@@ -1,0 +1,40 @@
+{{ $csvFile := .Get 0 }}
+{{ $delimiter := .Get 1 | default "," }}
+{{ $hasHeader := .Get 2 | default "true" }}
+
+{{ $csvContent := readFile $csvFile | transform.Unmarshal (dict "delimiter" $delimiter) }}
+
+{{ if not $csvContent }}
+  <p>Error: No data to transform or CSV file is empty.</p>
+{{ else }}
+  <table>
+    {{ if eq $hasHeader "true" }}
+      <thead>
+        <tr>
+          {{ range index $csvContent 0 }}
+            <th>{{ . }}</th>
+          {{ end }}
+        </tr>
+      </thead>
+      <tbody>
+        {{ range after 1 $csvContent }}
+          <tr>
+            {{ range . }}
+              <td>{{ . }}</td>
+            {{ end }}
+          </tr>
+        {{ end }}
+      </tbody>
+    {{ else }}
+      <tbody>
+        {{ range $csvContent }}
+          <tr>
+            {{ range . }}
+              <td>{{ . }}</td>
+            {{ end }}
+          </tr>
+        {{ end }}
+      </tbody>
+    {{ end }}
+  </table>
+{{ end }}
