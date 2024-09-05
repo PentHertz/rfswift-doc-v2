@@ -111,7 +111,7 @@ rfswift run -i penthertz/rfswift:sdr_light -n harogictest -b <host/path/of/CalFi
 
 Then you can run `sastudio` inside the container, and you get your Harogic device running:
 
-![[Harogic device running with SaStudio]](/images/docs/harogicsas.png)
+![Harogic device running with SaStudio](/images/docs/harogicsas.png "Harogic device running with SaStudio")
 
 
 ### Running SDR++ with Harogic
@@ -125,7 +125,7 @@ cp -R /rftools/analysers/SAStudio4_x86_64_05_23_17_06/bin/CalFile /usr/bin
 And then you can start SDR++ with Harogic, and voilà!
 
 
-![[Content of USB Harogic USB key]](/images/docs/harogicsdrpp.png)
+![Running SDR++ with Harogic](/images/docs/harogicsdrpp.png "Running SDR++ with Harogic")
 
 
 ## Next

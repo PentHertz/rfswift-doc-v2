@@ -310,7 +310,7 @@ Depending on the Docker image you are using, some software can be used, like `sd
 └─[$]> sdrangel
 ```
 
-![[Running SDRAngel with an RTL-SDR]](/images/docs/sdrangel.png)
+![Running SDRAngel with an RTL-SDR](/images/docs/sdrangel.png "Running SDRAngel with an RTL-SDR")
 
 {{< callout type="warning" >}}
   `xhost` on Linux, or `XQuartz` on macOS (well configured), should be installed on the computer to handle graphic elements.

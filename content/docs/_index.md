@@ -13,19 +13,26 @@ cascade:
 <div align="center">
   <table>
     <tr>
+      <td><strong>Supported OSes</strong></td>
       <td><img alt="linux supported" src="https://img.shields.io/badge/linux-supported-success"></td>
       <td><img alt="windows supported" src="https://img.shields.io/badge/windows-supported-success"></td>
       <td><img alt="windows supported" src="https://img.shields.io/badge/macos-pending-orange"></td>
-      <td><a target="_blank" rel="noopener noreferrer" href="https://x.com/intent/follow?screen_name=FlUxIuS" title="Follow"><img src="https://img.shields.io/twitter/follow/_nwodtuhs?label=FlUxIuS&style=social" alt="Twitter FlUxIuS"></a></td>
     </tr>
     <tr>
+      <td><strong>Supported architectures</strong></td>
       <td><img alt="amd64" src="https://img.shields.io/badge/amd64%20(x86__64)-supported-success"></td>
       <td><img alt="arm64" src="https://img.shields.io/badge/arm64%20(aarch64)-supported-success"></td>
       <td><img alt="riscv64" src="https://img.shields.io/badge/riscv64%20-supported-success"></td>
-      <td><a target="_blank" rel="noopener noreferrer" href="https://x.com/intent/follow?screen_name=Penthertz" title="Follow"><img src="https://img.shields.io/twitter/follow/_nwodtuhs?label=Penthertz&style=social" alt="Twitter Dramelac"></a></td>
+    </tr>
+    <tr>
+      <td><strong>Socials</strong></td>
+      <td><a target="_blank" rel="noopener noreferrer" href="https://x.com/intent/follow?screen_name=FlUxIuS" title="Follow"><img src="https://img.shields.io/twitter/follow/_nwodtuhs?label=FlUxIuS&style=social" alt="Twitter FlUxIuS"></a></td>
+      <td><a target="_blank" rel="noopener noreferrer" href="https://x.com/intent/follow?screen_name=Penthertz" title="Follow"><img src="https://img.shields.io/twitter/follow/_nwodtuhs?label=Penthertz&style=social" alt="Twitter Penthertz"></a></td>
+      <td>
+        <a target="_blank" rel="noopener noreferrer" href="https://discord.gg/NS3HayKrpA" title="Join us on Discord"><img src="https://github.com/PentHertz/RF-Swift-docs/blob/main/.assets/discord_join_us.png?raw=true" width="150" alt="Join us on Discord"></a>
+      </td>
     </tr>
   </table>
-  <a target="_blank" rel="noopener noreferrer" href="https://discord.gg/NS3HayKrpA" title="Join us on Discord"><img src="https://github.com/PentHertz/RF-Swift-docs/blob/main/.assets/discord_join_us.png?raw=true" width="150" alt="Join us on Discord"></a>
 </div>
 
 ## What is RF Swift?
@@ -83,7 +90,7 @@ graph TD
 Dive right into the following section to get started:
 
 {{< cards >}}
-  {{< card link="getting-started" title="Getting Started" icon="document-text" subtitle="Learn how to run RF Swift" >}}
-  {{< card link="development/compiling-rfswift" title="Compile RF Swift binarry" icon="document-text" subtitle="Compile RF Swift and develop around the framework" >}}
+  {{< card link="/docs/getting-started" title="Getting Started" icon="document-text" subtitle="Learn how to run RF Swift" >}}
+  {{< card link="/docs/development/compiling-rfswift" title="Compile RF Swift binarry" icon="document-text" subtitle="Compile RF Swift and develop around the framework" >}}
 {{< /cards >}}
 

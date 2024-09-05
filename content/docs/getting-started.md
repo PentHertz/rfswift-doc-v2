@@ -35,7 +35,7 @@ To get started using RF Swift, you first need to follow specific requirements.
 The minimum requirements to run the project are the following:
 
 
-{{< tabs items="Linux (prefered),Windows,macOS" >}}
+{{< tabs items="Linux (preferred),Windows,macOS" >}}
 
   {{< tab >}}
 

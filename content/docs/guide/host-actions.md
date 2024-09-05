@@ -70,4 +70,53 @@ rfswift host audio enable -s 10.0.0.1:34567
 
 ## Binding USB devices on a Windows host
 
-TODO
+To manage USB sharing access between host and container, a `winusb` command has been introduced to simplify all the process.
+
+{{< callout type="warning" >}}
+  This command needs `usbipd` to be installed, and Docker Desktop running.
+{{< /callout >}}
+
+To allows a USB device, we first need to identify it by first fingerprinting current devices and keeping the targeted one unplugged:
+
+```powershell
+rfswift.exe winusb list
+...
+BusID: 1-3, DeviceID: 8087:0032, VendorID: Intel(R), ProductID: Wireless, Description: Bluetooth(R) Not shared
+BusID: 1-4, DeviceID: 1532:0270, VendorID: USB, ProductID: Input, Description: Device, Razer Blade 14 Shared
+BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera,, Description: Integrated IR Camera Not shared
+PS C:\Users\fluxius\Downloads\RF-Swift-main (1)\RF-Swift-main>
+```
+
+Then we plug the devices we want to use and issue the `list` command once again:
+
+```powershell
+rfswift.exe winusb list
+...
+USB Devices:
+BusID: 1-2, DeviceID: 0bda:2838, VendorID: Bulk-In,, ProductID: Interface, Description: Not shared
+BusID: 1-3, DeviceID: 8087:0032, VendorID: Intel(R), ProductID: Wireless, Description: Bluetooth(R) Not shared
+BusID: 1-4, DeviceID: 1532:0270, VendorID: USB, ProductID: Input, Description: Device, Razer Blade 14 Shared
+BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera,, Description: Integrated IR Camera Not shared
+```
+
+We can see a new device appeared `BusID: 1-2`, to attach this device, we need to run the following command **as and administrator**:
+
+```powershell
+(administrator) rfswift.exe winusb attach -i 1-2
+```
+
+If it worked well, you can see the device that switched from *Not Shared* to *Shared Status*:
+
+```powershell
+...
+USB Devices:
+BusID: 1-2, DeviceID: 0bda:2838, VendorID: Bulk-In,, ProductID: Interface, Description: Attached
+...
+```
+
+And if you try running a container, and use for example SDRAngel to display what the device stream:
+
+
+![SDRAngel on Windows](/images/docs/sdrangelwindows.png "Running SDR Angel on Windows with RTL-SDR attached")
+
+sdrangelwindows.png
