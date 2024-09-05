@@ -11,10 +11,10 @@ This section covers topics related on how to run RF Swift and use the different 
 
 
 {{< cards >}}
-  {{< card link="running-rf-swift" title="Running RF Swift" icon="lightning-bolt" >}}
-  {{< card link="configurations" title="Configurations" icon="pencil-alt" >}}
-  {{< card link="list-of-images" title="Container images" icon="photograph" >}}
-  {{< card link="list-of-tools" title="Included tools" icon="table" >}}
-  {{< card link="host-actions" title="Host actions" icon="desktop-computer" >}}
-  {{< card link="sharing-files" title="Sharing files" icon="share" >}}
+  {{< card link="/docs/guide/running-rf-swift" title="Running RF Swift" icon="lightning-bolt" >}}
+  {{< card link="/docs/guide/configurations" title="Configurations" icon="pencil-alt" >}}
+  {{< card link="/docs/guide/list-of-images" title="Container images" icon="photograph" >}}
+  {{< card link="/docs/guide/list-of-tools" title="Included tools" icon="table" >}}
+  {{< card link="/docs/guide/host-actions" title="Host actions" icon="desktop-computer" >}}
+  {{< card link="/docs/guide/sharing-files" title="Sharing files" icon="share" >}}
 {{< /cards >}}
