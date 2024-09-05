@@ -11,7 +11,7 @@ layout: hextra-home
 
 <div class="hx-mt-6 hx-mb-6">
 {{< hextra/hero-headline >}}
-  The epic RF companion ⚡ &nbsp;<br class="sm:hx-block hx-hidden" />for HAMS and professionnals
+  The epic RF companion ⚡ &nbsp;<br class="sm:hx-block hx-hidden" />for HAMS and professionals
 {{< /hextra/hero-headline >}}
 </div>
 
