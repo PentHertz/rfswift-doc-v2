@@ -1,0 +1,53 @@
+name: HugoSiteCompileAndDeploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build_hugo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+
+      - name: Build Hugo site
+        shell: bash
+        run: hugo -d public
+
+      - name: Check public directory
+        shell: bash
+        run: ls -la public
+
+      - name: Commit files
+        id: commit
+        run: |
+          cd public
+          git init
+          git config --local user.email "action@github.com"
+          git config --local user.name "github-actions"
+          git add --all
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "push=false" >> $GITHUB_OUTPUT
+          else
+            git commit -m "Deploy updated Hugo site"
+            echo "push=true" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Push changes
+        if: steps.commit.outputs.push == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: public  # Pushes to the 'public' branch
