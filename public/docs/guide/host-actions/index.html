@@ -51,7 +51,7 @@ Enabling audio
   <meta itemprop="description" content="Know we know how to run, configure, and manage images, let us see how we can also manage perform important host actions depending on the context.
 Enabling audio When running a container, you will probably encounter the following warning notification:
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐ │ ⚠️ Warning │ ├──────────────────────────────────────────────────────────────────────────────────────────────────┤ │ Warning: Unable to connect to Pulse server at 127.0.0.1:34567 │ │ To install Pulse server on Linux, follow these steps: │ │ 1. Update your package manager: sudo apt update (for Debian-based) or sudo yum update (for Red │ │ Hat-based). │ │ 2. Install Pulse server: sudo apt install pulse-server (for Debian-based) or sudo yum install │ │ pulse-server (for Red Hat-based). │ │ After installation, enable the module with the following command as unprivileged user: │ │ ./rfswift host audio enable │ └──────────────────────────────────────────────────────────────────────────────────────────────────┘">
-  <meta itemprop="wordCount" content="309">
+  <meta itemprop="wordCount" content="569">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Host actions">
   <meta name="twitter:description" content="Know we know how to run, configure, and manage images, let us see how we can also manage perform important host actions depending on the context.
@@ -599,7 +599,121 @@ Enabling audio When running a container, you will probably encounter the followi
 </div>
 
 <h2>Binding USB devices on a Windows host<span class="hx-absolute -hx-mt-20" id="binding-usb-devices-on-a-windows-host"></span>
-    <a href="#binding-usb-devices-on-a-windows-host" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>TODO</p>
+    <a href="#binding-usb-devices-on-a-windows-host" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>To manage USB sharing access between host and container, a <code>winusb</code> command has been introduced to simplify all the process.</p>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-yellow-100 hx-bg-yellow-50 hx-text-yellow-900 dark:hx-border-yellow-200/30 dark:hx-bg-yellow-700/30 dark:hx-text-yellow-200">
+  <div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2"><div class="hx-select-none hx-text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
+        ⚠️
+      </div></div>
+
+  <div class="hx-w-full hx-min-w-0 hx-leading-7">
+    <div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+      This command needs <code>usbipd</code> to be installed, and Docker Desktop running.
+    </div>
+  </div>
+</div>
+
+<p>To allows a USB device, we first need to identify it by first fingerprinting current devices and keeping the targeted one unplugged:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>rfswift.exe winusb list
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>BusID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">1</span>-<span style="color:#ae81ff">3</span>, DeviceID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">8087</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">0032</span>, VendorID<span style="color:#960050;background-color:#1e0010">:</span> Intel(R), ProductID<span style="color:#960050;background-color:#1e0010">:</span> Wireless, Description<span style="color:#960050;background-color:#1e0010">:</span> Bluetooth(R) Not shared
+</span></span><span style="display:flex;"><span>BusID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">1</span>-<span style="color:#ae81ff">4</span>, DeviceID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">1532</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">0270</span>, VendorID<span style="color:#960050;background-color:#1e0010">:</span> USB, ProductID<span style="color:#960050;background-color:#1e0010">:</span> Input, Description<span style="color:#960050;background-color:#1e0010">:</span> Device, Razer Blade <span style="color:#ae81ff">14</span> Shared
+</span></span><span style="display:flex;"><span>BusID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">2</span>-<span style="color:#ae81ff">4</span>, DeviceID<span style="color:#960050;background-color:#1e0010">:</span> 13d3<span style="color:#960050;background-color:#1e0010">:</span>56d5, VendorID<span style="color:#960050;background-color:#1e0010">:</span> Integrated, ProductID<span style="color:#960050;background-color:#1e0010">:</span> Camera,, Description<span style="color:#960050;background-color:#1e0010">:</span> Integrated IR Camera Not shared
+</span></span><span style="display:flex;"><span>PS C:\Users\fluxius\Downloads\RF-Swift-main (<span style="color:#ae81ff">1</span>)\RF-Swift-main&gt;</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>Then we plug the devices we want to use and issue the <code>list</code> command once again:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>rfswift.exe winusb list
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>USB Devices<span style="color:#960050;background-color:#1e0010">:</span>
+</span></span><span style="display:flex;"><span>BusID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">1</span>-<span style="color:#ae81ff">2</span>, DeviceID<span style="color:#960050;background-color:#1e0010">:</span> 0bda<span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">2838</span>, VendorID<span style="color:#960050;background-color:#1e0010">:</span> Bulk-In,, ProductID<span style="color:#960050;background-color:#1e0010">:</span> Interface, Description<span style="color:#960050;background-color:#1e0010">:</span> Not shared
+</span></span><span style="display:flex;"><span>BusID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">1</span>-<span style="color:#ae81ff">3</span>, DeviceID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">8087</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">0032</span>, VendorID<span style="color:#960050;background-color:#1e0010">:</span> Intel(R), ProductID<span style="color:#960050;background-color:#1e0010">:</span> Wireless, Description<span style="color:#960050;background-color:#1e0010">:</span> Bluetooth(R) Not shared
+</span></span><span style="display:flex;"><span>BusID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">1</span>-<span style="color:#ae81ff">4</span>, DeviceID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">1532</span><span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">0270</span>, VendorID<span style="color:#960050;background-color:#1e0010">:</span> USB, ProductID<span style="color:#960050;background-color:#1e0010">:</span> Input, Description<span style="color:#960050;background-color:#1e0010">:</span> Device, Razer Blade <span style="color:#ae81ff">14</span> Shared
+</span></span><span style="display:flex;"><span>BusID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">2</span>-<span style="color:#ae81ff">4</span>, DeviceID<span style="color:#960050;background-color:#1e0010">:</span> 13d3<span style="color:#960050;background-color:#1e0010">:</span>56d5, VendorID<span style="color:#960050;background-color:#1e0010">:</span> Integrated, ProductID<span style="color:#960050;background-color:#1e0010">:</span> Camera,, Description<span style="color:#960050;background-color:#1e0010">:</span> Integrated IR Camera Not shared</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>We can see a new device appeared <code>BusID: 1-2</code>, to attach this device, we need to run the following command <strong>as and administrator</strong>:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>(administrator) rfswift.exe winusb attach -i <span style="color:#ae81ff">1</span>-<span style="color:#ae81ff">2</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>If it worked well, you can see the device that switched from <em>Not Shared</em> to <em>Shared Status</em>:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>USB Devices<span style="color:#960050;background-color:#1e0010">:</span>
+</span></span><span style="display:flex;"><span>BusID<span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#ae81ff">1</span>-<span style="color:#ae81ff">2</span>, DeviceID<span style="color:#960050;background-color:#1e0010">:</span> 0bda<span style="color:#960050;background-color:#1e0010">:</span><span style="color:#ae81ff">2838</span>, VendorID<span style="color:#960050;background-color:#1e0010">:</span> Bulk-In,, ProductID<span style="color:#960050;background-color:#1e0010">:</span> Interface, Description<span style="color:#960050;background-color:#1e0010">:</span> Attached
+</span></span><span style="display:flex;"><span>...</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>And if you try running a container, and use for example SDRAngel to display what the device stream:</p>
+<p><figure>
+    <img src="/images/docs/sdrangelwindows.png" title="Running SDR Angel on Windows with RTL-SDR attached" alt="SDRAngel on Windows" loading="lazy" />
+    <figcaption>Running SDR Angel on Windows with RTL-SDR attached</figcaption>
+  </figure></p>
+<p>sdrangelwindows.png</p>
 
         </div>
         <div class="hx-mt-16"></div>
