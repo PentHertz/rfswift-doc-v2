@@ -17,7 +17,7 @@ layout: hextra-home
 
 <div class="hx-mb-12">
 {{< hextra/hero-subtitle >}}
-  Fast, efficient; and multi-platform&nbsp;<br class="sm:hx-block hx-hidden" /> toolbox for your regular RF & HW assesments
+  Fast, efficient; and multi-platform&nbsp;<br class="sm:hx-block hx-hidden" /> toolbox for your regular RF & HW assessments
 {{< /hextra/hero-subtitle >}}
 </div>
 
