@@ -338,11 +338,11 @@ rfswift last
 ...
 ``` 
  
-## Saving changes
+## Saving Changes to a Container
 
-At any time, you can also save changes you are making inside a container to an image.
+You can save changes made inside a running container to a new image using the `commit` command. This allows you to preserve the current state of your container as a reusable image.
 
-For that, you can issue the `commit` command from RF Swift as follows:
+To commit the changes from a container, use the following command in RF Swift:
 
 ```bash
 rfswift commit -c supertelecom -i supernewimage
