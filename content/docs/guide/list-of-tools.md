@@ -27,11 +27,9 @@ graph TD;
     A-->G[sdrsa_devices_rtlsdrv4];
     B[sdrsa_devices]-->H[sdr_light];
     B[sdrsa_devices]-->I[bluetooth];
-    B[sdrsa_devices]-->J[wifi_light];
+    B[sdrsa_devices]-->J[wifi];
     B[sdrsa_devices]-->K[telecom];
     H-->L[sdr_full]
-    J-->M[wifi_middle]
-    M-->N[wifi_full]
 ```
 
 ## sdrsa_devices
@@ -68,8 +66,6 @@ graph TD;
 ## Wi-Fi
 
 {{< csv-table "content/docs/guide/tools_for_wifi.csv" >}}
-
-Note: wifi_light do not have Kismet and Bettercap provided in `sdr_middle` and `sdr_full`.
 
 ## Telecom
 
