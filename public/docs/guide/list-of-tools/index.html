@@ -37,13 +37,13 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rfswift.io/docs/guide/list-of-tools/" /><meta property="article:section" content="docs" />
 
-<meta property="article:modified_time" content="2024-09-29T22:05:43+02:00" />
+<meta property="article:modified_time" content="2024-10-03T22:33:36+02:00" />
 
   
   <meta itemprop="name" content="Included tools">
   <meta itemprop="description" content=" 📈 RF Swift is still in active development so more tools will be expected, and will readapted for all architectures as possible. RF Swift prebuilt images are compiled with tools you can discover in the next sections.">
-  <meta itemprop="dateModified" content="2024-09-29T22:05:43+02:00">
-  <meta itemprop="wordCount" content="1369">
+  <meta itemprop="dateModified" content="2024-10-03T22:33:36+02:00">
+  <meta itemprop="wordCount" content="1397">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Included tools">
   <meta name="twitter:description" content=" 📈 RF Swift is still in active development so more tools will be expected, and will readapted for all architectures as possible. RF Swift prebuilt images are compiled with tools you can discover in the next sections.">
@@ -510,6 +510,18 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#utils">Utils
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#2g-to-3g">2G to 3G
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#4g-to-5g">4G to 5G
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
         <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#automotive">Automotive
         </a>
       </li>
@@ -572,7 +584,7 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
 </div>
 
 <p>RF Swift prebuilt images are compiled with tools you can discover in the next sections.</p>
-<p>ere is you will find images hierarchy:</p>
+<p>Here you will find images hierarchy:</p>
 <pre class="mermaid hx-mt-6">graph TD;
     A[corebuild]-->B[sdrsa_devices];
     A-->C[rfid];
@@ -583,8 +595,10 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
     B[sdrsa_devices]-->H[sdr_light];
     B[sdrsa_devices]-->I[bluetooth];
     B[sdrsa_devices]-->J[wifi];
-    B[sdrsa_devices]-->K[telecom];
-    H-->L[sdr_full]</pre><h2>sdrsa_devices<span class="hx-absolute -hx-mt-20" id="sdrsa_devices"></span>
+    B[sdrsa_devices]-->J[telecom_utils];
+    J-->L[telecom_2Gto3G];
+    J-->M[telecom_4Gto5G];
+    H-->K[sdr_full]</pre><h2>sdrsa_devices<span class="hx-absolute -hx-mt-20" id="sdrsa_devices"></span>
     <a href="#sdrsa_devices" class="subheading-anchor" aria-label="Permalink for this section"></a></h2>
 
 
@@ -1678,7 +1692,7 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
             
               <td>✅   </td>
             
-              <td>✅ </td>
+              <td>❌ (missing libpthread for now)</td>
             
           </tr>
         
@@ -2591,7 +2605,57 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
   </table>
 
 <h2>Telecom<span class="hx-absolute -hx-mt-20" id="telecom"></span>
-    <a href="#telecom" class="subheading-anchor" aria-label="Permalink for this section"></a></h2>
+    <a href="#telecom" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Utils<span class="hx-absolute -hx-mt-20" id="utils"></span>
+    <a href="#utils" class="subheading-anchor" aria-label="Permalink for this section"></a></h3>
+
+
+
+
+
+
+  <table>
+    
+      <thead>
+        <tr>
+          
+            <th>Tool(s)</th>
+          
+            <th>Available commands</th>
+          
+            <th>amd64 </th>
+          
+            <th>aarch64</th>
+          
+            <th>riscv64</th>
+          
+            <th>Installation function</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        
+          <tr>
+            
+              <td>pycrate</td>
+            
+              <td>/telecom/pycrate/</td>
+            
+              <td>✅  </td>
+            
+              <td>✅  </td>
+            
+              <td>✅</td>
+            
+              <td>pycrate_soft_install</td>
+            
+          </tr>
+        
+      </tbody>
+    
+  </table>
+
+<h3>2G to 3G<span class="hx-absolute -hx-mt-20" id="2g-to-3g"></span>
+    <a href="#2g-to-3g" class="subheading-anchor" aria-label="Permalink for this section"></a></h3>
 
 
 
@@ -2669,6 +2733,55 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
         
           <tr>
             
+              <td>OsmoBTS suite (including OsmoPCU &#43; OsmoSGSN and others)</td>
+            
+              <td>osmo* tools with configs in /telecom/2G/osmocom/</td>
+            
+              <td>✅  </td>
+            
+              <td>✅ </td>
+            
+              <td>✅</td>
+            
+              <td>osmobts_suite_soft_install</td>
+            
+          </tr>
+        
+      </tbody>
+    
+  </table>
+
+<h3>4G to 5G<span class="hx-absolute -hx-mt-20" id="4g-to-5g"></span>
+    <a href="#4g-to-5g" class="subheading-anchor" aria-label="Permalink for this section"></a></h3>
+
+
+
+
+
+
+  <table>
+    
+      <thead>
+        <tr>
+          
+            <th>Tool(s)</th>
+          
+            <th>Available commands</th>
+          
+            <th>amd64 </th>
+          
+            <th>aarch64</th>
+          
+            <th>riscv64</th>
+          
+            <th>Installation function</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        
+          <tr>
+            
               <td>srsRAN 4G, 5G NSA</td>
             
               <td>/telecom/4G/srsRAN_4G/</td>
@@ -2701,22 +2814,6 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
         
           <tr>
             
-              <td>pycrate</td>
-            
-              <td>/telecom/pycrate/</td>
-            
-              <td>✅  </td>
-            
-              <td>✅  </td>
-            
-              <td>✅</td>
-            
-              <td>pycrate_soft_install</td>
-            
-          </tr>
-        
-          <tr>
-            
               <td>Open5GS</td>
             
               <td>/telecom/5G/open5gs/</td>
@@ -2728,22 +2825,6 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
               <td>✅ </td>
             
               <td>Open5GS_soft_install</td>
-            
-          </tr>
-        
-          <tr>
-            
-              <td>OsmoBTS suite (including OsmoPCU &#43; OsmoSGSN and others)</td>
-            
-              <td>osmo* tools with configs in /telecom/2G/osmocom/</td>
-            
-              <td>✅  </td>
-            
-              <td>✅ </td>
-            
-              <td>✅</td>
-            
-              <td>osmobts_suite_soft_install</td>
             
           </tr>
         
@@ -3172,7 +3253,7 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
 
         </div>
         
-    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2024-09-29T22:05:43.000Z">September 29, 2024</time></div>
+    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2024-10-03T22:33:36.000Z">October 3, 2024</time></div>
         <div class="hx-mb-8 hx-flex hx-items-center hx-border-t hx-pt-8 dark:hx-border-neutral-800 contrast-more:hx-border-neutral-400 dark:contrast-more:hx-border-neutral-400 print:hx-hidden"><a
         href="/docs/guide/list-of-images/"
         title="Container images"

@@ -1111,7 +1111,9 @@ First you should know that those two tags are the same, but &lt;code&gt;sdr_ligh
     B[sdrsa_devices]--&gt;H[sdr_light];
     B[sdrsa_devices]--&gt;I[bluetooth];
     B[sdrsa_devices]--&gt;J[wifi];
-    B[sdrsa_devices]--&gt;J[telecom];
+    B[sdrsa_devices]--&gt;J[telecom_utils];
+    J--&gt;L[telecom_2Gto3G];
+    J--&gt;M[telecom_4Gto5G];
     H--&gt;K[sdr_full]&lt;/pre&gt;&lt;p&gt;So if you want to build one of your own, do not hesitate to take one these images as a reference.&lt;/p&gt;
 &lt;h2&gt;List local images&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;list-local-images&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#list-local-images&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;To list pulled, but also built images, you can issue the &lt;code&gt;images local&lt;/code&gt; command, that will display these local images and details:&lt;/p&gt;
@@ -1241,7 +1243,7 @@ First you should know that those two tags are the same, but &lt;code&gt;sdr_ligh
 &lt;/div&gt;
 
 &lt;p&gt;RF Swift prebuilt images are compiled with tools you can discover in the next sections.&lt;/p&gt;
-&lt;p&gt;ere is you will find images hierarchy:&lt;/p&gt;
+&lt;p&gt;Here you will find images hierarchy:&lt;/p&gt;
 &lt;pre class=&#34;mermaid hx-mt-6&#34;&gt;graph TD;
     A[corebuild]--&gt;B[sdrsa_devices];
     A--&gt;C[rfid];
@@ -1252,8 +1254,10 @@ First you should know that those two tags are the same, but &lt;code&gt;sdr_ligh
     B[sdrsa_devices]--&gt;H[sdr_light];
     B[sdrsa_devices]--&gt;I[bluetooth];
     B[sdrsa_devices]--&gt;J[wifi];
-    B[sdrsa_devices]--&gt;K[telecom];
-    H--&gt;L[sdr_full]&lt;/pre&gt;&lt;h2&gt;sdrsa_devices&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;sdrsa_devices&#34;&gt;&lt;/span&gt;
+    B[sdrsa_devices]--&gt;J[telecom_utils];
+    J--&gt;L[telecom_2Gto3G];
+    J--&gt;M[telecom_4Gto5G];
+    H--&gt;K[sdr_full]&lt;/pre&gt;&lt;h2&gt;sdrsa_devices&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;sdrsa_devices&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#sdrsa_devices&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 
 
@@ -2347,7 +2351,7 @@ First you should know that those two tags are the same, but &lt;code&gt;sdr_ligh
             
               &lt;td&gt;✅   &lt;/td&gt;
             
-              &lt;td&gt;✅ &lt;/td&gt;
+              &lt;td&gt;❌ (missing libpthread for now)&lt;/td&gt;
             
           &lt;/tr&gt;
         
@@ -3260,7 +3264,57 @@ First you should know that those two tags are the same, but &lt;code&gt;sdr_ligh
   &lt;/table&gt;
 
 &lt;h2&gt;Telecom&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;telecom&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#telecom&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+    &lt;a href=&#34;#telecom&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Utils&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;utils&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#utils&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+
+
+
+
+
+  &lt;table&gt;
+    
+      &lt;thead&gt;
+        &lt;tr&gt;
+          
+            &lt;th&gt;Tool(s)&lt;/th&gt;
+          
+            &lt;th&gt;Available commands&lt;/th&gt;
+          
+            &lt;th&gt;amd64 &lt;/th&gt;
+          
+            &lt;th&gt;aarch64&lt;/th&gt;
+          
+            &lt;th&gt;riscv64&lt;/th&gt;
+          
+            &lt;th&gt;Installation function&lt;/th&gt;
+          
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;pycrate&lt;/td&gt;
+            
+              &lt;td&gt;/telecom/pycrate/&lt;/td&gt;
+            
+              &lt;td&gt;✅  &lt;/td&gt;
+            
+              &lt;td&gt;✅  &lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;pycrate_soft_install&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+      &lt;/tbody&gt;
+    
+  &lt;/table&gt;
+
+&lt;h3&gt;2G to 3G&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;2g-to-3g&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#2g-to-3g&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 
 
@@ -3338,6 +3392,55 @@ First you should know that those two tags are the same, but &lt;code&gt;sdr_ligh
         
           &lt;tr&gt;
             
+              &lt;td&gt;OsmoBTS suite (including OsmoPCU &amp;#43; OsmoSGSN and others)&lt;/td&gt;
+            
+              &lt;td&gt;osmo* tools with configs in /telecom/2G/osmocom/&lt;/td&gt;
+            
+              &lt;td&gt;✅  &lt;/td&gt;
+            
+              &lt;td&gt;✅ &lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osmobts_suite_soft_install&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+      &lt;/tbody&gt;
+    
+  &lt;/table&gt;
+
+&lt;h3&gt;4G to 5G&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;4g-to-5g&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#4g-to-5g&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+
+
+
+
+
+  &lt;table&gt;
+    
+      &lt;thead&gt;
+        &lt;tr&gt;
+          
+            &lt;th&gt;Tool(s)&lt;/th&gt;
+          
+            &lt;th&gt;Available commands&lt;/th&gt;
+          
+            &lt;th&gt;amd64 &lt;/th&gt;
+          
+            &lt;th&gt;aarch64&lt;/th&gt;
+          
+            &lt;th&gt;riscv64&lt;/th&gt;
+          
+            &lt;th&gt;Installation function&lt;/th&gt;
+          
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        
+          &lt;tr&gt;
+            
               &lt;td&gt;srsRAN 4G, 5G NSA&lt;/td&gt;
             
               &lt;td&gt;/telecom/4G/srsRAN_4G/&lt;/td&gt;
@@ -3370,22 +3473,6 @@ First you should know that those two tags are the same, but &lt;code&gt;sdr_ligh
         
           &lt;tr&gt;
             
-              &lt;td&gt;pycrate&lt;/td&gt;
-            
-              &lt;td&gt;/telecom/pycrate/&lt;/td&gt;
-            
-              &lt;td&gt;✅  &lt;/td&gt;
-            
-              &lt;td&gt;✅  &lt;/td&gt;
-            
-              &lt;td&gt;✅&lt;/td&gt;
-            
-              &lt;td&gt;pycrate_soft_install&lt;/td&gt;
-            
-          &lt;/tr&gt;
-        
-          &lt;tr&gt;
-            
               &lt;td&gt;Open5GS&lt;/td&gt;
             
               &lt;td&gt;/telecom/5G/open5gs/&lt;/td&gt;
@@ -3397,22 +3484,6 @@ First you should know that those two tags are the same, but &lt;code&gt;sdr_ligh
               &lt;td&gt;✅ &lt;/td&gt;
             
               &lt;td&gt;Open5GS_soft_install&lt;/td&gt;
-            
-          &lt;/tr&gt;
-        
-          &lt;tr&gt;
-            
-              &lt;td&gt;OsmoBTS suite (including OsmoPCU &amp;#43; OsmoSGSN and others)&lt;/td&gt;
-            
-              &lt;td&gt;osmo* tools with configs in /telecom/2G/osmocom/&lt;/td&gt;
-            
-              &lt;td&gt;✅  &lt;/td&gt;
-            
-              &lt;td&gt;✅ &lt;/td&gt;
-            
-              &lt;td&gt;✅&lt;/td&gt;
-            
-              &lt;td&gt;osmobts_suite_soft_install&lt;/td&gt;
             
           &lt;/tr&gt;
         
