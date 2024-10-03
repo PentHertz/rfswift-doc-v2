@@ -15,7 +15,7 @@ cascade:
 
 RF Swift prebuilt images are compiled with tools you can discover in the next sections.
 
-ere is you will find images hierarchy:
+Here you will find images hierarchy:
 
 ```mermaid
 graph TD;
@@ -28,8 +28,10 @@ graph TD;
     B[sdrsa_devices]-->H[sdr_light];
     B[sdrsa_devices]-->I[bluetooth];
     B[sdrsa_devices]-->J[wifi];
-    B[sdrsa_devices]-->K[telecom];
-    H-->L[sdr_full]
+    B[sdrsa_devices]-->J[telecom_utils];
+    J-->L[telecom_2Gto3G];
+    J-->M[telecom_4Gto5G];
+    H-->K[sdr_full]
 ```
 
 ## sdrsa_devices
@@ -67,9 +69,19 @@ graph TD;
 
 {{< csv-table "content/docs/guide/tools_for_wifi.csv" >}}
 
-## Telecom
+## Telecom 
 
-{{< csv-table "content/docs/guide/tools_for_telecom.csv" >}}
+### Utils
+
+{{< csv-table "content/docs/guide/tools_for_telecom_utils.csv" >}}
+
+### 2G to 3G
+
+{{< csv-table "content/docs/guide/tools_for_telecom_2gto3g.csv" >}}
+
+### 4G to 5G
+
+{{< csv-table "content/docs/guide/tools_for_telecom_4gto5g.csv" >}}
 
 ## Automotive
 
