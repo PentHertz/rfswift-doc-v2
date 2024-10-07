@@ -37,13 +37,13 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rfswift.io/docs/guide/list-of-tools/" /><meta property="article:section" content="docs" />
 
-<meta property="article:modified_time" content="2024-10-03T23:19:02+02:00" />
+<meta property="article:modified_time" content="2024-10-07T22:16:55+02:00" />
 
   
   <meta itemprop="name" content="Included tools">
   <meta itemprop="description" content=" 📈 RF Swift is still in active development so more tools will be expected, and will readapted for all architectures as possible. RF Swift prebuilt images are compiled with tools you can discover in the next sections.">
-  <meta itemprop="dateModified" content="2024-10-03T23:19:02+02:00">
-  <meta itemprop="wordCount" content="1405">
+  <meta itemprop="dateModified" content="2024-10-07T22:16:55+02:00">
+  <meta itemprop="wordCount" content="1490">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Included tools">
   <meta name="twitter:description" content=" 📈 RF Swift is still in active development so more tools will be expected, and will readapted for all architectures as possible. RF Swift prebuilt images are compiled with tools you can discover in the next sections.">
@@ -478,6 +478,14 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#troubleshooting-with-some-devices">Troubleshooting with some devices
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-8 rtl:hx-pr-8 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#plutosdr">PlutoSDR
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
         <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#sdr_light">sdr_light
         </a>
       </li>
@@ -869,6 +877,43 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
   </div>
 </div>
 
+<h3>Troubleshooting with some devices<span class="hx-absolute -hx-mt-20" id="troubleshooting-with-some-devices"></span>
+    <a href="#troubleshooting-with-some-devices" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><h4>PlutoSDR<span class="hx-absolute -hx-mt-20" id="plutosdr"></span>
+    <a href="#plutosdr" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>Using some distribution or system, the PlutoSDR will probably not show with <code>iio_info -s</code> command:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<pre><code>with backends: local xml ip usb
+Unable to create Local IIO context : No such file or directory (2)
+ERROR: Unable to create Avahi DNS-SD client :Daemon not running
+Scanning for IIO contexts failed: Text file busy (26)</code></pre><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>This can be fixed running <code>avahi-daemon</code> on your host if using Linux, or by running a daemon inside the container with following command :</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<pre><code>avahi-daemon --no-drop-root --no-rlimits</code></pre><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
 <h2>sdr_light<span class="hx-absolute -hx-mt-20" id="sdr_light"></span>
     <a href="#sdr_light" class="subheading-anchor" aria-label="Permalink for this section"></a></h2>
 
@@ -3269,7 +3314,7 @@ RF Swift prebuilt images are compiled with tools you can discover in the next se
 
         </div>
         
-    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2024-10-03T23:19:02.000Z">October 3, 2024</time></div>
+    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2024-10-07T22:16:55.000Z">October 7, 2024</time></div>
         <div class="hx-mb-8 hx-flex hx-items-center hx-border-t hx-pt-8 dark:hx-border-neutral-800 contrast-more:hx-border-neutral-400 dark:contrast-more:hx-border-neutral-400 print:hx-hidden"><a
         href="/docs/guide/list-of-images/"
         title="Container images"
