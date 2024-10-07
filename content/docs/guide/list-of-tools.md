@@ -8,7 +8,6 @@ cascade:
 ---
 
 
-
 {{< callout emoji="📈" >}}
    RF Swift is still in active development so more tools will be expected, and will readapted for all architectures as possible.
 {{< /callout >}}
@@ -41,6 +40,25 @@ graph TD;
 {{< callout type="info" >}}
   For RTL-SDR v4, the `rtlsdrv4_devices_install` function can be used instead. For ANTSDR, use `antsdr__devices_install`
 {{< /callout >}}
+
+### Troubleshooting with some devices
+
+#### PlutoSDR
+
+Using some distribution or system, the PlutoSDR will probably not show with `iio_info -s` command:
+
+```
+with backends: local xml ip usb
+Unable to create Local IIO context : No such file or directory (2)
+ERROR: Unable to create Avahi DNS-SD client :Daemon not running
+Scanning for IIO contexts failed: Text file busy (26)
+```
+
+This can be fixed running `avahi-daemon` on your host if using Linux, or by running a daemon inside the container with following command :
+
+```
+avahi-daemon --no-drop-root --no-rlimits
+```
 
 ## sdr_light
 
