@@ -68,10 +68,12 @@ graph TD;
     A-->G[sdrsa_devices_rtlsdrv4];
     B[sdrsa_devices]-->H[sdr_light];
     B[sdrsa_devices]-->I[bluetooth];
-    B[sdrsa_devices]-->J[wifi];
+    B[sdrsa_devices]-->J[wifi_basic];
     B[sdrsa_devices]-->L[telecom_utils];
     L-->M[telecom_2Gto3G];
-    L-->N[telecom_4Gto5G];
+    L-->N[telecom_4G_5GNSA];
+    L-->O[telecom_5G];
+    J-->P[wifi_full];
     H-->K[sdr_full]
 ```
 
