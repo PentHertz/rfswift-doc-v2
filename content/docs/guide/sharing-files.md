@@ -85,7 +85,23 @@ Let us go inside this `shared` directory and put a file inside:
 
 If you look on your host, the file will be present.
 
+## Binding devices
 
+### Example with proxmark3
+
+By default, Proxmark3 tool already has `/dev/ttyACM0` binded by default. But you have multiple devices, you can add them using `-b` when running a new container: 
+
+```bash
+rfswift run -i penthertz/rfswift:rfid -n superrfid -b /dev/ttyACM1:/dev/ttyACM1
+```
+
+### Example with Bluetooth HCI devices
+
+For HCI devices, you can bind `/dev/vchi` as follows:
+
+```bash
+rfswift run -i penthertz/rfswift:rfid -n superrfid -b /dev/vchi:/dev/vchi
+```
 
 ## Example with Harogic devices
 
