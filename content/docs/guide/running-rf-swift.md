@@ -31,7 +31,7 @@ rfswift --help
 
                 RF toolbox for HAMs and professionals                                                                             
 
-[+] You are running version: 0.4.9 (Up to date)
+[+] You are running version: 0.5.2 (Up to date)
 rfswift is a super fancy CLI (kidding)
    
 One can use stringer to modify or inspect strings straight from the terminal
@@ -41,6 +41,7 @@ Usage:
   rfswift [command]
 
 Available Commands:
+  bindings    Manage bindings
   commit      Commit a container
   completion  Generate the autocompletion script for the specified shell
   delete      Delete an rfswift images
@@ -60,7 +61,6 @@ Flags:
   -h, --help   help for rfswift
 
 Use "rfswift [command] --help" for more information about a command.
-
 ```
 
 {{< callout type="warning" >}}

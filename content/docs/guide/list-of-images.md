@@ -108,7 +108,7 @@ To list pulled, but also built images, you can issue the `images local` command,
 If an update is necessary you can issue a `images pull` command as follows:
 
 ```bash
-rfswift images pull -i penthertz/rfswift:<tag_name>
+rfswift images pull -i <tag_name>
 ```
 
 ## Next

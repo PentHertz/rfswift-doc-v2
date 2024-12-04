@@ -35,14 +35,16 @@ Config file not found. Would you like to create one with default values? (y/n)
 
 RF Swift have already some prebuilt images you can fire on the go.
 
-For the example, we will pull an image containing a complete SDR images `penthertz/rfswift:sdr_full` on an `x86_64` architecture:
+For the example, we will pull an image containing a complete SDR images `sdr_full` on an `x86_64` architecture:
 
 ```bash
-rfswift images pull -i penthertz/sdr_light [-t myrfswift:label]
+rfswift images pull -i sdr_full [-t myrfswift:label]
 ```
    **Important options**:
    - i: remote label
    - t: optional local tag we want to use.
+
+Note that you can use the complete image tag `penthertz/rfswift:sdr_full` if you like, or change the repository in your profile to use the short tag only with a different source.
 
 {{< callout type="info" >}}
   Using Docker Desktop (Windows and macOS) or OrbStack on macOS, `sudo` is not necessary.
@@ -53,8 +55,18 @@ rfswift images pull -i penthertz/sdr_light [-t myrfswift:label]
 After downloading the image, you can create and run the container by precising the `tag with -i` assigned to the image and the `name with -n` of the container:
 
 ```shell
-rfswift run -i penthertz/rfswift:sdr_light -n supercontainername
+rfswift run -i sdr_full -n supercontainername
 ```
+
+Optionally, you can also share a directory with `-b` option as follows:
+
+```shell
+rfswift run -i sdr_full -n supercontainername -b /path/to/bind:/target
+```
+
+More details can be found in the sharing [sharing files](/docs/guide/sharing-files) section of this guide.
+
+Note that you can use the complete image name `penthertz/rfswift:sdr_full` if you want to change the repository. You can also change default repository within your RF Swift profile.
 
 {{< callout type="info" >}}
   The name of the container will allow to restart it without having to remember its ID.
