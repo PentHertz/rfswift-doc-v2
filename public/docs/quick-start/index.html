@@ -37,13 +37,13 @@ To install RF Swift, you have to choice using the pre-compiled binary wrapper de
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rfswift.io/docs/quick-start/" /><meta property="article:section" content="docs" />
 
-<meta property="article:modified_time" content="2024-12-04T14:14:03+01:00" />
+<meta property="article:modified_time" content="2024-12-04T22:48:18+01:00" />
 
   
   <meta itemprop="name" content="🚀 Quick Start">
   <meta itemprop="description" content="⚠️ On Linux, unless your are using Docker Desktop, you will have to use rfswift with sudo most of the time. To install RF Swift, you have to choice using the pre-compiled binary wrapper depending on your system and pull an existing container image, or to compile the Go project and/or the Docker images from sources.">
-  <meta itemprop="dateModified" content="2024-12-04T14:14:03+01:00">
-  <meta itemprop="wordCount" content="423">
+  <meta itemprop="dateModified" content="2024-12-04T22:48:18+01:00">
+  <meta itemprop="wordCount" content="515">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="🚀 Quick Start">
   <meta name="twitter:description" content="⚠️ On Linux, unless your are using Docker Desktop, you will have to use rfswift with sudo most of the time. To install RF Swift, you have to choice using the pre-compiled binary wrapper depending on your system and pull an existing container image, or to compile the Go project and/or the Docker images from sources.">
@@ -535,11 +535,11 @@ To install RF Swift, you have to choice using the pre-compiled binary wrapper de
 </div>
 <h3>Pulling a built image<span class="hx-absolute -hx-mt-20" id="pulling-a-built-image"></span>
     <a href="#pulling-a-built-image" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>RF Swift have already some prebuilt images you can fire on the go.</p>
-<p>For the example, we will pull an image containing a complete SDR images <code>penthertz/rfswift:sdr_full</code> on an <code>x86_64</code> architecture:</p>
+<p>For the example, we will pull an image containing a complete SDR images <code>sdr_full</code> on an <code>x86_64</code> architecture:</p>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
   
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images pull -i penthertz/sdr_light <span class="o">[</span>-t myrfswift:label<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images pull -i sdr_full <span class="o">[</span>-t myrfswift:label<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
   <button
     class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
     title="Copy code"
@@ -556,6 +556,7 @@ To install RF Swift, you have to choice using the pre-compiled binary wrapper de
 <li>i: remote label</li>
 <li>t: optional local tag we want to use.</li>
 </ul>
+<p>Note that you can use the complete image tag <code>penthertz/rfswift:sdr_full</code> if you like, or change the repository in your profile to use the short tag only with a different source.</p>
 <div class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
   <div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2"><div class="hx-select-none hx-text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
         ℹ️
@@ -571,7 +572,7 @@ To install RF Swift, you have to choice using the pre-compiled binary wrapper de
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
   
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_light -n supercontainername</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">rfswift run -i sdr_full -n supercontainername</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
   <button
     class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
     title="Copy code"
@@ -583,6 +584,24 @@ To install RF Swift, you have to choice using the pre-compiled binary wrapper de
 
   
 </div>
+<p>Optionally, you can also share a directory with <code>-b</code> option as follows:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">rfswift run -i sdr_full -n supercontainername -b /path/to/bind:/target</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>More details can be found in the sharing <a href="/docs/guide/sharing-files" >sharing files</a> section of this guide.</p>
+<p>Note that you can use the complete image name <code>penthertz/rfswift:sdr_full</code> if you want to change the repository. You can also change default repository within your RF Swift profile.</p>
 <div class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
   <div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2"><div class="hx-select-none hx-text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
         ℹ️
@@ -680,7 +699,7 @@ To install RF Swift, you have to choice using the pre-compiled binary wrapper de
 
         </div>
         
-    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2024-12-04T14:14:03.000Z">December 4, 2024</time></div>
+    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2024-12-04T22:48:18.000Z">December 4, 2024</time></div>
         <div class="hx-mb-8 hx-flex hx-items-center hx-border-t hx-pt-8 dark:hx-border-neutral-800 contrast-more:hx-border-neutral-400 dark:contrast-more:hx-border-neutral-400 print:hx-hidden"><a
         href="/docs/getting-started/"
         title="Getting started"
