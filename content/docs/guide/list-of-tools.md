@@ -43,6 +43,16 @@ graph TD;
   For RTL-SDR v4, the `rtlsdrv4_devices_install` function can be used instead. For ANTSDR, use `antsdr__devices_install`
 {{< /callout >}}
 
+### Troubleshootings 
+
+#### RTL-SDR in use
+
+If the RTL-SDR is not available when using tools like `nfc-spy`, try blacklisting the device and restart the host after running this command:
+
+```bash
+echo "blacklist dvb_usb_rtl28xxu" | sudo tee /etc/modprobe.d/blacklist-dvb_usb_rtl28xxu.conf
+```
+
 ### Troubleshooting with some devices
 
 #### PlutoSDR
