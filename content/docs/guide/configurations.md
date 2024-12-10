@@ -132,3 +132,24 @@ sudo rfswift bindings rm -c <name_of_the_container> -t /dev/vhci [-s /dev/vhci]
 ```
 
 In case the source path (host side) should be different from the target (container side), use the `-s` parameter.
+
+
+### API version mismatch
+
+In case you are using a Docker API with lower version than the client:
+
+```bash
+[+] You are running version: 0.5.5 (Up to date)
+[i] Fetching container ID...
+test/testble[+] Container ID: e73b0e9f63d2c5ffe2041ec990c67e833d17a5fe4f15c7162ec27bde3235f415
+[i] Stopping the container...
+[!] Error during Stopping the container...: Error response from daemon: client version 1.47 is too new. Maximum supported API version is 1.45
+[!] Failed to stop the container gracefully: Error response from daemon: client version 1.47 is too new. Maximum supported API version is 1.45
+```
+You can force the client to use a lower API version as follows:
+
+```bash
+sudo DOCKER_API_VERSION=1.45 ./rfswift bindings add -c testble -s /tmp -t /root/myshare
+```
+
+You can add `DOCKER_API_VERSION=1.45` to your `.bashrc` file or equivalent.
