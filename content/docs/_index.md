@@ -16,7 +16,7 @@ cascade:
       <td><strong>Supported OSes</strong></td>
       <td><img alt="linux supported" src="https://img.shields.io/badge/linux-supported-success"></td>
       <td><img alt="windows supported" src="https://img.shields.io/badge/windows-supported-success"></td>
-      <td><img alt="windows supported" src="https://img.shields.io/badge/macos-pending-orange"></td>
+      <td><img alt="macOS supported" src="https://img.shields.io/badge/macos-supported-success"></td>
     </tr>
     <tr>
       <td><strong>Supported architectures</strong></td>
