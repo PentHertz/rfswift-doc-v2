@@ -25,6 +25,17 @@ cascade:
       <td><img alt="riscv64" src="https://img.shields.io/badge/riscv64%20-supported-success"></td>
     </tr>
     <tr>
+      <td><strong>Presented in</strong></td>
+      <td><a target="_blank" rel="noopener noreferrer" href="https://www.blackhat.com/eu-24/arsenal/schedule/index.html#rf-swift-a-swifty-toolbox-for-all-wireless-assessments-41157" title="Schedule">
+       <img alt="Black Hat Europe 2024" src="https://img.shields.io/badge/Black%20Hat%20Arsenal-Europe%202024-blueviolet">
+      </a></td>
+      <td>
+        <a target="_blank" rel="noopener noreferrer" href="https://spectrum-conference.org/24/schedule" title="Schedule">
+       <img alt="Spectrum 24" src="https://img.shields.io/badge/Spectrum-2024-yellow">
+      </a>
+      </td>
+    </tr>
+    <tr>
       <td><strong>Socials</strong></td>
       <td><a target="_blank" rel="noopener noreferrer" href="https://x.com/intent/follow?screen_name=FlUxIuS" title="Follow"><img src="https://img.shields.io/twitter/follow/_nwodtuhs?label=FlUxIuS&style=social" alt="Twitter FlUxIuS"></a></td>
       <td><a target="_blank" rel="noopener noreferrer" href="https://x.com/intent/follow?screen_name=Penthertz" title="Follow"><img src="https://img.shields.io/twitter/follow/_nwodtuhs?label=Penthertz&style=social" alt="Twitter Penthertz"></a></td>
@@ -53,7 +64,6 @@ graph TD
     A[rfswift] --> B[Host manager]
     B --> C[Host]
     B --> D[USB]
-    B --> E[Host]
     B --> F[Sound]
 
     B --> G[Images Container manager]
