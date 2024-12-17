@@ -87,15 +87,15 @@ This file contains different sections and lines parameters for RF Swift as follo
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rfswift.io/docs/guide/configurations/" /><meta property="article:section" content="docs" />
 
-<meta property="article:modified_time" content="2024-12-09T00:11:17+01:00" />
+<meta property="article:modified_time" content="2024-12-11T00:40:51+01:00" />
 
   
   <meta itemprop="name" content="Configurations">
   <meta itemprop="description" content="RF Swift can be configured on the fly, or using a profile configuration file for conveniency.
 Profil configuration Depending on your os, RF Swift will look for a profile configuration and ask you to create one if it is not found in the following path:
 LinuxWindowsmacOS X /home/username/.config/rfswift/config.ini C:\Users\username\AppData\Roaming\rfswift\config.ini /Users/username/.config/rfswift/config.ini This file contains different sections and lines parameters for RF Swift as follows:">
-  <meta itemprop="dateModified" content="2024-12-09T00:11:17+01:00">
-  <meta itemprop="wordCount" content="534">
+  <meta itemprop="dateModified" content="2024-12-11T00:40:51+01:00">
+  <meta itemprop="wordCount" content="651">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Configurations">
   <meta name="twitter:description" content="RF Swift can be configured on the fly, or using a profile configuration file for conveniency.
@@ -510,6 +510,10 @@ LinuxWindowsmacOS X /home/username/.config/rfswift/config.ini C:\Users\username\
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
         <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#removing-a-binding">Removing a binding
         </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#api-version-mismatch">API version mismatch
+        </a>
       </li></ul>
       <div class="hx-mt-8 hx-border-t hx-bg-white hx-pt-8 hx-shadow-[0_-12px_16px_white] dark:hx-bg-dark dark:hx-shadow-[0_-12px_16px_#111] hx-sticky hx-bottom-0 hx-flex hx-flex-col hx-items-start hx-gap-2 hx-pb-8 dark:hx-border-neutral-800 contrast-more:hx-border-t contrast-more:hx-border-neutral-400 contrast-more:hx-shadow-none contrast-more:dark:hx-border-neutral-400">
         <button aria-hidden="true" id="backToTop" onClick="scrollUp();" class="hx-transition-all hx-duration-75 hx-opacity-0 hx-text-xs hx-font-medium hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-100 contrast-more:hx-text-gray-800 contrast-more:dark:hx-text-gray-50">
@@ -789,10 +793,49 @@ This parameters allows you to skip <code>-i</code> parameter for the command <co
   
 </div>
 <p>In case the source path (host side) should be different from the target (container side), use the <code>-s</code> parameter.</p>
+<h3>API version mismatch<span class="hx-absolute -hx-mt-20" id="api-version-mismatch"></span>
+    <a href="#api-version-mismatch" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>In case you are using a Docker API with lower version than the client:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> You are running version: 0.5.5 <span class="o">(</span>Up to date<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>i<span class="o">]</span> Fetching container ID...
+</span></span><span class="line"><span class="cl">test/testble<span class="o">[</span>+<span class="o">]</span> Container ID: e73b0e9f63d2c5ffe2041ec990c67e833d17a5fe4f15c7162ec27bde3235f415
+</span></span><span class="line"><span class="cl"><span class="o">[</span>i<span class="o">]</span> Stopping the container...
+</span></span><span class="line"><span class="cl"><span class="o">[</span>!<span class="o">]</span> Error during Stopping the container...: Error response from daemon: client version 1.47 is too new. Maximum supported API version is 1.45
+</span></span><span class="line"><span class="cl"><span class="o">[</span>!<span class="o">]</span> Failed to stop the container gracefully: Error response from daemon: client version 1.47 is too new. Maximum supported API version is 1.45</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>You can force the client to use a lower API version as follows:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo <span class="nv">DOCKER_API_VERSION</span><span class="o">=</span>1.45 ./rfswift bindings add -c testble -s /tmp -t /root/myshare</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>You can add <code>DOCKER_API_VERSION=1.45</code> to your <code>.bashrc</code> file or equivalent.</p>
 
         </div>
         
-    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2024-12-09T00:11:17.000Z">December 9, 2024</time></div>
+    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2024-12-11T00:40:51.000Z">December 11, 2024</time></div>
         <div class="hx-mb-8 hx-flex hx-items-center hx-border-t hx-pt-8 dark:hx-border-neutral-800 contrast-more:hx-border-neutral-400 dark:contrast-more:hx-border-neutral-400 print:hx-hidden"><a
         href="/docs/guide/list-of-tools/"
         title="Included tools"
