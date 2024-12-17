@@ -58,14 +58,14 @@ Options
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rfswift.io/docs/guide/running-rf-swift/" /><meta property="article:section" content="docs" />
 
-<meta property="article:modified_time" content="2024-12-11T00:40:51+01:00" />
+<meta property="article:modified_time" content="2024-12-17T18:38:18+01:00" />
 
   
   <meta itemprop="name" content="Running RF Swift">
   <meta itemprop="description" content="Running RF Swift is pretty straight forward and only requires a few command line to use your hacking tools as you wish.
 ⚠️ On Linux, unless your are using Docker Desktop, you will have to use rfswift with sudo most of the time. Options Let us first discover the different options of the tool by typing rfswift --help:">
-  <meta itemprop="dateModified" content="2024-12-11T00:40:51+01:00">
-  <meta itemprop="wordCount" content="1627">
+  <meta itemprop="dateModified" content="2024-12-17T18:38:18+01:00">
+  <meta itemprop="wordCount" content="1910">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Running RF Swift">
   <meta name="twitter:description" content="Running RF Swift is pretty straight forward and only requires a few command line to use your hacking tools as you wish.
@@ -308,6 +308,12 @@ Options
                 class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
               >Deleting an image</a>
             </li>
+          <li>
+              <a
+                href="#isolation"
+                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
+              >Isolation</a>
+            </li>
           </ul>
   
               
@@ -540,6 +546,18 @@ Options
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
         <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#deleting-an-image">Deleting an image
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#isolation">Isolation
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#network-isolation">Network isolation
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#host-isolation">Host isolation
         </a>
       </li></ul>
       <div class="hx-mt-8 hx-border-t hx-bg-white hx-pt-8 hx-shadow-[0_-12px_16px_white] dark:hx-bg-dark dark:hx-shadow-[0_-12px_16px_#111] hx-sticky hx-bottom-0 hx-flex hx-flex-col hx-items-start hx-gap-2 hx-pb-8 dark:hx-border-neutral-800 contrast-more:hx-border-t contrast-more:hx-border-neutral-400 contrast-more:hx-shadow-none contrast-more:dark:hx-border-neutral-400">
@@ -1310,10 +1328,69 @@ Options
 
   
 </div>
+<h2>Isolation<span class="hx-absolute -hx-mt-20" id="isolation"></span>
+    <a href="#isolation" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Network isolation<span class="hx-absolute -hx-mt-20" id="network-isolation"></span>
+    <a href="#network-isolation" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>By default, all images run in <code>host</code> mode which means there is no network isolation.</p>
+<p>RF Swift implement same network isolation as classic Docker:</p>
+<ul>
+<li><code>bridge</code>: The default network driver.</li>
+<li><code>host</code>: Remove network isolation between the container and the Docker host.</li>
+<li><code>none</code>: Completely isolate a container from the host and other containers.</li>
+<li><code>overlay</code>: Overlay networks connect multiple Docker daemons together.</li>
+<li><code>ipvlan</code>: IPvlan networks provide full control over both IPv4 and IPv6 addressing.</li>
+<li><code>macvlan</code>: Assign a MAC address to a container.</li>
+</ul>
+<p>To use <code>bridge</code> mode and exposing a port to all container and/or on the host, you can use use the following command (with root privileges):</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i bluetooth -n containername -t bridge -z <span class="m">8000</span> -w 8000:127.0.0.0:80/tcp
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Binded: <span class="s1">&#39;8000:127.0.0.0:80/tcp&#39;</span>
+</span></span><span class="line"><span class="cl">  🧊 Container Summary                                                                                                                                                            
+</span></span><span class="line"><span class="cl">╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+</span></span><span class="line"><span class="cl">│ Container Name  │ containername                                                                                                                                                  │
+</span></span><span class="line"><span class="cl">├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+</span></span><span class="line"><span class="cl">│ X Display       │ :0                                                                                                                                                             │
+</span></span><span class="line"><span class="cl">├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+</span></span><span class="line"><span class="cl">│ Shell           │ /bin/zsh                                                                                                                                                       │
+</span></span><span class="line"><span class="cl">├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+</span></span><span class="line"><span class="cl">│ Privileged Mode │ <span class="nb">true</span>                                                                                                                                                           │
+</span></span><span class="line"><span class="cl">├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+</span></span><span class="line"><span class="cl">│ Network Mode    │ bridge                                                                                                                                                         │
+</span></span><span class="line"><span class="cl">├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+</span></span><span class="line"><span class="cl">│ Exposed Ports   │ <span class="m">8000</span>                                                                                                                                                           │
+</span></span><span class="line"><span class="cl">├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+</span></span><span class="line"><span class="cl">│ Port Bindings   │ 127.0.0.0:80/tcp -&gt; <span class="m">8000</span>                                                                                                                                       │
+</span></span><span class="line"><span class="cl">├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+</span></span><span class="line"><span class="cl">│ Image Name      │ penthertz/rfswift:bluetooth                                                                                                                                    │
+</span></span><span class="line"><span class="cl">├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+</span></span><span class="line"><span class="cl">│ Size on Disk    │ 10836.73 MB                                                                                                                                                    │
+</span></span><span class="line"><span class="cl">├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+</span></span><span class="line"><span class="cl">│ Bindings        │ /tmp/.X11-unix:/tmp/.X11-unix,/dev/bus/usb:/dev/bus/usb,/run/dbus/system_bus_socket:/run/dbus/system_bus_socket,/dev/snd:/dev/snd,/dev/dri:/dev/dri,/dev/input │
+</span></span><span class="line"><span class="cl">│                 │                                                                                                                                                                │
+</span></span><span class="line"><span class="cl">│                 │ :/dev/input,/dev/vhci:/dev/vhci                                                                                                                                │
+</span></span><span class="line"><span class="cl">├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+</span></span><span class="line"><span class="cl">│ Extra Hosts     │ pluto.local:192.168.2.1                                                                                                                                        │
+</span></span><span class="line"><span class="cl">╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>The <code>-w</code> argument will expose the container port <code>tcp/8000</code> to the host as <code>tcp/80</code>. Note that we have only exposed it to the host with host IP address <code>127.0.0.1</code>, but can also remove the local IP address to bind to any interfaces. The <code>tcp/8000</code> will also be exposed to other containers as <code>tcp/8000</code> thanks to argument <code>-z</code>.</p>
+<h3>Host isolation<span class="hx-absolute -hx-mt-20" id="host-isolation"></span>
+    <a href="#host-isolation" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>This part is in progress and will be available soon ;)</p>
 
         </div>
         
-    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2024-12-11T00:40:51.000Z">December 11, 2024</time></div>
+    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2024-12-17T18:38:18.000Z">December 17, 2024</time></div>
         <div class="hx-mb-8 hx-flex hx-items-center hx-border-t hx-pt-8 dark:hx-border-neutral-800 contrast-more:hx-border-neutral-400 dark:contrast-more:hx-border-neutral-400 print:hx-hidden"><a
         href="/docs/quick-start/"
         title="🚀 Quick Start"
