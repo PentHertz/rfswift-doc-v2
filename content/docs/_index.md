@@ -25,7 +25,7 @@ cascade:
       <td><img alt="riscv64" src="https://img.shields.io/badge/riscv64%20-supported-success"></td>
     </tr>
     <tr>
-      <td><strong>Presented in</strong></td>
+      <td><strong>Presented at</strong></td>
       <td><a target="_blank" rel="noopener noreferrer" href="https://www.blackhat.com/eu-24/arsenal/schedule/index.html#rf-swift-a-swifty-toolbox-for-all-wireless-assessments-41157" title="Schedule">
        <img alt="Black Hat Europe 2024" src="https://img.shields.io/badge/Black%20Hat%20Arsenal-Europe%202024-blueviolet">
       </a></td>
