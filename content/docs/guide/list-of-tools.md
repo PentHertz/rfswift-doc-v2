@@ -28,6 +28,8 @@ graph TD;
     B[sdrsa_devices]-->I[bluetooth];
     B[sdrsa_devices]-->J[wifi_basic];
     B[sdrsa_devices]-->L[telecom_utils];
+    B[sdrsa_devices]-->R[hardware];
+    B[sdrsa_devices]-->S[network];
     L-->M[telecom_2Gto3G];
     L-->N[telecom_4G_5GNSA];
     L-->O[telecom_5G];
@@ -90,22 +92,13 @@ avahi-daemon --no-drop-root --no-rlimits
 
 {{< csv-table "content/docs/guide/tools_for_rfid.csv" >}}
 
-
 ## Bluetooth
 
 {{< csv-table "content/docs/guide/tools_for_bluetooth.csv" >}}
 
 ## Wi-Fi
 
-### Basic
-
-{{< csv-table "content/docs/guide/tools_for_wifi_basic.csv" >}}
-
-### Full
-
-Includes everything from Wi-Fi basic and:
-
-{{< csv-table "content/docs/guide/tools_for_wifi_full.csv" >}}
+{{< csv-table "content/docs/guide/tools_for_wifi.csv" >}}
 
 ## Telecom 
 
@@ -128,3 +121,11 @@ Includes everything from Wi-Fi basic and:
 ## Reversing
 
 {{< csv-table "content/docs/guide/tools_for_reversing.csv" >}}
+
+## Network
+
+{{< csv-table "content/docs/guide/tools_for_network.csv" >}}
+
+## Hardware
+
+{{< csv-table "content/docs/guide/tools_for_hardware.csv" >}}

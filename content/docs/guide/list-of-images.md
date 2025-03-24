@@ -22,32 +22,47 @@ rfswift images remote
 ┌──────────────────────────────┬──────────────────────┬────────────────────────────────────────────────┬──────────────┐
 │ Tag                          │ Pushed Date          │ Image                                          │ Architecture │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ bluetooth                    │ 2024-11-07T05:42:30Z │ penthertz/rfswift:bluetooth                    │ amd64        │
+│ sdr_full_nvidiagpu_amd64     │ 2025-03-24T17:37:59Z │ penthertz/rfswift:sdr_full_nvidiagpu_amd64     │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ reversing                    │ 2024-11-07T05:33:35Z │ penthertz/rfswift:reversing                    │ amd64        │
+│ hardware                     │ 2025-03-24T17:33:21Z │ penthertz/rfswift:hardware                     │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ sdrsa_devices_antsdr         │ 2024-11-07T02:42:15Z │ penthertz/rfswift:sdrsa_devices_antsdr         │ amd64        │
+│ sdr_full_intelgpu_amd64      │ 2025-03-24T17:09:38Z │ penthertz/rfswift:sdr_full_intelgpu_amd64      │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ sdr_full_amd64               │ 2024-11-07T02:38:30Z │ penthertz/rfswift:sdr_full_amd64               │ amd64        │
+│ sdr_full                     │ 2025-03-24T16:43:07Z │ penthertz/rfswift:sdr_full                     │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ telecom_2Gto3G               │ 2024-11-07T02:06:18Z │ penthertz/rfswift:telecom_2Gto3G               │ amd64        │
+│ telecom_5G                   │ 2025-03-24T16:36:22Z │ penthertz/rfswift:telecom_5G                   │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ sdr_light                    │ 2024-11-07T01:51:47Z │ penthertz/rfswift:sdr_light                    │ amd64        │
+│ telecom_2Gto3G               │ 2025-03-24T16:14:59Z │ penthertz/rfswift:telecom_2Gto3G               │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ wifi_amd64                   │ 2024-11-07T01:17:27Z │ penthertz/rfswift:wifi_amd64                   │ amd64        │
+│ telecom_4G_5GNSA             │ 2025-03-24T16:08:08Z │ penthertz/rfswift:telecom_4G_5GNSA             │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ bluetooth_amd64              │ 2024-11-07T01:00:11Z │ penthertz/rfswift:bluetooth_amd64              │ amd64        │
+│ network                      │ 2025-03-24T16:03:53Z │ penthertz/rfswift:network                      │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ telecom_2Gto3G_amd64         │ 2024-11-07T00:44:47Z │ penthertz/rfswift:telecom_2Gto3G_amd64         │ amd64        │
+│ telecom_utils                │ 2025-03-24T15:53:28Z │ penthertz/rfswift:telecom_utils                │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ automotive                   │ 2024-11-07T00:38:37Z │ penthertz/rfswift:automotive                   │ amd64        │
+│ deeptempest                  │ 2025-03-24T15:39:08Z │ penthertz/rfswift:deeptempest                  │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ reversing_amd64              │ 2024-11-07T00:37:29Z │ penthertz/rfswift:reversing_amd64              │ amd64        │
+│ reversing                    │ 2025-03-24T15:36:32Z │ penthertz/rfswift:reversing                    │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ deeptemptest_amd64           │ 2024-11-07T00:27:08Z │ penthertz/rfswift:deeptemptest_amd64           │ amd64        │
+│ sdr_light                    │ 2025-03-24T15:35:17Z │ penthertz/rfswift:sdr_light                    │ amd64        │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ telecom_utils                │ 2024-11-07T00:23:12Z │ penthertz/rfswift:telecom_utils                │ amd64        │
-...
+│ wifi                         │ 2025-03-24T15:34:11Z │ penthertz/rfswift:wifi                         │ amd64        │
+├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
+│ sdrsa_devices_antsdr         │ 2025-03-24T15:32:58Z │ penthertz/rfswift:sdrsa_devices_antsdr         │ amd64        │
+├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
+│ bluetooth                    │ 2025-03-24T15:24:19Z │ penthertz/rfswift:bluetooth                    │ amd64        │
+├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
+│ bluetooth_amd64              │ 2025-03-24T15:23:31Z │ penthertz/rfswift:bluetooth_amd64              │ amd64        │
+├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
+│ automotive                   │ 2025-03-24T15:19:40Z │ penthertz/rfswift:automotive                   │ amd64        │
+├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
+│ sdrsa_devices                │ 2025-03-24T15:19:16Z │ penthertz/rfswift:sdrsa_devices                │ amd64        │
+├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
+│ sdrsa_devices_rtlsdrv4       │ 2025-03-24T15:19:15Z │ penthertz/rfswift:sdrsa_devices_rtlsdrv4       │ amd64        │
+├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
+│ rfid                         │ 2025-03-24T15:18:29Z │ penthertz/rfswift:rfid                         │ amd64        │
+└──────────────────────────────┴──────────────────────┴────────────────────────────────────────────────┴──────────────┘
+....
 ```
 
 You will see that some tag are specific to the architecture `sdr_light_amd64`, but others like `sdr_light` do not include the architecture.
@@ -72,6 +87,8 @@ graph TD;
     B[sdrsa_devices]-->I[bluetooth];
     B[sdrsa_devices]-->J[wifi_basic];
     B[sdrsa_devices]-->L[telecom_utils];
+    B[sdrsa_devices]-->R[hardware];
+    B[sdrsa_devices]-->S[network];
     L-->M[telecom_2Gto3G];
     L-->N[telecom_4G_5GNSA];
     L-->O[telecom_5G];
