@@ -7,7 +7,7 @@ cascade:
   type: docs
 ---
 
-# Running RF Swift
+# Important settings
 
 RF Swift provides a streamlined command-line interface to manage containers for RF and hardware security applications. This guide covers essential commands and workflows.
 
