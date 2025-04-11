@@ -7,103 +7,283 @@ cascade:
   type: docs
 ---
 
+# Getting Up and Running with RF Swift
+
+This guide will help you quickly get started with RF Swift using pre-built binaries and container images.
+
 {{< callout type="warning" >}}
-  **On Linux**, unless your are using Docker Desktop, you will have to use `rfswift` with sudo most of the time.
+**On Linux**, unless you are using Docker Desktop, you may need to use `sudo` with the `rfswift` command for operations that require elevated privileges.
 {{< /callout >}}
 
-To install RF Swift, you have to choice using the pre-compiled binary wrapper depending on your system and pull an existing container image, or to compile the Go project and/or the Docker images from sources.
-
-In this section, we will go straight forward to the quickest way to run the project.
-
+To install RF Swift, you can either use pre-compiled binaries and existing container images (quickest method) or compile the Go project and/or Docker images from source. This guide focuses on the fastest way to get up and running.
 
 {{% steps %}}
 
-### Get binary from GitHub
+### Install RF Swift
 
-Get the latest binary from [the official repository ↗](https://github.com/PentHertz/RF-Swift/tags).
+#### Linux and macOS
 
-Rename the binary to `rfswift` to make things simplier.
+The easiest way to install RF Swift on Linux or macOS is to use the installation script:
 
-If you run the binary without config, the tool will ask you if you want to create one or use values by default:
+```bash
+# Clone the repository
+git clone https://github.com/PentHertz/RF-Swift.git
+cd RF-Swift
+
+# Run the installation script
+./install.sh
+```
+
+The `install.sh` script will:
+- Install all required dependencies (Docker, BuildX, Go)
+- Configure necessary services (xhost, PulseAudio)
+- Set up proper permissions
+- Create a system-wide alias for the `rfswift` command
+- Install the latest RF Swift binary
+
+#### Windows or Manual Installation
+
+If you prefer manual installation or are using Windows:
+
+1. Download the latest binary from [the official repository ↗](https://github.com/PentHertz/RF-Swift/releases)
+2. Rename the binary to `rfswift` (or `rfswift.exe` on Windows)
+3. Make the binary executable (on Linux/macOS): `chmod +x rfswift`
+
+When you run the binary for the first time, it will guide you through configuration:
 
 ```bash
 rfswift 
 Config file not found. Would you like to create one with default values? (y/n)
 ```
 
-### Pulling a built image
+Select `y` to create a default configuration file or `n` to configure manually.
 
-RF Swift have already some prebuilt images you can fire on the go.
+### Pull a Pre-built Image
 
-For the example, we will pull an image containing a complete SDR images `sdr_full` on an `x86_64` architecture:
+RF Swift provides several pre-built images to get you started quickly. For example, let's pull a complete SDR image:
 
 ```bash
-rfswift images pull -i sdr_full [-t myrfswift:label]
+rfswift images pull -i sdr_full
 ```
-   **Important options**:
-   - i: remote label
-   - t: optional local tag we want to use.
 
-Note that you can use the complete image tag `penthertz/rfswift:sdr_full` if you like, or change the repository in your profile to use the short tag only with a different source.
+You can also specify a custom tag for the image:
+
+```bash
+rfswift images pull -i sdr_full -t my_custom_tag
+```
+
+**Available Options:**
+- `-i`: Remote image label (required)
+- `-t`: Local tag to assign to the pulled image (optional)
+- `-r`: Repository to pull from (defaults to penthertz/rfswift)
 
 {{< callout type="info" >}}
-  Using Docker Desktop (Windows and macOS) or OrbStack on macOS, `sudo` is not necessary.
+You can use the complete image tag `penthertz/rfswift:sdr_full` if you prefer, or change the default repository in your RF Swift profile.
 {{< /callout >}}
 
-### Running the container
+### Run the Container
 
-After downloading the image, you can create and run the container by precising the `tag with -i` assigned to the image and the `name with -n` of the container:
+Once you have an image, you can create and run a container:
 
-```shell
-rfswift run -i sdr_full -n supercontainername
+```bash
+rfswift run -i sdr_full -n my_sdr_container
 ```
 
-Optionally, you can also share a directory with `-b` option as follows:
+This will start a container using the `sdr_full` image with the name `my_sdr_container`.
 
-```shell
-rfswift run -i sdr_full -n supercontainername -b /path/to/bind:/target
+**Run Command Options:**
+
+```bash
+rfswift run -i sdr_full -n my_sdr_container
 ```
 
-More details can be found in the sharing [sharing files](/docs/guide/sharing-files) section of this guide.
+The `run` command has numerous options for configuring your container environment:
 
-Note that you can use the complete image name `penthertz/rfswift:sdr_full` if you want to change the repository. You can also change default repository within your RF Swift profile.
+| Flag | Description |
+|------|-------------|
+| `-i, --image string` | Image name/tag to use (default: 'myrfswift:latest') |
+| `-n, --name string` | Name for the container (makes it easier to reference later) |
+| `-b, --bind string` | Extra bind mounts, separated by commas (e.g., `/host/path:/container/path,/another/path:/in/container`) |
+| `-s, --devices string` | Extra device mappings in unprivileged mode, separated by commas (e.g., `/dev/ttyUSB0:/dev/ttyUSB0`) |
+| `-a, --capabilities string` | Extra Linux capabilities, separated by commas (e.g., `NET_ADMIN,SYS_ADMIN`) |
+| `-t, --network string` | Network mode (default: 'host') |
+| `-u, --privileged int` | Set privilege level (1: privileged, 0: unprivileged) |
+| `-e, --command string` | Command to execute (default: '/bin/bash') |
+| `-d, --display string` | Set X Display (duplicates host's env by default) (default "DISPLAY=:0") |
+| `-p, --pulseserver string` | PulseAudio server TCP address (default: "tcp:127.0.0.1:34567") |
+| `-w, --bindedports string` | Ports to bind (between container and host) |
+| `-z, --exposedports string` | Ports to expose |
+| `-x, --extrahosts string` | Set extra hosts (default: 'pluto.local:192.168.1.2'), separated by commas |
+| `-g, --cgroups string` | Extra cgroup rules, separated by commas |
+| `-m, --seccomp string` | Set Seccomp profile (default: 'default') |
 
-{{< callout type="info" >}}
-  The name of the container will allow to restart it without having to remember its ID.
-{{< /callout >}}
+**Share Files with the Container:**
 
-And there you can execute all programs installed on it ;)!
+To share files between your host system and the container:
 
-As an example, plug an supported SDR devices in your computer, and inside the command shell `sdrpp`.
+```bash
+rfswift run -i sdr_full -n my_sdr_container -b ~/sdr_projects:/home/user/projects
+```
+
+You can bind multiple directories by separating them with commas:
+
+```bash
+rfswift run -i sdr_full -n my_sdr_container -b ~/sdr_projects:/home/user/projects,~/datasets:/home/user/data
+```
+
+**Share Specific Devices:**
+
+When running in unprivileged mode, you can share specific devices:
+
+```bash
+rfswift run -i sdr_full -n my_sdr_container -s /dev/ttyUSB0:/dev/ttyUSB0
+```
+
+Multiple devices can be shared by separating them with commas:
+
+```bash
+rfswift run -i sdr_full -n my_sdr_container -s /dev/ttyUSB0:/dev/ttyUSB0,/dev/ttyACM0:/dev/ttyACM0
+```
+
+**Add Linux Capabilities:**
+
+For Wi-Fi and Bluetooth tools, you may need additional Linux capabilities:
+
+```bash
+rfswift run -i wifi_tools -n my_wifi_container -a NET_ADMIN
+```
+
+For multiple capabilities:
+
+```bash
+rfswift run -i advanced_tools -n my_container -a NET_ADMIN,SYS_ADMIN
+```
 
 {{< callout type="warning" >}}
-  The sound could be maybe missing, we will see other options the `rfswift`, but if you follow the warnings you will probably see that `./rfswift host audio enable` will solve the issues if `pulseaudio` is well running on your host. 
+**Security Consideration:** Be cautious when adding capabilities like `NET_ADMIN`. If the container becomes compromised, malicious programs could capture or manipulate network interfaces! Only add capabilities that are strictly necessary for your work.
 {{< /callout >}}
+
+**Network Configuration:**
+
+By default, containers use the host network mode. To use a different network:
+
+```bash
+rfswift run -i sdr_full -n my_sdr_container -t bridge
+```
+
+**Privilege Levels:**
+
+Control container privilege level:
+
+```bash
+# Run in unprivileged mode
+rfswift run -i sdr_full -n my_sdr_container -u 0
+
+# Run in privileged mode (use with caution)
+rfswift run -i sdr_full -n my_sdr_container -u 1
+```
+
+**Custom Commands:**
+
+Run a specific command instead of the default shell:
+
+```bash
+rfswift run -i gnuradio -n signal_processor -e "gnuradio-companion"
+```
+
+{{< callout type="info" >}}
+Using a named container with the `-n` flag makes it much easier to restart or access the container later.
+{{< /callout >}}
+
+### Use RF Tools in the Container
+
+Once the container is running, you can use any of the pre-installed RF tools. For example, to run SDR++:
+
+1. Connect your SDR device to your computer
+2. Inside the container, run: `sdrpp`
+
+{{< callout type="warning" >}}
+If you encounter audio issues, you can enable audio forwarding with:
+```bash
+rfswift host audio enable
+```
+This requires `pulseaudio` to be properly configured on your host system.
+{{< /callout >}}
+
+### Forward USB Devices
+
+To use SDR hardware, you'll need to forward USB devices to your container:
+
+```bash
+# List available USB devices
+rfswift host usb list
+
+# Forward a specific device
+rfswift host usb forward -v VENDOR_ID -p PRODUCT_ID
+
+# Or forward all detected SDR devices
+rfswift host usb forward-all-sdrs
+```
 
 {{% /steps %}}
 
-## Restarting a container
+## Managing Existing Containers
 
-You can create as many fresh container you want, but sometimes you want to get back to previous job.
+### Restart an Existing Container
 
-To restart a container, you can do it with the following command using `-c nameofthecontainer`:
+To return to a previously created container:
 
-```shell
-rfswift exec -c supercontainername
+```bash
+rfswift exec -c my_sdr_container
 ```
 
-{{< callout type="info" >}}
-  On Unix-Like systems, consider using an alias, if you want to start the binary from any location with `rfswift` command ;)
-  ```basg
-    echo "alias rfswift='<BINARY_PATH>/rfswift'" >> "$HOME/.<shell>rc" # example /home/user/.bashrc
-  ```
-{{< /callout >}}
+This restarts the container if it's stopped and gives you a shell inside it.
 
+### List Running Containers
 
-## Next
+View all RF Swift containers:
 
-Dive right into the following section to get started:
+```bash
+rfswift container list
+```
+
+### Save Container State
+
+If you've made changes to a container that you want to preserve:
+
+```bash
+rfswift container commit -c my_sdr_container -t my_custom_image
+```
+
+This saves the current state of the container as a new image.
+
+## Creating an Alias (Linux/macOS)
+
+For convenience, you can create an alias to run RF Swift from anywhere. If you didn't use the `install.sh` script (which creates this automatically), you can add an alias manually:
+
+```bash
+echo "alias rfswift='$(pwd)/rfswift'" >> "$HOME/.$(basename $SHELL)rc"
+source "$HOME/.$(basename $SHELL)rc"
+```
+
+Replace `$(pwd)/rfswift` with the full path to your RF Swift binary.
+
+## Common Commands Reference
+
+| Command | Description |
+|---------|-------------|
+| `rfswift run -i IMAGE -n NAME` | Create and run a new container |
+| `rfswift exec -c CONTAINER` | Enter an existing container |
+| `rfswift images list` | List available local images |
+| `rfswift container list` | List all containers |
+| `rfswift host usb list` | List connected USB devices |
+| `rfswift host audio enable` | Enable audio forwarding |
+| `rfswift host video enable` | Enable video forwarding |
+
+## Next Steps
+
+Dive right into the following section to learn more:
 
 {{< cards >}}
-  {{< card link="/docs/guide" title="Follow the guide" icon="document-text" subtitle="Read the guide and learn how to use RF Swift for your dealy assessments." >}}
+  {{< card link="/docs/guide" title="Follow the Guide" icon="document-text" subtitle="Read the complete guide and learn how to use RF Swift for your daily assessments." >}}
 {{< /cards >}}
