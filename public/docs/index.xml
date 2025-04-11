@@ -8114,7 +8114,7 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
     </item>
     
     <item>
-      <title>Sharing files</title>
+      <title>Sharing Files &amp; Devices</title>
       <link>https://rfswift.io/docs/guide/sharing-files/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -8122,16 +8122,19 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
       <description>
         
         
-        &lt;p&gt;When using RF Swift for your assesment, you would like to retrieve the reports, logs, capture, or any file resulting the mission.&lt;/p&gt;
-&lt;p&gt;Let see with two examples how we can to it.&lt;/p&gt;
-&lt;h2&gt;Binding directories&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;binding-directories&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#binding-directories&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;General&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;general&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#general&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Sharing file between host and guest is possible throught the binding &lt;code&gt;-b&lt;/code&gt; parameter when using &lt;code&gt;run&lt;/code&gt; command.&lt;/p&gt;
-&lt;p&gt;First, create a directory you want to share with the guest on your host:&lt;/p&gt;
+        &lt;h1&gt;Sharing Files and Devices&lt;/h1&gt;&lt;p&gt;When conducting RF assessments with RF Swift, you&amp;rsquo;ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers various file sharing methods and device binding techniques for common RF hardware.&lt;/p&gt;
+&lt;h2&gt;File Sharing Between Host and Container&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;file-sharing-between-host-and-container&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#file-sharing-between-host-and-container&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Directory Binding&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;directory-binding&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#directory-binding&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The most common way to share files is by binding a directory from your host system to a location within the container using the &lt;code&gt;-b&lt;/code&gt; parameter with the &lt;code&gt;run&lt;/code&gt; command.&lt;/p&gt;
+&lt;h4&gt;Basic Directory Sharing&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;basic-directory-sharing&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#basic-directory-sharing&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;First, create a directory on your host system:&lt;/li&gt;
+&lt;/ol&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir shared&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create a directory on your host&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir -p ~/shared_data&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -8143,11 +8146,13 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 
   
 &lt;/div&gt;
-&lt;p&gt;Then you can simply use bindings when issuing the &lt;code&gt;run&lt;/code&gt; command as follows:&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Start a container with this directory bound to a location inside the container:&lt;/li&gt;
+&lt;/ol&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift:telecom -n supertelecom2 -b /home/user/shared:/root/shared&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift:telecom -n telecom_analysis -b ~/shared_data:/root/shared&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -8159,63 +8164,14 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 
   
 &lt;/div&gt;
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;div class=&#34;hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-yellow-100 hx-bg-yellow-50 hx-text-yellow-900 dark:hx-border-yellow-200/30 dark:hx-bg-yellow-700/30 dark:hx-text-yellow-200&#34;&gt;
-  &lt;div class=&#34;ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2&#34;&gt;&lt;div class=&#34;hx-select-none hx-text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;
-        ⚠️
-      &lt;/div&gt;&lt;/div&gt;
-
-  &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
-    &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
-      Remember to always begin with host, and then guest like that: hostpath:guestpath. And separate each binding with commas.
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The container summary will display you the bindings that are used:&lt;/p&gt;
+&lt;p&gt;This binds your host&amp;rsquo;s &lt;code&gt;~/shared_data&lt;/code&gt; directory to &lt;code&gt;/root/shared&lt;/code&gt; inside the container.&lt;/p&gt;
+&lt;h4&gt;Multiple Directory Bindings&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;multiple-directory-bindings&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#multiple-directory-bindings&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;You can bind multiple directories by separating them with commas:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 🧊 Container Summary                                                      
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;╭────────────────────────────────────────────────────────────────────────────╮
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ Container Name  │ supertelecom2                                            │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├─────────────────┼──────────────────────────────────────────────────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ X Display       │ :0                                                       │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├─────────────────┼──────────────────────────────────────────────────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ Shell           │ /bin/zsh                                                 │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├─────────────────┼──────────────────────────────────────────────────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ Privileged Mode │ &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;                                                     │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├─────────────────┼──────────────────────────────────────────────────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ Network Mode    │ host                                                     │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├─────────────────┼──────────────────────────────────────────────────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ Image Name      │ penthertz/rfswift:telecom &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;Obsolete&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;                     │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├─────────────────┼──────────────────────────────────────────────────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ Size on Disk    │ 11150.42 MB                                              │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├─────────────────┼──────────────────────────────────────────────────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ Bindings        │ /tmp/.X11-unix:/tmp/.X11-unix,/dev/bus/usb:/dev/bus/usb, │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│                 │                                                          │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│                 │ /home/user/shared:/root/shared                           │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├─────────────────┼──────────────────────────────────────────────────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ Extra Hosts     │ pluto.local:192.168.2.1                                  │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;╰────────────────────────────────────────────────────────────────────────────╯&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift:sdr_full -n sdr_project &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -b ~/captures:/root/captures,~/scripts:/root/scripts,~/reports:/root/reports&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -8252,18 +8208,38 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 
   &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
     &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
-      Some default profile bindings have been probably disabled. You can re-enable then with &lt;code&gt;-b&lt;/code&gt; parameter of &lt;code&gt;run&lt;/code&gt; command.
+      Always specify paths in the format &lt;code&gt;host_path:container_path&lt;/code&gt;, and separate multiple bindings with commas.
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Running the command &lt;code&gt;ls&lt;/code&gt; inside the container, you will see that a directory is present:&lt;/p&gt;
+&lt;h4&gt;Verifying Bindings&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;verifying-bindings&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#verifying-bindings&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The container summary will display all active bindings:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;┌─&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;root@topms&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; - &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; - &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Wed Sep 04, 13:46&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└─&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;$&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&amp;gt; ls
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;config  scripts  shared&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;pre&gt;&lt;code&gt; 🧊 Container Summary                                                      
+╭────────────────────────────────────────────────────────────────────────────╮
+│ Container Name  │ telecom_analysis                                         │
+├─────────────────┼──────────────────────────────────────────────────────────┤
+│ X Display       │ :0                                                       │
+├─────────────────┼──────────────────────────────────────────────────────────┤
+│ Shell           │ /bin/zsh                                                 │
+├─────────────────┼──────────────────────────────────────────────────────────┤
+│ Privileged Mode │ true                                                     │
+├─────────────────┼──────────────────────────────────────────────────────────┤
+│ Network Mode    │ host                                                     │
+├─────────────────┼──────────────────────────────────────────────────────────┤
+│ Image Name      │ penthertz/rfswift:telecom                                │
+├─────────────────┼──────────────────────────────────────────────────────────┤
+│ Size on Disk    │ 11150.42 MB                                              │
+├─────────────────┼──────────────────────────────────────────────────────────┤
+│ Bindings        │ /tmp/.X11-unix:/tmp/.X11-unix,/dev/bus/usb:/dev/bus/usb, │
+│                 │                                                          │
+│                 │ /home/user/shared_data:/root/shared                      │
+├─────────────────┼──────────────────────────────────────────────────────────┤
+│ Extra Hosts     │ pluto.local:192.168.2.1                                  │
+╰────────────────────────────────────────────────────────────────────────────╯&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -8275,14 +8251,12 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 
   
 &lt;/div&gt;
-&lt;p&gt;Let us go inside this &lt;code&gt;shared&lt;/code&gt; directory and put a file inside:&lt;/p&gt;
+&lt;h4&gt;Adding Bindings to Existing Containers&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;adding-bindings-to-existing-containers&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#adding-bindings-to-existing-containers&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;If you forgot to bind a directory when creating a container, you can add it later using the &lt;code&gt;bindings&lt;/code&gt; command:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;┌─&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;root@topms&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; - &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; - &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Wed Sep 04, 13:48&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└─&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;$&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&amp;gt; &lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; shared 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;┌─&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;root@topms&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; - &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;~/shared&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; - &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Wed Sep 04, 13:49&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└─&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;$&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&amp;gt; touch superfile&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift bindings add -c telecom_analysis -s ~/new_data -t /root/new_data&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -8294,14 +8268,15 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 
   
 &lt;/div&gt;
-&lt;p&gt;If you look on your host, the file will be present.&lt;/p&gt;
-&lt;h2&gt;Binding devices&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;binding-devices&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#binding-devices&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Example with proxmark3&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;example-with-proxmark3&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#example-with-proxmark3&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;By default, Proxmark3 tool already has &lt;code&gt;/dev/ttyACM0&lt;/code&gt; binded by default. But you have multiple devices, you can add them using &lt;code&gt;-b&lt;/code&gt; when running a new container:&lt;/p&gt;
+&lt;h3&gt;Working with Shared Files&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;working-with-shared-files&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#working-with-shared-files&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Once your directories are bound, you can access them from within the container:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift:rfid -n superrfid -b /dev/ttyACM1:/dev/ttyACM1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Inside the container&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /root/shared
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;touch analysis_results.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Signal detected at 915MHz&amp;#34;&lt;/span&gt; &amp;gt; analysis_results.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -8313,12 +8288,94 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 
   
 &lt;/div&gt;
-&lt;h3&gt;Example with Bluetooth HCI devices&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;example-with-bluetooth-hci-devices&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#example-with-bluetooth-hci-devices&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For HCI devices, you can bind &lt;code&gt;/dev/vchi&lt;/code&gt; as follows:&lt;/p&gt;
+&lt;p&gt;The file will be immediately available on your host system at &lt;code&gt;~/shared_data/analysis_results.txt&lt;/code&gt;.&lt;/p&gt;
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;div class=&#34;hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200&#34;&gt;
+  &lt;div class=&#34;ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2&#34;&gt;&lt;div class=&#34;hx-select-none hx-text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;
+        ℹ️
+      &lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
+    &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
+      File changes are bidirectional and immediate. Any changes made on either the host or container side will be instantly visible on the other side.
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Device Binding for RF Hardware&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;device-binding-for-rf-hardware&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#device-binding-for-rf-hardware&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Many RF tools require access to specific hardware devices. RF Swift makes it easy to bind these devices to your containers.&lt;/p&gt;
+&lt;h3&gt;Common RF Device Bindings&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;common-rf-device-bindings&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#common-rf-device-bindings&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Device Type&lt;/th&gt;
+          &lt;th&gt;Host Path&lt;/th&gt;
+          &lt;th&gt;Container Path&lt;/th&gt;
+          &lt;th&gt;Required Capabilities&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;RTL-SDR&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/dev/bus/usb&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/dev/bus/usb&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;None&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;HackRF&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/dev/bus/usb&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/dev/bus/usb&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;None&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Proxmark3&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/dev/ttyACM0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/dev/ttyACM0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;None&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Bluetooth Adapters&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/dev/vhci&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/dev/vhci&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;NET_ADMIN&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Wi-Fi Adapters&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/dev/ttyUSB0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/dev/ttyUSB0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;NET_ADMIN&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Most RF Swift images automatically bind common device paths, but you may need to add specific devices or additional bindings for specialized hardware.&lt;/p&gt;
+&lt;h3&gt;RFID Device Binding&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;rfid-device-binding&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#rfid-device-binding&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For Proxmark3 and similar RFID tools, you may need to bind specific device paths:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift:rfid -n superrfid -b /dev/vchi:/dev/vchi&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Default Proxmark3 device&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift:rfid -n rfid_scanner -s /dev/ttyACM0:/dev/ttyACM0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# For multiple Proxmark3 devices&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift:rfid -n multi_proxmark &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -s /dev/ttyACM0:/dev/ttyACM0,/dev/ttyACM1:/dev/ttyACM1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -8330,17 +8387,14 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 
   
 &lt;/div&gt;
-&lt;h2&gt;Example with Harogic devices&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;example-with-harogic-devices&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#example-with-harogic-devices&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Sharing calibration data&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;sharing-calibration-data&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#sharing-calibration-data&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Along with a Spectrum Analyzer and other stuff, Harogic provides a USB key where you can find a &lt;code&gt;CalFile&lt;/code&gt; directory:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://rfswift.io/images/docs/harogicusb.png&#34; alt=&#34;[Content of USB Harogic USB key]&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;To avoid any problem, let us copy this directory to the host side:&lt;/p&gt;
+&lt;h3&gt;Bluetooth Device Binding&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;bluetooth-device-binding&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#bluetooth-device-binding&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For Bluetooth scanning and analysis:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ cp -R /media/fluxius/37B6-82D6/CalFile .
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ ls
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;build-windows.bat  CalFile  go  images  install.sh  LICENSE  README.md  rfswift  rules  run  shared&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift:bluetooth -n bt_scanner &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -s /dev/vhci:/dev/vhci &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -a NET_ADMIN&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -8352,11 +8406,50 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 
   
 &lt;/div&gt;
-&lt;p&gt;And share it with a container based on &lt;code&gt;sdr_light&lt;/code&gt; images:&lt;/p&gt;
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;div class=&#34;hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-yellow-100 hx-bg-yellow-50 hx-text-yellow-900 dark:hx-border-yellow-200/30 dark:hx-bg-yellow-700/30 dark:hx-text-yellow-200&#34;&gt;
+  &lt;div class=&#34;ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2&#34;&gt;&lt;div class=&#34;hx-select-none hx-text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;
+        ⚠️
+      &lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
+    &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
+      Bluetooth and Wi-Fi tools typically require the &lt;code&gt;NET_ADMIN&lt;/code&gt; capability in addition to device bindings. Add this with the &lt;code&gt;-a NET_ADMIN&lt;/code&gt; parameter.
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Specialized Hardware Configuration&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;specialized-hardware-configuration&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#specialized-hardware-configuration&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Harogic Spectrum Analyzer Setup&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;harogic-spectrum-analyzer-setup&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#harogic-spectrum-analyzer-setup&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Harogic spectrum analyzers require calibration files to function properly. Here&amp;rsquo;s how to configure a container for use with these devices:&lt;/p&gt;
+&lt;h4&gt;1. Copy Calibration Files&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;1-copy-calibration-files&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#1-copy-calibration-files&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;First, copy the calibration files from the provided USB to your host:&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;
+    &lt;img src=&#34;https://rfswift.io/images/docs/harogicusb.png&#34; title=&#34;Content of Harogic USB key&#34; alt=&#34;Content of Harogic USB key&#34; loading=&#34;lazy&#34; /&gt;
+    &lt;figcaption&gt;Content of Harogic USB key&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift:sdr_light -n harogictest -b &amp;lt;host/path/of/CalFile&amp;gt;:/rftools/analysers/SAStudio4_x86_64_05_23_17_06/bin/CalFile&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Copy from USB to host&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp -R /media/username/37B6-82D6/CalFile ~/harogic_cal&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -8368,17 +8461,53 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 
   
 &lt;/div&gt;
-&lt;p&gt;Then you can run &lt;code&gt;sastudio&lt;/code&gt; inside the container, and you get your Harogic device running:&lt;/p&gt;
+&lt;h4&gt;2. Bind Calibration Directory&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;2-bind-calibration-directory&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#2-bind-calibration-directory&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;When creating your container, bind the calibration directory to the proper location:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift:sdr_light -n harogic_analysis &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -b ~/harogic_cal:/rftools/analysers/SAStudio4_x86_64_05_23_17_06/bin/CalFile&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h4&gt;3. Run SAStudio&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;3-run-sastudio&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#3-run-sastudio&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;Once inside the container, you can run SAStudio with the calibration files properly configured:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Inside the container&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sastudio&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
 &lt;p&gt;&lt;figure&gt;
     &lt;img src=&#34;https://rfswift.io/images/docs/harogicsas.png&#34; title=&#34;Harogic device running with SaStudio&#34; alt=&#34;Harogic device running with SaStudio&#34; loading=&#34;lazy&#34; /&gt;
     &lt;figcaption&gt;Harogic device running with SaStudio&lt;/figcaption&gt;
   &lt;/figure&gt;&lt;/p&gt;
-&lt;h3&gt;Running SDR++ with Harogic&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;running-sdr-with-harogic&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#running-sdr-with-harogic&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;To run &lt;code&gt;SDR++&lt;/code&gt; with Harogic devices, you will need only to copy the CalFile in &lt;code&gt;/rftools/analysers/SAStudio4_x86_64_05_23_17_06/bin/CalFile&lt;/code&gt; inside your container to &lt;code&gt;/usr/bin&lt;/code&gt; that way:&lt;/p&gt;
+&lt;h4&gt;Using Harogic with SDR++&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;using-harogic-with-sdr&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#using-harogic-with-sdr&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;To use Harogic devices with SDR++, copy the calibration files to the correct location:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp -R /rftools/analysers/SAStudio4_x86_64_05_23_17_06/bin/CalFile /usr/bin&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Inside the container&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp -R /rftools/analysers/SAStudio4_x86_64_05_23_17_06/bin/CalFile /usr/bin&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -8390,17 +8519,80 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 
   
 &lt;/div&gt;
-&lt;p&gt;And then you can start SDR++ with Harogic, and voilà!&lt;/p&gt;
+&lt;p&gt;Then launch SDR++:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sdrpp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
 &lt;p&gt;&lt;figure&gt;
     &lt;img src=&#34;https://rfswift.io/images/docs/harogicsdrpp.png&#34; title=&#34;Running SDR&amp;#43;&amp;#43; with Harogic&#34; alt=&#34;Running SDR&amp;#43;&amp;#43; with Harogic&#34; loading=&#34;lazy&#34; /&gt;
     &lt;figcaption&gt;Running SDR&amp;#43;&amp;#43; with Harogic&lt;/figcaption&gt;
   &lt;/figure&gt;&lt;/p&gt;
-&lt;h2&gt;Next&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;next&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#next&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Dive right into the following section to get started:&lt;/p&gt;
+&lt;h2&gt;Best Practices for File Sharing&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;best-practices-for-file-sharing&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#best-practices-for-file-sharing&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Use Consistent Directory Structures&lt;/strong&gt;: Create a standardized directory layout for your assessments to make file management easier&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Organize by Project&lt;/strong&gt;: Create separate shared directories for different projects or assessments&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Keep User Data Separate&lt;/strong&gt;: Use dedicated directories for user data, software configurations, and temporary files&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bind Read-Only When Possible&lt;/strong&gt;: For reference data that shouldn&amp;rsquo;t be modified, consider mounting as read-only&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Use Descriptive Container Names&lt;/strong&gt;: Name containers based on their purpose to easily identify bound directories later&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Troubleshooting&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;troubleshooting&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#troubleshooting&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Permission Issues&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;permission-issues&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#permission-issues&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;If you experience permission errors when accessing shared directories:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# On the host, ensure proper ownership&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo chown -R your_username:your_username ~/shared_data
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Or make the directory world-writable (less secure)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod -R &lt;span class=&#34;m&#34;&gt;777&lt;/span&gt; ~/shared_data&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h3&gt;Missing Bindings&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;missing-bindings&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#missing-bindings&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;If default bindings are missing, you can restore them while adding your custom bindings:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift:sdr_full -n sdr_analysis &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -b /tmp/.X11-unix:/tmp/.X11-unix,/dev/bus/usb:/dev/bus/usb,~/my_data:/root/my_data&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h2&gt;Next Steps&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;next-steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Now that you understand how to share files and devices, you might want to create your own customized images:&lt;/p&gt;
 &lt;div class=&#34;hextra-cards hx-mt-4 hx-gap-4 hx-grid not-prose&#34; style=&#34;--hextra-cards-grid-cols: 3;&#34;&gt;
   &lt;a
     class=&#34;hextra-card hx-group hx-flex hx-flex-col hx-justify-start hx-overflow-hidden hx-rounded-lg hx-border hx-border-gray-200 hx-text-current hx-no-underline dark:hx-shadow-none hover:hx-shadow-gray-100 dark:hover:hx-shadow-none hx-shadow-gray-100 active:hx-shadow-sm active:hx-shadow-gray-200 hx-transition-all hx-duration-200 hover:hx-border-gray-300 hx-bg-transparent hx-shadow-sm dark:hx-border-neutral-800 hover:hx-bg-slate-50 hover:hx-shadow-md dark:hover:hx-border-neutral-700 dark:hover:hx-bg-neutral-900&#34;href=&#34;https://rfswift.io/docs/development/building-images/&#34;
-      &gt;&lt;span class=&#34;hextra-card-icon hx-flex hx-font-semibold hx-items-start hx-gap-2 hx-pt-4 hx-px-4 hx-text-gray-700 hover:hx-text-gray-900 dark:hx-text-neutral-200 dark:hover:hx-text-neutral-50&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z&#34;/&gt;&lt;/svg&gt;Beak your own image&lt;/span&gt;&lt;div class=&#34;hextra-card-subtitle hx-line-clamp-3 hx-text-sm hx-font-normal hx-text-gray-500 dark:hx-text-gray-400 hx-px-4 hx-mb-4 hx-mt-2&#34;&gt;Be a master chef, and create your own images.&lt;/div&gt;&lt;/a&gt;
+      &gt;&lt;span class=&#34;hextra-card-icon hx-flex hx-font-semibold hx-items-start hx-gap-2 hx-pt-4 hx-px-4 hx-text-gray-700 hover:hx-text-gray-900 dark:hx-text-neutral-200 dark:hover:hx-text-neutral-50&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z&#34;/&gt;&lt;/svg&gt;Build Your Own Image&lt;/span&gt;&lt;div class=&#34;hextra-card-subtitle hx-line-clamp-3 hx-text-sm hx-font-normal hx-text-gray-500 dark:hx-text-gray-400 hx-px-4 hx-mb-4 hx-mt-2&#34;&gt;Become a master chef and create your own custom RF Swift images.&lt;/div&gt;&lt;/a&gt;
 &lt;/div&gt;
 
 
