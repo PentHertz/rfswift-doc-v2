@@ -118,7 +118,7 @@ When using RFID tools, you need to ensure that your RFID reader device (typicall
 rfswift run -i rfid -n rfid_tools -s /dev/ttyACM0:/dev/ttyACM0
 
 # Or with an existing container
-rfswift bindings add -c rfid_tools -s /dev/ttyACM0:/dev/ttyACM0
+rfswift bindings add -c rfid_tools -d -t /dev/ttyACM0
 ```
 {{< /callout >}}
 
@@ -230,6 +230,7 @@ ls -la /rftools
 ls -la /hardware
 ls -la /automotive
 ls -la /reverse
+// and more
 
 # Search for a specific tool across all locations
 find /usr/bin /usr/local/bin /rftools /hardware /automotive /reverse -name "*sdr*" -type f -executable
