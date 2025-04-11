@@ -1797,7 +1797,7 @@ The sizes displayed by &lt;code&gt;rfswift images local&lt;/code&gt; show the vi
     </item>
     
     <item>
-      <title>Included tools</title>
+      <title>Included Tools</title>
       <link>https://rfswift.io/docs/guide/list-of-tools/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -1805,7 +1805,8 @@ The sizes displayed by &lt;code&gt;rfswift images local&lt;/code&gt; show the vi
       <description>
         
         
-        
+        &lt;h1&gt;RF Swift Tool Collection&lt;/h1&gt;&lt;p&gt;RF Swift provides a comprehensive suite of specialized tools for radio frequency and hardware security work. This page catalogs the tools available in each pre-built image.&lt;/p&gt;
+
 
 
 
@@ -1828,13 +1829,13 @@ The sizes displayed by &lt;code&gt;rfswift images local&lt;/code&gt; show the vi
 
   &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
     &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
-      RF Swift is still in active development so more tools will be expected, and will readapted for all architectures as possible.
+      RF Swift is in active development. The tool collection is regularly expanded and optimized for all supported architectures.
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;p&gt;RF Swift prebuilt images are compiled with tools you can discover in the next sections.&lt;/p&gt;
-&lt;p&gt;Here you will find images hierarchy:&lt;/p&gt;
+&lt;h2&gt;Image Hierarchy&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;image-hierarchy&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#image-hierarchy&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Each RF Swift image builds upon a foundation of tools, with specialized images adding domain-specific capabilities. Understanding this hierarchy helps you choose the most appropriate image for your needs:&lt;/p&gt;
 &lt;pre class=&#34;mermaid hx-mt-6&#34;&gt;graph TD;
     A[corebuild]--&gt;B[sdrsa_devices];
     A--&gt;C[rfid];
@@ -1851,8 +1852,10 @@ The sizes displayed by &lt;code&gt;rfswift images local&lt;/code&gt; show the vi
     L--&gt;M[telecom_2Gto3G];
     L--&gt;N[telecom_4G_5GNSA];
     L--&gt;O[telecom_5G];
-    H--&gt;K[sdr_full]&lt;/pre&gt;&lt;h2&gt;sdrsa_devices&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;sdrsa_devices&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#sdrsa_devices&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+    H--&gt;K[sdr_full]&lt;/pre&gt;&lt;h2&gt;Tool Categories&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;tool-categories&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#tool-categories&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Core SDR Devices Support&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;core-sdr-devices-support&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#core-sdr-devices-support&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;sdrsa_devices&lt;/code&gt; image serves as the foundation for many RF Swift images, providing essential drivers and utilities for software-defined radio hardware.&lt;/p&gt;
+
 
 
 
@@ -2165,14 +2168,18 @@ The sizes displayed by &lt;code&gt;rfswift images local&lt;/code&gt; show the vi
 
   &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
     &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
-      For RTL-SDR v4, the &lt;code&gt;rtlsdrv4_devices_install&lt;/code&gt; function can be used instead. For ANTSDR, use &lt;code&gt;antsdr__devices_install&lt;/code&gt;
+      &lt;p&gt;&lt;strong&gt;Specialized Device Support:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For RTL-SDR v4 devices: Use the &lt;code&gt;rtlsdrv4_devices_install&lt;/code&gt; function&lt;/li&gt;
+&lt;li&gt;For ANTSDR devices: Use the &lt;code&gt;antsdr__devices_install&lt;/code&gt; function&lt;/li&gt;
+&lt;/ul&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;h3&gt;Troubleshootings&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;troubleshootings&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#troubleshootings&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;h4&gt;RTL-SDR in use&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;rtl-sdr-in-use&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#rtl-sdr-in-use&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;If the RTL-SDR is not available when using tools like &lt;code&gt;nfc-spy&lt;/code&gt;, try blacklisting the device and restart the host after running this command:&lt;/p&gt;
+&lt;h4&gt;Common Device Troubleshooting&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;common-device-troubleshooting&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#common-device-troubleshooting&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;h5&gt;RTL-SDR Kernel Module Conflicts&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;rtl-sdr-kernel-module-conflicts&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#rtl-sdr-kernel-module-conflicts&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h5&gt;&lt;p&gt;If your RTL-SDR device is unavailable when using tools like &lt;code&gt;nfc-spy&lt;/code&gt;, the DVB-T kernel module may have claimed it. Blacklist the module with:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
@@ -2188,9 +2195,9 @@ The sizes displayed by &lt;code&gt;rfswift images local&lt;/code&gt; show the vi
 
   
 &lt;/div&gt;
-&lt;h3&gt;Troubleshooting with some devices&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;troubleshooting-with-some-devices&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#troubleshooting-with-some-devices&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;h4&gt;PlutoSDR&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;plutosdr&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#plutosdr&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;Using some distribution or system, the PlutoSDR will probably not show with &lt;code&gt;iio_info -s&lt;/code&gt; command:&lt;/p&gt;
+&lt;p&gt;You&amp;rsquo;ll need to restart your host system after adding this blacklist entry.&lt;/p&gt;
+&lt;h5&gt;PlutoSDR Connection Issues&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;plutosdr-connection-issues&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#plutosdr-connection-issues&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h5&gt;&lt;p&gt;If the PlutoSDR doesn&amp;rsquo;t appear with &lt;code&gt;iio_info -s&lt;/code&gt; and you see errors like:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
@@ -2209,11 +2216,14 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
 
   
 &lt;/div&gt;
-&lt;p&gt;This can be fixed running &lt;code&gt;avahi-daemon&lt;/code&gt; on your host if using Linux, or by running a daemon inside the container with following command :&lt;/p&gt;
+&lt;p&gt;This can be resolved in two ways:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;On Linux hosts: Ensure &lt;code&gt;avahi-daemon&lt;/code&gt; is running on your host system&lt;/li&gt;
+&lt;li&gt;Inside the container: Run the Avahi daemon with:
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;pre&gt;&lt;code&gt;avahi-daemon --no-drop-root --no-rlimits&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;avahi-daemon --no-drop-root --no-rlimits&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -2225,8 +2235,11 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
 
   
 &lt;/div&gt;
-&lt;h2&gt;sdr_light&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;sdr_light&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#sdr_light&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;SDR Light Tools&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;sdr-light-tools&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#sdr-light-tools&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;sdr_light&lt;/code&gt; image includes essential software-defined radio tools for signal capture, analysis, and basic decoding.&lt;/p&gt;
+
 
 
 
@@ -2610,9 +2623,11 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h2&gt;sdr_full&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;sdr_full&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#sdr_full&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;GNU Radio Out-Of-Tree Modules&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;gnu-radio-out-of-tree-modules&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#gnu-radio-out-of-tree-modules&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;SDR Full Environment&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;sdr-full-environment&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#sdr-full-environment&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;sdr_full&lt;/code&gt; image builds on &lt;code&gt;sdr_light&lt;/code&gt; to provide a comprehensive SDR development and analysis environment, including GNU Radio and specialized plugins.&lt;/p&gt;
+&lt;h4&gt;GNU Radio Out-Of-Tree Modules&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;gnu-radio-out-of-tree-modules&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#gnu-radio-out-of-tree-modules&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;These modules extend GNU Radio&amp;rsquo;s capabilities for specific protocols and signal types:&lt;/p&gt;
+
 
 
 
@@ -3228,8 +3243,8 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h3&gt;Extra-softwares&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;extra-softwares&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#extra-softwares&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;h4&gt;Additional SDR Software&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;additional-sdr-software&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#additional-sdr-software&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;
 
 
 
@@ -3565,8 +3580,9 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h2&gt;RFID&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;rfid&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#rfid&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h3&gt;RFID Tools&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;rfid-tools&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#rfid-tools&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;rfid&lt;/code&gt; image focuses on radio-frequency identification analysis and exploitation:&lt;/p&gt;
+
 
 
 
@@ -3678,8 +3694,59 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h2&gt;Bluetooth&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;bluetooth&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#bluetooth&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;div class=&#34;hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-yellow-100 hx-bg-yellow-50 hx-text-yellow-900 dark:hx-border-yellow-200/30 dark:hx-bg-yellow-700/30 dark:hx-text-yellow-200&#34;&gt;
+  &lt;div class=&#34;ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2&#34;&gt;&lt;div class=&#34;hx-select-none hx-text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;
+        ⚠️
+      &lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
+    &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
+      &lt;p&gt;&lt;strong&gt;RFID Device Requirements:&lt;/strong&gt;
+When using RFID tools, you need to ensure that your RFID reader device (typically appearing as &lt;code&gt;/dev/ttyACM0&lt;/code&gt;) is properly bound to the container:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# When creating a new container&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i rfid -n rfid_tools -s /dev/ttyACM0:/dev/ttyACM0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Or with an existing container&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift bindings add -c rfid_tools -s /dev/ttyACM0:/dev/ttyACM0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Bluetooth Analysis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;bluetooth-analysis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#bluetooth-analysis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;bluetooth&lt;/code&gt; image contains specialized tools for Bluetooth protocol analysis and security testing:&lt;/p&gt;
+
 
 
 
@@ -3855,8 +3922,57 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h2&gt;Wi-Fi&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;wi-fi&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#wi-fi&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;div class=&#34;hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-yellow-100 hx-bg-yellow-50 hx-text-yellow-900 dark:hx-border-yellow-200/30 dark:hx-bg-yellow-700/30 dark:hx-text-yellow-200&#34;&gt;
+  &lt;div class=&#34;ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2&#34;&gt;&lt;div class=&#34;hx-select-none hx-text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;
+        ⚠️
+      &lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
+    &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
+      &lt;p&gt;&lt;strong&gt;Required Capability:&lt;/strong&gt;
+Bluetooth tools require the &lt;code&gt;NET_ADMIN&lt;/code&gt; capability to function properly. Always include this capability when running the container:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i bluetooth -n bt_tools -a NET_ADMIN&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;p&gt;Without this capability, many Bluetooth tools will fail with permission errors when attempting to configure network interfaces.&lt;/p&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Wi-Fi Security&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;wi-fi-security&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#wi-fi-security&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;wifi&lt;/code&gt; image provides tools for Wi-Fi network analysis, packet capture, and security assessment:&lt;/p&gt;
+
 
 
 
@@ -4080,9 +4196,59 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h2&gt;Telecom&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;telecom&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#telecom&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Utils&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;utils&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#utils&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;div class=&#34;hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-yellow-100 hx-bg-yellow-50 hx-text-yellow-900 dark:hx-border-yellow-200/30 dark:hx-bg-yellow-700/30 dark:hx-text-yellow-200&#34;&gt;
+  &lt;div class=&#34;ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2&#34;&gt;&lt;div class=&#34;hx-select-none hx-text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;
+        ⚠️
+      &lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
+    &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
+      &lt;p&gt;&lt;strong&gt;Required Capability:&lt;/strong&gt;
+Wi-Fi tools require the &lt;code&gt;NET_ADMIN&lt;/code&gt; capability to manipulate wireless interfaces. Always include this capability when running the container:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i wifi -n wifi_tools -a NET_ADMIN&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;p&gt;If you see errors about insufficient permissions when using Wi-Fi tools, this capability is likely missing.&lt;/p&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Telecommunications&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;telecommunications&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#telecommunications&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The telecommunications images are divided into several categories based on mobile network generations:&lt;/p&gt;
+&lt;h4&gt;Telecom Utilities&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;telecom-utilities&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#telecom-utilities&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;Foundation tools for cellular network analysis:&lt;/p&gt;
+
 
 
 
@@ -4242,8 +4408,9 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h3&gt;2G to 3G&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;2g-to-3g&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#2g-to-3g&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;h4&gt;2G/3G Analysis Tools&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;2g3g-analysis-tools&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#2g3g-analysis-tools&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;Tools for GSM, UMTS, and related technologies:&lt;/p&gt;
+
 
 
 
@@ -4339,8 +4506,9 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h3&gt;4G to 5G&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;4g-to-5g&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#4g-to-5g&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;h4&gt;4G/5G Analysis Tools&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;4g5g-analysis-tools&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#4g5g-analysis-tools&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;Tools for LTE, 5G-NSA, and 5G technologies:&lt;/p&gt;
+
 
 
 
@@ -4436,8 +4604,9 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h2&gt;Automotive&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;automotive&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#automotive&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h3&gt;Automotive Security&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;automotive-security&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#automotive-security&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;automotive&lt;/code&gt; image contains tools for vehicle network analysis and communication:&lt;/p&gt;
+
 
 
 
@@ -4565,8 +4734,9 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h2&gt;Reversing&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;reversing&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#reversing&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h3&gt;Hardware Reverse Engineering&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;hardware-reverse-engineering&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#hardware-reverse-engineering&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;reversing&lt;/code&gt; image provides tools for firmware analysis and hardware reverse engineering:&lt;/p&gt;
+
 
 
 
@@ -4854,8 +5024,9 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h2&gt;Network&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;network&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#network&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h3&gt;Network Analysis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;network-analysis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#network-analysis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;network&lt;/code&gt; image contains general network analysis and security tools:&lt;/p&gt;
+
 
 
 
@@ -5031,8 +5202,9 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
     
   &lt;/table&gt;
 
-&lt;h2&gt;Hardware&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;hardware&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#hardware&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h3&gt;Hardware Security&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;hardware-security&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#hardware-security&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;hardware&lt;/code&gt; image focuses on general hardware security testing and analysis:&lt;/p&gt;
+
 
 
 
@@ -5239,6 +5411,104 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
       &lt;/tbody&gt;
     
   &lt;/table&gt;
+
+&lt;h2&gt;Tool Usage Tips&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;tool-usage-tips&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#tool-usage-tips&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Tool Directory Organization&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;tool-directory-organization&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#tool-directory-organization&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;RF Swift organizes tools in specialized directories for easier discovery:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/rftools&lt;/code&gt; - Contains radio frequency analysis tools&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/hardware&lt;/code&gt; - Hardware security and testing tools&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/automotive&lt;/code&gt; - Vehicle communication and analysis tools&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/reverse&lt;/code&gt; - Reverse engineering and firmware analysis tools&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These directories complement the standard system paths (&lt;code&gt;/usr/bin&lt;/code&gt;, &lt;code&gt;/usr/local/bin&lt;/code&gt;) and contain specialized tools, scripts, and resources.&lt;/p&gt;
+&lt;h3&gt;Finding Available Tools&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;finding-available-tools&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#finding-available-tools&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;To discover which tools are available in your current container:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# List all executable commands in standard paths&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;find /usr/bin /usr/local/bin -type f -executable &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sort
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# List RF tools in the dedicated directory&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -la /rftools
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# List tools in other specialized directories&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -la /hardware
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -la /automotive
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -la /reverse
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Search for a specific tool across all locations&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;find /usr/bin /usr/local/bin /rftools /hardware /automotive /reverse -name &lt;span class=&#34;s2&#34;&gt;&amp;#34;*sdr*&amp;#34;&lt;/span&gt; -type f -executable&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h3&gt;Tool Documentation&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;tool-documentation&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#tool-documentation&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Most tools include built-in help available through the &lt;code&gt;-h&lt;/code&gt; or &lt;code&gt;--help&lt;/code&gt; flags:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tool_name --help&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;p&gt;For more detailed documentation, many tools include man pages:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;man tool_name&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h3&gt;Creating Tool Aliases&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;creating-tool-aliases&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#creating-tool-aliases&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For frequently used tools with complex options, consider creating aliases in your container:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;alias rtlpower-optimized=&amp;#34;rtl_power -f 88M:108M:25k -g 50 -i 10 -e 1h power.csv&amp;#34;&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.zshrc
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.zshrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h2&gt;Next Steps&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;next-steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Continue to the Configurations page to learn how to customize your RF Swift environment:&lt;/p&gt;
+&lt;div class=&#34;hextra-cards hx-mt-4 hx-gap-4 hx-grid not-prose&#34; style=&#34;--hextra-cards-grid-cols: 3;&#34;&gt;
+  &lt;a
+    class=&#34;hextra-card hx-group hx-flex hx-flex-col hx-justify-start hx-overflow-hidden hx-rounded-lg hx-border hx-border-gray-200 hx-text-current hx-no-underline dark:hx-shadow-none hover:hx-shadow-gray-100 dark:hover:hx-shadow-none hx-shadow-gray-100 active:hx-shadow-sm active:hx-shadow-gray-200 hx-transition-all hx-duration-200 hover:hx-border-gray-300 hx-bg-transparent hx-shadow-sm dark:hx-border-neutral-800 hover:hx-bg-slate-50 hover:hx-shadow-md dark:hover:hx-border-neutral-700 dark:hover:hx-bg-neutral-900&#34;href=&#34;https://rfswift.io/docs/guide/configurations&#34;
+      &gt;&lt;span class=&#34;hextra-card-icon hx-flex hx-font-semibold hx-items-start hx-gap-2 hx-pt-4 hx-px-4 hx-text-gray-700 hover:hx-text-gray-900 dark:hx-text-neutral-200 dark:hover:hx-text-neutral-50&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z&#34;/&gt;&lt;/svg&gt;Configuration Options&lt;/span&gt;&lt;div class=&#34;hextra-card-subtitle hx-line-clamp-3 hx-text-sm hx-font-normal hx-text-gray-500 dark:hx-text-gray-400 hx-px-4 hx-mb-4 hx-mt-2&#34;&gt;Customize your RF Swift environment for optimal performance.&lt;/div&gt;&lt;/a&gt;
+&lt;/div&gt;
 
 
       </description>
