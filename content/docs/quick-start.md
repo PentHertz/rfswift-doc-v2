@@ -220,7 +220,7 @@ On Windows, you'll need to explicitly forward USB devices to your container usin
 rfswift winusb list
 
 # Attach a specific device on Windows
-rfswift winusb attach -b <USB ID>
+rfswift winusb attach -i <USB ID>
 ```
 
 #### Linux USB Device Access
