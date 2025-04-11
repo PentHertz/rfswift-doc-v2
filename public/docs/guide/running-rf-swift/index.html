@@ -58,14 +58,14 @@ Command Overview
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rfswift.io/docs/guide/running-rf-swift/" /><meta property="article:section" content="docs" />
 
-<meta property="article:modified_time" content="2025-04-12T00:30:28+02:00" />
+<meta property="article:modified_time" content="2025-04-12T00:37:24+02:00" />
 
   
   <meta itemprop="name" content="Running RF Swift">
   <meta itemprop="description" content="Running RF SwiftRF Swift provides a streamlined command-line interface to manage containers for RF and hardware security applications. This guide covers essential commands and workflows.
 ⚠️ On Linux, unless you are using Docker Desktop, you will need to use sudo with the rfswift command for operations that require elevated privileges. Command Overview Let’s explore the available commands with rfswift --help:">
-  <meta itemprop="dateModified" content="2025-04-12T00:30:28+02:00">
-  <meta itemprop="wordCount" content="1133">
+  <meta itemprop="dateModified" content="2025-04-12T00:37:24+02:00">
+  <meta itemprop="wordCount" content="1693">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Running RF Swift">
   <meta name="twitter:description" content="Running RF SwiftRF Swift provides a streamlined command-line interface to manage containers for RF and hardware security applications. This guide covers essential commands and workflows.
@@ -542,6 +542,18 @@ Command Overview
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
         <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#host-isolation">Host Isolation
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-8 rtl:hx-pr-8 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#default-security-configuration">Default Security Configuration
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-8 rtl:hx-pr-8 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#customizing-security-settings">Customizing Security Settings
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-8 rtl:hx-pr-8 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#command-line-security-configuration">Command-Line Security Configuration
         </a>
       </li></ul>
       <div class="hx-mt-8 hx-border-t hx-bg-white hx-pt-8 hx-shadow-[0_-12px_16px_white] dark:hx-bg-dark dark:hx-shadow-[0_-12px_16px_#111] hx-sticky hx-bottom-0 hx-flex hx-flex-col hx-items-start hx-gap-2 hx-pb-8 dark:hx-border-neutral-800 contrast-more:hx-border-t contrast-more:hx-border-neutral-400 contrast-more:hx-shadow-none contrast-more:dark:hx-border-neutral-400">
@@ -1333,7 +1345,102 @@ Be cautious when adding capabilities as they increase security risks if the cont
 
 <h2>Advanced Features<span class="hx-absolute -hx-mt-20" id="advanced-features"></span>
     <a href="#advanced-features" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Host Isolation<span class="hx-absolute -hx-mt-20" id="host-isolation"></span>
-    <a href="#host-isolation" class="subheading-anchor" aria-label="Permalink for this section"></a></h3>
+    <a href="#host-isolation" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>RF Swift implements host isolation through several security mechanisms configured in your <code>config.ini</code> file:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[container]</span>
+</span></span><span class="line"><span class="cl"><span class="na">privileged</span> <span class="o">=</span> <span class="s">false</span>
+</span></span><span class="line"><span class="cl"><span class="na">caps</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl"><span class="na">seccomp</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl"><span class="na">cgroups</span> <span class="o">=</span> <span class="s">c 189:* rwm,c 166:* rwm,c 188:* rwm</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<h4>Default Security Configuration<span class="hx-absolute -hx-mt-20" id="default-security-configuration"></span>
+    <a href="#default-security-configuration" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>By default, RF Swift runs containers in unprivileged mode with specific cgroup restrictions:</p>
+<ul>
+<li><strong>Unprivileged Mode</strong>: Containers run without full root privileges on the host (<code>privileged = false</code>)</li>
+<li><strong>Cgroup Restrictions</strong>: Controlled device access through character device major numbers:
+<ul>
+<li><code>c 189:* rwm</code>: Access to USB serial devices (ttyUSB*)</li>
+<li><code>c 166:* rwm</code>: Access to ACM devices (ttyACM*)</li>
+<li><code>c 188:* rwm</code>: Access to USB serial converters</li>
+</ul>
+</li>
+</ul>
+<p>This provides a reasonable balance between functionality and security for RF applications.</p>
+<h4>Customizing Security Settings<span class="hx-absolute -hx-mt-20" id="customizing-security-settings"></span>
+    <a href="#customizing-security-settings" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>You can customize security settings both in the config file and via command-line parameters:</p>
+<p><strong>Adding Capabilities</strong>:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Via command line</span>
+</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n my_container -a NET_ADMIN,SYS_PTRACE
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Via config.ini</span>
+</span></span><span class="line"><span class="cl"><span class="nv">caps</span> <span class="o">=</span> NET_ADMIN,SYS_PTRACE</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p><strong>Custom Seccomp Profile</strong>:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Via command line</span>
+</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n my_container -m /path/to/seccomp.json
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Via config.ini</span>
+</span></span><span class="line"><span class="cl"><span class="nv">seccomp</span> <span class="o">=</span> /path/to/seccomp.json</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p><strong>Additional Cgroup Rules</strong>:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Via command line</span>
+</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n my_container -g <span class="s2">&#34;c 226:* rwm&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Via config.ini</span>
+</span></span><span class="line"><span class="cl"><span class="nv">cgroups</span> <span class="o">=</span> c 189:* rwm,c 166:* rwm,c 188:* rwm,c 226:* rwm</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+
 
 
 
@@ -1358,7 +1465,171 @@ Be cautious when adding capabilities as they increase security risks if the cont
 
   <div class="hx-w-full hx-min-w-0 hx-leading-7">
     <div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
-      Host isolation features are in development and will be available soon.
+      <p>Cgroup rules use the format <code>type major:minor permission</code> where:</p>
+<ul>
+<li><code>type</code> is c (character) or b (block)</li>
+<li><code>major:minor</code> defines the device number (use * for wildcard)</li>
+<li><code>permission</code> is r (read), w (write), m (mknod)</li>
+</ul>
+<p>For example, <code>c 189:* rwm</code> grants full access to all devices with major number 189.</p>
+
+    </div>
+  </div>
+</div>
+
+<h4>Command-Line Security Configuration<span class="hx-absolute -hx-mt-20" id="command-line-security-configuration"></span>
+    <a href="#command-line-security-configuration" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>RF Swift allows you to override or extend security settings directly from the command line when running containers. This is particularly useful for one-off tasks or testing configurations before adding them to your config file.</p>
+<p><strong>Complete List of Security-Related Flags:</strong></p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run <span class="o">[</span>options<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Security Options:
+</span></span><span class="line"><span class="cl">  -u, --privileged int        Set privilege level <span class="o">(</span>1: privileged, 0: unprivileged<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  -a, --capabilities string   Extra capabilities <span class="o">(</span>separate with commas<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  -g, --cgroups string        Extra cgroup rules <span class="o">(</span>separate with commas<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  -m, --seccomp string        Set Seccomp profile <span class="o">(</span><span class="s1">&#39;default&#39;</span> one used by default<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  -s, --devices string        Extra devices mapping <span class="o">(</span>separate with commas<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">Network Options:  
+</span></span><span class="line"><span class="cl">  -t, --network string        Network mode <span class="o">(</span>default: <span class="s1">&#39;host&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">  -z, --exposedports string   Exposed ports
+</span></span><span class="line"><span class="cl">  -w, --bindedports string    Ports to <span class="nb">bind</span> between host and container
+</span></span><span class="line"><span class="cl">  -x, --extrahosts string     Set extra hosts <span class="o">(</span>default: <span class="s1">&#39;pluto.local:192.168.1.2&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">Resource Options:
+</span></span><span class="line"><span class="cl">  -b, --bind string           Extra volume bindings <span class="o">(</span>separate with commas<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  -d, --display string        Set X Display <span class="o">(</span>default <span class="s2">&#34;DISPLAY=:0&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">  -p, --pulseserver string    PULSE SERVER TCP address <span class="o">(</span>default <span class="s2">&#34;tcp:127.0.0.1:34567&#34;</span><span class="o">)</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p><strong>Examples of Command-Line Security Configurations:</strong></p>
+<ol>
+<li>
+<p><strong>Run with specific privileges and capabilities</strong>:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:wifi -n wifi_tools -u <span class="m">0</span> -a NET_ADMIN,NET_RAW</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>This runs a container in unprivileged mode but adds the NET_ADMIN and NET_RAW capabilities.</p>
+</li>
+<li>
+<p><strong>Add custom cgroup rules and device mappings</strong>:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr -n rtlsdr -g <span class="s2">&#34;c 226:* rwm&#34;</span> -s <span class="s2">&#34;/dev/rtlsdr0:/dev/rtlsdr0&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>This adds permission for device major number 226 and maps a specific RTL-SDR device.</p>
+</li>
+<li>
+<p><strong>Set a custom seccomp profile</strong>:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:security -n forensics -m ~/custom_seccomp.json</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>This applies a custom seccomp profile to the container.</p>
+</li>
+<li>
+<p><strong>Combined security settings</strong>:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:bluetooth -n bt_scanner <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -a NET_ADMIN <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 226:* rwm,c 116:* rwm&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s <span class="s2">&#34;/dev/bluetooth:/dev/bluetooth&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">0</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>This creates a container with:</p>
+<ul>
+<li>Bridge networking mode</li>
+<li>NET_ADMIN capability</li>
+<li>Custom cgroup rules for devices with major numbers 226 and 116</li>
+<li>Specific Bluetooth device mapping</li>
+<li>Unprivileged mode</li>
+</ul>
+</li>
+</ol>
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-yellow-100 hx-bg-yellow-50 hx-text-yellow-900 dark:hx-border-yellow-200/30 dark:hx-bg-yellow-700/30 dark:hx-text-yellow-200">
+  <div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2"><div class="hx-select-none hx-text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
+        ⚠️
+      </div></div>
+
+  <div class="hx-w-full hx-min-w-0 hx-leading-7">
+    <div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+      Command-line settings always take precedence over config file settings. When using both, command-line options will extend or override the corresponding settings in your config.ini file.
     </div>
   </div>
 </div>
@@ -1366,7 +1637,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
 
         </div>
         
-    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2025-04-12T00:30:28.000Z">April 12, 2025</time></div>
+    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2025-04-12T00:37:24.000Z">April 12, 2025</time></div>
         <div class="hx-mb-8 hx-flex hx-items-center hx-border-t hx-pt-8 dark:hx-border-neutral-800 contrast-more:hx-border-neutral-400 dark:contrast-more:hx-border-neutral-400 print:hx-hidden"><a
         href="/docs/quick-start/"
         title="🚀 Quick Start"
