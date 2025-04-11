@@ -2501,7 +2501,7 @@ RUN DEBIAN_FRONTEND=noninteractive rm -rf /var/lib/apt/lists/*&lt;/code&gt;&lt;/
     </item>
     
     <item>
-      <title>Container images</title>
+      <title>Container Images</title>
       <link>https://rfswift.io/docs/guide/list-of-images/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -2509,60 +2509,13 @@ RUN DEBIAN_FRONTEND=noninteractive rm -rf /var/lib/apt/lists/*&lt;/code&gt;&lt;/
       <description>
         
         
-        &lt;p&gt;RF Swift has an &lt;code&gt;images&lt;/code&gt; options that allows to deal with remote and local images.&lt;/p&gt;
-&lt;p&gt;Let us discover these different options.&lt;/p&gt;
-&lt;h2&gt;Remote images&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;remote-images&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#remote-images&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;You can list remote images associated to the architecture you are using with the &lt;code&gt;images remote&lt;/code&gt; command set:&lt;/p&gt;
+        &lt;h1&gt;RF Swift Container Images&lt;/h1&gt;&lt;p&gt;RF Swift provides a comprehensive set of container images to support various radio frequency and hardware security workflows. This guide explains how to manage these images and understand the available options.&lt;/p&gt;
+&lt;h2&gt;Image Management Commands&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;image-management-commands&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#image-management-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;RF Swift offers the &lt;code&gt;images&lt;/code&gt; command group to interact with both remote and local images:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift images remote
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  💿 Official Images                                                                                                 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;┌──────────────────────────────┬──────────────────────┬────────────────────────────────────────────────┬──────────────┐
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ Tag                          │ Pushed Date          │ Image                                          │ Architecture │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ sdr_full_nvidiagpu_amd64     │ 2025-03-24T17:37:59Z │ penthertz/rfswift:sdr_full_nvidiagpu_amd64     │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ hardware                     │ 2025-03-24T17:33:21Z │ penthertz/rfswift:hardware                     │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ sdr_full_intelgpu_amd64      │ 2025-03-24T17:09:38Z │ penthertz/rfswift:sdr_full_intelgpu_amd64      │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ sdr_full                     │ 2025-03-24T16:43:07Z │ penthertz/rfswift:sdr_full                     │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ telecom_5G                   │ 2025-03-24T16:36:22Z │ penthertz/rfswift:telecom_5G                   │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ telecom_2Gto3G               │ 2025-03-24T16:14:59Z │ penthertz/rfswift:telecom_2Gto3G               │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ telecom_4G_5GNSA             │ 2025-03-24T16:08:08Z │ penthertz/rfswift:telecom_4G_5GNSA             │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ network                      │ 2025-03-24T16:03:53Z │ penthertz/rfswift:network                      │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ telecom_utils                │ 2025-03-24T15:53:28Z │ penthertz/rfswift:telecom_utils                │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ deeptempest                  │ 2025-03-24T15:39:08Z │ penthertz/rfswift:deeptempest                  │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ reversing                    │ 2025-03-24T15:36:32Z │ penthertz/rfswift:reversing                    │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ sdr_light                    │ 2025-03-24T15:35:17Z │ penthertz/rfswift:sdr_light                    │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ wifi                         │ 2025-03-24T15:34:11Z │ penthertz/rfswift:wifi                         │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ sdrsa_devices_antsdr         │ 2025-03-24T15:32:58Z │ penthertz/rfswift:sdrsa_devices_antsdr         │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ bluetooth                    │ 2025-03-24T15:24:19Z │ penthertz/rfswift:bluetooth                    │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ bluetooth_amd64              │ 2025-03-24T15:23:31Z │ penthertz/rfswift:bluetooth_amd64              │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ automotive                   │ 2025-03-24T15:19:40Z │ penthertz/rfswift:automotive                   │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ sdrsa_devices                │ 2025-03-24T15:19:16Z │ penthertz/rfswift:sdrsa_devices                │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ sdrsa_devices_rtlsdrv4       │ 2025-03-24T15:19:15Z │ penthertz/rfswift:sdrsa_devices_rtlsdrv4       │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ rfid                         │ 2025-03-24T15:18:29Z │ penthertz/rfswift:rfid                         │ amd64        │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└──────────────────────────────┴──────────────────────┴────────────────────────────────────────────────┴──────────────┘
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;....&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift images --help&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -2574,10 +2527,160 @@ RUN DEBIAN_FRONTEND=noninteractive rm -rf /var/lib/apt/lists/*&lt;/code&gt;&lt;/
 
   
 &lt;/div&gt;
-&lt;p&gt;You will see that some tag are specific to the architecture &lt;code&gt;sdr_light_amd64&lt;/code&gt;, but others like &lt;code&gt;sdr_light&lt;/code&gt; do not include the architecture.
-First you should know that those two tags are the same, but &lt;code&gt;sdr_light&lt;/code&gt; can be used also against aarch64/arm64, and riscv64 as well.&lt;/p&gt;
-&lt;p&gt;To better explain the different pre-compiled image, look at this table showing the main images you will be interested in:&lt;/p&gt;
+&lt;p&gt;Key subcommands include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;remote&lt;/code&gt;: List available images from the repository&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;local&lt;/code&gt;: List downloaded images on your system&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Remote Image Repository&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;remote-image-repository&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#remote-image-repository&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Listing Available Images&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;listing-available-images&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#listing-available-images&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;To view all available images for your architecture from the official repository:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
 
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift images remote&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;p&gt;This command displays a table of available images with important details:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;pre&gt;&lt;code&gt;  💿 Official Images                                                                                                 
+┌──────────────────────────────┬──────────────────────┬────────────────────────────────────────────────┬──────────────┐
+│ Tag                          │ Pushed Date          │ Image                                          │ Architecture │
+├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
+│ sdr_full_nvidiagpu_amd64     │ 2025-03-24T17:37:59Z │ penthertz/rfswift:sdr_full_nvidiagpu_amd64     │ amd64        │
+│ hardware                     │ 2025-03-24T17:33:21Z │ penthertz/rfswift:hardware                     │ amd64        │
+│ sdr_full_intelgpu_amd64      │ 2025-03-24T17:09:38Z │ penthertz/rfswift:sdr_full_intelgpu_amd64      │ amd64        │
+│ sdr_full                     │ 2025-03-24T16:43:07Z │ penthertz/rfswift:sdr_full                     │ amd64        │
+│ telecom_5G                   │ 2025-03-24T16:36:22Z │ penthertz/rfswift:telecom_5G                   │ amd64        │
+...&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h3&gt;Understanding Image Tags&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;understanding-image-tags&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#understanding-image-tags&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The image naming system follows a consistent pattern:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Generic tags&lt;/strong&gt; (e.g., &lt;code&gt;sdr_full&lt;/code&gt;, &lt;code&gt;bluetooth&lt;/code&gt;) work across supported architectures with multi-architecture builds&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Architecture-specific tags&lt;/strong&gt; (e.g., &lt;code&gt;sdr_light_amd64&lt;/code&gt;, &lt;code&gt;bluetooth_arm64&lt;/code&gt;) target single architectures&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Specialized hardware tags&lt;/strong&gt; (e.g., &lt;code&gt;sdr_full_nvidiagpu_amd64&lt;/code&gt;) include optimizations for specific hardware&lt;/li&gt;
+&lt;/ol&gt;
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;div class=&#34;hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200&#34;&gt;
+  &lt;div class=&#34;ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2&#34;&gt;&lt;div class=&#34;hx-select-none hx-text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;
+        ℹ️
+      &lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
+    &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
+      When in doubt, use the generic tags (without architecture suffix) as RF Swift will automatically select the correct version for your system. Use architecture-specific tags only when you need a particular variant.
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Core Image Categories&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;core-image-categories&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#core-image-categories&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Category&lt;/th&gt;
+          &lt;th&gt;Description&lt;/th&gt;
+          &lt;th&gt;Example Images&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;SDR&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Software-defined radio tools&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;sdr_light&lt;/code&gt;, &lt;code&gt;sdr_full&lt;/code&gt;, &lt;code&gt;sdr_full_nvidiagpu_amd64&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Telecom&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Mobile network analysis&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;telecom_utils&lt;/code&gt;, &lt;code&gt;telecom_2Gto3G&lt;/code&gt;, &lt;code&gt;telecom_4G_5GNSA&lt;/code&gt;, &lt;code&gt;telecom_5G&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Short-range&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Bluetooth, Wi-Fi and RFID&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;bluetooth&lt;/code&gt;, &lt;code&gt;wifi&lt;/code&gt;, &lt;code&gt;rfid&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Hardware&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Hardware security tools&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;hardware&lt;/code&gt;, &lt;code&gt;reversing&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Automotive&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Vehicle communications&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;automotive&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Base images&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Foundation for other images&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;corebuild&lt;/code&gt;, &lt;code&gt;sdrsa_devices&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;Image Hierarchy&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;image-hierarchy&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#image-hierarchy&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;RF Swift images are structured in a layered hierarchy, with specialized images building on more general base images:&lt;/p&gt;
+&lt;pre class=&#34;mermaid hx-mt-6&#34;&gt;graph TD;
+    A[corebuild]--&gt;B[sdrsa_devices];
+    A--&gt;C[rfid];
+    A--&gt;D[automotive];
+    A--&gt;E[reversing];
+    A--&gt;F[sdrsa_devices_antsdr];
+    A--&gt;G[sdrsa_devices_rtlsdrv4];
+    B[sdrsa_devices]--&gt;H[sdr_light];
+    B[sdrsa_devices]--&gt;I[bluetooth];
+    B[sdrsa_devices]--&gt;J[wifi];
+    B[sdrsa_devices]--&gt;L[telecom_utils];
+    B[sdrsa_devices]--&gt;R[hardware];
+    B[sdrsa_devices]--&gt;S[network];
+    L--&gt;M[telecom_2Gto3G];
+    L--&gt;N[telecom_4G_5GNSA];
+    L--&gt;O[telecom_5G];
+    H--&gt;K[sdr_full]&lt;/pre&gt;&lt;p&gt;This hierarchy provides several benefits:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Layer reuse&lt;/strong&gt;: Reduces overall disk space when using multiple images&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consistency&lt;/strong&gt;: Common tools are identical across related images&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Specialization&lt;/strong&gt;: Higher-level images include more specialized tools&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Base for customization&lt;/strong&gt;: You can build your own images starting from any level&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Recommended Images&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;recommended-images&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#recommended-images&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 
 
 
@@ -2929,41 +3032,13 @@ First you should know that those two tags are the same, but &lt;code&gt;sdr_ligh
     
   &lt;/table&gt;
 
-&lt;p&gt;Here is you will find images hierarchy:&lt;/p&gt;
-&lt;pre class=&#34;mermaid hx-mt-6&#34;&gt;graph TD;
-    A[corebuild]--&gt;B[sdrsa_devices];
-    A--&gt;C[rfid];
-    A--&gt;D[automotive];
-    A--&gt;E[reversing];
-    A--&gt;F[sdrsa_devices_antsdr];
-    A--&gt;G[sdrsa_devices_rtlsdrv4];
-    B[sdrsa_devices]--&gt;H[sdr_light];
-    B[sdrsa_devices]--&gt;I[bluetooth];
-    B[sdrsa_devices]--&gt;J[wifi];
-    B[sdrsa_devices]--&gt;L[telecom_utils];
-    B[sdrsa_devices]--&gt;R[hardware];
-    B[sdrsa_devices]--&gt;S[network];
-    L--&gt;M[telecom_2Gto3G];
-    L--&gt;N[telecom_4G_5GNSA];
-    L--&gt;O[telecom_5G];
-    H--&gt;K[sdr_full]&lt;/pre&gt;&lt;p&gt;So if you want to build one of your own, do not hesitate to take one these images as a reference.&lt;/p&gt;
-&lt;h2&gt;List local images&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;list-local-images&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#list-local-images&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;To list pulled, but also built images, you can issue the &lt;code&gt;images local&lt;/code&gt; command, that will display these local images and details:&lt;/p&gt;
+&lt;h2&gt;Managing Local Images&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;managing-local-images&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#managing-local-images&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Listing Local Images&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;listing-local-images&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#listing-local-images&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;To see images you&amp;rsquo;ve already downloaded or created:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  📦 RF Swift Images                                                                                          
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;┌──────────────────────┬─────────────────┬──────────────┬───────────────────────────┬─────────────┬────────────┐
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ Repository           │ Tag             │ Image ID     │ Created                   │ Size        │ Status     │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────┼─────────────────┼──────────────┼───────────────────────────┼─────────────┼────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ myrfswift            │ latest          │ sha256:0bdb2 │ 2024-09-01T00:56:27+02:00 │ 16635.22 MB │ Custom     │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────┼─────────────────┼──────────────┼───────────────────────────┼─────────────┼────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ penthertz/rfswiftdev │ sdr_full_amd64  │ sha256:0bdb2 │ 2024-09-01T00:56:27+02:00 │ 16635.22 MB │ Up to date │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────┼─────────────────┼──────────────┼───────────────────────────┼─────────────┼────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ penthertz/rfswiftdev │ sdr_light_amd64 │ sha256:476c0 │ 2024-09-01T00:34:55+02:00 │ 9617.12 MB  │ Up to date │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├──────────────────────┼─────────────────┼──────────────┼───────────────────────────┼─────────────┼────────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ penthertz/rfswift    │ sdr_full        │ sha256:50ce1 │ 2024-08-02T14:45:46+02:00 │ 10383.56 MB │ Custom     │
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;└──────────────────────┴─────────────────┴──────────────┴───────────────────────────┴─────────────┴────────────┘&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift images local&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -2975,41 +3050,19 @@ First you should know that those two tags are the same, but &lt;code&gt;sdr_ligh
 
   
 &lt;/div&gt;
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;div class=&#34;hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200&#34;&gt;
-  &lt;div class=&#34;ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2&#34;&gt;&lt;div class=&#34;hx-select-none hx-text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;
-        ℹ️
-      &lt;/div&gt;&lt;/div&gt;
-
-  &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
-    &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
-      The status can serve as a good indicator to show if the images are up-to-date when using official tags.
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;If an update is necessary you can issue a &lt;code&gt;images pull&lt;/code&gt; command as follows:&lt;/p&gt;
+&lt;p&gt;This shows details about local images, including their status:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift images pull -i &amp;lt;tag_name&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;pre&gt;&lt;code&gt;  📦 RF Swift Images                                                                                          
+┌──────────────────────┬─────────────────┬──────────────┬───────────────────────────┬─────────────┬────────────┐
+│ Repository           │ Tag             │ Image ID     │ Created                   │ Size        │ Status     │
+├──────────────────────┼─────────────────┼──────────────┼───────────────────────────┼─────────────┼────────────┤
+│ myrfswift            │ latest          │ sha256:0bdb2 │ 2024-09-01T00:56:27&amp;#43;02:00 │ 16635.22 MB │ Custom     │
+│ penthertz/rfswiftdev │ sdr_full_amd64  │ sha256:0bdb2 │ 2024-09-01T00:56:27&amp;#43;02:00 │ 16635.22 MB │ Up to date │
+│ penthertz/rfswiftdev │ sdr_light_amd64 │ sha256:476c0 │ 2024-09-01T00:34:55&amp;#43;02:00 │ 9617.12 MB  │ Up to date │
+│ penthertz/rfswift    │ sdr_full        │ sha256:50ce1 │ 2024-08-02T14:45:46&amp;#43;02:00 │ 10383.56 MB │ Custom     │
+└──────────────────────┴─────────────────┴──────────────┴───────────────────────────┴─────────────┴────────────┘&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -3021,16 +3074,143 @@ First you should know that those two tags are the same, but &lt;code&gt;sdr_ligh
 
   
 &lt;/div&gt;
-&lt;h2&gt;Next&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;next&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#next&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In next pages, you will have a better idea of tools installed for each images, as well as other details.&lt;/p&gt;
-&lt;p&gt;Dive right into the following section to get started:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Image Status Indicators:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Up to date&lt;/strong&gt;: Image matches the latest version in the repository&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Update available&lt;/strong&gt;: A newer version exists in the repository&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Custom&lt;/strong&gt;: Image has been modified locally (through tagging or container commits)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Pulling Images&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;pulling-images&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#pulling-images&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;To download an image from the repository:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift images pull -i sdr_light&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;p&gt;Options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-i, --image&lt;/code&gt;: Image tag to download (required)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-t, --tag&lt;/code&gt;: Local tag to apply to the pulled image (optional)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-r, --repository&lt;/code&gt;: Alternate repository source (optional)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example with custom tag:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift images pull -i sdr_full -t my_sdr:v1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h3&gt;Updating Images&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;updating-images&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#updating-images&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;To update an image that shows &amp;ldquo;Update available&amp;rdquo;:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift images pull -i sdr_full&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;p&gt;RF Swift will automatically download the latest version.&lt;/p&gt;
+&lt;h3&gt;Saving and Loading Images&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;saving-and-loading-images&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#saving-and-loading-images&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For offline use or transfer between systems:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Export an image to a file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift images save -i sdr_light -o sdr_light.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Import an image from a file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift images load -i sdr_light.tar.gz&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h2&gt;Disk Space Considerations&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;disk-space-considerations&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#disk-space-considerations&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;RF Swift images vary in size based on included tools:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Image Type&lt;/th&gt;
+          &lt;th&gt;Typical Size Range&lt;/th&gt;
+          &lt;th&gt;Examples&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Base images&lt;/td&gt;
+          &lt;td&gt;2-5 GB&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;corebuild&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Specialized tools&lt;/td&gt;
+          &lt;td&gt;5-10 GB&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;bluetooth&lt;/code&gt;, &lt;code&gt;wifi&lt;/code&gt;, &lt;code&gt;reversing&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Comprehensive suites&lt;/td&gt;
+          &lt;td&gt;10-20 GB&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;sdr_full&lt;/code&gt;, &lt;code&gt;telecom_5G&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Important Note on Actual Disk Usage:&lt;/strong&gt;
+The sizes displayed by &lt;code&gt;rfswift images local&lt;/code&gt; show the virtual size of each image. However, due to Docker&amp;rsquo;s layer-based architecture and the hierarchical structure of RF Swift images, the actual disk space used is often significantly less than the sum of all image sizes.&lt;/p&gt;
+&lt;p&gt;For example, if you have both &lt;code&gt;sdr_light&lt;/code&gt; (9GB) and &lt;code&gt;sdr_full&lt;/code&gt; (16GB) images:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The displayed total might suggest 25GB of usage&lt;/li&gt;
+&lt;li&gt;The actual disk usage might be closer to 17GB since both images share common base layers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This layer sharing happens automatically and is one of the key benefits of RF Swift&amp;rsquo;s hierarchical image design. When you pull multiple related images (like those in the same branch of the hierarchy diagram), you&amp;rsquo;re only downloading and storing the unique layers for each image.&lt;/p&gt;
+&lt;p&gt;To manage disk space efficiently:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Use specialized images rather than all-inclusive ones when possible&lt;/li&gt;
+&lt;li&gt;Leverage the image hierarchy - related images share layers and consume less space&lt;/li&gt;
+&lt;li&gt;Remove unused images with &lt;code&gt;rfswift delete -c image:tag&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Clean up unused containers with &lt;code&gt;rfswift remove -c container_name&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Consider creating custom images with only the tools you need&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Next Steps&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;next-steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Explore these sections to learn more about available tools and configuration options:&lt;/p&gt;
 &lt;div class=&#34;hextra-cards hx-mt-4 hx-gap-4 hx-grid not-prose&#34; style=&#34;--hextra-cards-grid-cols: 3;&#34;&gt;
   &lt;a
     class=&#34;hextra-card hx-group hx-flex hx-flex-col hx-justify-start hx-overflow-hidden hx-rounded-lg hx-border hx-border-gray-200 hx-text-current hx-no-underline dark:hx-shadow-none hover:hx-shadow-gray-100 dark:hover:hx-shadow-none hx-shadow-gray-100 active:hx-shadow-sm active:hx-shadow-gray-200 hx-transition-all hx-duration-200 hover:hx-border-gray-300 hx-bg-transparent hx-shadow-sm dark:hx-border-neutral-800 hover:hx-bg-slate-50 hover:hx-shadow-md dark:hover:hx-border-neutral-700 dark:hover:hx-bg-neutral-900&#34;href=&#34;https://rfswift.io/docs/guide/list-of-tools&#34;
-      &gt;&lt;span class=&#34;hextra-card-icon hx-flex hx-font-semibold hx-items-start hx-gap-2 hx-pt-4 hx-px-4 hx-text-gray-700 hover:hx-text-gray-900 dark:hx-text-neutral-200 dark:hover:hx-text-neutral-50&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z&#34;/&gt;&lt;/svg&gt;List of tools&lt;/span&gt;&lt;div class=&#34;hextra-card-subtitle hx-line-clamp-3 hx-text-sm hx-font-normal hx-text-gray-500 dark:hx-text-gray-400 hx-px-4 hx-mb-4 hx-mt-2&#34;&gt;List of tools per images.&lt;/div&gt;&lt;/a&gt;
+      &gt;&lt;span class=&#34;hextra-card-icon hx-flex hx-font-semibold hx-items-start hx-gap-2 hx-pt-4 hx-px-4 hx-text-gray-700 hover:hx-text-gray-900 dark:hx-text-neutral-200 dark:hover:hx-text-neutral-50&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z&#34;/&gt;&lt;/svg&gt;List of Tools&lt;/span&gt;&lt;div class=&#34;hextra-card-subtitle hx-line-clamp-3 hx-text-sm hx-font-normal hx-text-gray-500 dark:hx-text-gray-400 hx-px-4 hx-mb-4 hx-mt-2&#34;&gt;Detailed inventory of tools included in each image.&lt;/div&gt;&lt;/a&gt;
   &lt;a
     class=&#34;hextra-card hx-group hx-flex hx-flex-col hx-justify-start hx-overflow-hidden hx-rounded-lg hx-border hx-border-gray-200 hx-text-current hx-no-underline dark:hx-shadow-none hover:hx-shadow-gray-100 dark:hover:hx-shadow-none hx-shadow-gray-100 active:hx-shadow-sm active:hx-shadow-gray-200 hx-transition-all hx-duration-200 hover:hx-border-gray-300 hx-bg-transparent hx-shadow-sm dark:hx-border-neutral-800 hover:hx-bg-slate-50 hover:hx-shadow-md dark:hover:hx-border-neutral-700 dark:hover:hx-bg-neutral-900&#34;href=&#34;https://rfswift.io/docs/guide/configurations&#34;
-      &gt;&lt;span class=&#34;hextra-card-icon hx-flex hx-font-semibold hx-items-start hx-gap-2 hx-pt-4 hx-px-4 hx-text-gray-700 hover:hx-text-gray-900 dark:hx-text-neutral-200 dark:hover:hx-text-neutral-50&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z&#34;/&gt;&lt;/svg&gt;Configurations&lt;/span&gt;&lt;div class=&#34;hextra-card-subtitle hx-line-clamp-3 hx-text-sm hx-font-normal hx-text-gray-500 dark:hx-text-gray-400 hx-px-4 hx-mb-4 hx-mt-2&#34;&gt;Manage configurations in your profile and in RF Swift.&lt;/div&gt;&lt;/a&gt;
+      &gt;&lt;span class=&#34;hextra-card-icon hx-flex hx-font-semibold hx-items-start hx-gap-2 hx-pt-4 hx-px-4 hx-text-gray-700 hover:hx-text-gray-900 dark:hx-text-neutral-200 dark:hover:hx-text-neutral-50&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z&#34;/&gt;&lt;/svg&gt;Configurations&lt;/span&gt;&lt;div class=&#34;hextra-card-subtitle hx-line-clamp-3 hx-text-sm hx-font-normal hx-text-gray-500 dark:hx-text-gray-400 hx-px-4 hx-mb-4 hx-mt-2&#34;&gt;Manage profiles and settings for RF Swift.&lt;/div&gt;&lt;/a&gt;
 &lt;/div&gt;
 
 
