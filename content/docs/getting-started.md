@@ -60,14 +60,27 @@ The minimum requirements to run RF Swift are:
 
   #### Quick Installation
 
+  RF Swift provides a comprehensive installation script that automatically installs all required tools and dependencies on Linux systems.
+
   ```bash
   # Clone the repository
   git clone https://github.com/PentHertz/RF-Swift.git
   cd RF-Swift
   
-  # Run the installation script
+  # Run the installation script to automatically install all dependencies
   ./install.sh
   ```
+
+  The `install.sh` script will:
+  - Install Docker if not already present
+  - Set up BuildX for cross-architecture support
+  - Install Go compiler if needed
+  - Configure xhost for GUI application access
+  - Set up PulseAudio for sound
+  - Configure user permissions for Docker
+  - Download and install the latest RF Swift binary
+
+  This is the recommended method for Linux users as it ensures all components are correctly configured to work together.
   {{< /tab >}}
 
   {{< tab >}}
@@ -179,12 +192,3 @@ If you encounter issues during installation or usage:
 | Audio Support | ✅ | ✅ (with PulseAudio) | ❓ Limited |
 | Hardware Acceleration | ✅ | ❓ Limited | ❓ Limited |
 | Cross-Compilation | ✅ | ✅ (in WSL) | ✅ |
-
-## Next
-
-Dive right into the following section to get started:
-
-{{< cards >}}
-  {{< card link="/docs/quick-start" title="Quick start" icon="document-text" subtitle="Running RF Swift with pre-built images and binary." >}}
-  {{< card link="/docs/development" title="Developping and contributing" icon="document-text" subtitle="Compile binary and build images from sources, contribute to the project." >}}
-{{< /cards >}}
