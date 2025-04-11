@@ -203,27 +203,51 @@ Once the container is running, you can use any of the pre-installed RF tools. Fo
 2. Inside the container, run: `sdrpp`
 
 {{< callout type="warning" >}}
-If you encounter audio issues, you can enable audio forwarding with:
-```bash
-rfswift host audio enable
-```
+If you encounter audio issues, you can enable audio forwarding with: `rfswift host audio enable`
 This requires `pulseaudio` to be properly configured on your host system.
 {{< /callout >}}
 
-### Forward USB Devices
+### USB Device Management
 
-To use SDR hardware, you'll need to forward USB devices to your container:
+USB device handling varies by platform:
+
+#### Windows USB Forwarding
+
+On Windows, you'll need to explicitly forward USB devices to your container using the `winusb` commands in Administrator mode:
 
 ```bash
-# List available USB devices
-rfswift host usb list
+# List available USB devices on Windows
+rfswift winusb list
 
-# Forward a specific device
-rfswift host usb forward -v VENDOR_ID -p PRODUCT_ID
-
-# Or forward all detected SDR devices
-rfswift host usb forward-all-sdrs
+# Attach a specific device on Windows
+rfswift winusb attach -b <USB ID>
 ```
+
+#### Linux USB Device Access
+
+On Linux, you can access USB devices in two ways:
+
+1. **During container creation** - use the `-s` option to bind specific devices:
+   ```bash
+   rfswift run -i sdr_full -n my_container -s /dev/ttyUSB0:/dev/ttyUSB0
+   ```
+
+2. **After container creation** - use the powerful `bindings` feature to add devices to an existing container:
+   ```bash
+   # Add a new USB device to an existing container
+   rfswift bindings add -c my_container -d -s /dev/ttyUSB0 -t /dev/ttyUSB0*
+
+   # Same but shorter: Add a new USB device to an existing container with some destination
+   rfswift bindings add -c my_container -t /dev/ttyUSB0
+   
+   # Add a new volume to an existing container
+   rfswift bindings add -c my_container -s /home/user/data -t /root/data
+   
+   # Remove a binding
+   rfswift bindings rm -c my_container -s /dev/ttyUSB0
+   ```
+
+Note that to rebind a device, you need the `-d` switch.
 
 {{% /steps %}}
 
@@ -237,6 +261,12 @@ To return to a previously created container:
 rfswift exec -c my_sdr_container
 ```
 
+You can also use the short command if you want to recall the last container:
+
+```bash
+rfswift exec
+```
+
 This restarts the container if it's stopped and gives you a shell inside it.
 
 ### List Running Containers
@@ -244,7 +274,7 @@ This restarts the container if it's stopped and gives you a shell inside it.
 View all RF Swift containers:
 
 ```bash
-rfswift container list
+rfswift last
 ```
 
 ### Save Container State
@@ -252,7 +282,7 @@ rfswift container list
 If you've made changes to a container that you want to preserve:
 
 ```bash
-rfswift container commit -c my_sdr_container -t my_custom_image
+rfswift commit -c my_sdr_container -i my_custom_image
 ```
 
 This saves the current state of the container as a new image.
@@ -274,9 +304,8 @@ Replace `$(pwd)/rfswift` with the full path to your RF Swift binary.
 |---------|-------------|
 | `rfswift run -i IMAGE -n NAME` | Create and run a new container |
 | `rfswift exec -c CONTAINER` | Enter an existing container |
-| `rfswift images list` | List available local images |
-| `rfswift container list` | List all containers |
-| `rfswift host usb list` | List connected USB devices |
+| `rfswift images local` | List available local images |
+| `rfswift last` | List all containers |
 | `rfswift host audio enable` | Enable audio forwarding |
 | `rfswift host video enable` | Enable video forwarding |
 

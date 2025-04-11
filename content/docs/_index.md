@@ -88,6 +88,7 @@ This toolbox is probably the **best solution** to deploy a generic, as well as a
 | Scenario | RF Swift | Kali Linux | Dragon OS |
 |----------|---------|------------|-----------|
 | Quick assessment on personal device | ⭐⭐⭐ | ⭐ | ⭐ |
+| Deployment on a burner laptop | ⭐⭐⭐ | ⭐ | ⭐ |
 | Dedicated pentesting machine | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ |
 | Low storage environments | ⭐⭐⭐ | ⭐ | ⭐ |
 | Multiple architecture development | ⭐⭐⭐ | ⭐⭐ | ⭐ |
