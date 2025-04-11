@@ -336,6 +336,132 @@ GUI applications require:
 
 ### Host Isolation
 
+RF Swift implements host isolation through several security mechanisms configured in your `config.ini` file:
+
+```ini
+[container]
+privileged = false
+caps =
+seccomp =
+cgroups = c 189:* rwm,c 166:* rwm,c 188:* rwm
+```
+
+#### Default Security Configuration
+
+By default, RF Swift runs containers in unprivileged mode with specific cgroup restrictions:
+
+- **Unprivileged Mode**: Containers run without full root privileges on the host (`privileged = false`)
+- **Cgroup Restrictions**: Controlled device access through character device major numbers:
+  - `c 189:* rwm`: Access to USB serial devices (ttyUSB*)
+  - `c 166:* rwm`: Access to ACM devices (ttyACM*)
+  - `c 188:* rwm`: Access to USB serial converters
+
+This provides a reasonable balance between functionality and security for RF applications.
+
+#### Customizing Security Settings
+
+You can customize security settings both in the config file and via command-line parameters:
+
+**Adding Capabilities**:
+```bash
+# Via command line
+rfswift run -i sdr_full -n my_container -a NET_ADMIN,SYS_PTRACE
+
+# Via config.ini
+caps = NET_ADMIN,SYS_PTRACE
+```
+
+**Custom Seccomp Profile**:
+```bash
+# Via command line
+rfswift run -i sdr_full -n my_container -m /path/to/seccomp.json
+
+# Via config.ini
+seccomp = /path/to/seccomp.json
+```
+
+**Additional Cgroup Rules**:
+```bash
+# Via command line
+rfswift run -i sdr_full -n my_container -g "c 226:* rwm"
+
+# Via config.ini
+cgroups = c 189:* rwm,c 166:* rwm,c 188:* rwm,c 226:* rwm
+```
+
 {{< callout type="info" >}}
-Host isolation features are in development and will be available soon.
+Cgroup rules use the format `type major:minor permission` where:
+- `type` is c (character) or b (block)
+- `major:minor` defines the device number (use * for wildcard)
+- `permission` is r (read), w (write), m (mknod)
+
+For example, `c 189:* rwm` grants full access to all devices with major number 189.
+{{< /callout >}}
+
+#### Command-Line Security Configuration
+
+RF Swift allows you to override or extend security settings directly from the command line when running containers. This is particularly useful for one-off tasks or testing configurations before adding them to your config file.
+
+**Complete List of Security-Related Flags:**
+
+```bash
+rfswift run [options]
+
+Security Options:
+  -u, --privileged int        Set privilege level (1: privileged, 0: unprivileged)
+  -a, --capabilities string   Extra capabilities (separate with commas)
+  -g, --cgroups string        Extra cgroup rules (separate with commas)
+  -m, --seccomp string        Set Seccomp profile ('default' one used by default)
+  -s, --devices string        Extra devices mapping (separate with commas)
+  
+Network Options:  
+  -t, --network string        Network mode (default: 'host')
+  -z, --exposedports string   Exposed ports
+  -w, --bindedports string    Ports to bind between host and container
+  -x, --extrahosts string     Set extra hosts (default: 'pluto.local:192.168.1.2')
+  
+Resource Options:
+  -b, --bind string           Extra volume bindings (separate with commas)
+  -d, --display string        Set X Display (default "DISPLAY=:0")
+  -p, --pulseserver string    PULSE SERVER TCP address (default "tcp:127.0.0.1:34567")
+```
+
+**Examples of Command-Line Security Configurations:**
+
+1. **Run with specific privileges and capabilities**:
+   ```bash
+   rfswift run -i penthertz/rfswift:wifi -n wifi_tools -u 0 -a NET_ADMIN,NET_RAW
+   ```
+   This runs a container in unprivileged mode but adds the NET_ADMIN and NET_RAW capabilities.
+
+2. **Add custom cgroup rules and device mappings**:
+   ```bash
+   rfswift run -i penthertz/rfswift:sdr -n rtlsdr -g "c 226:* rwm" -s "/dev/rtlsdr0:/dev/rtlsdr0"
+   ```
+   This adds permission for device major number 226 and maps a specific RTL-SDR device.
+
+3. **Set a custom seccomp profile**:
+   ```bash
+   rfswift run -i penthertz/rfswift:security -n forensics -m ~/custom_seccomp.json
+   ```
+   This applies a custom seccomp profile to the container.
+
+4. **Combined security settings**:
+   ```bash
+   rfswift run -i penthertz/rfswift:bluetooth -n bt_scanner \
+     -t bridge \
+     -a NET_ADMIN \
+     -g "c 226:* rwm,c 116:* rwm" \
+     -s "/dev/bluetooth:/dev/bluetooth" \
+     -u 0
+   ```
+   This creates a container with:
+   - Bridge networking mode
+   - NET_ADMIN capability
+   - Custom cgroup rules for devices with major numbers 226 and 116
+   - Specific Bluetooth device mapping
+   - Unprivileged mode
+
+{{< callout type="warning" >}}
+Command-line settings always take precedence over config file settings. When using both, command-line options will extend or override the corresponding settings in your config.ini file.
 {{< /callout >}}
