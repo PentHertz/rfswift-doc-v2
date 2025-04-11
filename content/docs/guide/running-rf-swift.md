@@ -7,20 +7,22 @@ cascade:
   type: docs
 ---
 
-Running RF Swift is pretty straight forward and only requires a few command line to use your hacking tools as you wish.
+# Running RF Swift
+
+RF Swift provides a streamlined command-line interface to manage containers for RF and hardware security applications. This guide covers essential commands and workflows.
 
 {{< callout type="warning" >}}
-  **On Linux**, unless your are using Docker Desktop, you will have to use `rfswift` with sudo most of the time.
+**On Linux**, unless you are using Docker Desktop, you will need to use `sudo` with the `rfswift` command for operations that require elevated privileges.
 {{< /callout >}}
 
-## Options
+## Command Overview
 
-Let us first discover the different options of the tool by typing `rfswift --help`:
+Let's explore the available commands with `rfswift --help`:
 
 ```bash
 rfswift --help
 [...]                                                                                                                                              
-                                     
+
 
   888~-_   888~~        ,d88~~\                ,e,   88~\   d8   
   888   \  888___       8888    Y88b    e    /  "  _888__ _d88__ 
@@ -31,17 +33,14 @@ rfswift --help
 
                 RF toolbox for HAMs and professionals                                                                             
 
-[+] You are running version: 0.5.2 (Up to date)
-rfswift is a super fancy CLI (kidding)
-   
-One can use stringer to modify or inspect strings straight from the terminal
+rfswift is THE toolbox for any HAM & radiocommunications and hardware professionals
 
 Usage:
   rfswift [flags]
   rfswift [command]
 
 Available Commands:
-  bindings    Manage bindings
+  bindings    Manage devices and volumes bindings
   commit      Commit a container
   completion  Generate the autocompletion script for the specified shell
   delete      Delete an rfswift images
@@ -55,57 +54,62 @@ Available Commands:
   rename      Rename a container
   retag       Rename an image
   run         Create and run a program
+  stop        Stop a container
   update      Update RF Swift
 
 Flags:
-  -h, --help   help for rfswift
+  -q, --disconnect   Don't query updates (disconnected mode)
+  -h, --help         help for rfswift
 
 Use "rfswift [command] --help" for more information about a command.
 ```
 
-{{< callout type="warning" >}}
-  Using Docker Desktop (Windows and macOS) or OrbStack on macOS, **`sudo` is not necessary**. In other cases, you will have to use it particularly on Linux dealing with images and containers, but not host actions.
+{{< callout type="info" >}}
+**Privilege requirements by platform:**
+- **Linux**: `sudo` is required for most container operations when not using Docker Desktop
+- **Windows/macOS**: With Docker Desktop or OrbStack, `sudo` is not necessary
+- **Windows**: Commands related to USB binding require Administrator privileges
 {{< /callout >}}
 
-{{< callout type="warning" >}}
-  **On Windows**, commands related to USB binding will need to be run as an administrator.
-{{< /callout >}}
+## Core Workflows
 
+### 1. Keeping RF Swift Updated
 
-## Stay up-to-date
-
-In case you binary is older than latest official release, you can pull the latest source from [our official GitHub repository ↗](https://github.com/PentHertz/RF-Swift/).
-
-At launch time, the binary will check your binary against latest official release:
+RF Swift automatically checks for updates when launched:
 
 ```bash
 [!] You are running version: 0.4.8 (Obsolete)
 [+] Do you want to update to the latest version? (yes/no): 
 ```
 
-Or you can also use the `upate` command that will download the [latest ↗](https://github.com/PentHertz/RF-Swift/tags) binary compiled for your architecture:
+You can also trigger updates manually:
 
 ```bash
-rfswift update 
-...                                                                         
+rfswift update
 
-[!] Your current version (0.4.8) is obsolete. Please update to version (v0.4.9).
+[!] Your current version (0.4.8) is obsolete. Please update to version (v0.6.0).
 [+] Do you want to update to the latest version? (yes/no): yes
-Latest release download URL: https://github.com/PentHertz/RF-Swift/releases/download/v0.4.9/rfswift_linux_amd64
+Latest release download URL: https://github.com/PentHertz/RF-Swift/releases/download/v0.6.0/rfswift_linux_amd64
 [+] Do you want to replace the existing binary with this new release? (yes/no): yes
 13.67 MiB / 13.67 MiB [---------------------------------------------------------------------------------------------------------------------------------------------------------------------------] 100.00%%
 File downloaded and replaced successfully.
 ```
 
-After that, your binary should be up-to-date!
+### 2. Image Management
 
+#### Customizing Image Tags
 
-## Changing tag and running
+You can rename image tags for convenience or to match your default configuration:
 
-After pulling an image, you can choose to change the tag name as you wish for conveniency, and also match the tag to the default image to run as described in the configuration in your profile directory (e.g: on Linux):
+```bash
+rfswift retag -i penthertz/rfswiftdev:sdr_full_amd64 -t myrfswift:latest
+[+] You are running version: 0.4.9 (Up to date)
+[+] Image renamed!
+```
 
-{{< tabs items="Linux,Windows,macOS X" defaultIndex="1" >}}
+This allows you to use the default tag in your configuration file:
 
+{{< tabs items="Linux,Windows,macOS" >}}
   {{< tab >}}
 ```bash
 cat /home/username/.config/rfswift/config.ini
@@ -130,180 +134,189 @@ imagename = myrfswift:latest
 ...
 ```
   {{< /tab >}}
-
 {{< /tabs >}}
 
-So if you change your the tag name of your desired image, or last image you have pulled, to the default tag name `myrfswift:latest` that way:
+With the default tag set, you can simplify the `run` command:
 
 ```bash
-rfswift retag -i penthertz/rfswiftdev:sdr_full_amd64 -t myrfswift:latest
-...                                                                            
-
-[+] You are running version: 0.4.9 (Up to date)
-[+] Image renamed!
-```
-
-This will simplify the `run` command and avoid you to use `-i` argument:
-
-```bash
-rfswift run -n supertagname1 # -> same as 'rfswift run -i myrfswift:latest -n supertagname1'
-...
-
-  🧊 Container Summary                                                                                                                                                                                
-╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Container Name  │ supertagname1                                                                                                                                                                      │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ X Display       │ :0                                                                                                                                                                                 │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Shell           │ /bin/zsh                                                                                                                                                                           │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Privileged Mode │ true                                                                                                                                                                               │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Network Mode    │ host                                                                                                                                                                               │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Image Name      │ myrfswift:latest (Custom)                                                                                                                                                          │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Size on Disk    │ 16635.22 MB                                                                                                                                                                        │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Bindings        │ /tmp/.X11-unix:/tmp/.X11-unix,/dev/bus/usb:/dev/bus/usb,/run/dbus/system_bus_socket:/run/dbus/system_bus_socket,/dev/snd:/dev/snd,/dev/dri:/dev/dri,/dev/input:/dev/input          │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Extra Hosts     │ pluto.local:192.168.2.1                                                                                                                                                            │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-
-[+] Container 'supertagname1' started successfully
-┌─[root@topms] - [~] - [Tue Sep 03, 13:57]
-└─[$]> exit
-
+rfswift run -n my_container  # Equivalent to: rfswift run -i myrfswift:latest -n my_container
 ```
 
 {{< callout type="info" >}}
-  Note that changing tag name will also make your image custom, and you will not be able to track this image for update from official registry.
+Changing an image's tag makes it a "custom" image in RF Swift, which means it won't receive automatic updates from the official registry.
 {{< /callout >}}
 
+### 3. Container Management
 
-Note that if you run a container without enabling audio with `pulseaudio` options, you will generally miss the sound on many tools, and a warning will notify you that the audio is not enabled:
+#### Creating and Running Containers
+
+Create a new container from an image:
 
 ```bash
+rfswift run -i sdr_full -n my_sdr_container
+```
+
+#### Container Listing and Selection
+
+If you forget container names, use the `last` command:
+
+```bash
+rfswift last
+┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ ℹ️  Up-to-date                                                                                    │
+├──────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ You are running the latest version: 0.6.0-dev                                                    │
+└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+  🤖 Last Run Containers                                                                                                                   
+┌───────────────────────────┬─────────────────────────────┬───────────────────────────────────────────────────────┬──────────────┬──────────┐
+│ Created                   │ Image Tag (ID)              │ Container Name                                        │ Container ID │ Command  │
+├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
+│ 2025-04-11T16:47:02+02:00 │ penthertz/rfswift:hardware  │ hardware                                              │ b6e43a87e1f6 │ /bin/zsh │
+├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
+│ 2025-04-11T16:23:43+02:00 │ penthertz/rfswift:bluetooth │ missionbluetooth                                      │ 3d92cb59560f │ /bin/zsh │
+├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
+│ 2025-04-11T16:18:22+02:00 │ penthertz/rfswift:rfid      │ missionrfid2                                          │ 50cbccef53f5 │ /bin/zsh │
+├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
+...
+``` 
+
+#### Restarting Existing Containers
+
+To restart the most recently used container:
+
+```bash
+rfswift exec
+```
+
+To restart a specific container by name:
+
+```bash
+rfswift exec -c my_sdr_container
+```
+
+#### Container Lifecycle Management
+
+**Save container changes as a new image:**
+```bash
+rfswift commit -c my_container -i my_new_image
+```
+
+**Rename a container:**
+```bash
+rfswift rename -n old_name -d new_name
+```
+
+**Remove a container:**
+```bash
+rfswift remove -c container_name
+```
+
+**Delete an image:**
+```bash
+rfswift delete -c penthertz/rfswift:tag_name
+```
+
+### 4. Device and Resource Management
+
+#### Audio Support
+
+RF Swift will warn if audio support is not properly configured:
+
+```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
 │ ⚠️  Warning                                                                                       │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │ Warning: Unable to connect to Pulse server at 127.0.0.1:34567                                    │
-│ To install Pulse server on Linux, follow these steps:                                            │
-│ 1. Update your package manager: sudo apt update (for Debian-based) or sudo yum update (for Red   │
-│ Hat-based).                                                                                      │
-│ 2. Install Pulse server: sudo apt install pulse-server (for Debian-based) or sudo yum install    │
-│ pulse-server (for Red Hat-based).                                                                │
-│ After installation, enable the module with the following command as unprivileged user:           │
-│ ./rfswift host audio enable                                                                      │
+...
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-To enable the audio, use the following command **without sudo** and you should see the following message:
+Enable audio support (run **without sudo**):
 
 ```bash
 rfswift host audio enable
-...
 [+] Successfully loaded module-native-protocol-tcp with index 29
 ```
 
-When running a container, you should get a different shell indicating you are using now the container.
+#### Dynamic Device and Volume Binding
 
-Using the `run` command, you are creating a new container from desired images everytime:
+One of RF Swift's most powerful features is the ability to add or remove device bindings to running containers:
+
+```bash
+# Add a USB device to an existing container
+rfswift bindings add -c my_container -d -s /dev/ttyUSB0:/dev/ttyUSB0
+
+# For some destination, use shortcuts with -t only
+rfswift bindings add -c my_container -d -t /dev/ttyUSB0
+
+# Add a shared folder
+rfswift bindings add -c my_container -b ~/projects:/root/projects
+
+# Remove a binding
+rfswift bindings rm -c my_container -t /dev/ttyUSB0 [-d]
+
+# List current bindings
+rfswift bindings list -c my_container
+```
+
+Don't forget the `-d` switch if you want to deal with devices and not volumes.
+
+### 5. Network Configuration
+
+RF Swift supports various network isolation modes:
+
+| Mode | Description |
+|------|-------------|
+| `host` | No network isolation (default) |
+| `bridge` | Default Docker network driver with isolation |
+| `none` | Complete network isolation |
+| `overlay` | Connect multiple Docker daemons |
+| `ipvlan` | Full IPv4/IPv6 addressing control |
+| `macvlan` | Assign MAC addresses to containers |
+
+Example of using bridge mode with port mapping:
+
+```bash
+rfswift run -i bluetooth -n my_container -t bridge -z 8000 -w 8000:127.0.0.1:80/tcp
+```
+
+This command:
+- Uses the `-t bridge` option to enable bridge networking
+- Maps container port 8000 to host port 80 on localhost with `-w 8000:127.0.0.1:80/tcp`
+- Exposes port 8000 to other containers with `-z 8000`
+
+{{< callout type="warning" >}}
+For Wi-Fi and Bluetooth tools, you may need to add the `NET_ADMIN` capability: `rfswift run -i wifi_tools -n my_container -a NET_ADMIN`
+Be cautious when adding capabilities as they increase security risks if the container is compromised.
+{{< /callout >}}
+
+## Container Architecture Benefits
 
 ```mermaid
 graph TD;
-    A[corebuild]-->B[Image 1];
+    A[Core build]-->B[Image 1];
     A-->C[Docker image 2];
-    B-->D[Supercontainer #1 of image 1];
-    B-->E[Supercontainer #2 of image 1];
-    C-->F[Anothercontainer from image 2]
-  
+    B-->D[Container #1 from image 1];
+    B-->E[Container #2 from image 1];
+    C-->F[Container from image 2]
 ```
 
-This architecture has several benefits:
-
-* more portability;
-* possibility to have kind of "light" and isolated environment;
-* you can create, mess, and destroy the environment;
-* have specific environments for specific tasks;
-* stop wasting time reinstalling the entire system with your tools;
-* better performance than VMs that consume more CPU, memory, and disk space;
-* and more such as using it as for microservices, etc.
-
-These benefits are what you are generally what you are looking for when doing lots of assessments, particularly when you have to prepare at the last moment.
+This architecture provides significant advantages:
+- **Portability**: Move environments between systems easily
+- **Isolation**: Create separate environments for different tasks
+- **Disposability**: Create, experiment with, and destroy environments without impact
+- **Specialization**: Tailored environments for specific assessment needs
+- **Efficiency**: No need to reinstall entire systems
+- **Performance**: Less resource-intensive than VMs
+- **Time-saving**: Quick deployment for last-minute assessment preparations
 
 {{< callout type="info" >}}
-  Using RF Swift instead of manual host, and Docker commands also makes things easy when the learning curve for Docker can be blocking for most people, and also allow to save a lot of time dealing with host resources for you.
+RF Swift significantly flattens the Docker learning curve while providing powerful features like dynamic device binding and host resource integration that would otherwise require considerable Docker expertise.
 {{< /callout >}}
 
+## Using RF Tools
 
-## Restarting a previous container
-
-Of course, to avoid creating new containers with `run` command, you can use `exec` command that will automatically restart the latest container you run:
-
-```bash
-rfswift exec                                                                                             
-...                                                                        
-[+] You are running version: 0.4.9 (Up to date)
-[+] Container 'a9c76a227726357a9b403d703923a57ae62a024bace11c1d1df893ea6c7e9623' started successfully
-  🧊 Container Summary                                                                                                                                                                                
-╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Container Name  │ supertagname1                                                                                                                                                                      │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ X Display       │ :0                                                                                                                                                                                 │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Shell           │ /bin/zsh                                                                                                                                                                           │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Privileged Mode │ true                                                                                                                                                                               │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Network Mode    │ host                                                                                                                                                                               │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Image Name      │ myrfswift:latest (Custom)                                                                                                                                                          │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Size on Disk    │ 16635.22 MB                                                                                                                                                                        │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Bindings        │ /tmp/.X11-unix:/tmp/.X11-unix,/dev/bus/usb:/dev/bus/usb,/run/dbus/system_bus_socket:/run/dbus/system_bus_socket,/dev/snd:/dev/snd,/dev/dri:/dev/dri,/dev/input:/dev/input          │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Extra Hosts     │ pluto.local:192.168.2.1                                                                                                                                                            │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-┌─[root@topms] - [~] - [Tue Sep 03, 14:57]
-└─[$]> 
-```
-
-With `-c` argument precising the name, or container ID, used when creating the container you can also call other container you have previously made:
-
-```bash
-rfswift exec -c containername3
-...                                                                         
-[+] You are running version: 0.4.9 (Up to date)
-[+] Container 'containername3' started successfully
-  🧊 Container Summary                                                                                                                                                                                
-╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Container Name  │ containername3                                                                                                                                                                     │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ X Display       │ :0                                                                                                                                                                                 │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Shell           │ /bin/zsh                                                                                                                                                                           │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Privileged Mode │ true                                                                                                                                                                               │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Network Mode    │ host                                                                                                                                                                               │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Image Name      │ penthertz/rfswiftdev:sdr_full_amd64 (Up to date)                                                                                                                                   │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Size on Disk    │ 16635.22 MB                                                                                                                                                                        │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Bindings        │ /tmp/.X11-unix:/tmp/.X11-unix,/dev/bus/usb:/dev/bus/usb,/run/dbus/system_bus_socket:/run/dbus/system_bus_socket,/dev/snd:/dev/snd,/dev/dri:/dev/dri,/dev/input:/dev/input          │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Extra Hosts     │ pluto.local:192.168.2.1                                                                                                                                                            │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-┌─[root@topms] - [~] - [Tue Sep 03, 15:00]
-└─[$]> 
-```
-
-## Starting programs
-
-Depending on the Docker image you are using, some software can be used, like `sdrangel` after plugging an SDR device like the RTL-SDR one:
+Once your container is running, you can use any included RF tools. For example, with an SDR device connected:
 
 ```bash
 ┌─[root@topms] - [~] - [Tue Sep 03, 15:15]
@@ -313,124 +326,16 @@ Depending on the Docker image you are using, some software can be used, like `sd
 ![Running SDRAngel with an RTL-SDR](/images/docs/sdrangel.png "Running SDRAngel with an RTL-SDR")
 
 {{< callout type="warning" >}}
-  `xhost` on Linux, or `XQuartz` on macOS (well configured), should be installed on the computer to handle graphic elements.
+GUI applications require:
+- **Linux**: `xhost` installed and configured
+- **macOS**: `XQuartz` properly configured
+- **Windows**: Native support via Docker Desktop
 {{< /callout >}}
 
-Of course, other software are installed among images, so you can discover the lists in the next pages.
+## Advanced Features
 
-## Retrieving last containers name
+### Host Isolation
 
-If you do not remember how you have named your container, it is not a problem as you can recover the details with the command `last`:
-
-```bash
-rfswift last
-[+] You are running version: 0.4.9 (Up to date)
-  🤖 Last Run Containers                                                                                    
-┌───────────────────────────┬─────────────────────────────────────┬────────────────┬──────────────┬──────────┐
-│ Created                   │ Image Tag                           │ Container Name │ Container ID │ Command  │
-├───────────────────────────┼─────────────────────────────────────┼────────────────┼──────────────┼──────────┤
-│ 2024-09-04T12:51:15+02:00 │ penthertz/rfswift:telecom           │ supertelecom   │ e1a8c7c5f419 │ /bin/zsh │
-├───────────────────────────┼─────────────────────────────────────┼────────────────┼──────────────┼──────────┤
-│ 2024-09-04T12:47:11+02:00 │ penthertz/rfswift:reversing         │ superreverse   │ 70b9269b2819 │ /bin/zsh │
-├───────────────────────────┼─────────────────────────────────────┼────────────────┼──────────────┼──────────┤
-│ 2024-09-04T12:38:09+02:00 │ penthertz/rfswift:automotive        │ superauto      │ 9063f86f9cf7 │ /bin/zsh │
-├───────────────────────────┼─────────────────────────────────────┼────────────────┼──────────────┼──────────┤
-...
-``` 
- 
-## Saving Changes to a Container
-
-You can save changes made inside a running container to a new image using the `commit` command. This allows you to preserve the current state of your container as a reusable image.
-
-To commit the changes from a container, use the following command in RF Swift:
-
-```bash
-rfswift commit -c supertelecom -i supernewimage
-...
-[+] You are running version: 0.4.9 (Up to date)
-sha256:3e287dbff4ea78ae782f19f50db6e7645ef45294c8990f2a5d595936c1f9d47b
-```
-
-## Renaming a container
-
-If the name of the container does not suit you anymore, you can also rename it with the `rename` command as follows:
-
-```bash
-rfswift rename -n oldcontainername -d newcontainername
-...
-[+] You are running version: 0.4.9 (Up to date)
-[+] Container 'supertelecom2' renamed to 'newnametelecom'!
-```
-
-## Deleting a container
-
-If you want to remove a container, and save space once for a while, you can issue the `remove` command precing the name or ID of the container:
-
-```bash
-rfswift remove -c newnametelecom
-...
-[+] Container 'newnametelecom' removed successfully
-```
-
-## Deleting an image
-
-If deleting the container is not enough and need to also remove the image, you can use `delete` command with image tag as follows:
-
-```bash
-rfswift detele -c penthertz/rfswift:<tagname>
-```
-
-## Isolation
-
-### Network isolation
-
-By default, all images run in `host` mode which means there is no network isolation.
-
-RF Swift implement same network isolation as classic Docker:
-
-* `bridge`: The default network driver.
-* `host`: Remove network isolation between the container and the Docker host.
-* `none`: Completely isolate a container from the host and other containers.
-* `overlay`: Overlay networks connect multiple Docker daemons together.
-* `ipvlan`: IPvlan networks provide full control over both IPv4 and IPv6 addressing.
-* `macvlan`: Assign a MAC address to a container.
-
-To use `bridge` mode and exposing a port to all container and/or on the host, you can use use the following command (with root privileges):
-
-```bash
-rfswift run -i bluetooth -n containername -t bridge -z 8000 -w 8000:127.0.0.0:80/tcp
-...
-[+] Binded: '8000:127.0.0.0:80/tcp'
-  🧊 Container Summary                                                                                                                                                            
-╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ Container Name  │ containername                                                                                                                                                  │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ X Display       │ :0                                                                                                                                                             │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Shell           │ /bin/zsh                                                                                                                                                       │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Privileged Mode │ true                                                                                                                                                           │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Network Mode    │ bridge                                                                                                                                                         │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Exposed Ports   │ 8000                                                                                                                                                           │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Port Bindings   │ 127.0.0.0:80/tcp -> 8000                                                                                                                                       │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Image Name      │ penthertz/rfswift:bluetooth                                                                                                                                    │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Size on Disk    │ 10836.73 MB                                                                                                                                                    │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Bindings        │ /tmp/.X11-unix:/tmp/.X11-unix,/dev/bus/usb:/dev/bus/usb,/run/dbus/system_bus_socket:/run/dbus/system_bus_socket,/dev/snd:/dev/snd,/dev/dri:/dev/dri,/dev/input │
-│                 │                                                                                                                                                                │
-│                 │ :/dev/input,/dev/vhci:/dev/vhci                                                                                                                                │
-├─────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Extra Hosts     │ pluto.local:192.168.2.1                                                                                                                                        │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-```
-
-The `-w` argument will expose the container port `tcp/8000` to the host as `tcp/80`. Note that we have only exposed it to the host with host IP address `127.0.0.1`, but can also remove the local IP address to bind to any interfaces. The `tcp/8000` will also be exposed to other containers as `tcp/8000` thanks to argument `-z`.
-
-### Host isolation
-
-This part is in progress and will be available soon ;)
+{{< callout type="info" >}}
+Host isolation features are in development and will be available soon.
+{{< /callout >}}
