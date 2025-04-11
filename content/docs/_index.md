@@ -6,9 +6,9 @@ cascade:
   type: docs
 ---
 
-👋 Hello! Welcome to the RF Swift documentation!
+# 👋 Hello! Welcome to the RF Swift documentation!
 
-![landscape](https://github.com/PentHertz/RF-Swift-docs/blob/main/.assets/logo.png?raw=true)
+![RF Swift Logo](https://github.com/PentHertz/RF-Swift-docs/blob/main/.assets/logo.png?raw=true)
 
 <div align="center">
   <table>
@@ -48,16 +48,54 @@ cascade:
 
 ## What is RF Swift?
 
-RF Swift is a toolbox for creating an environment laboratory for your RF assessments, that can easily fit your prerequirements.
+**RF Swift** is a toolbox for creating an environment laboratory for your RF assessments, that can easily fit your prerequirements.
 
-This toolbox is probably the best solution to deploy a generic, as well as a special environment securely, skipping the headache and waste of time when installing and using RF tools on same host.
+This toolbox is probably the **best solution** to deploy a generic, as well as a special environment securely, skipping the headache and waste of time when installing and using RF tools on same host.
 
 {{< callout type="warning" >}}
-  Even if the project, could work on macOS with some manual workaround, we do not adverstise it for the moment, but this system will be a 100% supported anytime soon.
+  Even if the project could work on macOS with some manual workaround, we do not advertise it for the moment, but this system will be fully supported in the near future.
 {{< /callout >}}
 
+# RF Swift vs. Kali Linux vs. Dragon OS Comparison
 
-## The RF Swift project
+| Feature | RF Swift | Kali Linux | Dragon OS |
+|---------|---------|------------|-----------|
+| 🖥️ **Host OS Preservation** | ✅ Runs alongside your existing OS | ❌ Typically requires dedicated partition or VM | ❌ Typically requires dedicated partition or VM |
+| 🧰 **Tool Isolation** | ✅ Tools run in containers without impacting system | ⚠️ Tools can affect system stability | ⚠️ Tools can affect system stability |
+| 🚀 **Deployment Speed** | ✅ Fast container deployment | ❌ Full OS installation required | ❌ Full OS installation required |
+| 📦 **VM Requirement** | ✅ No VM needed | ⚠️ Needs VM for non-dedicated machines | ⚠️ Needs VM for non-dedicated machines |
+| 🔧 **Tool Availability** | ✅ Extensive tool collection for hardware security, RF, reversing, and more. | ✅ Extensive tool collection for generic pentests | ✅ Specialized for RF |
+| 🔄 **Tool Updates** | ✅ Easily updated containers | ⚠️ Requires system updates | ⚠️ Requires system updates |
+| 💾 **Storage Efficiency** | ✅ Customizable to fit small storage | ❌ Requires significant disk space | ❌ Requires significant disk space |
+| 🛡️ **Security Isolation** | ✅ Strong container isolation (custom confinement) | ⚠️ Limited isolation between applications | ⚠️ Limited isolation between applications |
+| 🔌 **Network Containment** | ✅ Can isolate network activity | ⚠️ Network isolation requires additional setup | ⚠️ Network isolation requires additional setup |
+| 🏗️ **Architecture Support** | ✅ x86_64, ARM64, RISCV64 | ✅ x86_64, ARM64 | ⚠️ Primarily x86_64 |
+| 🧩 **Customization** | ✅ Highly customizable (specific tools only) | ✅ Customizable but affects whole system | ⚠️ Limited customization |
+| 📱 **USB Device Access** | ✅ Streamlined USB forwarding | ✅ Direct access | ✅ Direct access |
+| 🔊 **Audio Support** | ✅ Container-based audio support | ✅ Native audio support | ✅ Native audio support |
+| 🌐 **Internet Connectivity** | ✅ Configurable per container | ✅ System-wide configuration | ✅ System-wide configuration |
+
+## Key Benefits of RF Swift
+
+- **Flexibility**: Use RF tools without disrupting your daily work environment
+- **Efficiency**: Deploy only the tools you need, when you need them
+- **Security**: Strong isolation between containers prevents cross-contamination
+- **Portability**: Works across multiple architectures with consistent experience
+- **Resource Management**: Optimized resource usage compared to full VMs
+
+## Use Case Scenarios
+
+| Scenario | RF Swift | Kali Linux | Dragon OS |
+|----------|---------|------------|-----------|
+| Quick assessment on personal device | ⭐⭐⭐ | ⭐ | ⭐ |
+| Dedicated pentesting machine | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ |
+| Low storage environments | ⭐⭐⭐ | ⭐ | ⭐ |
+| Multiple architecture development | ⭐⭐⭐ | ⭐⭐ | ⭐ |
+| Isolated testing environment | ⭐⭐⭐ | ⭐⭐ | ⭐⭐ |
+
+## Comprehensive Container Orchestration
+
+RF Swift provides a complete orchestration solution that goes beyond traditional containers. Unlike standard Docker, RF Swift simplifies the entire workflow with a straightforward learning curve:
 
 ```mermaid
 graph TD
@@ -65,11 +103,8 @@ graph TD
     B --> C[Host]
     B --> D[USB]
     B --> F[Sound]
-
     B --> G[Images Container manager]
-
     H[Dockerfiles] --> G
-
     G --> I[Pull]
     G --> J[List]
     G --> K[Save]
@@ -80,13 +115,25 @@ graph TD
     style A fill:#f9f,stroke:#333,stroke-width:4px
     style B fill:#bbf,stroke:#333,stroke-width:2px
     style H fill:#afa,stroke:#333,stroke-width:2px
-
     style G fill:#bbf,stroke:#333,stroke-width:2px
-
 ```
 
-- **Go binary (rfswift)** - instruments containers and hosts to simplify the use of tools that may require internet connectivity, display, sounds, USB accesses. This rfswift is the main program you will interact with to run clean containers, execute inside running or paused containers, and do many magic actions that will make things work without headache.
-- **Docker images** - some pre-built Docker container images are available in RF Swift’s repository. In case you wan to bake your own environment, preserve some spaces, and have a special set-up, you will also find some Docker files you can edit to fit your expectations.
+RF Swift handles everything from container creation and execution to pulling images, committing changes, and re-tagging. What sets it apart is the seamless integration of USB, video, and audio forwarding in a user-friendly interface—tasks that typically require significant expertise in standard Docker environments.
+
+### Key Components
+
+- **Go binary (rfswift)** - Instruments containers and hosts to simplify the use of tools that may require:
+  - Internet connectivity
+  - Display
+  - Sounds
+  - USB accesses
+  
+  This rfswift is the main program you will interact with to:
+  - Run clean containers
+  - Execute inside running or paused containers
+  - Perform many magic actions that will make things work without a headache
+
+- **Docker images** - Pre-built Docker container images are available in RF Swift's repository. In case you want to bake your own environment, preserve some space, and have a special set-up, you will also find some Docker files you can edit to fit your expectations.
 
 ## Questions or Feedback?
 
@@ -95,12 +142,11 @@ graph TD
   Have a question or feedback? Feel free to [open an issue](https://github.com/PentHertz/RF-Swift/issues)!
 {{< /callout >}}
 
-## Next
+## Next Steps
 
 Dive right into the following section to get started:
 
 {{< cards >}}
   {{< card link="/docs/getting-started" title="Getting Started" icon="document-text" subtitle="Learn how to run RF Swift" >}}
-  {{< card link="/docs/development/compiling-rfswift" title="Compile RF Swift binarry" icon="document-text" subtitle="Compile RF Swift and develop around the framework" >}}
+  {{< card link="/docs/development/compiling-rfswift" title="Compile RF Swift binary" icon="document-text" subtitle="Compile RF Swift and develop around the framework" >}}
 {{< /cards >}}
-
