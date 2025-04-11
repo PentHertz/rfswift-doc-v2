@@ -24,10 +24,10 @@ Most helpers implement retry logic and consistent logging to ensure resilience a
 | `criticalecho-noexit <message>` | Prints a red-colored message without exiting |
 
 Example:
-\`\`\`bash
+```bash
 goodecho "Installation complete!"
 criticalecho "An unrecoverable error occurred."
-\`\`\`
+```
 
 ---
 
@@ -38,9 +38,9 @@ criticalecho "An unrecoverable error occurred."
 Executes a given shell command up to 5 times with 15-second intervals between attempts. Useful for flaky downloads or network-related tasks.
 
 Example:
-\`\`\`bash
+```bash
 installfromnet "wget http://example.com/tool.tar.gz"
-\`\`\`
+```
 
 ---
 
@@ -49,9 +49,9 @@ installfromnet "wget http://example.com/tool.tar.gz"
 Installs Debian packages using `apt-fast`, with retry logic.
 
 Example:
-\`\`\`bash
+```bash
 install_dependencies "python3-numpy python3-scipy g++"
-\`\`\`
+```
 
 ---
 
@@ -60,9 +60,9 @@ install_dependencies "python3-numpy python3-scipy g++"
 Checks whether a library is installed via `pkg-config`. If not found, attempts to install it via `apt-fast`.
 
 Example:
-\`\`\`bash
+```bash
 check_and_install_lib "libusb-1.0-0-dev" "libusb-1.0"
-\`\`\`
+```
 
 ---
 
@@ -73,10 +73,10 @@ check_and_install_lib "libusb-1.0-0-dev" "libusb-1.0"
 Installs Python packages using `pip3` with retry logic. Supports both single package installs and `requirements.txt` files.
 
 Examples:
-\`\`\`bash
+```bash
 pip3install scikit-learn
 pip3install -r requirements.txt
-\`\`\`
+```
 
 ---
 
@@ -87,9 +87,9 @@ pip3install -r requirements.txt
 Clones or updates a Git repository. On success, logs the repository metadata to `/var/lib/db/rfswift_github.lst`. Also initializes submodules if needed.
 
 Example:
-\`\`\`bash
+```bash
 gitinstall "https://github.com/example/tool.git" "tool_install" "main"
-\`\`\`
+```
 
 ---
 
@@ -106,9 +106,9 @@ Arguments:
 - `[cmake-args...]`: Additional arguments passed to `cmake`
 
 Example:
-\`\`\`bash
+```bash
 cmake_clone_and_build "https://github.com/example/project.git" "build" "main" "v1.0.0" "mytool_install" -DENABLE_X=ON
-\`\`\`
+```
 
 ---
 
@@ -117,9 +117,9 @@ cmake_clone_and_build "https://github.com/example/project.git" "build" "main" "v
 Simplified wrapper for `cmake_clone_and_build`, designed for GNU Radio OOT modules.
 
 Example:
-\`\`\`bash
+```bash
 grclone_and_build "https://github.com/author/gr-foo.git" "gr-foo" "gr_foo_install" -b dev -DENABLE_DOCS=OFF
-\`\`\`
+```
 
 ---
 
