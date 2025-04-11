@@ -57,14 +57,14 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rfswift.io/docs/quick-start/" /><meta property="article:section" content="docs" />
 
-<meta property="article:modified_time" content="2025-04-12T00:03:07+02:00" />
+<meta property="article:modified_time" content="2025-04-12T00:23:02+02:00" />
 
   
   <meta itemprop="name" content="🚀 Quick Start">
   <meta itemprop="description" content="Getting Up and Running with RF SwiftThis guide will help you quickly get started with RF Swift using pre-built binaries and container images.
 ⚠️ On Linux, unless you are using Docker Desktop, you may need to use sudo with the rfswift command for operations that require elevated privileges. To install RF Swift, you can either use pre-compiled binaries and existing container images (quickest method) or compile the Go project and/or Docker images from source. This guide focuses on the fastest way to get up and running.">
-  <meta itemprop="dateModified" content="2025-04-12T00:03:07+02:00">
-  <meta itemprop="wordCount" content="1114">
+  <meta itemprop="dateModified" content="2025-04-12T00:23:02+02:00">
+  <meta itemprop="wordCount" content="1257">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="🚀 Quick Start">
   <meta name="twitter:description" content="Getting Up and Running with RF SwiftThis guide will help you quickly get started with RF Swift using pre-built binaries and container images.
@@ -496,7 +496,15 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#forward-usb-devices">Forward USB Devices
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#usb-device-management">USB Device Management
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-8 rtl:hx-pr-8 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#windows-usb-forwarding">Windows USB Forwarding
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-8 rtl:hx-pr-8 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#linux-usb-device-access">Linux USB Device Access
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
@@ -979,36 +987,23 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
       </div></div>
   <div class="hx-w-full hx-min-w-0 hx-leading-7">
     <div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
-      <p>If you encounter audio issues, you can enable audio forwarding with:</p>
-<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host audio enable</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
-  <button
-    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-    title="Copy code"
-  >
-    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
-    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
-  </button>
-</div>
-</div>
-<p>This requires <code>pulseaudio</code> to be properly configured on your host system.</p>
-<pre><code>&lt;/div&gt;
-</code></pre>
+      If you encounter audio issues, you can enable audio forwarding with: <code>rfswift host audio enable</code>
+This requires <code>pulseaudio</code> to be properly configured on your host system.
+    </div>
   </div>
 </div>
-<h3>Forward USB Devices<span class="hx-absolute -hx-mt-20" id="forward-usb-devices"></span>
-    <a href="#forward-usb-devices" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>To use SDR hardware, you&rsquo;ll need to forward USB devices to your container:</p>
+<h3>USB Device Management<span class="hx-absolute -hx-mt-20" id="usb-device-management"></span>
+    <a href="#usb-device-management" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>USB device handling varies by platform:</p>
+<h4>Windows USB Forwarding<span class="hx-absolute -hx-mt-20" id="windows-usb-forwarding"></span>
+    <a href="#windows-usb-forwarding" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>On Windows, you&rsquo;ll need to explicitly forward USB devices to your container using the <code>winusb</code> commands in Administrator mode:</p>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
   
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List available USB devices</span>
-</span></span><span class="line"><span class="cl">rfswift host usb list
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List available USB devices on Windows</span>
+</span></span><span class="line"><span class="cl">rfswift winusb list
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Forward a specific device</span>
-</span></span><span class="line"><span class="cl">rfswift host usb forward -v VENDOR_ID -p PRODUCT_ID
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or forward all detected SDR devices</span>
-</span></span><span class="line"><span class="cl">rfswift host usb forward-all-sdrs</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Attach a specific device on Windows</span>
+</span></span><span class="line"><span class="cl">rfswift winusb attach -b &lt;USB ID&gt;</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
   <button
     class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
     title="Copy code"
@@ -1020,6 +1015,57 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 
   
 </div>
+<h4>Linux USB Device Access<span class="hx-absolute -hx-mt-20" id="linux-usb-device-access"></span>
+    <a href="#linux-usb-device-access" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>On Linux, you can access USB devices in two ways:</p>
+<ol>
+<li>
+<p><strong>During container creation</strong> - use the <code>-s</code> option to bind specific devices:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i sdr_full -n my_container -s /dev/ttyUSB0:/dev/ttyUSB0</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+</li>
+<li>
+<p><strong>After container creation</strong> - use the powerful <code>bindings</code> feature to add devices to an existing container:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add a new USB device to an existing container</span>
+</span></span><span class="line"><span class="cl">rfswift bindings add -c my_container -d -s /dev/ttyUSB0 -t /dev/ttyUSB0*
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Same but shorter: Add a new USB device to an existing container with some destination</span>
+</span></span><span class="line"><span class="cl">rfswift bindings add -c my_container -t /dev/ttyUSB0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Add a new volume to an existing container</span>
+</span></span><span class="line"><span class="cl">rfswift bindings add -c my_container -s /home/user/data -t /root/data
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Remove a binding</span>
+</span></span><span class="line"><span class="cl">rfswift bindings rm -c my_container -s /dev/ttyUSB0</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+</li>
+</ol>
+<p>Note that to rebind a device, you need the <code>-d</code> switch.</p>
 </div>
 <h2>Managing Existing Containers<span class="hx-absolute -hx-mt-20" id="managing-existing-containers"></span>
     <a href="#managing-existing-containers" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Restart an Existing Container<span class="hx-absolute -hx-mt-20" id="restart-an-existing-container"></span>
@@ -1039,13 +1085,29 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 
   
 </div>
+<p>You can also use the short command if you want to recall the last container:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift exec</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
 <p>This restarts the container if it&rsquo;s stopped and gives you a shell inside it.</p>
 <h3>List Running Containers<span class="hx-absolute -hx-mt-20" id="list-running-containers"></span>
     <a href="#list-running-containers" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>View all RF Swift containers:</p>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
   
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container list</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift last</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
   <button
     class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
     title="Copy code"
@@ -1062,7 +1124,7 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
   
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container commit -c my_sdr_container -t my_custom_image</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift commit -c my_sdr_container -i my_custom_image</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
   <button
     class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
     title="Copy code"
@@ -1112,16 +1174,12 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
           <td>Enter an existing container</td>
       </tr>
       <tr>
-          <td><code>rfswift images list</code></td>
+          <td><code>rfswift images local</code></td>
           <td>List available local images</td>
       </tr>
       <tr>
-          <td><code>rfswift container list</code></td>
+          <td><code>rfswift last</code></td>
           <td>List all containers</td>
-      </tr>
-      <tr>
-          <td><code>rfswift host usb list</code></td>
-          <td>List connected USB devices</td>
       </tr>
       <tr>
           <td><code>rfswift host audio enable</code></td>
@@ -1144,7 +1202,7 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 
         </div>
         
-    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2025-04-12T00:03:07.000Z">April 12, 2025</time></div>
+    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2025-04-12T00:23:02.000Z">April 12, 2025</time></div>
         <div class="hx-mb-8 hx-flex hx-items-center hx-border-t hx-pt-8 dark:hx-border-neutral-800 contrast-more:hx-border-neutral-400 dark:contrast-more:hx-border-neutral-400 print:hx-hidden"><a
         href="/docs/getting-started/"
         title="Getting Started"
