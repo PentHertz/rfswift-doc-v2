@@ -153,7 +153,7 @@ grclone_and_build "https://github.com/author/gr-foo.git" "gr-foo" "gr_foo_instal
 ## Related Docs
 
 {{< cards >}}
-  {{< card link="/docs/development/building-custom-images" title="Build Custom Images" icon="layers" subtitle="Use these helpers in your own container builds" >}}
+  {{< card link="/docs/development/building-custom-images" title="Build Custom Images" icon="box" subtitle="Use these helpers in your own container builds" >}}
   {{< card link="/docs/guide/configurations" title="System Configuration" icon="cog" subtitle="Tune RF Swift for your hardware" >}}
   {{< card link="https://github.com/PentHertz/RF-Swift" title="Contribute" icon="github" subtitle="Improve or extend these helper functions on GitHub" >}}
 {{< /cards >}}
