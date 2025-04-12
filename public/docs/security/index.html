@@ -11,66 +11,34 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 
-  <title>Helper Functions Reference – RF Swift</title>
-  <meta name="description" content="RF Swift Helper Functions ReferenceThis page documents the Bash helper functions used in the RF Swift container build system. These utilities simplify logging, dependency management, source code builds, and network operations.
-Most helpers implement retry logic and consistent logging to ensure resilience and ease of use when building custom images or tools.
-🎨 Output &amp; Logging Functions Function Description colorecho &lt;message&gt; Prints a blue-colored message to indicate neutral info goodecho &lt;message&gt; Prints a green-colored message for successful actions criticalecho &lt;message&gt; Prints a red-colored message and exits with error code 1 criticalecho-noexit &lt;message&gt; Prints a red-colored message without exiting Example:" />
+  <title>RF Swift Security Guidelines – RF Swift</title>
+  <meta name="description" content="🛡️ RF Swift Security GuidelinesSecurity is a critical consideration when using RF Swift, as containerized environments often require special permissions to access hardware devices and network interfaces. This section provides comprehensive guidance on securing your RF Swift deployments while maintaining full functionality.
+Why Security Matters for RF Swift Radio frequency and hardware security work inherently requires elevated privileges. Balancing functionality with security is essential to:
+🔒 Protect your host system from container exploits 🛡️ Prevent lateral movement if a container is compromised 🔍 Maintain isolation between different testing environments 🧰 Allow tools to function correctly with minimum necessary privileges Key Security Areas Security GuidelinesEssential security practices for RF Swift Security Quick Reference Setting Command Security Impact Unprivileged Mode rfswift run -u 0 ✅ Recommended: Reduces container privileges Minimal Capabilities rfswift run -a NET_ADMIN ✅ Recommended: Only add required capabilities Network Isolation rfswift run -t bridge ✅ Recommended: Isolates container network Device Restrictions rfswift run -g &#34;c 189:* rwm&#34; ✅ Recommended: Limit device access Privileged Mode rfswift run -u 1 ⚠️ High Risk: Grants extensive privileges Default Network rfswift run -t host ⚠️ Medium Risk: Shares host network stack Container Security Philosophy With RF Swift you can also adopt a security philosophy of:" />
 
   
-    <link rel="canonical" href="https://rfswift.io/docs/development/building-images/" itemprop="url" />
+    <link rel="canonical" href="https://rfswift.io/docs/security/" itemprop="url" />
   
 
   
 
-<meta property="og:title" content="Helper Functions Reference" />
-<meta property="og:description" content="RF Swift Helper Functions ReferenceThis page documents the Bash helper functions used in the RF Swift container build system. These utilities simplify logging, dependency management, source code builds, and network operations.
-Most helpers implement retry logic and consistent logging to ensure resilience and ease of use when building custom images or tools.
-
-🎨 Output &amp; Logging Functions
-    
-  
-      
-          Function
-          Description
-      
-  
-  
-      
-          colorecho &lt;message&gt;
-          Prints a blue-colored message to indicate neutral info
-      
-      
-          goodecho &lt;message&gt;
-          Prints a green-colored message for successful actions
-      
-      
-          criticalecho &lt;message&gt;
-          Prints a red-colored message and exits with error code 1
-      
-      
-          criticalecho-noexit &lt;message&gt;
-          Prints a red-colored message without exiting
-      
-  
-
-Example:" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://rfswift.io/docs/development/building-images/" /><meta property="article:section" content="docs" />
-
-<meta property="article:modified_time" content="2025-04-12T13:34:52+02:00" />
+<meta property="og:title" content="RF Swift Security Guidelines" />
+<meta property="og:description" content="The epic RF companion for your assessments" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://rfswift.io/docs/security/" />
 
   
-  <meta itemprop="name" content="Helper Functions Reference">
-  <meta itemprop="description" content="RF Swift Helper Functions ReferenceThis page documents the Bash helper functions used in the RF Swift container build system. These utilities simplify logging, dependency management, source code builds, and network operations.
-Most helpers implement retry logic and consistent logging to ensure resilience and ease of use when building custom images or tools.
-🎨 Output &amp; Logging Functions Function Description colorecho &lt;message&gt; Prints a blue-colored message to indicate neutral info goodecho &lt;message&gt; Prints a green-colored message for successful actions criticalecho &lt;message&gt; Prints a red-colored message and exits with error code 1 criticalecho-noexit &lt;message&gt; Prints a red-colored message without exiting Example:">
+  <meta itemprop="name" content="RF Swift Security Guidelines">
+  <meta itemprop="description" content="🛡️ RF Swift Security GuidelinesSecurity is a critical consideration when using RF Swift, as containerized environments often require special permissions to access hardware devices and network interfaces. This section provides comprehensive guidance on securing your RF Swift deployments while maintaining full functionality.
+Why Security Matters for RF Swift Radio frequency and hardware security work inherently requires elevated privileges. Balancing functionality with security is essential to:
+🔒 Protect your host system from container exploits 🛡️ Prevent lateral movement if a container is compromised 🔍 Maintain isolation between different testing environments 🧰 Allow tools to function correctly with minimum necessary privileges Key Security Areas Security GuidelinesEssential security practices for RF Swift Security Quick Reference Setting Command Security Impact Unprivileged Mode rfswift run -u 0 ✅ Recommended: Reduces container privileges Minimal Capabilities rfswift run -a NET_ADMIN ✅ Recommended: Only add required capabilities Network Isolation rfswift run -t bridge ✅ Recommended: Isolates container network Device Restrictions rfswift run -g &#34;c 189:* rwm&#34; ✅ Recommended: Limit device access Privileged Mode rfswift run -u 1 ⚠️ High Risk: Grants extensive privileges Default Network rfswift run -t host ⚠️ Medium Risk: Shares host network stack Container Security Philosophy With RF Swift you can also adopt a security philosophy of:">
   <meta itemprop="dateModified" content="2025-04-12T13:34:52+02:00">
-  <meta itemprop="wordCount" content="490">
+  <meta itemprop="wordCount" content="351">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Helper Functions Reference">
-  <meta name="twitter:description" content="RF Swift Helper Functions ReferenceThis page documents the Bash helper functions used in the RF Swift container build system. These utilities simplify logging, dependency management, source code builds, and network operations.
-Most helpers implement retry logic and consistent logging to ensure resilience and ease of use when building custom images or tools.
-🎨 Output &amp; Logging Functions Function Description colorecho &lt;message&gt; Prints a blue-colored message to indicate neutral info goodecho &lt;message&gt; Prints a green-colored message for successful actions criticalecho &lt;message&gt; Prints a red-colored message and exits with error code 1 criticalecho-noexit &lt;message&gt; Prints a red-colored message without exiting Example:">
+  <meta name="twitter:title" content="RF Swift Security Guidelines">
+  <meta name="twitter:description" content="🛡️ RF Swift Security GuidelinesSecurity is a critical consideration when using RF Swift, as containerized environments often require special permissions to access hardware devices and network interfaces. This section provides comprehensive guidance on securing your RF Swift deployments while maintaining full functionality.
+Why Security Matters for RF Swift Radio frequency and hardware security work inherently requires elevated privileges. Balancing functionality with security is essential to:
+🔒 Protect your host system from container exploits 🛡️ Prevent lateral movement if a container is compromised 🔍 Maintain isolation between different testing environments 🧰 Allow tools to function correctly with minimum necessary privileges Key Security Areas Security GuidelinesEssential security practices for RF Swift Security Quick Reference Setting Command Security Impact Unprivileged Mode rfswift run -u 0 ✅ Recommended: Reduces container privileges Minimal Capabilities rfswift run -a NET_ADMIN ✅ Recommended: Only add required capabilities Network Isolation rfswift run -t bridge ✅ Recommended: Isolates container network Device Restrictions rfswift run -g &#34;c 189:* rwm&#34; ✅ Recommended: Limit device access Privileged Mode rfswift run -u 1 ⚠️ High Risk: Grants extensive privileges Default Network rfswift run -t host ⚠️ Medium Risk: Shares host network stack Container Security Philosophy With RF Swift you can also adopt a security philosophy of:">
 
     <link rel="preload" href="/css/compiled/main.min.c1fe2c80102c9dc9ddc66184191e646769052d36a21b38ac5ab5077713cf7a81.css" as="style" integrity="sha256-wf4sgBAsncndxmGEGR5kZ2kFLTaiGzisWrUHdxPPeoE=" />
     <link href="/css/compiled/main.min.c1fe2c80102c9dc9ddc66184191e646769052d36a21b38ac5ab5077713cf7a81.css" rel="stylesheet" integrity="sha256-wf4sgBAsncndxmGEGR5kZ2kFLTaiGzisWrUHdxPPeoE=" />
@@ -291,14 +259,53 @@ Most helpers implement retry logic and consistent logging to ensure resilience a
               
             </li></ul>
       </div>
-            </li><li class="hx-flex hx-flex-col "><a
+            </li><li class="hx-flex hx-flex-col open"><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+      sidebar-active-item hx-bg-primary-100 hx-font-semibold hx-text-primary-800 contrast-more:hx-border contrast-more:hx-border-primary-500 dark:hx-bg-primary-400/10 dark:hx-text-primary-600 contrast-more:dark:hx-border-primary-500"
     href="/docs/security/"
     
   >🛡️ Security
         <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
     </a>
+  
+    <ul class='hx-flex hx-flex-col hx-gap-1 hx-relative before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] dark:before:hx-bg-neutral-800 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-pr-3 rtl:before:hx-right-0 ltr:hx-ml-3 rtl:hx-mr-3'><li>
+              <a
+                href="#why-security-matters-for-rf-swift"
+                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
+              >Why Security Matters for RF Swift</a>
+            </li>
+          <li>
+              <a
+                href="#key-security-areas"
+                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
+              >Key Security Areas</a>
+            </li>
+          <li>
+              <a
+                href="#security-quick-reference"
+                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
+              >Security Quick Reference</a>
+            </li>
+          <li>
+              <a
+                href="#container-security-philosophy"
+                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
+              >Container Security Philosophy</a>
+            </li>
+          <li>
+              <a
+                href="#best-practices-at-a-glance"
+                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
+              >Best Practices at a Glance</a>
+            </li>
+          <li>
+              <a
+                href="#reporting-security-issues"
+                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
+              >Reporting Security Issues</a>
+            </li>
+          </ul>
+  
               <div class="ltr:hx-pr-0 hx-overflow-hidden">
         <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -310,7 +317,7 @@ Most helpers implement retry logic and consistent logging to ensure resilience a
               
             </li></ul>
       </div>
-            </li><li class="hx-flex hx-flex-col open"><a
+            </li><li class="hx-flex hx-flex-col "><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
     href="/docs/development/"
@@ -327,58 +334,13 @@ Most helpers implement retry logic and consistent logging to ensure resilience a
   >Compiling RF Swift from Source
     </a>
               
-            </li><li class="hx-flex hx-flex-col open"><a
+            </li><li class="hx-flex hx-flex-col "><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      sidebar-active-item hx-bg-primary-100 hx-font-semibold hx-text-primary-800 contrast-more:hx-border contrast-more:hx-border-primary-500 dark:hx-bg-primary-400/10 dark:hx-text-primary-600 contrast-more:dark:hx-border-primary-500"
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
     href="/docs/development/building-images/"
     
   >Helper Functions Reference
     </a>
-  
-    <ul class='hx-flex hx-flex-col hx-gap-1 hx-relative before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] dark:before:hx-bg-neutral-800 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-pr-3 rtl:before:hx-right-0 ltr:hx-ml-3 rtl:hx-mr-3'><li>
-              <a
-                href="#-output--logging-functions"
-                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
-              >🎨 Output &amp;amp; Logging Functions</a>
-            </li>
-          <li>
-              <a
-                href="#-package-installation-helpers"
-                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
-              >📦 Package Installation Helpers</a>
-            </li>
-          <li>
-              <a
-                href="#-python-installer-helper"
-                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
-              >🐍 Python Installer Helper</a>
-            </li>
-          <li>
-              <a
-                href="#-git-and-source-management"
-                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
-              >🧬 Git and Source Management</a>
-            </li>
-          <li>
-              <a
-                href="#-summary-table"
-                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
-              >🧠 Summary Table</a>
-            </li>
-          <li>
-              <a
-                href="#-tips"
-                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
-              >💡 Tips</a>
-            </li>
-          <li>
-              <a
-                href="#related-docs"
-                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
-              >Related Docs</a>
-            </li>
-          </ul>
-  
               
             </li></ul>
       </div>
@@ -460,9 +422,9 @@ Most helpers implement retry logic and consistent logging to ensure resilience a
               
             </li></ul>
       </div></li>
-          <li class=""><a
+          <li class="open"><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+      sidebar-active-item hx-bg-primary-100 hx-font-semibold hx-text-primary-800 contrast-more:hx-border contrast-more:hx-border-primary-500 dark:hx-bg-primary-400/10 dark:hx-text-primary-600 contrast-more:dark:hx-border-primary-500"
     href="/docs/security/"
     
   >🛡️ Security
@@ -478,7 +440,7 @@ Most helpers implement retry logic and consistent logging to ensure resilience a
               
             </li></ul>
       </div></li>
-          <li class="open"><a
+          <li class=""><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
     href="/docs/development/"
@@ -494,9 +456,9 @@ Most helpers implement retry logic and consistent logging to ensure resilience a
   >Compiling RF Swift from Source
     </a>
               
-            </li><li class="hx-flex hx-flex-col open"><a
+            </li><li class="hx-flex hx-flex-col "><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      sidebar-active-item hx-bg-primary-100 hx-font-semibold hx-text-primary-800 contrast-more:hx-border contrast-more:hx-border-primary-500 dark:hx-bg-primary-400/10 dark:hx-text-primary-600 contrast-more:dark:hx-border-primary-500"
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
     href="/docs/development/building-images/"
     
   >Helper Functions Reference
@@ -523,59 +485,27 @@ Most helpers implement retry logic and consistent logging to ensure resilience a
 <nav class="hextra-toc hx-order-last hx-hidden hx-w-64 hx-shrink-0 xl:hx-block print:hx-hidden hx-px-4" aria-label="table of contents">
     <div class="hextra-scrollbar hx-sticky hx-top-16 hx-overflow-y-auto hx-pr-4 hx-pt-6 hx-text-sm [hyphens:auto] hx-max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:hx--mr-4 rtl:hx--ml-4"><p class="hx-mb-4 hx-font-semibold hx-tracking-tight">On this page</p><ul>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#-output--logging-functions">🎨 Output &amp; Logging Functions
+        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#why-security-matters-for-rf-swift">Why Security Matters for RF Swift
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#-package-installation-helpers">📦 Package Installation Helpers
+        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#key-security-areas">Key Security Areas
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#installfromnet-command">installfromnet &lt;command&gt;
+        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#security-quick-reference">Security Quick Reference
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#install_dependencies-packages">install_dependencies &#34;&lt;packages&gt;&#34;
+        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#container-security-philosophy">Container Security Philosophy
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#check_and_install_lib-lib-name-pkg-config-name">check_and_install_lib &lt;lib-name&gt; &lt;pkg-config-name&gt;
+        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#best-practices-at-a-glance">Best Practices at a Glance
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#-python-installer-helper">🐍 Python Installer Helper
-        </a>
-      </li>
-      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#pip3install-args">pip3install &lt;args&gt;
-        </a>
-      </li>
-      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#-git-and-source-management">🧬 Git and Source Management
-        </a>
-      </li>
-      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#gitinstall-repo-url-method-branch">gitinstall &lt;repo-url&gt; &lt;method&gt; &lt;branch&gt;
-        </a>
-      </li>
-      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#cmake_clone_and_build-repo-url-build-dir-branch-reset-commit-method-cmake-args">cmake_clone_and_build &lt;repo-url&gt; &lt;build-dir&gt; &lt;branch&gt; &lt;reset-commit&gt; &lt;method&gt; [cmake-args...]
-        </a>
-      </li>
-      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#grclone_and_build-repo-url-subdir-method--b-branch-cmake-args">grclone_and_build &lt;repo-url&gt; &lt;subdir&gt; &lt;method&gt; [-b branch] [cmake-args...]
-        </a>
-      </li>
-      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#-summary-table">🧠 Summary Table
-        </a>
-      </li>
-      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#-tips">💡 Tips
-        </a>
-      </li>
-      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#related-docs">Related Docs
+        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#reporting-security-issues">Reporting Security Issues
         </a>
       </li></ul>
       <div class="hx-mt-8 hx-border-t hx-bg-white hx-pt-8 hx-shadow-[0_-12px_16px_white] dark:hx-bg-dark dark:hx-shadow-[0_-12px_16px_#111] hx-sticky hx-bottom-0 hx-flex hx-flex-col hx-items-start hx-gap-2 hx-pb-8 dark:hx-border-neutral-800 contrast-more:hx-border-t contrast-more:hx-border-neutral-400 contrast-more:hx-shadow-none contrast-more:dark:hx-border-neutral-400">
@@ -596,298 +526,118 @@ Most helpers implement retry logic and consistent logging to ensure resilience a
   <div class="hx-mt-1.5 hx-flex hx-items-center hx-gap-1 hx-overflow-hidden hx-text-sm hx-text-gray-500 dark:hx-text-gray-400 contrast-more:hx-text-current">
         <div class="hx-whitespace-nowrap hx-transition-colors hx-min-w-[24px] hx-overflow-hidden hx-text-ellipsis hover:hx-text-gray-900 dark:hover:hx-text-gray-100">
           <a href="/docs/">Documentation</a>
-        </div><svg class="hx-w-3.5 hx-shrink-0 rtl:-hx-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-        <div class="hx-whitespace-nowrap hx-transition-colors hx-min-w-[24px] hx-overflow-hidden hx-text-ellipsis hover:hx-text-gray-900 dark:hover:hx-text-gray-100">
-          <a href="/docs/development/">🧑‍🍳 Development</a>
-        </div><svg class="hx-w-3.5 hx-shrink-0 rtl:-hx-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx-whitespace-nowrap hx-transition-colors hx-font-medium hx-text-gray-700 contrast-more:hx-font-bold contrast-more:hx-text-current dark:hx-text-gray-100 contrast-more:dark:hx-text-current">Helper Functions Reference</div>
+        </div><svg class="hx-w-3.5 hx-shrink-0 rtl:-hx-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx-whitespace-nowrap hx-transition-colors hx-font-medium hx-text-gray-700 contrast-more:hx-font-bold contrast-more:hx-text-current dark:hx-text-gray-100 contrast-more:dark:hx-text-current">🛡️ Security</div>
   </div>
 
         <div class="content">
-          <h1>Helper Functions Reference</h1>
-          <h1>RF Swift Helper Functions Reference</h1><p>This page documents the Bash helper functions used in the RF Swift container build system. These utilities simplify logging, dependency management, source code builds, and network operations.</p>
-<p>Most helpers implement retry logic and consistent logging to ensure resilience and ease of use when building custom images or tools.</p>
-<hr>
-<h2>🎨 Output &amp; Logging Functions<span class="hx-absolute -hx-mt-20" id="-output--logging-functions"></span>
-    <a href="#-output--logging-functions" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><table>
-  <thead>
-      <tr>
-          <th>Function</th>
-          <th>Description</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>colorecho &lt;message&gt;</code></td>
-          <td>Prints a blue-colored message to indicate neutral info</td>
-      </tr>
-      <tr>
-          <td><code>goodecho &lt;message&gt;</code></td>
-          <td>Prints a green-colored message for successful actions</td>
-      </tr>
-      <tr>
-          <td><code>criticalecho &lt;message&gt;</code></td>
-          <td>Prints a red-colored message and exits with error code 1</td>
-      </tr>
-      <tr>
-          <td><code>criticalecho-noexit &lt;message&gt;</code></td>
-          <td>Prints a red-colored message without exiting</td>
-      </tr>
-  </tbody>
-</table>
-<p>Example:</p>
-<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">goodecho <span class="s2">&#34;Installation complete!&#34;</span>
-</span></span><span class="line"><span class="cl">criticalecho <span class="s2">&#34;An unrecoverable error occurred.&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
-  <button
-    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-    title="Copy code"
-  >
-    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
-    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
-  </button>
-</div>
-
-  
-</div>
-<hr>
-<h2>📦 Package Installation Helpers<span class="hx-absolute -hx-mt-20" id="-package-installation-helpers"></span>
-    <a href="#-package-installation-helpers" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3><code>installfromnet &lt;command&gt;</code><span class="hx-absolute -hx-mt-20" id="installfromnet-command"></span>
-    <a href="#installfromnet-command" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Executes a given shell command up to 5 times with 15-second intervals between attempts. Useful for flaky downloads or network-related tasks.</p>
-<p>Example:</p>
-<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">installfromnet <span class="s2">&#34;wget http://example.com/tool.tar.gz&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
-  <button
-    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-    title="Copy code"
-  >
-    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
-    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
-  </button>
-</div>
-
-  
-</div>
-<hr>
-<h3><code>install_dependencies &quot;&lt;packages&gt;&quot;</code><span class="hx-absolute -hx-mt-20" id="install_dependencies-packages"></span>
-    <a href="#install_dependencies-packages" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Installs Debian packages using <code>apt-fast</code>, with retry logic.</p>
-<p>Example:</p>
-<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">install_dependencies <span class="s2">&#34;python3-numpy python3-scipy g++&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
-  <button
-    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-    title="Copy code"
-  >
-    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
-    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
-  </button>
-</div>
-
-  
-</div>
-<hr>
-<h3><code>check_and_install_lib &lt;lib-name&gt; &lt;pkg-config-name&gt;</code><span class="hx-absolute -hx-mt-20" id="check_and_install_lib-lib-name-pkg-config-name"></span>
-    <a href="#check_and_install_lib-lib-name-pkg-config-name" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Checks whether a library is installed via <code>pkg-config</code>. If not found, attempts to install it via <code>apt-fast</code>.</p>
-<p>Example:</p>
-<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">check_and_install_lib <span class="s2">&#34;libusb-1.0-0-dev&#34;</span> <span class="s2">&#34;libusb-1.0&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
-  <button
-    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-    title="Copy code"
-  >
-    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
-    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
-  </button>
-</div>
-
-  
-</div>
-<hr>
-<h2>🐍 Python Installer Helper<span class="hx-absolute -hx-mt-20" id="-python-installer-helper"></span>
-    <a href="#-python-installer-helper" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3><code>pip3install &lt;args&gt;</code><span class="hx-absolute -hx-mt-20" id="pip3install-args"></span>
-    <a href="#pip3install-args" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Installs Python packages using <code>pip3</code> with retry logic. Supports both single package installs and <code>requirements.txt</code> files.</p>
-<p>Examples:</p>
-<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip3install scikit-learn
-</span></span><span class="line"><span class="cl">pip3install -r requirements.txt</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
-  <button
-    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-    title="Copy code"
-  >
-    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
-    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
-  </button>
-</div>
-
-  
-</div>
-<hr>
-<h2>🧬 Git and Source Management<span class="hx-absolute -hx-mt-20" id="-git-and-source-management"></span>
-    <a href="#-git-and-source-management" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3><code>gitinstall &lt;repo-url&gt; &lt;method&gt; &lt;branch&gt;</code><span class="hx-absolute -hx-mt-20" id="gitinstall-repo-url-method-branch"></span>
-    <a href="#gitinstall-repo-url-method-branch" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Clones or updates a Git repository. On success, logs the repository metadata to <code>/var/lib/db/rfswift_github.lst</code>. Also initializes submodules if needed.</p>
-<p>Example:</p>
-<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gitinstall <span class="s2">&#34;https://github.com/example/tool.git&#34;</span> <span class="s2">&#34;tool_install&#34;</span> <span class="s2">&#34;main&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
-  <button
-    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-    title="Copy code"
-  >
-    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
-    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
-  </button>
-</div>
-
-  
-</div>
-<hr>
-<h3><code>cmake_clone_and_build &lt;repo-url&gt; &lt;build-dir&gt; &lt;branch&gt; &lt;reset-commit&gt; &lt;method&gt; [cmake-args...]</code><span class="hx-absolute -hx-mt-20" id="cmake_clone_and_build-repo-url-build-dir-branch-reset-commit-method-cmake-args"></span>
-    <a href="#cmake_clone_and_build-repo-url-build-dir-branch-reset-commit-method-cmake-args" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Clones a Git repository, optionally resets to a specific commit/tag, then configures and builds the project using CMake.</p>
-<p>Arguments:</p>
+          <h1>RF Swift Security Guidelines</h1>
+          <h1>🛡️ RF Swift Security Guidelines</h1><p>Security is a critical consideration when using RF Swift, as containerized environments often require special permissions to access hardware devices and network interfaces. This section provides comprehensive guidance on securing your RF Swift deployments while maintaining full functionality.</p>
+<h2>Why Security Matters for RF Swift<span class="hx-absolute -hx-mt-20" id="why-security-matters-for-rf-swift"></span>
+    <a href="#why-security-matters-for-rf-swift" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Radio frequency and hardware security work inherently requires elevated privileges. Balancing functionality with security is essential to:</p>
 <ul>
-<li><code>repo-url</code>: URL of the Git repository</li>
-<li><code>build-dir</code>: Relative build path within the repo</li>
-<li><code>branch</code>: Git branch to use (optional)</li>
-<li><code>reset-commit</code>: Commit or tag to reset to (optional)</li>
-<li><code>method</code>: Name of the install function (used in logs)</li>
-<li><code>[cmake-args...]</code>: Additional arguments passed to <code>cmake</code></li>
+<li>🔒 Protect your host system from container exploits</li>
+<li>🛡️ Prevent lateral movement if a container is compromised</li>
+<li>🔍 Maintain isolation between different testing environments</li>
+<li>🧰 Allow tools to function correctly with minimum necessary privileges</li>
 </ul>
-<p>Example:</p>
-<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cmake_clone_and_build <span class="s2">&#34;https://github.com/example/project.git&#34;</span> <span class="s2">&#34;build&#34;</span> <span class="s2">&#34;main&#34;</span> <span class="s2">&#34;v1.0.0&#34;</span> <span class="s2">&#34;mytool_install&#34;</span> -DENABLE_X<span class="o">=</span>ON</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
-  <button
-    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-    title="Copy code"
-  >
-    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
-    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
-  </button>
+<h2>Key Security Areas<span class="hx-absolute -hx-mt-20" id="key-security-areas"></span>
+    <a href="#key-security-areas" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-cards hx-mt-4 hx-gap-4 hx-grid not-prose" style="--hextra-cards-grid-cols: 3;">
+  <a
+    class="hextra-card hx-group hx-flex hx-flex-col hx-justify-start hx-overflow-hidden hx-rounded-lg hx-border hx-border-gray-200 hx-text-current hx-no-underline dark:hx-shadow-none hover:hx-shadow-gray-100 dark:hover:hx-shadow-none hx-shadow-gray-100 active:hx-shadow-sm active:hx-shadow-gray-200 hx-transition-all hx-duration-200 hover:hx-border-gray-300 hx-bg-transparent hx-shadow-sm dark:hx-border-neutral-800 hover:hx-bg-slate-50 hover:hx-shadow-md dark:hover:hx-border-neutral-700 dark:hover:hx-bg-neutral-900"href="guide_lines"
+      ><span class="hextra-card-icon hx-flex hx-font-semibold hx-items-start hx-gap-2 hx-pt-4 hx-px-4 hx-text-gray-700 hover:hx-text-gray-900 dark:hx-text-neutral-200 dark:hover:hx-text-neutral-50"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>Security Guidelines</span><div class="hextra-card-subtitle hx-line-clamp-3 hx-text-sm hx-font-normal hx-text-gray-500 dark:hx-text-gray-400 hx-px-4 hx-mb-4 hx-mt-2">Essential security practices for RF Swift</div></a>
 </div>
 
-  
-</div>
-<hr>
-<h3><code>grclone_and_build &lt;repo-url&gt; &lt;subdir&gt; &lt;method&gt; [-b branch] [cmake-args...]</code><span class="hx-absolute -hx-mt-20" id="grclone_and_build-repo-url-subdir-method--b-branch-cmake-args"></span>
-    <a href="#grclone_and_build-repo-url-subdir-method--b-branch-cmake-args" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Simplified wrapper for <code>cmake_clone_and_build</code>, designed for GNU Radio OOT modules.</p>
-<p>Example:</p>
-<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">grclone_and_build <span class="s2">&#34;https://github.com/author/gr-foo.git&#34;</span> <span class="s2">&#34;gr-foo&#34;</span> <span class="s2">&#34;gr_foo_install&#34;</span> -b dev -DENABLE_DOCS<span class="o">=</span>OFF</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
-  <button
-    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
-    title="Copy code"
-  >
-    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
-    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
-  </button>
-</div>
-
-  
-</div>
-<hr>
-<h2>🧠 Summary Table<span class="hx-absolute -hx-mt-20" id="-summary-table"></span>
-    <a href="#-summary-table" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><table>
+<h2>Security Quick Reference<span class="hx-absolute -hx-mt-20" id="security-quick-reference"></span>
+    <a href="#security-quick-reference" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><table>
   <thead>
       <tr>
-          <th>Category</th>
-          <th>Function</th>
-          <th>Description</th>
+          <th>Setting</th>
+          <th>Command</th>
+          <th>Security Impact</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td>Output</td>
-          <td><code>colorecho</code></td>
-          <td>Info messages (blue)</td>
+          <td>Unprivileged Mode</td>
+          <td><code>rfswift run -u 0</code></td>
+          <td>✅ Recommended: Reduces container privileges</td>
       </tr>
       <tr>
-          <td>Output</td>
-          <td><code>goodecho</code></td>
-          <td>Success messages (green)</td>
+          <td>Minimal Capabilities</td>
+          <td><code>rfswift run -a NET_ADMIN</code></td>
+          <td>✅ Recommended: Only add required capabilities</td>
       </tr>
       <tr>
-          <td>Output</td>
-          <td><code>criticalecho</code></td>
-          <td>Error + exit (red)</td>
+          <td>Network Isolation</td>
+          <td><code>rfswift run -t bridge</code></td>
+          <td>✅ Recommended: Isolates container network</td>
       </tr>
       <tr>
-          <td>Output</td>
-          <td><code>criticalecho-noexit</code></td>
-          <td>Error only (red)</td>
+          <td>Device Restrictions</td>
+          <td><code>rfswift run -g &quot;c 189:* rwm&quot;</code></td>
+          <td>✅ Recommended: Limit device access</td>
       </tr>
       <tr>
-          <td>Install</td>
-          <td><code>installfromnet</code></td>
-          <td>Retry logic for flaky commands</td>
+          <td>Privileged Mode</td>
+          <td><code>rfswift run -u 1</code></td>
+          <td>⚠️ High Risk: Grants extensive privileges</td>
       </tr>
       <tr>
-          <td>Install</td>
-          <td><code>install_dependencies</code></td>
-          <td>Apt-based dependency installation</td>
-      </tr>
-      <tr>
-          <td>Install</td>
-          <td><code>check_and_install_lib</code></td>
-          <td>Lib check + install via <code>pkg-config</code></td>
-      </tr>
-      <tr>
-          <td>Python</td>
-          <td><code>pip3install</code></td>
-          <td>Retry pip install</td>
-      </tr>
-      <tr>
-          <td>Git</td>
-          <td><code>gitinstall</code></td>
-          <td>Clone/update and log repos</td>
-      </tr>
-      <tr>
-          <td>Build</td>
-          <td><code>cmake_clone_and_build</code></td>
-          <td>Git clone + CMake build</td>
-      </tr>
-      <tr>
-          <td>Build</td>
-          <td><code>grclone_and_build</code></td>
-          <td>Optimized for GNU Radio modules</td>
+          <td>Default Network</td>
+          <td><code>rfswift run -t host</code></td>
+          <td>⚠️ Medium Risk: Shares host network stack</td>
       </tr>
   </tbody>
 </table>
-<hr>
-<h2>💡 Tips<span class="hx-absolute -hx-mt-20" id="-tips"></span>
-    <a href="#-tips" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
-<li>Always use <code>installfromnet</code> when working with downloads or Git operations in Dockerfiles.</li>
-<li>Group commands in a single <code>RUN</code> line in Dockerfiles to reduce layers.</li>
-<li>Clean build directories and cache files to keep image size minimal.</li>
-<li>You can extend the helper library by placing new functions in <code>images/scripts/common.sh</code> or custom scripts.</li>
+<h2>Container Security Philosophy<span class="hx-absolute -hx-mt-20" id="container-security-philosophy"></span>
+    <a href="#container-security-philosophy" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>With RF Swift you can also adopt a security philosophy of:</p>
+<ol>
+<li><strong>Principle of Least Privilege</strong>: Containers start with minimal privileges</li>
+<li><strong>Dynamic Enhancement</strong>: Add capabilities only when needed</li>
+<li><strong>Separation of Concerns</strong>: Use dedicated containers for different tasks</li>
+<li><strong>Defense in Depth</strong>: Multiple security layers working together</li>
+</ol>
+<h2>Best Practices at a Glance<span class="hx-absolute -hx-mt-20" id="best-practices-at-a-glance"></span>
+    <a href="#best-practices-at-a-glance" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
+<li>🔍 <strong>Audit Permissions</strong>: Regularly review container privileges</li>
+<li>🔄 <strong>Update Regularly</strong>: Keep RF Swift and images updated</li>
+<li>🧩 <strong>Separate Workloads</strong>: Use dedicated containers for each assessment</li>
+<li>🚪 <strong>Remove When Done</strong>: Delete containers that are no longer needed</li>
+<li>🔒 <strong>Monitor Usage</strong>: Watch for unusual container behavior</li>
 </ul>
-<hr>
-<h2>Related Docs<span class="hx-absolute -hx-mt-20" id="related-docs"></span>
-    <a href="#related-docs" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-cards hx-mt-4 hx-gap-4 hx-grid not-prose" style="--hextra-cards-grid-cols: 3;">
-  <a
-    class="hextra-card hx-group hx-flex hx-flex-col hx-justify-start hx-overflow-hidden hx-rounded-lg hx-border hx-border-gray-200 hx-text-current hx-no-underline dark:hx-shadow-none hover:hx-shadow-gray-100 dark:hover:hx-shadow-none hx-shadow-gray-100 active:hx-shadow-sm active:hx-shadow-gray-200 hx-transition-all hx-duration-200 hover:hx-border-gray-300 hx-bg-transparent hx-shadow-sm dark:hx-border-neutral-800 hover:hx-bg-slate-50 hover:hx-shadow-md dark:hover:hx-border-neutral-700 dark:hover:hx-bg-neutral-900"href="/docs/development/building-images"
-      ><span class="hextra-card-icon hx-flex hx-font-semibold hx-items-start hx-gap-2 hx-pt-4 hx-px-4 hx-text-gray-700 hover:hx-text-gray-900 dark:hx-text-neutral-200 dark:hover:hx-text-neutral-50"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>Build Custom Images</span><div class="hextra-card-subtitle hx-line-clamp-3 hx-text-sm hx-font-normal hx-text-gray-500 dark:hx-text-gray-400 hx-px-4 hx-mb-4 hx-mt-2">Use these helpers in your own container builds</div></a>
-  <a
-    class="hextra-card hx-group hx-flex hx-flex-col hx-justify-start hx-overflow-hidden hx-rounded-lg hx-border hx-border-gray-200 hx-text-current hx-no-underline dark:hx-shadow-none hover:hx-shadow-gray-100 dark:hover:hx-shadow-none hx-shadow-gray-100 active:hx-shadow-sm active:hx-shadow-gray-200 hx-transition-all hx-duration-200 hover:hx-border-gray-300 hx-bg-transparent hx-shadow-sm dark:hx-border-neutral-800 hover:hx-bg-slate-50 hover:hx-shadow-md dark:hover:hx-border-neutral-700 dark:hover:hx-bg-neutral-900"href="/docs/guide/configurations"
-      ><span class="hextra-card-icon hx-flex hx-font-semibold hx-items-start hx-gap-2 hx-pt-4 hx-px-4 hx-text-gray-700 hover:hx-text-gray-900 dark:hx-text-neutral-200 dark:hover:hx-text-neutral-50"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>System Configuration</span><div class="hextra-card-subtitle hx-line-clamp-3 hx-text-sm hx-font-normal hx-text-gray-500 dark:hx-text-gray-400 hx-px-4 hx-mb-4 hx-mt-2">Tune RF Swift for your hardware</div></a>
-  <a
-    class="hextra-card hx-group hx-flex hx-flex-col hx-justify-start hx-overflow-hidden hx-rounded-lg hx-border hx-border-gray-200 hx-text-current hx-no-underline dark:hx-shadow-none hover:hx-shadow-gray-100 dark:hover:hx-shadow-none hx-shadow-gray-100 active:hx-shadow-sm active:hx-shadow-gray-200 hx-transition-all hx-duration-200 hover:hx-border-gray-300 hx-bg-transparent hx-shadow-sm dark:hx-border-neutral-800 hover:hx-bg-slate-50 hover:hx-shadow-md dark:hover:hx-border-neutral-700 dark:hover:hx-bg-neutral-900"href="https://github.com/PentHertz/RF-Swift"
-      target="_blank" rel="noreferrer"><span class="hextra-card-icon hx-flex hx-font-semibold hx-items-start hx-gap-2 hx-pt-4 hx-px-4 hx-text-gray-700 hover:hx-text-gray-900 dark:hx-text-neutral-200 dark:hover:hx-text-neutral-50"><svg fill="currentColor" viewBox="3 3 18 18">
-    <path d="M12 3C7.0275 3 3 7.12937 3 12.2276C3 16.3109 5.57625 19.7597 9.15374 20.9824C9.60374 21.0631 9.77249 20.7863 9.77249 20.5441C9.77249 20.3249 9.76125 19.5982 9.76125 18.8254C7.5 19.2522 6.915 18.2602 6.735 17.7412C6.63375 17.4759 6.19499 16.6569 5.8125 16.4378C5.4975 16.2647 5.0475 15.838 5.80124 15.8264C6.51 15.8149 7.01625 16.4954 7.18499 16.7723C7.99499 18.1679 9.28875 17.7758 9.80625 17.5335C9.885 16.9337 10.1212 16.53 10.38 16.2993C8.3775 16.0687 6.285 15.2728 6.285 11.7432C6.285 10.7397 6.63375 9.9092 7.20749 9.26326C7.1175 9.03257 6.8025 8.08674 7.2975 6.81794C7.2975 6.81794 8.05125 6.57571 9.77249 7.76377C10.4925 7.55615 11.2575 7.45234 12.0225 7.45234C12.7875 7.45234 13.5525 7.55615 14.2725 7.76377C15.9937 6.56418 16.7475 6.81794 16.7475 6.81794C17.2424 8.08674 16.9275 9.03257 16.8375 9.26326C17.4113 9.9092 17.76 10.7281 17.76 11.7432C17.76 15.2843 15.6563 16.0687 13.6537 16.2993C13.98 16.5877 14.2613 17.1414 14.2613 18.0065C14.2613 19.2407 14.25 20.2326 14.25 20.5441C14.25 20.7863 14.4188 21.0746 14.8688 20.9824C16.6554 20.364 18.2079 19.1866 19.3078 17.6162C20.4077 16.0457 20.9995 14.1611 21 12.2276C21 7.12937 16.9725 3 12 3Z"></path>
-  </svg>
-  Contribute</span><div class="hextra-card-subtitle hx-line-clamp-3 hx-text-sm hx-font-normal hx-text-gray-500 dark:hx-text-gray-400 hx-px-4 hx-mb-4 hx-mt-2">Improve or extend these helper functions on GitHub</div></a>
+<h2>Reporting Security Issues<span class="hx-absolute -hx-mt-20" id="reporting-security-issues"></span>
+    <a href="#reporting-security-issues" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>If you discover a security vulnerability in RF Swift, please report it responsibly by:</p>
+<ol>
+<li><strong>Creating a GitHub Issue</strong> marked as &ldquo;Security Concern&rdquo;</li>
+<li><strong>Join our Discord</strong> for security discussions</li>
+<li><strong>Contact Project Maintainers</strong> directly for critical vulnerabilities</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-orange-100 hx-bg-orange-50 hx-text-orange-800 dark:hx-border-orange-400/30 dark:hx-bg-orange-400/20 dark:hx-text-orange-300">
+  <div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2"><div class="hx-select-none hx-text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
+        ⚠️
+      </div></div>
+
+  <div class="hx-w-full hx-min-w-0 hx-leading-7">
+    <div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+      Remember that security is a balance. RF Swift needs certain privileges to function correctly, especially when working with hardware devices. Follow these guidelines to maintain that balance safely.
+    </div>
+  </div>
 </div>
 
 
@@ -895,10 +645,14 @@ Most helpers implement retry logic and consistent logging to ensure resilience a
         
     <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2025-04-12T13:34:52.000Z">April 12, 2025</time></div>
         <div class="hx-mb-8 hx-flex hx-items-center hx-border-t hx-pt-8 dark:hx-border-neutral-800 contrast-more:hx-border-neutral-400 dark:contrast-more:hx-border-neutral-400 print:hx-hidden"><a
-        href="/docs/development/compiling-rfswift/"
-        title="Compiling RF Swift from Source"
+        href="/docs/guide/"
+        title="📖 Guide"
         class="hx-flex hx-max-w-[50%] hx-items-center hx-gap-1 hx-py-4 hx-text-base hx-font-medium hx-text-gray-600 hx-transition-colors [word-break:break-word] hover:hx-text-primary-600 dark:hx-text-gray-300 md:hx-text-lg ltr:hx-pr-4 rtl:hx-pl-4"
-      ><svg class="hx-inline hx-h-5 hx-shrink-0 ltr:hx-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>Compiling RF Swift from Source</a></div>
+      ><svg class="hx-inline hx-h-5 hx-shrink-0 ltr:hx-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>📖 Guide</a><a
+        href="/docs/security/guide_lines/"
+        title="Security guidelines"
+        class="hx-flex hx-max-w-[50%] hx-items-center hx-gap-1 hx-py-4 hx-text-base hx-font-medium hx-text-gray-600 hx-transition-colors [word-break:break-word] hover:hx-text-primary-600 dark:hx-text-gray-300 md:hx-text-lg ltr:hx-ml-auto ltr:hx-pl-4 ltr:hx-text-right rtl:hx-mr-auto rtl:hx-pr-4 rtl:hx-text-left"
+      >Security guidelines<svg class="hx-inline hx-h-5 hx-shrink-0 rtl:-hx-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
         
       </main>
     </article>

@@ -1,0 +1,438 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RF Swift – RF Swift Security Guidelines</title>
+    <link>https://rfswift.io/docs/security/</link>
+    <description>Recent content in RF Swift Security Guidelines on RF Swift</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="https://rfswift.io/docs/security/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Security guidelines</title>
+      <link>https://rfswift.io/docs/security/guide_lines/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://rfswift.io/docs/security/guide_lines/</guid>
+      <description>
+        
+        
+        &lt;h1&gt;🛡️ RF Swift Security Guidelines&lt;/h1&gt;&lt;p&gt;This document provides important security guidelines for using RF Swift in various environments. Following these recommendations will help you maintain a secure system while enjoying the full capabilities of RF Swift.&lt;/p&gt;
+&lt;h2&gt;🐳 Docker Permissions&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-docker-permissions&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-docker-permissions&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Running Docker Without Sudo (Linux) 🐧&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;running-docker-without-sudo-linux-&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#running-docker-without-sudo-linux-&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;By default, Docker requires root privileges on Linux systems, but this can be a security concern. Here&amp;rsquo;s how to use Docker without &lt;code&gt;sudo&lt;/code&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create the docker group&lt;/strong&gt; (if it doesn&amp;rsquo;t exist):&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo groupadd docker&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Add your user to the docker group&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo usermod -aG docker &lt;span class=&#34;nv&#34;&gt;$USER&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Apply the new group membership&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;newgrp docker&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Verify it works&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run hello-world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;⚠️ &lt;strong&gt;Security Implications&lt;/strong&gt;: Users in the docker group effectively have root privileges on the host. Only add trusted users to this group.&lt;/p&gt;
+&lt;h3&gt;Docker Desktop Security (Windows &amp;amp; macOS) 🪟 🍎&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;docker-desktop-security-windows--macos--&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#docker-desktop-security-windows--macos--&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Docker Desktop provides a more user-friendly approach to permissions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Windows&lt;/strong&gt;: Docker Desktop runs through a VM and doesn&amp;rsquo;t require admin rights for normal operation after installation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;macOS&lt;/strong&gt;: Docker Desktop handles permissions through the application&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔒 &lt;strong&gt;Recommended Settings&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Enable the &amp;ldquo;Use Docker Compose V2&amp;rdquo; option&lt;/li&gt;
+&lt;li&gt;Enable the &amp;ldquo;Use containerd for pulling and storing images&amp;rdquo; option&lt;/li&gt;
+&lt;li&gt;Keep Docker Desktop updated to the latest version&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;🔐 Container Security Parameters&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-container-security-parameters&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-container-security-parameters&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;RF Swift provides several mechanisms to control container privileges and access:&lt;/p&gt;
+&lt;h3&gt;Privileged Mode 🚨&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;privileged-mode-&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#privileged-mode-&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -u &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# Privileged mode (1)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -u &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# Unprivileged mode (0)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;p&gt;⚠️ &lt;strong&gt;Security Risk&lt;/strong&gt;: Privileged containers can access all devices on the host and potentially escape container isolation.&lt;/p&gt;
+&lt;p&gt;🛡️ &lt;strong&gt;Recommendation&lt;/strong&gt;: Use unprivileged mode (&lt;code&gt;-u 0&lt;/code&gt;) whenever possible, which is the default in RF Swift.&lt;/p&gt;
+&lt;h3&gt;Linux Capabilities 🧢&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;linux-capabilities-&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#linux-capabilities-&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Capabilities provide a more granular approach to permissions than privileged mode:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -a NET_ADMIN,SYS_PTRACE  &lt;span class=&#34;c1&#34;&gt;# Add specific capabilities&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h4&gt;Common Capabilities and Risks&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;common-capabilities-and-risks&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#common-capabilities-and-risks&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Capability&lt;/th&gt;
+          &lt;th&gt;Use Case&lt;/th&gt;
+          &lt;th&gt;Security Risk&lt;/th&gt;
+          &lt;th&gt;Recommendation&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;NET_ADMIN&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Wi-Fi/Bluetooth tools&lt;/td&gt;
+          &lt;td&gt;Network traffic interception&lt;/td&gt;
+          &lt;td&gt;Only use with networking tools&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;NET_RAW&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Raw socket access&lt;/td&gt;
+          &lt;td&gt;Packet spoofing&lt;/td&gt;
+          &lt;td&gt;Only use with specific networking tools&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;SYS_PTRACE&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Debugging&lt;/td&gt;
+          &lt;td&gt;Process inspection, memory access&lt;/td&gt;
+          &lt;td&gt;Only use for debugging or reverse engineering&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;SYS_ADMIN&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Mount operations&lt;/td&gt;
+          &lt;td&gt;Almost root equivalent&lt;/td&gt;
+          &lt;td&gt;Avoid unless absolutely necessary&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;MKNOD&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Create device nodes&lt;/td&gt;
+          &lt;td&gt;Create arbitrary devices&lt;/td&gt;
+          &lt;td&gt;Rarely needed, avoid&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;CHOWN&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Change file ownership&lt;/td&gt;
+          &lt;td&gt;Permission escalation&lt;/td&gt;
+          &lt;td&gt;Rarely needed for RF tools&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;🛡️ &lt;strong&gt;Recommendation&lt;/strong&gt;: Only add the specific capabilities required for your tools. RF Swift automatically configures common capabilities for specific image types.&lt;/p&gt;
+&lt;h3&gt;Seccomp Profiles 🔒&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;seccomp-profiles-&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#seccomp-profiles-&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Seccomp filters restrict the system calls a container can make:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -m /path/to/seccomp.json  &lt;span class=&#34;c1&#34;&gt;# Use custom seccomp profile&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;p&gt;🛡️ &lt;strong&gt;Default Profile&lt;/strong&gt;: RF Swift uses Docker&amp;rsquo;s default seccomp profile which blocks ~44 system calls out of 300+.&lt;/p&gt;
+&lt;h4&gt;Creating Custom Seccomp Profiles&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;creating-custom-seccomp-profiles&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#creating-custom-seccomp-profiles&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;For highly sensitive environments, create a custom profile:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Start with the &lt;a href=&#34;https://github.com/moby/moby/blob/master/profiles/seccomp/default.json&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;default Docker profile&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Modify it to allow only required system calls&lt;/li&gt;
+&lt;li&gt;Test thoroughly with your specific tools&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;⚠️ &lt;strong&gt;Warning&lt;/strong&gt;: Overly restrictive seccomp profiles can cause tools to fail in unexpected ways.&lt;/p&gt;
+&lt;h3&gt;Control Groups (cgroups) 🧩&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;control-groups-cgroups-&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#control-groups-cgroups-&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Cgroups limit container access to devices:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -g &lt;span class=&#34;s2&#34;&gt;&amp;#34;c 189:* rwm,c 166:* rwm&amp;#34;&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# Allow specific device access&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h4&gt;Common cgroup Rules&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;common-cgroup-rules&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#common-cgroup-rules&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Rule&lt;/th&gt;
+          &lt;th&gt;Devices&lt;/th&gt;
+          &lt;th&gt;Use Case&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;c 189:* rwm&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;USB serial devices (ttyUSB*)&lt;/td&gt;
+          &lt;td&gt;RTL-SDR, HackRF&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;c 166:* rwm&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;ACM devices (ttyACM*)&lt;/td&gt;
+          &lt;td&gt;Proxmark3, Arduino&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;c 188:* rwm&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;USB serial converters&lt;/td&gt;
+          &lt;td&gt;Various adapters&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;c 116:* rwm&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;ALSA devices&lt;/td&gt;
+          &lt;td&gt;Audio capture&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;c 226:* rwm&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;DRI (GPU)&lt;/td&gt;
+          &lt;td&gt;OpenCL acceleration&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;🛡️ &lt;strong&gt;Format Explanation&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;c&lt;/code&gt; = character device, &lt;code&gt;b&lt;/code&gt; = block device&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Major#:Minor#&lt;/code&gt; = device identifier (use &lt;code&gt;*&lt;/code&gt; for all minor devices)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;r&lt;/code&gt; = read, &lt;code&gt;w&lt;/code&gt; = write, &lt;code&gt;m&lt;/code&gt; = mknod (create device files)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;🔄 Dynamic Permission Management&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-dynamic-permission-management&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-dynamic-permission-management&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;One of RF Swift&amp;rsquo;s key advantages is the ability to add or remove permissions dynamically:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Temporarily add NET_ADMIN capability&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift bindings add -c my_container -a NET_ADMIN
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# When finished with sensitive operations&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift bindings remove -c my_container -a NET_ADMIN&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;p&gt;🛡️ &lt;strong&gt;Best Practice&lt;/strong&gt;: Add sensitive capabilities only when needed and remove them immediately afterward.&lt;/p&gt;
+&lt;h2&gt;🌐 Network Isolation&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-network-isolation&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-network-isolation&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Control the container&amp;rsquo;s network access for added security:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Complete network isolation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -t none -n isolated_container
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Bridge network with limited connectivity&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -t bridge -n bridge_container&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;p&gt;🛡️ &lt;strong&gt;Network Modes&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;host&lt;/code&gt;: Full network access (default, needed for many RF tools)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bridge&lt;/code&gt;: Isolated network with optional port forwarding&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;none&lt;/code&gt;: No network access (highest security)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;custom&lt;/code&gt;: Create custom networks for container-to-container communication&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;🛡️ Security Checklist&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-security-checklist&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-security-checklist&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Use this checklist for a secure RF Swift deployment:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;✅ Use unprivileged mode by default&lt;/li&gt;
+&lt;li&gt;✅ Add only required capabilities&lt;/li&gt;
+&lt;li&gt;✅ Bind only the devices you need&lt;/li&gt;
+&lt;li&gt;✅ Consider network isolation when possible&lt;/li&gt;
+&lt;li&gt;✅ Keep RF Swift and Docker updated&lt;/li&gt;
+&lt;li&gt;✅ Run containers with a non-root user when possible&lt;/li&gt;
+&lt;li&gt;✅ Remove sensitive capabilities when not in use&lt;/li&gt;
+&lt;li&gt;✅ Use separate containers for different tasks/assessments&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;📈 Balancing Security and Functionality&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-balancing-security-and-functionality&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-balancing-security-and-functionality&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;RF Swift is designed for radio frequency and hardware security work, which inherently requires more privileges than typical containers. The key is finding the right balance:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;🎯 &lt;strong&gt;Task-specific containers&lt;/strong&gt;: Create purpose-built containers with minimal privileges&lt;/li&gt;
+&lt;li&gt;🔍 &lt;strong&gt;Progressive enhancement&lt;/strong&gt;: Start with minimal privileges and add only what&amp;rsquo;s needed&lt;/li&gt;
+&lt;li&gt;⏱️ &lt;strong&gt;Temporary privileges&lt;/strong&gt;: Use the bindings feature to add/remove privileges dynamically&lt;/li&gt;
+&lt;li&gt;🧪 &lt;strong&gt;Test environment&lt;/strong&gt;: Test containers in a controlled environment before deployment&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;🌟 Real-World Secure Configurations&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-real-world-secure-configurations&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-real-world-secure-configurations&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;SDR Work with Minimal Privileges&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;sdr-work-with-minimal-privileges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#sdr-work-with-minimal-privileges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# RTL-SDR with just the required devices&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i sdr_light -n secure_sdr -u &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; -g &lt;span class=&#34;s2&#34;&gt;&amp;#34;c 189:* rwm&amp;#34;&lt;/span&gt; -t bridge&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h3&gt;Wi-Fi Assessment with Controlled Capabilities&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;wi-fi-assessment-with-controlled-capabilities&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#wi-fi-assessment-with-controlled-capabilities&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Start with minimal privileges&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i wifi -n wifi_assessment -u &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; -t bridge
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Add NET_ADMIN only when needed&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift bindings add -c wifi_assessment -a NET_ADMIN
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Remove when done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift bindings remove -c wifi_assessment -a NET_ADMIN&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h3&gt;Hardware Reverse Engineering with Isolation&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;hardware-reverse-engineering-with-isolation&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#hardware-reverse-engineering-with-isolation&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Isolated environment for reverse engineering&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i reversing -n secure_reversing -u &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; -t none -s /dev/ttyUSB0:/dev/ttyUSB0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h2&gt;🔄 Keeping Updated&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-keeping-updated&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-keeping-updated&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Security is an ongoing process. Stay informed about:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔔 RF Swift updates&lt;/li&gt;
+&lt;li&gt;🐳 Docker security advisories&lt;/li&gt;
+&lt;li&gt;🛡️ Container security best practices&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;📚 Additional Resources&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-additional-resources&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-additional-resources&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.docker.com/engine/security/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Docker Security Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://man7.org/linux/man-pages/man7/capabilities.7.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Linux Capabilities Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.docker.com/engine/security/seccomp/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Seccomp Security Profiles for Docker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.kernel.org/doc/Documentation/cgroup-v1/devices.txt&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Control Groups Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
