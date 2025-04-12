@@ -260,5 +260,5 @@ sdrangel
 Continue to the file sharing section to learn how to exchange data between your host and containers:
 
 {{< cards >}}
-  {{< card link="/docs/guide/file-sharing" title="File Sharing" icon="document-text" subtitle="Learn how to share files and directories between host and containers." >}}
+  {{< card link="/docs/guide/sharing-files/" title="File Sharing" icon="document-text" subtitle="Learn how to share files and directories between host and containers." >}}
 {{< /cards >}}
