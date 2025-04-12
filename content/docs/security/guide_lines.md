@@ -196,13 +196,7 @@ rfswift run -i sdr_light -n secure_sdr -u 0 -g "c 189:* rwm" -t bridge
 
 ```bash
 # Start with minimal privileges
-rfswift run -i wifi -n wifi_assessment -u 0 -t bridge
-
-# Add NET_ADMIN only when needed
-rfswift bindings add -c wifi_assessment -a NET_ADMIN
-
-# Remove when done
-rfswift bindings remove -c wifi_assessment -a NET_ADMIN
+rfswift run -i wifi -n wifi_assessment -a NET_ADMIN
 ```
 
 ### Hardware Reverse Engineering with Isolation
