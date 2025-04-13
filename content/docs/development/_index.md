@@ -23,8 +23,6 @@ RF Swift is designed to be extensible and customizable. You can tailor it to you
 {{< cards >}}
   {{< card link="compiling-rfswift" title="Compile RF Swift Binary" icon="chip" subtitle="Build the RF Swift binary from source for different platforms and architectures" >}}
   {{< card link="building-images" title="Building Custom Images" icon="beaker" subtitle="Create specialized Docker images with your preferred RF and security tools" >}}
-  {{< card link="extending-rfswift" title="Extending RF Swift" icon="puzzle" subtitle="Add new features and capabilities to the RF Swift framework" >}}
-  {{< card link="contributing" title="Contributing to RF Swift" icon="users" subtitle="Guidelines for submitting code, reporting issues, and collaborating with the community" >}}
 {{< /cards >}}
 
 ## Development Environment Setup
