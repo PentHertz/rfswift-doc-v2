@@ -3,7 +3,7 @@ title: Container Scripts
 linkTitle: 🛠️ Container Scripts
 weight: 9
 prev: /docs/guide
-next: /docs/container_scripts/rfswift_install
+next: /docs/container_scripts/avahi_inside_container
 cascade:
   type: docs
 ---
@@ -17,7 +17,7 @@ RF Swift provides several utility scripts that simplify common tasks inside cont
 ## Available Scripts
 
 {{< cards >}}
-  {{< card link="avahi_inside_container" title="Avahi Container Script" icon="signal" subtitle="Enable service discovery for PlutoSDR and network devices" >}}
+  {{< card link="avahi_inside_container" title="Avahi Container Script" icon="wifi" subtitle="Enable service discovery for PlutoSDR and network devices" >}}
   {{< card link="libresdr_swap_firmware" title="LibreSDR Firmware Swap" icon="chip" subtitle="Upgrade USRP B210/B220 with enhanced FPGA firmware" >}}
   {{< card link="rfswift_install" title="RF Scripts Updater" icon="refresh" subtitle="Keep your RF Swift scripts updated with the latest versions" >}}
 {{< /cards >}}
