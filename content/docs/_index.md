@@ -34,6 +34,11 @@ cascade:
        <img alt="Spectrum 24" src="https://img.shields.io/badge/Spectrum-2024-yellow">
       </a>
       </td>
+      <td>
+        <a target="_blank" rel="noopener noreferrer" href="https://fosdem.org/2025/schedule/event/fosdem-2025-4301-rf-swift-a-swifty-toolbox-for-all-wireless-assessments/" title="Schedule">
+       <img alt="Spectrum 24" src="https://img.shields.io/badge/FOSDEM-2025-pink">
+      </a>
+      </td>
     </tr>
     <tr>
       <td><strong>Socials</strong></td>
