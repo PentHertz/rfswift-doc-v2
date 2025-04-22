@@ -23,13 +23,9 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 
 #### Linux and macOS
 
-The easiest way to install RF Swift on Linux or macOS is to use the installation script:
-
+The easiest way to install RF Swift on Linux or macOS is to use the installation script after downloading [the latest version here](https://github.com/PentHertz/RF-Swift/tags):
+  
 ```bash
-# Clone the repository
-git clone https://github.com/PentHertz/RF-Swift.git
-cd RF-Swift
-
 # Run the installation script
 ./install.sh
 ```
@@ -40,6 +36,23 @@ The `install.sh` script will:
 - Set up proper permissions
 - Create a system-wide alias for the `rfswift` command
 - Install the latest RF Swift binary
+
+#### Alternative: from sources 
+
+You can also download the latest (unstable) version from GitHub by cloning the repository, but you will need to build and use `install.sh` script as follows:
+
+```bash
+git clone https://github.com/PentHertz/RF-Swift.git
+cd RF-Swift
+
+# Step 1 - Building the project
+./build_project.sh
+
+# Step 2 - Run the installation script
+./install.sh
+```
+
+Then you should have the binary installed as well as all the requirements ;)
 
 #### Windows or Manual Installation
 
