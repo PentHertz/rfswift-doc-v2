@@ -174,9 +174,15 @@ Tools for GSM, UMTS, and related technologies:
 
 #### 4G/5G Analysis Tools
 
-Tools for LTE, 5G-NSA, and 5G technologies:
+Tools for LTE, 5G-NSA:
 
 {{< csv-table "content/docs/guide/tools_for_telecom_4gto5g.csv" >}}
+
+#### 5G Analysis Tools
+
+Tools for 5G technologies:
+
+{{< csv-table "content/docs/guide/tools_for_telecom_5g.csv" >}}
 
 ### Automotive Security
 

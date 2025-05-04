@@ -104,6 +104,10 @@ rfswift run -i sdr_full -n my_sdr_container
 
 This will start a container using the `sdr_full` image with the name `my_sdr_container`.
 
+{{< callout type="warning" >}}
+With some plateforms, some default devices may be non-existant. Your can use `bindings` or modify RF Swift's configuration file to remove the device from the mapped device list.
+{{< /callout >}}
+
 **Run Command Options:**
 
 ```bash

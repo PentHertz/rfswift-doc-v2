@@ -29,6 +29,7 @@ RF Swift is designed to work across multiple platforms and architectures to suit
 |-----|--------|----------|
 | Raspberry Pi 5 | ✅ | Works perfectly with most tools |
 | Milk-V Jupiter | ✅ | Works perfectly with most tools, but slower than Raspberry Pi 5 |
+| Orange Pi RV2  | ✅ | Works perfectly with most tools, but slower than Milk-V Jupiter |
 | Milk-V Mars | ❌ | Software support is currently unavailable. Docker installation is problematic |
 | UP Squared Series | ✅ | Works perfectly with most tools |
 
