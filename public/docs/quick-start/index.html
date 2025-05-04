@@ -57,14 +57,14 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rfswift.io/docs/quick-start/" /><meta property="article:section" content="docs" />
 
-<meta property="article:modified_time" content="2025-04-21T22:15:08+02:00" />
+<meta property="article:modified_time" content="2025-04-22T16:07:38+02:00" />
 
   
   <meta itemprop="name" content="🚀 Quick Start">
   <meta itemprop="description" content="Getting Up and Running with RF SwiftThis guide will help you quickly get started with RF Swift using pre-built binaries and container images.
 ⚠️ On Linux, unless you are using Docker Desktop, you may need to use sudo with the rfswift command for operations that require elevated privileges. To install RF Swift, you can either use pre-compiled binaries and existing container images (quickest method) or compile the Go project and/or Docker images from source. This guide focuses on the fastest way to get up and running.">
-  <meta itemprop="dateModified" content="2025-04-21T22:15:08+02:00">
-  <meta itemprop="wordCount" content="1257">
+  <meta itemprop="dateModified" content="2025-04-22T16:07:38+02:00">
+  <meta itemprop="wordCount" content="1319">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="🚀 Quick Start">
   <meta name="twitter:description" content="Getting Up and Running with RF SwiftThis guide will help you quickly get started with RF Swift using pre-built binaries and container images.
@@ -586,6 +586,10 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-8 rtl:hx-pr-8 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#alternative-from-sources">Alternative: from sources
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
         <a class="ltr:hx-pl-8 rtl:hx-pr-8 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#windows-or-manual-installation">Windows or Manual Installation
         </a>
       </li>
@@ -699,15 +703,11 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 <div class="steps hx-ml-4 hx-mb-12 ltr:hx-border-l rtl:hx-border-r hx-border-gray-200 ltr:hx-pl-6 rtl:hx-pr-6 dark:hx-border-neutral-800 [counter-reset:step]">
 <h3>Install RF Swift<span class="hx-absolute -hx-mt-20" id="install-rf-swift"></span>
     <a href="#install-rf-swift" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><h4>Linux and macOS<span class="hx-absolute -hx-mt-20" id="linux-and-macos"></span>
-    <a href="#linux-and-macos" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>The easiest way to install RF Swift on Linux or macOS is to use the installation script:</p>
+    <a href="#linux-and-macos" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>The easiest way to install RF Swift on Linux or macOS is to use the installation script after downloading <a href="https://github.com/PentHertz/RF-Swift/tags" target="_blank" rel="noopener">the latest version here</a>:</p>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
   
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Clone the repository</span>
-</span></span><span class="line"><span class="cl">git clone https://github.com/PentHertz/RF-Swift.git
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> RF-Swift
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Run the installation script</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Run the installation script</span>
 </span></span><span class="line"><span class="cl">./install.sh</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
   <button
     class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
@@ -728,6 +728,31 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 <li>Create a system-wide alias for the <code>rfswift</code> command</li>
 <li>Install the latest RF Swift binary</li>
 </ul>
+<h4>Alternative: from sources<span class="hx-absolute -hx-mt-20" id="alternative-from-sources"></span>
+    <a href="#alternative-from-sources" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>You can also download the latest (unstable) version from GitHub by cloning the repository, but you will need to build and use <code>install.sh</code> script as follows:</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+  
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/PentHertz/RF-Swift.git
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> RF-Swift
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Step 1 - Building the project</span>
+</span></span><span class="line"><span class="cl">./build_project.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Step 2 - Run the installation script</span>
+</span></span><span class="line"><span class="cl">./install.sh</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+
+  
+</div>
+<p>Then you should have the binary installed as well as all the requirements ;)</p>
 <h4>Windows or Manual Installation<span class="hx-absolute -hx-mt-20" id="windows-or-manual-installation"></span>
     <a href="#windows-or-manual-installation" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>If you prefer manual installation or are using Windows:</p>
 <ol>
@@ -1308,7 +1333,7 @@ This requires <code>pulseaudio</code> to be properly configured on your host sys
 
         </div>
         
-    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2025-04-21T22:15:08.000Z">April 21, 2025</time></div>
+    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2025-04-22T16:07:38.000Z">April 22, 2025</time></div>
         <div class="hx-mb-8 hx-flex hx-items-center hx-border-t hx-pt-8 dark:hx-border-neutral-800 contrast-more:hx-border-neutral-400 dark:contrast-more:hx-border-neutral-400 print:hx-hidden"><a
         href="/docs/getting-started/"
         title="Getting Started"
