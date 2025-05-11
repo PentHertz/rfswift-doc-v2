@@ -75,6 +75,11 @@ pulse_server = tcp:localhost:34567
 | `imagename` | Default image used when running containers without `-i` | `myrfswift:latest` |
 | `repotag` | Default repository for RF Swift images | `penthertz/rfswift` |
 
+
+  {{< callout type="info" >}}
+  RF Swift images by default are built in Jammy version of Ubuntu, but are available in Beta version with Noble build. If you want to try Ubuntu Noble versions, please change repotag to `penthertz/rfswift_noble`.
+  {{< /callout >}}
+
 #### Container Section
 
 | Parameter | Description | Example |
