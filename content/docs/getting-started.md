@@ -56,13 +56,13 @@ This is now the recommended method for installing RF Swift on all supported plat
 #### Linux and macOS
 
 ```bash
-curl -fsSL "https://get.rfswift.io/" | sudo sh # remove 'sudo' on macOS
+curl -fsSL "https://get.rfswift.io/" | sh
 ```
 
 Or if you prefer wget:
 
 ```bash
-wget -qO- "https://get.rfswift.io/" | sudo sh # remove 'sudo' on macOS
+wget -qO- "https://get.rfswift.io/" | sh
 ```
 
 After installation completes, simply open a new terminal and run:
