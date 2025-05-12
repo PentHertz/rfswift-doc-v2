@@ -1,4 +1,3 @@
-
 ---
 title: Getting Started
 weight: 1
@@ -39,143 +38,135 @@ RF Swift is designed to work across multiple platforms and architectures to suit
 RF Swift now offers a streamlined one-line installer that automatically installs all dependencies (including Docker) and configures your system for optimal performance.
 
 {{< tabs items="One-Line Installer (Recommended),Manual Installation" >}}
-  {{< tab >}}
-  ### One-Line Installer
+{{< tab >}}
+### One-Line Installer
 
-  Our new installer takes care of everything for you in a single command! It will:
-  
-  - Install Docker if it's not already present
-  - Download and install the latest RF Swift release
-  - Configure your system for USB, audio, and GUI support
-  - Create a convenient shell alias for easy access
-  - Set up proper permissions and configurations
+Our new installer takes care of everything for you in a single command! It will:
 
-  {{< callout type="info" >}}
-  This is now the recommended method for installing RF Swift on all supported platforms.
-  {{< /callout >}}
+- Install Docker if it's not already present
+- Download and install the latest RF Swift release
+- Configure your system for USB, audio, and GUI support
+- Create a convenient shell alias for easy access
+- Set up proper permissions and configurations
 
-  #### Linux and macOS
+{{< callout type="info" >}}
+This is now the recommended method for installing RF Swift on all supported platforms.
+{{< /callout >}}
 
+#### Linux and macOS
+
+```bash
+curl -fsSL "https://get.rfswift.io/" | sudo sh
+```
+
+Or if you prefer wget:
+
+```bash
+wget -qO- "https://get.rfswift.io/" | sudo sh
+```
+
+After installation completes, simply open a new terminal and run:
+
+```bash
+rfswift
+```
+
+#### Windows
+
+Follow the manual installation steps.
+{{< /tab >}}
+
+{{< tab >}}
+### Manual Installation
+
+If you prefer to have more control over the installation process, you can install the components separately.
+
+#### Linux Manual Installation (Preferred)
+
+{{< callout type="info" >}}
+On Linux, Docker, BuildX, and Go can be directly installed with the `install.sh` script included in the repository.
+{{< /callout >}}
+
+**Essential Components**
+
+- **Docker**: Required to run RF Swift containers
   ```bash
-  curl -fsSL "https://get.rfswift.io/" | sudo sh
+  curl -fsSL "https://get.docker.com/" | sh
   ```
+- **xhost**: Required for GUI application support (install via your distribution's package manager)
+- **PulseAudio**: Required for audio support (install via your distribution's package manager)
 
-  Or if you prefer wget:
-  
-  ```bash
-  wget -qO- "https://get.rfswift.io/" | sudo sh
-  ```
+**Optional Components**
 
-  After installation completes, simply open a new terminal and run:
-  
-  ```bash
-  rfswift
-  ```
+- **Go Compiler**: Required if you want to build RF Swift from source
+- **BuildX**: Required for cross-architecture compilation
 
-  #### Windows
+**Repository Installation**
 
-  Follow the manual installation steps.
-  {{< /tab >}}
+```bash
+# Clone the repository
+git clone https://github.com/PentHertz/RF-Swift.git
+cd RF-Swift
 
-  {{< tab >}}
-  ### Manual Installation
+# Run the installation script to automatically install all dependencies
+./install.sh
+```
 
-  If you prefer to have more control over the installation process, you can install the components separately.
+The `install.sh` script will:
+- Install Docker if not already present
+- Set up BuildX for cross-architecture support
+- Install Go compiler if needed
+- Configure xhost for GUI application access
+- Set up PulseAudio for sound
+- Configure user permissions for Docker
+- Download and install the latest RF Swift binary
 
-  {{< tabs items="Linux (preferred),Windows,macOS" >}}
-    {{< tab >}}
-    ### Linux Manual Installation
+#### Windows Manual Installation
 
-    {{< callout type="info" >}}
-    On Linux, Docker, BuildX, and Go can be directly installed with the `install.sh` script included in the repository.
-    {{< /callout >}}
+**Required Software**
 
-    #### Essential Components
-    
-    - **Docker**: Required to run RF Swift containers
-      ```bash
-      curl -fsSL "https://get.docker.com/" | sh
-      ```
-    - **xhost**: Required for GUI application support (install via your distribution's package manager)
-    - **PulseAudio**: Required for audio support (install via your distribution's package manager)
-    
-    #### Optional Components
-    
-    - **Go Compiler**: Required if you want to build RF Swift from source
-    - **BuildX**: Required for cross-architecture compilation
+- [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/) to run containers
+- [usbipd](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) to bind USB devices to the host
 
-    #### Repository Installation
+**For Audio Support**
 
-    ```bash
-    # Clone the repository
-    git clone https://github.com/PentHertz/RF-Swift.git
-    cd RF-Swift
-    
-    # Run the installation script to automatically install all dependencies
-    ./install.sh
-    ```
+For programs requiring PulseAudio:
 
-    The `install.sh` script will:
-    - Install Docker if not already present
-    - Set up BuildX for cross-architecture support
-    - Install Go compiler if needed
-    - Configure xhost for GUI application access
-    - Set up PulseAudio for sound
-    - Configure user permissions for Docker
-    - Download and install the latest RF Swift binary
-    {{< /tab >}}
+1. Follow the setup guide on [Linux Uprising](https://www.linuxuprising.com/2021/03/how-to-get-sound-pulseaudio-to-work-on.html)
+2. Use the updated binaries available at [pgaskin.net/pulseaudio-win32](https://pgaskin.net/pulseaudio-win32/)
 
-    {{< tab >}}
-    ### Windows Manual Installation
+{{< callout type="warning" >}}
+Make sure Docker Desktop runs in [WSL2 mode](https://docs.docker.com/desktop/wsl/#enabling-docker-support-in-wsl-2-distros) for optimal performance and compatibility.
+{{< /callout >}}
 
-    #### Required Software
-    
-    - [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/) to run containers
-    - [usbipd](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) to bind USB devices to the host
+**Installation Steps**
 
-    #### For Audio Support
-    
-    For programs requiring PulseAudio:
-    
-    1. Follow the setup guide on [Linux Uprising](https://www.linuxuprising.com/2021/03/how-to-get-sound-pulseaudio-to-work-on.html)
-    2. Use the updated binaries available at [pgaskin.net/pulseaudio-win32](https://pgaskin.net/pulseaudio-win32/)
+1. Install Docker Desktop and ensure WSL2 integration is enabled
+2. Install usbipd for USB device support
+3. Set up PulseAudio if audio functionality is needed
+4. Download the latest RF Swift binary from the releases page
 
-    {{< callout type="warning" >}}
-    Make sure Docker Desktop runs in [WSL2 mode](https://docs.docker.com/desktop/wsl/#enabling-docker-support-in-wsl-2-distros) for optimal performance and compatibility.
-    {{< /callout >}}
+#### macOS Manual Installation
 
-    #### Installation Steps
-    
-    1. Install Docker Desktop and ensure WSL2 integration is enabled
-    2. Install usbipd for USB device support
-    3. Set up PulseAudio if audio functionality is needed
-    4. Download the latest RF Swift binary from the releases page
-    {{< /tab >}}
+{{< callout type="warning" >}}
+macOS support will be fully implemented soon. Currently, some features may have limited functionality.
+{{< /callout >}}
 
-    {{< tab >}}
-    ### macOS Manual Installation
+**Current Status**
 
-    {{< callout type="warning" >}}
-    macOS support will be fully implemented soon. Currently, some features may have limited functionality.
-    {{< /callout >}}
+- Container functionality works without USB forwarding
+- For full functionality including USB device support, running in a Linux VM is recommended
 
-    #### Current Status
-    
-    - Container functionality works without USB forwarding
-    - For full functionality including USB device support, running in a Linux VM is recommended
-    
-    #### Required Software
-    
-    - Docker Desktop for macOS
-    - XQuartz for X11 forwarding (optional)
-    
-    #### Known Limitations
-    
-    - USB device forwarding is not currently supported natively
-    - Some specialized RF tools may have compatibility issues
-    {{< /tab >}}
-  {{< /tabs >}}
-  {{< /tab >}}
+**Required Software**
+
+- Docker Desktop for macOS
+- XQuartz for X11 forwarding (optional)
+
+**Known Limitations**
+
+- USB device forwarding is not currently supported natively
+- Some specialized RF tools may have compatibility issues
+{{< /tab >}}
 {{< /tabs >}}
 
 ## System Requirements
