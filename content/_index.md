@@ -29,13 +29,13 @@ layout: hextra-home
 {{< tabs items="Linux/macOS (curl),Linux/macOS (wget),Windows" >}}
   {{< tab >}}
 ```bash
-curl -fsSL "https://get.rfswift.io/" | sudo sh
+curl -fsSL "https://get.rfswift.io/" | sudo sh # remove 'sudo' on macOS
 ```
 After installation, simply run: `rfswift`
   {{< /tab >}}
   {{< tab >}}
 ```bash
-wget -qO- "https://get.rfswift.io/" | sudo sh
+wget -qO- "https://get.rfswift.io/" | sudo sh # remove 'sudo' on macOS
 ```
 After installation, simply run: `rfswift`
   {{< /tab >}}
