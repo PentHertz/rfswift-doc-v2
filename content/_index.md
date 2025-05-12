@@ -26,148 +26,27 @@ layout: hextra-home
   <h2 class="hx-text-3xl hx-font-bold hx-mb-4">Easy Installation</h2>
   <p class="hx-mb-6">Get RF-Swift up and running on your system with our one-line installer - no technical expertise required!</p>
 
-## Quick One-Line Installer
+## Quick Install
 
-{{< tabs items="Linux,macOS,Windows" >}}
+{{< tabs items="Linux/macOS cURL, Linux/macOS wgete,Windows" >}}
   {{< tab >}}
+Using curl:
 ```bash
 curl -fsSL "https://get.rfswift.io/" | sudo sh
 ```
-
-Or if you prefer wget:
-
+After installation, simply run: `rfswift`.
+  {{< /tab >}}
+  {{< tab >}}
+Or using wget:
 ```bash
 wget -qO- "https://get.rfswift.io/" | sudo sh
 ```
-
-The installer will:
-1. Check for and install Docker if needed
-2. Detect and download the latest RF-Swift release
-3. Install RF-Swift to your system
-4. Create a convenient alias in your shell configuration
-
-After installation, you can start using RF-Swift immediately with the simple command:
-
-```bash
-rfswift
-```
-
-Note: You may need to restart your terminal or run `source ~/.bashrc` (or equivalent for your shell) to use the alias.
+After installation, simply run: `rfswift`.
   {{< /tab >}}
   {{< tab >}}
-```bash
-curl -fsSL "https://get.rfswift.io/" | sudo sh
-```
-
-Or if you prefer wget:
-
-```bash
-wget -qO- "https://get.rfswift.io/" | sudo sh
-```
-
-The installer will:
-1. Check for and install Docker if needed (via Homebrew if available)
-2. Detect and download the latest RF-Swift release
-3. Install RF-Swift to your system
-4. Create a convenient shell alias in your .bash_profile or .zshrc
-
-After installation, you can start using RF-Swift immediately with the simple command:
-
-```bash
-rfswift
-```
-
-Note: You may need to restart your terminal or run `source ~/.zshrc` (or equivalent for your shell) to use the alias.
-  {{< /tab >}}
-  {{< tab >}}
-Open PowerShell as administrator and run:
-
-```powershell
-iwr -useb https://get.rfswift.io/win.ps1 | iex
-```
-
-The Windows installer will:
-1. Check for and install Docker Desktop if needed
-2. Download the latest RF-Swift release
-3. Install RF-Swift and add it to your PATH
-4. Create a desktop shortcut for easy access
-
-After installation, you can start using RF-Swift from any PowerShell or Command Prompt window:
-
-```powershell
-rfswift
-```
+See our [installation documentation](docs/quick-start) for Windows installation instructions.
   {{< /tab >}}
 {{< /tabs >}}
-
-## Manual Installation
-
-If you prefer to download and install manually:
-
-{{< tabs items="Linux,macOS,Windows" >}}
-  {{< tab >}}
-1. Visit the [GitHub Releases page](https://github.com/PentHertz/RF-Swift/releases)
-2. Download the appropriate package: `rfswift_Linux_x86_64.tar.gz` or `rfswift_Linux_arm64.tar.gz`
-3. Extract the archive:
-   ```bash
-   tar -xzf rfswift_Linux_*.tar.gz
-   ```
-4. Move the binary to a directory in your PATH:
-   ```bash
-   sudo mv rfswift /usr/local/bin/
-   sudo chmod +x /usr/local/bin/rfswift
-   ```
-5. Create an alias in your shell configuration file:
-   ```bash
-   echo 'alias rfswift="/usr/local/bin/rfswift"' >> ~/.bashrc
-   source ~/.bashrc
-   ```
-  {{< /tab >}}
-  {{< tab >}}
-1. Visit the [GitHub Releases page](https://github.com/PentHertz/RF-Swift/releases)
-2. Download the appropriate package: `rfswift_Darwin_x86_64.tar.gz` or `rfswift_Darwin_arm64.tar.gz`
-3. Extract the archive:
-   ```bash
-   tar -xzf rfswift_Darwin_*.tar.gz
-   ```
-4. Move the binary to a directory in your PATH:
-   ```bash
-   sudo mv rfswift /usr/local/bin/
-   sudo chmod +x /usr/local/bin/rfswift
-   ```
-5. Create an alias in your shell configuration file:
-   ```bash
-   # For Bash
-   echo 'alias rfswift="/usr/local/bin/rfswift"' >> ~/.bash_profile
-   source ~/.bash_profile
-   
-   # For Zsh
-   echo 'alias rfswift="/usr/local/bin/rfswift"' >> ~/.zshrc
-   source ~/.zshrc
-   ```
-  {{< /tab >}}
-  {{< tab >}}
-1. Visit the [GitHub Releases page](https://github.com/PentHertz/RF-Swift/releases)
-2. Download the appropriate package: `rfswift_Windows_x86_64.zip`
-3. Extract the ZIP file to a location of your choice (e.g., `C:\Program Files\RF-Swift\`)
-4. Add the folder to your PATH:
-   ```powershell
-   $env:Path += ";C:\Program Files\RF-Swift"
-   [Environment]::SetEnvironmentVariable("Path", $env:Path, [EnvironmentVariableTarget]::User)
-   ```
-5. Create a desktop shortcut if desired
-  {{< /tab >}}
-{{< /tabs >}}
-
-## System Requirements
-
-- Docker installed (our installer can set this up for you)
-- Supported platforms:
-  - Linux (x86_64, arm64, riscv64)
-  - macOS (x86_64, arm64)
-  - Windows (x86_64)
-- Minimal disk space required (most tools run in containers)
-</div>
 
 <div class="hx-mt-6"></div>
 {{< hextra/feature-grid >}}
