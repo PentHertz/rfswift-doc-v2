@@ -28,25 +28,24 @@ layout: hextra-home
 
 ## Quick Install
 
-{{< tabs items="Linux/macOS cURL, Linux/macOS wgete,Windows" >}}
+{{< tabs items="Linux/macOS (curl),Linux/macOS (wget),Windows" >}}
   {{< tab >}}
-Using curl:
 ```bash
 curl -fsSL "https://get.rfswift.io/" | sudo sh
 ```
-After installation, simply run: `rfswift`.
+After installation, simply run: `rfswift`
   {{< /tab >}}
   {{< tab >}}
-Or using wget:
 ```bash
 wget -qO- "https://get.rfswift.io/" | sudo sh
 ```
-After installation, simply run: `rfswift`.
+After installation, simply run: `rfswift`
   {{< /tab >}}
   {{< tab >}}
 See our [installation documentation](docs/quick-start) for Windows installation instructions.
   {{< /tab >}}
 {{< /tabs >}}
+</div>
 
 <div class="hx-mt-6"></div>
 {{< hextra/feature-grid >}}
