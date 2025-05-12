@@ -26,8 +26,6 @@ layout: hextra-home
   <h2 class="hx-text-3xl hx-font-bold hx-mb-4">Easy Installation</h2>
   <p class="hx-mb-6">Get RF-Swift up and running on your system with our one-line installer - no technical expertise required!</p>
 
-## Quick Install
-
 {{< tabs items="Linux/macOS (curl),Linux/macOS (wget),Windows" >}}
   {{< tab >}}
 ```bash
