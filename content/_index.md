@@ -19,30 +19,22 @@ layout: hextra-home
 </div>
 <div class="hx-mb-6">
 {{< hextra/hero-button text="Get Started" link="docs" >}}
-{{< hextra/hero-button text="All Release 📦" link="https://github.com/PentHertz/RF-Swift/releases" >}}
+{{< hextra/hero-button text="Download Latest Release 📦" link="https://github.com/PentHertz/RF-Swift/releases" >}}
 </div>
 
-{{< hextra/content-section-start >}}
+<div class="hx-mt-6 hx-mb-12 hx-px-4 sm:hx-px-6 md:hx-px-8 lg:hx-px-12 max-w-screen-lg mx-auto">
+  <h2 class="hx-text-3xl hx-font-bold hx-mb-4">Easy Installation</h2>
+  <p class="hx-mb-6">Get RF-Swift up and running on your system with our one-line installer - no technical expertise required!</p>
 
-## Easy Installation
+## Quick One-Line Installer
 
-Get RF-Swift up and running on your system with our one-line installer - no technical expertise required!
-
-{{< tabs items="One-Line Installation,Manual Download" >}}
-
-{{< tab >}}
-
-### Quick Installer
-
-Just copy and paste one of these commands in your terminal:
-
-{{< details summary="On Linux or macOS" >}}
-
+{{< tabs items="Linux,macOS,Windows" >}}
+  {{< tab >}}
 ```bash
 curl -fsSL "https://get.rfswift.io/" | sudo sh
 ```
 
-or if you prefer wget:
+Or if you prefer wget:
 
 ```bash
 wget -qO- "https://get.rfswift.io/" | sudo sh
@@ -50,52 +42,121 @@ wget -qO- "https://get.rfswift.io/" | sudo sh
 
 The installer will:
 1. Check for and install Docker if needed
-2. Automatically detect and download the latest RF-Swift release
+2. Detect and download the latest RF-Swift release
 3. Install RF-Swift to your system
-4. Create a convenient shell alias so you can run RF-Swift from anywhere
+4. Create a convenient alias in your shell configuration
 
-After installation, you can start using RF-Swift immediately with:
+After installation, you can start using RF-Swift immediately with the simple command:
 
 ```bash
 rfswift
 ```
 
 Note: You may need to restart your terminal or run `source ~/.bashrc` (or equivalent for your shell) to use the alias.
-{{< /details >}}
+  {{< /tab >}}
+  {{< tab >}}
+```bash
+curl -fsSL "https://get.rfswift.io/" | sudo sh
+```
 
-{{< details summary="On Windows" >}}
+Or if you prefer wget:
+
+```bash
+wget -qO- "https://get.rfswift.io/" | sudo sh
+```
+
+The installer will:
+1. Check for and install Docker if needed (via Homebrew if available)
+2. Detect and download the latest RF-Swift release
+3. Install RF-Swift to your system
+4. Create a convenient shell alias in your .bash_profile or .zshrc
+
+After installation, you can start using RF-Swift immediately with the simple command:
+
+```bash
+rfswift
+```
+
+Note: You may need to restart your terminal or run `source ~/.zshrc` (or equivalent for your shell) to use the alias.
+  {{< /tab >}}
+  {{< tab >}}
 Open PowerShell as administrator and run:
 
 ```powershell
 iwr -useb https://get.rfswift.io/win.ps1 | iex
 ```
 
-The Windows installer sets up RF-Swift and creates a shortcut for easy access.
-{{< /details >}}
+The Windows installer will:
+1. Check for and install Docker Desktop if needed
+2. Download the latest RF-Swift release
+3. Install RF-Swift and add it to your PATH
+4. Create a desktop shortcut for easy access
 
-{{< /tab >}}
+After installation, you can start using RF-Swift from any PowerShell or Command Prompt window:
 
-{{< tab >}}
+```powershell
+rfswift
+```
+  {{< /tab >}}
+{{< /tabs >}}
 
-### Manual Installation 
+## Manual Installation
 
 If you prefer to download and install manually:
 
+{{< tabs items="Linux,macOS,Windows" >}}
+  {{< tab >}}
 1. Visit the [GitHub Releases page](https://github.com/PentHertz/RF-Swift/releases)
-2. Download the appropriate package for your operating system and architecture:
-   - **Linux**: `rfswift_Linux_x86_64.tar.gz` or `rfswift_Linux_arm64.tar.gz`
-   - **macOS**: `rfswift_Darwin_x86_64.tar.gz` or `rfswift_Darwin_arm64.tar.gz`
-   - **Windows**: `rfswift_Windows_x86_64.zip`
-3. Extract the archive to a location of your choice
-4. Add the extracted directory to your PATH or create a symbolic link to the binary
-
-For manual alias creation:
-- **Bash**: Add `alias rfswift='/path/to/rfswift'` to your `~/.bashrc` or `~/.bash_profile`
-- **Zsh**: Add `alias rfswift='/path/to/rfswift'` to your `~/.zshrc`
-- **Fish**: Add `alias rfswift '/path/to/rfswift'` to your `~/.config/fish/config.fish`
-
-{{< /tab >}}
-
+2. Download the appropriate package: `rfswift_Linux_x86_64.tar.gz` or `rfswift_Linux_arm64.tar.gz`
+3. Extract the archive:
+   ```bash
+   tar -xzf rfswift_Linux_*.tar.gz
+   ```
+4. Move the binary to a directory in your PATH:
+   ```bash
+   sudo mv rfswift /usr/local/bin/
+   sudo chmod +x /usr/local/bin/rfswift
+   ```
+5. Create an alias in your shell configuration file:
+   ```bash
+   echo 'alias rfswift="/usr/local/bin/rfswift"' >> ~/.bashrc
+   source ~/.bashrc
+   ```
+  {{< /tab >}}
+  {{< tab >}}
+1. Visit the [GitHub Releases page](https://github.com/PentHertz/RF-Swift/releases)
+2. Download the appropriate package: `rfswift_Darwin_x86_64.tar.gz` or `rfswift_Darwin_arm64.tar.gz`
+3. Extract the archive:
+   ```bash
+   tar -xzf rfswift_Darwin_*.tar.gz
+   ```
+4. Move the binary to a directory in your PATH:
+   ```bash
+   sudo mv rfswift /usr/local/bin/
+   sudo chmod +x /usr/local/bin/rfswift
+   ```
+5. Create an alias in your shell configuration file:
+   ```bash
+   # For Bash
+   echo 'alias rfswift="/usr/local/bin/rfswift"' >> ~/.bash_profile
+   source ~/.bash_profile
+   
+   # For Zsh
+   echo 'alias rfswift="/usr/local/bin/rfswift"' >> ~/.zshrc
+   source ~/.zshrc
+   ```
+  {{< /tab >}}
+  {{< tab >}}
+1. Visit the [GitHub Releases page](https://github.com/PentHertz/RF-Swift/releases)
+2. Download the appropriate package: `rfswift_Windows_x86_64.zip`
+3. Extract the ZIP file to a location of your choice (e.g., `C:\Program Files\RF-Swift\`)
+4. Add the folder to your PATH:
+   ```powershell
+   $env:Path += ";C:\Program Files\RF-Swift"
+   [Environment]::SetEnvironmentVariable("Path", $env:Path, [EnvironmentVariableTarget]::User)
+   ```
+5. Create a desktop shortcut if desired
+  {{< /tab >}}
 {{< /tabs >}}
 
 ## System Requirements
@@ -106,8 +167,7 @@ For manual alias creation:
   - macOS (x86_64, arm64)
   - Windows (x86_64)
 - Minimal disk space required (most tools run in containers)
-
-{{< hextra/content-section-end >}}
+</div>
 
 <div class="hx-mt-6"></div>
 {{< hextra/feature-grid >}}
