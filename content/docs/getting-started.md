@@ -135,6 +135,7 @@ RF Swift now offers a streamlined one-line installer that automatically installs
     #### For Audio Support
     
     For programs requiring PulseAudio:
+    
     1. Follow the setup guide on [Linux Uprising](https://www.linuxuprising.com/2021/03/how-to-get-sound-pulseaudio-to-work-on.html)
     2. Use the updated binaries available at [pgaskin.net/pulseaudio-win32](https://pgaskin.net/pulseaudio-win32/)
 
@@ -254,4 +255,4 @@ If you encounter issues with the one-line installer:
 | Audio Support | ✅ | ✅ (with PulseAudio) | ❓ Limited |
 | Hardware Acceleration | ✅ | ❓ Limited | ❓ Limited |
 | Cross-Compilation | ✅ | ✅ (in WSL) | ✅ |
-| One-Line Installer | ✅ | ✅ | ✅ |
+| One-Line Installer | ✅ | ❌ | ✅ |
