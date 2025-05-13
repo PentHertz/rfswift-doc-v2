@@ -71,6 +71,10 @@ After installation completes, simply open a new terminal and run:
 rfswift
 ```
 
+{{< callout type="Warning" >}}
+For security, it is advised to check the script and execute separately. As we don't have proper way to make a secure easy install, the best solution is would be manual installation through the `install.sh` script provided in each release.
+{{< /callout >}}
+
 #### Windows
 
 Follow the manual installation steps.
