@@ -45,7 +45,7 @@ See our [installation documentation](docs/quick-start) for Windows installation 
 {{< /tabs >}}
 
 {{< callout type="Warning" >}}
-For security, it is advised to check the script and execute separately. As we don't have proper way to make a secure easy install, the best solution is would be manual installation through the `install.sh` script provided in each release.
+For security reasons, it is advised to review the script before execution. As we don't currently have a fully secured installation method, the recommended approach is to perform a manual installation using the `install.sh` script provided with each release. Always download the script from the official repository to ensure authenticity.
 {{< /callout >}}
 </div>
 
