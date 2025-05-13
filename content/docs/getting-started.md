@@ -49,10 +49,6 @@ Our new installer takes care of everything for you in a single command! It will:
 - Create a convenient shell alias for easy access
 - Set up proper permissions and configurations
 
-{{< callout type="info" >}}
-This is now the recommended method for installing RF Swift on all supported platforms.
-{{< /callout >}}
-
 #### Linux and macOS
 
 ```bash
