@@ -36,8 +36,11 @@ cascade:
       </td>
       <td>
         <a target="_blank" rel="noopener noreferrer" href="https://fosdem.org/2025/schedule/event/fosdem-2025-4301-rf-swift-a-swifty-toolbox-for-all-wireless-assessments/" title="Schedule">
-       <img alt="Spectrum 24" src="https://img.shields.io/badge/FOSDEM-2025-pink">
-      </a>
+         <img alt="FOSDEM 2025" src="https://img.shields.io/badge/FOSDEM-2025-pink">
+        </a>
+        <a target="_blank" rel="noopener noreferrer" href="https://www.cyberonboard.org/en/content/sujetsscientifiques" title="Schedule">
+         <img alt="CyberOnBoard" src="https://img.shields.io/badge/CyberOnBoard-2025-green">
+        </a>
       </td>
     </tr>
     <tr>
