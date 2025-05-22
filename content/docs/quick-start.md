@@ -162,6 +162,11 @@ Multiple devices can be shared by separating them with commas:
 rfswift run -i sdr_full -n my_sdr_container -s /dev/ttyUSB0:/dev/ttyUSB0,/dev/ttyACM0:/dev/ttyACM0
 ```
 
+
+{{< callout type="info" >}}
+If you plug the device after the container has started, or replug it later, you will have to stop it with command `rswift stop -c <container name>`. You can avoid this manipulation by mounting `/dev/bus/usb:/dev/bus/usb` as a volum instead with option `-b` when creating and running the container. This last manipulation may degrade the container's isolation, especially if you disable X11 manually too.
+{{< /callout >}}
+
 **Add Linux Capabilities:**
 
 For Wi-Fi and Bluetooth tools, you may need additional Linux capabilities:
