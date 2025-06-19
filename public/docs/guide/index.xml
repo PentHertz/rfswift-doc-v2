@@ -5983,11 +5983,33 @@ Wi-Fi tools require the &lt;code&gt;NET_ADMIN&lt;/code&gt; capability to manipul
   &lt;tbody&gt;
       &lt;tr&gt;
           &lt;td&gt;&lt;code&gt;pulse_server&lt;/code&gt;&lt;/td&gt;
-          &lt;td&gt;PulseAudio server address&lt;/td&gt;
+          &lt;td&gt;PulseAudio/PipeWire server address&lt;/td&gt;
           &lt;td&gt;&lt;code&gt;tcp:localhost:34567&lt;/code&gt;&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;h4&gt;Changing repository&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;changing-repository&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#changing-repository&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;RF Swift Ubuntu Noble (version 24.04) images are in the way, and you can also test them using the &lt;code&gt;penthertz/rfswift_noble:&amp;lt;tag&amp;gt;&lt;/code&gt; prefix.
+In case you want to use Noble images with a short tag name, modify you RF Swift profile &lt;code&gt;config.ini&lt;/code&gt; file as follows:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;pre&gt;&lt;code&gt;[general]
+imagename = myrfswift:latest
+repotag = penthertz/rfswift_noble
+
+...&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
 &lt;h2&gt;Command-Line Configuration&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;command-line-configuration&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#command-line-configuration&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;You can override any configuration setting when running a container using command-line flags with the &lt;code&gt;run&lt;/code&gt; command:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
@@ -6382,8 +6404,8 @@ Global Flags:
         
         &lt;h1&gt;Host Actions&lt;/h1&gt;&lt;p&gt;After learning how to run, configure, and manage RF Swift containers and images, this section covers important host-level operations that enhance the functionality of your RF tools and containers.&lt;/p&gt;
 &lt;h2&gt;Audio Configuration&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;audio-configuration&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#audio-configuration&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Managing PulseAudio for Container Sound&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;managing-pulseaudio-for-container-sound&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#managing-pulseaudio-for-container-sound&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Many RF tools like GQRX, SDR++, and SDRAngel produce audio output that requires proper configuration to be heard on your host system. RF Swift provides commands to manage the PulseAudio server for this purpose.&lt;/p&gt;
+    &lt;a href=&#34;#audio-configuration&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Managing PulseAudio/PipeWire for Container Sound&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;managing-pulseaudiopipewire-for-container-sound&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#managing-pulseaudiopipewire-for-container-sound&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Many RF tools like GQRX, SDR++, and SDRAngel produce audio output that requires proper configuration to be heard on your host system. RF Swift provides commands to manage the PulseAudio/PipeWire server for this purpose.&lt;/p&gt;
 &lt;h4&gt;Diagnosing Audio Issues&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;diagnosing-audio-issues&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#diagnosing-audio-issues&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;When audio is not properly configured, you&amp;rsquo;ll see this warning when running a container:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
@@ -6412,9 +6434,9 @@ Global Flags:
 
   
 &lt;/div&gt;
-&lt;p&gt;This indicates that PulseAudio is not configured to accept TCP connections on the default address (127.0.0.1:34567).&lt;/p&gt;
+&lt;p&gt;This indicates that PulseAudio/PipeWire is not configured to accept TCP connections on the default address (127.0.0.1:34567).&lt;/p&gt;
 &lt;h4&gt;Audio Command Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;audio-command-options&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#audio-command-options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The &lt;code&gt;host audio&lt;/code&gt; command provides options to manage PulseAudio:&lt;/p&gt;
+    &lt;a href=&#34;#audio-command-options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The &lt;code&gt;host audio&lt;/code&gt; command provides options to manage PulseAudio/PipeWire:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
@@ -6475,7 +6497,7 @@ Flags:
 &lt;/div&gt;
 &lt;p&gt;This command:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Loads the PulseAudio TCP module&lt;/li&gt;
+&lt;li&gt;Loads the PulseAudio/PipeWire TCP module&lt;/li&gt;
 &lt;li&gt;Configures it to listen on 127.0.0.1:34567&lt;/li&gt;
 &lt;li&gt;Does not require sudo/administrator privileges&lt;/li&gt;
 &lt;/ul&gt;
@@ -6538,7 +6560,7 @@ Flags:
 
   &lt;div class=&#34;hx-w-full hx-min-w-0 hx-leading-7&#34;&gt;
     &lt;div class=&#34;hx-mt-6 hx-leading-7 first:hx-mt-0&#34;&gt;
-      &lt;strong&gt;Security Note&lt;/strong&gt;: Opening PulseAudio to network interfaces introduces potential security risks. Only use custom addresses on secure networks and consider using firewalls to restrict access.
+      &lt;strong&gt;Security Note&lt;/strong&gt;: Opening PulseAudio/PipeWire to network interfaces introduces potential security risks. Only use custom addresses on secure networks and consider using firewalls to restrict access.
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
@@ -6560,7 +6582,7 @@ Flags:
 
   
 &lt;/div&gt;
-&lt;p&gt;This removes the TCP module from PulseAudio, closing the network port.&lt;/p&gt;
+&lt;p&gt;This removes the TCP module from PulseAudio/PipeWire, closing the network port.&lt;/p&gt;
 &lt;h3&gt;Troubleshooting Audio Issues&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;troubleshooting-audio-issues&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#troubleshooting-audio-issues&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;If you continue to experience audio problems after enabling the server:&lt;/p&gt;
 &lt;ol&gt;
