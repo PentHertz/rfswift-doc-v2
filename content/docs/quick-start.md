@@ -23,7 +23,13 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 
 #### Linux and macOS
 
-The easiest way to install RF Swift on Linux or macOS is to use the installation script after downloading [the latest version here](https://github.com/PentHertz/RF-Swift/tags):
+The easiest way to install RF Swift with this command line:
+
+```bash
+curl -fsSL "https://get.rfswift.io/" | sh
+```
+
+But if you want to install it securely, we recommand using the installation script after downloading [the latest version here](https://github.com/PentHertz/RF-Swift/tags):
   
 ```bash
 # Run the installation script
@@ -84,6 +90,18 @@ You can also specify a custom tag for the image:
 ```bash
 rfswift images pull -i sdr_full -t my_custom_tag
 ```
+
+
+RF Swift Ubuntu Noble (version 24.04) images are in the way, and you can also test them using the `penthertz/rfswift_noble:<tag>` prefix.
+In case you want to use Noble images with a short tag name, modify you RF Swift profile `config.ini` file as follows:
+
+```
+[general]
+imagename = myrfswift:latest
+repotag = penthertz/rfswift_noble
+
+...
+``` 
 
 **Available Options:**
 - `-i`: Remote image label (required)

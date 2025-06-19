@@ -13,9 +13,9 @@ After learning how to run, configure, and manage RF Swift containers and images,
 
 ## Audio Configuration
 
-### Managing PulseAudio for Container Sound
+### Managing PulseAudio/PipeWire for Container Sound
 
-Many RF tools like GQRX, SDR++, and SDRAngel produce audio output that requires proper configuration to be heard on your host system. RF Swift provides commands to manage the PulseAudio server for this purpose.
+Many RF tools like GQRX, SDR++, and SDRAngel produce audio output that requires proper configuration to be heard on your host system. RF Swift provides commands to manage the PulseAudio/PipeWire server for this purpose.
 
 #### Diagnosing Audio Issues
 
@@ -36,11 +36,11 @@ When audio is not properly configured, you'll see this warning when running a co
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-This indicates that PulseAudio is not configured to accept TCP connections on the default address (127.0.0.1:34567).
+This indicates that PulseAudio/PipeWire is not configured to accept TCP connections on the default address (127.0.0.1:34567).
 
 #### Audio Command Options
 
-The `host audio` command provides options to manage PulseAudio:
+The `host audio` command provides options to manage PulseAudio/PipeWire:
 
 ```bash
 rfswift host audio
@@ -71,7 +71,7 @@ rfswift host audio enable
 ```
 
 This command:
-- Loads the PulseAudio TCP module
+- Loads the PulseAudio/PipeWire TCP module
 - Configures it to listen on 127.0.0.1:34567
 - Does not require sudo/administrator privileges
 
@@ -92,7 +92,7 @@ rfswift host audio enable -s 10.0.0.1:34567
 This allows audio forwarding across a network (useful for remote connections or VMs).
 
 {{< callout type="warning" >}}
-**Security Note**: Opening PulseAudio to network interfaces introduces potential security risks. Only use custom addresses on secure networks and consider using firewalls to restrict access.
+**Security Note**: Opening PulseAudio/PipeWire to network interfaces introduces potential security risks. Only use custom addresses on secure networks and consider using firewalls to restrict access.
 {{< /callout >}}
 
 #### Disabling Audio Forwarding
@@ -103,7 +103,7 @@ When you no longer need audio forwarding:
 rfswift host audio unload
 ```
 
-This removes the TCP module from PulseAudio, closing the network port.
+This removes the TCP module from PulseAudio/PipeWire, closing the network port.
 
 ### Troubleshooting Audio Issues
 

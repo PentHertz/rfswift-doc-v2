@@ -103,7 +103,21 @@ pulse_server = tcp:localhost:34567
 
 | Parameter | Description | Example |
 |-----------|-------------|---------|
-| `pulse_server` | PulseAudio server address | `tcp:localhost:34567` |
+| `pulse_server` | PulseAudio/PipeWire server address | `tcp:localhost:34567` |
+
+
+#### Changing repository
+
+RF Swift Ubuntu Noble (version 24.04) images are in the way, and you can also test them using the `penthertz/rfswift_noble:<tag>` prefix.
+In case you want to use Noble images with a short tag name, modify you RF Swift profile `config.ini` file as follows:
+
+```
+[general]
+imagename = myrfswift:latest
+repotag = penthertz/rfswift_noble
+
+...
+``` 
 
 ## Command-Line Configuration
 
