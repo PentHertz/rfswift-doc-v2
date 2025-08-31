@@ -66,8 +66,8 @@ This toolbox is probably the **best solution** to deploy a generic, as well as a
 
 # RF Swift vs. Kali Linux vs. Dragon OS Comparison
 
-| Feature | RF Swift | Kali Linux | Dragon OS |
-|---------|---------|------------|-----------|
+| Feature | RF Swift | Kali Linux/Pentoo/Parrot OS | Dragon OS |
+|---------|---------|------------------------------|-----------|
 | 🖥️ **Host OS Preservation** | ✅ Runs alongside your existing OS | ❌ Typically requires dedicated partition or VM | ❌ Typically requires dedicated partition or VM |
 | 🧰 **Tool Isolation** | ✅ Tools run in containers without impacting system | ⚠️ Tools can affect system stability | ⚠️ Tools can affect system stability |
 | 🚀 **Deployment Speed** | ✅ Fast container deployment | ❌ Full OS installation required | ❌ Full OS installation required |
@@ -93,8 +93,9 @@ This toolbox is probably the **best solution** to deploy a generic, as well as a
 
 ## Use Case Scenarios
 
-| Scenario | RF Swift | Kali Linux | Dragon OS |
-|----------|---------|------------|-----------|
+| Scenario | RF Swift | Kali Linux/Pentoo/Parrot OS | Dragon OS |
+|----------|---------|------------------------------|-----------|
+| Security assessments | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐ |
 | Quick assessment on personal device | ⭐⭐⭐ | ⭐ | ⭐ |
 | Deployment on a burner laptop | ⭐⭐⭐ | ⭐ | ⭐ |
 | Low storage environments | ⭐⭐⭐ | ⭐ | ⭐ |
