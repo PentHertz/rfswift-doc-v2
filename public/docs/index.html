@@ -30,8 +30,8 @@ Supported OSes Supported architectures Presented at Socials What is RF Swift? RF
   <meta itemprop="name" content="Introduction">
   <meta itemprop="description" content="👋 Hello! Welcome to the RF Swift documentation!
 Supported OSes Supported architectures Presented at Socials What is RF Swift? RF Swift is a toolbox for creating an environment laboratory for your RF assessments, that can easily fit your prerequirements.">
-  <meta itemprop="dateModified" content="2025-12-22T17:00:08+01:00">
-  <meta itemprop="wordCount" content="757">
+  <meta itemprop="dateModified" content="2026-01-12T17:10:00+01:00">
+  <meta itemprop="wordCount" content="936">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Introduction">
   <meta name="twitter:description" content="👋 Hello! Welcome to the RF Swift documentation!
@@ -675,12 +675,20 @@ Supported OSes Supported architectures Presented at Socials What is RF Swift? RF
   </div>
 </div>
 
-<h1>RF Swift vs. Kali Linux vs. Dragon OS Comparison</h1><table>
+<h1>RF Swift vs. Specific Security or RF distributions comparison</h1><p>RF Swift was born from real-world operational needs that no existing distribution could fully address.
+During security engagements, we often work on multiple projects within the same week—sometimes even the same day. This creates several challenges that traditional distributions struggle to handle:</p>
+<ul>
+<li><strong>Isolation between engagements</strong>: Each project needs to remain completely separate to preserve forensic integrity and avoid cross-contamination of traces and artifacts.</li>
+<li><strong>Reproducible environments</strong>: We need the ability to spin up known-working configurations instantly, without worrying about dependency conflicts or broken toolchains.</li>
+<li><strong>Experimentation without risk</strong>: Installing experimental tools or libraries for one engagement shouldn&rsquo;t break the setup we rely on for another.</li>
+</ul>
+<p>With RF Swift&rsquo;s container-based architecture, each engagement runs in its own isolated environment. You can experiment freely, knowing that a broken dependency or conflicting library won&rsquo;t cascade across your entire system.</p>
+<table>
   <thead>
       <tr>
           <th>Feature</th>
           <th>RF Swift</th>
-          <th>Kali Linux/Pentoo/Parrot OS</th>
+          <th>Pentest Distributions</th>
           <th>Dragon OS</th>
       </tr>
   </thead>
@@ -688,8 +696,8 @@ Supported OSes Supported architectures Presented at Socials What is RF Swift? RF
       <tr>
           <td>🖥️ <strong>Host OS Preservation</strong></td>
           <td>✅ Runs alongside your existing OS</td>
-          <td>❌ Typically requires dedicated partition or VM</td>
-          <td>❌ Typically requires dedicated partition or VM</td>
+          <td>❌ Requires dedicated partition or VM</td>
+          <td>❌ Requires dedicated partition or VM</td>
       </tr>
       <tr>
           <td>🧰 <strong>Tool Isolation</strong></td>
@@ -711,44 +719,50 @@ Supported OSes Supported architectures Presented at Socials What is RF Swift? RF
       </tr>
       <tr>
           <td>🔧 <strong>Tool Availability</strong></td>
-          <td>✅ Extensive tool collection for hardware security, RF, reversing, and more.</td>
-          <td>✅ Extensive tool collection for generic pentests</td>
+          <td>✅ Extensive collection for RF, hardware security, and reversing</td>
+          <td>✅ Extensive collection for general pentesting</td>
           <td>✅ Specialized for RF</td>
       </tr>
       <tr>
           <td>🔄 <strong>Tool Updates</strong></td>
-          <td>✅ Easily updated containers</td>
-          <td>⚠️ Requires system updates</td>
-          <td>⚠️ Requires system updates</td>
+          <td>✅ Independent container updates</td>
+          <td>⚠️ Tied to system update cycle</td>
+          <td>⚠️ Tied to system update cycle</td>
+      </tr>
+      <tr>
+          <td>🔁 <strong>Rollback Capability</strong></td>
+          <td>✅ Instant rollback via container images</td>
+          <td>❌ Requires snapshots or manual backup</td>
+          <td>❌ Requires snapshots or manual backup</td>
       </tr>
       <tr>
           <td>💾 <strong>Storage Efficiency</strong></td>
-          <td>✅ Customizable to fit small storage</td>
+          <td>✅ Modular—install only what you need</td>
           <td>❌ Requires significant disk space</td>
           <td>❌ Requires significant disk space</td>
       </tr>
       <tr>
           <td>🛡️ <strong>Security Isolation</strong></td>
-          <td>✅ Strong container isolation (custom confinement)</td>
+          <td>✅ Strong container isolation with custom confinement</td>
           <td>⚠️ Limited isolation between applications</td>
           <td>⚠️ Limited isolation between applications</td>
       </tr>
       <tr>
           <td>🔌 <strong>Network Containment</strong></td>
-          <td>✅ Can isolate network activity</td>
-          <td>⚠️ Network isolation requires additional setup</td>
-          <td>⚠️ Network isolation requires additional setup</td>
+          <td>✅ Per-container network isolation</td>
+          <td>⚠️ Requires additional setup</td>
+          <td>⚠️ Requires additional setup</td>
       </tr>
       <tr>
           <td>🏗️ <strong>Architecture Support</strong></td>
-          <td>✅ x86_64, ARM64, RISCV64</td>
+          <td>✅ x86_64, ARM64, RISC-V64</td>
           <td>✅ x86_64, ARM64</td>
           <td>⚠️ Primarily x86_64</td>
       </tr>
       <tr>
           <td>🧩 <strong>Customization</strong></td>
-          <td>✅ Highly customizable (specific tools only)</td>
-          <td>✅ Customizable but affects whole system</td>
+          <td>✅ Highly modular—pick specific tools</td>
+          <td>✅ Customizable, but changes affect entire system</td>
           <td>⚠️ Limited customization</td>
       </tr>
       <tr>
@@ -771,6 +785,9 @@ Supported OSes Supported architectures Presented at Socials What is RF Swift? RF
       </tr>
   </tbody>
 </table>
+<blockquote>
+<p><strong>Pentest Distributions</strong> includes Kali Linux, Pentoo, Parrot OS, and similar security-focused operating systems.</p>
+</blockquote>
 <h2>Key Benefits of RF Swift<span class="hx-absolute -hx-mt-20" id="key-benefits-of-rf-swift"></span>
     <a href="#key-benefits-of-rf-swift" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
 <li><strong>Flexibility</strong>: Use RF tools without disrupting your daily work environment</li>
@@ -790,6 +807,12 @@ Supported OSes Supported architectures Presented at Socials What is RF Swift? RF
       </tr>
   </thead>
   <tbody>
+      <tr>
+          <td>Air-gapped environments</td>
+          <td>⭐⭐⭐</td>
+          <td>⭐⭐⭐</td>
+          <td>⭐⭐⭐</td>
+      </tr>
       <tr>
           <td>Security assessments</td>
           <td>⭐⭐⭐⭐</td>
@@ -828,6 +851,18 @@ Supported OSes Supported architectures Presented at Socials What is RF Swift? RF
       </tr>
       <tr>
           <td>Organization of traces</td>
+          <td>⭐⭐⭐</td>
+          <td>❌</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td>Sharing setups with other users</td>
+          <td>⭐⭐⭐</td>
+          <td>❌</td>
+          <td>❌</td>
+      </tr>
+      <tr>
+          <td>Recording sessions</td>
           <td>⭐⭐⭐</td>
           <td>❌</td>
           <td>❌</td>
@@ -919,7 +954,7 @@ Have a question or feedback? Feel free to <a href="https://github.com/PentHertz/
 
         </div>
         
-    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2025-12-22T17:00:08.000Z">December 22, 2025</time></div>
+    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">Last updated on <time datetime="2026-01-12T17:10:00.000Z">January 12, 2026</time></div>
         
         
       </main>
