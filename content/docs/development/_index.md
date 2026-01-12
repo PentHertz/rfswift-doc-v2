@@ -21,7 +21,8 @@ RF Swift is designed to be extensible and customizable. You can tailor it to you
 
 {{< cards >}}
   {{< card link="compiling-rfswift" title="Compile RF Swift Binary" icon="chip" subtitle="Build the RF Swift binary from source for different platforms and architectures" >}}
-  {{< card link="building-images" title="Building Custom Images" icon="beaker" subtitle="Create specialized Docker images with your preferred RF and security tools using YAML recipes" >}}
+  {{< card link="yaml-recipe-guide" title="YAML Recipe Guide" icon="document-text" subtitle="Create custom container images using simple, readable YAML recipes without Dockerfile complexity" >}}
+  {{< card link="building-images" title="Building Custom Images" icon="beaker" subtitle="Advanced Docker image creation with Dockerfiles and multi-stage builds" >}}
 {{< /cards >}}
 
 ## Simplified Image Building with YAML Recipes
