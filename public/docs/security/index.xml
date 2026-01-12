@@ -338,26 +338,26 @@
 &lt;li&gt;&lt;code&gt;none&lt;/code&gt;: No network access (highest security)&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;custom&lt;/code&gt;: Create custom networks for container-to-container communication&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;🛡️ Security Checklist&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-security-checklist&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#-security-checklist&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Use this checklist for a secure RF Swift deployment:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;✅ Use unprivileged mode by default&lt;/li&gt;
-&lt;li&gt;✅ Add only required capabilities&lt;/li&gt;
-&lt;li&gt;✅ Bind only the devices you need&lt;/li&gt;
-&lt;li&gt;✅ Consider network isolation when possible&lt;/li&gt;
-&lt;li&gt;✅ Keep RF Swift and Docker updated&lt;/li&gt;
-&lt;li&gt;✅ Run containers with a non-root user when possible&lt;/li&gt;
-&lt;li&gt;✅ Remove sensitive capabilities when not in use&lt;/li&gt;
-&lt;li&gt;✅ Use separate containers for different tasks/assessments&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;📈 Balancing Security and Functionality&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-balancing-security-and-functionality&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#-balancing-security-and-functionality&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;RF Swift is designed for radio frequency and hardware security work, which inherently requires more privileges than typical containers. The key is finding the right balance:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;🎯 &lt;strong&gt;Task-specific containers&lt;/strong&gt;: Create purpose-built containers with minimal privileges&lt;/li&gt;
-&lt;li&gt;🔍 &lt;strong&gt;Progressive enhancement&lt;/strong&gt;: Start with minimal privileges and add only what&amp;rsquo;s needed&lt;/li&gt;
-&lt;li&gt;⏱️ &lt;strong&gt;Temporary privileges&lt;/strong&gt;: Use the bindings feature to add/remove privileges dynamically&lt;/li&gt;
-&lt;li&gt;🧪 &lt;strong&gt;Test environment&lt;/strong&gt;: Test containers in a controlled environment before deployment&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h2&gt;📹 Session Recording Security&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-session-recording-security&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-session-recording-security&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;RF Swift&amp;rsquo;s session recording feature provides valuable documentation and compliance capabilities, but recordings contain sensitive information that requires careful handling.&lt;/p&gt;
+&lt;h3&gt;Understanding Recording Data Sensitivity 🎥&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;understanding-recording-data-sensitivity-&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#understanding-recording-data-sensitivity-&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Session recordings capture &lt;strong&gt;everything&lt;/strong&gt; displayed in your terminal session, including:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Low-Risk Data:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Command sequences and tool usage&lt;/li&gt;
+&lt;li&gt;Tool output and results&lt;/li&gt;
+&lt;li&gt;System configurations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;High-Risk Data:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔑 Credentials entered in plaintext (passwords, tokens, API keys)&lt;/li&gt;
+&lt;li&gt;🎯 Target system information (IP addresses, hostnames, network architecture)&lt;/li&gt;
+&lt;li&gt;🛠️ Exploitation techniques and payloads&lt;/li&gt;
+&lt;li&gt;📊 Captured traffic and sensitive network data&lt;/li&gt;
+&lt;li&gt;💾 File contents displayed in terminal&lt;/li&gt;
+&lt;li&gt;🔐 Private keys or certificates displayed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;⚠️ &lt;strong&gt;Critical Warning&lt;/strong&gt;: Treat session recordings with the same security level as penetration testing reports. They contain sufficient information to compromise assessed systems.&lt;/p&gt;
 &lt;h2&gt;🌟 Real-World Secure Configurations&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-real-world-secure-configurations&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#-real-world-secure-configurations&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;SDR Work with Minimal Privileges&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;sdr-work-with-minimal-privileges&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#sdr-work-with-minimal-privileges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
@@ -376,12 +376,13 @@
 
   
 &lt;/div&gt;
-&lt;h3&gt;Wi-Fi Assessment with Controlled Capabilities&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;wi-fi-assessment-with-controlled-capabilities&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#wi-fi-assessment-with-controlled-capabilities&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+&lt;h3&gt;Wi-Fi Assessment with Controlled Capabilities and Recording&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;wi-fi-assessment-with-controlled-capabilities-and-recording&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#wi-fi-assessment-with-controlled-capabilities-and-recording&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
   
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Start with minimal privileges&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i wifi -n wifi_assessment -a NET_ADMIN&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Start with minimal privileges, record for compliance&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i wifi -n wifi_assessment -a NET_ADMIN &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  --record --record-output /secure/assessments/wifi-test.cast&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -398,7 +399,41 @@
   
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Isolated environment for reverse engineering&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i reversing -n secure_reversing -u &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; -t none -s /dev/ttyUSB0:/dev/ttyUSB0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i reversing -n secure_reversing -u &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; -t none &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -s /dev/ttyUSB0:/dev/ttyUSB0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+  
+&lt;/div&gt;
+&lt;h3&gt;Full Client Assessment example&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;full-client-assessment-example&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#full-client-assessment-example&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+  
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Complete secure workflow with recording&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;acme-corp&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;DATE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;date +%Y-%m-%d&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;RECORDING_DIR&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/secure/clients/&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$CLIENT&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/recordings&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir -p &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$RECORDING_DIR&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod &lt;span class=&#34;m&#34;&gt;700&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$RECORDING_DIR&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Run assessment with recording&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i pentest -n &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CLIENT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;-assessment&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -u &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; -t bridge -a NET_ADMIN &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  --record --record-output &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$RECORDING_DIR&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;DATE&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;-assessment.cast&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# After assessment, secure the recording&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod &lt;span class=&#34;m&#34;&gt;600&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$RECORDING_DIR&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;DATE&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;-assessment.cast&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;gpg --encrypt --recipient security@company.com &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$RECORDING_DIR&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;DATE&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;-assessment.cast&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;shred -vfz -n &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$RECORDING_DIR&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;DATE&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;-assessment.cast&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -416,6 +451,7 @@
 &lt;li&gt;🔔 RF Swift updates&lt;/li&gt;
 &lt;li&gt;🐳 Docker security advisories&lt;/li&gt;
 &lt;li&gt;🛡️ Container security best practices&lt;/li&gt;
+&lt;li&gt;📹 Recording data protection regulations&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;📚 Additional Resources&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;-additional-resources&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#-additional-resources&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
@@ -423,6 +459,8 @@
 &lt;li&gt;&lt;a href=&#34;https://man7.org/linux/man-pages/man7/capabilities.7.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Linux Capabilities Documentation&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.docker.com/engine/security/seccomp/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Seccomp Security Profiles for Docker&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.kernel.org/doc/Documentation/cgroup-v1/devices.txt&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Control Groups Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://csrc.nist.gov/publications/detail/sp/800-88/rev-1/final&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NIST Guidelines for Media Sanitization&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;OWASP Docker Security Cheat Sheet&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
       </description>
