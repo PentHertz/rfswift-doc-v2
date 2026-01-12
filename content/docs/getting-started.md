@@ -163,8 +163,6 @@ macOS support will be fully implemented soon. Currently, some features may have 
 
 - USB device forwarding is not currently supported natively
 - Some specialized RF tools may have compatibility issues
-{{< /tab >}}
-{{< /tabs >}}
 
 ## System Requirements
 
