@@ -20,10 +20,6 @@ RF Swift provides a streamlined command-line interface to manage containers for 
 Let's explore the available commands with `rfswift --help`:
 
 ```bash
-rfswift --help
-[...]                                                                                                                                              
-
-
   888~-_   888~~        ,d88~~\                ,e,   88~\   d8   
   888   \  888___       8888    Y88b    e    /  "  _888__ _d88__ 
   888    | 888          'Y88b    Y88b  d8b  /  888  888    888   
@@ -40,22 +36,32 @@ Usage:
   rfswift [command]
 
 Available Commands:
-  bindings    Manage devices and volumes bindings
-  commit      Commit a container
-  completion  Generate the autocompletion script for the specified shell
-  delete      Delete an rfswift images
-  exec        Exec a command
-  help        Help about any command
-  host        Host configuration
-  images      RF Swift images management remote/local
-  install     Install function script
-  last        Last container run
-  remove      Remove a container
-  rename      Rename a container
-  retag       Rename an image
-  run         Create and run a program
-  stop        Stop a container
-  update      Update RF Swift
+  bindings     Manage devices and volumes bindings
+  build        Build an image from a recipe
+  capabilities Manage container capabilities
+  cgroups      Manage container cgroup rules
+  cleanup      Clean up containers and images
+  commit       Commit a container
+  completion   Generate and install completion script
+  delete       Delete an rfswift images
+  download     Download and save an image to tar.gz
+  exec         Exec a command
+  export       Export containers or images
+  help         Help about any command
+  host         Host configuration
+  images       RF Swift images management remote/local
+  import       Import containers or images
+  install      Install function script
+  last         Last container run
+  log          Record and replay terminal sessions
+  ports        Manage container ports
+  remove       Remove a container
+  rename       Rename a container
+  retag        Rename an image
+  run          Create and run a program
+  stop         Stop a container
+  update       Update RF Swift
+  upgrade      Upgrade container to a new/latest/another image
 
 Flags:
   -q, --disconnect   Don't query updates (disconnected mode)
@@ -79,20 +85,22 @@ RF Swift automatically checks for updates when launched:
 
 ```bash
 [!] You are running version: 0.4.8 (Obsolete)
-[+] Do you want to update to the latest version? (yes/no): 
 ```
 
-You can also trigger updates manually:
+You can also trigger updates:
 
 ```bash
 rfswift update
 
-[!] Your current version (0.4.8) is obsolete. Please update to version (v0.6.0).
-[+] Do you want to update to the latest version? (yes/no): yes
-Latest release download URL: https://github.com/PentHertz/RF-Swift/releases/download/v0.6.0/rfswift_linux_amd64
-[+] Do you want to replace the existing binary with this new release? (yes/no): yes
-13.67 MiB / 13.67 MiB [---------------------------------------------------------------------------------------------------------------------------------------------------------------------------] 100.00%%
-File downloaded and replaced successfully.
+[!] Current version: 0.6.5-rc3
+Latest version: v0.6.5-rc4
+[!] Your current version is obsolete. Please update to version: v0.6.5-rc4
+[i] Do you want to update to the latest version? (yes/no): 
+yes
+[i] Latest release download URL: https://github.com/PentHertz/RF-Swift/releases/download/v0.6.5-rc4/rfswift_Linux_x86_64.tar.gz
+4.58 MiB / 4.58 MiB [----------------------------------------------------------------------------------------------------------------------------------------] 100.00%%
+[+] File downloaded, extracted, and replaced successfully.
+
 ```
 
 ### 2. Image Management
@@ -156,6 +164,24 @@ Create a new container from an image:
 rfswift run -i sdr_full -n my_sdr_container
 ```
 
+**Recording Container Sessions:**
+
+RF Swift includes built-in session recording for documentation, debugging, or training purposes:
+
+```bash
+# Record with auto-generated filename
+rfswift run -i sdr_full -n my_sdr_container --record
+
+# Record with custom filename
+rfswift run -i sdr_full -n my_sdr_container --record --record-output my-session.cast
+```
+
+During recording, your terminal title will display "🔴 RECORDING - RF Swift" as a visual reminder.
+
+{{< callout type="info" >}}
+Session recordings use the asciinema format (.cast files) which can be replayed, shared, or even uploaded to asciinema.org for embedding in documentation.
+{{< /callout >}}
+
 #### Container Listing and Selection
 
 If you forget container names, use the `last` command:
@@ -194,6 +220,18 @@ To restart a specific container by name:
 rfswift exec -c my_sdr_container
 ```
 
+**Recording Exec Sessions:**
+
+You can also record when entering existing containers:
+
+```bash
+# Record with auto-generated filename
+rfswift exec -c my_sdr_container --record
+
+# Record with custom filename and working directory
+rfswift exec -c my_sdr_container -w /root/projects --record --record-output debug-session.cast
+```
+
 #### Container Lifecycle Management
 
 **Save container changes as a new image:**
@@ -216,7 +254,117 @@ rfswift remove -c container_name
 rfswift delete -c penthertz/rfswift:tag_name
 ```
 
-### 4. Device and Resource Management
+### 4. Session Recording and Playback
+
+RF Swift provides comprehensive session recording capabilities for documentation, debugging, training, and compliance purposes.
+
+#### Recording Sessions
+
+Record your container sessions automatically:
+
+```bash
+# Record during container creation
+rfswift run -i sdr_full -n my_container --record
+
+# Record when entering existing container
+rfswift exec -c my_container --record
+
+# Specify custom output filename
+rfswift run -i sdr_full -n my_container --record --record-output pentest-session.cast
+```
+
+**What Gets Recorded:**
+- All terminal input and output
+- Command execution and results
+- Tool outputs and GUI application launches
+- Timing information for accurate playback
+
+**Recording Format:**
+- Sessions are saved as `.cast` files (asciinema format)
+- Compatible with asciinema.org for sharing
+- Can be replayed at variable speeds
+- Lightweight text-based format
+
+
+#### Replaying Sessions
+
+Play back recorded sessions for review or demonstration:
+
+```bash
+# Normal speed playback
+rfswift log replay -i rfswift-exec-mycontainer-20260112-134651.cast
+
+# 2x speed playback (useful for long sessions)
+rfswift log replay -i session.cast -s 2.0
+
+# Slow motion for detailed analysis
+rfswift log replay -i session.cast -s 0.5
+```
+
+#### Managing Recordings
+
+List and organize your recorded sessions:
+
+```bash
+# List recordings in current directory
+rfswift log list
+
+# List recordings in specific directory
+rfswift log list --dir ~/recordings
+
+# List recordings from assessment project
+rfswift log list --dir /projects/client-assessment/recordings
+```
+
+#### Advanced Recording Workflows
+
+**Standalone Recording:**
+
+For situations where you want to record without immediately entering a container:
+
+```bash
+# Start recording
+rfswift log start -o my-session.cast
+
+# ... perform your work ...
+
+# Stop recording
+rfswift log stop
+```
+
+**Organizing Assessment Sessions:**
+
+Create a structured recording workflow for penetration tests:
+
+```bash
+# Create recording directory structure
+mkdir -p ~/assessments/client-2024/recordings
+
+# Record reconnaissance phase
+rfswift run -i sdr_full -n recon --record \
+  --record-output ~/assessments/client-2024/recordings/01-recon.cast
+
+# Record exploitation phase  
+rfswift exec -c recon --record \
+  --record-output ~/assessments/client-2024/recordings/02-exploit.cast
+
+# List all session recordings
+rfswift log list --dir ~/assessments/client-2024/recordings
+```
+
+**Sharing and Documentation:**
+
+Recordings can be used for:
+- **Client Reports**: Demonstrate discovered vulnerabilities
+- **Team Training**: Share techniques with colleagues
+- **Compliance**: Document assessment procedures
+- **Bug Reports**: Provide detailed reproduction steps
+
+{{< callout type="warning" >}}
+**Security Consideration**: Recorded sessions may contain sensitive information such as credentials, exploit code, or target system details. Store recordings securely and be mindful when sharing.
+{{< /callout >}}
+
+### 5. Device and Resource Management
 
 #### Audio Support
 
@@ -261,7 +409,7 @@ rfswift bindings list -c my_container
 
 Don't forget the `-d` switch if you want to deal with devices and not volumes.
 
-### 5. Network Configuration
+### 6. Network Configuration
 
 RF Swift supports various network isolation modes:
 
@@ -309,9 +457,10 @@ This architecture provides significant advantages:
 - **Efficiency**: No need to reinstall entire systems
 - **Performance**: Less resource-intensive than VMs
 - **Time-saving**: Quick deployment for last-minute assessment preparations
+- **Documentation**: Built-in session recording for compliance and reporting
 
 {{< callout type="info" >}}
-RF Swift significantly flattens the Docker learning curve while providing powerful features like dynamic device binding and host resource integration that would otherwise require considerable Docker expertise.
+RF Swift significantly flattens the Docker learning curve while providing powerful features like dynamic device binding, host resource integration, and session recording that would otherwise require considerable Docker expertise.
 {{< /callout >}}
 
 ## Using RF Tools
@@ -424,6 +573,13 @@ Resource Options:
   -b, --bind string           Extra volume bindings (separate with commas)
   -d, --display string        Set X Display (default "DISPLAY=:0")
   -p, --pulseserver string    PULSE SERVER TCP address (default "tcp:127.0.0.1:34567")
+
+Recording Options:
+  --record                    Record the container session
+  --record-output string      Custom output filename for recording (default: auto-generated)
+  
+Display Options:
+  --no-x11                    Disable X11 forwarding
 ```
 
 **Examples of Command-Line Security Configurations:**
@@ -446,14 +602,15 @@ Resource Options:
    ```
    This applies a custom seccomp profile to the container.
 
-4. **Combined security settings**:
+4. **Combined security settings with recording**:
    ```bash
    rfswift run -i penthertz/rfswift:bluetooth -n bt_scanner \
      -t bridge \
      -a NET_ADMIN \
      -g "c 226:* rwm,c 116:* rwm" \
      -s "/dev/bluetooth:/dev/bluetooth" \
-     -u 0
+     -u 0 \
+     --record --record-output bluetooth-assessment.cast
    ```
    This creates a container with:
    - Bridge networking mode
@@ -461,6 +618,7 @@ Resource Options:
    - Custom cgroup rules for devices with major numbers 226 and 116
    - Specific Bluetooth device mapping
    - Unprivileged mode
+   - Session recording enabled
 
 {{< callout type="warning" >}}
 Command-line settings always take precedence over config file settings. When using both, command-line options will extend or override the corresponding settings in your config.ini file.

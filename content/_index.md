@@ -29,13 +29,13 @@ layout: hextra-home
 {{< tabs items="Linux/macOS (curl),Linux/macOS (wget),Windows" >}}
   {{< tab >}}
 ```bash
-curl -fsSL "https://get.rfswift.io/" | sh
+curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
 After installation, simply run: `rfswift`
   {{< /tab >}}
   {{< tab >}}
 ```bash
-wget -qO- "https://get.rfswift.io/" | sh
+wget -qO- "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
 After installation, simply run: `rfswift`
   {{< /tab >}}
@@ -45,7 +45,7 @@ See our [installation documentation](docs/quick-start) for Windows installation 
 {{< /tabs >}}
 
 {{< callout type="Warning" >}}
-For security reasons, it is advised to review the script before execution. As we don't currently have a fully secured installation method, the recommended approach is to perform a manual installation using the `install.sh` script provided with each release. Always download the script from the official repository to ensure authenticity.
+For security reasons, it is advised to review the script before execution. As we don't currently have a fully secured installation method, the recommended approach is to perform a manual installation. Always download the script from the official repository to ensure authenticity.
 {{< /callout >}}
 </div>
 

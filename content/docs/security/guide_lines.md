@@ -161,27 +161,29 @@ rfswift run -t bridge -n bridge_container
 - `none`: No network access (highest security)
 - `custom`: Create custom networks for container-to-container communication
 
-## 🛡️ Security Checklist
+## 📹 Session Recording Security
 
-Use this checklist for a secure RF Swift deployment:
+RF Swift's session recording feature provides valuable documentation and compliance capabilities, but recordings contain sensitive information that requires careful handling.
 
-1. ✅ Use unprivileged mode by default
-2. ✅ Add only required capabilities
-3. ✅ Bind only the devices you need
-4. ✅ Consider network isolation when possible
-5. ✅ Keep RF Swift and Docker updated
-6. ✅ Run containers with a non-root user when possible
-7. ✅ Remove sensitive capabilities when not in use
-8. ✅ Use separate containers for different tasks/assessments
+### Understanding Recording Data Sensitivity 🎥
 
-## 📈 Balancing Security and Functionality
+Session recordings capture **everything** displayed in your terminal session, including:
 
-RF Swift is designed for radio frequency and hardware security work, which inherently requires more privileges than typical containers. The key is finding the right balance:
+**Low-Risk Data:**
+- Command sequences and tool usage
+- Tool output and results
+- System configurations
 
-1. 🎯 **Task-specific containers**: Create purpose-built containers with minimal privileges
-2. 🔍 **Progressive enhancement**: Start with minimal privileges and add only what's needed
-3. ⏱️ **Temporary privileges**: Use the bindings feature to add/remove privileges dynamically
-4. 🧪 **Test environment**: Test containers in a controlled environment before deployment
+**High-Risk Data:**
+- 🔑 Credentials entered in plaintext (passwords, tokens, API keys)
+- 🎯 Target system information (IP addresses, hostnames, network architecture)
+- 🛠️ Exploitation techniques and payloads
+- 📊 Captured traffic and sensitive network data
+- 💾 File contents displayed in terminal
+- 🔐 Private keys or certificates displayed
+
+⚠️ **Critical Warning**: Treat session recordings with the same security level as penetration testing reports. They contain sufficient information to compromise assessed systems.
+
 
 ## 🌟 Real-World Secure Configurations
 
@@ -192,18 +194,43 @@ RF Swift is designed for radio frequency and hardware security work, which inher
 rfswift run -i sdr_light -n secure_sdr -u 0 -g "c 189:* rwm" -t bridge
 ```
 
-### Wi-Fi Assessment with Controlled Capabilities
+### Wi-Fi Assessment with Controlled Capabilities and Recording
 
 ```bash
-# Start with minimal privileges
-rfswift run -i wifi -n wifi_assessment -a NET_ADMIN
+# Start with minimal privileges, record for compliance
+rfswift run -i wifi -n wifi_assessment -a NET_ADMIN \
+  --record --record-output /secure/assessments/wifi-test.cast
 ```
 
 ### Hardware Reverse Engineering with Isolation
 
 ```bash
 # Isolated environment for reverse engineering
-rfswift run -i reversing -n secure_reversing -u 0 -t none -s /dev/ttyUSB0:/dev/ttyUSB0
+rfswift run -i reversing -n secure_reversing -u 0 -t none \
+  -s /dev/ttyUSB0:/dev/ttyUSB0
+```
+
+### Full Client Assessment example
+
+```bash
+# Complete secure workflow with recording
+CLIENT="acme-corp"
+DATE=$(date +%Y-%m-%d)
+RECORDING_DIR="/secure/clients/$CLIENT/recordings"
+
+mkdir -p "$RECORDING_DIR"
+chmod 700 "$RECORDING_DIR"
+
+# Run assessment with recording
+rfswift run -i pentest -n "${CLIENT}-assessment" \
+  -u 0 -t bridge -a NET_ADMIN \
+  --record --record-output "$RECORDING_DIR/${DATE}-assessment.cast"
+
+# After assessment, secure the recording
+chmod 600 "$RECORDING_DIR/${DATE}-assessment.cast"
+gpg --encrypt --recipient security@company.com \
+  "$RECORDING_DIR/${DATE}-assessment.cast"
+shred -vfz -n 3 "$RECORDING_DIR/${DATE}-assessment.cast"
 ```
 
 ## 🔄 Keeping Updated
@@ -213,6 +240,7 @@ Security is an ongoing process. Stay informed about:
 - 🔔 RF Swift updates
 - 🐳 Docker security advisories
 - 🛡️ Container security best practices
+- 📹 Recording data protection regulations
 
 ## 📚 Additional Resources
 
@@ -220,3 +248,5 @@ Security is an ongoing process. Stay informed about:
 - [Linux Capabilities Documentation](https://man7.org/linux/man-pages/man7/capabilities.7.html)
 - [Seccomp Security Profiles for Docker](https://docs.docker.com/engine/security/seccomp/)
 - [Control Groups Documentation](https://www.kernel.org/doc/Documentation/cgroup-v1/devices.txt)
+- [NIST Guidelines for Media Sanitization](https://csrc.nist.gov/publications/detail/sp/800-88/rev-1/final)
+- [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)

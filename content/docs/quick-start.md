@@ -26,7 +26,7 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 The easiest way to install RF Swift with this command line:
 
 ```bash
-curl -fsSL "https://get.rfswift.io/" | sh
+curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
 
 But if you want to install it securely, we recommand using the installation script after downloading [the latest version here](https://github.com/PentHertz/RF-Swift/tags):
@@ -151,6 +151,9 @@ The `run` command has numerous options for configuring your container environmen
 | `-x, --extrahosts string` | Set extra hosts (default: 'pluto.local:192.168.1.2'), separated by commas |
 | `-g, --cgroups string` | Extra cgroup rules, separated by commas |
 | `-m, --seccomp string` | Set Seccomp profile (default: 'default') |
+| `--no-x11` | Disable X11 forwarding |
+| `--record` | Record the container session |
+| `--record-output string` | Custom output filename for recording (default: auto-generated) |
 
 **Share Files with the Container:**
 
@@ -231,6 +234,20 @@ Run a specific command instead of the default shell:
 rfswift run -i gnuradio -n signal_processor -e "gnuradio-companion"
 ```
 
+**Recording Sessions:**
+
+You can record your container sessions for documentation or debugging purposes:
+
+```bash
+# Record with auto-generated filename
+rfswift run -i sdr_full -n my_sdr_container --record
+
+# Record with custom filename
+rfswift run -i sdr_full -n my_sdr_container --record --record-output my-session.cast
+```
+
+Session recordings are saved as `.cast` files (asciinema format) that can be replayed later.
+
 {{< callout type="info" >}}
 Using a named container with the `-n` flag makes it much easier to restart or access the container later.
 {{< /callout >}}
@@ -309,6 +326,18 @@ rfswift exec
 
 This restarts the container if it's stopped and gives you a shell inside it.
 
+**Recording Exec Sessions:**
+
+Just like with `run`, you can record exec sessions:
+
+```bash
+# Record with auto-generated filename
+rfswift exec -c my_sdr_container --record
+
+# Record with custom filename and working directory
+rfswift exec -c my_sdr_container -w /root/projects --record --record-output debug-session.cast
+```
+
 ### List Running Containers
 
 View all RF Swift containers:
@@ -326,6 +355,50 @@ rfswift commit -c my_sdr_container -i my_custom_image
 ```
 
 This saves the current state of the container as a new image.
+
+## Session Recording and Playback
+
+RF Swift includes built-in session recording capabilities using asciinema (or the `script` command as fallback).
+
+### Recording Sessions
+
+Record your work for documentation, debugging, or training purposes:
+
+```bash
+# Record a new container session
+rfswift run -i sdr_full -n my_container --record
+
+# Record an exec session
+rfswift exec -c my_container --record
+```
+
+During recording, your terminal title will display "🔴 RECORDING - RF Swift" as a reminder.
+
+### Replaying Recordings
+
+Play back recorded sessions:
+
+```bash
+# Normal speed playback
+rfswift log replay -i rfswift-exec-mycontainer-20260112-134651.cast
+
+# 2x speed playback
+rfswift log replay -i session.cast -s 2.0
+```
+
+### Managing Recordings
+
+```bash
+# List all recordings in current directory
+rfswift log list
+
+# List recordings in specific directory
+rfswift log list --dir ~/recordings
+```
+
+{{< callout type="info" >}}
+Session recordings are stored as `.cast` files in asciinema format, which can be uploaded to asciinema.org for sharing or embedded in documentation.
+{{< /callout >}}
 
 ## Creating an Alias (Linux/macOS)
 
@@ -347,7 +420,9 @@ Replace `$(pwd)/rfswift` with the full path to your RF Swift binary.
 | `rfswift images local` | List available local images |
 | `rfswift last` | List all containers |
 | `rfswift host audio enable` | Enable audio forwarding |
-| `rfswift host video enable` | Enable video forwarding |
+| `rfswift bindings add` | Add device or volume binding to existing container |
+| `rfswift log replay -i FILE` | Replay a recorded session |
+| `rfswift log list` | List all recorded sessions |
 
 ## Next Steps
 

@@ -37,10 +37,6 @@ RF Swift is designed to work across multiple platforms and architectures to suit
 
 RF Swift now offers a streamlined one-line installer that automatically installs all dependencies (including Docker) and configures your system for optimal performance.
 
-{{< tabs items="One-Line Installer (Recommended),Manual Installation" >}}
-{{< tab >}}
-### One-Line Installer
-
 Our new installer takes care of everything for you in a single command! It will:
 
 - Install Docker if it's not already present
@@ -49,34 +45,24 @@ Our new installer takes care of everything for you in a single command! It will:
 - Create a convenient shell alias for easy access
 - Set up proper permissions and configurations
 
-#### Linux and macOS
-
+{{< tabs items="Linux/macOS (curl),Linux/macOS (wget),Windows" >}}
+  {{< tab >}}
 ```bash
-curl -fsSL "https://get.rfswift.io/" | sh
+curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
-
-Or if you prefer wget:
-
+After installation, simply run: `rfswift`
+  {{< /tab >}}
+  {{< tab >}}
 ```bash
-wget -qO- "https://get.rfswift.io/" | sh
+wget -qO- "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
+After installation, simply run: `rfswift`
+  {{< /tab >}}
+  {{< tab >}}
+See our [installation documentation](docs/quick-start) for Windows installation instructions.
+  {{< /tab >}}
+{{< /tabs >}}
 
-After installation completes, simply open a new terminal and run:
-
-```bash
-rfswift
-```
-
-{{< callout type="Warning" >}}
-For security reasons, it is advised to review the script before execution. As we don't currently have a fully secured installation method, the recommended approach is to perform a manual installation using the `install.sh` script provided with each release. Always download the script from the official repository to ensure authenticity.
-{{< /callout >}}
-
-#### Windows
-
-Follow the manual installation steps.
-{{< /tab >}}
-
-{{< tab >}}
 ### Manual Installation
 
 If you prefer to have more control over the installation process, you can install the components separately.
@@ -120,6 +106,17 @@ The `install.sh` script will:
 - Set up PulseAudio for sound
 - Configure user permissions for Docker
 - Download and install the latest RF Swift binary
+
+**Running Docker Without Sudo**
+
+To avoid using `sudo` for every Docker command, add your user to the `docker` group:
+
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+You may need to log out and back in for the changes to take effect. Verify it works by running `docker ps` without sudo.
 
 #### Windows Manual Installation
 

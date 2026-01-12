@@ -64,24 +64,36 @@ This toolbox is probably the **best solution** to deploy a generic, as well as a
   Even if the project could work on macOS with some manual workaround, we do not advertise it for the moment, but this system will be fully supported in the near future.
 {{< /callout >}}
 
-# RF Swift vs. Kali Linux vs. Dragon OS Comparison
+# RF Swift vs. Specific Security or RF distributions comparison
 
-| Feature | RF Swift | Kali Linux/Pentoo/Parrot OS | Dragon OS |
-|---------|---------|------------------------------|-----------|
-| 🖥️ **Host OS Preservation** | ✅ Runs alongside your existing OS | ❌ Typically requires dedicated partition or VM | ❌ Typically requires dedicated partition or VM |
+RF Swift was born from real-world operational needs that no existing distribution could fully address.
+During security engagements, we often work on multiple projects within the same week—sometimes even the same day. This creates several challenges that traditional distributions struggle to handle:
+
+- **Isolation between engagements**: Each project needs to remain completely separate to preserve forensic integrity and avoid cross-contamination of traces and artifacts.
+- **Reproducible environments**: We need the ability to spin up known-working configurations instantly, without worrying about dependency conflicts or broken toolchains.
+- **Experimentation without risk**: Installing experimental tools or libraries for one engagement shouldn't break the setup we rely on for another.
+
+With RF Swift's container-based architecture, each engagement runs in its own isolated environment. You can experiment freely, knowing that a broken dependency or conflicting library won't cascade across your entire system.
+
+| Feature | RF Swift | Pentest Distributions | Dragon OS |
+|---------|----------|----------------------|-----------|
+| 🖥️ **Host OS Preservation** | ✅ Runs alongside your existing OS | ❌ Requires dedicated partition or VM | ❌ Requires dedicated partition or VM |
 | 🧰 **Tool Isolation** | ✅ Tools run in containers without impacting system | ⚠️ Tools can affect system stability | ⚠️ Tools can affect system stability |
 | 🚀 **Deployment Speed** | ✅ Fast container deployment | ❌ Full OS installation required | ❌ Full OS installation required |
 | 📦 **VM Requirement** | ✅ No VM needed | ⚠️ Needs VM for non-dedicated machines | ⚠️ Needs VM for non-dedicated machines |
-| 🔧 **Tool Availability** | ✅ Extensive tool collection for hardware security, RF, reversing, and more. | ✅ Extensive tool collection for generic pentests | ✅ Specialized for RF |
-| 🔄 **Tool Updates** | ✅ Easily updated containers | ⚠️ Requires system updates | ⚠️ Requires system updates |
-| 💾 **Storage Efficiency** | ✅ Customizable to fit small storage | ❌ Requires significant disk space | ❌ Requires significant disk space |
-| 🛡️ **Security Isolation** | ✅ Strong container isolation (custom confinement) | ⚠️ Limited isolation between applications | ⚠️ Limited isolation between applications |
-| 🔌 **Network Containment** | ✅ Can isolate network activity | ⚠️ Network isolation requires additional setup | ⚠️ Network isolation requires additional setup |
-| 🏗️ **Architecture Support** | ✅ x86_64, ARM64, RISCV64 | ✅ x86_64, ARM64 | ⚠️ Primarily x86_64 |
-| 🧩 **Customization** | ✅ Highly customizable (specific tools only) | ✅ Customizable but affects whole system | ⚠️ Limited customization |
+| 🔧 **Tool Availability** | ✅ Extensive collection for RF, hardware security, and reversing | ✅ Extensive collection for general pentesting | ✅ Specialized for RF |
+| 🔄 **Tool Updates** | ✅ Independent container updates | ⚠️ Tied to system update cycle | ⚠️ Tied to system update cycle |
+| 🔁 **Rollback Capability** | ✅ Instant rollback via container images | ❌ Requires snapshots or manual backup | ❌ Requires snapshots or manual backup |
+| 💾 **Storage Efficiency** | ✅ Modular—install only what you need | ❌ Requires significant disk space | ❌ Requires significant disk space |
+| 🛡️ **Security Isolation** | ✅ Strong container isolation with custom confinement | ⚠️ Limited isolation between applications | ⚠️ Limited isolation between applications |
+| 🔌 **Network Containment** | ✅ Per-container network isolation | ⚠️ Requires additional setup | ⚠️ Requires additional setup |
+| 🏗️ **Architecture Support** | ✅ x86_64, ARM64, RISC-V64 | ✅ x86_64, ARM64 | ⚠️ Primarily x86_64 |
+| 🧩 **Customization** | ✅ Highly modular—pick specific tools | ✅ Customizable, but changes affect entire system | ⚠️ Limited customization |
 | 📱 **USB Device Access** | ✅ Streamlined USB forwarding | ✅ Direct access | ✅ Direct access |
 | 🔊 **Audio Support** | ✅ Container-based audio support | ✅ Native audio support | ✅ Native audio support |
 | 🌐 **Internet Connectivity** | ✅ Configurable per container | ✅ System-wide configuration | ✅ System-wide configuration |
+
+> **Pentest Distributions** includes Kali Linux, Pentoo, Parrot OS, and similar security-focused operating systems.
 
 ## Key Benefits of RF Swift
 
@@ -95,6 +107,7 @@ This toolbox is probably the **best solution** to deploy a generic, as well as a
 
 | Scenario | RF Swift | Kali Linux/Pentoo/Parrot OS | Dragon OS |
 |----------|---------|------------------------------|-----------|
+| Air-gapped environments | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ |
 | Security assessments | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐ |
 | Quick assessment on personal device | ⭐⭐⭐ | ⭐ | ⭐ |
 | Deployment on a burner laptop | ⭐⭐⭐ | ⭐ | ⭐ |
@@ -102,6 +115,8 @@ This toolbox is probably the **best solution** to deploy a generic, as well as a
 | Multiple architecture development | ⭐⭐⭐ | ⭐⭐ | ⭐ |
 | Isolated testing environment | ⭐⭐⭐ | ⭐ | ❌ |
 | Organization of traces | ⭐⭐⭐ | ❌ | ❌ |
+| Sharing setups with other users | ⭐⭐⭐ | ❌ | ❌ |
+| Recording sessions | ⭐⭐⭐ | ❌ | ❌ |
 
 ## Comprehensive Container Orchestration
 
