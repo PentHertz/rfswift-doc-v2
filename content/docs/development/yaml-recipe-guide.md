@@ -910,7 +910,7 @@ Browse community recipes:
 ## 🔗 Related Documentation
 
 {{< cards >}}
-  {{< card link="/docs/development/helper-functions" title="Helper Functions" icon="command-line" subtitle="Complete reference for all helper functions" >}}
+  {{< card link="/docs/development/helper-functions" title="Helper Functions" icon="terminal" subtitle="Complete reference for all helper functions" >}}
   {{< card link="/docs/development/compiling-rfswift" title="Compile RF Swift" icon="chip" subtitle="Build the RF Swift binary from source" >}}
   {{< card link="/docs/guide/list-of-images" title="Official Images" icon="cube" subtitle="Browse pre-built RF Swift images" >}}
 {{< /cards >}}
