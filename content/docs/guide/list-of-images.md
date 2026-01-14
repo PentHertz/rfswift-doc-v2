@@ -40,11 +40,11 @@ This command displays a table of available images with important details:
 ┌──────────────────────────────┬──────────────────────┬────────────────────────────────────────────────┬──────────────┐
 │ Tag                          │ Pushed Date          │ Image                                          │ Architecture │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ sdr_full_nvidiagpu_amd64     │ 2025-03-24T17:37:59Z │ penthertz/rfswift:sdr_full_nvidiagpu_amd64     │ amd64        │
-│ hardware                     │ 2025-03-24T17:33:21Z │ penthertz/rfswift:hardware                     │ amd64        │
-│ sdr_full_intelgpu_amd64      │ 2025-03-24T17:09:38Z │ penthertz/rfswift:sdr_full_intelgpu_amd64      │ amd64        │
-│ sdr_full                     │ 2025-03-24T16:43:07Z │ penthertz/rfswift:sdr_full                     │ amd64        │
-│ telecom_5G                   │ 2025-03-24T16:36:22Z │ penthertz/rfswift:telecom_5G                   │ amd64        │
+│ sdr_full_nvidiagpu_amd64     │ 2025-03-24T17:37:59Z │ penthertz/rfswift_noble:sdr_full_nvidiagpu_amd64     │ amd64        │
+│ hardware                     │ 2025-03-24T17:33:21Z │ penthertz/rfswift_noble:hardware                     │ amd64        │
+│ sdr_full_intelgpu_amd64      │ 2025-03-24T17:09:38Z │ penthertz/rfswift_noble:sdr_full_intelgpu_amd64      │ amd64        │
+│ sdr_full                     │ 2025-03-24T16:43:07Z │ penthertz/rfswift_noble:sdr_full                     │ amd64        │
+│ telecom_5G                   │ 2025-03-24T16:36:22Z │ penthertz/rfswift_noble:telecom_5G                   │ amd64        │
 ...
 ```
 

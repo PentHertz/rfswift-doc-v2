@@ -196,10 +196,10 @@ To create and run a container using an image:
 
 ```bash
 # With sudo (Linux without Docker Desktop)
-sudo rfswift run -i penthertz/rfswift:sdr_full -n my_sdr_container
+sudo rfswift run -i penthertz/rfswift_noble:sdr_full -n my_sdr_container
 
 # Without sudo (macOS, Windows, or Linux with Docker Desktop)
-rfswift run -i penthertz/rfswift:sdr_full -n my_sdr_container
+rfswift run -i penthertz/rfswift_noble:sdr_full -n my_sdr_container
 ```
 
 ### Resume Existing Containers

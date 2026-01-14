@@ -69,7 +69,7 @@ rfswift cleanup --containers --images
 rfswift cleanup --all
 
 # Then pull new images
-rfswift images pull -i penthertz/rfswift:sdr_full
+rfswift images pull -i penthertz/rfswift_noble:sdr_full
 ```
 
 **Emergency disk space recovery:**
@@ -226,7 +226,7 @@ ls ~/docker-backups/
 rfswift import container -i backup.tar.gz -n restored_container
 
 # Recreate from image if no backup
-rfswift run -i penthertz/rfswift:sdr_full -n recreated_container
+rfswift run -i penthertz/rfswift_noble:sdr_full -n recreated_container
 
 # Lesson: Always export important containers before cleanup
 rfswift export container -c important -o backup.tar.gz

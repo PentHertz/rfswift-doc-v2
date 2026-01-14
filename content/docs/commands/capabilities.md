@@ -133,7 +133,7 @@ rfswift capabilities rm -c container -p NET_ADMIN
 **WiFi monitoring mode:**
 ```bash
 # Create container
-rfswift run -i penthertz/rfswift:wifi -n wifi_mon
+rfswift run -i penthertz/rfswift_noble:wifi -n wifi_mon
 
 # Add capabilities for WiFi monitoring
 rfswift capabilities add -c wifi_mon -p NET_ADMIN
@@ -151,7 +151,7 @@ exit
 **Packet capture and analysis:**
 ```bash
 # Network analysis container
-rfswift run -i penthertz/rfswift:sdr_full -n netcap
+rfswift run -i penthertz/rfswift_noble:sdr_full -n netcap
 
 # Add packet capture capabilities
 rfswift capabilities add -c netcap -p NET_ADMIN
@@ -166,7 +166,7 @@ exit
 **Debugging application:**
 ```bash
 # Development container
-rfswift run -i penthertz/rfswift:sdr_full -n debug
+rfswift run -i penthertz/rfswift_noble:sdr_full -n debug
 
 # Add debugging capability
 rfswift capabilities add -c debug -p SYS_PTRACE
@@ -180,7 +180,7 @@ exit
 **Running services on privileged ports:**
 ```bash
 # Web server container
-rfswift run -i penthertz/rfswift:sdr_full -n web
+rfswift run -i penthertz/rfswift_noble:sdr_full -n web
 
 # Add capability to bind port 80
 rfswift capabilities add -c web -p NET_BIND_SERVICE
@@ -194,7 +194,7 @@ exit
 **Network reconfiguration:**
 ```bash
 # SDR with network tools
-rfswift run -i penthertz/rfswift:sdr_full -n sdr_net
+rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_net
 
 # Add network capabilities
 rfswift capabilities add -c sdr_net -p NET_ADMIN

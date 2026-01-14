@@ -23,7 +23,7 @@ The `delete` command removes Docker images from your local system. This is usefu
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-i, --image STRING` | Image ID or tag to delete | Yes | `-i penthertz/rfswift:old_version` |
+| `-i, --image STRING` | Image ID or tag to delete | Yes | `-i penthertz/rfswift_noble:old_version` |
 
 ---
 
@@ -33,7 +33,7 @@ The `delete` command removes Docker images from your local system. This is usefu
 
 **Delete by tag:**
 ```bash
-rfswift delete -i penthertz/rfswift:old_version
+rfswift delete -i penthertz/rfswift_noble:old_version
 ```
 
 **Delete by image ID:**
@@ -77,7 +77,7 @@ rfswift delete -i test_build:v3
 docker system df
 
 # Delete large unused images
-rfswift delete -i penthertz/rfswift:sdr_full_old
+rfswift delete -i penthertz/rfswift_noble:sdr_full_old
 
 # Check space recovered
 docker system df
@@ -122,7 +122,7 @@ When you delete an image:
 **Images in use cannot be deleted:**
 ```bash
 # This will fail if containers are using the image
-rfswift delete -i penthertz/rfswift:sdr_full
+rfswift delete -i penthertz/rfswift_noble:sdr_full
 
 # Error: image is being used by running container
 ```
@@ -136,7 +136,7 @@ rfswift stop -c container_using_image
 rfswift remove -c container_using_image
 
 # Now delete image
-rfswift delete -i penthertz/rfswift:old_version
+rfswift delete -i penthertz/rfswift_noble:old_version
 ```
 
 ---
@@ -207,7 +207,7 @@ rfswift images local
 docker images
 
 # Use correct format
-rfswift delete -i penthertz/rfswift:sdr_full
+rfswift delete -i penthertz/rfswift_noble:sdr_full
 # Or by ID
 rfswift delete -i a1b2c3d4e5f6
 ```

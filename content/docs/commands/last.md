@@ -37,9 +37,9 @@ rfswift last
 **Example output:**
 ```
 CONTAINER ID   NAME           IMAGE                        STATUS      CREATED        PORTS
-a1b2c3d4e5f6   sdr_work       penthertz/rfswift:sdr_full   Up 2 hours  3 hours ago    0.0.0.0:8080->80/tcp
-b2c3d4e5f6g7   bluetooth_1    penthertz/rfswift:bluetooth  Up 1 day    2 days ago     
-c3d4e5f6g7h8   analysis       penthertz/rfswift:sdr_full   Exited      1 week ago     
+a1b2c3d4e5f6   sdr_work       penthertz/rfswift_noble:sdr_full   Up 2 hours  3 hours ago    0.0.0.0:8080->80/tcp
+b2c3d4e5f6g7   bluetooth_1    penthertz/rfswift_noble:bluetooth  Up 1 day    2 days ago     
+c3d4e5f6g7h8   analysis       penthertz/rfswift_noble:sdr_full   Exited      1 week ago     
 ```
 
 ### Understanding Output

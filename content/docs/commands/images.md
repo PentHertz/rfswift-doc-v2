@@ -70,7 +70,7 @@ rfswift images pull -i IMAGE_NAME [-t TAG]
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-i, --image STRING` | Image reference to pull | Yes | `-i penthertz/rfswift:sdr_full` |
+| `-i, --image STRING` | Image reference to pull | Yes | `-i penthertz/rfswift_noble:sdr_full` |
 | `-t, --tag STRING` | Rename to target tag locally | No | `-t my_sdr:v1` |
 
 ---
@@ -116,25 +116,25 @@ telecom - Telecommunications security (2G-5G)
 
 **Pull specific image:**
 ```bash
-rfswift images pull -i penthertz/rfswift:sdr_full
+rfswift images pull -i penthertz/rfswift_noble:sdr_full
 ```
 
 **Pull and rename locally:**
 ```bash
-rfswift images pull -i penthertz/rfswift:sdr_full -t my_sdr:production
+rfswift images pull -i penthertz/rfswift_noble:sdr_full -t my_sdr:production
 ```
 
 **Pull specific version:**
 ```bash
-rfswift images pull -i penthertz/rfswift:sdr_full -t sdr_v0.6.5
+rfswift images pull -i penthertz/rfswift_noble:sdr_full -t sdr_v0.6.5
 ```
 
 **Pull multiple images:**
 ```bash
 # Pull all needed images
-rfswift images pull -i penthertz/rfswift:sdr_full
-rfswift images pull -i penthertz/rfswift:bluetooth
-rfswift images pull -i penthertz/rfswift:wifi
+rfswift images pull -i penthertz/rfswift_noble:sdr_full
+rfswift images pull -i penthertz/rfswift_noble:bluetooth
+rfswift images pull -i penthertz/rfswift_noble:wifi
 ```
 
 ### Real-World Scenarios
@@ -145,19 +145,19 @@ rfswift images pull -i penthertz/rfswift:wifi
 rfswift images remote
 
 # Pull main working image
-rfswift images pull -i penthertz/rfswift:sdr_full
+rfswift images pull -i penthertz/rfswift_noble:sdr_full
 
 # Verify it's available
 rfswift images local
 
 # Run it
-rfswift run -i penthertz/rfswift:sdr_full -n my_workspace
+rfswift run -i penthertz/rfswift_noble:sdr_full -n my_workspace
 ```
 
 **Version management:**
 ```bash
 # Pull new version with specific tag
-rfswift images pull -i penthertz/rfswift:sdr_full -t sdr_v0.6.6
+rfswift images pull -i penthertz/rfswift_noble:sdr_full -t sdr_v0.6.6
 
 # Keep old version
 rfswift images local | grep penthertz/rfswift
@@ -172,9 +172,9 @@ rfswift upgrade -c production -i sdr_v0.6.6
 **Multi-environment setup:**
 ```bash
 # Pull images for different purposes
-rfswift images pull -i penthertz/rfswift:sdr_full -t sdr_work
-rfswift images pull -i penthertz/rfswift:bluetooth -t bt_analysis
-rfswift images pull -i penthertz/rfswift:wifi -t wifi_testing
+rfswift images pull -i penthertz/rfswift_noble:sdr_full -t sdr_work
+rfswift images pull -i penthertz/rfswift_noble:bluetooth -t bt_analysis
+rfswift images pull -i penthertz/rfswift_noble:wifi -t wifi_testing
 
 # Verify all available
 rfswift images local
@@ -188,9 +188,9 @@ rfswift images local
 echo "Synchronizing team images..."
 
 TEAM_IMAGES=(
-    "penthertz/rfswift:sdr_full"
-    "penthertz/rfswift:bluetooth"
-    "penthertz/rfswift:wifi"
+    "penthertz/rfswift_noble:sdr_full"
+    "penthertz/rfswift_noble:bluetooth"
+    "penthertz/rfswift_noble:wifi"
 )
 
 for image in "${TEAM_IMAGES[@]}"; do
@@ -236,9 +236,9 @@ rfswift images local
 
 # Pull latest versions
 echo "Pulling latest versions..."
-rfswift images pull -i penthertz/rfswift:sdr_full
-rfswift images pull -i penthertz/rfswift:bluetooth
-rfswift images pull -i penthertz/rfswift:wifi
+rfswift images pull -i penthertz/rfswift_noble:sdr_full
+rfswift images pull -i penthertz/rfswift_noble:bluetooth
+rfswift images pull -i penthertz/rfswift_noble:wifi
 
 echo "Update complete. Current images:"
 rfswift images local
@@ -254,10 +254,10 @@ rfswift images local
 docker images | grep "penthertz/rfswift"
 
 # Remove specific old version
-docker rmi penthertz/rfswift:old_version
+docker rmi penthertz/rfswift_noble:old_version
 
 # Or use RF Swift delete command
-rfswift delete -i penthertz/rfswift:old_version
+rfswift delete -i penthertz/rfswift_noble:old_version
 
 # Verify cleanup
 rfswift images local
@@ -293,13 +293,13 @@ RF Swift images use descriptive tags for different configurations:
 rfswift images remote
 
 # 2. Pull what you need
-rfswift images pull -i penthertz/rfswift:sdr_full
+rfswift images pull -i penthertz/rfswift_noble:sdr_full
 
 # 3. Verify it's ready
 rfswift images local
 
 # 4. Start using it
-rfswift run -i penthertz/rfswift:sdr_full -n mission
+rfswift run -i penthertz/rfswift_noble:sdr_full -n mission
 ```
 
 ---
@@ -313,7 +313,7 @@ rfswift run -i penthertz/rfswift:sdr_full -n mission
 **Solutions:**
 ```bash
 # Pull your first image
-rfswift images pull -i penthertz/rfswift:sdr_full
+rfswift images pull -i penthertz/rfswift_noble:sdr_full
 
 # Check all Docker images (not just RF Swift)
 docker images
@@ -350,7 +350,7 @@ docker search penthertz/rfswift_noble
 rfswift images remote  # Verify exact name
 
 # Try with docker directly
-docker pull penthertz/rfswift:sdr_full
+docker pull penthertz/rfswift_noble:sdr_full
 
 # Check disk space
 df -h

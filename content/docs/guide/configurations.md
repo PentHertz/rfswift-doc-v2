@@ -156,19 +156,19 @@ Global Flags:
 
 ```bash
 # Run with custom image and name
-rfswift run -i penthertz/rfswift:sdr_full -n my_sdr_container
+rfswift run -i penthertz/rfswift_noble:sdr_full -n my_sdr_container
 
 # Share a host directory with the container
-rfswift run -i penthertz/rfswift:sdr_full -b /home/user/captures:/data/captures
+rfswift run -i penthertz/rfswift_noble:sdr_full -b /home/user/captures:/data/captures
 
 # Add network capabilities for Wi-Fi tools
-rfswift run -i penthertz/rfswift:wifi -a NET_ADMIN
+rfswift run -i penthertz/rfswift_noble:wifi -a NET_ADMIN
 
 # Use bridge network with port mapping
-rfswift run -i penthertz/rfswift:sdr_full -t bridge -w 8080:80/tcp
+rfswift run -i penthertz/rfswift_noble:sdr_full -t bridge -w 8080:80/tcp
 
 # Specify a custom shell
-rfswift run -i penthertz/rfswift:sdr_full -e /bin/bash
+rfswift run -i penthertz/rfswift_noble:sdr_full -e /bin/bash
 ```
 
 ## Dynamic Container Modification with Bindings
@@ -298,7 +298,7 @@ Using quiet mode doesn't affect RF Swift's functionality—it only disables the 
 ### SDR Development Environment
 
 ```bash
-rfswift run -i penthertz/rfswift:sdr_full -n sdr_dev \
+rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_dev \
   -b ~/sdr_projects:/projects \
   -s /dev/ttyUSB0:/dev/ttyUSB0
 ```
@@ -306,7 +306,7 @@ rfswift run -i penthertz/rfswift:sdr_full -n sdr_dev \
 ### Wi-Fi Security Testing
 
 ```bash
-rfswift run -i penthertz/rfswift:wifi -n wifi_testing \
+rfswift run -i penthertz/rfswift_noble:wifi -n wifi_testing \
   -a NET_ADMIN,NET_RAW \
   -b ~/wifi_captures:/captures
 ```
@@ -315,7 +315,7 @@ rfswift run -i penthertz/rfswift:wifi -n wifi_testing \
 
 ```bash
 # Create a container with no network
-rfswift run -i penthertz/rfswift:reversing -n firmware_analysis \
+rfswift run -i penthertz/rfswift_noble:reversing -n firmware_analysis \
   -t none \
   -b ~/firmware:/firmware
 ```

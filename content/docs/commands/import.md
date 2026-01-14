@@ -120,7 +120,7 @@ rfswift import image -i rfswift-images-offline-bundle.tar.gz
 rfswift images local
 
 # Run container
-rfswift run -i penthertz/rfswift:sdr_full -n offline_work
+rfswift run -i penthertz/rfswift_noble:sdr_full -n offline_work
 ```
 
 **Team distribution:**

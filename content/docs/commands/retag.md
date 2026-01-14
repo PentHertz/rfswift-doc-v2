@@ -23,7 +23,7 @@ The `retag` command creates a new tag for an existing Docker image. This is usef
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-i, --image STRING` | Source image reference | Yes | `-i penthertz/rfswift:sdr_full` |
+| `-i, --image STRING` | Source image reference | Yes | `-i penthertz/rfswift_noble:sdr_full` |
 | `-t, --tag STRING` | New tag name | Yes | `-t my_sdr:production` |
 
 ---
@@ -34,12 +34,12 @@ The `retag` command creates a new tag for an existing Docker image. This is usef
 
 **Create new tag for existing image:**
 ```bash
-rfswift retag -i penthertz/rfswift:sdr_full -t my_sdr:v1
+rfswift retag -i penthertz/rfswift_noble:sdr_full -t my_sdr:v1
 ```
 
 **Create alias for convenience:**
 ```bash
-rfswift retag -i penthertz/rfswift:sdr_full -t sdr:latest
+rfswift retag -i penthertz/rfswift_noble:sdr_full -t sdr:latest
 ```
 
 **Mark as production:**
@@ -57,12 +57,12 @@ rfswift retag -i my_image:latest -t my_image:v1.0.0
 **Environment-based tagging:**
 ```bash
 # Pull image
-rfswift images pull -i penthertz/rfswift:sdr_full
+rfswift images pull -i penthertz/rfswift_noble:sdr_full
 
 # Create environment-specific tags
-rfswift retag -i penthertz/rfswift:sdr_full -t sdr_work:development
-rfswift retag -i penthertz/rfswift:sdr_full -t sdr_work:staging
-rfswift retag -i penthertz/rfswift:sdr_full -t sdr_work:production
+rfswift retag -i penthertz/rfswift_noble:sdr_full -t sdr_work:development
+rfswift retag -i penthertz/rfswift_noble:sdr_full -t sdr_work:staging
+rfswift retag -i penthertz/rfswift_noble:sdr_full -t sdr_work:production
 ```
 
 **Version management:**
@@ -101,14 +101,14 @@ graph LR
 ```bash
 # Original image
 docker images
-# penthertz/rfswift:sdr_full  a1b2c3d4e5f6  2.5GB
+# penthertz/rfswift_noble:sdr_full  a1b2c3d4e5f6  2.5GB
 
 # Create new tag
-rfswift retag -i penthertz/rfswift:sdr_full -t my_sdr:work
+rfswift retag -i penthertz/rfswift_noble:sdr_full -t my_sdr:work
 
 # Both tags exist, pointing to same image
 docker images
-# penthertz/rfswift:sdr_full  a1b2c3d4e5f6  2.5GB
+# penthertz/rfswift_noble:sdr_full  a1b2c3d4e5f6  2.5GB
 # my_sdr:work                 a1b2c3d4e5f6  2.5GB
 # Same image ID, no extra disk space
 ```
@@ -224,10 +224,10 @@ rfswift images local
 docker images | grep image_name
 
 # Pull if needed
-rfswift images pull -i penthertz/rfswift:sdr_full
+rfswift images pull -i penthertz/rfswift_noble:sdr_full
 
 # Then retag
-rfswift retag -i penthertz/rfswift:sdr_full -t my_sdr:v1
+rfswift retag -i penthertz/rfswift_noble:sdr_full -t my_sdr:v1
 ```
 
 ### Invalid Tag Format
@@ -296,8 +296,8 @@ rfswift retag -i source:tag -t new:tag
 
 # Container continues using the image it was started with
 # New tag just provides another reference to same image
-rfswift retag -i penthertz/rfswift:sdr_full -t my_sdr:v1
-# Running containers using penthertz/rfswift:sdr_full are unaffected
+rfswift retag -i penthertz/rfswift_noble:sdr_full -t my_sdr:v1
+# Running containers using penthertz/rfswift_noble:sdr_full are unaffected
 ```
 
 ---

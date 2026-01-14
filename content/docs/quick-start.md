@@ -120,7 +120,7 @@ repotag = penthertz/rfswift_noble
 - `-r`: Repository to pull from (defaults to penthertz/rfswift)
 
 {{< callout type="info" >}}
-You can use the complete image tag `penthertz/rfswift:sdr_full` if you prefer, or change the default repository in your RF Swift profile.
+You can use the complete image tag `penthertz/rfswift_noble:sdr_full` if you prefer, or change the default repository in your RF Swift profile.
 {{< /callout >}}
 
 ### Run the Container

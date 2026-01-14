@@ -40,19 +40,19 @@ rfswift upgrade -c my_container
 
 **Upgrade to specific version:**
 ```bash
-rfswift upgrade -c sdr_work -i penthertz/rfswift:sdr_full
+rfswift upgrade -c sdr_work -i penthertz/rfswift_noble:sdr_full
 ```
 
 **Upgrade with preserved directories:**
 ```bash
 rfswift upgrade -c analysis_work \
-  -i penthertz/rfswift:sdr_full \
+  -i penthertz/rfswift_noble:sdr_full \
   -r /root/scripts,/root/captures,/opt/tools
 ```
 
 **Downgrade to previous version:**
 ```bash
-rfswift upgrade -c production -i penthertz/rfswift:v0.6.4
+rfswift upgrade -c production -i penthertz/rfswift_noble:v0.6.4
 ```
 
 ---
@@ -143,10 +143,10 @@ rfswift last
 ping registry.hub.docker.com
 
 # Pull manually first
-docker pull penthertz/rfswift:sdr_full
+docker pull penthertz/rfswift_noble:sdr_full
 
 # Retry upgrade
-rfswift upgrade -c container -i penthertz/rfswift:sdr_full
+rfswift upgrade -c container -i penthertz/rfswift_noble:sdr_full
 ```
 
 ### Preserved Directory Not Found

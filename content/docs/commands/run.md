@@ -159,7 +159,7 @@ rfswift run -i analysis -n offline_analysis \
 
 **Custom host entries:**
 ```bash
-rfswift run -i penthertz/rfswift:telecom -n network_test \
+rfswift run -i penthertz/rfswift_noble:telecom -n network_test \
   -x "device1.local:192.168.1.10,device2.local:192.168.1.11"
 ```
 
@@ -249,9 +249,9 @@ Specifies which RF Swift image to use for the container.
 **Formats:**
 ```bash
 # Full registry path
--i penthertz/rfswift:sdr_full
+-i penthertz/rfswift_noble:sdr_full
 
-# Short name (resolves to penthertz/rfswift:IMAGE)
+# Short name (resolves to penthertz/rfswift_noble:IMAGE)
 -i sdr_full
 
 # Custom registry
@@ -550,7 +550,7 @@ rfswift run -i image -n container_name_2
 
 ### Image Not Found
 
-**Error:** `Error: No such image: penthertz/rfswift:image_name`
+**Error:** `Error: No such image: penthertz/rfswift_noble:image_name`
 
 **Solution:**
 ```bash

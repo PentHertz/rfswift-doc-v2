@@ -158,7 +158,7 @@ mkdir -p ~/secure-assessments
 chmod 700 ~/secure-assessments
 
 # 3. Run assessment with recording
-rfswift run -i penthertz/rfswift:sdr -n client-assessment \
+rfswift run -i penthertz/rfswift_noble:sdr -n client-assessment \
   -u 0 \
   -t bridge \
   -a NET_ADMIN \

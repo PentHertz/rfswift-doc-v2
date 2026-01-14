@@ -70,7 +70,7 @@ rfswift host audio unload
 rfswift host audio enable
 
 # Create container with audio
-rfswift run -i penthertz/rfswift:sdr_full -n sdr_audio \
+rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_audio \
   -p tcp:127.0.0.1:34567
 
 # Audio now works in container

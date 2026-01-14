@@ -141,7 +141,7 @@ rfswift cgroups rm -c container -r "c 189:* rwm"
 **USB based SDRs setup:**
 ```bash
 # Create container
-rfswift run -i penthertz/rfswift:sdr_full -n sdrtest
+rfswift run -i penthertz/rfswift_noble:sdr_full -n sdrtest
 
 # Add device binding
 rfswift bindings add -d -c sdrtest -s /dev/bus/usb -t /dev/rtlsdr0
@@ -158,7 +158,7 @@ exit
 **USB serial device:**
 ```bash
 # Container for serial work
-rfswift run -i penthertz/rfswift:sdr_full -n serial_work
+rfswift run -i penthertz/rfswift_noble:sdr_full -n serial_work
 
 # Add serial device
 rfswift bindings add -d -c serial_work -s /dev/ttyUSB0 -t /dev/ttyUSB0

@@ -61,7 +61,7 @@ rfswift build -r recipe.yaml --no-cache
 cat > sdr-custom.yaml << 'EOF'
 name: my_sdr_custom
 tag: sdr_custom:v1.0
-base: penthertz/rfswift:sdr_light
+base: penthertz/rfswift_noble:sdr_light
 packages:
   - gqrx-sdr
   - inspectrum
@@ -85,7 +85,7 @@ rfswift build -r sdr-custom.yaml
 # Image metadata
 name: my_custom_image
 tag: my_custom:v1.0
-base: penthertz/rfswift:sdr_full
+base: penthertz/rfswift_noble:sdr_full
 
 # Package installation
 packages:
@@ -122,7 +122,7 @@ workdir: /root/workspace
 ```yaml
 name: advanced_sdr_setup
 tag: advanced_sdr:v2.0
-base: penthertz/rfswift:sdr_full
+base: penthertz/rfswift_noble:sdr_full
 
 # Install additional tools
 packages:
@@ -197,15 +197,15 @@ rfswift build -r recipe.yaml -t override_tag:v2
 Base image to build from. Usually an RF Swift image.
 
 ```yaml
-base: penthertz/rfswift:sdr_full
+base: penthertz/rfswift_noble:sdr_full
 ```
 
 Common base images:
-- `penthertz/rfswift:sdr_full` - Complete SDR stack
-- `penthertz/rfswift:sdr_light` - Lightweight SDR
-- `penthertz/rfswift:bluetooth` - Bluetooth tools
-- `penthertz/rfswift:wifi` - WiFi tools
-- `penthertz/rfswift:hardware` - Hardware security tools
+- `penthertz/rfswift_noble:sdr_full` - Complete SDR stack
+- `penthertz/rfswift_noble:sdr_light` - Lightweight SDR
+- `penthertz/rfswift_noble:bluetooth` - Bluetooth tools
+- `penthertz/rfswift_noble:wifi` - WiFi tools
+- `penthertz/rfswift_noble:hardware` - Hardware security tools
 
 ### packages (Optional)
 
@@ -325,7 +325,7 @@ cat -A recipe.yaml | grep "^I"
 **Solutions:**
 ```bash
 # Pull base image first
-rfswift images pull penthertz/rfswift:sdr_full
+rfswift images pull penthertz/rfswift_noble:sdr_full
 
 # Check available images
 rfswift images local

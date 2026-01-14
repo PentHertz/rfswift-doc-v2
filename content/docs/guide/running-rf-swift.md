@@ -208,11 +208,11 @@ rfswift last
 ┌───────────────────────────┬─────────────────────────────┬───────────────────────────────────────────────────────┬──────────────┬──────────┐
 │ Created                   │ Image Tag (ID)              │ Container Name                                        │ Container ID │ Command  │
 ├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-│ 2025-04-11T16:47:02+02:00 │ penthertz/rfswift:hardware  │ hardware                                              │ b6e43a87e1f6 │ /bin/zsh │
+│ 2025-04-11T16:47:02+02:00 │ penthertz/rfswift_noble:hardware  │ hardware                                              │ b6e43a87e1f6 │ /bin/zsh │
 ├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-│ 2025-04-11T16:23:43+02:00 │ penthertz/rfswift:bluetooth │ missionbluetooth                                      │ 3d92cb59560f │ /bin/zsh │
+│ 2025-04-11T16:23:43+02:00 │ penthertz/rfswift_noble:bluetooth │ missionbluetooth                                      │ 3d92cb59560f │ /bin/zsh │
 ├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-│ 2025-04-11T16:18:22+02:00 │ penthertz/rfswift:rfid      │ missionrfid2                                          │ 50cbccef53f5 │ /bin/zsh │
+│ 2025-04-11T16:18:22+02:00 │ penthertz/rfswift_noble:rfid      │ missionrfid2                                          │ 50cbccef53f5 │ /bin/zsh │
 ├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
 ...
 ``` 
@@ -262,7 +262,7 @@ rfswift remove -c container_name
 
 **Delete an image:**
 ```bash
-rfswift delete -c penthertz/rfswift:tag_name
+rfswift delete -c penthertz/rfswift_noble:tag_name
 ```
 
 ### 4. Session Recording and Playback
@@ -565,25 +565,25 @@ Display Options:
 
 1. **Run with specific privileges and capabilities**:
    ```bash
-   rfswift run -i penthertz/rfswift:wifi -n wifi_tools -u 0 -a NET_ADMIN,NET_RAW
+   rfswift run -i penthertz/rfswift_noble:wifi -n wifi_tools -u 0 -a NET_ADMIN,NET_RAW
    ```
    This runs a container in unprivileged mode but adds the NET_ADMIN and NET_RAW capabilities.
 
 2. **Add custom cgroup rules and device mappings**:
    ```bash
-   rfswift run -i penthertz/rfswift:sdr -n rtlsdr -g "c 226:* rwm" -s "/dev/rtlsdr0:/dev/rtlsdr0"
+   rfswift run -i penthertz/rfswift_noble:sdr -n rtlsdr -g "c 226:* rwm" -s "/dev/rtlsdr0:/dev/rtlsdr0"
    ```
    This adds permission for device major number 226 and maps a specific RTL-SDR device.
 
 3. **Set a custom seccomp profile**:
    ```bash
-   rfswift run -i penthertz/rfswift:security -n forensics -m ~/custom_seccomp.json
+   rfswift run -i penthertz/rfswift_noble:security -n forensics -m ~/custom_seccomp.json
    ```
    This applies a custom seccomp profile to the container.
 
 4. **Combined security settings with recording**:
    ```bash
-   rfswift run -i penthertz/rfswift:bluetooth -n bt_scanner \
+   rfswift run -i penthertz/rfswift_noble:bluetooth -n bt_scanner \
      -t bridge \
      -a NET_ADMIN \
      -g "c 226:* rwm,c 116:* rwm" \
