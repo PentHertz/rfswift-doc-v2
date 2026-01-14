@@ -3,7 +3,7 @@ linkTitle: 📖 Guide
 title: Guide
 prev: /docs/quick-start/
 next: running-rf-swift/
-weight: 3
+weight: 7
 ---
 
 This section covers topics related on how to run RF Swift and use the different softwares installed default images.

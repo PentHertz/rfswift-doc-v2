@@ -3,7 +3,7 @@ linkTitle: 🧑‍🍳 Development
 title: Developing with RF Swift
 prev: /docs/guide
 next: /docs/development/compiling-rfswift
-weight: 4
+weight: 8
 ---
 
 # RF Swift Development Guide

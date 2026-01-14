@@ -1,7 +1,7 @@
 ---
 linkTitle: "Documentation"
 title: About
-weight: 2
+weight: 1
 next: /docs/supports
 cascade:
   type: docs

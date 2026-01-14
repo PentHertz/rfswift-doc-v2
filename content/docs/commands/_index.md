@@ -3,7 +3,7 @@ linkTitle: 📘 Commands
 title: RF Swift Command Reference
 next: /docs/commands/run
 prev: /docs/container_scripts/
-weight: 5
+weight: 11
 cascade:
   type: docs
 ---

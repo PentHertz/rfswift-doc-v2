@@ -1,6 +1,6 @@
 ---
 title: Getting Started
-weight: 1
+weight: 5
 next: /docs/quick-start
 prev: /docs/comparisons
 cascade:

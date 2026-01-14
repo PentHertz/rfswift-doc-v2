@@ -3,7 +3,7 @@ linkTitle: 🛡️ Security
 title: RF Swift Security Guidelines
 prev: /docs/guide
 next: /docs/security/guide_lines
-weight: 4
+weight: 9
 ---
 # 🛡️ RF Swift Security Guidelines
 Security is a critical consideration when using RF Swift, as containerized environments often require special permissions to access hardware devices and network interfaces. This section provides comprehensive guidance on securing your RF Swift deployments while maintaining full functionality.

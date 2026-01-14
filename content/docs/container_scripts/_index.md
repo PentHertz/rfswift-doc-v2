@@ -1,7 +1,7 @@
 ---
 title: Container Scripts
 linkTitle: 🛠️ Container Scripts
-weight: 9
+weight: 10
 prev: /docs/guide
 next: /docs/container_scripts/avahi_inside_container
 cascade:
