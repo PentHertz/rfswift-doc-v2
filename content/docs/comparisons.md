@@ -2,7 +2,7 @@
 title: Comparisons with dedicated distributions
 next: /docs/getting-started
 prev: /docs/supports
-weight: 3
+weight: 2
 cascade:
   type: docs
 ---
