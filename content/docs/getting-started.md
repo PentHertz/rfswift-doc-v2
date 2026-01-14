@@ -55,7 +55,7 @@ On Linux, Docker, BuildX, and Go can be directly installed with the `install.sh`
 
 - **Docker**: Required to run RF Swift containers
   ```bash
-  curl -fsSL "https://get.docker.com/" | sh
+  wget -qO- "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
   ```
 - **xhost**: Required for GUI application support (install via your distribution's package manager)
 - **PulseAudio**: Required for audio support (install via your distribution's package manager)
