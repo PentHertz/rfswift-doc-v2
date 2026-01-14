@@ -1,6 +1,6 @@
 ---
 title: 🚀 Quick Start
-weight: 2
+weight: 4
 next: /docs/guide
 prev: /docs/getting-started
 cascade:
