@@ -70,7 +70,7 @@ If this file doesn&rsquo;t exist when you first run RF Swift, you&rsquo;ll be pr
 
 <meta
   property="article:modified_time"
-  content="2026-01-14T09:19:11+01:00">
+  content="2026-01-14T09:28:34+01:00">
 
 
 
@@ -78,7 +78,7 @@ If this file doesn&rsquo;t exist when you first run RF Swift, you&rsquo;ll be pr
   <meta itemprop="description" content="RF Swift ConfigurationRF Swift provides flexible configuration options to customize your environment. You can configure settings through a profile configuration file for persistent preferences or via command-line arguments for one-time adjustments.
 Profile Configuration Configuration File Location RF Swift looks for a profile configuration file in a platform-specific location:
 LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\AppData\Roaming\rfswift\config.ini /Users/username/.config/rfswift/config.ini If this file doesn’t exist when you first run RF Swift, you’ll be prompted to create one with default settings.">
-  <meta itemprop="dateModified" content="2026-01-14T09:19:11+01:00">
+  <meta itemprop="dateModified" content="2026-01-14T09:28:34+01:00">
   <meta itemprop="wordCount" content="1163">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Configurations">
@@ -1556,19 +1556,19 @@ Global Flags:
     <a href="#examples" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Run with custom image and name</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_full -n my_sdr_container
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n my_sdr_container
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Share a host directory with the container</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_full -b /home/user/captures:/data/captures
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -b /home/user/captures:/data/captures
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Add network capabilities for Wi-Fi tools</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:wifi -a NET_ADMIN
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:wifi -a NET_ADMIN
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Use bridge network with port mapping</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_full -t bridge -w 8080:80/tcp
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -t bridge -w 8080:80/tcp
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Specify a custom shell</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_full -e /bin/bash</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -e /bin/bash</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1772,7 +1772,7 @@ Global Flags:
     <a href="#common-configuration-scenarios" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>SDR Development Environment<span class="hx:absolute hx:-mt-20" id="sdr-development-environment"></span>
     <a href="#sdr-development-environment" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_full -n sdr_dev <span class="se">\
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_dev <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/sdr_projects:/projects <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/ttyUSB0:/dev/ttyUSB0</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
@@ -1787,7 +1787,7 @@ Global Flags:
 <h3>Wi-Fi Security Testing<span class="hx:absolute hx:-mt-20" id="wi-fi-security-testing"></span>
     <a href="#wi-fi-security-testing" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:wifi -n wifi_testing <span class="se">\
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:wifi -n wifi_testing <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -a NET_ADMIN,NET_RAW <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/wifi_captures:/captures</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
@@ -1803,7 +1803,7 @@ Global Flags:
     <a href="#offline-device-analysis" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a container with no network</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:reversing -n firmware_analysis <span class="se">\
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:reversing -n firmware_analysis <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t none <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/firmware:/firmware</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
@@ -1818,7 +1818,7 @@ Global Flags:
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-01-14T09:19:11.000Z">January 14, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-01-14T09:28:34.000Z">January 14, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/guide/list-of-tools/"
         title="Included Tools"
