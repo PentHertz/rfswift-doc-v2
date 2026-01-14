@@ -1,30 +1,24 @@
 name: HugoSiteCompileAndDeploy
-
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
   workflow_dispatch:
-
 jobs:
   build_hugo:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-
+        uses: actions/checkout@v4
       - name: Set up Hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: '0.147.0'
-
+          extended: true
       - name: Build Hugo site
         shell: bash
         run: hugo -d public
-
       - name: Check public directory
         shell: bash
         run: ls -la public
@@ -34,7 +28,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "github-actions"
           git add --all
-          if [ -z "$(git status --porcelain)"]; then
+          if [ -z "$(git status --porcelain)" ]; then
             echo "push=false" >> $GITHUB_OUTPUT
           else
             git commit -m "Add changes" -a
