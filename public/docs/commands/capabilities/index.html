@@ -45,14 +45,14 @@ The capabilities command allows you to add or remove Linux capabilities to conta
 
 <meta
   property="article:modified_time"
-  content="2026-01-14T09:19:11+01:00">
+  content="2026-01-14T09:28:34+01:00">
 
 
 
   <meta itemprop="name" content="capabilities">
   <meta itemprop="description" content="rfswift capabilitiesDynamically add or remove Linux capabilities to running containers for fine-grained privilege control.
 Synopsis # Add capability rfswift capabilities add -c CONTAINER -p CAPABILITY # Remove capability rfswift capabilities rm -c CONTAINER -p CAPABILITY The capabilities command allows you to add or remove Linux capabilities to containers without restarting them. This provides fine-grained security control, granting specific privileges without running fully privileged containers.">
-  <meta itemprop="dateModified" content="2026-01-14T09:19:11+01:00">
+  <meta itemprop="dateModified" content="2026-01-14T09:28:34+01:00">
   <meta itemprop="wordCount" content="1273">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="capabilities">
@@ -1445,7 +1445,7 @@ Synopsis # Add capability rfswift capabilities add -c CONTAINER -p CAPABILITY # 
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create container</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:wifi -n wifi_mon
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:wifi -n wifi_mon
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Add capabilities for WiFi monitoring</span>
 </span></span><span class="line"><span class="cl">rfswift capabilities add -c wifi_mon -p NET_ADMIN
@@ -1471,7 +1471,7 @@ Synopsis # Add capability rfswift capabilities add -c CONTAINER -p CAPABILITY # 
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Network analysis container</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_full -n netcap
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n netcap
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Add packet capture capabilities</span>
 </span></span><span class="line"><span class="cl">rfswift capabilities add -c netcap -p NET_ADMIN
@@ -1494,7 +1494,7 @@ Synopsis # Add capability rfswift capabilities add -c CONTAINER -p CAPABILITY # 
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Development container</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_full -n debug
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n debug
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Add debugging capability</span>
 </span></span><span class="line"><span class="cl">rfswift capabilities add -c debug -p SYS_PTRACE
@@ -1516,7 +1516,7 @@ Synopsis # Add capability rfswift capabilities add -c CONTAINER -p CAPABILITY # 
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Web server container</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_full -n web
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n web
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Add capability to bind port 80</span>
 </span></span><span class="line"><span class="cl">rfswift capabilities add -c web -p NET_BIND_SERVICE
@@ -1538,7 +1538,7 @@ Synopsis # Add capability rfswift capabilities add -c CONTAINER -p CAPABILITY # 
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># SDR with network tools</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_full -n sdr_net
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_net
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Add network capabilities</span>
 </span></span><span class="line"><span class="cl">rfswift capabilities add -c sdr_net -p NET_ADMIN
@@ -1917,7 +1917,7 @@ Privileged Container (Least secure)</code></pre></div><div class="hextra-code-co
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-01-14T09:19:11.000Z">January 14, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-01-14T09:28:34.000Z">January 14, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/commands/bindings/"
         title="bindings"

@@ -41,14 +41,14 @@ The retag command creates a new tag for an existing Docker image. This is useful
 
 <meta
   property="article:modified_time"
-  content="2026-01-14T09:19:11+01:00">
+  content="2026-01-14T09:28:34+01:00">
 
 
 
   <meta itemprop="name" content="retag">
   <meta itemprop="description" content="rfswift retagCreate new tags for existing Docker images or rename image tags.
 Synopsis rfswift retag -i IMAGE_REFERENCE -t NEW_TAG The retag command creates a new tag for an existing Docker image. This is useful for organizing images, creating aliases, marking versions, or preparing images for distribution.">
-  <meta itemprop="dateModified" content="2026-01-14T09:19:11+01:00">
+  <meta itemprop="dateModified" content="2026-01-14T09:28:34+01:00">
   <meta itemprop="wordCount" content="769">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="retag">
@@ -1244,7 +1244,7 @@ Synopsis rfswift retag -i IMAGE_REFERENCE -t NEW_TAG The retag command creates a
           <td><code>-i, --image STRING</code></td>
           <td>Source image reference</td>
           <td>Yes</td>
-          <td><code>-i penthertz/rfswift:sdr_full</code></td>
+          <td><code>-i penthertz/rfswift_noble:sdr_full</code></td>
       </tr>
       <tr>
           <td><code>-t, --tag STRING</code></td>
@@ -1260,7 +1260,7 @@ Synopsis rfswift retag -i IMAGE_REFERENCE -t NEW_TAG The retag command creates a
     <a href="#basic-usage" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Create new tag for existing image:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift:sdr_full -t my_sdr:v1</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift_noble:sdr_full -t my_sdr:v1</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1273,7 +1273,7 @@ Synopsis rfswift retag -i IMAGE_REFERENCE -t NEW_TAG The retag command creates a
 <p><strong>Create alias for convenience:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift:sdr_full -t sdr:latest</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift_noble:sdr_full -t sdr:latest</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1314,12 +1314,12 @@ Synopsis rfswift retag -i IMAGE_REFERENCE -t NEW_TAG The retag command creates a
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull image</span>
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift:sdr_full
+</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Create environment-specific tags</span>
-</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift:sdr_full -t sdr_work:development
-</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift:sdr_full -t sdr_work:staging
-</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift:sdr_full -t sdr_work:production</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift_noble:sdr_full -t sdr_work:development
+</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift_noble:sdr_full -t sdr_work:staging
+</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift_noble:sdr_full -t sdr_work:production</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1369,14 +1369,14 @@ Synopsis rfswift retag -i IMAGE_REFERENCE -t NEW_TAG The retag command creates a
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Original image</span>
 </span></span><span class="line"><span class="cl">docker images
-</span></span><span class="line"><span class="cl"><span class="c1"># penthertz/rfswift:sdr_full  a1b2c3d4e5f6  2.5GB</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># penthertz/rfswift_noble:sdr_full  a1b2c3d4e5f6  2.5GB</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Create new tag</span>
-</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift:sdr_full -t my_sdr:work
+</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift_noble:sdr_full -t my_sdr:work
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Both tags exist, pointing to same image</span>
 </span></span><span class="line"><span class="cl">docker images
-</span></span><span class="line"><span class="cl"><span class="c1"># penthertz/rfswift:sdr_full  a1b2c3d4e5f6  2.5GB</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># penthertz/rfswift_noble:sdr_full  a1b2c3d4e5f6  2.5GB</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># my_sdr:work                 a1b2c3d4e5f6  2.5GB</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Same image ID, no extra disk space</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
@@ -1565,10 +1565,10 @@ Synopsis rfswift retag -i IMAGE_REFERENCE -t NEW_TAG The retag command creates a
 </span></span><span class="line"><span class="cl">docker images <span class="p">|</span> grep image_name
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Pull if needed</span>
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift:sdr_full
+</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Then retag</span>
-</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift:sdr_full -t my_sdr:v1</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift_noble:sdr_full -t my_sdr:v1</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1661,8 +1661,8 @@ Synopsis rfswift retag -i IMAGE_REFERENCE -t NEW_TAG The retag command creates a
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Container continues using the image it was started with</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># New tag just provides another reference to same image</span>
-</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift:sdr_full -t my_sdr:v1
-</span></span><span class="line"><span class="cl"><span class="c1"># Running containers using penthertz/rfswift:sdr_full are unaffected</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl">rfswift retag -i penthertz/rfswift_noble:sdr_full -t my_sdr:v1
+</span></span><span class="line"><span class="cl"><span class="c1"># Running containers using penthertz/rfswift_noble:sdr_full are unaffected</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1709,7 +1709,7 @@ Synopsis rfswift retag -i IMAGE_REFERENCE -t NEW_TAG The retag command creates a
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-01-14T09:19:11.000Z">January 14, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-01-14T09:28:34.000Z">January 14, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/commands/delete/"
         title="delete"

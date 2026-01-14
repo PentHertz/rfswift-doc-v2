@@ -33,14 +33,14 @@ File Sharing Between Host and Container
 
 <meta
   property="article:modified_time"
-  content="2026-01-14T09:19:11+01:00">
+  content="2026-01-14T09:28:34+01:00">
 
 
 
   <meta itemprop="name" content="Sharing Files & Devices">
   <meta itemprop="description" content="Sharing Files and DevicesWhen conducting RF assessments with RF Swift, you’ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers various file sharing methods and device binding techniques for common RF hardware.
 File Sharing Between Host and Container Directory Binding The most common way to share files is by binding a directory from your host system to a location within the container using the -b parameter with the run command.">
-  <meta itemprop="dateModified" content="2026-01-14T09:19:11+01:00">
+  <meta itemprop="dateModified" content="2026-01-14T09:28:34+01:00">
   <meta itemprop="wordCount" content="843">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Sharing Files & Devices">
@@ -1231,7 +1231,7 @@ File Sharing Between Host and Container Directory Binding The most common way to
 </ol>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:telecom -n telecom_analysis -b ~/shared_data:/root/shared</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:telecom -n telecom_analysis -b ~/shared_data:/root/shared</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1246,7 +1246,7 @@ File Sharing Between Host and Container Directory Binding The most common way to
     <a href="#multiple-directory-bindings" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>You can bind multiple directories by separating them with commas:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_full -n sdr_project <span class="se">\
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_project <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/captures:/root/captures,~/scripts:/root/scripts,~/reports:/root/reports</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
@@ -1281,7 +1281,7 @@ File Sharing Between Host and Container Directory Binding The most common way to
 ├─────────────────┼──────────────────────────────────────────────────────────┤
 │ Network Mode    │ host                                                     │
 ├─────────────────┼──────────────────────────────────────────────────────────┤
-│ Image Name      │ penthertz/rfswift:telecom                                │
+│ Image Name      │ penthertz/rfswift_noble:telecom                                │
 ├─────────────────┼──────────────────────────────────────────────────────────┤
 │ Size on Disk    │ 11150.42 MB                                              │
 ├─────────────────┼──────────────────────────────────────────────────────────┤
@@ -1391,10 +1391,10 @@ File Sharing Between Host and Container Directory Binding The most common way to
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Default Proxmark3 device</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:rfid -n rfid_scanner -s /dev/ttyACM0:/dev/ttyACM0
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:rfid -n rfid_scanner -s /dev/ttyACM0:/dev/ttyACM0
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># For multiple Proxmark3 devices</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:rfid -n multi_proxmark <span class="se">\
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:rfid -n multi_proxmark <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/ttyACM0:/dev/ttyACM0,/dev/ttyACM1:/dev/ttyACM1</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
@@ -1409,7 +1409,7 @@ File Sharing Between Host and Container Directory Binding The most common way to
     <a href="#bluetooth-device-binding" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>For Bluetooth scanning and analysis:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:bluetooth -n bt_scanner <span class="se">\
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:bluetooth -n bt_scanner <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/vhci:/dev/vhci <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -a NET_ADMIN</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
@@ -1455,7 +1455,7 @@ File Sharing Between Host and Container Directory Binding The most common way to
     <a href="#2-bind-calibration-directory" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>When creating your container, bind the calibration directory to the proper location:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_light -n harogic_analysis <span class="se">\
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_light -n harogic_analysis <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/harogic_cal:/rftools/analysers/SAStudio4_x86_64_05_23_17_06/bin/CalFile</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
@@ -1548,7 +1548,7 @@ File Sharing Between Host and Container Directory Binding The most common way to
     <a href="#missing-bindings" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>If default bindings are missing, you can restore them while adding your custom bindings:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift:sdr_full -n sdr_analysis <span class="se">\
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_analysis <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b /tmp/.X11-unix:/tmp/.X11-unix,/dev/bus/usb:/dev/bus/usb,~/my_data:/root/my_data</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
@@ -1570,7 +1570,7 @@ File Sharing Between Host and Container Directory Binding The most common way to
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-01-14T09:19:11.000Z">January 14, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-01-14T09:28:34.000Z">January 14, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/guide/host-actions/"
         title="Host Actions"
