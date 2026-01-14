@@ -1,5 +1,5 @@
 ---
-title: Air-Gapped Installation
+title: 📵 Air-Gapped Installation
 weight: 20
 cascade:
   type: docs
