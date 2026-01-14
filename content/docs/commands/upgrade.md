@@ -113,7 +113,7 @@ rfswift upgrade -c work -r /root/data
 rfswift bindings add -c work -s ~/captures -t /root/captures
 
 # Reconfigure devices
-rfswift bindings add -c work -d -s /dev/rtlsdr0 -t /dev/rtlsdr0
+rfswift bindings add -c work -d -s /dev/device -t /dev/device
 
 # Reconfigure capabilities
 rfswift capabilities add -c work -p NET_ADMIN

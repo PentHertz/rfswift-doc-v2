@@ -234,13 +234,13 @@ rfswift bindings add -c container -s source -t target
 **Solutions:**
 ```bash
 # Add device binding
-rfswift bindings add -d -c container -s /dev/rtlsdr0 -t /dev/rtlsdr0
+rfswift bindings add -d -c container -s /dev/device -t /dev/device
 
 # Add cgroup rule for device access
 rfswift cgroups add -c container -r "c 189:* rwm"
 
 # Check device major:minor numbers
-ls -l /dev/rtlsdr0
+ls -l /dev/device
 # Example: crw-rw---- 1 root dialout 189, 0
 
 # Add rule for correct major number

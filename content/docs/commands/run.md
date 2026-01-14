@@ -87,27 +87,20 @@ rfswift run -n my_container
 
 ### With Devices
 
-**RTL-SDR device:**
+**All USB devices:**
 ```bash
 rfswift run -i sdr_full -n rtlsdr_work \
-  -s /dev/rtlsdr0:/dev/rtlsdr0 \
+  -s /dev/bus/usb:/dev/bus/usb \
   -g "c 189:* rwm"
 ```
 
-**Multiple USB devices:**
+**Multiple USB serial devices:**
 ```bash
 rfswift run -i hardware -n multi_device \
   -s /dev/ttyUSB0:/dev/ttyUSB0,/dev/ttyACM0:/dev/ttyACM0 \
   -g "c 189:* rwm,c 166:* rwm"
 ```
 
-**HackRF with volume:**
-```bash
-rfswift run -i sdr_full -n hackrf_capture \
-  -s /dev/hackrf:/dev/hackrf \
-  -b ~/captures:/root/captures \
-  -g "c 189:* rwm"
-```
 
 ### With Security Configuration
 
@@ -195,9 +188,9 @@ rfswift run -i wifi -n wifi_audit \
 ```bash
 rfswift run -i sdr_full -n site_survey \
   -u 0 \
-  -s /dev/rtlsdr0:/dev/rtlsdr0 \
-  -b ~/captures:/root/captures \
-  -b ~/projects:/root/projects:ro \
+  -s /dev/bus/usb:/dev/bus/usb \
+  -b /pathto/captures:/root/captures \
+  -b /pathto/projects:/root/projects:ro \
   -g "c 189:* rwm,c 116:* rwm" \
   -t bridge \
   -w 8080:80/tcp \
@@ -211,31 +204,10 @@ rfswift run -i bluetooth -n bt_pentest \
   -u 0 \
   -a NET_ADMIN,NET_RAW \
   -s /dev/ttyACM0:/dev/ttyACM0 \
-  -b ~/bt-captures:/root/captures \
+  -b /pathto/bt-captures:/root/captures \
   -g "c 166:* rwm" \
   -t bridge \
   --record
-```
-
-**Isolated malware analysis:**
-```bash
-rfswift run -i reversing -n malware_lab \
-  -u 0 \
-  -t none \
-  -b ~/malware-samples:/root/samples:ro \
-  -b ~/analysis-output:/root/output \
-  --no-x11
-```
-
-**Teaching lab environment:**
-```bash
-rfswift run -i sdr_light -n student_lab_01 \
-  -u 0 \
-  -s /dev/rtlsdr0:/dev/rtlsdr0 \
-  -b ~/student-projects:/root/projects \
-  -g "c 189:* rwm" \
-  -t bridge \
-  -w 8888:8888/tcp
 ```
 
 ---
@@ -368,9 +340,6 @@ Make specific host devices available in the container.
 # Single device
 -s /dev/ttyUSB0:/dev/ttyUSB0
 
-# Different paths
--s /dev/rtlsdr0:/dev/sdr0
-
 # Multiple devices
 -s /dev/ttyUSB0:/dev/ttyUSB0,/dev/ttyACM0:/dev/ttyACM0
 ```
@@ -493,7 +462,7 @@ Recordings are saved in asciinema format (.cast files) and can be replayed with 
 rfswift run -i sdr_light -n test
 
 # With one device
-rfswift run -i sdr_full -n quick_test -s /dev/rtlsdr0:/dev/rtlsdr0
+rfswift run -i sdr_full -n quick_test -s /dev/bus/usb:/dev/bus/usb
 ```
 
 ### Repeatable Assessment Container

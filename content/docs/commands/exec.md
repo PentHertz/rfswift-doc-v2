@@ -431,7 +431,7 @@ rfswift log replay -i rfswift-exec-problematic_container-*.cast
 ```bash
 # Instructor prepares example
 rfswift run -i sdr_full -n training_demo \
-  -s /dev/rtlsdr0:/dev/rtlsdr0
+  -s /dev/bus/usb:/dev/bus/usb
 
 # Record demonstration
 rfswift exec -c training_demo \

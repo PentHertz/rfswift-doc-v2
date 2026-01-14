@@ -53,17 +53,14 @@ rfswift bindings add -c CONTAINER -d -t /dev/ttyUSB0
 **Real-world examples:**
 
 ```bash
-# Add RTL-SDR device
-rfswift bindings add -c sdr_container -d -t /dev/rtlsdr0
+# Add all USB SDR device
+rfswift bindings add -c sdr_container -d -t /dev/bus/usb
 
 # Add USB serial device
 rfswift bindings add -c my_container -d -s /dev/ttyUSB0 -t /dev/ttyUSB0
 
 # Add Proxmark3
 rfswift bindings add -c rfid_container -d -t /dev/ttyACM0
-
-# Add HackRF
-rfswift bindings add -c hackrf_container -d -t /dev/hackrf
 
 # Add multiple Bluetooth adapters
 rfswift bindings add -c bluetooth_container -d -t /dev/bluetooth
@@ -109,7 +106,7 @@ rfswift bindings list -c my_container
 
 Device Bindings:
   /dev/ttyUSB0 -> /dev/ttyUSB0
-  /dev/rtlsdr0 -> /dev/rtlsdr0
+  /dev/bus/usb -> /dev/bus/usb
 
 Volume Bindings:
   /home/user/projects -> /root/projects
@@ -146,17 +143,17 @@ RF Swift excels at handling devices that are plugged in after container creation
 rfswift run -i sdr_full -n sdr_work
 
 # 2. Plug in RTL-SDR device
-# (Device appears as /dev/rtlsdr0)
+# (Device appears as /dev/bus/usb)
 
 # 3. Add device to running container
-rfswift bindings add -c sdr_work -d -t /dev/rtlsdr0
+rfswift bindings add -c sdr_work -d -t /dev/bus/usb
 
 # 4. Use the device immediately
 rfswift exec -c sdr_work
 rtl_test -t
 
 # 5. When done, remove the device binding
-rfswift bindings rm -c sdr_work -d -t /dev/rtlsdr0
+rfswift bindings rm -c sdr_work -d -t /dev/bus/usb
 
 # 6. Physically unplug the device
 ```
@@ -574,7 +571,7 @@ Handle multiple SDR devices during a site survey:
 ```bash
 # Day 1: Start with RTL-SDR only
 rfswift run -i sdr_full -n site_survey
-rfswift bindings add -c site_survey -d -t /dev/rtlsdr0
+rfswift bindings add -c site_survey -d -t /dev/bus/usb
 
 # Day 2: Client provides HackRF for specific test
 rfswift bindings add -c site_survey -d -t /dev/hackrf
@@ -684,7 +681,7 @@ Classroom setup with controlled progression:
 rfswift run -i sdr_light -n student_lab
 
 # Week 2: Add RTL-SDR access
-rfswift bindings add -c student_lab -d -t /dev/rtlsdr0
+rfswift bindings add -c student_lab -d -t /dev/bus/usb
 rfswift cgroups add -c student_lab -g "c 189:* rwm"
 
 # Week 3: Add audio for AM/FM demodulation
@@ -897,8 +894,7 @@ Apply multiple changes in sequence:
 
 ```bash
 # Complete environment upgrade
-rfswift bindings add -c lab -d -t /dev/rtlsdr0
-rfswift bindings add -c lab -d -t /dev/hackrf
+rfswift bindings add -c lab -d -t /dev/bus/usb
 rfswift bindings add -c lab -b ~/captures:/root/captures
 rfswift capabilities add -c lab -a NET_ADMIN,NET_RAW
 rfswift cgroups add -c lab -g "c 189:* rwm,c 226:* rwm"
@@ -918,7 +914,7 @@ IMAGE="sdr_full"
 rfswift run -i $IMAGE -n $CONTAINER -u 0 -t bridge
 
 # Configure devices
-rfswift bindings add -c $CONTAINER -d -t /dev/rtlsdr0
+rfswift bindings add -c $CONTAINER -d -t /dev/bus/usb
 rfswift cgroups add -c $CONTAINER -g "c 189:* rwm"
 
 # Configure network

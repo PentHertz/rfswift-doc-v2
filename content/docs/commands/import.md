@@ -222,7 +222,7 @@ rfswift import container -i /tmp/sdr_dev_export.tar.gz \
 # Run with production configuration
 rfswift run -i sdr_production:v1.0 -n sdr_prod \
   -b /data/captures:/root/captures \
-  -s /dev/rtlsdr0:/dev/rtlsdr0 \
+  -s /dev/device:/dev/device \
   -g "c 189:* rwm" \
   -t bridge
 ```

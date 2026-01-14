@@ -571,7 +571,7 @@ Display Options:
 
 2. **Add custom cgroup rules and device mappings**:
    ```bash
-   rfswift run -i penthertz/rfswift_noble:sdr -n rtlsdr -g "c 226:* rwm" -s "/dev/rtlsdr0:/dev/rtlsdr0"
+   rfswift run -i penthertz/rfswift_noble:sdr -n rtlsdr -g "c 226:* rwm" -s "/dev/bus/usb:/dev/bus/usb"
    ```
    This adds permission for device major number 226 and maps a specific RTL-SDR device.
 

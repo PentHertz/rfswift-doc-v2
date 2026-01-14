@@ -144,7 +144,7 @@ rfswift cgroups rm -c container -r "c 189:* rwm"
 rfswift run -i penthertz/rfswift_noble:sdr_full -n sdrtest
 
 # Add device binding
-rfswift bindings add -d -c sdrtest -s /dev/bus/usb -t /dev/rtlsdr0
+rfswift bindings add -d -c sdrtest -s /dev/bus/usb -t /dev/bus/usb
 
 # Add cgroup rule for USB access
 rfswift cgroups add -c sdrtest -r "c 189:* rwm"
@@ -258,7 +258,7 @@ rfswift bindings add -d -c container -s /dev/device -t /dev/device
 rfswift cgroups add -c container -r "c 189:* rwm"
 
 # Check device major number is correct
-ls -l /dev/rtlsdr0
+ls -l /dev/bus/usb
 # crw-rw-rw- 1 root root 189, 0 ...
 #                        ^^^ use this number
 

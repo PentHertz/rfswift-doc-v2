@@ -84,7 +84,7 @@ rfswift remove -c week_old_container
 ```bash
 # Need to recreate with different config
 rfswift remove -c sdr_container
-rfswift run -i sdr_full -n sdr_container -s /dev/rtlsdr0:/dev/rtlsdr0
+rfswift run -i sdr_full -n sdr_container -s /dev/bus/usb:/dev/bus/usb
 ```
 
 ---
@@ -391,8 +391,8 @@ docker inspect my_container > my_container_config.json
 # Save as script for recreation
 cat > recreate_container.sh << 'EOF'
 rfswift run -i sdr_full -n my_container \
-  -s /dev/rtlsdr0:/dev/rtlsdr0 \
-  -b ~/captures:/root/captures \
+  -s /dev/bus/usb:/dev/bus/usb \
+  -b /pathto/captures:/root/captures \
   -g "c 189:* rwm"
 EOF
 
