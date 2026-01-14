@@ -140,10 +140,10 @@ ls -lh *.tar.gz
 **Exporting with RF Swift:**
 ```bash
 # Export container as tarball
-rfswift export -c my_work_container -t container -o work_env.tar.gz
+rfswift export container -c my_work_container -o work_env.tar.gz
 
 # Export image
-rfswift export -i my_custom:latest -t image -o custom_image.tar.gz
+rfswift export image my_custom:latest -o custom_image.tar.gz
 ```
 
 ### Step 5: Create Transfer Package
@@ -294,7 +294,7 @@ Installation:
 
 Note: Always use -q flag in air-gapped environments to disable update checks.
 
-For manual installation, see: https://rfswift.io/docs/air-gapped
+For manual installation, see: https://rfswift.io/docs/air-gapped-installation/
 EOF
 
 echo "✓ Transfer package ready: $(pwd)"
@@ -422,35 +422,18 @@ which xhost
 **Method 1: Using rfswift import (for images downloaded with custom names)**
 ```bash
 # Import images with custom filenames from download command
-rfswift import -t image -i rfswift_sdr_full.tar.gz
-rfswift import -t image -i rfswift_telecom.tar.gz
-rfswift import -t image -i rfswift_wifi.tar.gz
-rfswift import -t image -i rfswift_automotive.tar.gz
+rfswift import image -i rfswift_sdr_full.tar.gz
+rfswift import image -i rfswift_telecom.tar.gz
+rfswift import image -i rfswift_wifi.tar.gz
+rfswift import image -i rfswift_automotive.tar.gz
 
 # Verify
 rfswift -q images local
 ```
 
-**Method 2: Using docker load (for images saved with docker save)**
-```bash
-# Load images saved with docker save
-docker load -i sdr_full.tar.gz
-docker load -i telecom.tar.gz
-
-# Or from .tar files
-gunzip -c sdr_full.tar.gz | docker load
-
-# Verify
-docker images
-```
-
 **Method 3: Import exported containers**
 ```bash
-# Import containers exported with docker export
-docker import work_env.tar.gz my_work_env:latest
-
-# Or with RF Swift
-rfswift import -t container -i work_env.tar.gz -n restored_work
+rfswift import container -i work_env.tar.gz -n restored_work:tag
 ```
 
 ---
@@ -504,68 +487,6 @@ rfswift -q exec -c airgap_test -e "xclock"
 
 # Cleanup test
 rfswift -q remove -c airgap_test
-```
-
----
-
-## Common Air-Gapped Workflows
-
-### Starting a Container
-
-```bash
-# Always use -q flag
-rfswift -q run -i penthertz/rfswift_noble:sdr_full -n sdr_work \
-  -d /dev/bus/usb
-
-# With GUI support
-rfswift -q run -i penthertz/rfswift_noble:sdr_full -n sdr_gui \
-  -d /dev/bus/usb \
-  -v /tmp/.X11-unix:/tmp/.X11-unix \
-  -e DISPLAY=$DISPLAY
-```
-
-### Working with Containers
-
-```bash
-# Execute commands
-rfswift -q exec -c sdr_work
-
-# Add devices dynamically
-rfswift -q bindings add -c sdr_work -d -t /dev/ttyUSB0
-
-# Manage capabilities
-rfswift -q capabilities add -c sdr_work -a NET_ADMIN
-
-# Stop and restart
-rfswift -q stop -c sdr_work
-docker start sdr_work
-```
-
-### Creating Custom Images
-
-```bash
-# Install additional tools
-rfswift -q exec -c sdr_work
-apt-get update
-apt-get install -y custom-tool
-exit
-
-# Commit as new image
-rfswift -q commit -c sdr_work -i custom_sdr:v1
-
-# Export for backup or sharing
-rfswift -q export -i custom_sdr:v1 -t image -o custom_sdr_v1.tar.gz
-```
-
-### Container Migration
-
-```bash
-# On source system (with network)
-rfswift export -c production_sdr -t container -o prod_sdr.tar.gz
-
-# Transfer to air-gapped system
-# On air-gapped system
-rfswift -q import -t container -i prod_sdr.tar.gz -n production_sdr
 ```
 
 ---
