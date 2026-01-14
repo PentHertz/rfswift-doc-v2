@@ -37,7 +37,7 @@ wget -qO- "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/
 After installation, simply run: `rfswift`
   {{< /tab >}}
   {{< tab >}}
-See our [installation documentation](docs/quick-start) for Windows installation instructions.
+See our [installation documentation](/docs/quick-start) for Windows installation instructions.
   {{< /tab >}}
 {{< /tabs >}}
 
