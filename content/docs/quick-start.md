@@ -7,12 +7,21 @@ cascade:
   type: docs
 ---
 
-# Getting Up and Running with RF Swift
+## Getting Up and Running with RF Swift
 
-This guide will help you quickly get started with RF Swift using pre-built binaries and container images.
+Here we will quickly get started with RF Swift using pre-built binaries and container images.
 
 {{< callout type="warning" >}}
 **On Linux**, unless you are using Docker Desktop, you may need to use `sudo` with the `rfswift` command for operations that require elevated privileges.
+{{< /callout >}}
+
+{{< callout type="info" >}}
+To avoid using `sudo` for every Docker command, add your user to the `docker` group:
+
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
+```
 {{< /callout >}}
 
 To install RF Swift, you can either use pre-compiled binaries and existing container images (quickest method) or compile the Go project and/or Docker images from source. This guide focuses on the fastest way to get up and running.
@@ -20,6 +29,8 @@ To install RF Swift, you can either use pre-compiled binaries and existing conta
 {{% steps %}}
 
 ### Install RF Swift
+
+Skip this step if you already did it. This is just a reminder to show that the installation is pretty fast.
 
 #### Linux and macOS
 
@@ -51,7 +62,7 @@ You can also download the latest (unstable) version from GitHub by cloning the r
 git clone https://github.com/PentHertz/RF-Swift.git
 cd RF-Swift
 
-# Step 1 - Building the project
+# Step 1 - Building the project requirements
 ./build_project.sh
 
 # Step 2 - Run the installation script
@@ -126,6 +137,8 @@ This will start a container using the `sdr_full` image with the name `my_sdr_con
 With some plateforms, some default devices may be non-existant. Your can use `bindings` or modify RF Swift's configuration file to remove the device from the mapped device list.
 {{< /callout >}}
 
+## Advanced features
+
 **Run Command Options:**
 
 ```bash
@@ -185,7 +198,7 @@ rfswift run -i sdr_full -n my_sdr_container -s /dev/ttyUSB0:/dev/ttyUSB0,/dev/tt
 
 
 {{< callout type="info" >}}
-If you plug the device after the container has started, or replug it later, you will have to stop it with command `rswift stop -c <container name>`. You can avoid this manipulation by mounting `/dev/bus/usb:/dev/bus/usb` as a volum instead with option `-b` when creating and running the container. This last manipulation may degrade the container's isolation, especially if you disable X11 manually too.
+If you plug the device after the container has started, or replug it later, you will have to stop it with command `rswift stop -c <container name>`. You can avoid this manipulation by mounting `/dev/bus/usb:/dev/bus/usb` as a volum instead with option `-b` when creating and running the container. This last manipulation may degrade the container's isolation.
 {{< /callout >}}
 
 **Add Linux Capabilities:**
@@ -204,6 +217,10 @@ rfswift run -i advanced_tools -n my_container -a NET_ADMIN,SYS_ADMIN
 
 {{< callout type="warning" >}}
 **Security Consideration:** Be cautious when adding capabilities like `NET_ADMIN`. If the container becomes compromised, malicious programs could capture or manipulate network interfaces! Only add capabilities that are strictly necessary for your work.
+{{< /callout >}}
+
+{{< callout type="info" >}}
+If your container is already running, you will be able to configure bindings, exposed ports, capabilities, cgroups later with `bindings`, `cgroups`, and `capabilities` (maybe more properties later ;))
 {{< /callout >}}
 
 **Network Configuration:**
@@ -308,7 +325,19 @@ Note that to rebind a device, you need the `-d` switch.
 
 {{% /steps %}}
 
+#### macOS USB Device Access
+
+For the moment Docker do not have proper way to forward USB accesses. USB devices cannot be used without using complex virtualization.
+
 ## Managing Existing Containers
+
+### Stop a Running Container
+
+Running containers can be stopped using the `stop` as follows:
+
+```bash
+rswift stop -c my_sdr_container
+```
 
 ### Restart an Existing Container
 
@@ -326,11 +355,14 @@ rfswift exec
 
 This restarts the container if it's stopped and gives you a shell inside it.
 
-**Recording Exec Sessions:**
+**Recording Run and Exec sessions:**
 
-Just like with `run`, you can record exec sessions:
+With `run` and `exec`, you can record exec sessions with `--record` argument:
 
 ```bash
+# Record a new container session
+rfswift run -i sdr_full -n my_container --record
+
 # Record with auto-generated filename
 rfswift exec -c my_sdr_container --record
 
@@ -356,23 +388,7 @@ rfswift commit -c my_sdr_container -i my_custom_image
 
 This saves the current state of the container as a new image.
 
-## Session Recording and Playback
-
-RF Swift includes built-in session recording capabilities using asciinema (or the `script` command as fallback).
-
-### Recording Sessions
-
-Record your work for documentation, debugging, or training purposes:
-
-```bash
-# Record a new container session
-rfswift run -i sdr_full -n my_container --record
-
-# Record an exec session
-rfswift exec -c my_container --record
-```
-
-During recording, your terminal title will display "🔴 RECORDING - RF Swift" as a reminder.
+## Session Playback
 
 ### Replaying Recordings
 
@@ -399,17 +415,6 @@ rfswift log list --dir ~/recordings
 {{< callout type="info" >}}
 Session recordings are stored as `.cast` files in asciinema format, which can be uploaded to asciinema.org for sharing or embedded in documentation.
 {{< /callout >}}
-
-## Creating an Alias (Linux/macOS)
-
-For convenience, you can create an alias to run RF Swift from anywhere. If you didn't use the `install.sh` script (which creates this automatically), you can add an alias manually:
-
-```bash
-echo "alias rfswift='$(pwd)/rfswift'" >> "$HOME/.$(basename $SHELL)rc"
-source "$HOME/.$(basename $SHELL)rc"
-```
-
-Replace `$(pwd)/rfswift` with the full path to your RF Swift binary.
 
 ## Common Commands Reference
 

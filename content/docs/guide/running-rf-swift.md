@@ -1,7 +1,7 @@
 ---
 title: Running RF Swift
 weight: 1
-next: /docs/guide/list-of-images/
+next: /docs/guide/container-management/
 prev: /docs/quick-start
 cascade:
   type: docs
@@ -13,6 +13,15 @@ RF Swift provides a streamlined command-line interface to manage containers for 
 
 {{< callout type="warning" >}}
 **On Linux**, unless you are using Docker Desktop, you will need to use `sudo` with the `rfswift` command for operations that require elevated privileges.
+{{< /callout >}}
+
+{{< callout type="info" >}}
+To avoid using `sudo` for every Docker command, add your user to the `docker` group:
+
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
+```
 {{< /callout >}}
 
 ## Command Overview
@@ -87,7 +96,7 @@ RF Swift automatically checks for updates when launched:
 [!] You are running version: 0.4.8 (Obsolete)
 ```
 
-You can also trigger updates:
+You can then trigger updates:
 
 ```bash
 rfswift update
@@ -102,6 +111,8 @@ yes
 [+] File downloaded, extracted, and replaced successfully.
 
 ```
+
+If you don't want to make any requests over the internet, you can also use `-q` or `--disconnect` option when using `rswift`.
 
 ### 2. Image Management
 
@@ -331,38 +342,6 @@ rfswift log start -o my-session.cast
 # Stop recording
 rfswift log stop
 ```
-
-**Organizing Assessment Sessions:**
-
-Create a structured recording workflow for penetration tests:
-
-```bash
-# Create recording directory structure
-mkdir -p ~/assessments/client-2024/recordings
-
-# Record reconnaissance phase
-rfswift run -i sdr_full -n recon --record \
-  --record-output ~/assessments/client-2024/recordings/01-recon.cast
-
-# Record exploitation phase  
-rfswift exec -c recon --record \
-  --record-output ~/assessments/client-2024/recordings/02-exploit.cast
-
-# List all session recordings
-rfswift log list --dir ~/assessments/client-2024/recordings
-```
-
-**Sharing and Documentation:**
-
-Recordings can be used for:
-- **Client Reports**: Demonstrate discovered vulnerabilities
-- **Team Training**: Share techniques with colleagues
-- **Compliance**: Document assessment procedures
-- **Bug Reports**: Provide detailed reproduction steps
-
-{{< callout type="warning" >}}
-**Security Consideration**: Recorded sessions may contain sensitive information such as credentials, exploit code, or target system details. Store recordings securely and be mindful when sharing.
-{{< /callout >}}
 
 ### 5. Device and Resource Management
 
@@ -623,3 +602,12 @@ Display Options:
 {{< callout type="warning" >}}
 Command-line settings always take precedence over config file settings. When using both, command-line options will extend or override the corresponding settings in your config.ini file.
 {{< /callout >}}
+
+## Next Steps
+
+Now you can dive right into:
+
+{{< cards >}}
+  {{< card link="/docs/container-management" title="Container Management" icon="scissors" subtitle="Manage a running containers with remapping features" >}}
+  {{< card link="/docs/guide/list-of-images/" title="Container images" icon="database" subtitle="Prebult images" >}}
+{{< /cards >}}

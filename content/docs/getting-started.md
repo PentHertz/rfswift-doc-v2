@@ -2,36 +2,14 @@
 title: Getting Started
 weight: 1
 next: /docs/quick-start
-prev: /docs/
+prev: /docs/comparisons
 cascade:
   type: docs
 ---
 
 # Getting Started with RF Swift 🚀
 
-This guide will help you get started with RF Swift by covering system requirements, installation steps, and next actions.
-
-## Supported Platforms
-
-RF Swift is designed to work across multiple platforms and architectures to suit your specific environment.
-
-### Operating Systems
-
-| Platform | x86_64/amd64 | arm64/v8 | riscv64 |
-|----------|--------------|----------|---------|
-| Windows  | ✅ Fully supported | ❓ Limited testing | ❌ Not supported |
-| Linux    | ✅ Fully supported | ✅ Fully supported | ✅ Fully supported |
-| macOS    | ❓ Limited support | ✅ Supported (better inside a VM for USB devices) | ❌ Not supported |
-
-### Tested Single-Board Computers
-
-| SBC | Status | Comments |
-|-----|--------|----------|
-| Raspberry Pi 5 | ✅ | Works perfectly with most tools |
-| Milk-V Jupiter | ✅ | Works perfectly with most tools, but slower than Raspberry Pi 5 |
-| Orange Pi RV2  | ✅ | Works perfectly with most tools, but slower than Milk-V Jupiter |
-| Milk-V Mars | ❌ | Software support is currently unavailable. Docker installation is problematic |
-| UP Squared Series | ✅ | Works perfectly with most tools |
+This guide will help you get started with RF Swift by covering system requirements, installation steps, and next actions. First we will need to setup the environment.
 
 ## Installation
 
@@ -67,7 +45,7 @@ See our [installation documentation](docs/quick-start) for Windows installation 
 
 If you prefer to have more control over the installation process, you can install the components separately.
 
-#### Linux Manual Installation (Preferred)
+#### Linux Manual Installation
 
 {{< callout type="info" >}}
 On Linux, Docker, BuildX, and Go can be directly installed with the `install.sh` script included in the repository.
@@ -86,6 +64,7 @@ On Linux, Docker, BuildX, and Go can be directly installed with the `install.sh`
 
 - **Go Compiler**: Required if you want to build RF Swift from source
 - **BuildX**: Required for cross-architecture compilation
+- **asciinema**: Required for recording sessions
 
 **Repository Installation**
 
@@ -164,46 +143,18 @@ macOS support will be fully implemented soon. Currently, some features may have 
 - USB device forwarding is not currently supported natively
 - Some specialized RF tools may have compatibility issues
 
-## System Requirements
+## Creating an Alias (Linux/macOS)
 
-The minimum requirements to run RF Swift are:
+This part can be considered if you manually downloaded the binary.
 
-- **CPU**: Any dual-core CPU (quad-core recommended for better performance)
-- **RAM**: 4GB minimum (8GB or more recommended)
-- **Storage**: 10GB free space (20GB+ recommended for multiple container images)
-- **Docker**: Automatically installed by the one-line installer
-- **Internet Connection**: Required for initial setup and image downloads
+For convenience, you can create an alias to run RF Swift from anywhere. If you didn't use the `install.sh` script (which creates this automatically), you can add an alias manually:
 
-## Architecture Overview
-
-RF Swift organizes its functionality in a hierarchical structure:
-
-```mermaid
-graph TD
-    A[rfswift] --> B[Host manager]
-    B --> C[Host]
-    B --> D[USB]
-    B --> F[Sound]
-    B --> G[Images Container manager]
-    H[Dockerfiles] --> G
-    G --> I[Pull]
-    G --> J[List]
-    G --> K[Save]
-    G --> L[Tag]
-    G --> M[Run]
-    G --> N[Exec]
-    
-    style A fill:#f9f,stroke:#333,stroke-width:4px
-    style B fill:#bbf,stroke:#333,stroke-width:2px
-    style H fill:#afa,stroke:#333,stroke-width:2px
-    style G fill:#bbf,stroke:#333,stroke-width:2px
+```bash
+echo "alias rfswift='$(pwd)/rfswift'" >> "$HOME/.$(basename $SHELL)rc"
+source "$HOME/.$(basename $SHELL)rc"
 ```
 
-This structure allows RF Swift to provide:
-- Comprehensive container management
-- Host resource integration
-- Device forwarding (USB, audio, display)
-- Streamlined workflow for RF testing and development
+Replace `$(pwd)/rfswift` with the full path to your RF Swift binary.
 
 ## Next Steps
 
@@ -231,15 +182,3 @@ If you encounter issues with the one-line installer:
 - **Docker Service Not Starting**: Try restarting your system after installation
 - **Shell Alias Not Working**: Open a new terminal window or manually source your shell configuration file
 - **GitHub API Rate Limiting**: If you see an error about GitHub API limits, wait a few minutes and try again
-
-## Feature Compatibility Matrix
-
-| Feature | Linux | Windows | macOS |
-|---------|-------|---------|-------|
-| Container Execution | ✅ | ✅ | ✅ |
-| GUI Applications | ✅ | ✅ | ✅ (with XQuartz) |
-| USB Device Forwarding | ✅ | ✅ (with usbipd) | ❌ |
-| Audio Support | ✅ | ✅ (with PulseAudio) | ❓ Limited |
-| Hardware Acceleration | ✅ | ❓ Limited | ❓ Limited |
-| Cross-Compilation | ✅ | ✅ (in WSL) | ✅ |
-| One-Line Installer | ✅ | ❌ | ✅ |
