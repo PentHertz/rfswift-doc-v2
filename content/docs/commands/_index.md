@@ -57,7 +57,7 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
 ### 🖼️ Image Management
 
 {{< cards >}}
-  {{< card link="images" title="images" icon="photo" subtitle="Manage RF Swift images (pull, list, search)" >}}
+  {{< card link="images" title="images" icon="photograph" subtitle="Manage RF Swift images (pull, list, search)" >}}
   {{< card link="build" title="build" icon="beaker" subtitle="Build image from YAML recipe" >}}
   {{< card link="delete" title="delete" icon="x" subtitle="Delete an image" >}}
   {{< card link="retag" title="retag" icon="tag" subtitle="Rename an image tag" >}}
@@ -87,7 +87,7 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
   {{< card link="host" title="host" icon="desktop-computer" subtitle="Host system configuration" >}}
   {{< card link="update" title="update" icon="refresh" subtitle="Update RF Swift binary" >}}
   {{< card link="completion" title="completion" icon="code" subtitle="Generate shell completion scripts" >}}
-  {{< card link="install" title="install" icon="wrench" subtitle="Install helper scripts" >}}
+  {{< card link="install" title="install" icon="puzzle" subtitle="Install helper scripts" >}}
 {{< /cards >}}
 
 ### 🛠️ Utilities

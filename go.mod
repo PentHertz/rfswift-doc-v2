@@ -1,5 +1,5 @@
 module github.com/PentHertz/RF-Swif-doc-v2.git
 
-go 1.25.5
+go 1.20
 
 require github.com/imfing/hextra v0.11.1 // indirect
