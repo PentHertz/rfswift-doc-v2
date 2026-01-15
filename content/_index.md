@@ -47,6 +47,8 @@ See our [installation documentation](docs/quick-start) for Windows installation 
   {{< /tab >}}
 {{< /tabs >}}
 
+{{< youtube vDInlPsriUg >}}
+
 {{< callout type="Warning" >}}
 For security reasons, it is advised to review the script before execution. As we don't currently have a fully secured installation method, the recommended approach is to perform a manual installation. Always download the script from the official repository to ensure authenticity.
 {{< /callout >}}
