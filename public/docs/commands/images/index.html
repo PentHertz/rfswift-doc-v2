@@ -9,15 +9,15 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 <title>images – RF Swift</title>
-  <meta name="description" content="rfswift imagesManage Docker images - list local images, browse remote registry, and pull images.
-Synopsis # List local images rfswift images local # List remote registry images rfswift images remote # Pull image from registry rfswift images pull -i IMAGE_NAME [-t TAG] The images command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, and pull images from Docker registries." /><link rel="canonical" href="https://rfswift.io/docs/commands/images/" itemprop="url" />
+  <meta name="description" content="rfswift imagesManage Docker images - list local images, browse remote registry, pull images, and track versions.
+Synopsis # List local images rfswift images local # List remote registry images rfswift images remote # List remote images with versions rfswift images remote -v # Pull image from registry rfswift images pull -i IMAGE_NAME [-t TAG] [-V version] The images command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, pull images from Docker registries, and track image versions for better environment control." /><link rel="canonical" href="https://rfswift.io/docs/commands/images/" itemprop="url" />
 
 <meta property="og:title" content="images">
 <meta
   property="og:description"
   content="
     
-      rfswift imagesManage Docker images - list local images, browse remote registry, and pull images.
+      rfswift imagesManage Docker images - list local images, browse remote registry, pull images, and track versions.
 Synopsis
     
 
@@ -27,15 +27,18 @@ rfswift images local
 # List remote registry images
 rfswift images remote
 
+# List remote images with versions
+rfswift images remote -v
+
 # Pull image from registry
-rfswift images pull -i IMAGE_NAME [-t TAG]
+rfswift images pull -i IMAGE_NAME [-t TAG] [-V version]
   
     
 
   
 
 
-The images command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, and pull images from Docker registries.
+The images command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, pull images from Docker registries, and track image versions for better environment control.
     
   ">
 <meta
@@ -48,19 +51,19 @@ The images command provides comprehensive image management: view locally availab
 
 <meta
   property="article:modified_time"
-  content="2026-01-15T13:23:38+01:00">
+  content="2026-01-27T18:09:02+01:00">
 
 
 
   <meta itemprop="name" content="images">
-  <meta itemprop="description" content="rfswift imagesManage Docker images - list local images, browse remote registry, and pull images.
-Synopsis # List local images rfswift images local # List remote registry images rfswift images remote # Pull image from registry rfswift images pull -i IMAGE_NAME [-t TAG] The images command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, and pull images from Docker registries.">
-  <meta itemprop="dateModified" content="2026-01-15T13:23:38+01:00">
-  <meta itemprop="wordCount" content="1005">
+  <meta itemprop="description" content="rfswift imagesManage Docker images - list local images, browse remote registry, pull images, and track versions.
+Synopsis # List local images rfswift images local # List remote registry images rfswift images remote # List remote images with versions rfswift images remote -v # Pull image from registry rfswift images pull -i IMAGE_NAME [-t TAG] [-V version] The images command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, pull images from Docker registries, and track image versions for better environment control.">
+  <meta itemprop="dateModified" content="2026-01-27T18:09:02+01:00">
+  <meta itemprop="wordCount" content="732">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="images">
-  <meta name="twitter:description" content="rfswift imagesManage Docker images - list local images, browse remote registry, and pull images.
-Synopsis # List local images rfswift images local # List remote registry images rfswift images remote # Pull image from registry rfswift images pull -i IMAGE_NAME [-t TAG] The images command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, and pull images from Docker registries.">
+  <meta name="twitter:description" content="rfswift imagesManage Docker images - list local images, browse remote registry, pull images, and track versions.
+Synopsis # List local images rfswift images local # List remote registry images rfswift images remote # List remote images with versions rfswift images remote -v # Pull image from registry rfswift images pull -i IMAGE_NAME [-t TAG] [-V version] The images command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, pull images from Docker registries, and track image versions for better environment control.">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
     <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -524,27 +527,9 @@ Synopsis # List local images rfswift images local # List remote registry images 
             </li>
           <li>
               <a
-                href="#examples"
+                href="#-version-management-v070"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Examples</a>
-            </li>
-          <li>
-              <a
-                href="#image-management-workflows"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Image Management Workflows</a>
-            </li>
-          <li>
-              <a
-                href="#understanding-image-tags"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Understanding Image Tags</a>
-            </li>
-          <li>
-              <a
-                href="#common-patterns"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Common Patterns</a>
+              >🆕 Version Management (v0.7.0&#43;)</a>
             </li>
           <li>
               <a
@@ -1155,55 +1140,19 @@ Synopsis # List local images rfswift images local # List remote registry images 
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#examples">Examples
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#-version-management-v070">🆕 Version Management (v0.7.0&#43;)
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#list-local-images">List Local Images
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#viewing-available-versions">Viewing Available Versions
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#browse-remote-images">Browse Remote Images
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#pulling-specific-versions">Pulling Specific Versions
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#pull-images">Pull Images
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#real-world-scenarios">Real-World Scenarios
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#image-management-workflows">Image Management Workflows
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#check-available-images">Check Available Images
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#update-to-latest-versions">Update to Latest Versions
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#cleanup-old-images">Cleanup Old Images
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#understanding-image-tags">Understanding Image Tags
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#official-rf-swift-tags">Official RF Swift Tags
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#common-patterns">Common Patterns
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#first-time-setup">First-Time Setup
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#version-comparison">Version Comparison
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1220,6 +1169,10 @@ Synopsis # List local images rfswift images local # List remote registry images 
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
         <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#pull-fails">Pull Fails
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#version-not-found">Version Not Found
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1255,7 +1208,7 @@ Synopsis # List local images rfswift images local # List remote registry images 
 
         <div class="content">
           <h1>images</h1>
-          <h1>rfswift images</h1><p>Manage Docker images - list local images, browse remote registry, and pull images.</p>
+          <h1>rfswift images</h1><p>Manage Docker images - list local images, browse remote registry, pull images, and track versions.</p>
 <h2>Synopsis<span class="hx:absolute hx:-mt-20" id="synopsis"></span>
     <a href="#synopsis" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
@@ -1265,8 +1218,11 @@ Synopsis # List local images rfswift images local # List remote registry images 
 </span></span><span class="line"><span class="cl"><span class="c1"># List remote registry images</span>
 </span></span><span class="line"><span class="cl">rfswift images remote
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># List remote images with versions</span>
+</span></span><span class="line"><span class="cl">rfswift images remote -v
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Pull image from registry</span>
-</span></span><span class="line"><span class="cl">rfswift images pull -i IMAGE_NAME <span class="o">[</span>-t TAG<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl">rfswift images pull -i IMAGE_NAME <span class="o">[</span>-t TAG<span class="o">]</span> <span class="o">[</span>-V version<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1276,7 +1232,7 @@ Synopsis # List local images rfswift images local # List remote registry images 
   </button>
 </div>
 </div>
-<p>The <code>images</code> command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, and pull images from Docker registries.</p>
+<p>The <code>images</code> command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, pull images from Docker registries, and <strong>track image versions</strong> for better environment control.</p>
 <hr>
 <h2>Subcommands<span class="hx:absolute hx:-mt-20" id="subcommands"></span>
     <a href="#subcommands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>images local<span class="hx:absolute hx:-mt-20" id="images-local"></span>
@@ -1300,13 +1256,14 @@ Synopsis # List local images rfswift images local # List remote registry images 
 <li>Image ID</li>
 <li>Creation date</li>
 <li>Image size</li>
+<li><strong>Version information</strong> (v0.7.0+)</li>
 </ul>
 <h3>images remote<span class="hx:absolute hx:-mt-20" id="images-remote"></span>
     <a href="#images-remote" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>List available RF Swift images from the official Penthertz registry.</p>
 <p><strong>Usage:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images remote</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images remote <span class="o">[</span>-v<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1316,18 +1273,36 @@ Synopsis # List local images rfswift images local # List remote registry images 
   </button>
 </div>
 </div>
+<p><strong>Options:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Flag</th>
+          <th>Description</th>
+          <th>Example</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>-v, --versions</code></td>
+          <td>Show available versions for each image</td>
+          <td><code>-v</code></td>
+      </tr>
+  </tbody>
+</table>
 <p><strong>Output includes:</strong></p>
 <ul>
 <li>Available image names</li>
 <li>Image descriptions</li>
 <li>Available tags/versions</li>
+<li><strong>Version history</strong> (with <code>-v</code> flag)</li>
 </ul>
 <h3>images pull<span class="hx:absolute hx:-mt-20" id="images-pull"></span>
     <a href="#images-pull" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Pull images from Docker registries to local system.</p>
 <p><strong>Usage:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images pull -i IMAGE_NAME <span class="o">[</span>-t TAG<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images pull -i IMAGE_NAME <span class="o">[</span>-t TAG<span class="o">]</span> <span class="o">[</span>-V version<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1360,15 +1335,22 @@ Synopsis # List local images rfswift images local # List remote registry images 
           <td>No</td>
           <td><code>-t my_sdr:v1</code></td>
       </tr>
+      <tr>
+          <td><code>-V, --version STRING</code></td>
+          <td>Rename to wanted version</td>
+          <td>No</td>
+          <td><code>-V 0.1.1</code></td>
+      </tr>
   </tbody>
 </table>
 <hr>
-<h2>Examples<span class="hx:absolute hx:-mt-20" id="examples"></span>
-    <a href="#examples" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>List Local Images<span class="hx:absolute hx:-mt-20" id="list-local-images"></span>
-    <a href="#list-local-images" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>View all local RF Swift images:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+<h2>🆕 Version Management (v0.7.0+)<span class="hx:absolute hx:-mt-20" id="-version-management-v070"></span>
+    <a href="#-version-management-v070" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Starting with RF Swift v0.7.0, images now support <strong>proper versioning</strong> to help you track and manage different image releases.</p>
+<h3>Viewing Available Versions<span class="hx:absolute hx:-mt-20" id="viewing-available-versions"></span>
+    <a href="#viewing-available-versions" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images local</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List remote images with all available versions</span>
+</span></span><span class="line"><span class="cl">rfswift images remote -v</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1381,10 +1363,13 @@ Synopsis # List local images rfswift images local # List remote registry images 
 <p><strong>Example output:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><pre><code>REPOSITORY              TAG        IMAGE ID       CREATED        SIZE
-penthertz/rfswift_noble      sdr_full    a1b2c3d4e5f6   2 weeks ago    4.2GB
-penthertz/rfswift_noble      bluetooth   b2c3d4e5f6g7   3 weeks ago    2.1GB
-my_custom_sdr          v1.0        c3d4e5f6g7h8   1 day ago      3.8GB</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><pre><code>┌──────────────────────┬────────────────────┬─────────────────────────────────────┬──────────────┬──────────────────────────────────────────────────────────────┐
+│ Tag                  │ Pushed Date        │ Image                               │ Size         │ Versions                                                     │
+├──────────────────────┼────────────────────┼─────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
+│ wifi                 │ 2026-01-27 16:27   │ penthertz/rfswift_noble:wifi        │ 7981.2 MB    │ latest, 0.1.1                                                │
+├──────────────────────┼────────────────────┼─────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
+│ sdr_full             │ 2026-01-27 16:27   │ penthertz/rfswift_noble:sdr_full    │ 14176.2 MB   │ latest, 0.1.1                                                │
+├──────────────────────┼────────────────────┼─────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1394,11 +1379,14 @@ my_custom_sdr          v1.0        c3d4e5f6g7h8   1 day ago      3.8GB</code></p
   </button>
 </div>
 </div>
-<h3>Browse Remote Images<span class="hx:absolute hx:-mt-20" id="browse-remote-images"></span>
-    <a href="#browse-remote-images" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>See available images in registry:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+<h3>Pulling Specific Versions<span class="hx:absolute hx:-mt-20" id="pulling-specific-versions"></span>
+    <a href="#pulling-specific-versions" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images remote</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull latest version (default)</span>
+</span></span><span class="line"><span class="cl">rfswift images pull -i sdr_full
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Pull specific version</span>
+</span></span><span class="line"><span class="cl">rfswift images pull -i sdr_full -V 0.1.1</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1408,333 +1396,15 @@ my_custom_sdr          v1.0        c3d4e5f6g7h8   1 day ago      3.8GB</code></p
   </button>
 </div>
 </div>
-<p><strong>Example output:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+<h3>Version Comparison<span class="hx:absolute hx:-mt-20" id="version-comparison"></span>
+    <a href="#version-comparison" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><pre><code>Available RF Swift Images:
-
-sdr_full - Complete SDR toolkit with all tools
-sdr_light - Lightweight SDR environment
-bluetooth - Bluetooth security and analysis tools
-wifi - WiFi security and penetration testing
-hardware - Hardware security and reverse engineering
-automotive - Automotive security (CAN, V2X)
-telecom - Telecommunications security (2G-5G)</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Pull Images<span class="hx:absolute hx:-mt-20" id="pull-images"></span>
-    <a href="#pull-images" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Pull specific image:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Pull and rename locally:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full -t my_sdr:production</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Pull specific version:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full -t sdr_v0.6.5</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Pull multiple images:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull all needed images</span>
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:bluetooth
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:wifi</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Real-World Scenarios<span class="hx:absolute hx:-mt-20" id="real-world-scenarios"></span>
-    <a href="#real-world-scenarios" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Initial setup:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check what&#39;s available</span>
-</span></span><span class="line"><span class="cl">rfswift images remote
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Pull main working image</span>
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify it&#39;s available</span>
-</span></span><span class="line"><span class="cl">rfswift images <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Run it</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n my_workspace</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Version management:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull new version with specific tag</span>
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full -t sdr_v0.6.6
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Keep old version</span>
-</span></span><span class="line"><span class="cl">rfswift images <span class="nb">local</span> <span class="p">|</span> grep penthertz/rfswift
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Test new version</span>
-</span></span><span class="line"><span class="cl">rfswift run -i sdr_v0.6.6 -n test_new_version
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If good, update production</span>
-</span></span><span class="line"><span class="cl">rfswift upgrade -c production -i sdr_v0.6.6</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Multi-environment setup:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull images for different purposes</span>
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full -t sdr_work
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:bluetooth -t bt_analysis
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:wifi -t wifi_testing
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify all available</span>
-</span></span><span class="line"><span class="cl">rfswift images local</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Team synchronization:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># Pull standard team images</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Synchronizing team images...&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nv">TEAM_IMAGES</span><span class="o">=(</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;penthertz/rfswift_noble:sdr_full&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;penthertz/rfswift_noble:bluetooth&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;penthertz/rfswift_noble:wifi&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="o">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">for</span> image in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TEAM_IMAGES</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Pulling </span><span class="nv">$image</span><span class="s2">...&#34;</span>
-</span></span><span class="line"><span class="cl">    rfswift images pull -i <span class="s2">&#34;</span><span class="nv">$image</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">done</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Team images synchronized:&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift images local</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<hr>
-<h2>Image Management Workflows<span class="hx:absolute hx:-mt-20" id="image-management-workflows"></span>
-    <a href="#image-management-workflows" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Check Available Images<span class="hx:absolute hx:-mt-20" id="check-available-images"></span>
-    <a href="#check-available-images" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># See what&#39;s in the registry</span>
-</span></span><span class="line"><span class="cl">rfswift images remote
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># See what you have locally</span>
-</span></span><span class="line"><span class="cl">rfswift images <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Compare local vs remote</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;=== LOCAL IMAGES ===&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift images <span class="nb">local</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;=== AVAILABLE REMOTE IMAGES ===&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift images remote</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Update to Latest Versions<span class="hx:absolute hx:-mt-20" id="update-to-latest-versions"></span>
-    <a href="#update-to-latest-versions" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># update_images.sh</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Checking for image updates...&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># List current local images</span>
-</span></span><span class="line"><span class="cl">rfswift images <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Pull latest versions</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Pulling latest versions...&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:bluetooth
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:wifi
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Update complete. Current images:&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift images local</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Cleanup Old Images<span class="hx:absolute hx:-mt-20" id="cleanup-old-images"></span>
-    <a href="#cleanup-old-images" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># View all images</span>
-</span></span><span class="line"><span class="cl">rfswift images <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove old/unused images</span>
-</span></span><span class="line"><span class="cl">docker images <span class="p">|</span> grep <span class="s2">&#34;penthertz/rfswift&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove specific old version</span>
-</span></span><span class="line"><span class="cl">docker rmi penthertz/rfswift_noble:old_version
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or use RF Swift delete command</span>
-</span></span><span class="line"><span class="cl">rfswift delete -i penthertz/rfswift_noble:old_version
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify cleanup</span>
-</span></span><span class="line"><span class="cl">rfswift images local</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<hr>
-<h2>Understanding Image Tags<span class="hx:absolute hx:-mt-20" id="understanding-image-tags"></span>
-    <a href="#understanding-image-tags" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Official RF Swift Tags<span class="hx:absolute hx:-mt-20" id="official-rf-swift-tags"></span>
-    <a href="#official-rf-swift-tags" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>RF Swift images use descriptive tags for different configurations:</p>
-<table>
-  <thead>
-      <tr>
-          <th>Tag</th>
-          <th>Purpose</th>
-          <th>Size</th>
-          <th>Use Case</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>sdr_full</code></td>
-          <td>Complete SDR stack</td>
-          <td>~4GB</td>
-          <td>Professional SDR work</td>
-      </tr>
-      <tr>
-          <td><code>sdr_light</code></td>
-          <td>Lightweight SDR</td>
-          <td>~1.5GB</td>
-          <td>Basic SDR tasks</td>
-      </tr>
-      <tr>
-          <td><code>bluetooth</code></td>
-          <td>Bluetooth tools</td>
-          <td>~2GB</td>
-          <td>Bluetooth security</td>
-      </tr>
-      <tr>
-          <td><code>wifi</code></td>
-          <td>WiFi tools</td>
-          <td>~2GB</td>
-          <td>WiFi security</td>
-      </tr>
-      <tr>
-          <td><code>hardware</code></td>
-          <td>Hardware security</td>
-          <td>~2.5GB</td>
-          <td>Hardware hacking</td>
-      </tr>
-      <tr>
-          <td><code>automotive</code></td>
-          <td>Automotive security</td>
-          <td>~2GB</td>
-          <td>Vehicle security</td>
-      </tr>
-      <tr>
-          <td><code>telecom</code></td>
-          <td>Telecom security</td>
-          <td>~3GB</td>
-          <td>Mobile networks</td>
-      </tr>
-  </tbody>
-</table>
-<hr>
-<h2>Common Patterns<span class="hx:absolute hx:-mt-20" id="common-patterns"></span>
-    <a href="#common-patterns" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>First-Time Setup<span class="hx:absolute hx:-mt-20" id="first-time-setup"></span>
-    <a href="#first-time-setup" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1. See what&#39;s available</span>
-</span></span><span class="line"><span class="cl">rfswift images remote
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 2. Pull what you need</span>
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 3. Verify it&#39;s ready</span>
-</span></span><span class="line"><span class="cl">rfswift images <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 4. Start using it</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n mission</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  📦 RF Swift Images                                                                                                            
+</span></span><span class="line"><span class="cl">┌──────────────────────────────┬─────────────────┬──────────────┬───────────────────────────┬─────────────┬────────────┬─────────┐
+</span></span><span class="line"><span class="cl">│ Repository                   │ Tag             │ Image ID     │ Created                   │ Size        │ Status     │ Version │
+</span></span><span class="line"><span class="cl">├──────────────────────────────┼─────────────────┼──────────────┼───────────────────────────┼─────────────┼────────────┼─────────┤
+</span></span><span class="line"><span class="cl">│ penthertz/rfswift_noble      │ sdr_light_0.1.1 │ cdf39442893e │ 2026-01-19T20:17:49+01:00 │ 13076.96 MB │ Up to date │ 0.1.1   │
+</span></span><span class="line"><span class="cl">...</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1752,7 +1422,7 @@ telecom - Telecommunications security (2G-5G)</code></pre></div><div class="hext
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull your first image</span>
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full
+</span></span><span class="line"><span class="cl">rfswift images pull -i sdr_full
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Check all Docker images (not just RF Swift)</span>
 </span></span><span class="line"><span class="cl">docker images
@@ -1798,16 +1468,38 @@ telecom - Telecommunications security (2G-5G)</code></pre></div><div class="hext
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check image name spelling</span>
-</span></span><span class="line"><span class="cl">rfswift images remote  <span class="c1"># Verify exact name</span>
+</span></span><span class="line"><span class="cl">rfswift images remote -v  <span class="c1"># Verify exact name and version</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Try with docker directly</span>
-</span></span><span class="line"><span class="cl">docker pull penthertz/rfswift_noble:sdr_full
+</span></span><span class="line"><span class="cl">docker pull penthertz/rfswift:sdr_full
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Check disk space</span>
 </span></span><span class="line"><span class="cl">df -h
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Check network</span>
 </span></span><span class="line"><span class="cl">ping registry.hub.docker.com</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Version Not Found<span class="hx:absolute hx:-mt-20" id="version-not-found"></span>
+    <a href="#version-not-found" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Error:</strong> <code>Version not found</code> or <code>Tag not found</code></p>
+<p><strong>Solutions:</strong></p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List all available versions</span>
+</span></span><span class="line"><span class="cl">rfswift images remote -v
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Verify the version exists</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Use the exact version string shown in the list</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Pull with correct version format</span>
+</span></span><span class="line"><span class="cl">rfswift images pull -i wifi v0.1.0</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1848,14 +1540,24 @@ telecom - Telecommunications security (2G-5G)</code></pre></div><div class="hext
 <li><a href="/docs/commands/export/"><code>export</code></a> - Export images to archives</li>
 <li><a href="/docs/commands/import/"><code>import</code></a> - Import images from archives</li>
 <li><a href="/docs/commands/delete/"><code>delete</code></a> - Remove images</li>
+<li><a href="/docs/commands/retag/"><code>retag</code></a> - Retag images locally</li>
 <li><a href="/docs/commands/run/"><code>run</code></a> - Run containers from images</li>
+<li><a href="/docs/commands/upgrade/"><code>upgrade</code></a> - Upgrade container to new image version</li>
 </ul>
 <hr>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">🏷️</div></div>
+
+  <div class="hx:w-full hx:min-w-0 hx:leading-7">
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>New in v0.7.0</strong>: Use <code>rfswift images remote -v</code> to see all available versions for each image. Pin your production environments to specific versions for stability!</div>
+  </div>
+</div>
+
 <div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200">
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">🖼️</div></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Check Before Pull</strong>: Use <code>images remote</code> to see what&rsquo;s available before pulling. This helps you choose the right image variant for your needs and avoid pulling unnecessary large images.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Check Before Pull</strong>: Use <code>images remote -v</code> to see what&rsquo;s available before pulling. This helps you choose the right image variant and version for your needs.</div>
   </div>
 </div>
 
@@ -1863,7 +1565,7 @@ telecom - Telecommunications security (2G-5G)</code></pre></div><div class="hext
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Disk Space</strong>: RF Swift images can be large (1.5-4GB). Always check available disk space with <code>df -h</code> before pulling multiple images. Use <code>sdr_light</code> for space-constrained systems.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Disk Space</strong>: RF Swift images can be large (1.5-4GB). Always check available disk space with <code>df -h</code> before pulling multiple images or versions. Use <code>sdr_light</code> for space-constrained systems.</div>
   </div>
 </div>
 
@@ -1871,14 +1573,14 @@ telecom - Telecommunications security (2G-5G)</code></pre></div><div class="hext
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Tag Management</strong>: Use the <code>-t</code> flag when pulling to create descriptive local tags like <code>sdr_production</code> or <code>sdr_dev</code>. This makes it easier to manage multiple versions and environments!</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Version Pinning</strong>: For production environments, always pin to a specific version (e.g., <code>sdr_full-v0.7.0</code>) instead of using the latest tag. This ensures reproducibility and prevents unexpected changes!</div>
   </div>
 </div>
 
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-01-15T13:23:38.000Z">January 15, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-01-27T18:09:02.000Z">January 27, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/commands/build/"
         title="build"
