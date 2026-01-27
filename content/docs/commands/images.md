@@ -235,18 +235,6 @@ rfswift images pull -i myuser/private-image:tag
 
 ---
 
-{{< callout emoji="🏷️" >}}
-**New in v0.7.0**: Use `rfswift images remote -v` to see all available versions for each image. Pin your production environments to specific versions for stability!
-{{< /callout >}}
-
-{{< callout emoji="🖼️" >}}
-**Check Before Pull**: Use `images remote -v` to see what's available before pulling. This helps you choose the right image variant and version for your needs.
-{{< /callout >}}
-
 {{< callout type="warning" >}}
 **Disk Space**: RF Swift images can be large (1.5-4GB). Always check available disk space with `df -h` before pulling multiple images or versions. Use `sdr_light` for space-constrained systems.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Version Pinning**: For production environments, always pin to a specific version (e.g., `sdr_full-v0.7.0`) instead of using the latest tag. This ensures reproducibility and prevents unexpected changes!
 {{< /callout >}}
