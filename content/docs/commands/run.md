@@ -37,6 +37,13 @@ The `run` command is the primary way to create new containers in RF Swift. It pu
 | `-g, --cgroups STRING` | Cgroup device rules (comma-separated) | See config | `-g "c 189:* rwm"` |
 | `-m, --seccomp STRING` | Custom seccomp profile path | Default | `-m /path/to/profile.json` |
 
+### Performance Options
+
+| Flag | Description | Default | Example |
+|------|-------------|---------|---------|
+| `--realtime` | Enable realtime mode for SDR operations | `false` | `--realtime` |
+| `--ulimits STRING` | Set custom ulimits (comma-separated) | None | `--ulimits "rtprio=95,memlock=-1"` |
+
 ### Device & Volume Options
 
 | Flag | Description | Example |
@@ -83,6 +90,39 @@ rfswift run -i sdr_full -n my_sdr
 ```bash
 # Requires imagename set in ~/.config/rfswift/config.ini
 rfswift run -n my_container
+```
+
+### With Realtime Mode
+
+**Create container optimized for SDR operations:**
+```bash
+rfswift run -i sdr_full -n sdr_realtime --realtime
+```
+
+This automatically configures:
+- `SYS_NICE` capability
+- `rtprio=95` ulimit
+- `memlock=unlimited` ulimit
+- `nice=40` ulimit
+
+**With custom ulimits:**
+```bash
+rfswift run -i sdr_full -n custom_limits --ulimits "rtprio=95,memlock=-1,nofile=65536"
+```
+
+**Combine realtime with custom overrides:**
+```bash
+rfswift run -i sdr_full -n sdr_pro --realtime --ulimits "rtprio=99"
+```
+
+**Professional SDR setup with all optimizations:**
+```bash
+rfswift run -i sdr_full -n rf_pentest \
+  --realtime \
+  -s /dev/bus/usb:/dev/bus/usb \
+  -g "c 189:* rwm" \
+  -b ~/captures:/root/captures \
+  --record
 ```
 
 ### With Devices
@@ -188,6 +228,7 @@ rfswift run -i wifi -n wifi_audit \
 ```bash
 rfswift run -i sdr_full -n site_survey \
   -u 0 \
+  --realtime \
   -s /dev/bus/usb:/dev/bus/usb \
   -b /pathto/captures:/root/captures \
   -b /pathto/projects:/root/projects:ro \
@@ -208,6 +249,15 @@ rfswift run -i bluetooth -n bt_pentest \
   -g "c 166:* rwm" \
   -t bridge \
   --record
+```
+
+**High-performance signal capture:**
+```bash
+rfswift run -i sdr_full -n high_perf_capture \
+  --realtime \
+  -s /dev/bus/usb:/dev/bus/usb \
+  -g "c 189:* rwm" \
+  -b ~/captures:/root/captures
 ```
 
 ---
@@ -257,6 +307,65 @@ Assigns a unique name to the container. Names must be unique across all containe
 -n container1  # Not descriptive
 ```
 
+### Realtime Mode (`--realtime`)
+
+Enables optimized settings for low-latency SDR operations. This is a convenience flag that automatically configures:
+
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| SYS_NICE capability | Added | Allows real-time scheduling |
+| rtprio ulimit | 95 | Enables `chrt -f 1` through `chrt -f 95` |
+| memlock ulimit | unlimited | Prevents sample buffers from being swapped |
+| nice ulimit | 40 | Allows nice -20 to +19 |
+
+**When to use:**
+- High sample rate captures (avoid buffer underruns)
+- Real-time signal processing with GNU Radio, SDR++, GQRX
+- Time-critical protocols (RFID, NFC, automotive)
+- Professional pentesting where reliability is critical
+
+```bash
+# Simple usage
+rfswift run -i sdr_full -n sdr_work --realtime
+
+# Verify inside container
+rfswift exec -c sdr_work -e "ulimit -r"
+# Output: 95
+
+# Use real-time scheduling
+rfswift exec -c sdr_work
+chrt -f 50 rtl_sdr -f 433920000 -s 2048000 output.bin
+```
+
+### Custom Ulimits (`--ulimits`)
+
+Set specific resource limits for fine-grained control.
+
+**Format:** `name=value` or `name=soft:hard` (comma-separated for multiple)
+
+| Name | Description | Example |
+|------|-------------|---------|
+| `rtprio` | Real-time scheduling priority (0-99) | `rtprio=95` |
+| `memlock` | Max locked memory (-1 = unlimited) | `memlock=-1` |
+| `nice` | Nice priority range | `nice=40` |
+| `nofile` | Max open file descriptors | `nofile=65536` |
+| `nproc` | Max processes | `nproc=4096` |
+
+**Examples:**
+```bash
+# Single ulimit
+--ulimits "rtprio=95"
+
+# Multiple ulimits
+--ulimits "rtprio=95,memlock=-1,nofile=65536"
+
+# With soft:hard format
+--ulimits "nofile=1024:65536"
+
+# Combine with realtime (custom values override defaults)
+--realtime --ulimits "rtprio=99"
+```
+
 ### Privilege Level (`-u, --privileged`)
 
 Controls container privilege level:
@@ -283,6 +392,9 @@ Add specific Linux capabilities for fine-grained privilege control.
 
 # Process debugging
 -a SYS_PTRACE
+
+# Real-time scheduling (added automatically with --realtime)
+-a SYS_NICE
 
 # Low port binding
 -a NET_BIND_SERVICE
@@ -465,6 +577,16 @@ rfswift run -i sdr_light -n test
 rfswift run -i sdr_full -n quick_test -s /dev/bus/usb:/dev/bus/usb
 ```
 
+### High-Performance SDR Container
+
+```bash
+rfswift run -i sdr_full -n high_perf \
+  --realtime \
+  -s /dev/bus/usb:/dev/bus/usb \
+  -g "c 189:* rwm" \
+  -b ~/captures:/root/captures
+```
+
 ### Repeatable Assessment Container
 
 ```bash
@@ -473,6 +595,7 @@ rfswift run -i sdr_full -n quick_test -s /dev/bus/usb:/dev/bus/usb
 CONTAINER_NAME="assessment_$(date +%Y%m%d)"
 rfswift run -i pentest -n "$CONTAINER_NAME" \
   -u 0 \
+  --realtime \
   -t bridge \
   -b ~/assessments:/root/work \
   --record \
@@ -622,6 +745,26 @@ rfswift run -i image -n container -w 8081:80/tcp
 sudo systemctl stop service_name
 ```
 
+### Buffer Underruns with SDR
+
+**Problem:** Experiencing sample drops or buffer underruns
+
+**Solution:**
+```bash
+# Enable realtime mode
+rfswift run -i sdr_full -n sdr_work --realtime
+
+# Or add to existing container
+rfswift realtime enable -c existing_container
+
+# Verify inside container
+rfswift exec -c sdr_work -e "ulimit -r"
+# Should show: 95
+
+# Use real-time scheduling
+chrt -f 50 your_sdr_command
+```
+
 ---
 
 ## Best Practices
@@ -648,7 +791,14 @@ rfswift run -i wifi -n wifi_scan -u 0
 rfswift capabilities add -c wifi_scan -a NET_ADMIN
 ```
 
-### 3. Use Read-Only Mounts for Reference Data
+### 3. Use Realtime Mode for SDR Work
+
+```bash
+# Always use --realtime for SDR captures
+rfswift run -i sdr_full -n hackrf_capture --realtime
+```
+
+### 4. Use Read-Only Mounts for Reference Data
 
 ```bash
 rfswift run -i analysis -n data_analysis \
@@ -656,7 +806,7 @@ rfswift run -i analysis -n data_analysis \
   -b ~/output:/root/output
 ```
 
-### 4. Record Important Sessions
+### 5. Record Important Sessions
 
 ```bash
 rfswift run -i pentest -n client_assessment \
@@ -664,7 +814,7 @@ rfswift run -i pentest -n client_assessment \
   --record-output client-$(date +%Y%m%d).cast
 ```
 
-### 5. Use Bridge Network for Services
+### 6. Use Bridge Network for Services
 
 ```bash
 rfswift run -i web_tools -n web_server \
@@ -672,7 +822,7 @@ rfswift run -i web_tools -n web_server \
   -w 127.0.0.1:8080:80/tcp
 ```
 
-### 6. Organize Project Directories
+### 7. Organize Project Directories
 
 ```bash
 # Create organized structure
@@ -695,8 +845,14 @@ rfswift run -i sdr_full -n assessment \
 - [`capabilities`](/docs/commands/capabilities) - Modify capabilities after creation
 - [`cgroups`](/docs/commands/cgroups) - Modify cgroup rules after creation
 - [`ports`](/docs/commands/ports) - Manage ports after creation
+- [`realtime`](/docs/commands/realtime) - Enable/disable realtime mode on existing containers
+- [`ulimits`](/docs/commands/ulimits) - Manage ulimits on existing containers
 
 ---
+
+{{< callout emoji="⚡" >}}
+**SDR Performance**: Use `--realtime` flag for optimal SDR performance. It automatically configures rtprio, memlock, nice ulimits and SYS_NICE capability to eliminate buffer underruns!
+{{< /callout >}}
 
 {{< callout emoji="💡" >}}
 **Tip**: Use `rfswift run --help` to see all options with their current default values from your config file.

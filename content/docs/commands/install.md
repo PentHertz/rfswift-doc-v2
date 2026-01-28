@@ -2,6 +2,7 @@
 title: install
 weight: 25
 prev: /docs/commands/completion
+next: /docs/commands/ulimits
 ---
 
 # rfswift install

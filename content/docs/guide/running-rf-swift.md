@@ -64,11 +64,13 @@ Available Commands:
   last         Last container run
   log          Record and replay terminal sessions
   ports        Manage container ports
+  realtime     Manage realtime mode for SDR operations
   remove       Remove a container
   rename       Rename a container
   retag        Rename an image
   run          Create and run a program
   stop         Stop a container
+  ulimits      Manage container ulimits
   update       Update RF Swift
   upgrade      Upgrade container to a new/latest/another image
 
@@ -77,6 +79,7 @@ Flags:
   -h, --help         help for rfswift
 
 Use "rfswift [command] --help" for more information about a command.
+
 ```
 
 {{< callout type="info" >}}
@@ -174,6 +177,16 @@ Create a new container from an image:
 ```bash
 rfswift run -i sdr_full -n my_sdr_container
 ```
+
+**With Realtime Mode for SDR Operations:**
+
+For optimal SDR performance with reduced buffer underruns, use the `--realtime` flag:
+
+```bash
+rfswift run -i sdr_full -n my_sdr_container --realtime
+```
+
+This automatically configures real-time scheduling priority, memory locking, and the SYS_NICE capability.
 
 **Recording Container Sessions:**
 
@@ -388,6 +401,40 @@ rfswift bindings list -c my_container
 
 Don't forget the `-d` switch if you want to deal with devices and not volumes.
 
+#### Realtime Mode for SDR Performance
+
+If you experience buffer underruns or dropped samples with your SDR hardware, enable realtime mode:
+
+```bash
+# Enable on existing container
+rfswift realtime enable -c my_sdr_container
+
+# Check current status
+rfswift realtime status -c my_sdr_container
+
+# Disable if no longer needed
+rfswift realtime disable -c my_sdr_container
+```
+
+Realtime mode configures:
+- `rtprio=95` ulimit for real-time scheduling
+- `memlock=unlimited` to prevent buffer swapping
+- `SYS_NICE` capability for priority control
+
+Once enabled, you can use real-time scheduling inside the container:
+
+```bash
+# Run SDR tool with real-time priority
+chrt -f 50 rtl_sdr -f 433920000 -s 2048000 output.bin
+
+# Verify rtprio is set
+ulimit -r  # Should show 95
+```
+
+{{< callout type="info" >}}
+For fine-grained control, use `rfswift ulimits` to manage individual resource limits. See the [ulimits documentation](/docs/commands/ulimits/) for details.
+{{< /callout >}}
+
 ### 6. Network Configuration
 
 RF Swift supports various network isolation modes:
@@ -458,6 +505,10 @@ GUI applications require:
 - **Linux**: `xhost` installed and configured
 - **macOS**: `XQuartz` properly configured
 - **Windows**: Native support via Docker Desktop
+{{< /callout >}}
+
+{{< callout emoji="⚡" >}}
+**SDR Performance Tip**: If you experience buffer underruns or dropped samples, create your container with the `--realtime` flag or enable it afterwards with `rfswift realtime enable -c container_name`. See the [realtime documentation](/docs/commands/realtime/) for details.
 {{< /callout >}}
 
 ## Advanced Features
@@ -553,6 +604,10 @@ Resource Options:
   -d, --display string        Set X Display (default "DISPLAY=:0")
   -p, --pulseserver string    PULSE SERVER TCP address (default "tcp:127.0.0.1:34567")
 
+Performance Options:
+  --realtime                  Enable realtime mode (SYS_NICE + rtprio + memlock)
+  --ulimits string            Set custom ulimits (e.g., 'rtprio=95,memlock=-1')
+
 Recording Options:
   --record                    Record the container session
   --record-output string      Custom output filename for recording (default: auto-generated)
@@ -581,7 +636,23 @@ Display Options:
    ```
    This applies a custom seccomp profile to the container.
 
-4. **Combined security settings with recording**:
+4. **High-performance SDR setup with realtime mode**:
+   ```bash
+   rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_capture \
+     --realtime \
+     -s "/dev/bus/usb:/dev/bus/usb" \
+     -g "c 189:* rwm" \
+     -b ~/captures:/root/captures \
+     --record
+   ```
+   This creates a container with:
+   - Realtime mode for optimal SDR performance
+   - USB device access
+   - Cgroup rules for USB serial devices
+   - Shared captures folder
+   - Session recording enabled
+
+5. **Combined security settings with recording**:
    ```bash
    rfswift run -i penthertz/rfswift_noble:bluetooth -n bt_scanner \
      -t bridge \
