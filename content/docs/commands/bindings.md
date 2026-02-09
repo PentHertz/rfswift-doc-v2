@@ -25,7 +25,7 @@ rfswift bindings rm -c CONTAINER -s SOURCE -t TARGET
 rfswift bindings rm -d -c CONTAINER -s SOURCE -t TARGET
 ```
 
-The `bindings` command allows you to add or remove volume mounts and device mappings to containers without restarting them. This is part of RF Swift's dynamic container management features.
+The `bindings` command allows you to add or remove volume mounts and device mappings to containers without restarting them. This is part of RF Swift's dynamic container management features and works identically with both Docker and Podman.
 
 ---
 
@@ -116,7 +116,7 @@ rfswift bindings add -d -c sdr_work \
 ```
 
 {{< callout type="info" >}}
-If you know you will plug and unplug devices, just use the volume by turning of `-d` switch.
+If you know you will plug and unplug devices, just use the volume by turning off the `-d` switch.
 {{< /callout >}}
 
 **Add USB serial device:**
@@ -134,9 +134,9 @@ rfswift bindings add -d -c analysis \
 
 When you add a binding to a running container:
 
-1. **Docker updates** container configuration
+1. **Container configuration updated** by the active engine (Docker or Podman)
 2. **Namespace modified** to include new mount/device
-3. **Immediate access** - no restart needed
+3. **Immediate access** — no restart needed
 4. **Persists** until removed or container deleted
 
 ```mermaid
@@ -153,14 +153,32 @@ graph LR
 - Share files between host and container
 - Two-way sync (changes visible on both sides)
 - Use for: data, configs, scripts
-- Can be use to share devices and resists to hot(un)plug
+- Can be used to share devices and resists hot-(un)plug
 
 **Device Bindings (with `-d`):**
 - Expose hardware devices to container
 - Direct device access
 - Requires proper permissions (cgroups)
 - Use for: SDR, serial, USB devices
-- Not hot(un)plug resistant
+- Not hot-(un)plug resistant
+
+{{< tabs items="Docker behavior,Podman behavior" >}}
+  {{< tab >}}
+Docker processes bindings through the Docker daemon. The daemon handles namespace modifications and device cgroup rules on behalf of the container.
+
+- Device bindings require the Docker daemon to have access to the host device
+- Cgroup rules are applied via the daemon's cgroup driver
+- No additional user-level configuration needed beyond group membership (`docker` group)
+  {{< /tab >}}
+  {{< tab >}}
+Podman processes bindings directly in user space (no daemon involved). In rootless mode, there are a few differences to be aware of:
+
+- **Volume ownership**: Files created inside the container may appear owned by your UID on the host (mapped through the user namespace). Use `podman unshare chown` if you need to fix permissions.
+- **Device access**: Some `/dev` devices require the host user to have read/write permissions. Check with `ls -l /dev/your_device` and add your user to the appropriate group (e.g., `dialout`, `plugdev`).
+- **USB passthrough**: Binding `/dev/bus/usb` as a volume (without `-d`) is often the most reliable approach in rootless mode.
+- **Cgroup v2**: RF Swift auto-detects cgroup version and applies device access rules accordingly.
+  {{< /tab >}}
+{{< /tabs >}}
 
 ---
 
@@ -175,6 +193,7 @@ graph LR
 | **Modification** | ✅ Can add/remove | ❌ Fixed |
 | **Performance** | Same | Same |
 | **Use case** | Dynamic needs | Known requirements |
+| **Engine support** | Docker ✅ Podman ✅ | Docker ✅ Podman ✅ |
 
 ### When to Use Each
 
@@ -213,6 +232,9 @@ rfswift bindings add -d -c work -s /dev/bus/usb -t /dev/bus/usb
 **Problem:** Added binding but can't see it in container
 
 **Solutions:**
+
+{{< tabs items="Docker,Podman" >}}
+  {{< tab >}}
 ```bash
 # Check if binding was actually added
 docker inspect container | grep -A5 Binds
@@ -226,6 +248,23 @@ exit
 rfswift bindings rm -c container -s source -t target
 rfswift bindings add -c container -s source -t target
 ```
+  {{< /tab >}}
+  {{< tab >}}
+```bash
+# Check if binding was actually added
+podman inspect container | grep -A5 Binds
+
+# Try accessing directly
+rfswift exec -c container
+ls -la /path/to/binding
+exit
+
+# Remove and re-add with correct paths
+rfswift bindings rm -c container -s source -t target
+rfswift bindings add -c container -s source -t target
+```
+  {{< /tab >}}
+{{< /tabs >}}
 
 ### Device Access Denied
 
@@ -247,11 +286,47 @@ ls -l /dev/device
 rfswift cgroups add -c container -r "c 189:* rwm"
 ```
 
+{{< tabs items="Docker-specific,Podman-specific" >}}
+  {{< tab >}}
+```bash
+# Ensure your user is in the docker group
+groups $USER | grep docker
+
+# If not, add and re-login
+sudo usermod -aG docker $USER
+newgrp docker
+```
+  {{< /tab >}}
+  {{< tab >}}
+```bash
+# Check host-level device permissions
+ls -l /dev/ttyUSB0
+# crw-rw---- 1 root dialout 188, 0 ...
+
+# Add your user to the device group
+sudo usermod -aG dialout $USER
+newgrp dialout
+
+# For broad USB access in rootless mode, bind as volume instead
+rfswift bindings add -c container \
+  -s /dev/bus/usb \
+  -t /dev/bus/usb
+
+# If using cgroup v2, RF Swift handles device rules automatically
+# but you can verify:
+cat /sys/fs/cgroup/user.slice/user-$(id -u).slice/user@$(id -u).service/cgroup.controllers
+```
+  {{< /tab >}}
+{{< /tabs >}}
+
 ### Permission Denied on Volume
 
 **Problem:** Can't write to mounted volume
 
 **Solutions:**
+
+{{< tabs items="Docker,Podman" >}}
+  {{< tab >}}
 ```bash
 # Check host directory permissions
 ls -ld ~/data
@@ -259,12 +334,29 @@ ls -ld ~/data
 # Fix permissions
 chmod 755 ~/data
 
-# Or run container as specific user
-# (requires container recreation)
-
 # Or use capabilities
 rfswift capabilities add -c container -p DAC_OVERRIDE
 ```
+  {{< /tab >}}
+  {{< tab >}}
+```bash
+# Check host directory permissions
+ls -ld ~/data
+
+# Fix permissions
+chmod 755 ~/data
+
+# Podman rootless: files may be mapped to a different UID
+# Use podman unshare to fix ownership
+podman unshare chown -R 0:0 ~/data
+
+# Or use the :Z/:z SELinux label options if on Fedora/RHEL
+rfswift bindings add -c container \
+  -s ~/data \
+  -t /root/data:z
+```
+  {{< /tab >}}
+{{< /tabs >}}
 
 ### Source Path Not Found
 
@@ -289,6 +381,9 @@ rfswift bindings add -c container \
 **Problem:** `rm` command fails
 
 **Solutions:**
+
+{{< tabs items="Docker,Podman" >}}
+  {{< tab >}}
 ```bash
 # Check exact paths used
 docker inspect container | grep -A10 Binds
@@ -298,9 +393,23 @@ rfswift bindings rm -c container \
   -s /exact/source/path \
   -t /exact/target/path
 
-# If still fails, recreate container
-# (as last resort)
+# If still fails, recreate container (last resort)
 ```
+  {{< /tab >}}
+  {{< tab >}}
+```bash
+# Check exact paths used
+podman inspect container | grep -A10 Binds
+
+# Use same source and target as when added
+rfswift bindings rm -c container \
+  -s /exact/source/path \
+  -t /exact/target/path
+
+# If still fails, recreate container (last resort)
+```
+  {{< /tab >}}
+{{< /tabs >}}
 
 ### Device Not Found
 
@@ -313,6 +422,10 @@ ls -l /dev/bus/usb
 
 # Check device name pattern
 ls -l /dev | grep rtl
+
+# On some systems, udev rules may rename devices
+# Check dmesg for the actual device path
+dmesg | tail -20
 ```
 
 ---
@@ -320,6 +433,7 @@ ls -l /dev | grep rtl
 ## Related Commands
 
 - [`run`](/docs/commands/run) - Create containers with initial bindings
+- [`engine`](/docs/commands/engine) - Select container engine (Docker/Podman)
 - [`cgroups`](/docs/commands/cgroups) - Manage device permissions
 - [`capabilities`](/docs/commands/capabilities) - Manage container capabilities
 - [`exec`](/docs/commands/exec) - Access container after adding bindings
@@ -335,5 +449,5 @@ ls -l /dev | grep rtl
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**Volumes vs Devices**: Use `bindings add` without `-d` for directories/files (volumes), and with `-d` for hardware devices like SDRs, USB devices, serial ports, etc.
+**Volumes vs Devices**: Use `bindings add` without `-d` for directories/files (volumes), and with `-d` for hardware devices like SDRs, USB devices, serial ports, etc. Both modes work identically with Docker and Podman.
 {{< /callout >}}
