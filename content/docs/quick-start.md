@@ -11,6 +11,8 @@ cascade:
 
 Here we will quickly get started with RF Swift using pre-built binaries and container images.
 
+{{< tabs items="Docker,Podman" >}}
+  {{< tab >}}
 {{< callout type="warning" >}}
 **On Linux**, unless you are using Docker Desktop, you may need to use `sudo` with the `rfswift` command for operations that require elevated privileges.
 {{< /callout >}}
@@ -23,8 +25,20 @@ sudo usermod -aG docker $USER
 newgrp docker
 ```
 {{< /callout >}}
+  {{< /tab >}}
+  {{< tab >}}
+{{< callout type="info" >}}
+**Podman runs rootless by default** — no `sudo` or group membership required. Just make sure your subordinate UID/GID ranges are configured:
 
-To install RF Swift, you can either use pre-compiled binaries and existing container images (quickest method) or compile the Go project and/or Docker images from source. This guide focuses on the fastest way to get up and running.
+```bash
+sudo usermod --add-subuids 100000-165535 $USER
+sudo usermod --add-subgids 100000-165535 $USER
+```
+{{< /callout >}}
+  {{< /tab >}}
+{{< /tabs >}}
+
+To install RF Swift, you can either use pre-compiled binaries and existing container images (quickest method) or compile the Go project and/or container images from source. This guide focuses on the fastest way to get up and running.
 
 {{% steps %}}
 
@@ -36,11 +50,27 @@ Skip this step if you already did it. This is just a reminder to show that the i
 
 The easiest way to install RF Swift with this command line:
 
+{{< tabs items="curl,wget" >}}
+  {{< tab >}}
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
+  {{< /tab >}}
+  {{< tab >}}
+```bash
+curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
+```
+  {{< /tab >}}
+{{< /tabs >}}
 
-But if you want to install it securely, we recommand using the installation script after downloading [the latest version here](https://github.com/PentHertz/RF-Swift/tags):
+The installer will prompt you to choose a container engine if none is detected:
+
+```
+📝 Which container engine would you like to install?
+1) Docker   2) Podman   3) Both   4) Skip
+```
+
+But if you want to install it securely, we recommend using the installation script after downloading [the latest version here](https://github.com/PentHertz/RF-Swift/tags):
   
 ```bash
 # Run the installation script
@@ -48,9 +78,10 @@ But if you want to install it securely, we recommand using the installation scri
 ```
 
 The `install.sh` script will:
-- Install all required dependencies (Docker, BuildX, Go)
-- Configure necessary services (xhost, PulseAudio)
-- Set up proper permissions
+- Install your chosen container engine (Docker, Podman, or both)
+- Install all required dependencies (BuildX, Go)
+- Configure necessary services (xhost, PulseAudio/PipeWire)
+- Set up proper permissions and rootless configuration
 - Create a system-wide alias for the `rfswift` command
 - Install the latest RF Swift binary
 
@@ -88,6 +119,10 @@ Config file not found. Would you like to create one with default values? (y/n)
 
 Select `y` to create a default configuration file or `n` to configure manually.
 
+{{< callout type="info" >}}
+RF Swift **auto-detects** the available container engine (Docker or Podman) at startup. You can override this with `rfswift --engine docker` or `rfswift --engine podman`.
+{{< /callout >}}
+
 ### Pull a Pre-built Image
 
 RF Swift provides several pre-built images to get you started quickly. For example, let's pull a complete SDR image:
@@ -102,6 +137,9 @@ You can also specify a custom tag for the image:
 rfswift images pull -i sdr_full -t my_custom_tag
 ```
 
+{{< callout type="info" >}}
+All RF Swift images are **OCI-compatible** and work identically with both Docker and Podman. The same `rfswift images pull` command works regardless of which engine you have installed.
+{{< /callout >}}
 
 RF Swift Ubuntu Noble (version 24.04) images are in the way, and you can also test them using the `penthertz/rfswift_noble:<tag>` prefix.
 In case you want to use Noble images with a short tag name, modify you RF Swift profile `config.ini` file as follows:
@@ -134,7 +172,7 @@ rfswift run -i sdr_full -n my_sdr_container
 This will start a container using the `sdr_full` image with the name `my_sdr_container`.
 
 {{< callout type="warning" >}}
-With some plateforms, some default devices may be non-existant. Your can use `bindings` or modify RF Swift's configuration file to remove the device from the mapped device list.
+With some platforms, some default devices may be non-existent. You can use `bindings` or modify RF Swift's configuration file to remove the device from the mapped device list.
 {{< /callout >}}
 
 ## Advanced features
@@ -196,10 +234,22 @@ Multiple devices can be shared by separating them with commas:
 rfswift run -i sdr_full -n my_sdr_container -s /dev/ttyUSB0:/dev/ttyUSB0,/dev/ttyACM0:/dev/ttyACM0
 ```
 
-
 {{< callout type="info" >}}
-If you plug the device after the container has started, or replug it later, you will have to stop it with command `rswift stop -c <container name>`. You can avoid this manipulation by mounting `/dev/bus/usb:/dev/bus/usb` as a volum instead with option `-b` when creating and running the container. This last manipulation may degrade the container's isolation.
+If you plug the device after the container has started, or replug it later, you will have to stop it with command `rfswift stop -c <container name>`. You can avoid this manipulation by mounting `/dev/bus/usb:/dev/bus/usb` as a volume instead with option `-b` when creating and running the container. This last manipulation may degrade the container's isolation.
 {{< /callout >}}
+
+{{< tabs items="Docker device notes,Podman device notes" >}}
+  {{< tab >}}
+Device passthrough works natively with Docker. When running in privileged mode (`-u 1`), all host devices are accessible inside the container.
+  {{< /tab >}}
+  {{< tab >}}
+With Podman in rootless mode, device passthrough may require additional steps:
+
+- Use `--device` flags explicitly via the `-s` option
+- For USB SDR devices, binding `/dev/bus/usb` as a volume (`-b /dev/bus/usb:/dev/bus/usb`) is often the simplest approach
+- RF Swift auto-detects cgroup v1/v2 and configures device access rules accordingly
+  {{< /tab >}}
+{{< /tabs >}}
 
 **Add Linux Capabilities:**
 
@@ -231,6 +281,15 @@ By default, containers use the host network mode. To use a different network:
 rfswift run -i sdr_full -n my_sdr_container -t bridge
 ```
 
+{{< tabs items="Docker networking,Podman networking" >}}
+  {{< tab >}}
+Docker uses its built-in bridge, host, and overlay networks. Host mode is the default for RF Swift.
+  {{< /tab >}}
+  {{< tab >}}
+Podman supports the same network modes. In rootless mode, `slirp4netns` or `pasta` handles networking. Host mode works identically when running as root or with sufficient privileges.
+  {{< /tab >}}
+{{< /tabs >}}
+
 **Privilege Levels:**
 
 Control container privilege level:
@@ -242,6 +301,10 @@ rfswift run -i sdr_full -n my_sdr_container -u 0
 # Run in privileged mode (use with caution)
 rfswift run -i sdr_full -n my_sdr_container -u 1
 ```
+
+{{< callout type="info" >}}
+With **Podman in rootless mode**, privileged mode (`-u 1`) grants privileges within the user namespace, which is still more restricted than Docker's privileged mode. This provides an extra layer of safety.
+{{< /callout >}}
 
 **Custom Commands:**
 
@@ -278,7 +341,7 @@ Once the container is running, you can use any of the pre-installed RF tools. Fo
 
 {{< callout type="warning" >}}
 If you encounter audio issues, you can enable audio forwarding with: `rfswift host audio enable`
-This requires `pulseaudio` to be properly configured on your host system.
+This requires `pulseaudio` or `pipewire-pulse` to be properly configured on your host system.
 {{< /callout >}}
 
 ### USB Device Management
@@ -309,9 +372,9 @@ On Linux, you can access USB devices in two ways:
 2. **After container creation** - use the powerful `bindings` feature to add devices to an existing container:
    ```bash
    # Add a new USB device to an existing container
-   rfswift bindings add -c my_container -d -s /dev/ttyUSB0 -t /dev/ttyUSB0*
+   rfswift bindings add -c my_container -d -s /dev/ttyUSB0 -t /dev/ttyUSB0
 
-   # Same but shorter: Add a new USB device to an existing container with some destination
+   # Same but shorter: Add a new USB device to an existing container with same destination
    rfswift bindings add -c my_container -t /dev/ttyUSB0
    
    # Add a new volume to an existing container
@@ -327,16 +390,16 @@ Note that to rebind a device, you need the `-d` switch.
 
 #### macOS USB Device Access
 
-For the moment Docker do not have proper way to forward USB accesses. USB devices cannot be used without using complex virtualization.
+For the moment Docker and Podman on macOS do not have a proper way to forward USB accesses. USB devices cannot be used without using complex virtualization.
 
 ## Managing Existing Containers
 
 ### Stop a Running Container
 
-Running containers can be stopped using the `stop` as follows:
+Running containers can be stopped using the `stop` command as follows:
 
 ```bash
-rswift stop -c my_sdr_container
+rfswift stop -c my_sdr_container
 ```
 
 ### Restart an Existing Container
@@ -428,6 +491,8 @@ Session recordings are stored as `.cast` files in asciinema format, which can be
 | `rfswift bindings add` | Add device or volume binding to existing container |
 | `rfswift log replay -i FILE` | Replay a recorded session |
 | `rfswift log list` | List all recorded sessions |
+| `rfswift --engine docker ...` | Force Docker engine |
+| `rfswift --engine podman ...` | Force Podman engine |
 
 ## Next Steps
 

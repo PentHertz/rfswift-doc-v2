@@ -11,6 +11,8 @@ cascade:
 
 RF Swift provides a streamlined command-line interface to manage containers for RF and hardware security applications. This guide covers essential commands and workflows.
 
+{{< tabs items="Docker,Podman" >}}
+  {{< tab >}}
 {{< callout type="warning" >}}
 **On Linux**, unless you are using Docker Desktop, you will need to use `sudo` with the `rfswift` command for operations that require elevated privileges.
 {{< /callout >}}
@@ -23,6 +25,22 @@ sudo usermod -aG docker $USER
 newgrp docker
 ```
 {{< /callout >}}
+  {{< /tab >}}
+  {{< tab >}}
+{{< callout type="info" >}}
+**Podman runs rootless by default** — no `sudo`, no daemon, no group membership required. Just ensure your subordinate UID/GID ranges are configured:
+
+```bash
+sudo usermod --add-subuids 100000-165535 $USER
+sudo usermod --add-subgids 100000-165535 $USER
+```
+{{< /callout >}}
+
+{{< callout type="info" >}}
+RF Swift auto-detects the available container engine. You can force a specific one with `rfswift --engine podman` or `rfswift --engine docker`.
+{{< /callout >}}
+  {{< /tab >}}
+{{< /tabs >}}
 
 ## Command Overview
 
@@ -36,6 +54,7 @@ Let's explore the available commands with `rfswift --help`:
   888_-~   888             8888    Y8/  Y8/    888  888    888   
   888 ~-_  888          \__88P'     Y    Y     888  888    "88_/       
 
+                          v1.0.0 "Skywave"
                 RF toolbox for HAMs and professionals                                                                             
 
 rfswift is THE toolbox for any HAM & radiocommunications and hardware professionals
@@ -75,19 +94,32 @@ Available Commands:
   upgrade      Upgrade container to a new/latest/another image
 
 Flags:
-  -q, --disconnect   Don't query updates (disconnected mode)
-  -h, --help         help for rfswift
+      --engine string  Force container engine (docker or podman)
+  -q, --disconnect     Don't query updates (disconnected mode)
+  -h, --help           help for rfswift
 
 Use "rfswift [command] --help" for more information about a command.
 
 ```
 
+{{< tabs items="Docker privileges,Podman privileges" >}}
+  {{< tab >}}
 {{< callout type="info" >}}
 **Privilege requirements by platform:**
 - **Linux**: `sudo` is required for most container operations when not using Docker Desktop
 - **Windows/macOS**: With Docker Desktop or OrbStack, `sudo` is not necessary
 - **Windows**: Commands related to USB binding require Administrator privileges
 {{< /callout >}}
+  {{< /tab >}}
+  {{< tab >}}
+{{< callout type="info" >}}
+**Podman privilege model:**
+- **Linux**: No `sudo` needed — Podman runs in your user namespace by default
+- **Device access**: Some `/dev` devices may require explicit `--device` flags or `podman unshare`
+- **Windows/macOS**: Podman runs inside a lightweight VM (podman machine); no extra privileges needed
+{{< /callout >}}
+  {{< /tab >}}
+{{< /tabs >}}
 
 ## Core Workflows
 
@@ -115,7 +147,7 @@ yes
 
 ```
 
-If you don't want to make any requests over the internet, you can also use `-q` or `--disconnect` option when using `rswift`.
+If you don't want to make any requests over the internet, you can also use `-q` or `--disconnect` option when using `rfswift`.
 
 ### 2. Image Management
 
@@ -177,6 +209,8 @@ Create a new container from an image:
 ```bash
 rfswift run -i sdr_full -n my_sdr_container
 ```
+
+RF Swift auto-detects whether Docker or Podman is available and uses the appropriate engine. All commands work identically regardless of the backend.
 
 **With Realtime Mode for SDR Operations:**
 
@@ -378,6 +412,10 @@ rfswift host audio enable
 [+] Successfully loaded module-native-protocol-tcp with index 29
 ```
 
+{{< callout type="info" >}}
+This works with both PulseAudio and PipeWire (via `pipewire-pulse`). RF Swift's installer detects and configures whichever audio system is present on your host.
+{{< /callout >}}
+
 #### Dynamic Device and Volume Binding
 
 One of RF Swift's most powerful features is the ability to add or remove device bindings to running containers:
@@ -386,7 +424,7 @@ One of RF Swift's most powerful features is the ability to add or remove device 
 # Add a USB device to an existing container
 rfswift bindings add -c my_container -d -s /dev/ttyUSB0:/dev/ttyUSB0
 
-# For some destination, use shortcuts with -t only
+# For same destination, use shortcuts with -t only
 rfswift bindings add -c my_container -d -t /dev/ttyUSB0
 
 # Add a shared folder
@@ -400,6 +438,20 @@ rfswift bindings list -c my_container
 ```
 
 Don't forget the `-d` switch if you want to deal with devices and not volumes.
+
+{{< tabs items="Docker device notes,Podman device notes" >}}
+  {{< tab >}}
+Device passthrough works natively with Docker. In privileged mode (`-u 1`), all host devices are accessible. In unprivileged mode, use `-s` to map specific devices and `-g` for cgroup rules.
+  {{< /tab >}}
+  {{< tab >}}
+With Podman in rootless mode, device access may need additional configuration:
+
+- Explicitly map devices with `-s /dev/ttyUSB0:/dev/ttyUSB0`
+- Bind `/dev/bus/usb:/dev/bus/usb` as a volume (`-b`) for broad USB access
+- RF Swift auto-detects cgroup v1/v2 and configures device access rules accordingly
+- For stubborn devices, `podman unshare` can help with permission issues
+  {{< /tab >}}
+{{< /tabs >}}
 
 #### Realtime Mode for SDR Performance
 
@@ -439,6 +491,8 @@ For fine-grained control, use `rfswift ulimits` to manage individual resource li
 
 RF Swift supports various network isolation modes:
 
+{{< tabs items="Docker networking,Podman networking" >}}
+  {{< tab >}}
 | Mode | Description |
 |------|-------------|
 | `host` | No network isolation (default) |
@@ -447,6 +501,22 @@ RF Swift supports various network isolation modes:
 | `overlay` | Connect multiple Docker daemons |
 | `ipvlan` | Full IPv4/IPv6 addressing control |
 | `macvlan` | Assign MAC addresses to containers |
+  {{< /tab >}}
+  {{< tab >}}
+| Mode | Description |
+|------|-------------|
+| `host` | No network isolation (default) |
+| `bridge` | Podman CNI/netavark bridge with isolation |
+| `none` | Complete network isolation |
+| `slirp4netns` | Rootless user-mode networking (default in rootless) |
+| `pasta` | Newer rootless networking alternative to slirp4netns |
+| `macvlan` | Assign MAC addresses to containers |
+
+{{< callout type="info" >}}
+In rootless mode, Podman uses `slirp4netns` or `pasta` for networking. Host mode requires root or sufficient privileges. For most RF Swift use cases, host mode is recommended.
+{{< /callout >}}
+  {{< /tab >}}
+{{< /tabs >}}
 
 Example of using bridge mode with port mapping:
 
@@ -469,24 +539,25 @@ Be cautious when adding capabilities as they increase security risks if the cont
 ```mermaid
 graph TD;
     A[Core build]-->B[Image 1];
-    A-->C[Docker image 2];
+    A-->C[OCI Image 2];
     B-->D[Container #1 from image 1];
     B-->E[Container #2 from image 1];
     C-->F[Container from image 2]
 ```
 
 This architecture provides significant advantages:
-- **Portability**: Move environments between systems easily
+- **Portability**: Move environments between systems easily — images work with both Docker and Podman
 - **Isolation**: Create separate environments for different tasks
 - **Disposability**: Create, experiment with, and destroy environments without impact
 - **Specialization**: Tailored environments for specific assessment needs
 - **Efficiency**: No need to reinstall entire systems
 - **Performance**: Less resource-intensive than VMs
+- **Rootless security**: Run entire RF labs without root privileges (Podman)
 - **Time-saving**: Quick deployment for last-minute assessment preparations
 - **Documentation**: Built-in session recording for compliance and reporting
 
 {{< callout type="info" >}}
-RF Swift significantly flattens the Docker learning curve while providing powerful features like dynamic device binding, host resource integration, and session recording that would otherwise require considerable Docker expertise.
+RF Swift significantly flattens the container learning curve while providing powerful features like dynamic device binding, host resource integration, and session recording that would otherwise require considerable Docker or Podman expertise.
 {{< /callout >}}
 
 ## Using RF Tools
@@ -537,6 +608,15 @@ By default, RF Swift runs containers in unprivileged mode with specific cgroup r
 
 This provides a reasonable balance between functionality and security for RF applications.
 
+{{< tabs items="Docker isolation,Podman isolation" >}}
+  {{< tab >}}
+Docker runs its daemon as root, so unprivileged mode still operates within a root-owned daemon context. The cgroup rules restrict which devices the container can access within that context.
+  {{< /tab >}}
+  {{< tab >}}
+Podman in rootless mode provides an additional layer of isolation: the container runs inside a user namespace, meaning even "root" inside the container maps to your unprivileged user on the host. Combined with cgroup v2 device controllers, this gives defense-in-depth for RF labs where untrusted firmware or protocols may be analyzed.
+  {{< /tab >}}
+{{< /tabs >}}
+
 #### Customizing Security Settings
 
 You can customize security settings both in the config file and via command-line parameters:
@@ -575,6 +655,8 @@ Cgroup rules use the format `type major:minor permission` where:
 - `permission` is r (read), w (write), m (mknod)
 
 For example, `c 189:* rwm` grants full access to all devices with major number 189.
+
+RF Swift auto-detects whether your system uses **cgroup v1** or **cgroup v2** and applies rules accordingly.
 {{< /callout >}}
 
 #### Command-Line Security Configuration
@@ -585,6 +667,9 @@ RF Swift allows you to override or extend security settings directly from the co
 
 ```bash
 rfswift run [options]
+
+Container Engine:
+  --engine string             Force container engine (docker or podman)
 
 Security Options:
   -u, --privileged int        Set privilege level (1: privileged, 0: unprivileged)
@@ -670,6 +755,15 @@ Display Options:
    - Unprivileged mode
    - Session recording enabled
 
+6. **Rootless Podman with explicit engine selection**:
+   ```bash
+   rfswift --engine podman run -i penthertz/rfswift_noble:sdr_full -n rootless_sdr \
+     -s "/dev/bus/usb:/dev/bus/usb" \
+     -b ~/captures:/root/captures \
+     --realtime
+   ```
+   This forces the Podman engine for a fully rootless SDR setup with USB passthrough and realtime performance.
+
 {{< callout type="warning" >}}
 Command-line settings always take precedence over config file settings. When using both, command-line options will extend or override the corresponding settings in your config.ini file.
 {{< /callout >}}
@@ -679,6 +773,6 @@ Command-line settings always take precedence over config file settings. When usi
 Now you can dive right into:
 
 {{< cards >}}
-  {{< card link="/docs/container-management" title="Container Management" icon="scissors" subtitle="Manage a running containers with remapping features" >}}
-  {{< card link="/docs/guide/list-of-images/" title="Container images" icon="database" subtitle="Prebult images" >}}
+  {{< card link="/docs/container-management" title="Container Management" icon="scissors" subtitle="Manage running containers with remapping features" >}}
+  {{< card link="/docs/guide/list-of-images/" title="Container images" icon="database" subtitle="Pre-built images" >}}
 {{< /cards >}}
