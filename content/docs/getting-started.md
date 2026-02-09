@@ -322,4 +322,4 @@ If you encounter issues with the one-line installer:
 
 - **"WARN[0000] "/" is not a shared mount"**: Run `sudo mount --make-rshared /` or add it to `/etc/fstab`
 - **Device passthrough not working**: Some devices may require `--privileged` or explicit `--device` flags; RF Swift handles this automatically in most cases
-- **Image pull fails with "short-name resolution"**: Use the full image name, e.g., `docker.io/penthertz/rfswift:sdr_light`
+- **Image pull fails with "short-name resolution"**: Use the full image name, e.g., `docker.io/penthertz/rfswift_noble:sdr_light`

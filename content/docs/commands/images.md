@@ -178,7 +178,7 @@ docker search penthertz/rfswift_noble
 rfswift images remote -v  # Verify exact name and version
 
 # Try with docker directly
-docker pull penthertz/rfswift:sdr_full
+docker pull penthertz/rfswift_noble:sdr_full
 
 # Check disk space
 df -h

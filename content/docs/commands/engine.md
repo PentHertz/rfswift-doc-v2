@@ -176,7 +176,7 @@ Podman may prompt for a registry when using short image names:
 
 ```bash
 # Full name (no prompt)
-rfswift --engine podman images pull -i docker.io/penthertz/rfswift:sdr_full
+rfswift --engine podman images pull -i docker.io/penthertz/rfswift_noble:sdr_full
 
 # Short name (may prompt for registry selection)
 rfswift --engine podman images pull -i sdr_full
