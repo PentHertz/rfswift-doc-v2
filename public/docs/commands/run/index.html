@@ -41,15 +41,15 @@ The run command is the primary way to create new containers in RF Swift. It pull
 
 <meta
   property="article:modified_time"
-  content="2026-02-09T16:19:58+01:00">
+  content="2026-03-05T18:07:45+01:00">
 
 
 
   <meta itemprop="name" content="run">
   <meta itemprop="description" content="rfswift runCreate and start a new container from an RF Swift image.
 Synopsis rfswift run -i IMAGE -n CONTAINER_NAME [options] The run command is the primary way to create new containers in RF Swift. It pulls the specified image (if not already available), creates a container with the given name, and starts it with an interactive shell.">
-  <meta itemprop="dateModified" content="2026-02-09T16:19:58+01:00">
-  <meta itemprop="wordCount" content="2322">
+  <meta itemprop="dateModified" content="2026-03-05T18:07:45+01:00">
+  <meta itemprop="wordCount" content="2346">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="run">
   <meta name="twitter:description" content="rfswift runCreate and start a new container from an RF Swift image.
@@ -2577,14 +2577,17 @@ Synopsis rfswift run -i IMAGE -n CONTAINER_NAME [options] The run command is the
 <hr>
 <h2>Troubleshooting<span class="hx:absolute hx:-mt-20" id="troubleshooting"></span>
     <a href="#troubleshooting" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Container Name Already Exists<span class="hx:absolute hx:-mt-20" id="container-name-already-exists"></span>
-    <a href="#container-name-already-exists" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Error:</strong> <code>Error response from daemon: Conflict. The container name &quot;...&quot; is already in use</code></p>
+    <a href="#container-name-already-exists" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Error:</strong> <code>container name 'X' is already in use. Use a different name with -n, or exec into the existing container with: rfswift exec -c X</code></p>
 <p><strong>Solution:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove existing container</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Exec into the existing container</span>
+</span></span><span class="line"><span class="cl">rfswift <span class="nb">exec</span> -c container_name
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Or remove it and recreate</span>
 </span></span><span class="line"><span class="cl">rfswift remove -c container_name
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or use different name</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Or use a different name</span>
 </span></span><span class="line"><span class="cl">rfswift run -i image -n container_name_2</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
@@ -2916,7 +2919,7 @@ Synopsis rfswift run -i IMAGE -n CONTAINER_NAME [options] The run command is the
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-02-09T16:19:58.000Z">February 9, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-05T18:07:45.000Z">March 5, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/commands/engine/"
         title="engine"
