@@ -195,7 +195,7 @@ docker inspect old_container > old_container_config.json
 rfswift bindings add -c container -s ~/data -t /root/data
 rfswift capabilities add -c container -p NET_ADMIN
 rfswift cgroups add -c container -r "c 189:* rwm"
-rfswift ports bind -c container -b "8080/tcp:8080"
+rfswift ports bind -c container -b "8080:8080/tcp"
 ```
 
 ### Rollback Failed

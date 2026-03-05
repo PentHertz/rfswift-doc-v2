@@ -629,14 +629,17 @@ rfswift run -i reversing -n isolated_analysis \
 
 ### Container Name Already Exists
 
-**Error:** `Error response from daemon: Conflict. The container name "..." is already in use`
+**Error:** `container name 'X' is already in use. Use a different name with -n, or exec into the existing container with: rfswift exec -c X`
 
 **Solution:**
 ```bash
-# Remove existing container
+# Exec into the existing container
+rfswift exec -c container_name
+
+# Or remove it and recreate
 rfswift remove -c container_name
 
-# Or use different name
+# Or use a different name
 rfswift run -i image -n container_name_2
 ```
 

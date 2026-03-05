@@ -74,7 +74,7 @@ If you prefer to have more control over the installation process, you can instal
 #### Linux Manual Installation
 
 {{< callout type="info" >}}
-On Linux, Docker or Podman, BuildX, and Go can be directly installed with the `install.sh` script included in the repository.
+On Linux, Docker or Podman, BuildX, and Go can be directly installed with the `scripts/install.sh` script included in the repository.
 {{< /callout >}}
 
 **Essential Components**
@@ -110,7 +110,8 @@ sudo pacman -S podman podman-compose slirp4netns fuse-overlayfs crun
 
 # macOS (via Homebrew)
 brew install podman
-podman machine init && podman machine start
+# Note: RF Swift will automatically run 'podman machine init' and
+# 'podman machine start' if needed when you run a container.
 ```
 
 **Rootless configuration** (Linux only):
@@ -154,10 +155,10 @@ git clone https://github.com/PentHertz/RF-Swift.git
 cd RF-Swift
 
 # Run the installation script to automatically install all dependencies
-./install.sh
+./scripts/install.sh
 ```
 
-The `install.sh` script will:
+The `scripts/install.sh` script will:
 - Offer to install Docker, Podman, or both
 - Set up BuildX for cross-architecture support (Docker)
 - Configure rootless mode (Podman)
@@ -258,7 +259,8 @@ macOS support will be fully implemented soon. Currently, some features may have 
 # Install via Homebrew
 brew install podman
 
-# Initialize and start the Podman machine (Linux VM)
+# RF Swift will automatically run 'podman machine init' and
+# 'podman machine start' when needed, but you can also do it manually:
 podman machine init
 podman machine start
 

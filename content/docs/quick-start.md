@@ -74,7 +74,7 @@ But if you want to install it securely, we recommend using the installation scri
   
 ```bash
 # Run the installation script
-./install.sh
+./scripts/install.sh
 ```
 
 The `install.sh` script will:
@@ -94,10 +94,10 @@ git clone https://github.com/PentHertz/RF-Swift.git
 cd RF-Swift
 
 # Step 1 - Building the project requirements
-./build_project.sh
+./scripts/build_project.sh
 
 # Step 2 - Run the installation script
-./install.sh
+./scripts/install.sh
 ```
 
 Then you should have the binary installed as well as all the requirements ;)

@@ -75,7 +75,7 @@ RF Swift will display an error and prompt you to install a container engine:
 
 ```
 ❌ No container engine found. Please install Docker or Podman.
-   Run ./install.sh or visit https://rfswift.io/docs/getting-started/
+   Run ./scripts/install.sh or visit https://rfswift.io/docs/getting-started/
 ```
   {{< /tab >}}
 {{< /tabs >}}

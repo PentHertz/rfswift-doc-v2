@@ -38,10 +38,10 @@ RF Swift provides platform-specific scripts to handle the entire build process:
 
 #### Linux/macOS
 
-Use the `install.sh` script which handles all dependencies and compilation:
+Use the `scripts/install.sh` script which handles all dependencies and compilation:
 
 ```bash
-./install.sh
+./scripts/install.sh
 ```
 
 The script will:
@@ -52,10 +52,10 @@ The script will:
 
 #### Windows
 
-For Windows systems, use the `build-windows.bat` script:
+For Windows systems, use the `scripts/build-windows.bat` script:
 
 ```cmd
-build-windows.bat
+scripts\build-windows.bat
 ```
 
 This script will set up the required dependencies and compile the RF Swift binary for Windows.
@@ -65,7 +65,7 @@ This script will set up the required dependencies and compile the RF Swift binar
 The Linux installation script includes special handling for Steam Deck:
 
 ```bash
-./install.sh
+./scripts/install.sh
 [+] Checking Docker installation
 Are you installing on a Steam Deck? (yes/no): yes
 ```

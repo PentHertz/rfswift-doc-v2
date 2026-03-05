@@ -65,7 +65,8 @@ sudo dnf install podman slirp4netns fuse-overlayfs
 sudo pacman -S podman slirp4netns fuse-overlayfs crun
 
 # macOS
-brew install podman && podman machine init && podman machine start
+brew install podman
+# RF Swift will automatically init and start the Podman machine when needed
 
 # Configure rootless (Linux)
 sudo usermod --add-subuids 100000-165535 $USER
