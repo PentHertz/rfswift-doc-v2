@@ -8,31 +8,154 @@
 <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
-<title>host – RF Swift</title>
-  <meta name="description" content="rfswift hostConfigure host system for RF Swift container operations.
-Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER_ADDRESS] # Unload pulseaudio TCP module rfswift host audio unload The host command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers." /><link rel="canonical" href="https://rfswift.io/docs/commands/host/" itemprop="url" />
+<title>Using Podman – RF Swift</title>
+  <meta name="description" content="Using RF Swift with PodmanRF Swift supports Podman as an alternative to Docker, enabling rootless and daemonless container workflows.
+Overview Podman is a daemonless container engine that can run containers without root privileges. RF Swift auto-detects Podman and adapts its behavior for rootless compatibility.
+Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (daemon) Daemonless (fork-exec) Root required Yes (daemon) No (rootless by default) Device passthrough Native Supported Cgroup rules Full support Not supported in rootless Privileged mode Full host access User-namespace scoped USB hotplug With cgroup rules Limited in rootless Networking Host/bridge slirp4netns/pasta Getting Started with Podman Installation Ubuntu/DebianFedoraArchmacOS sudo apt install podman sudo dnf install podman sudo pacman -S podman brew install podman podman machine init podman machine start Configuration # Ensure subordinate UID/GID ranges are configured grep $USER /etc/subuid /etc/subgid # If empty, add them sudo usermod --add-subuids 100000-165535 $USER sudo usermod --add-subgids 100000-165535 $USER # Enable lingering (containers survive logout) sudo loginctl enable-linger $USER # Configure default registry to avoid prompts echo &#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39; | sudo tee -a /etc/containers/registries.conf Using RF Swift with Podman # Auto-detected (if Podman is the only engine) rfswift run -i sdr_full -n my_sdr # Explicit engine selection (if both Docker and Podman are installed) rfswift --engine podman run -i sdr_full -n my_sdr Rootless Mode By default, Podman runs rootless — no sudo required. RF Swift automatically adapts:" /><link rel="canonical" href="https://rfswift.io/docs/guide/podman/" itemprop="url" />
 
-<meta property="og:title" content="host">
+<meta property="og:title" content="Using Podman">
 <meta
   property="og:description"
   content="
     
-      rfswift hostConfigure host system for RF Swift container operations.
-Synopsis
+      Using RF Swift with PodmanRF Swift supports Podman as an alternative to Docker, enabling rootless and daemonless container workflows.
+Overview
+    Podman is a daemonless container engine that can run containers without root privileges. RF Swift auto-detects Podman and adapts its behavior for rootless compatibility.
+Docker vs Podman at a Glance
     
+  
+      
+          Feature
+          Docker
+          Podman
+      
+  
+  
+      
+          Architecture
+          Client-server (daemon)
+          Daemonless (fork-exec)
+      
+      
+          Root required
+          Yes (daemon)
+          No (rootless by default)
+      
+      
+          Device passthrough
+          Native
+          Supported
+      
+      
+          Cgroup rules
+          Full support
+          Not supported in rootless
+      
+      
+          Privileged mode
+          Full host access
+          User-namespace scoped
+      
+      
+          USB hotplug
+          With cgroup rules
+          Limited in rootless
+      
+      
+          Networking
+          Host/bridge
+          slirp4netns/pasta
+      
+  
 
-# Enable pulseaudio network access
-rfswift host audio enable [-s SERVER_ADDRESS]
 
-# Unload pulseaudio TCP module
-rfswift host audio unload
+Getting Started with Podman
+    Installation
+    
+  Ubuntu/DebianFedoraArchmacOS
+
+
+  
+
+sudo apt install podman
   
     
 
   
 
 
-The host command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers.
+
+  
+
+sudo dnf install podman
+  
+    
+
+  
+
+
+
+  
+
+sudo pacman -S podman
+  
+    
+
+  
+
+
+
+  
+
+brew install podman
+podman machine init
+podman machine start
+  
+    
+
+  
+
+
+
+
+Configuration
+    
+
+# Ensure subordinate UID/GID ranges are configured
+grep $USER /etc/subuid /etc/subgid
+
+# If empty, add them
+sudo usermod --add-subuids 100000-165535 $USER
+sudo usermod --add-subgids 100000-165535 $USER
+
+# Enable lingering (containers survive logout)
+sudo loginctl enable-linger $USER
+
+# Configure default registry to avoid prompts
+echo &#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39; | sudo tee -a /etc/containers/registries.conf
+  
+    
+
+  
+
+
+Using RF Swift with Podman
+    
+
+# Auto-detected (if Podman is the only engine)
+rfswift run -i sdr_full -n my_sdr
+
+# Explicit engine selection (if both Docker and Podman are installed)
+rfswift --engine podman run -i sdr_full -n my_sdr
+  
+    
+
+  
+
+
+
+Rootless Mode
+    By default, Podman runs rootless — no sudo required. RF Swift automatically adapts:
     
   ">
 <meta
@@ -40,7 +163,7 @@ The host command configures the host system to support RF Swift containers, prim
   content="
     article
   ">
-<meta property="og:url" content="https://rfswift.io/docs/commands/host/"><meta property="article:section" content="docs">
+<meta property="og:url" content="https://rfswift.io/docs/guide/podman/"><meta property="article:section" content="docs">
 
 
 <meta
@@ -49,15 +172,17 @@ The host command configures the host system to support RF Swift containers, prim
 
 
 
-  <meta itemprop="name" content="host">
-  <meta itemprop="description" content="rfswift hostConfigure host system for RF Swift container operations.
-Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER_ADDRESS] # Unload pulseaudio TCP module rfswift host audio unload The host command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers.">
+  <meta itemprop="name" content="Using Podman">
+  <meta itemprop="description" content="Using RF Swift with PodmanRF Swift supports Podman as an alternative to Docker, enabling rootless and daemonless container workflows.
+Overview Podman is a daemonless container engine that can run containers without root privileges. RF Swift auto-detects Podman and adapts its behavior for rootless compatibility.
+Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (daemon) Daemonless (fork-exec) Root required Yes (daemon) No (rootless by default) Device passthrough Native Supported Cgroup rules Full support Not supported in rootless Privileged mode Full host access User-namespace scoped USB hotplug With cgroup rules Limited in rootless Networking Host/bridge slirp4netns/pasta Getting Started with Podman Installation Ubuntu/DebianFedoraArchmacOS sudo apt install podman sudo dnf install podman sudo pacman -S podman brew install podman podman machine init podman machine start Configuration # Ensure subordinate UID/GID ranges are configured grep $USER /etc/subuid /etc/subgid # If empty, add them sudo usermod --add-subuids 100000-165535 $USER sudo usermod --add-subgids 100000-165535 $USER # Enable lingering (containers survive logout) sudo loginctl enable-linger $USER # Configure default registry to avoid prompts echo &#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39; | sudo tee -a /etc/containers/registries.conf Using RF Swift with Podman # Auto-detected (if Podman is the only engine) rfswift run -i sdr_full -n my_sdr # Explicit engine selection (if both Docker and Podman are installed) rfswift --engine podman run -i sdr_full -n my_sdr Rootless Mode By default, Podman runs rootless — no sudo required. RF Swift automatically adapts:">
   <meta itemprop="dateModified" content="2026-03-11T20:26:15+01:00">
-  <meta itemprop="wordCount" content="704">
+  <meta itemprop="wordCount" content="1178">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="host">
-  <meta name="twitter:description" content="rfswift hostConfigure host system for RF Swift container operations.
-Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER_ADDRESS] # Unload pulseaudio TCP module rfswift host audio unload The host command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers.">
+  <meta name="twitter:title" content="Using Podman">
+  <meta name="twitter:description" content="Using RF Swift with PodmanRF Swift supports Podman as an alternative to Docker, enabling rootless and daemonless container workflows.
+Overview Podman is a daemonless container engine that can run containers without root privileges. RF Swift auto-detects Podman and adapts its behavior for rootless compatibility.
+Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (daemon) Daemonless (fork-exec) Root required Yes (daemon) No (rootless by default) Device passthrough Native Supported Cgroup rules Full support Not supported in rootless Privileged mode Full host access User-namespace scoped USB hotplug With cgroup rules Limited in rootless Networking Host/bridge slirp4netns/pasta Getting Started with Podman Installation Ubuntu/DebianFedoraArchmacOS sudo apt install podman sudo dnf install podman sudo pacman -S podman brew install podman podman machine init podman machine start Configuration # Ensure subordinate UID/GID ranges are configured grep $USER /etc/subuid /etc/subgid # If empty, add them sudo usermod --add-subuids 100000-165535 $USER sudo usermod --add-subgids 100000-165535 $USER # Enable lingering (containers survive logout) sudo loginctl enable-linger $USER # Configure default registry to avoid prompts echo &#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39; | sudo tee -a /etc/containers/registries.conf Using RF Swift with Podman # Auto-detected (if Podman is the only engine) rfswift run -i sdr_full -n my_sdr # Explicit engine selection (if both Docker and Podman are installed) rfswift --engine podman run -i sdr_full -n my_sdr Rootless Mode By default, Podman runs rootless — no sudo required. RF Swift automatically adapts:">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
     <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -246,7 +371,7 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   >🚀 Quick Start
     </a>
               
-            </li><li class="hx:flex hx:flex-col "><a
+            </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/guide/"
@@ -319,13 +444,76 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   >VPN Inside Containers
     </a>
               
-            </li><li class="hx:flex hx:flex-col "><a
+            </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
     href="/docs/guide/podman/"
     
   >Using Podman
     </a>
+  
+    <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
+              <a
+                href="#overview"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Overview</a>
+            </li>
+          <li>
+              <a
+                href="#getting-started-with-podman"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Getting Started with Podman</a>
+            </li>
+          <li>
+              <a
+                href="#rootless-mode"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Rootless Mode</a>
+            </li>
+          <li>
+              <a
+                href="#running-with-root-podman--sudo"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Running with Root (Podman &#43; sudo)</a>
+            </li>
+          <li>
+              <a
+                href="#podman-and-vpn"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Podman and VPN</a>
+            </li>
+          <li>
+              <a
+                href="#podman-specific-commands"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Podman-Specific Commands</a>
+            </li>
+          <li>
+              <a
+                href="#networking"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Networking</a>
+            </li>
+          <li>
+              <a
+                href="#common-workflows"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Common Workflows</a>
+            </li>
+          <li>
+              <a
+                href="#troubleshooting"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Troubleshooting</a>
+            </li>
+          <li>
+              <a
+                href="#related"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Related</a>
+            </li>
+          </ul>
+  
               
             </li></ul>
       </div>
@@ -418,7 +606,7 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
               
             </li></ul>
       </div>
-            </li><li class="hx:flex hx:flex-col open"><a
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/"
@@ -595,58 +783,13 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   >log
     </a>
               
-            </li><li class="hx:flex hx:flex-col open"><a
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/host/"
     
   >host
     </a>
-  
-    <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
-              <a
-                href="#synopsis"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Synopsis</a>
-            </li>
-          <li>
-              <a
-                href="#subcommands"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Subcommands</a>
-            </li>
-          <li>
-              <a
-                href="#examples"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Examples</a>
-            </li>
-          <li>
-              <a
-                href="#how-audio-passthrough-works"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >How Audio Passthrough Works</a>
-            </li>
-          <li>
-              <a
-                href="#security-considerations"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Security Considerations</a>
-            </li>
-          <li>
-              <a
-                href="#troubleshooting"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Troubleshooting</a>
-            </li>
-          <li>
-              <a
-                href="#related-commands"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Related Commands</a>
-            </li>
-          </ul>
-  
               
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -756,7 +899,7 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
     
   >🚀 Quick Start
     </a></li>
-          <li class=""><a
+          <li class="open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/guide/"
@@ -828,9 +971,9 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   >VPN Inside Containers
     </a>
               
-            </li><li class="hx:flex hx:flex-col "><a
+            </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
     href="/docs/guide/podman/"
     
   >Using Podman
@@ -924,7 +1067,7 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
               
             </li></ul>
       </div></li>
-          <li class="open"><a
+          <li class=""><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/"
@@ -1100,9 +1243,9 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   >log
     </a>
               
-            </li><li class="hx:flex hx:flex-col open"><a
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/host/"
     
   >host
@@ -1238,51 +1381,103 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
 <nav class="hextra-toc hx:order-last hx:hidden hx:w-64 hx:shrink-0 hx:xl:block hx:print:hidden hx:px-4" aria-label="table of contents">
     <div class="hextra-scrollbar hx:sticky hx:top-16 hx:overflow-y-auto hx:pr-4 hx:pt-6 hx:text-sm [hyphens:auto] hx:max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] hx:ltr:-mr-4 hx:rtl:-ml-4"><p class="hx:mb-4 hx:font-semibold hx:tracking-tight">On this page</p><ul>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#synopsis">Synopsis
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#overview">Overview
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#subcommands">Subcommands
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#docker-vs-podman-at-a-glance">Docker vs Podman at a Glance
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#host-audio-enable">host audio enable
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#getting-started-with-podman">Getting Started with Podman
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#host-audio-unload">host audio unload
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#installation">Installation
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#examples">Examples
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#configuration">Configuration
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#basic-usage">Basic Usage
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#using-rf-swift-with-podman-1">Using RF Swift with Podman
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#real-world-scenarios">Real-World Scenarios
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#rootless-mode">Rootless Mode
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#how-audio-passthrough-works">How Audio Passthrough Works
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#what-works-in-rootless-mode">What Works in Rootless Mode
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#pulseaudio-tcp-module">Pulseaudio TCP Module
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#what-requires-root-or-privileged-mode">What Requires Root or Privileged Mode
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#environment-variable">Environment Variable
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#automatic-device-filtering">Automatic Device Filtering
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#security-considerations">Security Considerations
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#cgroup-rules">Cgroup Rules
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#localhost-vs-network-binding">Localhost vs Network Binding
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#running-with-root-podman--sudo">Running with Root (Podman &#43; sudo)
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#podman-and-vpn">Podman and VPN
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#tailscalenetbird-rootless">Tailscale/Netbird (Rootless)
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#wireguardopenvpn-requires-root">WireGuard/OpenVPN (Requires Root)
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#podman-specific-commands">Podman-Specific Commands
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#image-registry">Image Registry
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#container-management">Container Management
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#networking">Networking
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#rootless-networking">Rootless Networking
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#remote-desktop-with-podman">Remote Desktop with Podman
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#common-workflows">Common Workflows
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#rootless-sdr-analysis">Rootless SDR Analysis
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#full-hardware-setup-with-sudo">Full Hardware Setup (with sudo)
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#air-gapped-environment">Air-Gapped Environment
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1290,27 +1485,27 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#module-not-loading">Module Not Loading
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#error-creating-device-nodes">“error creating device nodes”
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#port-already-in-use">Port Already in Use
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#rootless-podman-does-not-support-device-cgroup-rules">“Rootless Podman does not support device cgroup rules”
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#no-audio-in-container">No Audio in Container
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#containers-not-visible-across-engines">Containers Not Visible Across Engines
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#permission-denied">Permission Denied
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#image-pull-prompts">Image Pull Prompts
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#module-wont-unload">Module Won’t Unload
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#permission-denied-on-devbususb">Permission Denied on /dev/bus/usb
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#related-commands">Related Commands
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#related">Related
         </a>
       </li></ul>
       <div class="hx:mt-8 hx:border-t hx:bg-white hx:pt-8 hx:shadow-[0_-12px_16px_white] hx:dark:bg-dark hx:dark:shadow-[0_-12px_16px_#111] hx:sticky hx:bottom-0 hx:flex hx:flex-col hx:items-start hx:gap-2 hx:pb-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-t hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:border-neutral-400">
@@ -1332,64 +1527,91 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
           <a href="/docs/">Documentation</a>
         </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         <div class="hx:whitespace-nowrap hx:transition-colors hx:min-w-[24px] hx:overflow-hidden hx:text-ellipsis hx:hover:text-gray-900 hx:dark:hover:text-gray-100">
-          <a href="/docs/commands/">📘 Commands</a>
-        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">host</div>
+          <a href="/docs/guide/">📖 Guide</a>
+        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">Using Podman</div>
   </div>
 
         <div class="content">
-          <h1>host</h1>
-          <h1>rfswift host</h1><p>Configure host system for RF Swift container operations.</p>
-<h2>Synopsis<span class="hx:absolute hx:-mt-20" id="synopsis"></span>
-    <a href="#synopsis" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Enable pulseaudio network access</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> <span class="o">[</span>-s SERVER_ADDRESS<span class="o">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Unload pulseaudio TCP module</span>
-</span></span><span class="line"><span class="cl">rfswift host audio unload</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>The <code>host</code> command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers.</p>
-<hr>
-<h2>Subcommands<span class="hx:absolute hx:-mt-20" id="subcommands"></span>
-    <a href="#subcommands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>host audio enable<span class="hx:absolute hx:-mt-20" id="host-audio-enable"></span>
-    <a href="#host-audio-enable" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Enable pulseaudio network module for container audio access.</p>
-<p><strong>Options:</strong></p>
-<table>
+          <h1>Using Podman</h1>
+          <h1>Using RF Swift with Podman</h1><p>RF Swift supports Podman as an alternative to Docker, enabling rootless and daemonless container workflows.</p>
+<h2>Overview<span class="hx:absolute hx:-mt-20" id="overview"></span>
+    <a href="#overview" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Podman is a daemonless container engine that can run containers without root privileges. RF Swift auto-detects Podman and adapts its behavior for rootless compatibility.</p>
+<h3>Docker vs Podman at a Glance<span class="hx:absolute hx:-mt-20" id="docker-vs-podman-at-a-glance"></span>
+    <a href="#docker-vs-podman-at-a-glance" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><table>
   <thead>
       <tr>
-          <th>Flag</th>
-          <th>Description</th>
-          <th>Default</th>
-          <th>Example</th>
+          <th>Feature</th>
+          <th>Docker</th>
+          <th>Podman</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td><code>-s, --pulseserver STRING</code></td>
-          <td>Pulse server address</td>
-          <td><code>tcp:127.0.0.1:34567</code></td>
-          <td><code>-s tcp:127.0.0.1:34567</code></td>
+          <td>Architecture</td>
+          <td>Client-server (daemon)</td>
+          <td>Daemonless (fork-exec)</td>
+      </tr>
+      <tr>
+          <td>Root required</td>
+          <td>Yes (daemon)</td>
+          <td>No (rootless by default)</td>
+      </tr>
+      <tr>
+          <td>Device passthrough</td>
+          <td>Native</td>
+          <td>Supported</td>
+      </tr>
+      <tr>
+          <td>Cgroup rules</td>
+          <td>Full support</td>
+          <td>Not supported in rootless</td>
+      </tr>
+      <tr>
+          <td>Privileged mode</td>
+          <td>Full host access</td>
+          <td>User-namespace scoped</td>
+      </tr>
+      <tr>
+          <td>USB hotplug</td>
+          <td>With cgroup rules</td>
+          <td>Limited in rootless</td>
+      </tr>
+      <tr>
+          <td>Networking</td>
+          <td>Host/bridge</td>
+          <td>slirp4netns/pasta</td>
       </tr>
   </tbody>
 </table>
-<h3>host audio unload<span class="hx:absolute hx:-mt-20" id="host-audio-unload"></span>
-    <a href="#host-audio-unload" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Unload the TCP module from pulseaudio server.</p>
-<p><strong>No additional options.</strong></p>
 <hr>
-<h2>Examples<span class="hx:absolute hx:-mt-20" id="examples"></span>
-    <a href="#examples" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Basic Usage<span class="hx:absolute hx:-mt-20" id="basic-usage"></span>
-    <a href="#basic-usage" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Enable pulseaudio with default settings:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+<h2>Getting Started with Podman<span class="hx:absolute hx:-mt-20" id="getting-started-with-podman"></span>
+    <a href="#getting-started-with-podman" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Installation<span class="hx:absolute hx:-mt-20" id="installation"></span>
+    <a href="#installation" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-scrollbar hx:overflow-x-auto hx:overflow-y-hidden hx:overscroll-x-contain">
+  <div class="hx:mt-4 hx:flex hx:w-max hx:min-w-full hx:border-b hx:border-gray-200 hx:pb-px hx:dark:border-neutral-800"><button
+        class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
+        role="tab"
+        type="button"
+        aria-controls="tabs-panel-0" aria-selected="true"  tabindex="0"  data-state="selected">Ubuntu/Debian</button><button
+        class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
+        role="tab"
+        type="button"
+        aria-controls="tabs-panel-1">Fedora</button><button
+        class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
+        role="tab"
+        type="button"
+        aria-controls="tabs-panel-2">Arch</button><button
+        class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
+        role="tab"
+        type="button"
+        aria-controls="tabs-panel-3">macOS</button></div>
+</div>
+<div>
+  <div
+  class="hextra-tabs-panel hx:rounded-sm hx:pt-6 hx:hidden hx:data-[state=selected]:block"
+  id="tabs-panel-0"
+  role="tabpanel" tabindex="0"  data-state="selected" ><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host audio enable</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install podman</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1399,10 +1621,13 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<p><strong>Enable with custom address:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+</div>
+  <div
+  class="hextra-tabs-panel hx:rounded-sm hx:pt-6 hx:hidden hx:data-[state=selected]:block"
+  id="tabs-panel-1"
+  role="tabpanel"><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:192.168.1.100:34567</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo dnf install podman</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1412,10 +1637,13 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<p><strong>Unload pulseaudio module:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+</div>
+  <div
+  class="hextra-tabs-panel hx:rounded-sm hx:pt-6 hx:hidden hx:data-[state=selected]:block"
+  id="tabs-panel-2"
+  role="tabpanel"><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host audio unload</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo pacman -S podman</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1425,22 +1653,15 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<h3>Real-World Scenarios<span class="hx:absolute hx:-mt-20" id="real-world-scenarios"></span>
-    <a href="#real-world-scenarios" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Setup for SDR with audio:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+</div>
+  <div
+  class="hextra-tabs-panel hx:rounded-sm hx:pt-6 hx:hidden hx:data-[state=selected]:block"
+  id="tabs-panel-3"
+  role="tabpanel"><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Enable audio on host</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Create container with audio</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_audio <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -p tcp:127.0.0.1:34567
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Audio now works in container</span>
-</span></span><span class="line"><span class="cl">rfswift <span class="nb">exec</span> -c sdr_audio
-</span></span><span class="line"><span class="cl">gqrx
-</span></span><span class="line"><span class="cl"><span class="c1"># Audio output works!</span>
-</span></span><span class="line"><span class="cl">exit</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install podman
+</span></span><span class="line"><span class="cl">podman machine init
+</span></span><span class="line"><span class="cl">podman machine start</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1450,14 +1671,23 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<p><strong>Remote audio access:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+</div>
+</div>
+<h3>Configuration<span class="hx:absolute hx:-mt-20" id="configuration"></span>
+    <a href="#configuration" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Enable on specific interface</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:192.168.1.100:34567
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Ensure subordinate UID/GID ranges are configured</span>
+</span></span><span class="line"><span class="cl">grep <span class="nv">$USER</span> /etc/subuid /etc/subgid
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Containers on network can access audio</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Use with -p flag when creating container</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># If empty, add them</span>
+</span></span><span class="line"><span class="cl">sudo usermod --add-subuids 100000-165535 <span class="nv">$USER</span>
+</span></span><span class="line"><span class="cl">sudo usermod --add-subgids 100000-165535 <span class="nv">$USER</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Enable lingering (containers survive logout)</span>
+</span></span><span class="line"><span class="cl">sudo loginctl enable-linger <span class="nv">$USER</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Configure default registry to avoid prompts</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39;</span> <span class="p">|</span> sudo tee -a /etc/containers/registries.conf</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1467,70 +1697,14 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<p><strong>Troubleshooting audio:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+<h3>Using RF Swift with Podman<span class="hx:absolute hx:-mt-20" id="using-rf-swift-with-podman-1"></span>
+    <a href="#using-rf-swift-with-podman-1" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Unload module</span>
-</span></span><span class="line"><span class="cl">rfswift host audio unload
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Auto-detected (if Podman is the only engine)</span>
+</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n my_sdr
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Wait a moment</span>
-</span></span><span class="line"><span class="cl">sleep <span class="m">2</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Re-enable</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Test audio in container</span>
-</span></span><span class="line"><span class="cl">rfswift <span class="nb">exec</span> -c sdr_work
-</span></span><span class="line"><span class="cl">speaker-test -c <span class="m">2</span>
-</span></span><span class="line"><span class="cl">exit</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Clean shutdown:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Before stopping RF Swift work</span>
-</span></span><span class="line"><span class="cl">rfswift host audio unload
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># This cleanly removes the module</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<hr>
-<h2>How Audio Passthrough Works<span class="hx:absolute hx:-mt-20" id="how-audio-passthrough-works"></span>
-    <a href="#how-audio-passthrough-works" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Pulseaudio TCP Module<span class="hx:absolute hx:-mt-20" id="pulseaudio-tcp-module"></span>
-    <a href="#pulseaudio-tcp-module" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>When you enable audio:</p>
-<ol>
-<li><strong>Load TCP module</strong>: Pulseaudio loads <code>module-native-protocol-tcp</code></li>
-<li><strong>Bind to port</strong>: Listens on specified address (default: 127.0.0.1:34567)</li>
-<li><strong>Container access</strong>: Containers connect via <code>PULSE_SERVER</code> environment variable</li>
-<li><strong>Audio streams</strong>: Audio from container apps plays on host</li>
-</ol>
-<pre class="mermaid hx:mt-6">
-  graph LR
-    A[Container App] --&gt;|PULSE_SERVER| B[TCP:34567]
-    B --&gt;|Network| C[Host Pulseaudio]
-    C --&gt;|Audio| D[Host Speakers]
-</pre><h3>Environment Variable<span class="hx:absolute hx:-mt-20" id="environment-variable"></span>
-    <a href="#environment-variable" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Containers need <code>PULSE_SERVER</code> set:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Automatically set by rfswift run with -p flag</span>
-</span></span><span class="line"><span class="cl"><span class="nv">PULSE_SERVER</span><span class="o">=</span>tcp:127.0.0.1:34567
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Container applications use this to find pulse server</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Explicit engine selection (if both Docker and Podman are installed)</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n my_sdr</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1541,13 +1715,38 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
 </div>
 </div>
 <hr>
-<h2>Security Considerations<span class="hx:absolute hx:-mt-20" id="security-considerations"></span>
-    <a href="#security-considerations" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Localhost vs Network Binding<span class="hx:absolute hx:-mt-20" id="localhost-vs-network-binding"></span>
-    <a href="#localhost-vs-network-binding" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Localhost (Secure):</strong></p>
+<h2>Rootless Mode<span class="hx:absolute hx:-mt-20" id="rootless-mode"></span>
+    <a href="#rootless-mode" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>By default, Podman runs rootless — no <code>sudo</code> required. RF Swift automatically adapts:</p>
+<h3>What Works in Rootless Mode<span class="hx:absolute hx:-mt-20" id="what-works-in-rootless-mode"></span>
+    <a href="#what-works-in-rootless-mode" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
+<li>Container creation and management</li>
+<li>Image pulling and building</li>
+<li>Volume bindings (user-accessible paths)</li>
+<li>X11 forwarding</li>
+<li>Audio (PulseAudio/PipeWire)</li>
+<li>Session recording</li>
+<li>Remote desktop (VNC/noVNC)</li>
+<li>Network modes (slirp4netns/pasta)</li>
+<li>Tailscale/Netbird VPN (userspace mode)</li>
+</ul>
+<h3>What Requires Root or Privileged Mode<span class="hx:absolute hx:-mt-20" id="what-requires-root-or-privileged-mode"></span>
+    <a href="#what-requires-root-or-privileged-mode" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
+<li>Device cgroup rules (USB hotplug)</li>
+<li>Some device nodes (<code>/dev/tty</code>, <code>/dev/console</code>, <code>/dev/vhci</code>, <code>/dev/uinput</code>)</li>
+<li>WireGuard/OpenVPN VPN</li>
+<li>Full TUN/TAP networking</li>
+<li>Raw hardware access</li>
+</ul>
+<h3>Automatic Device Filtering<span class="hx:absolute hx:-mt-20" id="automatic-device-filtering"></span>
+    <a href="#automatic-device-filtering" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>RF Swift automatically drops devices that can&rsquo;t be mapped in rootless mode:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Only local containers can access</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:127.0.0.1:34567</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><pre><code>[!] Dropping 5 inaccessible device(s) for rootless mode:
+  - /dev/vhci
+  - /dev/console
+  - /dev/tty0
+  - /dev/tty1
+  - /dev/uinput</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1557,14 +1756,233 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<p><strong>Network Binding (Less Secure):</strong></p>
+<p>Devices that remain accessible (e.g., <code>/dev/bus/usb</code>, <code>/dev/snd</code>, <code>/dev/dri</code>) are kept.</p>
+<h3>Cgroup Rules<span class="hx:absolute hx:-mt-20" id="cgroup-rules"></span>
+    <a href="#cgroup-rules" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Rootless Podman doesn&rsquo;t support device cgroup rules. RF Swift detects this and prompts:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Any machine on network can access</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:0.0.0.0:34567
+<div><pre><code>[!] Rootless Podman does not support device cgroup rules.
+[!] Rules that will be dropped: c 189:* rwm, c 166:* rwm, ...
+[i] Device hotplug (USB, SDR dongles) may not work without cgroup rules.
+[i] To use cgroup rules, run RF Swift with sudo.</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+
+  <div class="hx:w-full hx:min-w-0 hx:leading-7">
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Devices still work</strong> — you can use USB devices that are plugged in before container start. What doesn&rsquo;t work without cgroup rules is <strong>hotplug</strong> (plugging/unplugging devices while the container is running).</div>
+  </div>
+</div>
+
+<hr>
+<h2>Running with Root (Podman + sudo)<span class="hx:absolute hx:-mt-20" id="running-with-root-podman--sudo"></span>
+    <a href="#running-with-root-podman--sudo" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>For full hardware access, run Podman with <code>sudo</code>:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Full hardware support with sudo</span>
+</span></span><span class="line"><span class="cl">sudo rfswift --engine podman run -i sdr_full -n my_sdr <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/bus/usb:/dev/bus/usb <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p>This gives you the same capabilities as Docker with root, including cgroup rules and full device access.</p>
+<hr>
+<h2>Podman and VPN<span class="hx:absolute hx:-mt-20" id="podman-and-vpn"></span>
+    <a href="#podman-and-vpn" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Tailscale/Netbird (Rootless)<span class="hx:absolute hx:-mt-20" id="tailscalenetbird-rootless"></span>
+    <a href="#tailscalenetbird-rootless" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Mesh VPNs work in rootless Podman using userspace networking:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n my_sdr --vpn tailscale</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>WireGuard/OpenVPN (Requires Root)<span class="hx:absolute hx:-mt-20" id="wireguardopenvpn-requires-root"></span>
+    <a href="#wireguardopenvpn-requires-root" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Tunnel VPNs need privileged mode:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo rfswift --engine podman run -i sdr_full -n my_sdr <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">1</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --vpn wireguard:./wg0.conf</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<hr>
+<h2>Podman-Specific Commands<span class="hx:absolute hx:-mt-20" id="podman-specific-commands"></span>
+    <a href="#podman-specific-commands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Image Registry<span class="hx:absolute hx:-mt-20" id="image-registry"></span>
+    <a href="#image-registry" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Podman may prompt for a registry when using short image names. RF Swift normalizes image names automatically, but you can also use full names:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Short name (RF Swift resolves it)</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n my_sdr
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or specific interface</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:192.168.1.100:34567</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Full name (no resolution needed)</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman run -i docker.io/penthertz/rfswift_noble:sdr_full -n my_sdr</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Container Management<span class="hx:absolute hx:-mt-20" id="container-management"></span>
+    <a href="#container-management" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>All RF Swift commands work with Podman:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List containers</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman last
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Enter container</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman <span class="nb">exec</span> -c my_sdr
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Stop container</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman stop -c my_sdr
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Remove container</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman remove -c my_sdr
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Export/import</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman <span class="nb">export</span> container -c my_sdr -o backup.tar.gz
+</span></span><span class="line"><span class="cl">rfswift --engine podman import container -i backup.tar.gz</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<hr>
+<h2>Networking<span class="hx:absolute hx:-mt-20" id="networking"></span>
+    <a href="#networking" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Rootless Networking<span class="hx:absolute hx:-mt-20" id="rootless-networking"></span>
+    <a href="#rootless-networking" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Rootless Podman uses <code>slirp4netns</code> or <code>pasta</code> for networking instead of a real bridge:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Host network (default) — works with slirp4netns</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n my_sdr
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Bridge network</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n my_sdr -t bridge
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Port forwarding with bridge</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n my_sdr <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -w 8080:80/tcp</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+
+  <div class="hx:w-full hx:min-w-0 hx:leading-7">
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0">Port forwarding works in rootless mode but only for ports above 1024. To bind to low ports (e.g., 80, 443), use <code>sudo</code> or configure <code>sysctl net.ipv4.ip_unprivileged_port_start=0</code>.</div>
+  </div>
+</div>
+
+<h3>Remote Desktop with Podman<span class="hx:absolute hx:-mt-20" id="remote-desktop-with-podman"></span>
+    <a href="#remote-desktop-with-podman" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n sdr_desktop <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --desktop <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --desktop-config <span class="s2">&#34;http:0.0.0.0:6080&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --desktop-pass <span class="s2">&#34;mypassword&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<hr>
+<h2>Common Workflows<span class="hx:absolute hx:-mt-20" id="common-workflows"></span>
+    <a href="#common-workflows" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Rootless SDR Analysis<span class="hx:absolute hx:-mt-20" id="rootless-sdr-analysis"></span>
+    <a href="#rootless-sdr-analysis" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull image</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman images pull -i sdr_full
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Create container (rootless)</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n analysis <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/captures:/root/captures <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/bus/usb:/dev/bus/usb
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Enter later</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman <span class="nb">exec</span> -c analysis</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Full Hardware Setup (with sudo)<span class="hx:absolute hx:-mt-20" id="full-hardware-setup-with-sudo"></span>
+    <a href="#full-hardware-setup-with-sudo" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo rfswift --engine podman run -i sdr_full -n hw_work <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/bus/usb:/dev/bus/usb <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 189:* rwm,c 166:* rwm&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --realtime <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/captures:/root/captures</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Air-Gapped Environment<span class="hx:absolute hx:-mt-20" id="air-gapped-environment"></span>
+    <a href="#air-gapped-environment" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Podman is ideal for air-gapped systems since it has no daemon:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># On connected machine: export image</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman <span class="nb">export</span> image -i sdr_full -o sdr_full.tar.gz
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Transfer to air-gapped machine (USB, etc.)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># On air-gapped machine: import and run</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman import image -i sdr_full.tar.gz
+</span></span><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n offline_work -t none</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1576,25 +1994,14 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
 </div>
 <hr>
 <h2>Troubleshooting<span class="hx:absolute hx:-mt-20" id="troubleshooting"></span>
-    <a href="#troubleshooting" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Module Not Loading<span class="hx:absolute hx:-mt-20" id="module-not-loading"></span>
-    <a href="#module-not-loading" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> <code>rfswift host audio enable</code> fails</p>
-<p><strong>Solutions:</strong></p>
+    <a href="#troubleshooting" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>&ldquo;error creating device nodes&rdquo;<span class="hx:absolute hx:-mt-20" id="error-creating-device-nodes"></span>
+    <a href="#error-creating-device-nodes" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Error:</strong> <code>error during container init: error creating device nodes: create device inode /dev/tty: no such device or address</code></p>
+<p><strong>Cause:</strong> Rootless Podman can&rsquo;t create certain device nodes.</p>
+<p><strong>Solution:</strong> RF Swift automatically filters these. If you see this error, update to the latest RF Swift version. As a workaround, remove problematic devices:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if pulseaudio is running</span>
-</span></span><span class="line"><span class="cl">ps aux <span class="p">|</span> grep pulseaudio
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Start pulseaudio if needed</span>
-</span></span><span class="line"><span class="cl">pulseaudio --start
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check for conflicts</span>
-</span></span><span class="line"><span class="cl">pactl list modules <span class="p">|</span> grep tcp
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Kill existing modules</span>
-</span></span><span class="line"><span class="cl">pactl unload-module module-native-protocol-tcp
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Try again</span>
-</span></span><span class="line"><span class="cl">rfswift host audio enable</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># RF Swift handles this automatically, but you can also avoid the issue by not mapping tty devices</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n my_sdr -s /dev/bus/usb:/dev/bus/usb</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1604,19 +2011,12 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<h3>Port Already in Use<span class="hx:absolute hx:-mt-20" id="port-already-in-use"></span>
-    <a href="#port-already-in-use" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Port 34567 already in use</p>
-<p><strong>Solutions:</strong></p>
+<h3>&ldquo;Rootless Podman does not support device cgroup rules&rdquo;<span class="hx:absolute hx:-mt-20" id="rootless-podman-does-not-support-device-cgroup-rules"></span>
+    <a href="#rootless-podman-does-not-support-device-cgroup-rules" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Not an error</strong> — this is informational. Your container will still work; only USB hotplug is affected. Plug in devices before starting the container.</p>
+<p>To get full cgroup support:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check what&#39;s using the port</span>
-</span></span><span class="line"><span class="cl">sudo lsof -i :34567
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use different port</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:127.0.0.1:34568
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Update container creation</span>
-</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n work -p tcp:127.0.0.1:34568</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo rfswift --engine podman run ...</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1626,23 +2026,15 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<h3>No Audio in Container<span class="hx:absolute hx:-mt-20" id="no-audio-in-container"></span>
-    <a href="#no-audio-in-container" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Container has no audio output</p>
-<p><strong>Solutions:</strong></p>
+<h3>Containers Not Visible Across Engines<span class="hx:absolute hx:-mt-20" id="containers-not-visible-across-engines"></span>
+    <a href="#containers-not-visible-across-engines" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Containers created with Docker are invisible to Podman and vice versa:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Verify module is loaded</span>
-</span></span><span class="line"><span class="cl">pactl list modules <span class="p">|</span> grep module-native-protocol-tcp
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Created with Docker? Use Docker to access it</span>
+</span></span><span class="line"><span class="cl">rfswift --engine docker <span class="nb">exec</span> -c my_container
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check PULSE_SERVER in container</span>
-</span></span><span class="line"><span class="cl">rfswift <span class="nb">exec</span> -c container
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$PULSE_SERVER</span>
-</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Should show: tcp:127.0.0.1:34567</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If not set, recreate container with -p flag</span>
-</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n work -p tcp:127.0.0.1:34567</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Created with Podman? Use Podman</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman <span class="nb">exec</span> -c my_container</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1652,23 +2044,12 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<h3>Permission Denied<span class="hx:absolute hx:-mt-20" id="permission-denied"></span>
-    <a href="#permission-denied" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Cannot load module</p>
-<p><strong>Solutions:</strong></p>
+<h3>Image Pull Prompts<span class="hx:absolute hx:-mt-20" id="image-pull-prompts"></span>
+    <a href="#image-pull-prompts" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Podman asks which registry to use</p>
+<p><strong>Solution:</strong> Configure default registries:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Run as your user (not root)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Pulseaudio runs as user, not root</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check pulseaudio ownership</span>
-</span></span><span class="line"><span class="cl">ps aux <span class="p">|</span> grep pulseaudio
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If running as different user, restart</span>
-</span></span><span class="line"><span class="cl">pulseaudio --kill
-</span></span><span class="line"><span class="cl">pulseaudio --start
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then load module</span>
-</span></span><span class="line"><span class="cl">rfswift host audio enable</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39;</span> <span class="p">|</span> sudo tee -a /etc/containers/registries.conf</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1678,19 +2059,12 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<h3>Module Won&rsquo;t Unload<span class="hx:absolute hx:-mt-20" id="module-wont-unload"></span>
-    <a href="#module-wont-unload" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> <code>unload</code> command fails</p>
-<p><strong>Solutions:</strong></p>
+<h3>Permission Denied on /dev/bus/usb<span class="hx:absolute hx:-mt-20" id="permission-denied-on-devbususb"></span>
+    <a href="#permission-denied-on-devbususb" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Solution:</strong> Add your user to the correct groups:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Force unload with pactl</span>
-</span></span><span class="line"><span class="cl">pactl unload-module module-native-protocol-tcp
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or restart pulseaudio</span>
-</span></span><span class="line"><span class="cl">pulseaudio --kill
-</span></span><span class="line"><span class="cl">pulseaudio --start
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Module will be gone after restart</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG plugdev <span class="nv">$USER</span>
+</span></span><span class="line"><span class="cl">newgrp plugdev</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1700,35 +2074,30 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
+<p>Or use <code>sudo</code> for full access.</p>
 <hr>
-<h2>Related Commands<span class="hx:absolute hx:-mt-20" id="related-commands"></span>
-    <a href="#related-commands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
-<li><a href="/docs/commands/run/"><code>run</code></a> - Create containers with audio (<code>-p</code> flag)</li>
-<li><a href="/docs/commands/exec/"><code>exec</code></a> - Test audio in containers</li>
-<li><a href="/docs/commands/stop/"><code>stop</code></a> - Stop containers before unloading</li>
+<h2>Related<span class="hx:absolute hx:-mt-20" id="related"></span>
+    <a href="#related" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
+<li><a href="/docs/commands/engine/"><code>engine</code></a> - Container engine selection and comparison</li>
+<li><a href="/docs/commands/run/"><code>run</code></a> - Create and run containers</li>
+<li><a href="/docs/guide/vpn/">VPN Inside Containers</a> - VPN support with Podman</li>
+<li><a href="/docs/getting-started/">Getting Started</a> - Installation and setup</li>
+<li><a href="/docs/air-gapped-installation/">Air-Gapped Installation</a> - Offline deployment</li>
 </ul>
 <hr>
 <div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200">
-  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">🔊</div></div>
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">🔒</div></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Audio for SDR</strong>: The <code>host audio</code> commands enable audio passthrough from containers to your host speakers. Essential for SDR applications like GQRX that need audio output!</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Security Advantage</strong>: Podman&rsquo;s rootless mode provides better isolation than Docker. Even if a container escape occurs, the attacker only has unprivileged user access — not root.</div>
   </div>
 </div>
 
-<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200">
-  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">💡</div></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Run as User</strong>: Always run <code>rfswift host audio enable</code> as your regular user, NOT as root. Pulseaudio runs as your user and needs proper permissions.</div>
-  </div>
-</div>
-
-<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
-  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-
-  <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Container Flag Required</strong>: Don&rsquo;t forget the <code>-p tcp:127.0.0.1:34567</code> flag when creating containers. Without it, containers won&rsquo;t know where to find the pulseaudio server!</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Tip</strong>: For most RF work, rootless Podman is sufficient. Only use <code>sudo</code> when you need USB hotplug or WireGuard/OpenVPN VPN.</div>
   </div>
 </div>
 
@@ -1737,14 +2106,14 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
         
     <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-11T20:26:15.000Z">March 11, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
-        href="/docs/commands/log/"
-        title="log"
+        href="/docs/guide/vpn/"
+        title="VPN Inside Containers"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:pr-4 hx:rtl:pl-4"
-      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>log</a><a
-        href="/docs/commands/update/"
-        title="update"
+      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>VPN Inside Containers</a><a
+        href="/docs/guide/list-of-images/"
+        title="Container Images"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:ml-auto hx:ltr:pl-4 hx:ltr:text-right hx:rtl:mr-auto hx:rtl:pr-4 hx:rtl:text-left"
-      >update<svg class="hx:inline hx:h-5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
+      >Container Images<svg class="hx:inline hx:h-5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
         
       </main>
     </article>
@@ -1760,35 +2129,6 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
     
     <script defer src="/js/main.min.1fba8b463c3976277e140a710568addd3b581bff53843fb50ebbec6340f19ac2.js" integrity="sha256-H7qLRjw5did&#43;FApxBWit3TtYG/9ThD&#43;1DrvsY0DxmsI="></script>
 <script defer src="/js/flexsearch.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script>
-        <script defer src="/en.search.min.3d7b6ffb50e2cafaf5eae5b57ea40addb8ee727d0ad8a7f24bddc88ab7f7941f.js" integrity="sha256-PXtv&#43;1Diyvr16uW1fqQK3bjucn0K2KfyS93Iirf3lB8="></script><script defer src="/js/mermaid.min.3e2002bf333907fae7c1d6860bbc78f5da417bc70b64f3d2268581ba0ba8b96a.js" integrity="sha256-PiACvzM5B/rnwdaGC7x49dpBe8cLZPPSJoWBuguouWo=" crossorigin="anonymous"></script><script>
-  document.addEventListener("DOMContentLoaded", () => {
-    
-    document.querySelectorAll(".mermaid").forEach((el) => {
-      el.dataset.original = el.innerHTML;
-    });
-
-    const theme = document.documentElement.classList.contains("dark") ? "dark" : "default";
-    mermaid.initialize({ startOnLoad: true, theme: theme });
-
-    let timeout;
-    new MutationObserver(() => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        const theme = document.documentElement.classList.contains("dark") ? "dark" : "default";
-        document.querySelectorAll(".mermaid").forEach((el) => {
-          
-          el.innerHTML = el.dataset.original;
-          el.removeAttribute("data-processed");
-        });
-        mermaid.initialize({ startOnLoad: true, theme: theme });
-        mermaid.init();
-      }, 150);
-    }).observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-  });
-</script>
-
+        <script defer src="/en.search.min.3d7b6ffb50e2cafaf5eae5b57ea40addb8ee727d0ad8a7f24bddc88ab7f7941f.js" integrity="sha256-PXtv&#43;1Diyvr16uW1fqQK3bjucn0K2KfyS93Iirf3lB8="></script>
   </body>
 </html>

@@ -8,31 +8,34 @@
 <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
-<title>host – RF Swift</title>
-  <meta name="description" content="rfswift hostConfigure host system for RF Swift container operations.
-Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER_ADDRESS] # Unload pulseaudio TCP module rfswift host audio unload The host command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers." /><link rel="canonical" href="https://rfswift.io/docs/commands/host/" itemprop="url" />
+<title>winusb – RF Swift</title>
+  <meta name="description" content="rfswift winusbManage USB devices on Windows hosts for WSL2 container passthrough.
+Synopsis # List USB devices on Windows host rfswift winusb list # Attach a USB device to WSL container rfswift winusb attach -i BUSID # Detach a USB device from WSL container rfswift winusb detach -i BUSID The winusb command manages USB device passthrough between a Windows host and WSL2 containers. It uses usbipd under the hood to bind and attach USB devices, making them accessible inside RF Swift containers running in WSL2." /><link rel="canonical" href="https://rfswift.io/docs/commands/winusb/" itemprop="url" />
 
-<meta property="og:title" content="host">
+<meta property="og:title" content="winusb">
 <meta
   property="og:description"
   content="
     
-      rfswift hostConfigure host system for RF Swift container operations.
+      rfswift winusbManage USB devices on Windows hosts for WSL2 container passthrough.
 Synopsis
     
 
-# Enable pulseaudio network access
-rfswift host audio enable [-s SERVER_ADDRESS]
+# List USB devices on Windows host
+rfswift winusb list
 
-# Unload pulseaudio TCP module
-rfswift host audio unload
+# Attach a USB device to WSL container
+rfswift winusb attach -i BUSID
+
+# Detach a USB device from WSL container
+rfswift winusb detach -i BUSID
   
     
 
   
 
 
-The host command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers.
+The winusb command manages USB device passthrough between a Windows host and WSL2 containers. It uses usbipd under the hood to bind and attach USB devices, making them accessible inside RF Swift containers running in WSL2.
     
   ">
 <meta
@@ -40,7 +43,7 @@ The host command configures the host system to support RF Swift containers, prim
   content="
     article
   ">
-<meta property="og:url" content="https://rfswift.io/docs/commands/host/"><meta property="article:section" content="docs">
+<meta property="og:url" content="https://rfswift.io/docs/commands/winusb/"><meta property="article:section" content="docs">
 
 
 <meta
@@ -49,15 +52,15 @@ The host command configures the host system to support RF Swift containers, prim
 
 
 
-  <meta itemprop="name" content="host">
-  <meta itemprop="description" content="rfswift hostConfigure host system for RF Swift container operations.
-Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER_ADDRESS] # Unload pulseaudio TCP module rfswift host audio unload The host command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers.">
+  <meta itemprop="name" content="winusb">
+  <meta itemprop="description" content="rfswift winusbManage USB devices on Windows hosts for WSL2 container passthrough.
+Synopsis # List USB devices on Windows host rfswift winusb list # Attach a USB device to WSL container rfswift winusb attach -i BUSID # Detach a USB device from WSL container rfswift winusb detach -i BUSID The winusb command manages USB device passthrough between a Windows host and WSL2 containers. It uses usbipd under the hood to bind and attach USB devices, making them accessible inside RF Swift containers running in WSL2.">
   <meta itemprop="dateModified" content="2026-03-11T20:26:15+01:00">
-  <meta itemprop="wordCount" content="704">
+  <meta itemprop="wordCount" content="874">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="host">
-  <meta name="twitter:description" content="rfswift hostConfigure host system for RF Swift container operations.
-Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER_ADDRESS] # Unload pulseaudio TCP module rfswift host audio unload The host command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers.">
+  <meta name="twitter:title" content="winusb">
+  <meta name="twitter:description" content="rfswift winusbManage USB devices on Windows hosts for WSL2 container passthrough.
+Synopsis # List USB devices on Windows host rfswift winusb list # Attach a USB device to WSL container rfswift winusb attach -i BUSID # Detach a USB device from WSL container rfswift winusb detach -i BUSID The winusb command manages USB device passthrough between a Windows host and WSL2 containers. It uses usbipd under the hood to bind and attach USB devices, making them accessible inside RF Swift containers running in WSL2.">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
     <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -595,58 +598,13 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   >log
     </a>
               
-            </li><li class="hx:flex hx:flex-col open"><a
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/host/"
     
   >host
     </a>
-  
-    <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
-              <a
-                href="#synopsis"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Synopsis</a>
-            </li>
-          <li>
-              <a
-                href="#subcommands"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Subcommands</a>
-            </li>
-          <li>
-              <a
-                href="#examples"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Examples</a>
-            </li>
-          <li>
-              <a
-                href="#how-audio-passthrough-works"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >How Audio Passthrough Works</a>
-            </li>
-          <li>
-              <a
-                href="#security-considerations"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Security Considerations</a>
-            </li>
-          <li>
-              <a
-                href="#troubleshooting"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Troubleshooting</a>
-            </li>
-          <li>
-              <a
-                href="#related-commands"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Related Commands</a>
-            </li>
-          </ul>
-  
               
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -688,13 +646,52 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   >realtime
     </a>
               
-            </li><li class="hx:flex hx:flex-col "><a
+            </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
     href="/docs/commands/winusb/"
     
   >winusb
     </a>
+  
+    <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
+              <a
+                href="#synopsis"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Synopsis</a>
+            </li>
+          <li>
+              <a
+                href="#subcommands"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Subcommands</a>
+            </li>
+          <li>
+              <a
+                href="#examples"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Examples</a>
+            </li>
+          <li>
+              <a
+                href="#how-it-works"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >How It Works</a>
+            </li>
+          <li>
+              <a
+                href="#troubleshooting"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Troubleshooting</a>
+            </li>
+          <li>
+              <a
+                href="#related-commands"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Related Commands</a>
+            </li>
+          </ul>
+  
               
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -1100,9 +1097,9 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   >log
     </a>
               
-            </li><li class="hx:flex hx:flex-col open"><a
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/host/"
     
   >host
@@ -1148,9 +1145,9 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   >realtime
     </a>
               
-            </li><li class="hx:flex hx:flex-col "><a
+            </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
     href="/docs/commands/winusb/"
     
   >winusb
@@ -1246,11 +1243,15 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#host-audio-enable">host audio enable
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#winusb-list">winusb list
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#host-audio-unload">host audio unload
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#winusb-attach">winusb attach
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#winusb-detach">winusb detach
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1258,31 +1259,27 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#basic-usage">Basic Usage
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#listing-usb-devices">Listing USB Devices
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#real-world-scenarios">Real-World Scenarios
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#attaching-a-usb-device">Attaching a USB Device
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#how-audio-passthrough-works">How Audio Passthrough Works
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#detaching-a-usb-device">Detaching a USB Device
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#pulseaudio-tcp-module">Pulseaudio TCP Module
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#typical-wsl2-sdr-workflow">Typical WSL2 SDR Workflow
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#environment-variable">Environment Variable
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#how-it-works">How It Works
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#security-considerations">Security Considerations
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#localhost-vs-network-binding">Localhost vs Network Binding
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#usbipd-integration">usbipd Integration
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1290,23 +1287,23 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#module-not-loading">Module Not Loading
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#usbipd-not-found">usbipd Not Found
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#port-already-in-use">Port Already in Use
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#device-not-showing-in-list">Device Not Showing in List
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#no-audio-in-container">No Audio in Container
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#attach-fails-with-permission-error">Attach Fails with Permission Error
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#permission-denied">Permission Denied
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#device-not-visible-in-container-after-attach">Device Not Visible in Container After Attach
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#module-wont-unload">Module Won’t Unload
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#device-disconnects-unexpectedly">Device Disconnects Unexpectedly
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1333,20 +1330,23 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
         </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         <div class="hx:whitespace-nowrap hx:transition-colors hx:min-w-[24px] hx:overflow-hidden hx:text-ellipsis hx:hover:text-gray-900 hx:dark:hover:text-gray-100">
           <a href="/docs/commands/">📘 Commands</a>
-        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">host</div>
+        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">winusb</div>
   </div>
 
         <div class="content">
-          <h1>host</h1>
-          <h1>rfswift host</h1><p>Configure host system for RF Swift container operations.</p>
+          <h1>winusb</h1>
+          <h1>rfswift winusb</h1><p>Manage USB devices on Windows hosts for WSL2 container passthrough.</p>
 <h2>Synopsis<span class="hx:absolute hx:-mt-20" id="synopsis"></span>
     <a href="#synopsis" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Enable pulseaudio network access</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> <span class="o">[</span>-s SERVER_ADDRESS<span class="o">]</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List USB devices on Windows host</span>
+</span></span><span class="line"><span class="cl">rfswift winusb list
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Unload pulseaudio TCP module</span>
-</span></span><span class="line"><span class="cl">rfswift host audio unload</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Attach a USB device to WSL container</span>
+</span></span><span class="line"><span class="cl">rfswift winusb attach -i BUSID
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Detach a USB device from WSL container</span>
+</span></span><span class="line"><span class="cl">rfswift winusb detach -i BUSID</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1356,40 +1356,92 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<p>The <code>host</code> command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers.</p>
+<p>The <code>winusb</code> command manages USB device passthrough between a Windows host and WSL2 containers. It uses <code>usbipd</code> under the hood to bind and attach USB devices, making them accessible inside RF Swift containers running in WSL2.</p>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
+
+  <div class="hx:w-full hx:min-w-0 hx:leading-7">
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0">This command is <strong>Windows/WSL2 only</strong>. On native Linux, use <a href="/docs/commands/bindings/"><code>bindings</code></a> to manage USB device access instead.</div>
+  </div>
+</div>
+
 <hr>
 <h2>Subcommands<span class="hx:absolute hx:-mt-20" id="subcommands"></span>
-    <a href="#subcommands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>host audio enable<span class="hx:absolute hx:-mt-20" id="host-audio-enable"></span>
-    <a href="#host-audio-enable" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Enable pulseaudio network module for container audio access.</p>
+    <a href="#subcommands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><table>
+  <thead>
+      <tr>
+          <th>Subcommand</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>winusb list</code></td>
+          <td>List all USB devices connected to the Windows host</td>
+      </tr>
+      <tr>
+          <td><code>winusb attach</code></td>
+          <td>Attach a USB device from the Windows host to the WSL container</td>
+      </tr>
+      <tr>
+          <td><code>winusb detach</code></td>
+          <td>Detach a USB device from the WSL container</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3>winusb list<span class="hx:absolute hx:-mt-20" id="winusb-list"></span>
+    <a href="#winusb-list" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>List all USB devices connected to the Windows host, showing bus IDs, device IDs, vendor/product IDs, and descriptions.</p>
+<p><strong>No additional options.</strong></p>
+<h3>winusb attach<span class="hx:absolute hx:-mt-20" id="winusb-attach"></span>
+    <a href="#winusb-attach" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Attach a USB device from the Windows host to the WSL2 container by bus ID.</p>
 <p><strong>Options:</strong></p>
 <table>
   <thead>
       <tr>
           <th>Flag</th>
           <th>Description</th>
-          <th>Default</th>
+          <th>Required</th>
           <th>Example</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td><code>-s, --pulseserver STRING</code></td>
-          <td>Pulse server address</td>
-          <td><code>tcp:127.0.0.1:34567</code></td>
-          <td><code>-s tcp:127.0.0.1:34567</code></td>
+          <td><code>-i, --busid STRING</code></td>
+          <td>Bus ID of the USB device to attach</td>
+          <td>Yes</td>
+          <td><code>-i 2-3</code></td>
       </tr>
   </tbody>
 </table>
-<h3>host audio unload<span class="hx:absolute hx:-mt-20" id="host-audio-unload"></span>
-    <a href="#host-audio-unload" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Unload the TCP module from pulseaudio server.</p>
-<p><strong>No additional options.</strong></p>
+<h3>winusb detach<span class="hx:absolute hx:-mt-20" id="winusb-detach"></span>
+    <a href="#winusb-detach" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Detach a USB device from the WSL2 container, returning it to the Windows host.</p>
+<p><strong>Options:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Flag</th>
+          <th>Description</th>
+          <th>Required</th>
+          <th>Example</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>-i, --busid STRING</code></td>
+          <td>Bus ID of the USB device to detach</td>
+          <td>Yes</td>
+          <td><code>-i 2-3</code></td>
+      </tr>
+  </tbody>
+</table>
 <hr>
 <h2>Examples<span class="hx:absolute hx:-mt-20" id="examples"></span>
-    <a href="#examples" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Basic Usage<span class="hx:absolute hx:-mt-20" id="basic-usage"></span>
-    <a href="#basic-usage" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Enable pulseaudio with default settings:</strong></p>
+    <a href="#examples" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Listing USB Devices<span class="hx:absolute hx:-mt-20" id="listing-usb-devices"></span>
+    <a href="#listing-usb-devices" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>List all available USB devices:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host audio enable</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift winusb list</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1399,10 +1451,12 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<p><strong>Enable with custom address:</strong></p>
+<p><strong>Example output:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:192.168.1.100:34567</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><pre><code>USB Devices:
+BusID: 1-2, DeviceID: 0bda:2838, VendorID: 0bda, ProductID: 2838, Description: RTL2838UHIDIR
+BusID: 2-3, DeviceID: 1d50:6089, VendorID: 1d50, ProductID: 6089, Description: HackRF One</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1412,10 +1466,15 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<p><strong>Unload pulseaudio module:</strong></p>
+<h3>Attaching a USB Device<span class="hx:absolute hx:-mt-20" id="attaching-a-usb-device"></span>
+    <a href="#attaching-a-usb-device" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Attach an SDR device to the WSL container:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host audio unload</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># First, find the bus ID</span>
+</span></span><span class="line"><span class="cl">rfswift winusb list
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Attach using the bus ID</span>
+</span></span><span class="line"><span class="cl">rfswift winusb attach -i 2-3</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1425,64 +1484,15 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<h3>Real-World Scenarios<span class="hx:absolute hx:-mt-20" id="real-world-scenarios"></span>
-    <a href="#real-world-scenarios" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Setup for SDR with audio:</strong></p>
+<p><strong>Attach and use in a container:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Enable audio on host</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Attach device</span>
+</span></span><span class="line"><span class="cl">rfswift winusb attach -i 1-2
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Create container with audio</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_audio <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -p tcp:127.0.0.1:34567
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Audio now works in container</span>
-</span></span><span class="line"><span class="cl">rfswift <span class="nb">exec</span> -c sdr_audio
-</span></span><span class="line"><span class="cl">gqrx
-</span></span><span class="line"><span class="cl"><span class="c1"># Audio output works!</span>
-</span></span><span class="line"><span class="cl">exit</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Remote audio access:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Enable on specific interface</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:192.168.1.100:34567
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Containers on network can access audio</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Use with -p flag when creating container</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Troubleshooting audio:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Unload module</span>
-</span></span><span class="line"><span class="cl">rfswift host audio unload
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Wait a moment</span>
-</span></span><span class="line"><span class="cl">sleep <span class="m">2</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Re-enable</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Test audio in container</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Enter container and use</span>
 </span></span><span class="line"><span class="cl">rfswift <span class="nb">exec</span> -c sdr_work
-</span></span><span class="line"><span class="cl">speaker-test -c <span class="m">2</span>
-</span></span><span class="line"><span class="cl">exit</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Device is now available inside the container</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1492,13 +1502,51 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<p><strong>Clean shutdown:</strong></p>
+<h3>Detaching a USB Device<span class="hx:absolute hx:-mt-20" id="detaching-a-usb-device"></span>
+    <a href="#detaching-a-usb-device" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Return a device to the Windows host:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Before stopping RF Swift work</span>
-</span></span><span class="line"><span class="cl">rfswift host audio unload
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift winusb detach -i 2-3</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p><strong>Detach before unplugging:</strong></p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Always detach before physically removing the device</span>
+</span></span><span class="line"><span class="cl">rfswift winusb detach -i 1-2</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Typical WSL2 SDR Workflow<span class="hx:absolute hx:-mt-20" id="typical-wsl2-sdr-workflow"></span>
+    <a href="#typical-wsl2-sdr-workflow" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1. List devices to find your SDR</span>
+</span></span><span class="line"><span class="cl">rfswift winusb list
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># This cleanly removes the module</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. Attach the SDR to WSL</span>
+</span></span><span class="line"><span class="cl">rfswift winusb attach -i 1-2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. Run an RF Swift container</span>
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_work
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 4. Work with the SDR inside the container</span>
+</span></span><span class="line"><span class="cl">rfswift <span class="nb">exec</span> -c sdr_work
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 5. When done, detach the device</span>
+</span></span><span class="line"><span class="cl">rfswift winusb detach -i 1-2</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1509,92 +1557,31 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
 </div>
 </div>
 <hr>
-<h2>How Audio Passthrough Works<span class="hx:absolute hx:-mt-20" id="how-audio-passthrough-works"></span>
-    <a href="#how-audio-passthrough-works" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Pulseaudio TCP Module<span class="hx:absolute hx:-mt-20" id="pulseaudio-tcp-module"></span>
-    <a href="#pulseaudio-tcp-module" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>When you enable audio:</p>
+<h2>How It Works<span class="hx:absolute hx:-mt-20" id="how-it-works"></span>
+    <a href="#how-it-works" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>usbipd Integration<span class="hx:absolute hx:-mt-20" id="usbipd-integration"></span>
+    <a href="#usbipd-integration" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>The <code>winusb</code> command relies on <a href="https://github.com/dorssel/usbipd-win"target="_blank" rel="noopener">usbipd-win</a>, which must be installed on the Windows host. The workflow is:</p>
 <ol>
-<li><strong>Load TCP module</strong>: Pulseaudio loads <code>module-native-protocol-tcp</code></li>
-<li><strong>Bind to port</strong>: Listens on specified address (default: 127.0.0.1:34567)</li>
-<li><strong>Container access</strong>: Containers connect via <code>PULSE_SERVER</code> environment variable</li>
-<li><strong>Audio streams</strong>: Audio from container apps plays on host</li>
+<li><strong>List</strong> queries <code>usbipd</code> for all connected USB devices</li>
+<li><strong>Attach</strong> binds the device via <code>usbipd</code> and forwards it over USB/IP to WSL2</li>
+<li><strong>Detach</strong> releases the device from WSL2 and returns it to the Windows host</li>
 </ol>
 <pre class="mermaid hx:mt-6">
   graph LR
-    A[Container App] --&gt;|PULSE_SERVER| B[TCP:34567]
-    B --&gt;|Network| C[Host Pulseaudio]
-    C --&gt;|Audio| D[Host Speakers]
-</pre><h3>Environment Variable<span class="hx:absolute hx:-mt-20" id="environment-variable"></span>
-    <a href="#environment-variable" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Containers need <code>PULSE_SERVER</code> set:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Automatically set by rfswift run with -p flag</span>
-</span></span><span class="line"><span class="cl"><span class="nv">PULSE_SERVER</span><span class="o">=</span>tcp:127.0.0.1:34567
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Container applications use this to find pulse server</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<hr>
-<h2>Security Considerations<span class="hx:absolute hx:-mt-20" id="security-considerations"></span>
-    <a href="#security-considerations" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Localhost vs Network Binding<span class="hx:absolute hx:-mt-20" id="localhost-vs-network-binding"></span>
-    <a href="#localhost-vs-network-binding" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Localhost (Secure):</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Only local containers can access</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:127.0.0.1:34567</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Network Binding (Less Secure):</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Any machine on network can access</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:0.0.0.0:34567
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or specific interface</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:192.168.1.100:34567</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<hr>
+    A[Windows USB Device] --&gt;|usbipd bind + attach| B[WSL2 Kernel]
+    B --&gt;|/dev/bus/usb| C[RF Swift Container]
+    C --&gt;|detach| A
+</pre><hr>
 <h2>Troubleshooting<span class="hx:absolute hx:-mt-20" id="troubleshooting"></span>
-    <a href="#troubleshooting" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Module Not Loading<span class="hx:absolute hx:-mt-20" id="module-not-loading"></span>
-    <a href="#module-not-loading" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> <code>rfswift host audio enable</code> fails</p>
+    <a href="#troubleshooting" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>usbipd Not Found<span class="hx:absolute hx:-mt-20" id="usbipd-not-found"></span>
+    <a href="#usbipd-not-found" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> <code>winusb</code> commands fail because <code>usbipd</code> is not installed</p>
 <p><strong>Solutions:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if pulseaudio is running</span>
-</span></span><span class="line"><span class="cl">ps aux <span class="p">|</span> grep pulseaudio
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Install usbipd-win on Windows (run in PowerShell as Administrator)</span>
+</span></span><span class="line"><span class="cl"><span class="n">winget</span> <span class="n">install</span> <span class="p">-</span><span class="n">-interactive</span> <span class="p">-</span><span class="o">-exact</span> <span class="n">dorssel</span><span class="p">.</span><span class="nb">usbipd-win</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Start pulseaudio if needed</span>
-</span></span><span class="line"><span class="cl">pulseaudio --start
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check for conflicts</span>
-</span></span><span class="line"><span class="cl">pactl list modules <span class="p">|</span> grep tcp
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Kill existing modules</span>
-</span></span><span class="line"><span class="cl">pactl unload-module module-native-protocol-tcp
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Try again</span>
-</span></span><span class="line"><span class="cl">rfswift host audio enable</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c"># Verify installation</span>
+</span></span><span class="line"><span class="cl"><span class="n">usbipd</span> <span class="p">-</span><span class="n">-version</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1604,19 +1591,17 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<h3>Port Already in Use<span class="hx:absolute hx:-mt-20" id="port-already-in-use"></span>
-    <a href="#port-already-in-use" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Port 34567 already in use</p>
+<h3>Device Not Showing in List<span class="hx:absolute hx:-mt-20" id="device-not-showing-in-list"></span>
+    <a href="#device-not-showing-in-list" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> <code>winusb list</code> does not show your USB device</p>
 <p><strong>Solutions:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check what&#39;s using the port</span>
-</span></span><span class="line"><span class="cl">sudo lsof -i :34567
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Ensure the device is physically connected to the Windows host</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Check Windows Device Manager for the device</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use different port</span>
-</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:127.0.0.1:34568
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Update container creation</span>
-</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n work -p tcp:127.0.0.1:34568</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># On the Windows side, verify usbipd can see it</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># (run in PowerShell)</span>
+</span></span><span class="line"><span class="cl">usbipd list</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1626,23 +1611,17 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<h3>No Audio in Container<span class="hx:absolute hx:-mt-20" id="no-audio-in-container"></span>
-    <a href="#no-audio-in-container" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Container has no audio output</p>
+<h3>Attach Fails with Permission Error<span class="hx:absolute hx:-mt-20" id="attach-fails-with-permission-error"></span>
+    <a href="#attach-fails-with-permission-error" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> <code>winusb attach</code> returns a permission error</p>
 <p><strong>Solutions:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Verify module is loaded</span>
-</span></span><span class="line"><span class="cl">pactl list modules <span class="p">|</span> grep module-native-protocol-tcp
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># usbipd requires Administrator privileges on Windows</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Run your WSL terminal as Administrator</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check PULSE_SERVER in container</span>
-</span></span><span class="line"><span class="cl">rfswift <span class="nb">exec</span> -c container
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$PULSE_SERVER</span>
-</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Should show: tcp:127.0.0.1:34567</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If not set, recreate container with -p flag</span>
-</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n work -p tcp:127.0.0.1:34567</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Alternatively, ensure the usbipd service is running</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># (run in PowerShell as Administrator)</span>
+</span></span><span class="line"><span class="cl">sc query usbipd</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1652,23 +1631,21 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<h3>Permission Denied<span class="hx:absolute hx:-mt-20" id="permission-denied"></span>
-    <a href="#permission-denied" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Cannot load module</p>
+<h3>Device Not Visible in Container After Attach<span class="hx:absolute hx:-mt-20" id="device-not-visible-in-container-after-attach"></span>
+    <a href="#device-not-visible-in-container-after-attach" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Device is attached but not visible inside the container</p>
 <p><strong>Solutions:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Run as your user (not root)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Pulseaudio runs as user, not root</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if the device appears in WSL</span>
+</span></span><span class="line"><span class="cl">lsusb
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check pulseaudio ownership</span>
-</span></span><span class="line"><span class="cl">ps aux <span class="p">|</span> grep pulseaudio
+</span></span><span class="line"><span class="cl"><span class="c1"># If visible in WSL but not in the container, add a device binding</span>
+</span></span><span class="line"><span class="cl">rfswift bindings add -d -c sdr_work <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/bus/usb <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t /dev/bus/usb
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If running as different user, restart</span>
-</span></span><span class="line"><span class="cl">pulseaudio --kill
-</span></span><span class="line"><span class="cl">pulseaudio --start
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then load module</span>
-</span></span><span class="line"><span class="cl">rfswift host audio enable</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># You may also need cgroup rules</span>
+</span></span><span class="line"><span class="cl">rfswift cgroups add -c sdr_work -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1678,19 +1655,20 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   </button>
 </div>
 </div>
-<h3>Module Won&rsquo;t Unload<span class="hx:absolute hx:-mt-20" id="module-wont-unload"></span>
-    <a href="#module-wont-unload" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> <code>unload</code> command fails</p>
+<h3>Device Disconnects Unexpectedly<span class="hx:absolute hx:-mt-20" id="device-disconnects-unexpectedly"></span>
+    <a href="#device-disconnects-unexpectedly" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> USB device disconnects from WSL during use</p>
 <p><strong>Solutions:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Force unload with pactl</span>
-</span></span><span class="line"><span class="cl">pactl unload-module module-native-protocol-tcp
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Re-attach the device</span>
+</span></span><span class="line"><span class="cl">rfswift winusb attach -i 1-2
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or restart pulseaudio</span>
-</span></span><span class="line"><span class="cl">pulseaudio --kill
-</span></span><span class="line"><span class="cl">pulseaudio --start
+</span></span><span class="line"><span class="cl"><span class="c1"># If the issue persists, check Windows power management:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Open Device Manager &gt; USB devices &gt; Properties &gt; Power Management</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Uncheck &#34;Allow the computer to turn off this device to save power&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Module will be gone after restart</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Ensure WSL2 kernel supports USB/IP</span>
+</span></span><span class="line"><span class="cl">wsl --update</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1703,16 +1681,16 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
 <hr>
 <h2>Related Commands<span class="hx:absolute hx:-mt-20" id="related-commands"></span>
     <a href="#related-commands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
-<li><a href="/docs/commands/run/"><code>run</code></a> - Create containers with audio (<code>-p</code> flag)</li>
-<li><a href="/docs/commands/exec/"><code>exec</code></a> - Test audio in containers</li>
-<li><a href="/docs/commands/stop/"><code>stop</code></a> - Stop containers before unloading</li>
+<li><a href="/docs/commands/run/"><code>run</code></a> - Create containers to use with attached USB devices</li>
+<li><a href="/docs/commands/bindings/"><code>bindings</code></a> - Manage device bindings inside containers (Linux and WSL2)</li>
+<li><a href="/docs/commands/host/"><code>host</code></a> - Configure host system settings</li>
 </ul>
 <hr>
-<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200">
-  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">🔊</div></div>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Audio for SDR</strong>: The <code>host audio</code> commands enable audio passthrough from containers to your host speakers. Essential for SDR applications like GQRX that need audio output!</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Prerequisites</strong>: The <code>winusb</code> command requires <a href="https://github.com/dorssel/usbipd-win"target="_blank" rel="noopener">usbipd-win</a> to be installed on the Windows host. Install it via <code>winget install dorssel.usbipd-win</code> in an elevated PowerShell prompt.</div>
   </div>
 </div>
 
@@ -1720,7 +1698,7 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Run as User</strong>: Always run <code>rfswift host audio enable</code> as your regular user, NOT as root. Pulseaudio runs as your user and needs proper permissions.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Windows/WSL2 Only</strong>: This command is exclusively for Windows hosts running RF Swift through WSL2. On native Linux, USB devices are directly accessible and should be passed to containers using the <a href="/docs/commands/bindings/"><code>bindings</code></a> command instead.</div>
   </div>
 </div>
 
@@ -1728,7 +1706,7 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Container Flag Required</strong>: Don&rsquo;t forget the <code>-p tcp:127.0.0.1:34567</code> flag when creating containers. Without it, containers won&rsquo;t know where to find the pulseaudio server!</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Administrator Access</strong>: Attaching and detaching USB devices via <code>usbipd</code> typically requires Administrator privileges on Windows. Run your terminal as Administrator if you encounter permission errors.</div>
   </div>
 </div>
 
@@ -1737,14 +1715,14 @@ Synopsis # Enable pulseaudio network access rfswift host audio enable [-s SERVER
         
     <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-11T20:26:15.000Z">March 11, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
-        href="/docs/commands/log/"
-        title="log"
+        href="/docs/commands/realtime/"
+        title="realtime"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:pr-4 hx:rtl:pl-4"
-      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>log</a><a
-        href="/docs/commands/update/"
-        title="update"
+      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>realtime</a><a
+        href="/docs/commands/doctor/"
+        title="doctor"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:ml-auto hx:ltr:pl-4 hx:ltr:text-right hx:rtl:mr-auto hx:rtl:pr-4 hx:rtl:text-left"
-      >update<svg class="hx:inline hx:h-5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
+      >doctor<svg class="hx:inline hx:h-5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
         
       </main>
     </article>
