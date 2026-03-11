@@ -29,6 +29,10 @@ The `remove` command permanently deletes a container from your system. This oper
 |------|-------------|----------|---------|
 | `-c, --container STRING` | Container name or ID to remove | Yes | `-c my_container` |
 
+{{< callout type="info" >}}
+**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable container picker listing all containers with their name, ID, image, and state. A confirmation prompt is shown before deletion.
+{{< /callout >}}
+
 ---
 
 ## Examples

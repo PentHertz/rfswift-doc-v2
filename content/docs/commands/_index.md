@@ -16,6 +16,10 @@ Complete reference for all RF Swift commands. Each command has its own dedicated
 **Quick Help**: Use `rfswift [command] --help` for instant command help.
 {{< /callout >}}
 
+{{< callout emoji="🧙" >}}
+**Interactive Mode**: Most RF Swift commands feature interactive TUI pickers when run without required flags in a terminal. For example, `rfswift run` (without `-i` and `-n`) launches a guided wizard, and `rfswift exec` (without `-c`) shows a container picker. All interactive features gracefully degrade to standard CLI flags when scripting or piping.
+{{< /callout >}}
+
 ---
 
 ## 🔌 Global Flags
@@ -85,9 +89,18 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
 
 {{< cards >}}
   {{< card link="host" title="host" icon="desktop-computer" subtitle="Host system configuration" >}}
+  {{< card link="doctor" title="doctor" icon="shield-check" subtitle="Diagnose system environment" >}}
   {{< card link="update" title="update" icon="refresh" subtitle="Update RF Swift binary" >}}
   {{< card link="completion" title="completion" icon="code" subtitle="Generate shell completion scripts" >}}
   {{< card link="install" title="install" icon="puzzle" subtitle="Install helper scripts" >}}
+{{< /cards >}}
+
+### 🎚️ Performance & Resources
+
+{{< cards >}}
+  {{< card link="realtime" title="realtime" icon="lightning-bolt" subtitle="Enable/disable realtime SDR mode" >}}
+  {{< card link="ulimits" title="ulimits" icon="adjustments" subtitle="Manage container resource limits" >}}
+  {{< card link="engine" title="engine" icon="cog" subtitle="Show or set container engine" >}}
 {{< /cards >}}
 
 ### 🛠️ Utilities
@@ -96,6 +109,12 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
   {{< card link="last" title="last" icon="clock" subtitle="Show recently used containers" >}}
   {{< card link="cleanup" title="cleanup" icon="trash" subtitle="Clean up old containers and images" >}}
   {{< card link="upgrade" title="upgrade" icon="arrow-up" subtitle="Upgrade container to new image" >}}
+{{< /cards >}}
+
+### 🪟 Windows (WSL2)
+
+{{< cards >}}
+  {{< card link="winusb" title="winusb" icon="device-mobile" subtitle="Manage USB devices in WSL2" >}}
 {{< /cards >}}
 
 ---
@@ -113,7 +132,15 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
 | `rfswift images pull -i IMAGE` | Download image |
 | `rfswift build -r RECIPE.yaml` | Build from recipe |
 | `rfswift log replay -i FILE.cast` | Replay session |
+| `rfswift run --vpn tailscale` | Create container with VPN |
+| `rfswift exec --vpn tailscale` | Enter container with VPN |
+| `rfswift --engine podman run` | Use Podman engine |
+| `rfswift doctor` | Diagnose environment |
 | `rfswift update` | Update RF Swift |
+| `rfswift realtime enable -c CONTAINER` | Enable realtime SDR mode |
+| `rfswift images versions` | List available image versions |
+| `rfswift cleanup all --dry-run` | Preview cleanup actions |
+| `rfswift winusb list` | List USB devices (Windows/WSL2) |
 
 ---
 

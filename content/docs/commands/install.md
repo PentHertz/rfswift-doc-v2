@@ -26,6 +26,10 @@ The `install` command executes predefined installation functions inside containe
 | `-c, --container STRING` | Container ID or name | ✅ Yes | `-c my_container` |
 | `-i, --install STRING` | Function name to execute | ✅ Yes | `-i sdrpp_soft_install` |
 
+{{< callout type="info" >}}
+**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable container picker to select the installation target.
+{{< /callout >}}
+
 ---
 
 ## Examples

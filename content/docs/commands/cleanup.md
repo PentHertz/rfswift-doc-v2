@@ -7,27 +7,54 @@ next: /docs/commands/log
 
 # rfswift cleanup
 
-Automated cleanup of Docker resources to free disk space.
+Clean up containers and images to free disk space.
 
 ## Synopsis
 
 ```bash
-rfswift cleanup [OPTIONS]
+rfswift cleanup <subcommand> [OPTIONS]
 ```
 
-The `cleanup` command removes unused Docker resources including stopped containers, dangling images, unused volumes, and build cache. This helps maintain disk space and keep your Docker environment clean.
+The `cleanup` command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once.
 
 ---
 
-## Options
+## Subcommands
+
+| Subcommand | Description |
+|------------|-------------|
+| `all` | Remove both old containers and images |
+| `containers` | Remove old containers only |
+| `images` | Remove old images only |
+
+---
+
+## Common Options
+
+These options are available on **all** subcommands (`all`, `containers`, `images`):
 
 | Flag | Description | Default | Example |
 |------|-------------|---------|---------|
-| `--all` | Remove all unused resources | false | `--all` |
-| `--containers` | Remove stopped containers only | false | `--containers` |
-| `--images` | Remove unused images only | false | `--images` |
-| `--volumes` | Remove unused volumes only | false | `--volumes` |
-| `--force` | Skip confirmation prompts | false | `--force` |
+| `--older-than` | Remove items older than duration | `""` | `--older-than 7d` |
+| `--force` | Don't ask for confirmation | `false` | `--force` |
+| `--dry-run` | Show what would be deleted without actually deleting | `false` | `--dry-run` |
+
+The `--older-than` flag accepts durations such as `24h`, `7d`, `1m`, and `1y`.
+
+## Subcommand-Specific Options
+
+### containers
+
+| Flag | Description | Default | Example |
+|------|-------------|---------|---------|
+| `--stopped` | Only remove stopped containers | `false` | `--stopped` |
+
+### images
+
+| Flag | Description | Default | Example |
+|------|-------------|---------|---------|
+| `--dangling` | Only remove dangling (untagged) images | `false` | `--dangling` |
+| `--prune-children` | Also remove dependent child images | `false` | `--prune-children` |
 
 ---
 
@@ -35,38 +62,63 @@ The `cleanup` command removes unused Docker resources including stopped containe
 
 ### Basic Usage
 
-**Interactive cleanup (asks confirmation):**
+**Clean both containers and images:**
 ```bash
-rfswift cleanup
+rfswift cleanup all
+```
+
+**Preview what would be deleted:**
+```bash
+rfswift cleanup all --dry-run
 ```
 
 **Full cleanup without prompts:**
 ```bash
-rfswift cleanup --all --force
+rfswift cleanup all --force
 ```
 
-**Remove stopped containers only:**
+**Remove containers only:**
 ```bash
-rfswift cleanup --containers
+rfswift cleanup containers
 ```
 
-**Remove unused images only:**
+**Remove images only:**
 ```bash
-rfswift cleanup --images
+rfswift cleanup images
+```
+
+### Filtering by Age
+
+**Remove containers older than 7 days:**
+```bash
+rfswift cleanup containers --older-than 7d
+```
+
+**Remove images older than 1 month:**
+```bash
+rfswift cleanup images --older-than 1m
+```
+
+**Remove all resources older than 24 hours:**
+```bash
+rfswift cleanup all --older-than 24h --force
 ```
 
 ### Real-World Scenarios
 
 **Weekly maintenance:**
 ```bash
-# Clean up stopped containers and dangling images
-rfswift cleanup --containers --images
+# Remove stopped containers older than a week
+rfswift cleanup containers --stopped --older-than 7d --force
+
+# Remove dangling images
+rfswift cleanup images --dangling --force
 ```
 
 **Before major operations:**
 ```bash
 # Free space before pulling large images
-rfswift cleanup --all
+rfswift cleanup all --force
 
 # Then pull new images
 rfswift images pull -i penthertz/rfswift_noble:sdr_full
@@ -75,54 +127,26 @@ rfswift images pull -i penthertz/rfswift_noble:sdr_full
 **Emergency disk space recovery:**
 ```bash
 # Aggressive cleanup when disk is full
-rfswift cleanup --all --force
+rfswift cleanup all --force
 
 # Check space recovered
 df -h
 ```
 
-**Selective cleanup:**
+**Selective image cleanup:**
 ```bash
-# Keep running containers, remove images only
-rfswift cleanup --images --force
+# Remove only dangling images and their children
+rfswift cleanup images --dangling --prune-children --force
 ```
 
-**Post-development cleanup:**
+**Safe preview before cleanup:**
 ```bash
-# After testing, clean up test containers and images
-rfswift cleanup --containers --images
+# See what would be removed without deleting anything
+rfswift cleanup all --dry-run
+
+# If the list looks right, run for real
+rfswift cleanup all --force
 ```
-
----
-
-## What Gets Cleaned Up
-
-### Cleanup Targets
-
-| Resource | Description | When Removed |
-|----------|-------------|--------------|
-| **Stopped containers** | Containers not running | Always safe |
-| **Dangling images** | Untagged images (`<none>:<none>`) | Always safe |
-| **Unused images** | Images not used by any container | Safe if not needed |
-| **Build cache** | Docker build layer cache | Safe but slows rebuilds |
-| **Networks** | Unused custom networks | Usually safe |
-
-### Safety Levels
-
-**Safe to remove:**
-- ✅ Stopped containers (can recreate)
-- ✅ Dangling images (no tag, no use)
-- ✅ Build cache (recreated on next build)
-- ✅ Unused networks
-
-**Caution required:**
-- ⚠️ Unused images (may need later)
-- ⚠️ Unused volumes (may contain data)
-
-**Never removed:**
-- ❌ Running containers
-- ❌ Images used by running containers
-- ❌ Volumes attached to containers
 
 ---
 
@@ -130,11 +154,11 @@ rfswift cleanup --containers --images
 
 ### Conservative Strategy
 
-Remove only clearly unused resources:
+Remove only stopped containers and dangling images:
 
 ```bash
-# Stopped containers only
-rfswift cleanup --containers --force
+rfswift cleanup containers --stopped --force
+rfswift cleanup images --dangling --force
 ```
 
 **Good for:**
@@ -144,11 +168,10 @@ rfswift cleanup --containers --force
 
 ### Balanced Strategy
 
-Remove most unused resources:
+Remove older unused resources:
 
 ```bash
-# Containers and images
-rfswift cleanup --all
+rfswift cleanup all --older-than 7d --force
 ```
 
 **Good for:**
@@ -161,8 +184,7 @@ rfswift cleanup --all
 Remove everything unused:
 
 ```bash
-# Full cleanup
-rfswift cleanup --all --force
+rfswift cleanup all --force
 ```
 
 **Good for:**
@@ -203,14 +225,14 @@ truncate -s 0 /var/lib/docker/containers/*/*-json.log
 **Solutions:**
 ```bash
 # Use sudo
-sudo rfswift cleanup --all --force
+sudo rfswift cleanup all --force
 
 # Or add user to docker group
 sudo usermod -aG docker $USER
 newgrp docker
 
 # Then retry
-rfswift cleanup --all --force
+rfswift cleanup all --force
 ```
 
 ### Important Container Removed
@@ -244,13 +266,13 @@ rfswift export container -c important -o backup.tar.gz
 ---
 
 {{< callout emoji="🧹" >}}
-**Regular Maintenance**: Schedule regular cleanup with `rfswift cleanup --containers --images --force` to prevent disk space issues. Daily or weekly cleanup keeps your system healthy!
+**Regular Maintenance**: Schedule regular cleanup with `rfswift cleanup all --older-than 7d --force` to prevent disk space issues. Daily or weekly cleanup keeps your system healthy!
 {{< /callout >}}
 
 {{< callout type="warning" >}}
-**Data Loss Risk**: The `--volumes` flag removes ALL unused volumes, which may contain important data. Always check volumes before removing them, and backup any important data!
+**Use Dry Run First**: Before running a large cleanup, use `--dry-run` to preview what will be deleted. This helps avoid accidentally removing resources you still need.
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**Safe Defaults**: Without flags, `cleanup` removes stopped containers and dangling images only - the safest cleanup. Use `--all` for more aggressive cleanup when you need more space.
+**Targeted Cleanup**: Use the `containers` and `images` subcommands with their specific flags (`--stopped`, `--dangling`, `--prune-children`) for precise control over what gets removed.
 {{< /callout >}}

@@ -14,6 +14,7 @@ Radio frequency and hardware security work inherently requires elevated privileg
 - 🔍 Maintain isolation between different testing environments
 - 🧰 Allow tools to function correctly with minimum necessary privileges
 - 📹 Safeguard sensitive data in session recordings
+- 🖥️ Secure remote desktop connections exposed on the network
 ## Key Security Areas
 {{< cards >}}
   {{< card link="guide_lines" title="Security Guidelines" icon="shield-check" subtitle="Essential security practices for RF Swift" >}}
@@ -25,6 +26,10 @@ Radio frequency and hardware security work inherently requires elevated privileg
 | Minimal Capabilities | `rfswift run -a NET_ADMIN` | ✅ Recommended: Only add required capabilities |
 | Network Isolation | `rfswift run -t bridge` | ✅ Recommended: Isolates container network |
 | Device Restrictions | `rfswift run -g "c 189:* rwm"` | ✅ Recommended: Limit device access |
+| Desktop on localhost | `rfswift run --desktop` | ✅ Safe: Only reachable from host |
+| Desktop with password + SSL | `--desktop-pass "pw" --desktop-ssl` | ✅ Recommended: Encrypted and authenticated |
+| Desktop without password on network | `--desktop-config "http:0.0.0.0:6080"` | ⚠️ Critical Risk: Unauthenticated remote access |
+| Disable X11 for desktop | `rfswift run --desktop --no-x11` | ✅ Recommended: Removes X11 socket exposure |
 | Session Recording | `rfswift run --record` | ⚠️ Data Sensitivity: May capture credentials and sensitive information |
 | Privileged Mode | `rfswift run -u 1` | ⚠️ High Risk: Grants extensive privileges |
 | Default Network | `rfswift run -t host` | ⚠️ Medium Risk: Shares host network stack |
@@ -141,6 +146,7 @@ For regulated environments:
 - 🧩 **Separate Workloads**: Use dedicated containers for each assessment
 - 🚪 **Remove When Done**: Delete containers that are no longer needed
 - 🔒 **Monitor Usage**: Watch for unusual container behavior
+- 🖥️ **Secure Desktops**: Always use `--desktop-pass` and `--desktop-ssl` when exposing VNC on the network
 - 📹 **Secure Recordings**: Protect session recordings like sensitive assessment data
 - 🗑️ **Clean Up**: Delete recordings when they are no longer needed
 - 🔐 **Encrypt Storage**: Use encrypted filesystems for recording storage

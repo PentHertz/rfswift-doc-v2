@@ -65,7 +65,7 @@ Download the latest RF Swift static binary from GitHub releases:
 
 ```bash
 # Download latest release for x86_64
-wget https://github.com/PentHertz/RF-Swift/releases/download/v0.6.5-rc4/rfswift_Linux_x86_64.tar.gz
+wget https://github.com/PentHertz/RF-Swift/releases/download/v2.0.0/rfswift_Linux_x86_64.tar.gz
 
 tar -zvxf rfswift_Linux_x86_64.tar.gz
 
@@ -78,14 +78,14 @@ chmod +x rfswift
 
 **For ARM64 systems:**
 ```bash
-wget https://github.com/PentHertz/RF-Swift/releases/download/v0.6.5-rc4/rfswift_Linux_arm64.tar.gz
+wget https://github.com/PentHertz/RF-Swift/releases/download/v2.0.0/rfswift_Linux_arm64.tar.gz
 tar -zvxf rfswift_Linux_arm64.tar.gz
 chmod +x rfswift
 ```
 
 **For RISCV64 systems:**
 ```bash
-wget https://github.com/PentHertz/RF-Swift/releases/download/v0.6.5-rc4/rfswift_Linux_riscv64.tar.gz
+wget https://github.com/PentHertz/RF-Swift/releases/download/v2.0.0/rfswift_Linux_riscv64.tar.gz
 tar -zvxf rfswift_Linux_riscv64.tar.gz
 chmod +x rfswift
 ```

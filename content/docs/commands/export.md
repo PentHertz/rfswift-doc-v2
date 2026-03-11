@@ -30,14 +30,20 @@ The `export` command creates compressed tar.gz archives of containers or images,
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
 | `-c, --container STRING` | Container to export | Yes | `-c my_container` |
-| `-o, --output STRING` | Output filename | Yes | `-o backup.tar.gz` |
+| `-o, --output STRING` | Output filename | No | `-o backup.tar.gz` |
 
 ### Export Image
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
 | `-i, --images STRINGS` | Image(s) to export (can specify multiple) | Yes | `-i sdr_full` |
-| `-o, --output STRING` | Output filename | Yes | `-o backup.tar.gz` |
+| `-o, --output STRING` | Output filename | No | `-o backup.tar.gz` |
+
+{{< callout type="info" >}}
+**Auto-generated filenames**: If `-o` is omitted, filenames are generated automatically:
+- **Container export**: `{container_name}-{YYYYMMDD}.tar.gz`
+- **Image export**: `{image_name}_converted.tar.gz` (with `/` and `:` replaced by `_`)
+{{< /callout >}}
 
 ---
 

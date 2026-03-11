@@ -17,6 +17,10 @@ rfswift run -i IMAGE -n CONTAINER_NAME [options]
 
 The `run` command is the primary way to create new containers in RF Swift. It pulls the specified image (if not already available), creates a container with the given name, and starts it with an interactive shell.
 
+{{< callout type="info" >}}
+**Interactive Wizard**: When run without `-i` and `-n` flags in an interactive terminal, RF Swift launches a guided wizard that walks you through all options step by step. See [Interactive Wizard](#interactive-wizard) below.
+{{< /callout >}}
+
 ---
 
 ## Options
@@ -27,6 +31,10 @@ The `run` command is the primary way to create new containers in RF Swift. It pu
 |------|-------------|---------|
 | `-i, --image STRING` | Image name or tag to use | `-i sdr_full` |
 | `-n, --name STRING` | Name for the new container | `-n my_container` |
+
+{{< callout type="info" >}}
+Both flags are optional when using the interactive wizard. If omitted in an interactive terminal, the wizard launches automatically.
+{{< /callout >}}
 
 ### Security Options
 
@@ -66,7 +74,30 @@ The `run` command is the primary way to create new containers in RF Swift. It pu
 |------|-------------|---------|---------|
 | `-d, --display STRING` | X11 display setting | `DISPLAY=:0` | `-d DISPLAY=:1` |
 | `-p, --pulseserver STRING` | PulseAudio server address | `tcp:127.0.0.1:34567` | `-p tcp:127.0.0.1:4713` |
-| `--no-x11` | Disable X11 forwarding | false | `--no-x11` |
+| `--no-x11` | Disable X11 forwarding and remove X11 socket binding | false | `--no-x11` |
+| `--desktop` | Enable remote desktop via VNC/noVNC | false | `--desktop` |
+| `--desktop-config STRING` | Desktop config as `proto:host:port` | `http:127.0.0.1:6080` | `--desktop-config "http:0.0.0.0:6080"` |
+| `--desktop-pass STRING` | Set VNC password for desktop access | None | `--desktop-pass "mypassword"` |
+| `--desktop-ssl` | Enable SSL/TLS for desktop connections | false | `--desktop-ssl` |
+
+### VPN Options
+
+| Flag | Description | Example |
+|------|-------------|---------|
+| `--vpn STRING` | Enable VPN inside container | `--vpn tailscale` |
+
+**Format:** `--vpn TYPE[:ARGUMENT]`
+
+| Type | Argument | Example |
+|------|----------|---------|
+| `wireguard` | Config file path (required) | `--vpn wireguard:./wg0.conf` |
+| `openvpn` | Config file path (required) | `--vpn openvpn:./client.ovpn` |
+| `tailscale` | Auth key (optional) | `--vpn tailscale` or `--vpn tailscale:tskey-auth-xxx` |
+| `netbird` | Setup key (optional) | `--vpn netbird` or `--vpn netbird:nb-setup-xxx` |
+
+{{< callout type="info" >}}
+**Privileged mode**: WireGuard and OpenVPN require `-u 1`. Tailscale and Netbird work without privileges (userspace mode with SOCKS5 proxy). See [VPN Inside Containers](/docs/guide/vpn) for details.
+{{< /callout >}}
 
 ### Recording Options
 
@@ -220,6 +251,95 @@ rfswift run -i wifi -n wifi_audit \
   -s /dev/wlan0:/dev/wlan0 \
   --record \
   --record-output wifi-audit-session.cast
+```
+
+### With Remote Desktop
+
+**Enable noVNC desktop (browser-based GUI):**
+```bash
+rfswift run -i sdr_full -n sdr_desktop --desktop
+```
+Then open `http://127.0.0.1:6080` in your browser to access the GUI desktop.
+
+**Expose desktop on all interfaces:**
+```bash
+rfswift run -i sdr_full -n sdr_desktop \
+  --desktop --desktop-config "http:0.0.0.0:6080"
+```
+
+**Use raw VNC instead of noVNC:**
+```bash
+rfswift run -i sdr_full -n sdr_desktop \
+  --desktop --desktop-config "vnc::5900"
+```
+Then connect with a VNC client (e.g., TigerVNC, RealVNC) to `127.0.0.1:5900`.
+
+**Custom port:**
+```bash
+rfswift run -i sdr_full -n sdr_desktop \
+  --desktop --desktop-config "http:0.0.0.0:8080"
+```
+
+**With VNC password (recommended when exposing on network):**
+```bash
+rfswift run -i sdr_full -n sdr_desktop \
+  --desktop --desktop-config "http:0.0.0.0:6080" \
+  --desktop-pass "mysecretpass"
+```
+
+**Desktop with SDR devices and no X11 forwarding:**
+```bash
+rfswift run -i sdr_full -n sdr_desktop \
+  --desktop \
+  --desktop-config "http:0.0.0.0:6080" \
+  --desktop-pass "mysecretpass" \
+  -s /dev/bus/usb:/dev/bus/usb \
+  -g "c 189:* rwm" \
+  --no-x11
+```
+
+### With VPN
+
+**Tailscale mesh (interactive login):**
+```bash
+rfswift run -i sdr_full -n mesh_sdr --vpn tailscale
+```
+
+**Tailscale with auth key (headless):**
+```bash
+rfswift run -i sdr_full -n mesh_sdr \
+  --vpn tailscale:tskey-auth-xxxxxxxxxxxx
+```
+
+**WireGuard tunnel (requires privileged mode):**
+```bash
+rfswift run -i sdr_full -n vpn_sdr \
+  -u 1 \
+  --vpn wireguard:./wg0.conf
+```
+
+**OpenVPN with bridge network:**
+```bash
+rfswift run -i sdr_full -n corp_sdr \
+  -u 1 \
+  -t bridge \
+  --vpn openvpn:./client.ovpn
+```
+
+**Netbird mesh (interactive login):**
+```bash
+rfswift run -i sdr_full -n nb_sdr --vpn netbird
+```
+
+**VPN + Remote Desktop + SDR (full remote setup):**
+```bash
+rfswift run -i sdr_full -n remote_sdr \
+  -u 1 \
+  --vpn tailscale \
+  --desktop --desktop-config "http:0.0.0.0:6080" \
+  -s /dev/bus/usb:/dev/bus/usb \
+  -g "c 189:* rwm" \
+  --record
 ```
 
 ### Complex Real-World Examples
@@ -543,10 +663,79 @@ Configure container network isolation:
 -p tcp:localhost:4713      # Custom port
 ```
 
-**Disable X11 (`--no-x11`)**: For headless containers
+**Disable X11 (`--no-x11`)**: Disables X11 forwarding and removes the `/tmp/.X11-unix` socket binding from the container for improved security.
 ```bash
---no-x11    # No GUI support
+--no-x11    # No X11 forwarding, no X11 socket binding
 ```
+
+### Remote Desktop (`--desktop`)
+
+Enable a remote desktop inside the container, accessible via a web browser (noVNC) or a VNC client. This is useful for running GUI tools (SDR++, SDRangel, GQRX, etc.) without requiring X11 forwarding on the host.
+
+When enabled, RF Swift:
+- Injects `RFSWIFT_DESKTOP_PROTO`, `RFSWIFT_DESKTOP_HOST`, and `RFSWIFT_DESKTOP_PORT` environment variables into the container
+- Uses an entrypoint wrapper that starts the VNC server before launching the shell
+- Sets up port bindings automatically for non-host network modes
+- Prints the access URL to the terminal
+- Adds an `org.rfswift.desktop` label to the container
+
+**Desktop config format (`--desktop-config`):** `proto:host:port`
+
+All parts are optional and fall back to defaults:
+
+| Part | Options | Default |
+|------|---------|---------|
+| `proto` | `http` (noVNC), `vnc` (raw VNC) | `http` |
+| `host` | Bind address | `127.0.0.1` |
+| `port` | Listen port | `6080` (http) or `5900` (vnc) |
+
+```bash
+# Browser access (default, localhost only)
+--desktop
+--desktop --desktop-config "http:0.0.0.0:6080"
+
+# VNC client access
+--desktop --desktop-config "vnc::5900"
+
+# Custom port on all interfaces
+--desktop --desktop-config "http:0.0.0.0:8080"
+```
+
+**Password protection (`--desktop-pass`):**
+
+Set a VNC password to secure the desktop session. Recommended when binding to `0.0.0.0`:
+
+```bash
+# Password-protected desktop on all interfaces
+--desktop --desktop-config "http:0.0.0.0:6080" --desktop-pass "mysecretpass"
+```
+
+When a password is set, both noVNC (browser) and VNC clients will prompt for it before connecting. Without a password, access is unauthenticated — safe when bound to `127.0.0.1` (default), but a security risk when exposed on the network.
+
+**SSL/TLS encryption (`--desktop-ssl`):**
+
+Enable SSL/TLS to encrypt the desktop connection. A self-signed certificate is automatically generated inside the container:
+
+```bash
+# SSL-encrypted desktop with password
+--desktop --desktop-config "http:0.0.0.0:6080" --desktop-pass "mysecretpass" --desktop-ssl
+
+# SSL with VNC client
+--desktop --desktop-config "vnc:0.0.0.0:5900" --desktop-pass "mysecretpass" --desktop-ssl
+```
+
+With SSL enabled, noVNC uses `https://` and VNC clients connect via `vncs://` (TLS-wrapped VNC). The self-signed certificate will trigger a browser warning on first connection — this is expected.
+
+The password and SSL can also be set in the config file (`~/.config/rfswift/config.ini`):
+```ini
+[desktop]
+password = mysecretpass
+ssl = true
+```
+
+{{< callout type="info" >}}
+**Tip**: Combine `--desktop` with `--no-x11` when you only need browser-based GUI access — this removes the X11 socket binding entirely, improving security and avoiding the need for `xhost` or X11 configuration on the host.
+{{< /callout >}}
 
 ### Recording Options
 
@@ -562,6 +751,103 @@ Configure container network isolation:
 ```
 
 Recordings are saved in asciinema format (.cast files) and can be replayed with `rfswift log replay`.
+
+**Auto-generated filenames:** When `--record` is used without `--record-output`, the filename is automatically generated as:
+```
+rfswift-run-{container_name}-{YYYYMMDD-HHMMSS}.cast
+```
+
+**Recording indicator:** During recording, the terminal title changes to `⏺ REC | RF Swift` as a visual reminder. The environment variable `RFSWIFT_RECORDING=1` is also set inside the container, which can be used by scripts to detect recording mode.
+
+---
+
+## Interactive Wizard
+
+When you run `rfswift run` without specifying `-i` (image) and `-n` (name) in an interactive terminal, RF Swift launches a step-by-step guided wizard using a TUI (Terminal User Interface).
+
+**Launch the wizard:**
+```bash
+rfswift run
+```
+
+### Wizard Steps
+
+The wizard guides you through the following steps:
+
+1. **Image Selection** -- If local images are available, shows a scrollable picker list. Otherwise, prompts for manual input.
+
+2. **Container Name** -- Required text input (placeholder: `my_sdr`).
+
+3. **Volume Bindings** -- Asks if you want to add volume bindings, then prompts for comma-separated `host:container` paths (placeholder: `/home/user/data:/root/data,/tmp/captures:/tmp/captures`).
+
+4. **Device Mappings** -- Asks if you want to add device mappings, then prompts for comma-separated device paths (placeholder: `/dev/ttyUSB0,/dev/bus/usb`).
+
+5. **Feature Toggles** -- Multi-select checklist:
+   - Remote Desktop (VNC/noVNC)
+   - Desktop SSL/TLS
+   - Disable X11 forwarding
+   - Privileged mode
+   - Realtime mode (audio/SDR)
+   - VPN (WireGuard/OpenVPN/Tailscale/Netbird)
+
+6. **VPN Configuration** (if VPN selected) -- Prompts for VPN type, then type-specific input:
+   - **WireGuard**: Config file path (placeholder: `./wg0.conf`)
+   - **OpenVPN**: Config file path (placeholder: `./client.ovpn`)
+   - **Tailscale**: Auth key (placeholder: `tskey-auth-xxxxx or empty`)
+   - **Netbird**: Setup key (placeholder: `setup key or empty`)
+
+7. **Configuration Recap** -- Displays a summary of all selected options.
+
+8. **CLI Equivalent** -- Shows the equivalent CLI command you could use to reproduce this configuration without the wizard.
+
+9. **Final Confirmation** -- `Create this container?` Yes/No prompt.
+
+### Example Wizard Session
+
+```
+? Select an image:
+  > penthertz/rfswift_noble:sdr_full
+    penthertz/rfswift_noble:sdr_light
+    penthertz/rfswift_noble:bluetooth
+    penthertz/rfswift_noble:wifi
+
+? Container name: my_sdr_work
+
+? Add volume bindings? Yes
+? Volume bindings: ~/captures:/root/captures
+
+? Add device mappings? Yes
+? Device paths: /dev/bus/usb
+
+? Select features:
+  [x] Realtime mode (audio/SDR)
+  [ ] Remote Desktop (VNC/noVNC)
+  [ ] Privileged mode
+  [x] VPN (WireGuard/OpenVPN/Tailscale/Netbird)
+
+? VPN type: tailscale
+? Auth key (optional):
+
+──────────────────────────────────────────────────
+Configuration Recap:
+  Image:    penthertz/rfswift_noble:sdr_full
+  Name:     my_sdr_work
+  Bindings: ~/captures:/root/captures
+  Devices:  /dev/bus/usb
+  Realtime: yes
+  VPN:      tailscale
+──────────────────────────────────────────────────
+
+Equivalent CLI command:
+  rfswift run -i penthertz/rfswift_noble:sdr_full -n my_sdr_work \
+    -b ~/captures:/root/captures -s /dev/bus/usb --realtime --vpn tailscale
+
+? Create this container? Yes
+```
+
+{{< callout type="info" >}}
+**Non-interactive mode**: The wizard only appears in interactive terminals. When piping or scripting, always provide `-i` and `-n` flags explicitly.
+{{< /callout >}}
 
 ---
 
@@ -610,6 +896,20 @@ rfswift run -i sdr_full -n sdr_dev \
   -b ~/.ssh:/root/.ssh:ro \
   -b ~/.gitconfig:/root/.gitconfig:ro \
   -w 8888:8888/tcp
+```
+
+### Remote Desktop SDR Workstation
+
+```bash
+rfswift run -i sdr_full -n remote_sdr \
+  --desktop \
+  --desktop-config "http:0.0.0.0:6080" \
+  --no-x11 \
+  --realtime \
+  -s /dev/bus/usb:/dev/bus/usb \
+  -g "c 189:* rwm" \
+  -b ~/captures:/root/captures \
+  --record
 ```
 
 ### Isolated Analysis Container
@@ -850,6 +1150,8 @@ rfswift run -i sdr_full -n assessment \
 - [`ports`](/docs/commands/ports) - Manage ports after creation
 - [`realtime`](/docs/commands/realtime) - Enable/disable realtime mode on existing containers
 - [`ulimits`](/docs/commands/ulimits) - Manage ulimits on existing containers
+- [VPN Inside Containers](/docs/guide/vpn) - Detailed VPN setup guide
+- [Using Podman](/docs/guide/podman) - Podman-specific guidance
 
 ---
 

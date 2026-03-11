@@ -26,6 +26,10 @@ The `retag` command creates a new tag for an existing Docker image. This is usef
 | `-i, --image STRING` | Source image reference | Yes | `-i penthertz/rfswift_noble:sdr_full` |
 | `-t, --tag STRING` | New tag name | Yes | `-t my_sdr:production` |
 
+{{< callout type="info" >}}
+**Interactive Picker**: When run without `-i` in an interactive terminal, RF Swift displays a scrollable image picker listing all local images with their tags.
+{{< /callout >}}
+
 ---
 
 ## Examples

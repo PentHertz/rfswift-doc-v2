@@ -26,6 +26,10 @@ The `commit` command creates a new Docker image from a container's current state
 | `-c, --container STRING` | Container to commit | Yes | `-c my_container` |
 | `-i, --image STRING` | Name for new image | Yes | `-i my_backup:v1` |
 
+{{< callout type="info" >}}
+**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable container picker. If `-i` is also omitted, the image name is auto-suggested based on the container's current image (fallback: `rfswift/committed:latest`).
+{{< /callout >}}
+
 ---
 
 ## Examples

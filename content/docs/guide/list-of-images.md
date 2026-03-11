@@ -64,12 +64,13 @@ When in doubt, use the generic tags (without architecture suffix) as RF Swift wi
 
 | Category | Description | Example Images |
 |----------|-------------|----------------|
-| **SDR** | Software-defined radio tools | `sdr_light`, `sdr_full`, `sdr_full_nvidiagpu_amd64` |
-| **Telecom** | Mobile network analysis | `telecom_utils`, `telecom_2Gto3G`, `telecom_4G_5GNSA`, `telecom_5G` |
+| **SDR** | Software-defined radio tools | `sdr_light`, `sdr_full`, `sdr_light_intelgpu`, `sdr_full_nvidiagpu`, `deeptempest` |
+| **Telecom** | Mobile network analysis | `telecom_utils`, `telecom_2Gto3G`, `telecom_4G_5GNSA`, `telecom_5G`, `telecom_5G_bladerf`, `telecom_4Gto5G`, `telecom_5G_train` |
 | **Short-range** | Bluetooth, Wi-Fi and RFID | `bluetooth`, `wifi`, `rfid` |
 | **Hardware** | Hardware security tools | `hardware`, `reversing` |
 | **Automotive** | Vehicle communications | `automotive` |
-| **Base images** | Foundation for other images | `corebuild`, `sdrsa_devices` |
+| **Network** | General network security tools | `network` |
+| **Base images** | Foundation for other images | `corebuild`, `sdrsa_devices`, `sdrsa_devices_antsdr`, `sdrsa_devices_rtlsdrv4` |
 
 ## Image Hierarchy
 
@@ -88,11 +89,19 @@ graph TD;
     B[sdrsa_devices]-->L[telecom_utils];
     B[sdrsa_devices]-->R[hardware];
     B[sdrsa_devices]-->S[network];
+    B[sdrsa_devices]-->DT[deeptempest];
     S[network]-->J[wifi];
+    H-->K[sdr_full];
+    H-->H2[sdr_light_intelgpu];
+    H-->H3[sdr_light_nvidiagpu];
+    H2-->K2[sdr_full_intelgpu];
+    H3-->K3[sdr_full_nvidiagpu];
     L-->M[telecom_2Gto3G];
     L-->N[telecom_4G_5GNSA];
     L-->O[telecom_5G];
-    H-->K[sdr_full]
+    L-->O2[telecom_5G_bladerf];
+    L-->P[telecom_4Gto5G];
+    N-->P2[telecom_5G_train];
 ```
 
 This hierarchy provides several benefits:

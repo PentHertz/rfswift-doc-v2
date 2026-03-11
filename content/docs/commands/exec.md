@@ -17,6 +17,10 @@ rfswift exec [-c CONTAINER] [-w WORKDIR] [options]
 
 The `exec` command enters an existing container with an interactive shell. If no container is specified, it automatically uses the most recently created container.
 
+{{< callout type="info" >}}
+**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable container picker listing all containers with their name, ID, image, and state. The most recent container is marked with `← latest`.
+{{< /callout >}}
+
 ---
 
 ## Options
@@ -27,6 +31,28 @@ The `exec` command enters an existing container with an interactive shell. If no
 |------|-------------|---------|---------|
 | `-c, --container STRING` | Container name or ID | Most recent | `-c my_container` |
 | `-w, --workdir STRING` | Working directory inside container | `/root` | `-w /root/projects` |
+
+### Display Options
+
+| Flag | Description | Default | Example |
+|------|-------------|---------|---------|
+| `--no-x11` | Disable X11 forwarding and remove X11 socket binding | false | `--no-x11` |
+| `--desktop` | Start remote desktop via VNC/noVNC in the container | false | `--desktop` |
+| `--desktop-config STRING` | Desktop config as `proto:host:port` | `http:127.0.0.1:6080` | `--desktop-config "http:0.0.0.0:6080"` |
+| `--desktop-pass STRING` | Set VNC password for desktop access | None | `--desktop-pass "mypassword"` |
+| `--desktop-ssl` | Enable SSL/TLS for desktop connections | false | `--desktop-ssl` |
+
+### VPN Options
+
+| Flag | Description | Example |
+|------|-------------|---------|
+| `--vpn STRING` | Start VPN inside the container | `--vpn tailscale` |
+
+**Format:** `--vpn TYPE[:ARGUMENT]` — same syntax as [`run --vpn`](/docs/commands/run#vpn-options).
+
+{{< callout type="info" >}}
+When using `--vpn` with `exec`, the VPN client starts inside the already-running container. For WireGuard/OpenVPN, the container must have been created with privileged mode (`-u 1`). See [VPN Inside Containers](/docs/guide/vpn) for details.
+{{< /callout >}}
 
 ### Recording Options
 
@@ -84,6 +110,53 @@ rfswift exec -c analysis \
   -w /root/data \
   --record \
   --record-output ~/recordings/analysis-$(date +%Y%m%d-%H%M%S).cast
+```
+
+### With Remote Desktop
+
+The `--desktop` flag can be used with `exec` to start a remote desktop session on-the-fly, even if the container was originally created without desktop mode.
+
+**Start desktop when entering a container:**
+```bash
+rfswift exec -c my_container --desktop
+```
+Then open `http://127.0.0.1:6080` in your browser.
+
+**Expose on all interfaces with password:**
+```bash
+rfswift exec -c my_container \
+  --desktop --desktop-config "http:0.0.0.0:6080" \
+  --desktop-pass "mysecretpass"
+```
+
+**Use VNC client instead of browser:**
+```bash
+rfswift exec -c my_container \
+  --desktop --desktop-config "vnc::5900"
+```
+
+**With SSL/TLS encryption:**
+```bash
+rfswift exec -c my_container \
+  --desktop --desktop-config "http:0.0.0.0:6080" \
+  --desktop-pass "mysecretpass" --desktop-ssl
+```
+
+### With VPN
+
+**Start Tailscale when entering a container:**
+```bash
+rfswift exec -c my_sdr --vpn tailscale
+```
+
+**WireGuard on a privileged container:**
+```bash
+rfswift exec -c my_sdr --vpn wireguard:./wg0.conf
+```
+
+**Netbird with setup key:**
+```bash
+rfswift exec -c my_sdr --vpn netbird:nb-setup-xxxxxxxxxxxx
 ```
 
 ### Working Directory Examples
@@ -246,11 +319,13 @@ Records the entire terminal session for documentation, debugging, or training.
 - Tool outputs and error messages
 
 **Auto-generated filenames:**
-Format: `rfswift-exec-{container}-{timestamp}.cast`
+Format: `rfswift-exec-{container}-{YYYYMMDD-HHMMSS}.cast`
 ```bash
 rfswift exec -c my_container --record
 # Creates: rfswift-exec-my_container-20240112-143022.cast
 ```
+
+**Recording indicator:** During recording, the terminal title changes to `⏺ REC | RF Swift` as a visual reminder. The environment variable `RFSWIFT_RECORDING=1` is also set, which can be used by scripts to detect recording mode.
 
 **Custom filenames:**
 ```bash
@@ -655,6 +730,8 @@ source ~/.zshrc
 - [`remove`](/docs/commands/remove) - Delete containers
 - [`log`](/docs/commands/log) - Replay recorded sessions
 - [`bindings`](/docs/commands/bindings) - Add devices/volumes to running containers
+- [VPN Inside Containers](/docs/guide/vpn) - Detailed VPN setup guide
+- [Using Podman](/docs/guide/podman) - Podman-specific guidance
 
 ---
 

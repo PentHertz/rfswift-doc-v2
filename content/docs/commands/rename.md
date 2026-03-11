@@ -26,6 +26,10 @@ The `rename` command changes a container's name without affecting its data, conf
 | `-n, --name STRING` | Current container name | Yes | `-n old_container` |
 | `-d, --destination STRING` | New container name | Yes | `-d new_container` |
 
+{{< callout type="info" >}}
+**Interactive Picker**: When run without `-n` in an interactive terminal, RF Swift displays a scrollable container picker to select the container to rename.
+{{< /callout >}}
+
 ---
 
 ## Examples

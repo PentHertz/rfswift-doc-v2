@@ -25,6 +25,10 @@ The `delete` command removes Docker images from your local system. This is usefu
 |------|-------------|----------|---------|
 | `-i, --image STRING` | Image ID or tag to delete | Yes | `-i penthertz/rfswift_noble:old_version` |
 
+{{< callout type="info" >}}
+**Interactive Picker**: When run without `-i` in an interactive terminal, RF Swift displays a scrollable image picker listing all local images. A confirmation prompt (`Delete image 'name'?`) is shown before deletion.
+{{< /callout >}}
+
 ---
 
 ## Examples

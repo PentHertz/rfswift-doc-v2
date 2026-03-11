@@ -23,6 +23,9 @@ rfswift images remote -v
 
 # Pull image from registry
 rfswift images pull -i IMAGE_NAME [-t TAG] [-V version]
+
+# List available versions for images
+rfswift images versions [-f FILTER]
 ```
 
 The `images` command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, pull images from Docker registries, and **track image versions** for better environment control.
@@ -37,8 +40,15 @@ List all RF Swift images present on the local system.
 
 **Usage:**
 ```bash
-rfswift images local
+rfswift images local [-v] [-f FILTER]
 ```
+
+**Options:**
+
+| Flag | Description | Example |
+|------|-------------|---------|
+| `-v, --show-versions` | Show version information for images | `-v` |
+| `-f, --filter STRING` | Filter images by name | `-f sdr_full` |
 
 **Output includes:**
 - Image repository and tag
@@ -53,14 +63,15 @@ List available RF Swift images from the official Penthertz registry.
 
 **Usage:**
 ```bash
-rfswift images remote [-v]
+rfswift images remote [-v] [-f FILTER]
 ```
 
 **Options:**
 
 | Flag | Description | Example |
 |------|-------------|---------|
-| `-v, --versions` | Show available versions for each image | `-v` |
+| `-v, --show-versions` | Show version information for images | `-v` |
+| `-f, --filter STRING` | Filter images by name | `-f wifi` |
 
 **Output includes:**
 - Available image names
@@ -84,6 +95,43 @@ rfswift images pull -i IMAGE_NAME [-t TAG] [-V version]
 | `-i, --image STRING` | Image reference to pull | Yes | `-i penthertz/rfswift_noble:sdr_full` |
 | `-t, --tag STRING` | Rename to target tag locally | No | `-t my_sdr:v1` |
 | `-V, --version STRING` | Rename to wanted version | No | `-V 0.1.1` |
+
+### images versions
+
+List all available versions for RF Swift images.
+
+**Usage:**
+```bash
+rfswift images versions [-f FILTER]
+```
+
+**Options:**
+
+| Flag | Description | Example |
+|------|-------------|---------|
+| `-f, --filter STRING` | Filter by image name | `-f sdr_full` |
+
+**Example:**
+```bash
+# List versions for all images
+rfswift images versions
+
+# List versions for a specific image
+rfswift images versions -f wifi
+```
+
+**Example output:**
+```
+┌──────────────────────────────────────┬────────────────────┬──────────────┐
+│ Image                                │ Version            │ Status       │
+├──────────────────────────────────────┼────────────────────┼──────────────┤
+│ penthertz/rfswift_noble:wifi         │ latest, 0.1.1      │ Up to date   │
+├──────────────────────────────────────┼────────────────────┼──────────────┤
+│ penthertz/rfswift_noble:sdr_full     │ latest, 0.1.1      │ Up to date   │
+├──────────────────────────────────────┼────────────────────┼──────────────┤
+│ penthertz/rfswift_noble:sdr_light    │ latest, 0.1.1      │ Up to date   │
+└──────────────────────────────────────┴────────────────────┴──────────────┘
+```
 
 ---
 

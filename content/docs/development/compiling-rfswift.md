@@ -133,15 +133,20 @@ If you prefer to handle the compilation process manually or need more control ov
 
 ### Install Dependencies
 
-First, ensure you have all required dependencies:
+First, ensure you have all required dependencies. **Go 1.26.1 or later is required.**
 
 ```bash
 # Ubuntu/Debian
 sudo apt update
-sudo apt install -y git golang-go docker.io
+sudo apt install -y git docker.io
+# Install Go 1.26.1+ from https://go.dev/dl/ (distro packages may be outdated)
+wget https://go.dev/dl/go1.26.1.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.26.1.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
 
 # Fedora/CentOS/RHEL
-sudo dnf install -y git golang docker
+sudo dnf install -y git docker
+# Install Go 1.26.1+ from https://go.dev/dl/
 
 # Arch Linux
 sudo pacman -S git go docker
@@ -152,24 +157,36 @@ brew install go docker
 
 ### Compile the Binary
 
-Navigate to the cloned repository and compile the binary:
+Navigate to the Go source directory and compile the binary:
 
 ```bash
-cd RF-Swift
+cd RF-Swift/go/rfswift
 go build -o rfswift
+```
+
+For a **static binary** (recommended for air-gapped or production use):
+
+```bash
+cd RF-Swift/go/rfswift
+CGO_ENABLED=0 go build -tags netgo -o rfswift
 ```
 
 For cross-compilation (building for a different architecture):
 
 ```bash
+cd RF-Swift/go/rfswift
+
 # For ARM64 (e.g., Raspberry Pi)
-GOOS=linux GOARCH=arm64 go build -o rfswift_arm64
+CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -tags netgo -o rfswift_arm64
+
+# For RISC-V64
+CGO_ENABLED=0 GOOS=linux GOARCH=riscv64 go build -tags netgo -o rfswift_riscv64
 
 # For Windows
-GOOS=windows GOARCH=amd64 go build -o rfswift.exe
+CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -tags netgo -o rfswift.exe
 
 # For macOS
-GOOS=darwin GOARCH=amd64 go build -o rfswift_macos
+CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -tags netgo -o rfswift_macos
 ```
 
 ### Install the Binary

@@ -44,7 +44,7 @@ Start recording a terminal session.
 
 ### log stop
 
-Stop the currently active recording session.
+Stop the currently active recording session. The terminal title is restored to its default.
 
 **No options required.**
 
@@ -52,12 +52,26 @@ Stop the currently active recording session.
 
 Replay a previously recorded session.
 
+```bash
+rfswift log replay [-i INPUT_FILE] [-s SPEED]
+rfswift log replay [FILE]
+```
+
+**Positional argument**: The file path can be passed as a positional argument instead of `-i`:
+```bash
+rfswift log replay session.cast
+```
+
 **Options:**
 
 | Flag | Description | Default | Example |
 |------|-------------|---------|---------|
-| `-i, --input STRING` | Input file to replay | Required | `-i session.cast` |
+| `-i, --input STRING` | Input file to replay | None | `-i session.cast` |
 | `-s, --speed FLOAT` | Playback speed multiplier | 1.0 | `-s 2.0` |
+
+{{< callout type="info" >}}
+**Interactive Picker**: When run without `-i` and without a positional argument in an interactive terminal, RF Swift scans for recording files and displays a scrollable picker showing the file path, recording tool (`asciinema` or `script`), file size in KB, and modification date.
+{{< /callout >}}
 
 ### log list
 
@@ -69,6 +83,19 @@ List all recorded session files in a directory.
 |------|-------------|---------|---------|
 | `--dir STRING` | Directory to search | Current directory | `--dir ~/recordings` |
 
+The output is displayed as a styled TUI table:
+
+```
+Session Recordings
+┌───┬──────────────────────────────────────────┬───────────┬─────────┬──────────────────┐
+│ # │ File                                     │ Tool      │ Size    │ Date             │
+├───┼──────────────────────────────────────────┼───────────┼─────────┼──────────────────┤
+│ 1 │ rfswift-run-sdr_work-20250115-1430.cast  │ asciinema │ 24.5 KB │ 2025-01-15 14:30 │
+│ 2 │ rfswift-exec-debug-20250116-0900.cast    │ asciinema │ 12.1 KB │ 2025-01-16 09:00 │
+│ 3 │ rfswift-session-20250117-1100.cast       │ asciinema │ 45.3 KB │ 2025-01-17 11:00 │
+└───┴──────────────────────────────────────────┴───────────┴─────────┴──────────────────┘
+```
+
 ---
 
 ## Examples
@@ -78,8 +105,16 @@ List all recorded session files in a directory.
 **Start recording:**
 ```bash
 rfswift log start
-# Recording started: rfswift-session-20240112-143015.cast
+# Recording started: rfswift-session-20250112-143015.cast
+# Terminal title changes to: ⏺ REC | RF Swift
 ```
+
+**Auto-generated filenames:** When `-o` is omitted, the filename follows these patterns depending on context:
+- `log start`: `rfswift-session-{YYYYMMDD-HHMMSS}.cast`
+- `run --record`: `rfswift-run-{container_name}-{YYYYMMDD-HHMMSS}.cast`
+- `exec --record`: `rfswift-exec-{container_name}-{YYYYMMDD-HHMMSS}.cast`
+
+**Recording indicator:** During recording, the terminal title is set to `⏺ REC | RF Swift` as a visual reminder. The environment variable `RFSWIFT_RECORDING=1` is also set, allowing scripts to detect when a session is being recorded.
 
 **Start recording with custom filename:**
 ```bash

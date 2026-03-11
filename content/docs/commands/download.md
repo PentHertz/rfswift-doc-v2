@@ -24,8 +24,12 @@ The `download` command pulls Docker images from registries (Docker Hub, private 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
 | `-i, --image STRING` | Image name to download | Yes | `-i penthertz/rfswift_noble:sdr_full` |
-| `-o, --output STRING` | Output file path | Yes | `-o rfswift-sdr.tar.gz` |
+| `-o, --output STRING` | Output file path | No | `-o rfswift-sdr.tar.gz` |
 | `--pull` | Pull image first if not present locally | No | `--pull` |
+
+{{< callout type="info" >}}
+**Interactive Picker**: When run without `-i` in an interactive terminal, RF Swift displays a scrollable image picker to select the image to download. If `-o` is omitted, the output filename is auto-generated as `{image_name}_converted.tar.gz` (with `/` and `:` replaced by `_`).
+{{< /callout >}}
 
 ---
 

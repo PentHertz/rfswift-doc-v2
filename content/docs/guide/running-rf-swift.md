@@ -560,6 +560,101 @@ This architecture provides significant advantages:
 RF Swift significantly flattens the container learning curve while providing powerful features like dynamic device binding, host resource integration, and session recording that would otherwise require considerable Docker or Podman expertise.
 {{< /callout >}}
 
+### 7. Remote Desktop Mode
+
+RF Swift supports remote desktop access via **noVNC** (browser-based) or **raw VNC**, allowing you to run GUI tools without X11 forwarding on the host. This is especially useful for headless servers, remote machines, or when X11 is not available.
+
+#### Basic Usage
+
+```bash
+# Start a container with browser-based desktop
+rfswift run -i sdr_full -n sdr_desktop --desktop
+```
+
+Once started, open `http://127.0.0.1:6080` in your browser to access the full GUI desktop inside the container.
+
+#### Custom Configuration
+
+The `--desktop-config` flag accepts a `proto:host:port` format:
+
+```bash
+# Expose on all interfaces (for remote access)
+rfswift run -i sdr_full -n sdr_desktop \
+  --desktop --desktop-config "http:0.0.0.0:6080"
+
+# Use raw VNC protocol instead of noVNC
+rfswift run -i sdr_full -n sdr_desktop \
+  --desktop --desktop-config "vnc::5900"
+
+# Custom port
+rfswift run -i sdr_full -n sdr_desktop \
+  --desktop --desktop-config "http:0.0.0.0:8080"
+```
+
+| Protocol | Default Port | Access Method |
+|----------|-------------|---------------|
+| `http`   | `6080`      | Web browser (noVNC) |
+| `vnc`    | `5900`      | VNC client (TigerVNC, RealVNC, etc.) |
+
+#### Password Protection
+
+When exposing the desktop on the network (`0.0.0.0`), use `--desktop-pass` to require a VNC password:
+
+```bash
+rfswift run -i sdr_full -n sdr_desktop \
+  --desktop --desktop-config "http:0.0.0.0:6080" \
+  --desktop-pass "mysecretpass"
+```
+
+Without a password, the desktop is unauthenticated — safe on `127.0.0.1` (default), but a security risk when exposed. The password can also be set in the config file:
+
+```ini
+[desktop]
+password = mysecretpass
+```
+
+#### Combining with Other Options
+
+Desktop mode works well with `--no-x11` since you no longer need X11 forwarding. Using `--no-x11` also removes the `/tmp/.X11-unix` socket binding from the container for improved security:
+
+```bash
+rfswift run -i sdr_full -n sdr_desktop \
+  --desktop \
+  --desktop-config "http:0.0.0.0:6080" \
+  --desktop-pass "mysecretpass" \
+  -s /dev/bus/usb:/dev/bus/usb \
+  -g "c 189:* rwm" \
+  --no-x11 \
+  --realtime
+```
+
+#### Desktop Mode with exec
+
+You can also enable desktop mode when entering an existing container with `exec`, even if it wasn't created with `--desktop`:
+
+```bash
+# Start desktop on-the-fly
+rfswift exec -c my_container --desktop
+
+# With password and network exposure
+rfswift exec -c my_container \
+  --desktop --desktop-config "http:0.0.0.0:6080" \
+  --desktop-pass "mysecretpass"
+
+# With SSL encryption
+rfswift exec -c my_container \
+  --desktop --desktop-config "http:0.0.0.0:6080" \
+  --desktop-pass "mysecretpass" --desktop-ssl
+```
+
+{{< callout type="info" >}}
+When desktop mode is enabled, RF Swift automatically handles VNC server startup, port binding configuration, and environment variable injection — no manual setup required inside the container. The desktop provides a full LXQt environment with application menu, taskbar, and window management.
+{{< /callout >}}
+
+{{< callout type="warning" >}}
+When exposing the desktop on a network-facing address (`0.0.0.0` or a specific IP like `192.168.1.10`), the VNC/noVNC port will be accessible from the network. Always use `--desktop-pass` to set a VNC password and `--desktop-ssl` to encrypt the connection, and make sure your firewall rules are properly configured. See the [Remote Desktop Security](/docs/security/guide_lines/#-remote-desktop-security) section for detailed guidance.
+{{< /callout >}}
+
 ## Using RF Tools
 
 Once your container is running, you can use any included RF tools. For example, with an SDR device connected:
@@ -572,10 +667,9 @@ Once your container is running, you can use any included RF tools. For example, 
 ![Running SDRAngel with an RTL-SDR](/images/docs/sdrangel.png "Running SDRAngel with an RTL-SDR")
 
 {{< callout type="warning" >}}
-GUI applications require:
-- **Linux**: `xhost` installed and configured
-- **macOS**: `XQuartz` properly configured
-- **Windows**: Native support via Docker Desktop
+GUI applications require either X11 forwarding or remote desktop mode:
+- **X11 forwarding**: Linux needs `xhost`, macOS needs `XQuartz`, Windows has native support via Docker Desktop
+- **Remote desktop** (`--desktop`): Works on any platform — access GUI tools from a web browser with no X11 setup required
 {{< /callout >}}
 
 {{< callout emoji="⚡" >}}
@@ -696,9 +790,15 @@ Performance Options:
 Recording Options:
   --record                    Record the container session
   --record-output string      Custom output filename for recording (default: auto-generated)
-  
+
 Display Options:
-  --no-x11                    Disable X11 forwarding
+  --no-x11                    Disable X11 forwarding and remove X11 socket binding
+
+Desktop Options:
+  --desktop                   Enable remote desktop via VNC/noVNC (access GUI from a browser)
+  --desktop-config string     Desktop config as proto:host:port (e.g., 'http:0.0.0.0:6080')
+  --desktop-pass string       Set VNC password for desktop access (recommended on 0.0.0.0)
+  --desktop-ssl               Enable SSL/TLS for desktop connections (auto-generates self-signed cert)
 ```
 
 **Examples of Command-Line Security Configurations:**

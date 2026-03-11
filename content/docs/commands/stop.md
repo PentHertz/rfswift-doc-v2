@@ -25,6 +25,10 @@ The `stop` command gracefully stops a running container while preserving all dat
 |------|-------------|----------|---------|
 | `-c, --container STRING` | Container name or ID to stop | Yes | `-c my_container` |
 
+{{< callout type="info" >}}
+**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable picker listing only **running** containers with their name, ID, image, and state.
+{{< /callout >}}
+
 ---
 
 ## Examples

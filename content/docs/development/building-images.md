@@ -1,7 +1,7 @@
 ---
 title: Helper Functions Reference
 weight: 3
-prev: /docs/development/building-custom-images
+prev: /docs/development/yaml-recipe-guide
 cascade:
   type: docs
 ---

@@ -13,13 +13,21 @@ Import containers or images from compressed archive files.
 
 ```bash
 # Import container filesystem as image
-rfswift import container -i INPUT_FILE.tar.gz -n IMAGE_NAME
+rfswift import container [-i INPUT_FILE.tar.gz] [-n IMAGE_NAME]
+rfswift import container [FILE]
 
 # Import Docker image(s)
-rfswift import image -i INPUT_FILE.tar.gz
+rfswift import image [-i INPUT_FILE.tar.gz]
+rfswift import image [FILE]
 ```
 
 The `import` command restores containers and images from tar.gz archives created by the `export` or `download` commands, enabling backup restoration and system migration.
+
+**Positional argument**: Both subcommands accept the file path as a positional argument instead of the `-i` flag:
+```bash
+rfswift import container /path/to/backup.tar.gz
+rfswift import image /path/to/image.tar.gz
+```
 
 ---
 
@@ -29,14 +37,22 @@ The `import` command restores containers and images from tar.gz archives created
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-i, --input STRING` | Input tar.gz file path | Yes | `-i backup.tar.gz` |
-| `-n, --name STRING` | Name for the imported image | Yes | `-n myimage:tag` |
+| `-i, --input STRING` | Input tar.gz file path | No* | `-i backup.tar.gz` |
+| `-n, --name STRING` | Name for the imported image | No* | `-n myimage:tag` |
 
 ### Import Image
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-i, --input STRING` | Input tar.gz file path | Yes | `-i images.tar.gz` |
+| `-i, --input STRING` | Input tar.gz file path | No* | `-i images.tar.gz` |
+
+*\* When flags are omitted in an interactive terminal, RF Swift provides interactive pickers and auto-suggested values.*
+
+{{< callout type="info" >}}
+**Interactive File Picker**: When run without `-i` and without a positional argument in an interactive terminal, RF Swift scans the current directory for `.tar.gz` files and displays a scrollable picker showing filenames and sizes (in MB).
+
+**Auto-suggested image name**: For `import container`, if `-n` is omitted, the image name is auto-generated from the filename as `rfswift/{filename}:imported`.
+{{< /callout >}}
 
 ---
 

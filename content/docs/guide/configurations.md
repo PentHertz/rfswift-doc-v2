@@ -64,6 +64,13 @@ cgroups = c 189:* rwm,c 166:* rwm,c 188:* rwm
 
 [audio]
 pulse_server = tcp:localhost:34567
+
+[desktop]
+proto = vnc
+host = 127.0.0.1
+port = 6080
+password =
+ssl = false
 ```
 
 ### Configuration Sections Explained
@@ -105,6 +112,25 @@ pulse_server = tcp:localhost:34567
 |-----------|-------------|---------|
 | `pulse_server` | PulseAudio/PipeWire server address | `tcp:localhost:34567` |
 
+#### Desktop Section
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `proto` | Desktop protocol | `vnc`, `noVNC` |
+| `host` | Host address for desktop connections | `127.0.0.1` |
+| `port` | Port for desktop connections | `6080` |
+| `password` | VNC password (optional) | `mysecretpass` |
+| `ssl` | Enable SSL encryption for VNC | `true`, `false` |
+
+Example:
+```ini
+[desktop]
+proto = vnc
+host = 127.0.0.1
+port = 6080
+password =
+ssl = false
+```
 
 #### Changing repository
 
@@ -136,6 +162,10 @@ Flags:
   -a, --capabilities string   Extra capabilities (separate with commas)
   -g, --cgroups string        Extra cgroup rules (separate with commas)
   -e, --command string        Command to execute (default: '/bin/bash')
+      --desktop               Enable desktop mode (VNC/noVNC)
+      --desktop-config string Desktop config as proto:host:port (e.g., vnc:127.0.0.1:6080)
+      --desktop-pass string   VNC password for desktop mode
+      --desktop-ssl           Enable SSL for desktop connection
   -s, --devices string        Extra device mappings (separate with commas)
   -d, --display string        Set X Display (default: "DISPLAY=:0")
   -z, --exposedports string   Ports to expose
@@ -144,12 +174,19 @@ Flags:
   -i, --image string          Image to use (default: 'myrfswift:latest')
   -n, --name string           Container name
   -t, --network string        Network mode (default: 'host')
+      --no-x11                Disable X11 forwarding
   -u, --privileged int        Set privilege level (1: privileged, 0: unprivileged)
   -p, --pulseserver string    PulseAudio server address (default: "tcp:127.0.0.1:34567")
+      --realtime              Enable realtime mode for SDR performance
+      --record                Record terminal session (asciinema format)
+      --record-output string  Output path for recording file
   -m, --seccomp string        Set Seccomp profile (default: 'default')
+      --ulimits string        Additional ulimits (e.g., rtprio=95)
+      --vpn string            VPN type[:argument] (wireguard:file, openvpn:file, tailscale[:key], netbird[:key])
 
 Global Flags:
   -q, --disconnect            Don't query updates (disconnected mode)
+      --engine string         Container engine to use (docker, podman, auto)
 ```
 
 ### Examples
