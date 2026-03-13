@@ -168,7 +168,7 @@ Rootless Mode
 
 <meta
   property="article:modified_time"
-  content="2026-03-11T20:26:15+01:00">
+  content="2026-03-13T14:08:27+01:00">
 
 
 
@@ -176,8 +176,8 @@ Rootless Mode
   <meta itemprop="description" content="Using RF Swift with PodmanRF Swift supports Podman as an alternative to Docker, enabling rootless and daemonless container workflows.
 Overview Podman is a daemonless container engine that can run containers without root privileges. RF Swift auto-detects Podman and adapts its behavior for rootless compatibility.
 Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (daemon) Daemonless (fork-exec) Root required Yes (daemon) No (rootless by default) Device passthrough Native Supported Cgroup rules Full support Not supported in rootless Privileged mode Full host access User-namespace scoped USB hotplug With cgroup rules Limited in rootless Networking Host/bridge slirp4netns/pasta Getting Started with Podman Installation Ubuntu/DebianFedoraArchmacOS sudo apt install podman sudo dnf install podman sudo pacman -S podman brew install podman podman machine init podman machine start Configuration # Ensure subordinate UID/GID ranges are configured grep $USER /etc/subuid /etc/subgid # If empty, add them sudo usermod --add-subuids 100000-165535 $USER sudo usermod --add-subgids 100000-165535 $USER # Enable lingering (containers survive logout) sudo loginctl enable-linger $USER # Configure default registry to avoid prompts echo &#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39; | sudo tee -a /etc/containers/registries.conf Using RF Swift with Podman # Auto-detected (if Podman is the only engine) rfswift run -i sdr_full -n my_sdr # Explicit engine selection (if both Docker and Podman are installed) rfswift --engine podman run -i sdr_full -n my_sdr Rootless Mode By default, Podman runs rootless — no sudo required. RF Swift automatically adapts:">
-  <meta itemprop="dateModified" content="2026-03-11T20:26:15+01:00">
-  <meta itemprop="wordCount" content="1178">
+  <meta itemprop="dateModified" content="2026-03-13T14:08:27+01:00">
+  <meta itemprop="wordCount" content="1288">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Using Podman">
   <meta name="twitter:description" content="Using RF Swift with PodmanRF Swift supports Podman as an alternative to Docker, enabling rootless and daemonless container workflows.
@@ -629,6 +629,14 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
     href="/docs/commands/exec/"
     
   >exec
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/profile/"
+    
+  >profile
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1094,6 +1102,14 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/profile/"
+    
+  >profile
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/stop/"
     
   >stop
@@ -1494,6 +1510,10 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
         <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#containers-not-visible-across-engines">Containers Not Visible Across Engines
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#images-not-found-after-pulling-with-sudo">Images Not Found After Pulling with sudo
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -2044,6 +2064,30 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
   </button>
 </div>
 </div>
+<h3>Images Not Found After Pulling with sudo<span class="hx:absolute hx:-mt-20" id="images-not-found-after-pulling-with-sudo"></span>
+    <a href="#images-not-found-after-pulling-with-sudo" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> You pulled an image with <code>sudo podman pull</code> but RF Swift can&rsquo;t find it when running rootless.</p>
+<p><strong>Explanation:</strong> Podman stores images separately for root and rootless users. An image pulled with <code>sudo</code> is stored in the root image store, which is invisible to rootless Podman by default.</p>
+<p><strong>Solutions:</strong></p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Option 1: Pull without sudo (rootless)</span>
+</span></span><span class="line"><span class="cl">podman pull penthertz/rfswift_noble:sdr_full
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Option 2: Configure additionalimage stores to see root images</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Add to ~/.config/containers/storage.conf:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [storage]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [storage.options]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># additionalimagestores = [&#34;/var/lib/containers/storage&#34;]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p>RF Swift includes an <code>ImageInspectCompat</code> layer that automatically resolves image names across both local and remote registries, handling Podman&rsquo;s short-name resolution transparently.</p>
 <h3>Image Pull Prompts<span class="hx:absolute hx:-mt-20" id="image-pull-prompts"></span>
     <a href="#image-pull-prompts" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Podman asks which registry to use</p>
 <p><strong>Solution:</strong> Configure default registries:</p>
@@ -2104,7 +2148,7 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-11T20:26:15.000Z">March 11, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-13T14:08:27.000Z">March 13, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/guide/vpn/"
         title="VPN Inside Containers"
