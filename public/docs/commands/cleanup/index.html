@@ -9,26 +9,26 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 <title>cleanup – RF Swift</title>
-  <meta name="description" content="rfswift cleanupAutomated cleanup of Docker resources to free disk space.
-Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker resources including stopped containers, dangling images, unused volumes, and build cache. This helps maintain disk space and keep your Docker environment clean." /><link rel="canonical" href="https://rfswift.io/docs/commands/cleanup/" itemprop="url" />
+  <meta name="description" content="rfswift cleanupClean up containers and images to free disk space.
+Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once." /><link rel="canonical" href="https://rfswift.io/docs/commands/cleanup/" itemprop="url" />
 
 <meta property="og:title" content="cleanup">
 <meta
   property="og:description"
   content="
     
-      rfswift cleanupAutomated cleanup of Docker resources to free disk space.
+      rfswift cleanupClean up containers and images to free disk space.
 Synopsis
     
 
-rfswift cleanup [OPTIONS]
+rfswift cleanup &lt;subcommand&gt; [OPTIONS]
   
     
 
   
 
 
-The cleanup command removes unused Docker resources including stopped containers, dangling images, unused volumes, and build cache. This helps maintain disk space and keep your Docker environment clean.
+The cleanup command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once.
     
   ">
 <meta
@@ -41,19 +41,19 @@ The cleanup command removes unused Docker resources including stopped containers
 
 <meta
   property="article:modified_time"
-  content="2026-03-05T18:07:45+01:00">
+  content="2026-03-11T20:26:15+01:00">
 
 
 
   <meta itemprop="name" content="cleanup">
-  <meta itemprop="description" content="rfswift cleanupAutomated cleanup of Docker resources to free disk space.
-Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker resources including stopped containers, dangling images, unused volumes, and build cache. This helps maintain disk space and keep your Docker environment clean.">
-  <meta itemprop="dateModified" content="2026-03-05T18:07:45+01:00">
-  <meta itemprop="wordCount" content="637">
+  <meta itemprop="description" content="rfswift cleanupClean up containers and images to free disk space.
+Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once.">
+  <meta itemprop="dateModified" content="2026-03-11T20:26:15+01:00">
+  <meta itemprop="wordCount" content="675">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="cleanup">
-  <meta name="twitter:description" content="rfswift cleanupAutomated cleanup of Docker resources to free disk space.
-Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker resources including stopped containers, dangling images, unused volumes, and build cache. This helps maintain disk space and keep your Docker environment clean.">
+  <meta name="twitter:description" content="rfswift cleanupClean up containers and images to free disk space.
+Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once.">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
     <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -305,6 +305,22 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
     href="/docs/guide/sharing-files/"
     
   >Sharing Files &amp; Devices
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/vpn/"
+    
+  >VPN Inside Containers
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/podman/"
+    
+  >Using Podman
     </a>
               
             </li></ul>
@@ -575,21 +591,27 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
             </li>
           <li>
               <a
-                href="#options"
+                href="#subcommands"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Options</a>
+              >Subcommands</a>
+            </li>
+          <li>
+              <a
+                href="#common-options"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Common Options</a>
+            </li>
+          <li>
+              <a
+                href="#subcommand-specific-options"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Subcommand-Specific Options</a>
             </li>
           <li>
               <a
                 href="#examples"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
               >Examples</a>
-            </li>
-          <li>
-              <a
-                href="#what-gets-cleaned-up"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >What Gets Cleaned Up</a>
             </li>
           <li>
               <a
@@ -666,6 +688,22 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
     href="/docs/commands/realtime/"
     
   >realtime
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/winusb/"
+    
+  >winusb
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/doctor/"
+    
+  >doctor
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -782,6 +820,22 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
     href="/docs/guide/sharing-files/"
     
   >Sharing Files &amp; Devices
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/vpn/"
+    
+  >VPN Inside Containers
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/podman/"
+    
+  >Using Podman
     </a>
               
             </li></ul>
@@ -1099,6 +1153,22 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/winusb/"
+    
+  >winusb
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/doctor/"
+    
+  >doctor
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/engine/"
     
   >engine
@@ -1174,7 +1244,23 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#options">Options
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#subcommands">Subcommands
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#common-options">Common Options
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#subcommand-specific-options">Subcommand-Specific Options
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#containers">containers
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#images">images
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1186,19 +1272,11 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#filtering-by-age">Filtering by Age
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
         <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#real-world-scenarios">Real-World Scenarios
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#what-gets-cleaned-up">What Gets Cleaned Up
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#cleanup-targets">Cleanup Targets
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#safety-levels">Safety Levels
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1262,11 +1340,11 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
 
         <div class="content">
           <h1>cleanup</h1>
-          <h1>rfswift cleanup</h1><p>Automated cleanup of Docker resources to free disk space.</p>
+          <h1>rfswift cleanup</h1><p>Clean up containers and images to free disk space.</p>
 <h2>Synopsis<span class="hx:absolute hx:-mt-20" id="synopsis"></span>
     <a href="#synopsis" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup <span class="o">[</span>OPTIONS<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup &lt;subcommand&gt; <span class="o">[</span>OPTIONS<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1276,10 +1354,35 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
   </button>
 </div>
 </div>
-<p>The <code>cleanup</code> command removes unused Docker resources including stopped containers, dangling images, unused volumes, and build cache. This helps maintain disk space and keep your Docker environment clean.</p>
+<p>The <code>cleanup</code> command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once.</p>
 <hr>
-<h2>Options<span class="hx:absolute hx:-mt-20" id="options"></span>
-    <a href="#options" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><table>
+<h2>Subcommands<span class="hx:absolute hx:-mt-20" id="subcommands"></span>
+    <a href="#subcommands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><table>
+  <thead>
+      <tr>
+          <th>Subcommand</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>all</code></td>
+          <td>Remove both old containers and images</td>
+      </tr>
+      <tr>
+          <td><code>containers</code></td>
+          <td>Remove old containers only</td>
+      </tr>
+      <tr>
+          <td><code>images</code></td>
+          <td>Remove old images only</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2>Common Options<span class="hx:absolute hx:-mt-20" id="common-options"></span>
+    <a href="#common-options" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>These options are available on <strong>all</strong> subcommands (<code>all</code>, <code>containers</code>, <code>images</code>):</p>
+<table>
   <thead>
       <tr>
           <th>Flag</th>
@@ -1290,44 +1393,91 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
   </thead>
   <tbody>
       <tr>
-          <td><code>--all</code></td>
-          <td>Remove all unused resources</td>
-          <td>false</td>
-          <td><code>--all</code></td>
-      </tr>
-      <tr>
-          <td><code>--containers</code></td>
-          <td>Remove stopped containers only</td>
-          <td>false</td>
-          <td><code>--containers</code></td>
-      </tr>
-      <tr>
-          <td><code>--images</code></td>
-          <td>Remove unused images only</td>
-          <td>false</td>
-          <td><code>--images</code></td>
-      </tr>
-      <tr>
-          <td><code>--volumes</code></td>
-          <td>Remove unused volumes only</td>
-          <td>false</td>
-          <td><code>--volumes</code></td>
+          <td><code>--older-than</code></td>
+          <td>Remove items older than duration</td>
+          <td><code>&quot;&quot;</code></td>
+          <td><code>--older-than 7d</code></td>
       </tr>
       <tr>
           <td><code>--force</code></td>
-          <td>Skip confirmation prompts</td>
-          <td>false</td>
+          <td>Don&rsquo;t ask for confirmation</td>
+          <td><code>false</code></td>
           <td><code>--force</code></td>
+      </tr>
+      <tr>
+          <td><code>--dry-run</code></td>
+          <td>Show what would be deleted without actually deleting</td>
+          <td><code>false</code></td>
+          <td><code>--dry-run</code></td>
+      </tr>
+  </tbody>
+</table>
+<p>The <code>--older-than</code> flag accepts durations such as <code>24h</code>, <code>7d</code>, <code>1m</code>, and <code>1y</code>.</p>
+<h2>Subcommand-Specific Options<span class="hx:absolute hx:-mt-20" id="subcommand-specific-options"></span>
+    <a href="#subcommand-specific-options" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>containers<span class="hx:absolute hx:-mt-20" id="containers"></span>
+    <a href="#containers" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><table>
+  <thead>
+      <tr>
+          <th>Flag</th>
+          <th>Description</th>
+          <th>Default</th>
+          <th>Example</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>--stopped</code></td>
+          <td>Only remove stopped containers</td>
+          <td><code>false</code></td>
+          <td><code>--stopped</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3>images<span class="hx:absolute hx:-mt-20" id="images"></span>
+    <a href="#images" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><table>
+  <thead>
+      <tr>
+          <th>Flag</th>
+          <th>Description</th>
+          <th>Default</th>
+          <th>Example</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>--dangling</code></td>
+          <td>Only remove dangling (untagged) images</td>
+          <td><code>false</code></td>
+          <td><code>--dangling</code></td>
+      </tr>
+      <tr>
+          <td><code>--prune-children</code></td>
+          <td>Also remove dependent child images</td>
+          <td><code>false</code></td>
+          <td><code>--prune-children</code></td>
       </tr>
   </tbody>
 </table>
 <hr>
 <h2>Examples<span class="hx:absolute hx:-mt-20" id="examples"></span>
     <a href="#examples" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Basic Usage<span class="hx:absolute hx:-mt-20" id="basic-usage"></span>
-    <a href="#basic-usage" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Interactive cleanup (asks confirmation):</strong></p>
+    <a href="#basic-usage" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Clean both containers and images:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p><strong>Preview what would be deleted:</strong></p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --dry-run</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1340,7 +1490,7 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
 <p><strong>Full cleanup without prompts:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup --all --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1350,10 +1500,10 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
   </button>
 </div>
 </div>
-<p><strong>Remove stopped containers only:</strong></p>
+<p><strong>Remove containers only:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup --containers</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1363,10 +1513,50 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
   </button>
 </div>
 </div>
-<p><strong>Remove unused images only:</strong></p>
+<p><strong>Remove images only:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup --images</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup images</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Filtering by Age<span class="hx:absolute hx:-mt-20" id="filtering-by-age"></span>
+    <a href="#filtering-by-age" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Remove containers older than 7 days:</strong></p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers --older-than 7d</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p><strong>Remove images older than 1 month:</strong></p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup images --older-than 1m</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p><strong>Remove all resources older than 24 hours:</strong></p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --older-than 24h --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1380,8 +1570,11 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
     <a href="#real-world-scenarios" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Weekly maintenance:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Clean up stopped containers and dangling images</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup --containers --images</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove stopped containers older than a week</span>
+</span></span><span class="line"><span class="cl">rfswift cleanup containers --stopped --older-than 7d --force
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Remove dangling images</span>
+</span></span><span class="line"><span class="cl">rfswift cleanup images --dangling --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1395,7 +1588,7 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Free space before pulling large images</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup --all
+</span></span><span class="line"><span class="cl">rfswift cleanup all --force
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Then pull new images</span>
 </span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
@@ -1412,7 +1605,7 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Aggressive cleanup when disk is full</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup --all --force
+</span></span><span class="line"><span class="cl">rfswift cleanup all --force
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Check space recovered</span>
 </span></span><span class="line"><span class="cl">df -h</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
@@ -1425,11 +1618,11 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
   </button>
 </div>
 </div>
-<p><strong>Selective cleanup:</strong></p>
+<p><strong>Selective image cleanup:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Keep running containers, remove images only</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup --images --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove only dangling images and their children</span>
+</span></span><span class="line"><span class="cl">rfswift cleanup images --dangling --prune-children --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1439,11 +1632,14 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
   </button>
 </div>
 </div>
-<p><strong>Post-development cleanup:</strong></p>
+<p><strong>Safe preview before cleanup:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># After testing, clean up test containers and images</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup --containers --images</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># See what would be removed without deleting anything</span>
+</span></span><span class="line"><span class="cl">rfswift cleanup all --dry-run
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># If the list looks right, run for real</span>
+</span></span><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1453,72 +1649,14 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
   </button>
 </div>
 </div>
-<hr>
-<h2>What Gets Cleaned Up<span class="hx:absolute hx:-mt-20" id="what-gets-cleaned-up"></span>
-    <a href="#what-gets-cleaned-up" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Cleanup Targets<span class="hx:absolute hx:-mt-20" id="cleanup-targets"></span>
-    <a href="#cleanup-targets" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><table>
-  <thead>
-      <tr>
-          <th>Resource</th>
-          <th>Description</th>
-          <th>When Removed</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><strong>Stopped containers</strong></td>
-          <td>Containers not running</td>
-          <td>Always safe</td>
-      </tr>
-      <tr>
-          <td><strong>Dangling images</strong></td>
-          <td>Untagged images (<code>&lt;none&gt;:&lt;none&gt;</code>)</td>
-          <td>Always safe</td>
-      </tr>
-      <tr>
-          <td><strong>Unused images</strong></td>
-          <td>Images not used by any container</td>
-          <td>Safe if not needed</td>
-      </tr>
-      <tr>
-          <td><strong>Build cache</strong></td>
-          <td>Docker build layer cache</td>
-          <td>Safe but slows rebuilds</td>
-      </tr>
-      <tr>
-          <td><strong>Networks</strong></td>
-          <td>Unused custom networks</td>
-          <td>Usually safe</td>
-      </tr>
-  </tbody>
-</table>
-<h3>Safety Levels<span class="hx:absolute hx:-mt-20" id="safety-levels"></span>
-    <a href="#safety-levels" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Safe to remove:</strong></p>
-<ul>
-<li>✅ Stopped containers (can recreate)</li>
-<li>✅ Dangling images (no tag, no use)</li>
-<li>✅ Build cache (recreated on next build)</li>
-<li>✅ Unused networks</li>
-</ul>
-<p><strong>Caution required:</strong></p>
-<ul>
-<li>⚠️ Unused images (may need later)</li>
-<li>⚠️ Unused volumes (may contain data)</li>
-</ul>
-<p><strong>Never removed:</strong></p>
-<ul>
-<li>❌ Running containers</li>
-<li>❌ Images used by running containers</li>
-<li>❌ Volumes attached to containers</li>
-</ul>
 <hr>
 <h2>Cleanup Strategies<span class="hx:absolute hx:-mt-20" id="cleanup-strategies"></span>
     <a href="#cleanup-strategies" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Conservative Strategy<span class="hx:absolute hx:-mt-20" id="conservative-strategy"></span>
-    <a href="#conservative-strategy" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Remove only clearly unused resources:</p>
+    <a href="#conservative-strategy" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Remove only stopped containers and dangling images:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Stopped containers only</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup --containers --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers --stopped --force
+</span></span><span class="line"><span class="cl">rfswift cleanup images --dangling --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1535,11 +1673,10 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
 <li>Preserving development environments</li>
 </ul>
 <h3>Balanced Strategy<span class="hx:absolute hx:-mt-20" id="balanced-strategy"></span>
-    <a href="#balanced-strategy" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Remove most unused resources:</p>
+    <a href="#balanced-strategy" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Remove older unused resources:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Containers and images</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup --all</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --older-than 7d --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1559,8 +1696,7 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
     <a href="#aggressive-strategy" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Remove everything unused:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Full cleanup</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup --all --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1612,14 +1748,14 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use sudo</span>
-</span></span><span class="line"><span class="cl">sudo rfswift cleanup --all --force
+</span></span><span class="line"><span class="cl">sudo rfswift cleanup all --force
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Or add user to docker group</span>
 </span></span><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
 </span></span><span class="line"><span class="cl">newgrp docker
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Then retry</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup --all --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1667,7 +1803,7 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">🧹</div></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Regular Maintenance</strong>: Schedule regular cleanup with <code>rfswift cleanup --containers --images --force</code> to prevent disk space issues. Daily or weekly cleanup keeps your system healthy!</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Regular Maintenance</strong>: Schedule regular cleanup with <code>rfswift cleanup all --older-than 7d --force</code> to prevent disk space issues. Daily or weekly cleanup keeps your system healthy!</div>
   </div>
 </div>
 
@@ -1675,7 +1811,7 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Data Loss Risk</strong>: The <code>--volumes</code> flag removes ALL unused volumes, which may contain important data. Always check volumes before removing them, and backup any important data!</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Use Dry Run First</strong>: Before running a large cleanup, use <code>--dry-run</code> to preview what will be deleted. This helps avoid accidentally removing resources you still need.</div>
   </div>
 </div>
 
@@ -1683,14 +1819,14 @@ Synopsis rfswift cleanup [OPTIONS] The cleanup command removes unused Docker res
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Safe Defaults</strong>: Without flags, <code>cleanup</code> removes stopped containers and dangling images only - the safest cleanup. Use <code>--all</code> for more aggressive cleanup when you need more space.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Targeted Cleanup</strong>: Use the <code>containers</code> and <code>images</code> subcommands with their specific flags (<code>--stopped</code>, <code>--dangling</code>, <code>--prune-children</code>) for precise control over what gets removed.</div>
   </div>
 </div>
 
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-05T18:07:45.000Z">March 5, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-11T20:26:15.000Z">March 11, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/commands/last/"
         title="last"
