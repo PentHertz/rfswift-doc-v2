@@ -80,6 +80,22 @@ Both flags are optional when using the interactive wizard. If omitted in an inte
 | `--desktop-pass STRING` | Set VNC password for desktop access | None | `--desktop-pass "mypassword"` |
 | `--desktop-ssl` | Enable SSL/TLS for desktop connections | false | `--desktop-ssl` |
 
+### Profile Options
+
+| Flag | Description | Example |
+|------|-------------|---------|
+| `--profile STRING` | Use a preset profile | `--profile sdr-full` |
+
+Profiles bundle image, network, features, devices, ports, capabilities, and cgroup rules into a single named preset. CLI flags override profile values. See [`rfswift profile`](/docs/commands/profile/) for details.
+
+```bash
+# Use a profile
+rfswift run --profile sdr-full -n my_sdr
+
+# Profile with CLI overrides
+rfswift run --profile wifi -n my_wifi -t nat --realtime
+```
+
 ### VPN Options
 
 | Flag | Description | Example |
@@ -154,6 +170,23 @@ rfswift run -i sdr_full -n rf_pentest \
   -g "c 189:* rwm" \
   -b ~/captures:/root/captures \
   --record
+```
+
+### With Profiles
+
+**Quick container from a profile:**
+```bash
+rfswift run --profile sdr-full -n my_sdr
+```
+
+**Profile with image override:**
+```bash
+rfswift run --profile wifi -n wifi_custom -i penthertz/rfswift_noble:sdr_full
+```
+
+**Profile with NAT isolation:**
+```bash
+rfswift run --profile pentest-full -n pentest_session
 ```
 
 ### With Devices
@@ -614,6 +647,8 @@ Configure container network isolation:
 | Mode | Description | Use Case |
 |------|-------------|----------|
 | `host` | No isolation (default) | Most RF tools, full network access |
+| `nat` | Isolated NAT network (RF Swift managed) | Pentesting, desktop mode, network isolation |
+| `nat:NAME` | Join an existing NAT network | Multiple containers on same subnet |
 | `bridge` | Default Docker bridge | Web services, API servers |
 | `none` | No network access | Offline analysis, malware analysis |
 | `container:NAME` | Share network with another container | Linked services |
@@ -622,12 +657,22 @@ Configure container network isolation:
 # Full network access (default)
 -t host
 
+# Isolated NAT network (auto-creates subnet)
+-t nat
+
+# Join existing NAT network
+-t nat:rfswift_nat_mylab
+
 # Isolated with port forwarding
 -t bridge -w 8080:80/tcp
 
 # Complete isolation
 -t none
 ```
+
+{{< callout type="info" >}}
+**NAT mode** creates an isolated network with its own subnet. RF Swift automatically manages the network lifecycle. When using NAT with desktop mode, port bindings are configured automatically so you can access the desktop from your browser on the host.
+{{< /callout >}}
 
 ### Port Configuration
 
@@ -774,15 +819,21 @@ rfswift run
 
 The wizard guides you through the following steps:
 
-1. **Image Selection** -- If local images are available, shows a scrollable picker list. Otherwise, prompts for manual input.
+0. **Profile Selection** (if profiles are available) -- Choose a profile to pre-fill settings, or select "No profile" for manual configuration. If a profile is selected, you're asked whether to **use it as-is** (fast path: only asks for container name) or **customize** all settings with profile values pre-filled.
+
+1. **Image Selection** -- If a profile was selected, its image appears first with all local images available as alternatives, plus "Other (enter manually)". Without a profile, shows a scrollable picker of local images.
 
 2. **Container Name** -- Required text input (placeholder: `my_sdr`).
 
-3. **Volume Bindings** -- Asks if you want to add volume bindings, then prompts for comma-separated `host:container` paths (placeholder: `/home/user/data:/root/data,/tmp/captures:/tmp/captures`).
+3. **Volume Bindings** -- Asks if you want to add volume bindings, then prompts for comma-separated `host:container` paths.
 
-4. **Device Mappings** -- Asks if you want to add device mappings, then prompts for comma-separated device paths (placeholder: `/dev/ttyUSB0,/dev/bus/usb`).
+4. **Device Mappings** -- Asks if you want to add device mappings, then prompts for comma-separated device paths.
 
-5. **Feature Toggles** -- Multi-select checklist:
+5. **Port Mappings** -- Simplified port binding step. Enter `hostPort:containerPort` pairs (e.g., `8080:80,4443:443`). RF Swift auto-generates both exposed ports and port bindings from this input.
+
+6. **Network Mode** -- Select from host, NAT (create new isolated network), join existing NAT network, or bridge.
+
+7. **Feature Toggles** -- Multi-select checklist:
    - Remote Desktop (VNC/noVNC)
    - Desktop SSL/TLS
    - Disable X11 forwarding
@@ -790,26 +841,58 @@ The wizard guides you through the following steps:
    - Realtime mode (audio/SDR)
    - VPN (WireGuard/OpenVPN/Tailscale/Netbird)
 
-6. **VPN Configuration** (if VPN selected) -- Prompts for VPN type, then type-specific input:
-   - **WireGuard**: Config file path (placeholder: `./wg0.conf`)
-   - **OpenVPN**: Config file path (placeholder: `./client.ovpn`)
-   - **Tailscale**: Auth key (placeholder: `tskey-auth-xxxxx or empty`)
-   - **Netbird**: Setup key (placeholder: `setup key or empty`)
+8. **Desktop Port Configuration** (if desktop enabled with non-host network) -- Choose the host bind address (`127.0.0.1` or `0.0.0.0`) and port for the desktop service.
 
-7. **Configuration Recap** -- Displays a summary of all selected options.
+9. **VPN Configuration** (if VPN selected) -- Prompts for VPN type, then type-specific input.
 
-8. **CLI Equivalent** -- Shows the equivalent CLI command you could use to reproduce this configuration without the wizard.
+10. **Capabilities** -- Multi-select from 18 common Linux capabilities with descriptions (NET_ADMIN, NET_RAW, SYS_RAWIO, SYS_ADMIN, SYS_PTRACE, SYS_NICE, etc.).
 
-9. **Final Confirmation** -- `Create this container?` Yes/No prompt.
+11. **Cgroup Rules** -- Multi-select from common device cgroup rules with descriptions:
+    - `c 189:* rwm` — USB devices (SDR dongles, serial adapters)
+    - `c 188:* rwm` — USB serial (ttyUSB)
+    - `c 166:* rwm` — ACM modems (ttyACM)
+    - `c 116:* rwm` — ALSA sound devices
+    - `c 226:* rwm` — DRI/GPU rendering
+    - `c 13:* rwm` — Input devices (HID, joystick)
+    - `c 137:* rwm` — VHCI (virtual HCI for Bluetooth)
+    - And more...
 
-### Example Wizard Session
+12. **Configuration Recap** -- Displays a summary of all selected options.
+
+13. **CLI Equivalent** -- Shows the equivalent `rfswift run` command.
+
+14. **Final Confirmation** -- `Create this container?` Yes/No prompt.
+
+### Example: Wizard with Profile (Fast Path)
 
 ```
+? Start from a profile?
+  > sdr-full — Full SDR suite with all tools and device support
+
+? Use profile 'sdr-full' as-is?
+  > Yes, use as-is
+
+? Container name: my_sdr_work
+
+──────────────────────────────────────────────────
+Container Configuration (from profile):
+  Image:    penthertz/rfswift_noble:sdr_full
+  Name:     my_sdr_work
+  Network:  host
+  Realtime: enabled
+──────────────────────────────────────────────────
+
+? Create this container? Yes
+```
+
+### Example: Wizard without Profile
+
+```
+? Start from a profile?
+  > No profile (manual configuration)
+
 ? Select an image:
   > penthertz/rfswift_noble:sdr_full
-    penthertz/rfswift_noble:sdr_light
-    penthertz/rfswift_noble:bluetooth
-    penthertz/rfswift_noble:wifi
 
 ? Container name: my_sdr_work
 
@@ -819,28 +902,42 @@ The wizard guides you through the following steps:
 ? Add device mappings? Yes
 ? Device paths: /dev/bus/usb
 
+? Expose ports? No
+
+? Network mode: Host
+
 ? Select features:
   [x] Realtime mode (audio/SDR)
-  [ ] Remote Desktop (VNC/noVNC)
-  [ ] Privileged mode
   [x] VPN (WireGuard/OpenVPN/Tailscale/Netbird)
 
 ? VPN type: tailscale
 ? Auth key (optional):
 
+? Add extra Linux capabilities? Yes
+? Select capabilities:
+  [x] NET_ADMIN — network config, monitor mode, packet capture
+  [x] NET_RAW — raw sockets, packet injection
+
+? Add device cgroup rules? Yes
+? Select cgroup rules:
+  [x] c 189:* rwm — USB devices (SDR dongles, serial adapters)
+
 ──────────────────────────────────────────────────
-Configuration Recap:
-  Image:    penthertz/rfswift_noble:sdr_full
-  Name:     my_sdr_work
-  Bindings: ~/captures:/root/captures
-  Devices:  /dev/bus/usb
-  Realtime: yes
-  VPN:      tailscale
+Container Configuration:
+  Image:        penthertz/rfswift_noble:sdr_full
+  Name:         my_sdr_work
+  Bindings:     ~/captures:/root/captures
+  Devices:      /dev/bus/usb
+  Capabilities: NET_ADMIN,NET_RAW
+  Cgroups:      c 189:* rwm
+  Realtime:     enabled
+  VPN:          tailscale
 ──────────────────────────────────────────────────
 
 Equivalent CLI command:
   rfswift run -i penthertz/rfswift_noble:sdr_full -n my_sdr_work \
-    -b ~/captures:/root/captures -s /dev/bus/usb --realtime --vpn tailscale
+    -b ~/captures:/root/captures -s /dev/bus/usb \
+    -a NET_ADMIN,NET_RAW -g "c 189:* rwm" --realtime --vpn tailscale
 
 ? Create this container? Yes
 ```
@@ -1141,6 +1238,7 @@ rfswift run -i sdr_full -n assessment \
 
 ## Related Commands
 
+- [`profile`](/docs/commands/profile) - Manage container profiles (presets)
 - [`exec`](/docs/commands/exec) - Enter an existing container
 - [`stop`](/docs/commands/stop) - Stop a running container
 - [`remove`](/docs/commands/remove) - Remove a container

@@ -329,6 +329,26 @@ rfswift --engine docker exec -c my_container
 rfswift --engine podman exec -c my_container
 ```
 
+### Images Not Found After Pulling with sudo
+
+**Problem:** You pulled an image with `sudo podman pull` but RF Swift can't find it when running rootless.
+
+**Explanation:** Podman stores images separately for root and rootless users. An image pulled with `sudo` is stored in the root image store, which is invisible to rootless Podman by default.
+
+**Solutions:**
+```bash
+# Option 1: Pull without sudo (rootless)
+podman pull penthertz/rfswift_noble:sdr_full
+
+# Option 2: Configure additionalimage stores to see root images
+# Add to ~/.config/containers/storage.conf:
+# [storage]
+# [storage.options]
+# additionalimagestores = ["/var/lib/containers/storage"]
+```
+
+RF Swift includes an `ImageInspectCompat` layer that automatically resolves image names across both local and remote registries, handling Podman's short-name resolution transparently.
+
 ### Image Pull Prompts
 
 **Problem:** Podman asks which registry to use

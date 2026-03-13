@@ -72,6 +72,7 @@ Available Commands:
   commit       Commit a container
   completion   Generate and install completion script
   delete       Delete an rfswift images
+  doctor       Diagnose system environment
   download     Download and save an image to tar.gz
   exec         Exec a command
   export       Export containers or images
@@ -83,6 +84,7 @@ Available Commands:
   last         Last container run
   log          Record and replay terminal sessions
   ports        Manage container ports
+  profile      Manage container profiles (presets)
   realtime     Manage realtime mode for SDR operations
   remove       Remove a container
   rename       Rename a container
@@ -211,6 +213,23 @@ rfswift run -i sdr_full -n my_sdr_container
 ```
 
 RF Swift auto-detects whether Docker or Podman is available and uses the appropriate engine. All commands work identically regardless of the backend.
+
+**Using Profiles for Quick Setup:**
+
+Profiles are YAML presets that bundle image, network, features, and device settings. Use them to skip repetitive configuration:
+
+```bash
+# Initialize default profiles (first time)
+rfswift profile init
+
+# Create a container from a profile
+rfswift run --profile sdr-full -n my_sdr
+
+# List available profiles
+rfswift profile list
+```
+
+The interactive wizard also offers profile selection as the first step — select a profile, choose "Use as-is", enter a container name, and you're done. See [`rfswift profile`](/docs/commands/profile/) for details.
 
 **With Realtime Mode for SDR Operations:**
 
@@ -496,6 +515,8 @@ RF Swift supports various network isolation modes:
 | Mode | Description |
 |------|-------------|
 | `host` | No network isolation (default) |
+| `nat` | RF Swift managed NAT network with automatic subnet allocation |
+| `nat:NAME` | Join a specific named NAT network (shared with other containers) |
 | `bridge` | Default Docker network driver with isolation |
 | `none` | Complete network isolation |
 | `overlay` | Connect multiple Docker daemons |
@@ -506,6 +527,8 @@ RF Swift supports various network isolation modes:
 | Mode | Description |
 |------|-------------|
 | `host` | No network isolation (default) |
+| `nat` | RF Swift managed NAT network with automatic subnet allocation |
+| `nat:NAME` | Join a specific named NAT network (shared with other containers) |
 | `bridge` | Podman CNI/netavark bridge with isolation |
 | `none` | Complete network isolation |
 | `slirp4netns` | Rootless user-mode networking (default in rootless) |
@@ -528,6 +551,21 @@ This command:
 - Uses the `-t bridge` option to enable bridge networking
 - Maps container port 8000 to host port 80 on localhost with `-w 8000:127.0.0.1:80/tcp`
 - Exposes port 8000 to other containers with `-z 8000`
+
+**NAT Mode:**
+
+RF Swift provides a managed NAT mode (`-t nat`) that automatically creates an isolated Docker network with its own subnet. Multiple containers can share the same NAT network using the `nat:NAME` syntax:
+
+```bash
+# Create a container in its own NAT network
+rfswift run -i sdr_full -n isolated_sdr -t nat
+
+# Create containers that share a NAT network
+rfswift run -i sdr_full -n sdr_work -t nat:lab_network
+rfswift run -i bluetooth -n bt_work -t nat:lab_network
+```
+
+NAT mode is useful for network isolation, pentest labs, or when host mode is not desirable. Port forwarding works the same as bridge mode (`-w` flag).
 
 {{< callout type="warning" >}}
 For Wi-Fi and Bluetooth tools, you may need to add the `NET_ADMIN` capability: `rfswift run -i wifi_tools -n my_container -a NET_ADMIN`
@@ -649,6 +687,10 @@ rfswift exec -c my_container \
 
 {{< callout type="info" >}}
 When desktop mode is enabled, RF Swift automatically handles VNC server startup, port binding configuration, and environment variable injection — no manual setup required inside the container. The desktop provides a full LXQt environment with application menu, taskbar, and window management.
+{{< /callout >}}
+
+{{< callout type="info" >}}
+**Desktop in NAT/bridge mode**: When using desktop mode with a non-host network (`nat`, `bridge`), RF Swift automatically forces the in-container listen address to `0.0.0.0` so that Docker's port forwarding can reach the VNC server. The interactive wizard will also prompt you to configure the bind address and port when desktop is enabled with a non-host network.
 {{< /callout >}}
 
 {{< callout type="warning" >}}

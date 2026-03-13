@@ -51,6 +51,7 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
 
 {{< cards >}}
   {{< card link="run" title="run" icon="play" subtitle="Create and start a new container" >}}
+  {{< card link="profile" title="profile" icon="collection" subtitle="Manage container profiles (presets)" >}}
   {{< card link="exec" title="exec" icon="terminal" subtitle="Execute commands in a running container" >}}
   {{< card link="stop" title="stop" icon="pause" subtitle="Stop a running container" >}}
   {{< card link="remove" title="remove" icon="trash" subtitle="Remove a container" >}}
@@ -124,6 +125,9 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
 | Command | Purpose |
 |---------|---------|
 | `rfswift run -i IMAGE -n NAME` | Create new container |
+| `rfswift run --profile PROFILE -n NAME` | Create container from profile |
+| `rfswift profile list` | List available profiles |
+| `rfswift profile init` | Generate default profiles |
 | `rfswift exec -c CONTAINER` | Enter container |
 | `rfswift last` | List recent containers |
 | `rfswift bindings add -c CONTAINER -d -t DEVICE` | Add device |

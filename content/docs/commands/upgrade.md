@@ -89,35 +89,22 @@ graph LR
 | Files in preserved dirs | ✅ Yes | Complete copy |
 | Other directories | ❌ No | Use new image defaults |
 | Container name | ✅ Yes | Inherited by new container |
-| Mounted volumes | ⚠️ Reconfigure | Must remount manually |
-| Network settings | ⚠️ Reconfigure | Must reconfigure manually |
-| Port bindings | ⚠️ Reconfigure | Must reconfigure manually |
+| Volume bindings | ✅ Yes | Automatically inherited |
+| Network settings | ✅ Yes | Automatically inherited |
+| Port bindings | ✅ Yes | Automatically inherited |
+| Device mappings | ✅ Yes | Automatically inherited |
+| Capabilities | ✅ Yes | Automatically inherited |
+| Cgroup rules | ✅ Yes | Automatically inherited |
+| Environment variables | ✅ Yes | Automatically inherited |
+| Privileged mode | ✅ Yes | Automatically inherited |
+| Seccomp profile | ✅ Yes | Automatically inherited |
+
+The upgrade command now **automatically preserves** all host bindings, network settings, device mappings, capabilities, cgroup rules, and port bindings from the original container. A timestamped backup image is created before the old container is removed.
 
 ### What Doesn't Get Preserved
 
-**Important:** The upgrade command creates a completely new container, so:
-
-- ❌ Volume bindings (must remount)
-- ❌ Device mappings (must reconfigure)
-- ❌ Network configuration (must reconfigure)
-- ❌ Port bindings (must reconfigure)
-- ❌ Capabilities (must reconfigure)
-- ❌ Cgroup rules (must reconfigure)
-
-**Solution:** After upgrade, reconfigure these settings:
-```bash
-# Upgrade
-rfswift upgrade -c work -r /root/data
-
-# Reconfigure volumes
-rfswift bindings add -c work -s ~/captures -t /root/captures
-
-# Reconfigure devices
-rfswift bindings add -c work -d -s /dev/device -t /dev/device
-
-# Reconfigure capabilities
-rfswift capabilities add -c work -p NET_ADMIN
-```
+- ❌ Files outside of `-r` directories (new image defaults apply)
+- ❌ Running processes (container is restarted fresh)
 
 ---
 
@@ -182,11 +169,11 @@ rfswift remove -c container_old
 
 ### Configuration Lost After Upgrade
 
-**Problem:** Network/volume/device settings missing
+**Problem:** Network/volume/device settings missing after upgrade
 
-**Cause:** Upgrade creates new container, doesn't copy Docker configuration
+**Note:** This should no longer occur — RF Swift now automatically preserves all container settings (bindings, devices, network, capabilities, cgroups, ports) during upgrade. If you experience this issue, ensure you're running the latest version of RF Swift.
 
-**Solution:**
+**Workaround (for older versions):**
 ```bash
 # Document current configuration before upgrade
 docker inspect old_container > old_container_config.json
@@ -231,8 +218,8 @@ rfswift exec -c container
 **Always Backup First**: Before upgrading, create a backup with `export container`. This allows easy rollback if the upgrade has issues. The old container is kept as `container_old` for verification.
 {{< /callout >}}
 
-{{< callout type="warning" >}}
-**Reconfiguration Required**: Upgrade creates a new container, so volume bindings, device mappings, network settings, and capabilities must be reconfigured manually after upgrade. Document these before upgrading!
+{{< callout type="info" >}}
+**Settings Preserved**: RF Swift now automatically inherits all container settings (bindings, devices, network mode, capabilities, cgroup rules, ports, environment variables) from the original container during upgrade. No manual reconfiguration needed.
 {{< /callout >}}
 
 {{< callout type="info" >}}

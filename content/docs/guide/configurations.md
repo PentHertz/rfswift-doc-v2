@@ -145,6 +145,46 @@ repotag = penthertz/rfswift_noble
 ...
 ``` 
 
+## Container Profiles
+
+In addition to the global `config.ini`, RF Swift supports **profiles** — YAML presets that bundle image, network mode, features, device mappings, capabilities, cgroup rules, and port bindings into a single named preset.
+
+### Profile Storage
+
+Profiles are stored as individual `.yaml` files in a platform-specific directory:
+
+{{< tabs items="Linux,macOS,Windows" >}}
+  {{< tab >}}
+```
+~/.config/rfswift/profiles/
+```
+  {{< /tab >}}
+  {{< tab >}}
+```
+~/Library/Application Support/rfswift/profiles/
+```
+  {{< /tab >}}
+  {{< tab >}}
+```
+%APPDATA%\rfswift\profiles\
+```
+  {{< /tab >}}
+{{< /tabs >}}
+
+Generate default profiles with `rfswift profile init`, then use them:
+
+```bash
+# Create a container from a profile
+rfswift run --profile sdr-full -n my_sdr
+
+# CLI flags override profile values
+rfswift run --profile wifi -n my_wifi -i penthertz/rfswift_noble:sdr_full
+```
+
+See the [`profile` command reference](/docs/commands/profile/) for full details on creating, listing, and managing profiles.
+
+---
+
 ## Command-Line Configuration
 
 You can override any configuration setting when running a container using command-line flags with the `run` command:
@@ -159,6 +199,7 @@ rfswift run [flags]
 Flags:
   -b, --bind string           Extra bindings (separate with commas)
   -w, --bindedports string    Ports to bind between host and container
+      --profile string        Use a named profile preset
   -a, --capabilities string   Extra capabilities (separate with commas)
   -g, --cgroups string        Extra cgroup rules (separate with commas)
   -e, --command string        Command to execute (default: '/bin/bash')
