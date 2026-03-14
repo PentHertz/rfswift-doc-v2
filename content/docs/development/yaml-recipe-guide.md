@@ -888,7 +888,6 @@ cat > README.md << 'EOF'
 ```bash
 rfswift build -r sdr/rtlsdr-basic.yaml
 ```
-EOF
 
 # Share on GitHub
 git init
@@ -901,7 +900,7 @@ git push -u origin main
 ### Community Recipes
 
 Browse community recipes:
-- [Official RF Swift Recipes](https://github.com/PentHertz/RF-Swift-Recipes)
+- [Official RF Swift Recipes](https://github.com/PentHertz/RF-Swift/blob/main/recipes)
 - Share your recipes on Discord
 - Contribute to the recipe library
 
