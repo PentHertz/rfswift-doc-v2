@@ -41,15 +41,15 @@ The upgrade command follows this pattern: pull new image → create new containe
 
 <meta
   property="article:modified_time"
-  content="2026-03-11T20:26:15+01:00">
+  content="2026-03-13T14:08:27+01:00">
 
 
 
   <meta itemprop="name" content="upgrade">
   <meta itemprop="description" content="rfswift upgradeUpgrade containers to newer image versions while preserving selected data directories.
 Synopsis rfswift upgrade -c CONTAINER_NAME [-i IMAGE_NAME] [-r REPOSITORIES] The upgrade command follows this pattern: pull new image → create new container → copy preserved directories → inherit original container name. This enables seamless version upgrades while maintaining important data.">
-  <meta itemprop="dateModified" content="2026-03-11T20:26:15+01:00">
-  <meta itemprop="wordCount" content="753">
+  <meta itemprop="dateModified" content="2026-03-13T14:08:27+01:00">
+  <meta itemprop="wordCount" content="786">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="upgrade">
   <meta name="twitter:description" content="rfswift upgradeUpgrade containers to newer image versions while preserving selected data directories.
@@ -437,6 +437,14 @@ Synopsis rfswift upgrade -c CONTAINER_NAME [-i IMAGE_NAME] [-r REPOSITORIES] The
     href="/docs/commands/exec/"
     
   >exec
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/profile/"
+    
+  >profile
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -936,6 +944,14 @@ Synopsis rfswift upgrade -c CONTAINER_NAME [-i IMAGE_NAME] [-r REPOSITORIES] The
     href="/docs/commands/exec/"
     
   >exec
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/profile/"
+    
+  >profile
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1472,55 +1488,58 @@ Synopsis rfswift upgrade -c CONTAINER_NAME [-i IMAGE_NAME] [-r REPOSITORIES] The
           <td>Inherited by new container</td>
       </tr>
       <tr>
-          <td>Mounted volumes</td>
-          <td>⚠️ Reconfigure</td>
-          <td>Must remount manually</td>
+          <td>Volume bindings</td>
+          <td>✅ Yes</td>
+          <td>Automatically inherited</td>
       </tr>
       <tr>
           <td>Network settings</td>
-          <td>⚠️ Reconfigure</td>
-          <td>Must reconfigure manually</td>
+          <td>✅ Yes</td>
+          <td>Automatically inherited</td>
       </tr>
       <tr>
           <td>Port bindings</td>
-          <td>⚠️ Reconfigure</td>
-          <td>Must reconfigure manually</td>
+          <td>✅ Yes</td>
+          <td>Automatically inherited</td>
+      </tr>
+      <tr>
+          <td>Device mappings</td>
+          <td>✅ Yes</td>
+          <td>Automatically inherited</td>
+      </tr>
+      <tr>
+          <td>Capabilities</td>
+          <td>✅ Yes</td>
+          <td>Automatically inherited</td>
+      </tr>
+      <tr>
+          <td>Cgroup rules</td>
+          <td>✅ Yes</td>
+          <td>Automatically inherited</td>
+      </tr>
+      <tr>
+          <td>Environment variables</td>
+          <td>✅ Yes</td>
+          <td>Automatically inherited</td>
+      </tr>
+      <tr>
+          <td>Privileged mode</td>
+          <td>✅ Yes</td>
+          <td>Automatically inherited</td>
+      </tr>
+      <tr>
+          <td>Seccomp profile</td>
+          <td>✅ Yes</td>
+          <td>Automatically inherited</td>
       </tr>
   </tbody>
 </table>
+<p>The upgrade command now <strong>automatically preserves</strong> all host bindings, network settings, device mappings, capabilities, cgroup rules, and port bindings from the original container. A timestamped backup image is created before the old container is removed.</p>
 <h3>What Doesn&rsquo;t Get Preserved<span class="hx:absolute hx:-mt-20" id="what-doesnt-get-preserved"></span>
-    <a href="#what-doesnt-get-preserved" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Important:</strong> The upgrade command creates a completely new container, so:</p>
-<ul>
-<li>❌ Volume bindings (must remount)</li>
-<li>❌ Device mappings (must reconfigure)</li>
-<li>❌ Network configuration (must reconfigure)</li>
-<li>❌ Port bindings (must reconfigure)</li>
-<li>❌ Capabilities (must reconfigure)</li>
-<li>❌ Cgroup rules (must reconfigure)</li>
+    <a href="#what-doesnt-get-preserved" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
+<li>❌ Files outside of <code>-r</code> directories (new image defaults apply)</li>
+<li>❌ Running processes (container is restarted fresh)</li>
 </ul>
-<p><strong>Solution:</strong> After upgrade, reconfigure these settings:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Upgrade</span>
-</span></span><span class="line"><span class="cl">rfswift upgrade -c work -r /root/data
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reconfigure volumes</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -c work -s ~/captures -t /root/captures
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reconfigure devices</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -c work -d -s /dev/device -t /dev/device
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reconfigure capabilities</span>
-</span></span><span class="line"><span class="cl">rfswift capabilities add -c work -p NET_ADMIN</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
 <hr>
 <h2>Troubleshooting<span class="hx:absolute hx:-mt-20" id="troubleshooting"></span>
     <a href="#troubleshooting" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Container Not Found<span class="hx:absolute hx:-mt-20" id="container-not-found"></span>
@@ -1605,9 +1624,9 @@ Synopsis rfswift upgrade -c CONTAINER_NAME [-i IMAGE_NAME] [-r REPOSITORIES] The
 </div>
 </div>
 <h3>Configuration Lost After Upgrade<span class="hx:absolute hx:-mt-20" id="configuration-lost-after-upgrade"></span>
-    <a href="#configuration-lost-after-upgrade" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Network/volume/device settings missing</p>
-<p><strong>Cause:</strong> Upgrade creates new container, doesn&rsquo;t copy Docker configuration</p>
-<p><strong>Solution:</strong></p>
+    <a href="#configuration-lost-after-upgrade" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Network/volume/device settings missing after upgrade</p>
+<p><strong>Note:</strong> This should no longer occur — RF Swift now automatically preserves all container settings (bindings, devices, network, capabilities, cgroups, ports) during upgrade. If you experience this issue, ensure you&rsquo;re running the latest version of RF Swift.</p>
+<p><strong>Workaround (for older versions):</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Document current configuration before upgrade</span>
@@ -1667,11 +1686,11 @@ Synopsis rfswift upgrade -c CONTAINER_NAME [-i IMAGE_NAME] [-r REPOSITORIES] The
   </div>
 </div>
 
-<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200">
-  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Reconfiguration Required</strong>: Upgrade creates a new container, so volume bindings, device mappings, network settings, and capabilities must be reconfigured manually after upgrade. Document these before upgrading!</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Settings Preserved</strong>: RF Swift now automatically inherits all container settings (bindings, devices, network mode, capabilities, cgroup rules, ports, environment variables) from the original container during upgrade. No manual reconfiguration needed.</div>
   </div>
 </div>
 
@@ -1686,7 +1705,7 @@ Synopsis rfswift upgrade -c CONTAINER_NAME [-i IMAGE_NAME] [-r REPOSITORIES] The
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-11T20:26:15.000Z">March 11, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-13T14:08:27.000Z">March 13, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/commands/download/"
         title="download"

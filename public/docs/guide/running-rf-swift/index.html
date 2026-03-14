@@ -44,15 +44,15 @@ DockerPodman On Linux, unless you are using Docker Desktop, you will need to use
 
 <meta
   property="article:modified_time"
-  content="2026-03-11T20:26:15+01:00">
+  content="2026-03-13T14:08:27+01:00">
 
 
 
   <meta itemprop="name" content="Running RF Swift">
   <meta itemprop="description" content="Important settingsRF Swift provides a streamlined command-line interface to manage containers for RF and hardware security applications. This guide covers essential commands and workflows.
 DockerPodman On Linux, unless you are using Docker Desktop, you will need to use sudo with the rfswift command for operations that require elevated privileges. To avoid using sudo for every Docker command, add your user to the docker group:">
-  <meta itemprop="dateModified" content="2026-03-11T20:26:15+01:00">
-  <meta itemprop="wordCount" content="3424">
+  <meta itemprop="dateModified" content="2026-03-13T14:08:27+01:00">
+  <meta itemprop="wordCount" content="3714">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Running RF Swift">
   <meta name="twitter:description" content="Important settingsRF Swift provides a streamlined command-line interface to manage containers for RF and hardware security applications. This guide covers essential commands and workflows.
@@ -479,6 +479,14 @@ DockerPodman On Linux, unless you are using Docker Desktop, you will need to use
     href="/docs/commands/exec/"
     
   >exec
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/profile/"
+    
+  >profile
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -939,6 +947,14 @@ DockerPodman On Linux, unless you are using Docker Desktop, you will need to use
     href="/docs/commands/exec/"
     
   >exec
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/profile/"
+    
+  >profile
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1488,6 +1504,7 @@ DockerPodman On Linux, unless you are using Docker Desktop, you will need to use
 </span></span><span class="line"><span class="cl">  commit       Commit a container
 </span></span><span class="line"><span class="cl">  completion   Generate and install completion script
 </span></span><span class="line"><span class="cl">  delete       Delete an rfswift images
+</span></span><span class="line"><span class="cl">  doctor       Diagnose system environment
 </span></span><span class="line"><span class="cl">  download     Download and save an image to tar.gz
 </span></span><span class="line"><span class="cl">  <span class="nb">exec</span>         Exec a <span class="nb">command</span>
 </span></span><span class="line"><span class="cl">  <span class="nb">export</span>       Export containers or images
@@ -1499,6 +1516,7 @@ DockerPodman On Linux, unless you are using Docker Desktop, you will need to use
 </span></span><span class="line"><span class="cl">  last         Last container run
 </span></span><span class="line"><span class="cl">  log          Record and replay terminal sessions
 </span></span><span class="line"><span class="cl">  ports        Manage container ports
+</span></span><span class="line"><span class="cl">  profile      Manage container profiles <span class="o">(</span>presets<span class="o">)</span>
 </span></span><span class="line"><span class="cl">  realtime     Manage realtime mode <span class="k">for</span> SDR operations
 </span></span><span class="line"><span class="cl">  remove       Remove a container
 </span></span><span class="line"><span class="cl">  rename       Rename a container
@@ -1732,6 +1750,28 @@ DockerPodman On Linux, unless you are using Docker Desktop, you will need to use
 </div>
 </div>
 <p>RF Swift auto-detects whether Docker or Podman is available and uses the appropriate engine. All commands work identically regardless of the backend.</p>
+<p><strong>Using Profiles for Quick Setup:</strong></p>
+<p>Profiles are YAML presets that bundle image, network, features, and device settings. Use them to skip repetitive configuration:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Initialize default profiles (first time)</span>
+</span></span><span class="line"><span class="cl">rfswift profile init
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Create a container from a profile</span>
+</span></span><span class="line"><span class="cl">rfswift run --profile sdr-full -n my_sdr
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># List available profiles</span>
+</span></span><span class="line"><span class="cl">rfswift profile list</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p>The interactive wizard also offers profile selection as the first step — select a profile, choose &ldquo;Use as-is&rdquo;, enter a container name, and you&rsquo;re done. See <a href="/docs/commands/profile/"><code>rfswift profile</code></a> for details.</p>
 <p><strong>With Realtime Mode for SDR Operations:</strong></p>
 <p>For optimal SDR performance with reduced buffer underruns, use the <code>--realtime</code> flag:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
@@ -2181,6 +2221,14 @@ DockerPodman On Linux, unless you are using Docker Desktop, you will need to use
           <td>No network isolation (default)</td>
       </tr>
       <tr>
+          <td><code>nat</code></td>
+          <td>RF Swift managed NAT network with automatic subnet allocation</td>
+      </tr>
+      <tr>
+          <td><code>nat:NAME</code></td>
+          <td>Join a specific named NAT network (shared with other containers)</td>
+      </tr>
+      <tr>
           <td><code>bridge</code></td>
           <td>Default Docker network driver with isolation</td>
       </tr>
@@ -2217,6 +2265,14 @@ DockerPodman On Linux, unless you are using Docker Desktop, you will need to use
       <tr>
           <td><code>host</code></td>
           <td>No network isolation (default)</td>
+      </tr>
+      <tr>
+          <td><code>nat</code></td>
+          <td>RF Swift managed NAT network with automatic subnet allocation</td>
+      </tr>
+      <tr>
+          <td><code>nat:NAME</code></td>
+          <td>Join a specific named NAT network (shared with other containers)</td>
       </tr>
       <tr>
           <td><code>bridge</code></td>
@@ -2267,6 +2323,26 @@ DockerPodman On Linux, unless you are using Docker Desktop, you will need to use
 <li>Maps container port 8000 to host port 80 on localhost with <code>-w 8000:127.0.0.1:80/tcp</code></li>
 <li>Exposes port 8000 to other containers with <code>-z 8000</code></li>
 </ul>
+<p><strong>NAT Mode:</strong></p>
+<p>RF Swift provides a managed NAT mode (<code>-t nat</code>) that automatically creates an isolated Docker network with its own subnet. Multiple containers can share the same NAT network using the <code>nat:NAME</code> syntax:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a container in its own NAT network</span>
+</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n isolated_sdr -t nat
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Create containers that share a NAT network</span>
+</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n sdr_work -t nat:lab_network
+</span></span><span class="line"><span class="cl">rfswift run -i bluetooth -n bt_work -t nat:lab_network</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p>NAT mode is useful for network isolation, pentest labs, or when host mode is not desirable. Port forwarding works the same as bridge mode (<code>-w</code> flag).</p>
 <div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200">
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
 
@@ -2447,6 +2523,14 @@ Be cautious when adding capabilities as they increase security risks if the cont
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
     <div class="hx:mt-6 hx:leading-7 hx:first:mt-0">When desktop mode is enabled, RF Swift automatically handles VNC server startup, port binding configuration, and environment variable injection — no manual setup required inside the container. The desktop provides a full LXQt environment with application menu, taskbar, and window management.</div>
+  </div>
+</div>
+
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+
+  <div class="hx:w-full hx:min-w-0 hx:leading-7">
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Desktop in NAT/bridge mode</strong>: When using desktop mode with a non-host network (<code>nat</code>, <code>bridge</code>), RF Swift automatically forces the in-container listen address to <code>0.0.0.0</code> so that Docker&rsquo;s port forwarding can reach the VNC server. The interactive wizard will also prompt you to configure the bind address and port when desktop is enabled with a non-host network.</div>
   </div>
 </div>
 
@@ -2822,7 +2906,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-11T20:26:15.000Z">March 11, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-13T14:08:27.000Z">March 13, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/quick-start/"
         title="🚀 Quick Start"
