@@ -183,12 +183,16 @@ rfswift --engine lima run -i sdr_light -n my_work
 
 ### Prerequisites
 
-1. **Lima** must be installed:
+1. **Lima** and **QEMU** must be installed:
    ```bash
-   brew install lima
+   brew install lima qemu
    ```
 
 2. The Lima VM must use **`vmType: qemu`** (not `vz`) for USB passthrough support.
+
+{{< callout type="info" >}}
+QEMU is the virtualization backend that Lima uses to run the Linux VM. Lima manages the VM lifecycle, QEMU provides the actual emulation with USB hot-plug support via QMP.
+{{< /callout >}}
 
 ### First-Time Setup
 
@@ -237,7 +241,7 @@ The Lima VM comes pre-configured with udev rules for:
 
 **Solution:**
 ```bash
-brew install lima
+brew install lima qemu
 ```
 
 ### QMP Socket Not Found
@@ -296,7 +300,7 @@ limactl stop rfswift && limactl start rfswift
 ---
 
 {{< callout type="info" >}}
-**Prerequisites**: Lima must be installed (`brew install lima`) and the VM must use `vmType: qemu` for USB passthrough support.
+**Prerequisites**: Lima and QEMU must be installed (`brew install lima qemu`). The VM must use `vmType: qemu` for USB passthrough support.
 {{< /callout >}}
 
 {{< callout type="warning" >}}

@@ -80,10 +80,11 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
   {{< card link="ports" title="ports" icon="server" subtitle="Manage container ports" >}}
 {{< /cards >}}
 
-### 📹 Session Recording
+### 📹 Session Recording & Reporting
 
 {{< cards >}}
   {{< card link="log" title="log" icon="film" subtitle="Record and replay terminal sessions" >}}
+  {{< card link="report" title="report" icon="document-report" subtitle="Generate assessment reports" >}}
 {{< /cards >}}
 
 ### 🔧 System Operations
@@ -153,6 +154,8 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
 | `rfswift winusb list` | List USB devices (Windows/WSL2) |
 | `rfswift macusb list` | List USB devices (macOS) |
 | `rfswift --engine lima run` | Run container with USB (macOS) |
+| `rfswift report generate -c NAME` | Generate assessment report |
+| `rfswift report generate -c NAME -f html` | HTML report |
 
 ---
 

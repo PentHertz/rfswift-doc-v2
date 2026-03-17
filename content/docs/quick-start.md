@@ -171,6 +171,12 @@ rfswift run -i sdr_full -n my_sdr_container
 
 This will start a container using the `sdr_full` image with the name `my_sdr_container`.
 
+A **workspace directory** is automatically created at `~/rfswift-workspace/my_sdr_container/` and mounted at `/workspace` inside the container. Files saved there are immediately accessible on your host — no extra flags needed.
+
+{{< callout type="info" >}}
+Use `--workspace /path` for a custom workspace, `--cwd` to mount the current directory, or `--no-workspace` to disable it. See [`run` command reference](/docs/commands/run#workspace-options) for details.
+{{< /callout >}}
+
 {{< callout type="warning" >}}
 With some platforms, some default devices may be non-existent. You can use `bindings` or modify RF Swift's configuration file to remove the device from the mapped device list.
 {{< /callout >}}
@@ -394,7 +400,7 @@ Docker Desktop and Podman on macOS cannot forward USB devices into containers. R
 
 ```bash
 # Install Lima (one-time)
-brew install lima
+brew install lima qemu
 
 # 1. List USB devices on your Mac
 rfswift macusb list

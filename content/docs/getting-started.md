@@ -292,7 +292,7 @@ Lima runs a QEMU VM with USB hot-plug support. RF Swift containers run inside Li
 
 ```bash
 # Install Lima
-brew install lima
+brew install lima qemu
 
 # (Optional) Create the rfswift VM manually
 # RF Swift will auto-create it on first 'rfswift --engine lima run'

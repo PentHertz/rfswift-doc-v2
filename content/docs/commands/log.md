@@ -376,6 +376,7 @@ rfswift log start --use-script
 
 ## Related Commands
 
+- [`report`](/docs/commands/report) - Generate assessment reports (includes recordings automatically)
 - [`exec`](/docs/commands/exec) - Execute commands that can be recorded
 - [`run`](/docs/commands/run) - Run containers to record
 - [`last`](/docs/commands/last) - Show containers for recording sessions

@@ -52,12 +52,30 @@ Both flags are optional when using the interactive wizard. If omitted in an inte
 | `--realtime` | Enable realtime mode for SDR operations | `false` | `--realtime` |
 | `--ulimits STRING` | Set custom ulimits (comma-separated) | None | `--ulimits "rtprio=95,memlock=-1"` |
 
+### Workspace Options
+
+| Flag | Description | Default | Example |
+|------|-------------|---------|---------|
+| `--workspace STRING` | Custom workspace host path | `~/rfswift-workspace/<name>/` | `--workspace ~/my-project` |
+| `--cwd` | Mount current directory as workspace | false | `--cwd` |
+| `--no-workspace` | Disable automatic workspace | false | `--no-workspace` |
+
+By default, every container gets a **shared workspace directory** automatically mounted:
+- **Host**: `~/rfswift-workspace/<container-name>/`
+- **Container**: `/workspace`
+
+Files saved to `/workspace` inside the container are immediately available on the host. IQ captures, logs, reports, scripts — all in one place without manual `--bind` flags.
+
+{{< callout type="info" >}}
+The workspace directory persists after the container is deleted. Your data stays on the host.
+{{< /callout >}}
+
 ### Device & Volume Options
 
 | Flag | Description | Example |
 |------|-------------|---------|
 | `-s, --devices STRING` | Device mappings (comma-separated) | `-s /dev/ttyUSB0:/dev/ttyUSB0` |
-| `-b, --bind STRING` | Volume bindings (comma-separated) | `-b ~/projects:/root/projects` |
+| `-b, --bind STRING` | Extra volume bindings (comma-separated) | `-b ~/projects:/root/projects` |
 
 ### Network Options
 
@@ -825,15 +843,21 @@ The wizard guides you through the following steps:
 
 2. **Container Name** -- Required text input (placeholder: `my_sdr`).
 
-3. **Volume Bindings** -- Asks if you want to add volume bindings, then prompts for comma-separated `host:container` paths.
+3. **Workspace Directory** -- Select how to mount the shared workspace:
+   - **Auto** (default): `~/rfswift-workspace/<name>/` → `/workspace`
+   - **Custom path**: Enter a host directory to mount as `/workspace`
+   - **Current directory**: Mount `$PWD` as `/workspace`
+   - **Disable**: No workspace mount
 
-4. **Device Mappings** -- Asks if you want to add device mappings, then prompts for comma-separated device paths.
+4. **Volume Bindings** -- Asks if you want to add *additional* volume bindings beyond the workspace.
 
-5. **Port Mappings** -- Simplified port binding step. Enter `hostPort:containerPort` pairs (e.g., `8080:80,4443:443`). RF Swift auto-generates both exposed ports and port bindings from this input.
+5. **Device Mappings** -- Asks if you want to add device mappings, then prompts for comma-separated device paths.
 
-6. **Network Mode** -- Select from host, NAT (create new isolated network), join existing NAT network, or bridge.
+6. **Port Mappings** -- Simplified port binding step. Enter `hostPort:containerPort` pairs (e.g., `8080:80,4443:443`). RF Swift auto-generates both exposed ports and port bindings from this input.
 
-7. **Feature Toggles** -- Multi-select checklist:
+7. **Network Mode** -- Select from host, NAT (create new isolated network), join existing NAT network, or bridge.
+
+8. **Feature Toggles** -- Multi-select checklist:
    - Remote Desktop (VNC/noVNC)
    - Desktop SSL/TLS
    - Disable X11 forwarding
@@ -841,13 +865,13 @@ The wizard guides you through the following steps:
    - Realtime mode (audio/SDR)
    - VPN (WireGuard/OpenVPN/Tailscale/Netbird)
 
-8. **Desktop Port Configuration** (if desktop enabled with non-host network) -- Choose the host bind address (`127.0.0.1` or `0.0.0.0`) and port for the desktop service.
+9. **Desktop Port Configuration** (if desktop enabled with non-host network) -- Choose the host bind address (`127.0.0.1` or `0.0.0.0`) and port for the desktop service.
 
-9. **VPN Configuration** (if VPN selected) -- Prompts for VPN type, then type-specific input.
+10. **VPN Configuration** (if VPN selected) -- Prompts for VPN type, then type-specific input.
 
-10. **Capabilities** -- Multi-select from 18 common Linux capabilities with descriptions (NET_ADMIN, NET_RAW, SYS_RAWIO, SYS_ADMIN, SYS_PTRACE, SYS_NICE, etc.).
+11. **Capabilities** -- Multi-select from 18 common Linux capabilities with descriptions (NET_ADMIN, NET_RAW, SYS_RAWIO, SYS_ADMIN, SYS_PTRACE, SYS_NICE, etc.).
 
-11. **Cgroup Rules** -- Multi-select from common device cgroup rules with descriptions:
+12. **Cgroup Rules** -- Multi-select from common device cgroup rules with descriptions:
     - `c 189:* rwm` — USB devices (SDR dongles, serial adapters)
     - `c 188:* rwm` — USB serial (ttyUSB)
     - `c 166:* rwm` — ACM modems (ttyACM)
@@ -857,11 +881,13 @@ The wizard guides you through the following steps:
     - `c 137:* rwm` — VHCI (virtual HCI for Bluetooth)
     - And more...
 
-12. **Configuration Recap** -- Displays a summary of all selected options.
+13. **USB Devices** (macOS with `--engine lima` only) -- Asks whether to attach USB devices to the Lima VM, then shows a multi-select picker of discovered host USB devices.
 
-13. **CLI Equivalent** -- Shows the equivalent `rfswift run` command.
+14. **Configuration Recap** -- Displays a summary of all selected options, including workspace path.
 
-14. **Final Confirmation** -- `Create this container?` Yes/No prompt.
+15. **CLI Equivalent** -- Shows the equivalent `rfswift run` command.
+
+16. **Final Confirmation** -- `Create this container?` Yes/No prompt.
 
 ### Example: Wizard with Profile (Fast Path)
 

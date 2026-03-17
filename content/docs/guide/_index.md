@@ -16,7 +16,8 @@ This section covers topics related on how to run RF Swift and use the different 
   {{< card link="/docs/guide/list-of-images" title="Container images" icon="photograph" >}}
   {{< card link="/docs/guide/list-of-tools" title="Included tools" icon="table" >}}
   {{< card link="/docs/guide/host-actions" title="Host actions" icon="desktop-computer" >}}
-  {{< card link="/docs/guide/sharing-files" title="Sharing files" icon="share" >}}
+  {{< card link="/docs/guide/sharing-files" title="Workspace & sharing files" icon="share" >}}
+  {{< card link="/docs/commands/report" title="Assessment reports" icon="document-report" >}}
   {{< card link="/docs/guide/vpn" title="VPN Inside Containers" icon="shield-check" >}}
   {{< card link="/docs/guide/podman" title="Using Podman" icon="cube" >}}
 {{< /cards >}}
