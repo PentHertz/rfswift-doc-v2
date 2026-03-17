@@ -23,7 +23,7 @@ The `--engine` flag is a **global flag** that overrides RF Swift's auto-detectio
 
 | Flag | Description | Values |
 |------|-------------|--------|
-| `--engine STRING` | Force a specific container engine | `docker`, `podman` |
+| `--engine STRING` | Force a specific container engine | `docker`, `podman`, `lima` |
 
 ---
 
@@ -110,6 +110,26 @@ rfswift --engine podman run -i sdr_full -n rootless_sdr
 rfswift --engine podman last
 ```
 
+### Force Lima (macOS USB passthrough)
+
+```bash
+# Attach USB device to Lima VM first
+rfswift macusb attach --vid 0x1d50 --pid 0x604b
+
+# Run container via Lima's Docker (USB devices visible)
+rfswift --engine lima run -i sdr_full -n usb_sdr
+
+# List containers in Lima
+rfswift --engine lima last
+
+# When done, detach device
+rfswift macusb detach --vid 0x1d50 --pid 0x604b
+```
+
+{{< callout type="info" >}}
+Lima auto-creates and starts the QEMU VM on first use. No manual `limactl` setup needed.
+{{< /callout >}}
+
 ### Mixed Workflows
 
 If both engines are installed, you can maintain separate environments:
@@ -135,17 +155,20 @@ Containers created with one engine are **not visible** to the other. A container
 
 ## Engine Comparison
 
-| | Docker | Podman |
-|---|---|---|
-| **Architecture** | Client-server (daemon) | Daemonless (fork-exec) |
-| **Root required** | Yes (daemon runs as root) | No (rootless by default) |
-| **Socket** | `/var/run/docker.sock` | `$XDG_RUNTIME_DIR/podman/podman.sock` |
-| **Image format** | OCI / Docker | OCI / Docker |
-| **Compose** | `docker-compose` | `podman-compose` |
-| **Privileged mode** | Full host access | User-namespace scoped |
-| **Device passthrough** | Native | Supported (may need `--device` flags) |
-| **Networking (rootless)** | N/A (daemon is root) | `slirp4netns` or `pasta` |
-| **Best for** | Broad ecosystem, Windows/macOS | Security-focused, air-gapped, embedded |
+| | Docker | Podman | Lima |
+|---|---|---|---|
+| **Architecture** | Client-server (daemon) | Daemonless (fork-exec) | Docker inside QEMU VM |
+| **Root required** | Yes (daemon runs as root) | No (rootless by default) | No (Lima manages VM) |
+| **Socket** | `/var/run/docker.sock` | `$XDG_RUNTIME_DIR/podman/podman.sock` | `~/.lima/rfswift/sock/docker.sock` |
+| **Image format** | OCI / Docker | OCI / Docker | OCI / Docker |
+| **USB passthrough** | Linux only | Linux only | macOS via QMP hot-plug |
+| **Privileged mode** | Full host access | User-namespace scoped | Full access inside VM |
+| **Platform** | Linux, macOS, Windows | Linux, macOS, Windows | macOS only |
+| **Best for** | Broad ecosystem | Security-focused, air-gapped | macOS + USB hardware |
+
+{{< callout type="info" >}}
+**macOS USB passthrough**: On macOS, Docker Desktop and Podman cannot forward USB devices into containers. Use `--engine lima` when you need SDR dongles or other USB RF hardware. See [`macusb`](/docs/commands/macusb) for details.
+{{< /callout >}}
 
 ---
 

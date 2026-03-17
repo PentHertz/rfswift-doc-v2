@@ -67,7 +67,7 @@ The installer will prompt you to choose a container engine if none is detected:
 
 ```
 📝 Which container engine would you like to install?
-1) Docker   2) Podman   3) Both   4) Skip
+1) Docker   2) Podman   3) Both   4) Lima (macOS USB)   5) Skip
 ```
 
 But if you want to install it securely, we recommend using the installation script after downloading [the latest version here](https://github.com/PentHertz/RF-Swift/tags):
@@ -390,7 +390,32 @@ Note that to rebind a device, you need the `-d` switch.
 
 #### macOS USB Device Access
 
-For the moment Docker and Podman on macOS do not have a proper way to forward USB accesses. USB devices cannot be used without using complex virtualization.
+Docker Desktop and Podman on macOS cannot forward USB devices into containers. RF Swift solves this with **Lima**, which runs a QEMU VM with USB hot-plug support:
+
+```bash
+# Install Lima (one-time)
+brew install lima
+
+# 1. List USB devices on your Mac
+rfswift macusb list
+
+# 2. Attach your SDR dongle to the Lima VM
+rfswift macusb attach --vid 0x1d50 --pid 0x604b
+
+# 3. Run container via Lima's Docker (where USB device lives)
+rfswift --engine lima run -i penthertz/rfswift_noble:sdr_light -n sdr_work
+
+# 4. When done, detach the device
+rfswift macusb detach --vid 0x1d50 --pid 0x604b
+```
+
+{{< callout type="warning" >}}
+Use `--engine lima` when you need USB devices. Without it, containers run in Docker Desktop which has no USB access. See [`macusb` command reference](/docs/commands/macusb) for details.
+{{< /callout >}}
+
+{{< callout type="info" >}}
+Lima auto-creates the VM on first use — no manual `limactl` setup needed. The VM comes pre-configured with Docker, USB libraries, kernel modules, and udev rules for all common SDR/RF hardware.
+{{< /callout >}}
 
 ## Managing Existing Containers
 

@@ -118,6 +118,12 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
   {{< card link="winusb" title="winusb" icon="device-mobile" subtitle="Manage USB devices in WSL2" >}}
 {{< /cards >}}
 
+### 🍎 macOS (Lima)
+
+{{< cards >}}
+  {{< card link="macusb" title="macusb" icon="device-mobile" subtitle="Manage USB devices via Lima VM" >}}
+{{< /cards >}}
+
 ---
 
 ## 🚀 Quick Reference
@@ -145,6 +151,8 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
 | `rfswift images versions` | List available image versions |
 | `rfswift cleanup all --dry-run` | Preview cleanup actions |
 | `rfswift winusb list` | List USB devices (Windows/WSL2) |
+| `rfswift macusb list` | List USB devices (macOS) |
+| `rfswift --engine lima run` | Run container with USB (macOS) |
 
 ---
 

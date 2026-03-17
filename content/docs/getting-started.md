@@ -47,8 +47,11 @@ The installer will detect your system and prompt you to choose a container engin
 📝 Which container engine would you like to install?
    🐳 Docker  — Industry standard, requires daemon (root)
    🦭 Podman  — Daemonless, rootless by default
-1) Docker   2) Podman   3) Both   4) Skip
+   🦙 Lima    — QEMU VM with USB passthrough (macOS only)
+1) Docker   2) Podman   3) Both   4) Lima   5) Skip
 ```
+
+On macOS, the installer also offers **Lima** for USB device passthrough (SDR dongles, HackRF, etc.), even when Docker or Podman is already installed.
 
 If both engines are already installed, RF Swift will auto-detect the available one at runtime.
 
@@ -64,7 +67,7 @@ RF Swift supports both **Docker** and **Podman** as container engines. All RF Sw
 | **Device passthrough** | Native | Supported (may need extra config) |
 
 {{< callout type="info" >}}
-You can override the auto-detected engine at any time with `rfswift --engine docker` or `rfswift --engine podman`.
+You can override the auto-detected engine at any time with `rfswift --engine docker`, `rfswift --engine podman`, or `rfswift --engine lima` (macOS USB passthrough).
 {{< /callout >}}
 
 ### Manual Installation
@@ -236,21 +239,28 @@ Make sure Docker Desktop runs in [WSL2 mode](https://docs.docker.com/desktop/wsl
 
 #### macOS Manual Installation
 
-{{< callout type="warning" >}}
-macOS support will be fully implemented soon. Currently, some features may have limited functionality.
-{{< /callout >}}
+RF Swift on macOS works in **two modes** depending on whether you need USB hardware:
 
-**Current Status**
+| Mode | What you need | USB access | Best for |
+|------|---------------|------------|----------|
+| **Standard** | Docker Desktop or Podman | No USB | Software-only work, analysis, simulation |
+| **USB passthrough** | Lima (+ Docker Desktop optionally) | Full USB hot-plug | SDR dongles, RF hardware, HackRF, RTL-SDR, etc. |
 
-- Container functionality works without USB forwarding
-- For full functionality including USB device support, running in a Linux VM is recommended
-
-{{< tabs items="Docker,Podman" >}}
+{{< tabs items="Docker,Podman,Lima (USB passthrough)" >}}
   {{< tab >}}
 **Docker Desktop for macOS**
 
 - Install [Docker Desktop](https://docs.docker.com/desktop/install/mac-install/) from the official website
 - XQuartz for X11 forwarding (optional)
+
+```bash
+# Verify
+docker run hello-world
+```
+
+{{< callout type="info" >}}
+Docker Desktop runs containers inside its own Linux VM. This works for all RF Swift tools, but **USB devices cannot be forwarded** into containers. For USB hardware, add Lima (see the Lima tab).
+{{< /callout >}}
   {{< /tab >}}
   {{< tab >}}
 **Podman on macOS**
@@ -270,13 +280,54 @@ podman run hello-world
 
 - XQuartz for X11 forwarding (optional)
 - Podman Desktop available at [podman-desktop.io](https://podman-desktop.io/)
+
+{{< callout type="info" >}}
+Like Docker Desktop, Podman on macOS cannot forward USB devices into containers. For USB hardware, add Lima (see the Lima tab).
+{{< /callout >}}
+  {{< /tab >}}
+  {{< tab >}}
+**Lima — USB passthrough for macOS**
+
+Lima runs a QEMU VM with USB hot-plug support. RF Swift containers run inside Lima's Docker, where USB devices are visible.
+
+```bash
+# Install Lima
+brew install lima
+
+# (Optional) Create the rfswift VM manually
+# RF Swift will auto-create it on first 'rfswift --engine lima run'
+limactl create --name rfswift lima/rfswift.yaml
+limactl start rfswift
+```
+
+The Lima VM is pre-configured with:
+- Docker engine
+- USB libraries and kernel modules
+- Udev rules for all common SDR/RF devices (HackRF, RTL-SDR, USRP, BladeRF, Airspy, PlutoSDR, LimeSDR, etc.)
+
+**Workflow:**
+
+```bash
+# 1. See host USB devices
+rfswift macusb list
+
+# 2. Attach your SDR dongle to the Lima VM
+rfswift macusb attach --vid 0x1d50 --pid 0x604b
+
+# 3. Run container via Lima (not Docker Desktop)
+rfswift --engine lima run -i penthertz/rfswift_noble:sdr_light -n sdr_work
+
+# 4. When done, detach
+rfswift macusb detach --vid 0x1d50 --pid 0x604b
+```
+
+{{< callout type="warning" >}}
+You **must** use `--engine lima` when running containers that need USB access. Without it, containers run in Docker Desktop which has no USB passthrough.
+{{< /callout >}}
+
+Lima can coexist with Docker Desktop. Use Docker Desktop for general work and switch to `--engine lima` when you need USB hardware.
   {{< /tab >}}
 {{< /tabs >}}
-
-**Known Limitations**
-
-- USB device forwarding is not currently supported natively
-- Some specialized RF tools may have compatibility issues
 
 ## Creating an Alias (Linux/macOS)
 

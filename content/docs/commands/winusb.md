@@ -239,6 +239,7 @@ wsl --update
 
 ## Related Commands
 
+- [`macusb`](/docs/commands/macusb) - USB device management on macOS (via Lima)
 - [`run`](/docs/commands/run) - Create containers to use with attached USB devices
 - [`bindings`](/docs/commands/bindings) - Manage device bindings inside containers (Linux and WSL2)
 - [`host`](/docs/commands/host) - Configure host system settings
