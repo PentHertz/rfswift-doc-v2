@@ -8,27 +8,40 @@
 <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
-<title>cleanup – RF Swift</title>
-  <meta name="description" content="rfswift cleanupClean up containers and images to free disk space.
-Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once." /><link rel="canonical" href="https://rfswift.io/docs/commands/cleanup/" itemprop="url" />
+<title>macusb – RF Swift</title>
+  <meta name="description" content="rfswift macusbManage USB device passthrough on macOS via Lima QEMU VM.
+Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB device to the Lima VM rfswift macusb attach --vid VENDOR_ID --pid PRODUCT_ID # Detach a USB device from the Lima VM rfswift macusb detach --vid VENDOR_ID --pid PRODUCT_ID # List USB devices currently attached to the Lima VM rfswift macusb vm-devices # Check Lima VM status for USB passthrough rfswift macusb status The macusb command manages USB device passthrough on macOS. Docker Desktop and Podman on macOS run their own Linux VMs that cannot forward USB devices into containers. Lima solves this by running a QEMU VM where USB devices can be hot-plugged via the QMP protocol." /><link rel="canonical" href="https://rfswift.io/docs/commands/macusb/" itemprop="url" />
 
-<meta property="og:title" content="cleanup">
+<meta property="og:title" content="macusb">
 <meta
   property="og:description"
   content="
     
-      rfswift cleanupClean up containers and images to free disk space.
+      rfswift macusbManage USB device passthrough on macOS via Lima QEMU VM.
 Synopsis
     
 
-rfswift cleanup &lt;subcommand&gt; [OPTIONS]
+# List USB devices on macOS host
+rfswift macusb list
+
+# Attach a USB device to the Lima VM
+rfswift macusb attach --vid VENDOR_ID --pid PRODUCT_ID
+
+# Detach a USB device from the Lima VM
+rfswift macusb detach --vid VENDOR_ID --pid PRODUCT_ID
+
+# List USB devices currently attached to the Lima VM
+rfswift macusb vm-devices
+
+# Check Lima VM status for USB passthrough
+rfswift macusb status
   
     
 
   
 
 
-The cleanup command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once.
+The macusb command manages USB device passthrough on macOS. Docker Desktop and Podman on macOS run their own Linux VMs that cannot forward USB devices into containers. Lima solves this by running a QEMU VM where USB devices can be hot-plugged via the QMP protocol.
     
   ">
 <meta
@@ -36,7 +49,7 @@ The cleanup command removes old or unused containers and images based on age fil
   content="
     article
   ">
-<meta property="og:url" content="https://rfswift.io/docs/commands/cleanup/"><meta property="article:section" content="docs">
+<meta property="og:url" content="https://rfswift.io/docs/commands/macusb/"><meta property="article:section" content="docs">
 
 
 <meta
@@ -45,15 +58,15 @@ The cleanup command removes old or unused containers and images based on age fil
 
 
 
-  <meta itemprop="name" content="cleanup">
-  <meta itemprop="description" content="rfswift cleanupClean up containers and images to free disk space.
-Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once.">
+  <meta itemprop="name" content="macusb">
+  <meta itemprop="description" content="rfswift macusbManage USB device passthrough on macOS via Lima QEMU VM.
+Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB device to the Lima VM rfswift macusb attach --vid VENDOR_ID --pid PRODUCT_ID # Detach a USB device from the Lima VM rfswift macusb detach --vid VENDOR_ID --pid PRODUCT_ID # List USB devices currently attached to the Lima VM rfswift macusb vm-devices # Check Lima VM status for USB passthrough rfswift macusb status The macusb command manages USB device passthrough on macOS. Docker Desktop and Podman on macOS run their own Linux VMs that cannot forward USB devices into containers. Lima solves this by running a QEMU VM where USB devices can be hot-plugged via the QMP protocol.">
   <meta itemprop="dateModified" content="2026-03-17T11:47:01+01:00">
-  <meta itemprop="wordCount" content="675">
+  <meta itemprop="wordCount" content="1134">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="cleanup">
-  <meta name="twitter:description" content="rfswift cleanupClean up containers and images to free disk space.
-Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once.">
+  <meta name="twitter:title" content="macusb">
+  <meta name="twitter:description" content="rfswift macusbManage USB device passthrough on macOS via Lima QEMU VM.
+Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB device to the Lima VM rfswift macusb attach --vid VENDOR_ID --pid PRODUCT_ID # Detach a USB device from the Lima VM rfswift macusb detach --vid VENDOR_ID --pid PRODUCT_ID # List USB devices currently attached to the Lima VM rfswift macusb vm-devices # Check Lima VM status for USB passthrough rfswift macusb status The macusb command manages USB device passthrough on macOS. Docker Desktop and Podman on macOS run their own Linux VMs that cannot forward USB devices into containers. Lima solves this by running a QEMU VM where USB devices can be hot-plugged via the QMP protocol.">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
     <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -583,64 +596,13 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   >last
     </a>
               
-            </li><li class="hx:flex hx:flex-col open"><a
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/cleanup/"
     
   >cleanup
     </a>
-  
-    <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
-              <a
-                href="#synopsis"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Synopsis</a>
-            </li>
-          <li>
-              <a
-                href="#subcommands"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Subcommands</a>
-            </li>
-          <li>
-              <a
-                href="#common-options"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Common Options</a>
-            </li>
-          <li>
-              <a
-                href="#subcommand-specific-options"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Subcommand-Specific Options</a>
-            </li>
-          <li>
-              <a
-                href="#examples"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Examples</a>
-            </li>
-          <li>
-              <a
-                href="#cleanup-strategies"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Cleanup Strategies</a>
-            </li>
-          <li>
-              <a
-                href="#troubleshooting"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Troubleshooting</a>
-            </li>
-          <li>
-              <a
-                href="#related-commands"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Related Commands</a>
-            </li>
-          </ul>
-  
               
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -706,13 +668,58 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   >winusb
     </a>
               
-            </li><li class="hx:flex hx:flex-col "><a
+            </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
     href="/docs/commands/macusb/"
     
   >macusb
     </a>
+  
+    <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
+              <a
+                href="#synopsis"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Synopsis</a>
+            </li>
+          <li>
+              <a
+                href="#how-it-works"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >How It Works</a>
+            </li>
+          <li>
+              <a
+                href="#subcommands"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Subcommands</a>
+            </li>
+          <li>
+              <a
+                href="#examples"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Examples</a>
+            </li>
+          <li>
+              <a
+                href="#setup"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Setup</a>
+            </li>
+          <li>
+              <a
+                href="#troubleshooting"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Troubleshooting</a>
+            </li>
+          <li>
+              <a
+                href="#related-commands"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Related Commands</a>
+            </li>
+          </ul>
+  
               
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -1110,9 +1117,9 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   >last
     </a>
               
-            </li><li class="hx:flex hx:flex-col open"><a
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/cleanup/"
     
   >cleanup
@@ -1182,9 +1189,9 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   >winusb
     </a>
               
-            </li><li class="hx:flex hx:flex-col "><a
+            </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
     href="/docs/commands/macusb/"
     
   >macusb
@@ -1276,23 +1283,35 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#how-it-works">How It Works
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
         <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#subcommands">Subcommands
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#common-options">Common Options
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#macusb-list">macusb list
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#subcommand-specific-options">Subcommand-Specific Options
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#macusb-attach">macusb attach
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#containers">containers
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#macusb-detach">macusb detach
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#images">images
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#macusb-vm-devices">macusb vm-devices
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#macusb-status">macusb status
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#global-options">Global Options
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1300,31 +1319,31 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#basic-usage">Basic Usage
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#complete-sdr-workflow-on-macos">Complete SDR Workflow on macOS
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#filtering-by-age">Filtering by Age
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#attaching-multiple-devices">Attaching Multiple Devices
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#real-world-scenarios">Real-World Scenarios
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#using-a-custom-lima-instance">Using a Custom Lima Instance
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#cleanup-strategies">Cleanup Strategies
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#setup">Setup
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#conservative-strategy">Conservative Strategy
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#prerequisites">Prerequisites
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#balanced-strategy">Balanced Strategy
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#first-time-setup">First-Time Setup
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#aggressive-strategy">Aggressive Strategy
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#supported-rf-devices">Supported RF Devices
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1332,15 +1351,19 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#cleanup-not-freeing-space">Cleanup Not Freeing Space
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#lima-not-installed">Lima Not Installed
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#permission-denied">Permission Denied
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#qmp-socket-not-found">QMP Socket Not Found
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#important-container-removed">Important Container Removed
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#device-not-visible-in-container">Device Not Visible in Container
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#attach-fails-with-permission-error">Attach Fails with Permission Error
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1367,16 +1390,29 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
         </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         <div class="hx:whitespace-nowrap hx:transition-colors hx:min-w-[24px] hx:overflow-hidden hx:text-ellipsis hx:hover:text-gray-900 hx:dark:hover:text-gray-100">
           <a href="/docs/commands/">📘 Commands</a>
-        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">cleanup</div>
+        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">macusb</div>
   </div>
 
         <div class="content">
-          <h1>cleanup</h1>
-          <h1>rfswift cleanup</h1><p>Clean up containers and images to free disk space.</p>
+          <h1>macusb</h1>
+          <h1>rfswift macusb</h1><p>Manage USB device passthrough on macOS via Lima QEMU VM.</p>
 <h2>Synopsis<span class="hx:absolute hx:-mt-20" id="synopsis"></span>
     <a href="#synopsis" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup &lt;subcommand&gt; <span class="o">[</span>OPTIONS<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List USB devices on macOS host</span>
+</span></span><span class="line"><span class="cl">rfswift macusb list
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Attach a USB device to the Lima VM</span>
+</span></span><span class="line"><span class="cl">rfswift macusb attach --vid VENDOR_ID --pid PRODUCT_ID
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Detach a USB device from the Lima VM</span>
+</span></span><span class="line"><span class="cl">rfswift macusb detach --vid VENDOR_ID --pid PRODUCT_ID
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># List USB devices currently attached to the Lima VM</span>
+</span></span><span class="line"><span class="cl">rfswift macusb vm-devices
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Check Lima VM status for USB passthrough</span>
+</span></span><span class="line"><span class="cl">rfswift macusb status</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1386,7 +1422,52 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   </button>
 </div>
 </div>
-<p>The <code>cleanup</code> command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once.</p>
+<p>The <code>macusb</code> command manages USB device passthrough on macOS. Docker Desktop and Podman on macOS run their own Linux VMs that <strong>cannot forward USB devices</strong> into containers. Lima solves this by running a QEMU VM where USB devices can be hot-plugged via the QMP protocol.</p>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
+
+  <div class="hx:w-full hx:min-w-0 hx:leading-7">
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0">This command is <strong>macOS only</strong>. On Linux, USB devices are directly accessible via <a href="/docs/commands/bindings/"><code>bindings</code></a>. On Windows, use <a href="/docs/commands/winusb/"><code>winusb</code></a>.</div>
+  </div>
+</div>
+
+<hr>
+<h2>How It Works<span class="hx:absolute hx:-mt-20" id="how-it-works"></span>
+    <a href="#how-it-works" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><pre class="mermaid hx:mt-6">
+  graph LR
+    A[macOS USB Device] --&gt;|QMP hot-plug| B[Lima QEMU VM]
+    B --&gt;|/dev/bus/usb| C[Docker inside Lima]
+    C --&gt;|container| D[RF Swift Container]
+</pre><p>On macOS, there are <strong>two container engine modes</strong>:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Mode</th>
+          <th>Engine flag</th>
+          <th>USB access</th>
+          <th>Use case</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Docker Desktop</strong></td>
+          <td><code>--engine docker</code> (default)</td>
+          <td>No USB</td>
+          <td>General work, no RF hardware needed</td>
+      </tr>
+      <tr>
+          <td><strong>Lima VM</strong></td>
+          <td><code>--engine lima</code></td>
+          <td>USB hot-plug</td>
+          <td>RF hardware, SDR dongles</td>
+      </tr>
+  </tbody>
+</table>
+<p>When you need USB devices in your containers, you must:</p>
+<ol>
+<li>Attach the device to the Lima VM with <code>macusb attach</code></li>
+<li>Run your container with <code>--engine lima</code> so it runs inside Lima&rsquo;s Docker (where the USB device is visible)</li>
+</ol>
 <hr>
 <h2>Subcommands<span class="hx:absolute hx:-mt-20" id="subcommands"></span>
     <a href="#subcommands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><table>
@@ -1398,56 +1479,107 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   </thead>
   <tbody>
       <tr>
-          <td><code>all</code></td>
-          <td>Remove both old containers and images</td>
+          <td><code>macusb list</code></td>
+          <td>List all USB devices connected to the macOS host</td>
       </tr>
       <tr>
-          <td><code>containers</code></td>
-          <td>Remove old containers only</td>
+          <td><code>macusb attach</code></td>
+          <td>Hot-plug a USB device into the Lima VM</td>
       </tr>
       <tr>
-          <td><code>images</code></td>
-          <td>Remove old images only</td>
+          <td><code>macusb detach</code></td>
+          <td>Hot-unplug a USB device from the Lima VM</td>
+      </tr>
+      <tr>
+          <td><code>macusb vm-devices</code></td>
+          <td>List USB devices currently forwarded into the VM</td>
+      </tr>
+      <tr>
+          <td><code>macusb status</code></td>
+          <td>Check Lima installation, VM status, and QMP availability</td>
       </tr>
   </tbody>
 </table>
 <hr>
-<h2>Common Options<span class="hx:absolute hx:-mt-20" id="common-options"></span>
-    <a href="#common-options" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>These options are available on <strong>all</strong> subcommands (<code>all</code>, <code>containers</code>, <code>images</code>):</p>
+<h3>macusb list<span class="hx:absolute hx:-mt-20" id="macusb-list"></span>
+    <a href="#macusb-list" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>List all USB devices connected to the macOS host using <code>system_profiler</code>. Shows device name, vendor ID, product ID, and serial number.</p>
+<p><strong>No additional options.</strong></p>
+<h3>macusb attach<span class="hx:absolute hx:-mt-20" id="macusb-attach"></span>
+    <a href="#macusb-attach" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Hot-plug a USB device from the macOS host into the Lima QEMU VM.</p>
+<p><strong>Options:</strong></p>
 <table>
   <thead>
       <tr>
           <th>Flag</th>
           <th>Description</th>
-          <th>Default</th>
+          <th>Required</th>
           <th>Example</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td><code>--older-than</code></td>
-          <td>Remove items older than duration</td>
-          <td><code>&quot;&quot;</code></td>
-          <td><code>--older-than 7d</code></td>
+          <td><code>--vid STRING</code></td>
+          <td>USB Vendor ID (hex)</td>
+          <td>Yes</td>
+          <td><code>--vid 0x1d50</code></td>
       </tr>
       <tr>
-          <td><code>--force</code></td>
-          <td>Don&rsquo;t ask for confirmation</td>
-          <td><code>false</code></td>
-          <td><code>--force</code></td>
-      </tr>
-      <tr>
-          <td><code>--dry-run</code></td>
-          <td>Show what would be deleted without actually deleting</td>
-          <td><code>false</code></td>
-          <td><code>--dry-run</code></td>
+          <td><code>--pid STRING</code></td>
+          <td>USB Product ID (hex)</td>
+          <td>Yes</td>
+          <td><code>--pid 0x604b</code></td>
       </tr>
   </tbody>
 </table>
-<p>The <code>--older-than</code> flag accepts durations such as <code>24h</code>, <code>7d</code>, <code>1m</code>, and <code>1y</code>.</p>
-<h2>Subcommand-Specific Options<span class="hx:absolute hx:-mt-20" id="subcommand-specific-options"></span>
-    <a href="#subcommand-specific-options" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>containers<span class="hx:absolute hx:-mt-20" id="containers"></span>
-    <a href="#containers" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><table>
+<h3>macusb detach<span class="hx:absolute hx:-mt-20" id="macusb-detach"></span>
+    <a href="#macusb-detach" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Hot-unplug a USB device from the Lima QEMU VM.</p>
+<p><strong>Options:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Flag</th>
+          <th>Description</th>
+          <th>Required</th>
+          <th>Example</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>--vid STRING</code></td>
+          <td>USB Vendor ID (hex)</td>
+          <td>With <code>--pid</code></td>
+          <td><code>--vid 0x1d50</code></td>
+      </tr>
+      <tr>
+          <td><code>--pid STRING</code></td>
+          <td>USB Product ID (hex)</td>
+          <td>With <code>--vid</code></td>
+          <td><code>--pid 0x604b</code></td>
+      </tr>
+      <tr>
+          <td><code>--devid STRING</code></td>
+          <td>QMP device ID</td>
+          <td>Alternative</td>
+          <td><code>--devid usb-1d50-604b</code></td>
+      </tr>
+  </tbody>
+</table>
+<p>You can detach by vendor/product ID pair or by the QMP device ID shown in <code>vm-devices</code>.</p>
+<h3>macusb vm-devices<span class="hx:absolute hx:-mt-20" id="macusb-vm-devices"></span>
+    <a href="#macusb-vm-devices" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>List USB devices currently forwarded into the Lima VM via QMP <code>info usb</code>.</p>
+<p><strong>No additional options.</strong></p>
+<h3>macusb status<span class="hx:absolute hx:-mt-20" id="macusb-status"></span>
+    <a href="#macusb-status" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Check the full USB passthrough setup:</p>
+<ul>
+<li>Lima installation</li>
+<li>rfswift VM instance status</li>
+<li>QMP socket availability</li>
+<li>Currently attached USB devices</li>
+</ul>
+<p><strong>No additional options.</strong></p>
+<hr>
+<h3>Global Options<span class="hx:absolute hx:-mt-20" id="global-options"></span>
+    <a href="#global-options" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><table>
   <thead>
       <tr>
           <th>Flag</th>
@@ -1458,220 +1590,76 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   </thead>
   <tbody>
       <tr>
-          <td><code>--stopped</code></td>
-          <td>Only remove stopped containers</td>
-          <td><code>false</code></td>
-          <td><code>--stopped</code></td>
-      </tr>
-  </tbody>
-</table>
-<h3>images<span class="hx:absolute hx:-mt-20" id="images"></span>
-    <a href="#images" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><table>
-  <thead>
-      <tr>
-          <th>Flag</th>
-          <th>Description</th>
-          <th>Default</th>
-          <th>Example</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>--dangling</code></td>
-          <td>Only remove dangling (untagged) images</td>
-          <td><code>false</code></td>
-          <td><code>--dangling</code></td>
-      </tr>
-      <tr>
-          <td><code>--prune-children</code></td>
-          <td>Also remove dependent child images</td>
-          <td><code>false</code></td>
-          <td><code>--prune-children</code></td>
+          <td><code>--instance STRING</code></td>
+          <td>Lima instance name</td>
+          <td><code>rfswift</code></td>
+          <td><code>--instance myvm</code></td>
       </tr>
   </tbody>
 </table>
 <hr>
 <h2>Examples<span class="hx:absolute hx:-mt-20" id="examples"></span>
-    <a href="#examples" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Basic Usage<span class="hx:absolute hx:-mt-20" id="basic-usage"></span>
-    <a href="#basic-usage" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Clean both containers and images:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+    <a href="#examples" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Complete SDR Workflow on macOS<span class="hx:absolute hx:-mt-20" id="complete-sdr-workflow-on-macos"></span>
+    <a href="#complete-sdr-workflow-on-macos" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Preview what would be deleted:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --dry-run</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Full cleanup without prompts:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Remove containers only:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Remove images only:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup images</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Filtering by Age<span class="hx:absolute hx:-mt-20" id="filtering-by-age"></span>
-    <a href="#filtering-by-age" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Remove containers older than 7 days:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers --older-than 7d</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Remove images older than 1 month:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup images --older-than 1m</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Remove all resources older than 24 hours:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --older-than 24h --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Real-World Scenarios<span class="hx:absolute hx:-mt-20" id="real-world-scenarios"></span>
-    <a href="#real-world-scenarios" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Weekly maintenance:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove stopped containers older than a week</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup containers --stopped --older-than 7d --force
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1. Check that Lima is ready</span>
+</span></span><span class="line"><span class="cl">rfswift macusb status
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove dangling images</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup images --dangling --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Before major operations:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Free space before pulling large images</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup all --force
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. List USB devices to find your SDR</span>
+</span></span><span class="line"><span class="cl">rfswift macusb list
+</span></span><span class="line"><span class="cl"><span class="c1"># NAME                           VENDOR ID    PRODUCT ID   SERIAL</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># HackRF One                     0x1d50       0x604b       000000000000000...</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># RTL2838UHIDIR                  0x0bda       0x2838</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then pull new images</span>
-</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Emergency disk space recovery:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Aggressive cleanup when disk is full</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup all --force
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. Attach HackRF to the Lima VM</span>
+</span></span><span class="line"><span class="cl">rfswift macusb attach --vid 0x1d50 --pid 0x604b
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check space recovered</span>
-</span></span><span class="line"><span class="cl">df -h</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Selective image cleanup:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove only dangling images and their children</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup images --dangling --prune-children --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Safe preview before cleanup:</strong></p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># See what would be removed without deleting anything</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup all --dry-run
+</span></span><span class="line"><span class="cl"><span class="c1"># 4. Verify it&#39;s in the VM</span>
+</span></span><span class="line"><span class="cl">rfswift macusb vm-devices
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If the list looks right, run for real</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># 5. Run container via Lima&#39;s Docker (where USB device lives)</span>
+</span></span><span class="line"><span class="cl">rfswift --engine lima run -i penthertz/rfswift_noble:sdr_light -n sdr_work
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 6. Inside the container, the device is accessible</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># $ hackrf_info</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Found HackRF ...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 7. When done, detach the device</span>
+</span></span><span class="line"><span class="cl">rfswift macusb detach --vid 0x1d50 --pid 0x604b</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Attaching Multiple Devices<span class="hx:absolute hx:-mt-20" id="attaching-multiple-devices"></span>
+    <a href="#attaching-multiple-devices" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Attach RTL-SDR and HackRF</span>
+</span></span><span class="line"><span class="cl">rfswift macusb attach --vid 0x0bda --pid 0x2838
+</span></span><span class="line"><span class="cl">rfswift macusb attach --vid 0x1d50 --pid 0x604b
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Run container with both devices available</span>
+</span></span><span class="line"><span class="cl">rfswift --engine lima run -i penthertz/rfswift_noble:sdr_full -n multi_sdr</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Using a Custom Lima Instance<span class="hx:absolute hx:-mt-20" id="using-a-custom-lima-instance"></span>
+    <a href="#using-a-custom-lima-instance" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># All macusb commands support --instance for non-default VMs</span>
+</span></span><span class="line"><span class="cl">rfswift macusb list --instance my_custom_vm
+</span></span><span class="line"><span class="cl">rfswift macusb attach --vid 0x1d50 --pid 0x604b --instance my_custom_vm
+</span></span><span class="line"><span class="cl">rfswift --engine lima run -i sdr_light -n my_work</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1682,13 +1670,14 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
 </div>
 </div>
 <hr>
-<h2>Cleanup Strategies<span class="hx:absolute hx:-mt-20" id="cleanup-strategies"></span>
-    <a href="#cleanup-strategies" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Conservative Strategy<span class="hx:absolute hx:-mt-20" id="conservative-strategy"></span>
-    <a href="#conservative-strategy" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Remove only stopped containers and dangling images:</p>
+<h2>Setup<span class="hx:absolute hx:-mt-20" id="setup"></span>
+    <a href="#setup" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Prerequisites<span class="hx:absolute hx:-mt-20" id="prerequisites"></span>
+    <a href="#prerequisites" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ol>
+<li>
+<p><strong>Lima</strong> must be installed:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers --stopped --force
-</span></span><span class="line"><span class="cl">rfswift cleanup images --dangling --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install lima</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1698,17 +1687,22 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   </button>
 </div>
 </div>
-<p><strong>Good for:</strong></p>
-<ul>
-<li>Production systems</li>
-<li>Careful disk management</li>
-<li>Preserving development environments</li>
-</ul>
-<h3>Balanced Strategy<span class="hx:absolute hx:-mt-20" id="balanced-strategy"></span>
-    <a href="#balanced-strategy" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Remove older unused resources:</p>
+</li>
+<li>
+<p>The Lima VM must use <strong><code>vmType: qemu</code></strong> (not <code>vz</code>) for USB passthrough support.</p>
+</li>
+</ol>
+<h3>First-Time Setup<span class="hx:absolute hx:-mt-20" id="first-time-setup"></span>
+    <a href="#first-time-setup" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>RF Swift can auto-create the Lima VM on first use:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --older-than 7d --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Option 1: Let RF Swift create it automatically</span>
+</span></span><span class="line"><span class="cl">rfswift --engine lima run -i penthertz/rfswift_noble:sdr_light -n my_sdr
+</span></span><span class="line"><span class="cl"><span class="c1"># → Detects no Lima instance, creates one, installs Docker + udev rules, starts VM</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Option 2: Create manually with the bundled template</span>
+</span></span><span class="line"><span class="cl">limactl create --name rfswift lima/rfswift.yaml
+</span></span><span class="line"><span class="cl">limactl start rfswift</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1718,53 +1712,73 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   </button>
 </div>
 </div>
-<p><strong>Good for:</strong></p>
+<p>The auto-created VM includes:</p>
 <ul>
-<li>Regular maintenance</li>
-<li>Development systems</li>
-<li>General cleanup</li>
+<li>Docker engine inside the VM</li>
+<li>USB libraries (<code>libusb</code>, <code>libhidapi</code>, <code>libftdi</code>)</li>
+<li>Kernel modules for USB serial devices (<code>cp210x</code>, <code>ftdi_sio</code>, <code>ch341</code>)</li>
+<li>Udev rules for all common SDR/RF devices (HackRF, RTL-SDR, USRP, BladeRF, Airspy, PlutoSDR, LimeSDR, etc.)</li>
 </ul>
-<h3>Aggressive Strategy<span class="hx:absolute hx:-mt-20" id="aggressive-strategy"></span>
-    <a href="#aggressive-strategy" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Remove everything unused:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p><strong>Good for:</strong></p>
-<ul>
-<li>Emergency space recovery</li>
-<li>Fresh start scenarios</li>
-<li>CI/CD systems</li>
-</ul>
+<h3>Supported RF Devices<span class="hx:absolute hx:-mt-20" id="supported-rf-devices"></span>
+    <a href="#supported-rf-devices" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>The Lima VM comes pre-configured with udev rules for:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Device</th>
+          <th>Vendor ID</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>HackRF, Great Scott Gadgets</td>
+          <td><code>0x1d50</code></td>
+      </tr>
+      <tr>
+          <td>RTL-SDR (all variants)</td>
+          <td><code>0x0bda</code></td>
+      </tr>
+      <tr>
+          <td>Ettus USRP (B200/B210/B100)</td>
+          <td><code>0x2500</code>, <code>0x3923</code>, <code>0xfffe</code></td>
+      </tr>
+      <tr>
+          <td>Nuand BladeRF (v1/v2)</td>
+          <td><code>0x2cf0</code></td>
+      </tr>
+      <tr>
+          <td>Airspy, Airspy HF+</td>
+          <td><code>0x1d50</code>, <code>0x03eb</code></td>
+      </tr>
+      <tr>
+          <td>ADALM-Pluto (PlutoSDR)</td>
+          <td><code>0x0456</code>, <code>0x2fa2</code></td>
+      </tr>
+      <tr>
+          <td>LimeSDR</td>
+          <td><code>0x0403</code>, <code>0x1d50</code></td>
+      </tr>
+      <tr>
+          <td>FTDI devices (probes, serial)</td>
+          <td><code>0x0403</code></td>
+      </tr>
+      <tr>
+          <td>STM32 (VNA, bootloaders)</td>
+          <td><code>0x0483</code></td>
+      </tr>
+      <tr>
+          <td>FUNcube Dongle</td>
+          <td><code>0x04d8</code></td>
+      </tr>
+  </tbody>
+</table>
 <hr>
 <h2>Troubleshooting<span class="hx:absolute hx:-mt-20" id="troubleshooting"></span>
-    <a href="#troubleshooting" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Cleanup Not Freeing Space<span class="hx:absolute hx:-mt-20" id="cleanup-not-freeing-space"></span>
-    <a href="#cleanup-not-freeing-space" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Ran cleanup but disk usage still high</p>
-<p><strong>Solutions:</strong></p>
+    <a href="#troubleshooting" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Lima Not Installed<span class="hx:absolute hx:-mt-20" id="lima-not-installed"></span>
+    <a href="#lima-not-installed" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> <code>macusb</code> commands fail because Lima is not installed</p>
+<p><strong>Solution:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check what&#39;s using space</span>
-</span></span><span class="line"><span class="cl">docker system df -v
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Try more aggressive cleanup</span>
-</span></span><span class="line"><span class="cl">docker system prune -a -f --volumes
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check for large log files</span>
-</span></span><span class="line"><span class="cl">find /var/lib/docker -name <span class="s2">&#34;*.log&#34;</span> -size +100M
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check other disk usage</span>
-</span></span><span class="line"><span class="cl">du -sh /var/lib/docker/*
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># May need to clean Docker logs</span>
-</span></span><span class="line"><span class="cl">truncate -s <span class="m">0</span> /var/lib/docker/containers/*/*-json.log</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install lima</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1774,20 +1788,19 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   </button>
 </div>
 </div>
-<h3>Permission Denied<span class="hx:absolute hx:-mt-20" id="permission-denied"></span>
-    <a href="#permission-denied" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Cleanup fails with permission errors</p>
-<p><strong>Solutions:</strong></p>
+<h3>QMP Socket Not Found<span class="hx:absolute hx:-mt-20" id="qmp-socket-not-found"></span>
+    <a href="#qmp-socket-not-found" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> <code>macusb status</code> reports no QMP socket</p>
+<p><strong>Solution:</strong> Your Lima VM must use <code>vmType: qemu</code>. The Apple Virtualization framework (<code>vmType: vz</code>) does not support USB passthrough.</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use sudo</span>
-</span></span><span class="line"><span class="cl">sudo rfswift cleanup all --force
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check your VM config</span>
+</span></span><span class="line"><span class="cl">cat ~/.lima/rfswift/lima.yaml <span class="p">|</span> grep vmType
+</span></span><span class="line"><span class="cl"><span class="c1"># Should show: vmType: qemu</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or add user to docker group</span>
-</span></span><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
-</span></span><span class="line"><span class="cl">newgrp docker
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then retry</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># If it shows vz, recreate with QEMU:</span>
+</span></span><span class="line"><span class="cl">limactl delete rfswift
+</span></span><span class="line"><span class="cl">limactl create --name rfswift lima/rfswift.yaml
+</span></span><span class="line"><span class="cl">limactl start rfswift</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1797,22 +1810,35 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   </button>
 </div>
 </div>
-<h3>Important Container Removed<span class="hx:absolute hx:-mt-20" id="important-container-removed"></span>
-    <a href="#important-container-removed" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Accidentally removed needed container</p>
-<p><strong>Solutions:</strong></p>
+<h3>Device Not Visible in Container<span class="hx:absolute hx:-mt-20" id="device-not-visible-in-container"></span>
+    <a href="#device-not-visible-in-container" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> Device attached via <code>macusb attach</code> but not visible in the container</p>
+<p><strong>Solution:</strong> Make sure you&rsquo;re using <code>--engine lima</code>:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check backups</span>
-</span></span><span class="line"><span class="cl">ls ~/docker-backups/
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Wrong: runs in Docker Desktop (no USB access)</span>
+</span></span><span class="line"><span class="cl">rfswift run -i sdr_light -n my_sdr
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Restore from export</span>
-</span></span><span class="line"><span class="cl">rfswift import container -i backup.tar.gz -n restored_container
+</span></span><span class="line"><span class="cl"><span class="c1"># Correct: runs in Lima&#39;s Docker (USB devices visible)</span>
+</span></span><span class="line"><span class="cl">rfswift --engine lima run -i sdr_light -n my_sdr</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Attach Fails with Permission Error<span class="hx:absolute hx:-mt-20" id="attach-fails-with-permission-error"></span>
+    <a href="#attach-fails-with-permission-error" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem:</strong> <code>macusb attach</code> returns a QMP error</p>
+<p><strong>Solution:</strong> QEMU USB passthrough may require elevated permissions on macOS:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if the Lima VM is running</span>
+</span></span><span class="line"><span class="cl">rfswift macusb status
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Recreate from image if no backup</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n recreated_container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Lesson: Always export important containers before cleanup</span>
-</span></span><span class="line"><span class="cl">rfswift <span class="nb">export</span> container -c important -o backup.tar.gz</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Restart the VM if needed</span>
+</span></span><span class="line"><span class="cl">limactl stop rfswift <span class="o">&amp;&amp;</span> limactl start rfswift</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1825,17 +1851,18 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
 <hr>
 <h2>Related Commands<span class="hx:absolute hx:-mt-20" id="related-commands"></span>
     <a href="#related-commands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
-<li><a href="/docs/commands/last/"><code>last</code></a> - List containers before cleanup</li>
-<li><a href="/docs/commands/remove/"><code>remove</code></a> - Remove specific containers</li>
-<li><a href="/docs/commands/delete/"><code>delete</code></a> - Remove specific images</li>
-<li><a href="/docs/commands/images/"><code>images</code></a> - Check images before cleanup</li>
+<li><a href="/docs/commands/engine/"><code>--engine</code></a> - Select container engine (use <code>--engine lima</code> for USB)</li>
+<li><a href="/docs/commands/winusb/"><code>winusb</code></a> - USB management on Windows/WSL2</li>
+<li><a href="/docs/commands/bindings/"><code>bindings</code></a> - Device bindings on Linux</li>
+<li><a href="/docs/commands/run/"><code>run</code></a> - Create containers</li>
+<li><a href="/docs/commands/doctor/"><code>doctor</code></a> - Diagnose environment (includes Lima checks on macOS)</li>
 </ul>
 <hr>
-<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200">
-  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">🧹</div></div>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Regular Maintenance</strong>: Schedule regular cleanup with <code>rfswift cleanup all --older-than 7d --force</code> to prevent disk space issues. Daily or weekly cleanup keeps your system healthy!</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Prerequisites</strong>: Lima must be installed (<code>brew install lima</code>) and the VM must use <code>vmType: qemu</code> for USB passthrough support.</div>
   </div>
 </div>
 
@@ -1843,15 +1870,15 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Use Dry Run First</strong>: Before running a large cleanup, use <code>--dry-run</code> to preview what will be deleted. This helps avoid accidentally removing resources you still need.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>macOS Only</strong>: This command is exclusively for macOS hosts. On Linux, USB devices are directly accessible. On Windows, use <a href="/docs/commands/winusb/"><code>winusb</code></a>.</div>
   </div>
 </div>
 
-<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
-  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">💡</div></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Targeted Cleanup</strong>: Use the <code>containers</code> and <code>images</code> subcommands with their specific flags (<code>--stopped</code>, <code>--dangling</code>, <code>--prune-children</code>) for precise control over what gets removed.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Remember</strong>: Always use <code>rfswift --engine lima run ...</code> when you need USB devices in your containers. Without <code>--engine lima</code>, containers run in Docker Desktop which has no USB access.</div>
   </div>
 </div>
 
@@ -1860,14 +1887,14 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
         
     <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-17T11:47:01.000Z">March 17, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
-        href="/docs/commands/last/"
-        title="last"
+        href="/docs/commands/winusb/"
+        title="winusb"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:pr-4 hx:rtl:pl-4"
-      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>last</a><a
-        href="/docs/commands/log/"
-        title="log"
+      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>winusb</a><a
+        href="/docs/commands/doctor/"
+        title="doctor"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:ml-auto hx:ltr:pl-4 hx:ltr:text-right hx:rtl:mr-auto hx:rtl:pr-4 hx:rtl:text-left"
-      >log<svg class="hx:inline hx:h-5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
+      >doctor<svg class="hx:inline hx:h-5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
         
       </main>
     </article>
@@ -1883,6 +1910,35 @@ Synopsis rfswift cleanup &lt;subcommand&gt; [OPTIONS] The cleanup command remove
     
     <script defer src="/js/main.min.1fba8b463c3976277e140a710568addd3b581bff53843fb50ebbec6340f19ac2.js" integrity="sha256-H7qLRjw5did&#43;FApxBWit3TtYG/9ThD&#43;1DrvsY0DxmsI="></script>
 <script defer src="/js/flexsearch.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script>
-        <script defer src="/en.search.min.3d7b6ffb50e2cafaf5eae5b57ea40addb8ee727d0ad8a7f24bddc88ab7f7941f.js" integrity="sha256-PXtv&#43;1Diyvr16uW1fqQK3bjucn0K2KfyS93Iirf3lB8="></script>
+        <script defer src="/en.search.min.3d7b6ffb50e2cafaf5eae5b57ea40addb8ee727d0ad8a7f24bddc88ab7f7941f.js" integrity="sha256-PXtv&#43;1Diyvr16uW1fqQK3bjucn0K2KfyS93Iirf3lB8="></script><script defer src="/js/mermaid.min.3e2002bf333907fae7c1d6860bbc78f5da417bc70b64f3d2268581ba0ba8b96a.js" integrity="sha256-PiACvzM5B/rnwdaGC7x49dpBe8cLZPPSJoWBuguouWo=" crossorigin="anonymous"></script><script>
+  document.addEventListener("DOMContentLoaded", () => {
+    
+    document.querySelectorAll(".mermaid").forEach((el) => {
+      el.dataset.original = el.innerHTML;
+    });
+
+    const theme = document.documentElement.classList.contains("dark") ? "dark" : "default";
+    mermaid.initialize({ startOnLoad: true, theme: theme });
+
+    let timeout;
+    new MutationObserver(() => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const theme = document.documentElement.classList.contains("dark") ? "dark" : "default";
+        document.querySelectorAll(".mermaid").forEach((el) => {
+          
+          el.innerHTML = el.dataset.original;
+          el.removeAttribute("data-processed");
+        });
+        mermaid.initialize({ startOnLoad: true, theme: theme });
+        mermaid.init();
+      }, 150);
+    }).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  });
+</script>
+
   </body>
 </html>
