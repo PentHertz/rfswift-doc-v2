@@ -512,6 +512,51 @@
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;h3&gt;Workspace Options&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;workspace-options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#workspace-options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Flag&lt;/th&gt;
+          &lt;th&gt;Description&lt;/th&gt;
+          &lt;th&gt;Default&lt;/th&gt;
+          &lt;th&gt;Example&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;--workspace STRING&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Custom workspace host path&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;~/rfswift-workspace/&amp;lt;name&amp;gt;/&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;--workspace ~/my-project&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;--cwd&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Mount current directory as workspace&lt;/td&gt;
+          &lt;td&gt;false&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;--cwd&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;--no-workspace&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Disable automatic workspace&lt;/td&gt;
+          &lt;td&gt;false&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;--no-workspace&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;By default, every container gets a &lt;strong&gt;shared workspace directory&lt;/strong&gt; automatically mounted:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Host&lt;/strong&gt;: &lt;code&gt;~/rfswift-workspace/&amp;lt;container-name&amp;gt;/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Container&lt;/strong&gt;: &lt;code&gt;/workspace&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Files saved to &lt;code&gt;/workspace&lt;/code&gt; inside the container are immediately available on the host. IQ captures, logs, reports, scripts — all in one place without manual &lt;code&gt;--bind&lt;/code&gt; flags.&lt;/p&gt;
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;The workspace directory persists after the container is deleted. Your data stays on the host.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
 &lt;h3&gt;Device &amp;amp; Volume Options&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;device--volume-options&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#device--volume-options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;table&gt;
   &lt;thead&gt;
@@ -529,7 +574,7 @@
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;&lt;code&gt;-b, --bind STRING&lt;/code&gt;&lt;/td&gt;
-          &lt;td&gt;Volume bindings (comma-separated)&lt;/td&gt;
+          &lt;td&gt;Extra volume bindings (comma-separated)&lt;/td&gt;
           &lt;td&gt;&lt;code&gt;-b ~/projects:/root/projects&lt;/code&gt;&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
@@ -1989,7 +2034,16 @@
 &lt;p&gt;&lt;strong&gt;Container Name&lt;/strong&gt; &amp;ndash; Required text input (placeholder: &lt;code&gt;my_sdr&lt;/code&gt;).&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Volume Bindings&lt;/strong&gt; &amp;ndash; Asks if you want to add volume bindings, then prompts for comma-separated &lt;code&gt;host:container&lt;/code&gt; paths.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Workspace Directory&lt;/strong&gt; &amp;ndash; Select how to mount the shared workspace:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Auto&lt;/strong&gt; (default): &lt;code&gt;~/rfswift-workspace/&amp;lt;name&amp;gt;/&lt;/code&gt; → &lt;code&gt;/workspace&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Custom path&lt;/strong&gt;: Enter a host directory to mount as &lt;code&gt;/workspace&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Current directory&lt;/strong&gt;: Mount &lt;code&gt;$PWD&lt;/code&gt; as &lt;code&gt;/workspace&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Disable&lt;/strong&gt;: No workspace mount&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Volume Bindings&lt;/strong&gt; &amp;ndash; Asks if you want to add &lt;em&gt;additional&lt;/em&gt; volume bindings beyond the workspace.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Device Mappings&lt;/strong&gt; &amp;ndash; Asks if you want to add device mappings, then prompts for comma-separated device paths.&lt;/p&gt;
@@ -2034,7 +2088,10 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Configuration Recap&lt;/strong&gt; &amp;ndash; Displays a summary of all selected options.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;USB Devices&lt;/strong&gt; (macOS with &lt;code&gt;--engine lima&lt;/code&gt; only) &amp;ndash; Asks whether to attach USB devices to the Lima VM, then shows a multi-select picker of discovered host USB devices.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Configuration Recap&lt;/strong&gt; &amp;ndash; Displays a summary of all selected options, including workspace path.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;CLI Equivalent&lt;/strong&gt; &amp;ndash; Shows the equivalent &lt;code&gt;rfswift run&lt;/code&gt; command.&lt;/p&gt;
@@ -21737,7 +21794,7 @@ Global Flags:
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Install Lima&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install lima
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install lima qemu
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# (Optional) Create the rfswift VM manually&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# RF Swift will auto-create it on first &amp;#39;rfswift --engine lima run&amp;#39;&lt;/span&gt;
@@ -23620,6 +23677,13 @@ repotag = penthertz/rfswift_noble
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;This will start a container using the &lt;code&gt;sdr_full&lt;/code&gt; image with the name &lt;code&gt;my_sdr_container&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;A &lt;strong&gt;workspace directory&lt;/strong&gt; is automatically created at &lt;code&gt;~/rfswift-workspace/my_sdr_container/&lt;/code&gt; and mounted at &lt;code&gt;/workspace&lt;/code&gt; inside the container. Files saved there are immediately accessible on your host — no extra flags needed.&lt;/p&gt;
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;Use &lt;code&gt;--workspace /path&lt;/code&gt; for a custom workspace, &lt;code&gt;--cwd&lt;/code&gt; to mount the current directory, or &lt;code&gt;--no-workspace&lt;/code&gt; to disable it. See &lt;a href=&#34;https://rfswift.io/docs/commands/run/#workspace-options&#34;&gt;&lt;code&gt;run&lt;/code&gt; command reference&lt;/a&gt; for details.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 &lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200&#34;&gt;
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
   &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
@@ -24030,7 +24094,7 @@ This requires &lt;code&gt;pulseaudio&lt;/code&gt; or &lt;code&gt;pipewire-pulse&
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Install Lima (one-time)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install lima
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install lima qemu
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 1. List USB devices on your Mac&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift macusb list
@@ -24883,18 +24947,15 @@ This requires &lt;code&gt;pulseaudio&lt;/code&gt; or &lt;code&gt;pipewire-pulse&
       <description>
         
         
-        &lt;h1&gt;Sharing Files and Devices&lt;/h1&gt;&lt;p&gt;When conducting RF assessments with RF Swift, you&amp;rsquo;ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers various file sharing methods and device binding techniques for common RF hardware.&lt;/p&gt;
-&lt;h2&gt;File Sharing Between Host and Container&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;file-sharing-between-host-and-container&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#file-sharing-between-host-and-container&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Directory Binding&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;directory-binding&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#directory-binding&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The most common way to share files is by binding a directory from your host system to a location within the container using the &lt;code&gt;-b&lt;/code&gt; parameter with the &lt;code&gt;run&lt;/code&gt; command.&lt;/p&gt;
-&lt;h4&gt;Basic Directory Sharing&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;basic-directory-sharing&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#basic-directory-sharing&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;ol&gt;
-&lt;li&gt;First, create a directory on your host system:&lt;/li&gt;
-&lt;/ol&gt;
+        &lt;h1&gt;Sharing Files and Devices&lt;/h1&gt;&lt;p&gt;When conducting RF assessments with RF Swift, you&amp;rsquo;ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers the automatic workspace, manual file sharing, and device binding techniques.&lt;/p&gt;
+&lt;h2&gt;Automatic Workspace&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;automatic-workspace&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#automatic-workspace&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Every RF Swift container gets a &lt;strong&gt;shared workspace directory&lt;/strong&gt; automatically — no configuration needed.&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create a directory on your host&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir -p ~/shared_data&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;~/rfswift-workspace/
+├── my_sdr/            → /workspace inside container &amp;#34;my_sdr&amp;#34;
+├── wifi_pentest/      → /workspace inside container &amp;#34;wifi_pentest&amp;#34;
+└── client_assessment/ → /workspace inside container &amp;#34;client_assessment&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -24904,10 +24965,132 @@ This requires &lt;code&gt;pulseaudio&lt;/code&gt; or &lt;code&gt;pipewire-pulse&
   &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;Start a container with this directory bound to a location inside the container:&lt;/li&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Location&lt;/th&gt;
+          &lt;th&gt;Path&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Host&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;~/rfswift-workspace/&amp;lt;container-name&amp;gt;/&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Container&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/workspace&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;How It Works&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;how-it-works&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#how-it-works&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;When you run &lt;code&gt;rfswift run -n my_sdr&lt;/code&gt;, RF Swift automatically:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Creates &lt;code&gt;~/rfswift-workspace/my_sdr/&lt;/code&gt; on your host&lt;/li&gt;
+&lt;li&gt;Mounts it at &lt;code&gt;/workspace&lt;/code&gt; inside the container&lt;/li&gt;
+&lt;li&gt;Shows the workspace path in the container summary&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;No &lt;code&gt;--bind&lt;/code&gt; flag needed for the common case.&lt;/strong&gt; Just save files to &lt;code&gt;/workspace&lt;/code&gt; inside the container and they&amp;rsquo;re immediately available on your host.&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create a container — workspace is automatic&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_full -n capture_session
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Inside the container, /workspace is your shared folder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /workspace
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rtl_433 -f 433.92M -s 2M &amp;gt; captures/433mhz.iq
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Found signal at 433.92 MHz&amp;#34;&lt;/span&gt; &amp;gt; notes.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Files are immediately available on host at:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# ~/rfswift-workspace/capture_session/captures/433mhz.iq&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# ~/rfswift-workspace/capture_session/notes.txt&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Workspace Options&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;workspace-options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#workspace-options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Flag&lt;/th&gt;
+          &lt;th&gt;Description&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;em&gt;(default)&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;Auto-creates &lt;code&gt;~/rfswift-workspace/&amp;lt;name&amp;gt;/&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;--workspace /path&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Use a custom host directory as workspace&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;--cwd&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Mount current working directory as workspace&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;--no-workspace&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Disable workspace entirely&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Use current directory as workspace&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i sdr_full -n quick_test --cwd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Custom path&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i sdr_full -n project_x --workspace ~/projects/project-x/rf-data
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Disable workspace&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i sdr_full -n headless --no-workspace&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Workspace and Reports&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;workspace-and-reports&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#workspace-and-reports&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The workspace integrates with RF Swift&amp;rsquo;s &lt;a href=&#34;https://rfswift.io/docs/commands/report/&#34;&gt;report generator&lt;/a&gt;. All files in the workspace are automatically inventoried in generated reports:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# After your assessment, generate a report&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift report generate -c capture_session --format html
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Report includes workspace file inventory:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#   captures/433mhz.iq (capture, 12.5 MB)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#   notes.txt (log, 0.1 KB)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;The workspace directory &lt;strong&gt;persists&lt;/strong&gt; on the host after the container is stopped or deleted. Your captured data, notes, and scripts are never lost.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;h2&gt;Additional Volume Bindings&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;additional-volume-bindings&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#additional-volume-bindings&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;For directories beyond the workspace, use the &lt;code&gt;-b&lt;/code&gt; flag to bind additional host directories.&lt;/p&gt;
+&lt;h3&gt;Basic Directory Sharing&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;basic-directory-sharing&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#basic-directory-sharing&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:telecom -n telecom_analysis -b ~/shared_data:/root/shared&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
@@ -24919,7 +25102,7 @@ This requires &lt;code&gt;pulseaudio&lt;/code&gt; or &lt;code&gt;pipewire-pulse&
   &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;This binds your host&amp;rsquo;s &lt;code&gt;~/shared_data&lt;/code&gt; directory to &lt;code&gt;/root/shared&lt;/code&gt; inside the container.&lt;/p&gt;
+&lt;p&gt;This binds your host&amp;rsquo;s &lt;code&gt;~/shared_data&lt;/code&gt; directory to &lt;code&gt;/root/shared&lt;/code&gt; inside the container, &lt;strong&gt;in addition to&lt;/strong&gt; the automatic workspace at &lt;code&gt;/workspace&lt;/code&gt;.&lt;/p&gt;
 &lt;h4&gt;Multiple Directory Bindings&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;multiple-directory-bindings&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#multiple-directory-bindings&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;You can bind multiple directories by separating them with commas:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
@@ -35574,6 +35757,7 @@ c3d4e5f6g7h8   analysis       penthertz/rfswift_noble:sdr_full   Exited      1 w
 &lt;hr&gt;
 &lt;h2&gt;Related Commands&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;related-commands&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#related-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://rfswift.io/docs/commands/report/&#34;&gt;&lt;code&gt;report&lt;/code&gt;&lt;/a&gt; - Generate assessment reports (includes recordings automatically)&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://rfswift.io/docs/commands/exec/&#34;&gt;&lt;code&gt;exec&lt;/code&gt;&lt;/a&gt; - Execute commands that can be recorded&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://rfswift.io/docs/commands/run/&#34;&gt;&lt;code&gt;run&lt;/code&gt;&lt;/a&gt; - Run containers to record&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://rfswift.io/docs/commands/last/&#34;&gt;&lt;code&gt;last&lt;/code&gt;&lt;/a&gt; - Show containers for recording sessions&lt;/li&gt;

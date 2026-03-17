@@ -9,18 +9,50 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 <title>Sharing Files &amp; Devices – RF Swift</title>
-  <meta name="description" content="Sharing Files and DevicesWhen conducting RF assessments with RF Swift, you’ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers various file sharing methods and device binding techniques for common RF hardware.
-File Sharing Between Host and Container Directory Binding The most common way to share files is by binding a directory from your host system to a location within the container using the -b parameter with the run command." /><link rel="canonical" href="https://rfswift.io/docs/guide/sharing-files/" itemprop="url" />
+  <meta name="description" content="Sharing Files and DevicesWhen conducting RF assessments with RF Swift, you’ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers the automatic workspace, manual file sharing, and device binding techniques.
+Automatic Workspace Every RF Swift container gets a shared workspace directory automatically — no configuration needed.
+~/rfswift-workspace/ ├── my_sdr/ → /workspace inside container &#34;my_sdr&#34; ├── wifi_pentest/ → /workspace inside container &#34;wifi_pentest&#34; └── client_assessment/ → /workspace inside container &#34;client_assessment&#34; Location Path Host ~/rfswift-workspace/&lt;container-name&gt;/ Container /workspace How It Works When you run rfswift run -n my_sdr, RF Swift automatically:" /><link rel="canonical" href="https://rfswift.io/docs/guide/sharing-files/" itemprop="url" />
 
 <meta property="og:title" content="Sharing Files &amp; Devices">
 <meta
   property="og:description"
   content="
     
-      Sharing Files and DevicesWhen conducting RF assessments with RF Swift, you&rsquo;ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers various file sharing methods and device binding techniques for common RF hardware.
-File Sharing Between Host and Container
-    Directory Binding
-    The most common way to share files is by binding a directory from your host system to a location within the container using the -b parameter with the run command.
+      Sharing Files and DevicesWhen conducting RF assessments with RF Swift, you&rsquo;ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers the automatic workspace, manual file sharing, and device binding techniques.
+Automatic Workspace
+    Every RF Swift container gets a shared workspace directory automatically — no configuration needed.
+
+
+~/rfswift-workspace/
+├── my_sdr/            → /workspace inside container &#34;my_sdr&#34;
+├── wifi_pentest/      → /workspace inside container &#34;wifi_pentest&#34;
+└── client_assessment/ → /workspace inside container &#34;client_assessment&#34;
+  
+    
+
+  
+
+
+
+  
+      
+          Location
+          Path
+      
+  
+  
+      
+          Host
+          ~/rfswift-workspace/&lt;container-name&gt;/
+      
+      
+          Container
+          /workspace
+      
+  
+
+How It Works
+    When you run rfswift run -n my_sdr, RF Swift automatically:
     
   ">
 <meta
@@ -33,19 +65,21 @@ File Sharing Between Host and Container
 
 <meta
   property="article:modified_time"
-  content="2026-03-17T11:47:01+01:00">
+  content="2026-03-17T13:39:02+01:00">
 
 
 
   <meta itemprop="name" content="Sharing Files & Devices">
-  <meta itemprop="description" content="Sharing Files and DevicesWhen conducting RF assessments with RF Swift, you’ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers various file sharing methods and device binding techniques for common RF hardware.
-File Sharing Between Host and Container Directory Binding The most common way to share files is by binding a directory from your host system to a location within the container using the -b parameter with the run command.">
-  <meta itemprop="dateModified" content="2026-03-17T11:47:01+01:00">
-  <meta itemprop="wordCount" content="843">
+  <meta itemprop="description" content="Sharing Files and DevicesWhen conducting RF assessments with RF Swift, you’ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers the automatic workspace, manual file sharing, and device binding techniques.
+Automatic Workspace Every RF Swift container gets a shared workspace directory automatically — no configuration needed.
+~/rfswift-workspace/ ├── my_sdr/ → /workspace inside container &#34;my_sdr&#34; ├── wifi_pentest/ → /workspace inside container &#34;wifi_pentest&#34; └── client_assessment/ → /workspace inside container &#34;client_assessment&#34; Location Path Host ~/rfswift-workspace/&lt;container-name&gt;/ Container /workspace How It Works When you run rfswift run -n my_sdr, RF Swift automatically:">
+  <meta itemprop="dateModified" content="2026-03-17T13:39:02+01:00">
+  <meta itemprop="wordCount" content="1085">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Sharing Files & Devices">
-  <meta name="twitter:description" content="Sharing Files and DevicesWhen conducting RF assessments with RF Swift, you’ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers various file sharing methods and device binding techniques for common RF hardware.
-File Sharing Between Host and Container Directory Binding The most common way to share files is by binding a directory from your host system to a location within the container using the -b parameter with the run command.">
+  <meta name="twitter:description" content="Sharing Files and DevicesWhen conducting RF assessments with RF Swift, you’ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers the automatic workspace, manual file sharing, and device binding techniques.
+Automatic Workspace Every RF Swift container gets a shared workspace directory automatically — no configuration needed.
+~/rfswift-workspace/ ├── my_sdr/ → /workspace inside container &#34;my_sdr&#34; ├── wifi_pentest/ → /workspace inside container &#34;wifi_pentest&#34; └── client_assessment/ → /workspace inside container &#34;client_assessment&#34; Location Path Host ~/rfswift-workspace/&lt;container-name&gt;/ Container /workspace How It Works When you run rfswift run -n my_sdr, RF Swift automatically:">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
     <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -301,9 +335,15 @@ File Sharing Between Host and Container Directory Binding The most common way to
   
     <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
               <a
-                href="#file-sharing-between-host-and-container"
+                href="#automatic-workspace"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >File Sharing Between Host and Container</a>
+              >Automatic Workspace</a>
+            </li>
+          <li>
+              <a
+                href="#additional-volume-bindings"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Additional Volume Bindings</a>
             </li>
           <li>
               <a
@@ -692,6 +732,14 @@ File Sharing Between Host and Container Directory Binding The most common way to
     href="/docs/commands/macusb/"
     
   >macusb
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/report/"
+    
+  >report
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1173,6 +1221,14 @@ File Sharing Between Host and Container Directory Binding The most common way to
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/report/"
+    
+  >report
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/doctor/"
     
   >doctor
@@ -1252,15 +1308,27 @@ File Sharing Between Host and Container Directory Binding The most common way to
 <nav class="hextra-toc hx:order-last hx:hidden hx:w-64 hx:shrink-0 hx:xl:block hx:print:hidden hx:px-4" aria-label="table of contents">
     <div class="hextra-scrollbar hx:sticky hx:top-16 hx:overflow-y-auto hx:pr-4 hx:pt-6 hx:text-sm [hyphens:auto] hx:max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] hx:ltr:-mr-4 hx:rtl:-ml-4"><p class="hx:mb-4 hx:font-semibold hx:tracking-tight">On this page</p><ul>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#file-sharing-between-host-and-container">File Sharing Between Host and Container
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#automatic-workspace">Automatic Workspace
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#directory-binding">Directory Binding
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#how-it-works">How It Works
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-8 hx:rtl:pr-8 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#basic-directory-sharing">Basic Directory Sharing
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#workspace-options">Workspace Options
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#workspace-and-reports">Workspace and Reports
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#additional-volume-bindings">Additional Volume Bindings
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#basic-directory-sharing">Basic Directory Sharing
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1364,18 +1432,15 @@ File Sharing Between Host and Container Directory Binding The most common way to
 
         <div class="content">
           <h1>Sharing Files &amp; Devices</h1>
-          <h1>Sharing Files and Devices</h1><p>When conducting RF assessments with RF Swift, you&rsquo;ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers various file sharing methods and device binding techniques for common RF hardware.</p>
-<h2>File Sharing Between Host and Container<span class="hx:absolute hx:-mt-20" id="file-sharing-between-host-and-container"></span>
-    <a href="#file-sharing-between-host-and-container" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Directory Binding<span class="hx:absolute hx:-mt-20" id="directory-binding"></span>
-    <a href="#directory-binding" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>The most common way to share files is by binding a directory from your host system to a location within the container using the <code>-b</code> parameter with the <code>run</code> command.</p>
-<h4>Basic Directory Sharing<span class="hx:absolute hx:-mt-20" id="basic-directory-sharing"></span>
-    <a href="#basic-directory-sharing" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><ol>
-<li>First, create a directory on your host system:</li>
-</ol>
+          <h1>Sharing Files and Devices</h1><p>When conducting RF assessments with RF Swift, you&rsquo;ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers the automatic workspace, manual file sharing, and device binding techniques.</p>
+<h2>Automatic Workspace<span class="hx:absolute hx:-mt-20" id="automatic-workspace"></span>
+    <a href="#automatic-workspace" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Every RF Swift container gets a <strong>shared workspace directory</strong> automatically — no configuration needed.</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a directory on your host</span>
-</span></span><span class="line"><span class="cl">mkdir -p ~/shared_data</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><pre><code>~/rfswift-workspace/
+├── my_sdr/            → /workspace inside container &#34;my_sdr&#34;
+├── wifi_pentest/      → /workspace inside container &#34;wifi_pentest&#34;
+└── client_assessment/ → /workspace inside container &#34;client_assessment&#34;</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1385,10 +1450,132 @@ File Sharing Between Host and Container Directory Binding The most common way to
   </button>
 </div>
 </div>
-<ol start="2">
-<li>Start a container with this directory bound to a location inside the container:</li>
+<table>
+  <thead>
+      <tr>
+          <th>Location</th>
+          <th>Path</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Host</strong></td>
+          <td><code>~/rfswift-workspace/&lt;container-name&gt;/</code></td>
+      </tr>
+      <tr>
+          <td><strong>Container</strong></td>
+          <td><code>/workspace</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3>How It Works<span class="hx:absolute hx:-mt-20" id="how-it-works"></span>
+    <a href="#how-it-works" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>When you run <code>rfswift run -n my_sdr</code>, RF Swift automatically:</p>
+<ol>
+<li>Creates <code>~/rfswift-workspace/my_sdr/</code> on your host</li>
+<li>Mounts it at <code>/workspace</code> inside the container</li>
+<li>Shows the workspace path in the container summary</li>
 </ol>
+<p><strong>No <code>--bind</code> flag needed for the common case.</strong> Just save files to <code>/workspace</code> inside the container and they&rsquo;re immediately available on your host.</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a container — workspace is automatic</span>
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n capture_session
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Inside the container, /workspace is your shared folder</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /workspace
+</span></span><span class="line"><span class="cl">rtl_433 -f 433.92M -s 2M &gt; captures/433mhz.iq
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Found signal at 433.92 MHz&#34;</span> &gt; notes.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Files are immediately available on host at:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ~/rfswift-workspace/capture_session/captures/433mhz.iq</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ~/rfswift-workspace/capture_session/notes.txt</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Workspace Options<span class="hx:absolute hx:-mt-20" id="workspace-options"></span>
+    <a href="#workspace-options" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><table>
+  <thead>
+      <tr>
+          <th>Flag</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><em>(default)</em></td>
+          <td>Auto-creates <code>~/rfswift-workspace/&lt;name&gt;/</code></td>
+      </tr>
+      <tr>
+          <td><code>--workspace /path</code></td>
+          <td>Use a custom host directory as workspace</td>
+      </tr>
+      <tr>
+          <td><code>--cwd</code></td>
+          <td>Mount current working directory as workspace</td>
+      </tr>
+      <tr>
+          <td><code>--no-workspace</code></td>
+          <td>Disable workspace entirely</td>
+      </tr>
+  </tbody>
+</table>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use current directory as workspace</span>
+</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n quick_test --cwd
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Custom path</span>
+</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n project_x --workspace ~/projects/project-x/rf-data
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Disable workspace</span>
+</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n headless --no-workspace</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Workspace and Reports<span class="hx:absolute hx:-mt-20" id="workspace-and-reports"></span>
+    <a href="#workspace-and-reports" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>The workspace integrates with RF Swift&rsquo;s <a href="/docs/commands/report/">report generator</a>. All files in the workspace are automatically inventoried in generated reports:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># After your assessment, generate a report</span>
+</span></span><span class="line"><span class="cl">rfswift report generate -c capture_session --format html
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Report includes workspace file inventory:</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   captures/433mhz.iq (capture, 12.5 MB)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   notes.txt (log, 0.1 KB)</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+
+  <div class="hx:w-full hx:min-w-0 hx:leading-7">
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0">The workspace directory <strong>persists</strong> on the host after the container is stopped or deleted. Your captured data, notes, and scripts are never lost.</div>
+  </div>
+</div>
+
+<hr>
+<h2>Additional Volume Bindings<span class="hx:absolute hx:-mt-20" id="additional-volume-bindings"></span>
+    <a href="#additional-volume-bindings" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>For directories beyond the workspace, use the <code>-b</code> flag to bind additional host directories.</p>
+<h3>Basic Directory Sharing<span class="hx:absolute hx:-mt-20" id="basic-directory-sharing"></span>
+    <a href="#basic-directory-sharing" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:telecom -n telecom_analysis -b ~/shared_data:/root/shared</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
@@ -1400,7 +1587,7 @@ File Sharing Between Host and Container Directory Binding The most common way to
   </button>
 </div>
 </div>
-<p>This binds your host&rsquo;s <code>~/shared_data</code> directory to <code>/root/shared</code> inside the container.</p>
+<p>This binds your host&rsquo;s <code>~/shared_data</code> directory to <code>/root/shared</code> inside the container, <strong>in addition to</strong> the automatic workspace at <code>/workspace</code>.</p>
 <h4>Multiple Directory Bindings<span class="hx:absolute hx:-mt-20" id="multiple-directory-bindings"></span>
     <a href="#multiple-directory-bindings" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>You can bind multiple directories by separating them with commas:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
@@ -1729,7 +1916,7 @@ File Sharing Between Host and Container Directory Binding The most common way to
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-17T11:47:01.000Z">March 17, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-17T13:39:02.000Z">March 17, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/guide/host-actions/"
         title="Host Actions"
