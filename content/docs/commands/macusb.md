@@ -233,6 +233,187 @@ The Lima VM comes pre-configured with udev rules for:
 
 ---
 
+## Customizing the Lima VM
+
+The Lima VM is configured via a YAML file. RF Swift ships a default template at `lima/rfswift.yaml`, and once created, the instance config lives at `~/.lima/rfswift/lima.yaml`.
+
+### Editing the Configuration
+
+```bash
+# Before creating the VM — edit the template
+vim lima/rfswift.yaml
+limactl create --name rfswift lima/rfswift.yaml
+
+# After creating — edit the live config (requires VM restart)
+vim ~/.lima/rfswift/lima.yaml
+limactl stop rfswift && limactl start rfswift
+```
+
+{{< callout type="warning" >}}
+After editing `~/.lima/rfswift/lima.yaml`, you must stop and start the VM for changes to take effect. Changes to `provision` scripts only run on first creation — use `limactl shell rfswift` to run commands in an existing VM.
+{{< /callout >}}
+
+### Configuration Reference
+
+Here are the key settings you can tune:
+
+#### VM Resources
+
+Increase CPUs, memory, or disk for heavier workloads (e.g., srsRAN 5G, large IQ captures):
+
+```yaml
+cpus: 8          # default: 4
+memory: "16GiB"  # default: 8GiB
+disk: "200GiB"   # default: 100GiB
+```
+
+#### VM Backend
+
+**Must be `qemu`** for USB passthrough. Do not change to `vz`:
+
+```yaml
+vmType: qemu     # required — Apple Virtualization (vz) has no USB support
+```
+
+#### Host Directory Mounts
+
+Add extra host directories accessible inside the VM:
+
+```yaml
+mounts:
+  - location: "~"
+    writable: true
+  - location: "/tmp/lima"
+    writable: true
+  # Add your own:
+  - location: "/Volumes/ExternalSSD/captures"
+    writable: true
+    mountPoint: "/captures"
+```
+
+#### Port Forwarding
+
+Forward additional ports from the VM to the macOS host:
+
+```yaml
+portForwards:
+  # Docker socket (required — do not remove)
+  - guestSocket: "/run/docker.sock"
+    hostSocket: "{{.Dir}}/sock/docker.sock"
+  # noVNC desktop
+  - guestPort: 6080
+    hostPort: 6080
+  # PulseAudio
+  - guestPort: 34567
+    hostPort: 34567
+  # Add your own — e.g., srsRAN web UI
+  - guestPort: 7681
+    hostPort: 7681
+  # Jupyter notebook
+  - guestPort: 8888
+    hostPort: 8888
+```
+
+#### Guest OS Image
+
+Change the base Linux image (default is Ubuntu 24.04):
+
+```yaml
+images:
+  - location: "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-amd64.img"
+    arch: "x86_64"
+  - location: "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-arm64.img"
+    arch: "aarch64"
+```
+
+#### DNS
+
+```yaml
+dns:
+  - 8.8.8.8
+  - 8.8.4.4
+```
+
+### Adding Custom Udev Rules
+
+If you have RF hardware not covered by the defaults, add udev rules in the `provision` section or directly inside the running VM:
+
+```bash
+# Option 1: Add to the YAML template before creation
+# In the provision → system script section, add:
+cat > /etc/udev/rules.d/99-custom.rules << 'UDEV'
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="xxxx", ATTRS{idProduct}=="yyyy", MODE="0666"
+UDEV
+udevadm control --reload-rules && udevadm trigger
+
+# Option 2: Add to an already running VM
+limactl shell rfswift -- sudo bash -c '
+  echo "SUBSYSTEMS==\"usb\", ATTRS{idVendor}==\"xxxx\", ATTRS{idProduct}==\"yyyy\", MODE=\"0666\"" \
+    > /etc/udev/rules.d/99-custom.rules
+  udevadm control --reload-rules && udevadm trigger
+'
+```
+
+Replace `xxxx` and `yyyy` with your device's vendor and product IDs (find them with `rfswift macusb list`).
+
+### Adding Custom Kernel Modules
+
+The default template loads common USB serial modules. To add more:
+
+```bash
+# Load a module in the running VM
+limactl shell rfswift -- sudo modprobe <module_name>
+
+# Make it persistent
+limactl shell rfswift -- sudo bash -c \
+  'echo "<module_name>" >> /etc/modules-load.d/rfswift.conf'
+```
+
+### Installing Additional Packages
+
+Need extra tools inside the VM (outside of containers)?
+
+```bash
+limactl shell rfswift -- sudo apt install -y <package_name>
+```
+
+### Recreating the VM from Scratch
+
+If the VM becomes misconfigured, delete and recreate:
+
+```bash
+limactl stop rfswift
+limactl delete rfswift
+
+# Recreate from template (or let RF Swift auto-create on next run)
+limactl create --name rfswift lima/rfswift.yaml
+limactl start rfswift
+```
+
+{{< callout type="info" >}}
+Deleting the VM does **not** delete your workspace files (`~/rfswift-workspace/`) or Docker images — those live on the host.
+{{< /callout >}}
+
+### Using a Custom Template Location
+
+RF Swift searches for the Lima template in these locations (in order):
+
+1. `<rfswift-binary-dir>/lima/rfswift.yaml`
+2. `<rfswift-binary-dir>/../lima/rfswift.yaml`
+3. `~/.config/rfswift/lima.yaml`
+4. `~/.rfswift/lima.yaml`
+
+To use your own customized template by default, place it at `~/.config/rfswift/lima.yaml`:
+
+```bash
+cp lima/rfswift.yaml ~/.config/rfswift/lima.yaml
+vim ~/.config/rfswift/lima.yaml  # customize
+```
+
+RF Swift will use this template when auto-creating the VM on first `--engine lima` run.
+
+---
+
 ## Troubleshooting
 
 ### Lima Not Installed
