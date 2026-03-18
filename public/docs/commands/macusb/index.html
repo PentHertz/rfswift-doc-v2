@@ -54,15 +54,15 @@ The macusb command manages USB device passthrough on macOS. Docker Desktop and P
 
 <meta
   property="article:modified_time"
-  content="2026-03-17T14:28:49+01:00">
+  content="2026-03-18T23:18:52+01:00">
 
 
 
   <meta itemprop="name" content="macusb">
   <meta itemprop="description" content="rfswift macusbManage USB device passthrough on macOS via Lima QEMU VM.
 Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB device to the Lima VM rfswift macusb attach --vid VENDOR_ID --pid PRODUCT_ID # Detach a USB device from the Lima VM rfswift macusb detach --vid VENDOR_ID --pid PRODUCT_ID # List USB devices currently attached to the Lima VM rfswift macusb vm-devices # Check Lima VM status for USB passthrough rfswift macusb status The macusb command manages USB device passthrough on macOS. Docker Desktop and Podman on macOS run their own Linux VMs that cannot forward USB devices into containers. Lima solves this by running a QEMU VM where USB devices can be hot-plugged via the QMP protocol.">
-  <meta itemprop="dateModified" content="2026-03-17T14:28:49+01:00">
-  <meta itemprop="wordCount" content="1756">
+  <meta itemprop="dateModified" content="2026-03-18T23:18:52+01:00">
+  <meta itemprop="wordCount" content="1960">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="macusb">
   <meta name="twitter:description" content="rfswift macusbManage USB device passthrough on macOS via Lima QEMU VM.
@@ -591,9 +591,9 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/last/"
+    href="/docs/commands/network/"
     
-  >last
+  >network
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -602,6 +602,14 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
     href="/docs/commands/cleanup/"
     
   >cleanup
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/last/"
+    
+  >last
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1126,9 +1134,9 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/last/"
+    href="/docs/commands/network/"
     
-  >last
+  >network
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1137,6 +1145,14 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
     href="/docs/commands/cleanup/"
     
   >cleanup
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/last/"
+    
+  >last
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1598,17 +1614,18 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
       <tr>
           <td><code>--vid STRING</code></td>
           <td>USB Vendor ID (hex)</td>
-          <td>Yes</td>
+          <td>No*</td>
           <td><code>--vid 0x1d50</code></td>
       </tr>
       <tr>
           <td><code>--pid STRING</code></td>
           <td>USB Product ID (hex)</td>
-          <td>Yes</td>
+          <td>No*</td>
           <td><code>--pid 0x604b</code></td>
       </tr>
   </tbody>
 </table>
+<p>*When run <strong>without</strong> <code>--vid</code>/<code>--pid</code> in an interactive terminal, a TUI multi-select picker is shown where you can select one or more devices by name. Both flags are required in non-interactive mode.</p>
 <h3>macusb detach<span class="hx:absolute hx:-mt-20" id="macusb-detach"></span>
     <a href="#macusb-detach" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Hot-unplug a USB device from the Lima QEMU VM.</p>
 <p><strong>Options:</strong></p>
@@ -1625,23 +1642,24 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
       <tr>
           <td><code>--vid STRING</code></td>
           <td>USB Vendor ID (hex)</td>
-          <td>With <code>--pid</code></td>
+          <td>No*</td>
           <td><code>--vid 0x1d50</code></td>
       </tr>
       <tr>
           <td><code>--pid STRING</code></td>
           <td>USB Product ID (hex)</td>
-          <td>With <code>--vid</code></td>
+          <td>No*</td>
           <td><code>--pid 0x604b</code></td>
       </tr>
       <tr>
           <td><code>--devid STRING</code></td>
           <td>QMP device ID</td>
-          <td>Alternative</td>
+          <td>No*</td>
           <td><code>--devid usb-1d50-604b</code></td>
       </tr>
   </tbody>
 </table>
+<p>*When run <strong>without</strong> any flags in an interactive terminal, shows a device picker. In non-interactive mode, provide either <code>--devid</code> or both <code>--vid</code> and <code>--pid</code>.</p>
 <p>You can detach by vendor/product ID pair or by the QMP device ID shown in <code>vm-devices</code>.</p>
 <h3>macusb vm-devices<span class="hx:absolute hx:-mt-20" id="macusb-vm-devices"></span>
     <a href="#macusb-vm-devices" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>List USB devices currently forwarded into the Lima VM via QMP <code>info usb</code>.</p>
@@ -1779,16 +1797,16 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
 </div>
 
 <h3>First-Time Setup<span class="hx:absolute hx:-mt-20" id="first-time-setup"></span>
-    <a href="#first-time-setup" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>RF Swift can auto-create the Lima VM on first use:</p>
+    <a href="#first-time-setup" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>RF Swift <strong>automatically manages the Lima VM</strong> — no manual setup required. On first use, RF Swift creates, provisions, and starts the VM transparently:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Option 1: Let RF Swift create it automatically</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Just run it — RF Swift handles everything automatically</span>
 </span></span><span class="line"><span class="cl">rfswift --engine lima run -i penthertz/rfswift_noble:sdr_light -n my_sdr
-</span></span><span class="line"><span class="cl"><span class="c1"># → Detects no Lima instance, creates one, installs Docker + udev rules, starts VM</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Option 2: Create manually with the bundled template</span>
-</span></span><span class="line"><span class="cl">limactl create --name rfswift lima/rfswift.yaml
-</span></span><span class="line"><span class="cl">limactl start rfswift</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># → &#34;Lima instance &#39;rfswift&#39; not found. Creating it...&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># → Creates VM, installs Docker + USB tools + udev rules</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># → Starts VM and waits for Docker to be ready</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># → &#34;Lima instance &#39;rfswift&#39; created and started&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># → Container runs normally</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1798,11 +1816,26 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
   </button>
 </div>
 </div>
-<p>The auto-created VM includes:</p>
+<p>On subsequent runs, RF Swift automatically detects the VM state:</p>
+<ul>
+<li><strong>VM exists and running</strong>: proceeds immediately</li>
+<li><strong>VM exists but stopped</strong>: starts it automatically</li>
+<li><strong>VM doesn&rsquo;t exist</strong>: creates and provisions it from scratch</li>
+</ul>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+
+  <div class="hx:w-full hx:min-w-0 hx:leading-7">
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0">You can still create the VM manually if you prefer: <code>limactl create --name rfswift lima/rfswift.yaml &amp;&amp; limactl start rfswift</code></div>
+  </div>
+</div>
+
+<p>The auto-created VM is fully provisioned with:</p>
 <ul>
 <li>Docker engine inside the VM</li>
 <li>USB libraries (<code>libusb</code>, <code>libhidapi</code>, <code>libftdi</code>)</li>
 <li>Kernel modules for USB serial devices (<code>cp210x</code>, <code>ftdi_sio</code>, <code>ch341</code>)</li>
+<li>Bluetooth stack (<code>bluez</code>, <code>btusb</code>, <code>rfcomm</code>, <code>vhci-hcd</code>)</li>
 <li>Udev rules for all common SDR/RF devices (HackRF, RTL-SDR, USRP, BladeRF, Airspy, PlutoSDR, LimeSDR, etc.)</li>
 </ul>
 <h3>Supported RF Devices<span class="hx:absolute hx:-mt-20" id="supported-rf-devices"></span>
@@ -2064,7 +2097,24 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
 </div>
 </div>
 <h3>Recreating the VM from Scratch<span class="hx:absolute hx:-mt-20" id="recreating-the-vm-from-scratch"></span>
-    <a href="#recreating-the-vm-from-scratch" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>If the VM becomes misconfigured, delete and recreate:</p>
+    <a href="#recreating-the-vm-from-scratch" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>If the VM becomes misconfigured, use the built-in reset command:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Preferred: use RF Swift&#39;s built-in command</span>
+</span></span><span class="line"><span class="cl">rfswift engine lima reset
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Or with a specific template</span>
+</span></span><span class="line"><span class="cl">rfswift engine lima reset --template ~/my-custom-lima.yaml</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p>Alternatively, you can use <code>limactl</code> directly:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">limactl stop rfswift
@@ -2090,6 +2140,7 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
   </div>
 </div>
 
+<p>For non-destructive reconfiguration (e.g., changing CPU/memory/ports), use <a href="/docs/commands/engine/#engine-lima-reconfig"><code>rfswift engine lima reconfig</code></a> instead — it preserves the VM filesystem.</p>
 <h3>Using a Custom Template Location<span class="hx:absolute hx:-mt-20" id="using-a-custom-template-location"></span>
     <a href="#using-a-custom-template-location" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>RF Swift searches for the Lima template in these locations (in order):</p>
 <ol>
@@ -2179,7 +2230,10 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if the Lima VM is running</span>
 </span></span><span class="line"><span class="cl">rfswift macusb status
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Restart the VM if needed</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Restart the VM if needed (RF Swift manages this automatically)</span>
+</span></span><span class="line"><span class="cl">rfswift engine lima reconfig
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Or use limactl directly</span>
 </span></span><span class="line"><span class="cl">limactl stop rfswift <span class="o">&amp;&amp;</span> limactl start rfswift</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
@@ -2227,7 +2281,7 @@ Synopsis # List USB devices on macOS host rfswift macusb list # Attach a USB dev
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-17T14:28:49.000Z">March 17, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-18T23:18:52.000Z">March 18, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/commands/winusb/"
         title="winusb"

@@ -10,7 +10,7 @@
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 <title>ports – RF Swift</title>
   <meta name="description" content="rfswift portsDynamically manage port bindings on running containers.
-Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; # Unbind port rfswift ports unbind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; # List port bindings rfswift ports list -c CONTAINER The ports command allows you to add, remove, or list port bindings for running containers without restarting them. This enables dynamic port mapping for network services." /><link rel="canonical" href="https://rfswift.io/docs/commands/ports/" itemprop="url" />
+Synopsis # Expose a port on a container rfswift ports expose -c CONTAINER -p &#34;PORT/PROTOCOL&#34; # Remove an exposed port rfswift ports unexpose -c CONTAINER -p &#34;PORT/PROTOCOL&#34; # Bind a container port to a host port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; # Unbind a port binding rfswift ports unbind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; The ports command allows you to expose ports, manage port bindings, and remove port mappings for containers without restarting them. This enables dynamic port management for network services." /><link rel="canonical" href="https://rfswift.io/docs/commands/ports/" itemprop="url" />
 
 <meta property="og:title" content="ports">
 <meta
@@ -21,21 +21,24 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
 Synopsis
     
 
-# Bind port
+# Expose a port on a container
+rfswift ports expose -c CONTAINER -p &#34;PORT/PROTOCOL&#34;
+
+# Remove an exposed port
+rfswift ports unexpose -c CONTAINER -p &#34;PORT/PROTOCOL&#34;
+
+# Bind a container port to a host port
 rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34;
 
-# Unbind port
+# Unbind a port binding
 rfswift ports unbind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34;
-
-# List port bindings
-rfswift ports list -c CONTAINER
   
     
 
   
 
 
-The ports command allows you to add, remove, or list port bindings for running containers without restarting them. This enables dynamic port mapping for network services.
+The ports command allows you to expose ports, manage port bindings, and remove port mappings for containers without restarting them. This enables dynamic port management for network services.
     
   ">
 <meta
@@ -48,19 +51,19 @@ The ports command allows you to add, remove, or list port bindings for running c
 
 <meta
   property="article:modified_time"
-  content="2026-03-17T14:28:49+01:00">
+  content="2026-03-18T23:18:52+01:00">
 
 
 
   <meta itemprop="name" content="ports">
   <meta itemprop="description" content="rfswift portsDynamically manage port bindings on running containers.
-Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; # Unbind port rfswift ports unbind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; # List port bindings rfswift ports list -c CONTAINER The ports command allows you to add, remove, or list port bindings for running containers without restarting them. This enables dynamic port mapping for network services.">
-  <meta itemprop="dateModified" content="2026-03-17T14:28:49+01:00">
-  <meta itemprop="wordCount" content="1194">
+Synopsis # Expose a port on a container rfswift ports expose -c CONTAINER -p &#34;PORT/PROTOCOL&#34; # Remove an exposed port rfswift ports unexpose -c CONTAINER -p &#34;PORT/PROTOCOL&#34; # Bind a container port to a host port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; # Unbind a port binding rfswift ports unbind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; The ports command allows you to expose ports, manage port bindings, and remove port mappings for containers without restarting them. This enables dynamic port management for network services.">
+  <meta itemprop="dateModified" content="2026-03-18T23:18:52+01:00">
+  <meta itemprop="wordCount" content="1293">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ports">
   <meta name="twitter:description" content="rfswift portsDynamically manage port bindings on running containers.
-Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; # Unbind port rfswift ports unbind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; # List port bindings rfswift ports list -c CONTAINER The ports command allows you to add, remove, or list port bindings for running containers without restarting them. This enables dynamic port mapping for network services.">
+Synopsis # Expose a port on a container rfswift ports expose -c CONTAINER -p &#34;PORT/PROTOCOL&#34; # Remove an exposed port rfswift ports unexpose -c CONTAINER -p &#34;PORT/PROTOCOL&#34; # Bind a container port to a host port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; # Unbind a port binding rfswift ports unbind -c CONTAINER -b &#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34; The ports command allows you to expose ports, manage port bindings, and remove port mappings for containers without restarting them. This enables dynamic port management for network services.">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
     <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -636,9 +639,9 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/last/"
+    href="/docs/commands/network/"
     
-  >last
+  >network
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -647,6 +650,14 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
     href="/docs/commands/cleanup/"
     
   >cleanup
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/last/"
+    
+  >last
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1120,9 +1131,9 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/last/"
+    href="/docs/commands/network/"
     
-  >last
+  >network
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1131,6 +1142,14 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
     href="/docs/commands/cleanup/"
     
   >cleanup
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/last/"
+    
+  >last
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1303,15 +1322,19 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#ports-expose">ports expose
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#ports-unexpose">ports unexpose
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
         <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#ports-bind">ports bind
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
         <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#ports-unbind">ports unbind
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#ports-list">ports list
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1423,14 +1446,17 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
 <h2>Synopsis<span class="hx:absolute hx:-mt-20" id="synopsis"></span>
     <a href="#synopsis" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Bind port</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Expose a port on a container</span>
+</span></span><span class="line"><span class="cl">rfswift ports expose -c CONTAINER -p <span class="s2">&#34;PORT/PROTOCOL&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Remove an exposed port</span>
+</span></span><span class="line"><span class="cl">rfswift ports unexpose -c CONTAINER -p <span class="s2">&#34;PORT/PROTOCOL&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Bind a container port to a host port</span>
 </span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c CONTAINER -b <span class="s2">&#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Unbind port</span>
-</span></span><span class="line"><span class="cl">rfswift ports unbind -c CONTAINER -b <span class="s2">&#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># List port bindings</span>
-</span></span><span class="line"><span class="cl">rfswift ports list -c CONTAINER</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Unbind a port binding</span>
+</span></span><span class="line"><span class="cl">rfswift ports unbind -c CONTAINER -b <span class="s2">&#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1440,11 +1466,65 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
   </button>
 </div>
 </div>
-<p>The <code>ports</code> command allows you to add, remove, or list port bindings for running containers without restarting them. This enables dynamic port mapping for network services.</p>
+<p>The <code>ports</code> command allows you to expose ports, manage port bindings, and remove port mappings for containers without restarting them. This enables dynamic port management for network services.</p>
 <hr>
 <h2>Subcommands<span class="hx:absolute hx:-mt-20" id="subcommands"></span>
-    <a href="#subcommands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>ports bind<span class="hx:absolute hx:-mt-20" id="ports-bind"></span>
-    <a href="#ports-bind" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Add a port binding to a container.</p>
+    <a href="#subcommands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>ports expose<span class="hx:absolute hx:-mt-20" id="ports-expose"></span>
+    <a href="#ports-expose" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Expose a port on a container, making it available to other containers on the same network.</p>
+<p><strong>Options:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Flag</th>
+          <th>Description</th>
+          <th>Required</th>
+          <th>Example</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>-c, --container STRING</code></td>
+          <td>Container ID or name</td>
+          <td>Yes</td>
+          <td><code>-c my_container</code></td>
+      </tr>
+      <tr>
+          <td><code>-p, --port STRING</code></td>
+          <td>Port to expose (e.g., <code>8080/tcp</code>)</td>
+          <td>Yes</td>
+          <td><code>-p &quot;8080/tcp&quot;</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3>ports unexpose<span class="hx:absolute hx:-mt-20" id="ports-unexpose"></span>
+    <a href="#ports-unexpose" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Remove an exposed port from a container.</p>
+<p><strong>Options:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Flag</th>
+          <th>Description</th>
+          <th>Required</th>
+          <th>Example</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>-c, --container STRING</code></td>
+          <td>Container ID or name</td>
+          <td>Yes</td>
+          <td><code>-c my_container</code></td>
+      </tr>
+      <tr>
+          <td><code>-p, --port STRING</code></td>
+          <td>Port to remove</td>
+          <td>Yes</td>
+          <td><code>-p &quot;8080/tcp&quot;</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3>ports bind<span class="hx:absolute hx:-mt-20" id="ports-bind"></span>
+    <a href="#ports-bind" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Bind a container port to a host port, making the service accessible from the host.</p>
 <p><strong>Options:</strong></p>
 <table>
   <thead>
@@ -1494,27 +1574,6 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
           <td>Port binding specification</td>
           <td>Yes</td>
           <td><code>-b &quot;8080:80/tcp&quot;</code></td>
-      </tr>
-  </tbody>
-</table>
-<h3>ports list<span class="hx:absolute hx:-mt-20" id="ports-list"></span>
-    <a href="#ports-list" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>List all port bindings for a container.</p>
-<p><strong>Options:</strong></p>
-<table>
-  <thead>
-      <tr>
-          <th>Flag</th>
-          <th>Description</th>
-          <th>Required</th>
-          <th>Example</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>-c, --container STRING</code></td>
-          <td>Container ID or name</td>
-          <td>Yes</td>
-          <td><code>-c my_container</code></td>
       </tr>
   </tbody>
 </table>
@@ -1612,7 +1671,20 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
 <hr>
 <h2>Examples<span class="hx:absolute hx:-mt-20" id="examples"></span>
     <a href="#examples" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Basic Usage<span class="hx:absolute hx:-mt-20" id="basic-usage"></span>
-    <a href="#basic-usage" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Bind port:</strong></p>
+    <a href="#basic-usage" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Expose a port:</strong></p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ports expose -c web_server -p <span class="s2">&#34;80/tcp&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p><strong>Bind port to host:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c web_server -b <span class="s2">&#34;8080:80/tcp&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
@@ -1638,10 +1710,10 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
   </button>
 </div>
 </div>
-<p><strong>List ports:</strong></p>
+<p><strong>Remove exposed port:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ports list -c web_server</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ports unexpose -c web_server -p <span class="s2">&#34;80/tcp&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1689,8 +1761,10 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
 </span></span><span class="line"><span class="cl"><span class="c1"># Add metrics port</span>
 </span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c api_server -b <span class="s2">&#34;9090:9090/tcp&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># List all bindings</span>
-</span></span><span class="line"><span class="cl">rfswift ports list -c api_server</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Expose the ports for inter-container communication</span>
+</span></span><span class="line"><span class="cl">rfswift ports expose -c api_server -p <span class="s2">&#34;80/tcp&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift ports expose -c api_server -p <span class="s2">&#34;443/tcp&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift ports expose -c api_server -p <span class="s2">&#34;9090/tcp&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1767,10 +1841,7 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
 <p><strong>Change port mapping:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Service running on port 8080</span>
-</span></span><span class="line"><span class="cl">rfswift ports list -c service
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Switch to port 8081</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Switch from port 8080 to 8081</span>
 </span></span><span class="line"><span class="cl">rfswift ports unbind -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span>
 </span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8081:80/tcp&#34;</span>
 </span></span><span class="line"><span class="cl">
@@ -2116,10 +2187,7 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
 <p><strong>Solutions:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check protocol in binding</span>
-</span></span><span class="line"><span class="cl">rfswift ports list -c container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Bind correct protocol</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Bind correct protocol</span>
 </span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;5000:5000/udp&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Some services need both</span>
@@ -2139,10 +2207,7 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
 <p><strong>Solutions:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check exact binding</span>
-</span></span><span class="line"><span class="cl">rfswift ports list -c container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use exact binding string</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use exact binding string that was used to bind</span>
 </span></span><span class="line"><span class="cl">rfswift ports unbind -c container -b <span class="s2">&#34;8080:80/tcp&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># If still fails, may need container restart</span>
@@ -2192,16 +2257,16 @@ Synopsis # Bind port rfswift ports bind -c CONTAINER -b &#34;HOST_PORT:CONTAINER
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-17T14:28:49.000Z">March 17, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-18T23:18:52.000Z">March 18, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/commands/cgroups/"
         title="cgroups"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:pr-4 hx:rtl:pl-4"
       ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>cgroups</a><a
-        href="/docs/commands/last/"
-        title="last"
+        href="/docs/commands/network/"
+        title="network"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:ml-auto hx:ltr:pl-4 hx:ltr:text-right hx:rtl:mr-auto hx:rtl:pr-4 hx:rtl:text-left"
-      >last<svg class="hx:inline hx:h-5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
+      >network<svg class="hx:inline hx:h-5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
         
       </main>
     </article>
