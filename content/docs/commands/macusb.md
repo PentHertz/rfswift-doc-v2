@@ -83,8 +83,10 @@ Hot-plug a USB device from the macOS host into the Lima QEMU VM.
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `--vid STRING` | USB Vendor ID (hex) | Yes | `--vid 0x1d50` |
-| `--pid STRING` | USB Product ID (hex) | Yes | `--pid 0x604b` |
+| `--vid STRING` | USB Vendor ID (hex) | No* | `--vid 0x1d50` |
+| `--pid STRING` | USB Product ID (hex) | No* | `--pid 0x604b` |
+
+*When run **without** `--vid`/`--pid` in an interactive terminal, a TUI multi-select picker is shown where you can select one or more devices by name. Both flags are required in non-interactive mode.
 
 ### macusb detach
 
@@ -94,9 +96,11 @@ Hot-unplug a USB device from the Lima QEMU VM.
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `--vid STRING` | USB Vendor ID (hex) | With `--pid` | `--vid 0x1d50` |
-| `--pid STRING` | USB Product ID (hex) | With `--vid` | `--pid 0x604b` |
-| `--devid STRING` | QMP device ID | Alternative | `--devid usb-1d50-604b` |
+| `--vid STRING` | USB Vendor ID (hex) | No* | `--vid 0x1d50` |
+| `--pid STRING` | USB Product ID (hex) | No* | `--pid 0x604b` |
+| `--devid STRING` | QMP device ID | No* | `--devid usb-1d50-604b` |
+
+*When run **without** any flags in an interactive terminal, shows a device picker. In non-interactive mode, provide either `--devid` or both `--vid` and `--pid`.
 
 You can detach by vendor/product ID pair or by the QMP device ID shown in `vm-devices`.
 
@@ -196,22 +200,32 @@ QEMU is the virtualization backend that Lima uses to run the Linux VM. Lima mana
 
 ### First-Time Setup
 
-RF Swift can auto-create the Lima VM on first use:
+RF Swift **automatically manages the Lima VM** — no manual setup required. On first use, RF Swift creates, provisions, and starts the VM transparently:
 
 ```bash
-# Option 1: Let RF Swift create it automatically
+# Just run it — RF Swift handles everything automatically
 rfswift --engine lima run -i penthertz/rfswift_noble:sdr_light -n my_sdr
-# → Detects no Lima instance, creates one, installs Docker + udev rules, starts VM
-
-# Option 2: Create manually with the bundled template
-limactl create --name rfswift lima/rfswift.yaml
-limactl start rfswift
+# → "Lima instance 'rfswift' not found. Creating it..."
+# → Creates VM, installs Docker + USB tools + udev rules
+# → Starts VM and waits for Docker to be ready
+# → "Lima instance 'rfswift' created and started"
+# → Container runs normally
 ```
 
-The auto-created VM includes:
+On subsequent runs, RF Swift automatically detects the VM state:
+- **VM exists and running**: proceeds immediately
+- **VM exists but stopped**: starts it automatically
+- **VM doesn't exist**: creates and provisions it from scratch
+
+{{< callout type="info" >}}
+You can still create the VM manually if you prefer: `limactl create --name rfswift lima/rfswift.yaml && limactl start rfswift`
+{{< /callout >}}
+
+The auto-created VM is fully provisioned with:
 - Docker engine inside the VM
 - USB libraries (`libusb`, `libhidapi`, `libftdi`)
 - Kernel modules for USB serial devices (`cp210x`, `ftdi_sio`, `ch341`)
+- Bluetooth stack (`bluez`, `btusb`, `rfcomm`, `vhci-hcd`)
 - Udev rules for all common SDR/RF devices (HackRF, RTL-SDR, USRP, BladeRF, Airspy, PlutoSDR, LimeSDR, etc.)
 
 ### Supported RF Devices
@@ -379,7 +393,17 @@ limactl shell rfswift -- sudo apt install -y <package_name>
 
 ### Recreating the VM from Scratch
 
-If the VM becomes misconfigured, delete and recreate:
+If the VM becomes misconfigured, use the built-in reset command:
+
+```bash
+# Preferred: use RF Swift's built-in command
+rfswift engine lima reset
+
+# Or with a specific template
+rfswift engine lima reset --template ~/my-custom-lima.yaml
+```
+
+Alternatively, you can use `limactl` directly:
 
 ```bash
 limactl stop rfswift
@@ -393,6 +417,8 @@ limactl start rfswift
 {{< callout type="info" >}}
 Deleting the VM does **not** delete your workspace files (`~/rfswift-workspace/`) or Docker images — those live on the host.
 {{< /callout >}}
+
+For non-destructive reconfiguration (e.g., changing CPU/memory/ports), use [`rfswift engine lima reconfig`](/docs/commands/engine/#engine-lima-reconfig) instead — it preserves the VM filesystem.
 
 ### Using a Custom Template Location
 
@@ -464,7 +490,10 @@ rfswift --engine lima run -i sdr_light -n my_sdr
 # Check if the Lima VM is running
 rfswift macusb status
 
-# Restart the VM if needed
+# Restart the VM if needed (RF Swift manages this automatically)
+rfswift engine lima reconfig
+
+# Or use limactl directly
 limactl stop rfswift && limactl start rfswift
 ```
 

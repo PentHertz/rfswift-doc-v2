@@ -17,6 +17,10 @@ After learning how to run, configure, and manage RF Swift containers and images,
 
 Many RF tools like GQRX, SDR++, and SDRAngel produce audio output that requires proper configuration to be heard on your host system. RF Swift provides commands to manage the PulseAudio/PipeWire server for this purpose.
 
+{{< callout type="info" >}}
+**Automatic handling**: RF Swift now automatically detects your audio system (PulseAudio or PipeWire), starts it if needed, and configures the TCP module — all in a single command. On macOS with Lima, it also automatically configures network ACLs so containers inside the VM can reach the host audio server. Simply run `rfswift host audio enable` and everything is handled for you.
+{{< /callout >}}
+
 #### Diagnosing Audio Issues
 
 When audio is not properly configured, you'll see this warning when running a container:
@@ -71,8 +75,11 @@ rfswift host audio enable
 ```
 
 This command:
+- **Automatically detects** whether PulseAudio or PipeWire is installed
+- **Automatically starts** the audio server if it's not running
 - Loads the PulseAudio/PipeWire TCP module
 - Configures it to listen on 127.0.0.1:34567
+- On macOS with Lima: automatically allows connections from VM and Docker subnets
 - Does not require sudo/administrator privileges
 
 You should see confirmation like:

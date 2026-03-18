@@ -306,11 +306,169 @@ rfswift --engine podman exec -c my_container
 
 ---
 
+## Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `RFSWIFT_ENGINE` | Override the container engine (`docker`, `podman`, `lima`) | `auto` |
+| `RFSWIFT_LIMA_INSTANCE` | Custom Lima VM instance name | `rfswift` |
+
+```bash
+# Use Lima engine via environment variable
+export RFSWIFT_ENGINE=lima
+rfswift run -i sdr_full -n my_sdr
+
+# Use a custom Lima instance name
+export RFSWIFT_LIMA_INSTANCE=my_custom_vm
+rfswift macusb status
+```
+
+---
+
+## rfswift engine
+
+Running `rfswift engine` without subcommands displays information about the currently active container engine, including detection results and socket paths.
+
+```bash
+rfswift engine
+```
+
+---
+
+## rfswift engine lima
+
+Manage the Lima QEMU VM lifecycle on macOS. These commands give you direct control over the Lima VM without resorting to raw `limactl` commands.
+
+{{< callout type="warning" >}}
+**macOS only**: The `engine lima` subcommands are only available on macOS.
+{{< /callout >}}
+
+### Automatic VM Lifecycle Management
+
+RF Swift now **automatically manages the Lima VM** — no manual `limactl` commands required. When you run any command with `--engine lima`, RF Swift transparently handles the full VM lifecycle:
+
+1. **Instance detection**: Checks if the Lima instance exists
+2. **Auto-creation**: If the instance doesn't exist, creates it from the best available template (searches standard paths, falls back to a built-in inline template)
+3. **Auto-start**: If the instance exists but is stopped, starts it automatically
+4. **Docker readiness**: Waits (up to 60 seconds) for Docker to become available inside the VM before proceeding
+5. **Socket routing**: Sets `DOCKER_HOST` to the Lima Docker socket so all container operations work transparently
+
+```bash
+# First run — RF Swift creates the VM, installs Docker + USB tools, starts everything
+rfswift --engine lima run -i sdr_full -n my_sdr
+# → "Lima instance 'rfswift' not found. Creating it..."
+# → "Lima instance 'rfswift' created and started"
+# → Container runs normally
+
+# Second run — VM already exists, RF Swift just starts it if stopped
+rfswift --engine lima run -i sdr_full -n another_sdr
+# → "Starting Lima instance 'rfswift'..."
+# → Container runs normally
+
+# VM already running — no extra steps, runs immediately
+rfswift --engine lima exec -c my_sdr
+```
+
+The auto-created VM is fully provisioned with:
+- Docker engine
+- USB libraries (`libusb`, `libhidapi`, `libftdi`)
+- Kernel modules for USB serial devices (`cp210x`, `ftdi_sio`, `ch341`)
+- Bluetooth stack (`bluez`, `btusb`, `rfcomm`, `vhci-hcd`)
+- Udev rules for 100+ RF/USB devices (HackRF, RTL-SDR, USRP, BladeRF, Airspy, PlutoSDR, LimeSDR, etc.)
+
+{{< callout type="info" >}}
+**Zero-configuration USB workflow on macOS**: Just plug in your SDR, run `rfswift --engine lima run ...`, and the VM is created, started, and ready — all automatically.
+{{< /callout >}}
+
+### engine lima status
+
+Display the Lima VM instance details: running status, configuration file path, template source, QMP socket, and Docker socket.
+
+```bash
+rfswift engine lima status
+rfswift engine lima status --instance my_custom_vm
+```
+
+**Options:**
+
+| Flag | Description | Default | Example |
+|------|-------------|---------|---------|
+| `--instance STRING` | Lima instance name | `rfswift` | `--instance myvm` |
+
+**Output includes:**
+- Instance name and running/stopped status
+- Configuration file path (`~/.lima/<instance>/lima.yaml`)
+- Template source location (or "inline fallback" if none found)
+- QMP socket path (required for USB passthrough)
+- Docker socket path (for container engine routing)
+
+### engine lima reconfig
+
+Apply an updated YAML template to the VM. By default this is **non-destructive** — the VM is stopped, the template is applied, and the VM is restarted. The VM filesystem (Docker images, containers, etc.) is preserved.
+
+```bash
+# Non-destructive: stop → apply template → restart
+rfswift engine lima reconfig
+
+# Use a specific template
+rfswift engine lima reconfig --template ~/my-custom-lima.yaml
+
+# Destructive: delete and recreate the VM (all VM data lost)
+rfswift engine lima reconfig --force
+```
+
+**Options:**
+
+| Flag | Description | Default | Example |
+|------|-------------|---------|---------|
+| `--template STRING` | Path to Lima YAML template | Auto-detected | `--template ~/lima.yaml` |
+| `--force` | Delete and recreate the VM (destructive) | `false` | `--force` |
+| `--instance STRING` | Lima instance name | `rfswift` | `--instance myvm` |
+
+**Template search order** (when `--template` is not specified):
+1. `<binary_dir>/lima/rfswift.yaml`
+2. `~/.config/rfswift/lima.yaml`
+3. `~/.rfswift/lima.yaml`
+
+{{< callout type="warning" >}}
+**`--force` is destructive**: With `--force`, the VM is deleted and recreated from scratch. All data inside the VM is lost, including Docker images and containers. An interactive confirmation prompt is shown before proceeding.
+{{< /callout >}}
+
+**Use cases:**
+- Changed CPU, memory, or disk allocation in the YAML
+- Added new port forwards or host directory mounts
+- Updated provisioning scripts (udev rules, kernel modules)
+- With `--force`: changed base OS image or disk size (requires full recreation)
+
+### engine lima reset
+
+Delete and recreate the Lima VM from scratch. All data inside the VM is lost. This is equivalent to `reconfig --force`, but also works when no instance exists yet.
+
+```bash
+rfswift engine lima reset
+rfswift engine lima reset --template ~/my-custom-lima.yaml
+```
+
+**Options:**
+
+| Flag | Description | Default | Example |
+|------|-------------|---------|---------|
+| `--template STRING` | Path to Lima YAML template | Auto-detected | `--template ~/lima.yaml` |
+| `--instance STRING` | Lima instance name | `rfswift` | `--instance myvm` |
+
+{{< callout type="warning" >}}
+**Destructive operation**: An interactive confirmation prompt is shown before the VM is deleted.
+{{< /callout >}}
+
+---
+
 ## Related
 
 - [`run`](/docs/commands/run) - Create and run containers
 - [`exec`](/docs/commands/exec) - Enter existing containers
 - [`images`](/docs/commands/images) - Manage container images
+- [`macusb`](/docs/commands/macusb) - Manage USB devices on macOS via Lima
+- [`network`](/docs/commands/network) - Manage container networks
 - [Getting Started](/docs/getting-started) - Installation and engine setup
 - [Container Engine Support](/docs/supports) - Requirements and platform support
 

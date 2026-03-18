@@ -650,11 +650,8 @@ rfswift bindings add -c student_lab -b ~/student-projects:/root/projects
 # Week 5: Enable web access for visualization
 rfswift ports bind -c student_lab -p 8080:8080/tcp
 
-# End of semester: Review configuration
-rfswift bindings list -c student_lab
-rfswift capabilities list -c student_lab
-rfswift cgroups list -c student_lab
-rfswift ports list -c student_lab
+# End of semester: Review container configuration
+docker inspect student_lab
 ```
 
 ---

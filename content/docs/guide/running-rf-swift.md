@@ -432,7 +432,7 @@ rfswift host audio enable
 ```
 
 {{< callout type="info" >}}
-This works with both PulseAudio and PipeWire (via `pipewire-pulse`). RF Swift's installer detects and configures whichever audio system is present on your host.
+**Automatic audio management**: RF Swift automatically detects your audio system (PulseAudio or PipeWire), starts it if not running, and loads the TCP module — all in one command. On macOS with Lima, it also automatically configures network ACLs so containers inside the VM can access the host audio server. No manual PulseAudio setup required.
 {{< /callout >}}
 
 #### Dynamic Device and Volume Binding

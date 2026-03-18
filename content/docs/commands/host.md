@@ -21,6 +21,10 @@ rfswift host audio unload
 
 The `host` command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers.
 
+{{< callout type="info" >}}
+**Automatic audio management**: RF Swift now automatically detects and starts the audio system (PulseAudio or PipeWire) when you enable audio. No need to manually start PulseAudio — RF Swift handles it for you. See [Automatic Pulse Server Handling](#automatic-pulse-server-handling) below.
+{{< /callout >}}
+
 ---
 
 ## Subcommands
@@ -116,16 +120,66 @@ rfswift host audio unload
 
 ---
 
+## Automatic Pulse Server Handling
+
+RF Swift now **automatically manages the PulseAudio/PipeWire server** when you run `host audio enable`. You no longer need to manually check if PulseAudio is running or start it yourself — RF Swift handles everything:
+
+### What happens automatically
+
+1. **Audio system detection**: RF Swift detects whether your system uses PulseAudio or PipeWire
+2. **Auto-start**: If the audio server is not running, RF Swift starts it automatically
+3. **TCP module loading**: Loads `module-native-protocol-tcp` with the correct settings
+4. **Lima-aware ACLs** (macOS): When Lima is detected, RF Swift automatically expands the `auth-ip-acl` to include VM and Docker bridge subnets (`192.168.0.0/16`, `172.16.0.0/12`, `10.0.0.0/8`), so containers inside the Lima VM can reach the host audio server
+
+### Platform-specific behavior
+
+{{< tabs items="Linux,macOS" >}}
+  {{< tab >}}
+**Linux auto-start logic:**
+- Detects PipeWire or PulseAudio
+- If PipeWire is detected: starts via systemd user services (`pipewire.service`, `pipewire-pulse.service`, `wireplumber.service`)
+- If PulseAudio is detected: starts with `pulseaudio --start`
+- If neither is detected: tries PipeWire first, falls back to PulseAudio
+- Red Hat/Fedora: also starts additional services (`pipewire-media-session`, `wireplumber`)
+  {{< /tab >}}
+  {{< tab >}}
+**macOS auto-start logic:**
+- Checks if PulseAudio is installed (via Homebrew)
+- Detects stale PulseAudio daemons (process exists but unresponsive) and restarts them
+- Cleans up stale runtime symlinks in `~/.config/pulse/` (caused by macOS `/var/folders/` cleanup)
+- Starts PulseAudio via `brew services start pulseaudio` (preferred)
+- Falls back to direct foreground mode: `pulseaudio --exit-idle-time=-1`
+- When Lima is running: automatically allows connections from VM subnets
+  {{< /tab >}}
+{{< /tabs >}}
+
+### Example: fully automatic workflow
+
+```bash
+# Just run this — RF Swift will start PulseAudio/PipeWire if needed,
+# load the TCP module, and configure the right ACLs
+rfswift host audio enable
+
+# On macOS with Lima, you'll see:
+# [i] Starting PulseAudio on macOS...
+# [+] PulseAudio started via brew services.
+# [i] Lima detected: allowing connections from VM and Docker subnets
+# [+] Successfully loaded module-native-protocol-tcp with index 29
+```
+
+---
+
 ## How Audio Passthrough Works
 
 ### Pulseaudio TCP Module
 
 When you enable audio:
 
-1. **Load TCP module**: Pulseaudio loads `module-native-protocol-tcp`
-2. **Bind to port**: Listens on specified address (default: 127.0.0.1:34567)
-3. **Container access**: Containers connect via `PULSE_SERVER` environment variable
-4. **Audio streams**: Audio from container apps plays on host
+1. **Ensure audio server is running**: RF Swift automatically starts PulseAudio or PipeWire if not already running
+2. **Load TCP module**: Loads `module-native-protocol-tcp`
+3. **Bind to port**: Listens on specified address (default: 127.0.0.1:34567)
+4. **Container access**: Containers connect via `PULSE_SERVER` environment variable
+5. **Audio streams**: Audio from container apps plays on host
 
 ```mermaid
 graph LR
@@ -174,13 +228,13 @@ rfswift host audio enable -s tcp:192.168.1.100:34567
 
 **Problem:** `rfswift host audio enable` fails
 
+{{< callout type="info" >}}
+RF Swift now automatically detects and starts the audio server. Most "module not loading" issues are resolved automatically. If you still encounter problems, try the manual steps below.
+{{< /callout >}}
+
 **Solutions:**
 ```bash
-# Check if pulseaudio is running
-ps aux | grep pulseaudio
-
-# Start pulseaudio if needed
-pulseaudio --start
+# RF Swift should handle this automatically, but if it fails:
 
 # Check for conflicts
 pactl list modules | grep tcp
@@ -188,7 +242,7 @@ pactl list modules | grep tcp
 # Kill existing modules
 pactl unload-module module-native-protocol-tcp
 
-# Try again
+# Try again — RF Swift will auto-start the audio server
 rfswift host audio enable
 ```
 

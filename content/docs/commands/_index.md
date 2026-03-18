@@ -105,6 +105,12 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
   {{< card link="engine" title="engine" icon="cog" subtitle="Show or set container engine" >}}
 {{< /cards >}}
 
+### 🌐 Networking
+
+{{< cards >}}
+  {{< card link="network" title="network" icon="globe-alt" subtitle="Manage NAT networks for container isolation" >}}
+{{< /cards >}}
+
 ### 🛠️ Utilities
 
 {{< cards >}}
@@ -154,6 +160,12 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
 | `rfswift winusb list` | List USB devices (Windows/WSL2) |
 | `rfswift macusb list` | List USB devices (macOS) |
 | `rfswift --engine lima run` | Run container with USB (macOS) |
+| `rfswift engine lima status` | Show Lima VM status (macOS) |
+| `rfswift engine lima reconfig` | Reconfigure Lima VM (macOS) |
+| `rfswift engine lima reset` | Reset Lima VM from scratch (macOS) |
+| `rfswift network list` | List NAT networks |
+| `rfswift network create -n NAME` | Create isolated NAT network |
+| `rfswift network cleanup` | Remove orphaned networks |
 | `rfswift report generate -c NAME` | Generate assessment report |
 | `rfswift report generate -c NAME -f html` | HTML report |
 

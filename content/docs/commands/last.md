@@ -1,7 +1,7 @@
 ---
 title: last
-weight: 19
-prev: /docs/commands/ports
+weight: 20
+prev: /docs/commands/network
 next: /docs/commands/cleanup
 ---
 

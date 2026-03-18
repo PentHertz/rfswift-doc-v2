@@ -2,7 +2,7 @@
 title: ports
 weight: 18
 prev: /docs/commands/cgroups
-next: /docs/commands/last
+next: /docs/commands/network
 ---
 
 # rfswift ports
@@ -12,25 +12,50 @@ Dynamically manage port bindings on running containers.
 ## Synopsis
 
 ```bash
-# Bind port
+# Expose a port on a container
+rfswift ports expose -c CONTAINER -p "PORT/PROTOCOL"
+
+# Remove an exposed port
+rfswift ports unexpose -c CONTAINER -p "PORT/PROTOCOL"
+
+# Bind a container port to a host port
 rfswift ports bind -c CONTAINER -b "HOST_PORT:CONTAINER_PORT/PROTOCOL"
 
-# Unbind port
+# Unbind a port binding
 rfswift ports unbind -c CONTAINER -b "HOST_PORT:CONTAINER_PORT/PROTOCOL"
-
-# List port bindings
-rfswift ports list -c CONTAINER
 ```
 
-The `ports` command allows you to add, remove, or list port bindings for running containers without restarting them. This enables dynamic port mapping for network services.
+The `ports` command allows you to expose ports, manage port bindings, and remove port mappings for containers without restarting them. This enables dynamic port management for network services.
 
 ---
 
 ## Subcommands
 
+### ports expose
+
+Expose a port on a container, making it available to other containers on the same network.
+
+**Options:**
+
+| Flag | Description | Required | Example |
+|------|-------------|----------|---------|
+| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
+| `-p, --port STRING` | Port to expose (e.g., `8080/tcp`) | Yes | `-p "8080/tcp"` |
+
+### ports unexpose
+
+Remove an exposed port from a container.
+
+**Options:**
+
+| Flag | Description | Required | Example |
+|------|-------------|----------|---------|
+| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
+| `-p, --port STRING` | Port to remove | Yes | `-p "8080/tcp"` |
+
 ### ports bind
 
-Add a port binding to a container.
+Bind a container port to a host port, making the service accessible from the host.
 
 **Options:**
 
@@ -49,16 +74,6 @@ Remove a port binding from a container.
 |------|-------------|----------|---------|
 | `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
 | `-b, --binding STRING` | Port binding specification | Yes | `-b "8080:80/tcp"` |
-
-### ports list
-
-List all port bindings for a container.
-
-**Options:**
-
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
 
 ---
 
@@ -113,7 +128,12 @@ Port bindings follow this format:
 
 ### Basic Usage
 
-**Bind port:**
+**Expose a port:**
+```bash
+rfswift ports expose -c web_server -p "80/tcp"
+```
+
+**Bind port to host:**
 ```bash
 rfswift ports bind -c web_server -b "8080:80/tcp"
 ```
@@ -123,9 +143,9 @@ rfswift ports bind -c web_server -b "8080:80/tcp"
 rfswift ports unbind -c web_server -b "8080:80/tcp"
 ```
 
-**List ports:**
+**Remove exposed port:**
 ```bash
-rfswift ports list -c web_server
+rfswift ports unexpose -c web_server -p "80/tcp"
 ```
 
 ### Real-World Scenarios
@@ -158,8 +178,10 @@ rfswift ports bind -c api_server -b "8443:443/tcp"
 # Add metrics port
 rfswift ports bind -c api_server -b "9090:9090/tcp"
 
-# List all bindings
-rfswift ports list -c api_server
+# Expose the ports for inter-container communication
+rfswift ports expose -c api_server -p "80/tcp"
+rfswift ports expose -c api_server -p "443/tcp"
+rfswift ports expose -c api_server -p "9090/tcp"
 ```
 
 **UDP service:**
@@ -204,10 +226,7 @@ rfswift ports unbind -c test_service -b "9999:80/tcp"
 
 **Change port mapping:**
 ```bash
-# Service running on port 8080
-rfswift ports list -c service
-
-# Switch to port 8081
+# Switch from port 8080 to 8081
 rfswift ports unbind -c service -b "8080:80/tcp"
 rfswift ports bind -c service -b "8081:80/tcp"
 
@@ -373,9 +392,6 @@ sudo ufw status
 
 **Solutions:**
 ```bash
-# Check protocol in binding
-rfswift ports list -c container
-
 # Bind correct protocol
 rfswift ports bind -c service -b "5000:5000/udp"
 
@@ -390,10 +406,7 @@ rfswift ports bind -c service -b "53:53/udp"
 
 **Solutions:**
 ```bash
-# Check exact binding
-rfswift ports list -c container
-
-# Use exact binding string
+# Use exact binding string that was used to bind
 rfswift ports unbind -c container -b "8080:80/tcp"
 
 # If still fails, may need container restart
