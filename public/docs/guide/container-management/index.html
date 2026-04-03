@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 <title>Dynamic Container Management – RF Swift</title>
-  <meta name="description" content="Dynamic Container Management One of RF Swift’s most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, and ports - allowing you to adapt containers to changing assessment needs in real-time.
+  <meta name="description" content="Dynamic Container Management One of RF Swift’s most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, GPUs, and ports - allowing you to adapt containers to changing assessment needs in real-time.
 What Makes This Powerful: Traditional Docker requires destroying and recreating containers to change most settings. RF Swift’s dynamic management saves time and preserves your work environment while adapting to new requirements. 🔌 Dynamic Device and Volume Bindings The bindings command allows you to add or remove device and volume bindings to running containers without interruption." /><link rel="canonical" href="https://rfswift.io/docs/guide/container-management/" itemprop="url" />
 
 <meta property="og:title" content="Dynamic Container Management">
@@ -18,7 +18,7 @@ What Makes This Powerful: Traditional Docker requires destroying and recreating 
   content="
     
       Dynamic Container Management
-    One of RF Swift&rsquo;s most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, and ports - allowing you to adapt containers to changing assessment needs in real-time.
+    One of RF Swift&rsquo;s most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, GPUs, and ports - allowing you to adapt containers to changing assessment needs in real-time.
 
   
 
@@ -42,18 +42,18 @@ What Makes This Powerful: Traditional Docker requires destroying and recreating 
 
 <meta
   property="article:modified_time"
-  content="2026-03-18T23:18:52+01:00">
+  content="2026-04-03T22:36:25+02:00">
 
 
 
   <meta itemprop="name" content="Dynamic Container Management">
-  <meta itemprop="description" content="Dynamic Container Management One of RF Swift’s most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, and ports - allowing you to adapt containers to changing assessment needs in real-time.
+  <meta itemprop="description" content="Dynamic Container Management One of RF Swift’s most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, GPUs, and ports - allowing you to adapt containers to changing assessment needs in real-time.
 What Makes This Powerful: Traditional Docker requires destroying and recreating containers to change most settings. RF Swift’s dynamic management saves time and preserves your work environment while adapting to new requirements. 🔌 Dynamic Device and Volume Bindings The bindings command allows you to add or remove device and volume bindings to running containers without interruption.">
-  <meta itemprop="dateModified" content="2026-03-18T23:18:52+01:00">
-  <meta itemprop="wordCount" content="2927">
+  <meta itemprop="dateModified" content="2026-04-03T22:36:25+02:00">
+  <meta itemprop="wordCount" content="3071">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Dynamic Container Management">
-  <meta name="twitter:description" content="Dynamic Container Management One of RF Swift’s most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, and ports - allowing you to adapt containers to changing assessment needs in real-time.
+  <meta name="twitter:description" content="Dynamic Container Management One of RF Swift’s most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, GPUs, and ports - allowing you to adapt containers to changing assessment needs in real-time.
 What Makes This Powerful: Traditional Docker requires destroying and recreating containers to change most settings. RF Swift’s dynamic management saves time and preserves your work environment while adapting to new requirements. 🔌 Dynamic Device and Volume Bindings The bindings command allows you to add or remove device and volume bindings to running containers without interruption.">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -299,6 +299,12 @@ What Makes This Powerful: Traditional Docker requires destroying and recreating 
                 href="#-dynamic-cgroup-management"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
               >🧩 Dynamic Cgroup Management</a>
+            </li>
+          <li>
+              <a
+                href="#-dynamic-gpu-management"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >🎮 Dynamic GPU Management</a>
             </li>
           <li>
               <a
@@ -628,9 +634,9 @@ What Makes This Powerful: Traditional Docker requires destroying and recreating 
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/ports/"
+    href="/docs/commands/gpu/"
     
-  >ports
+  >gpus
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -639,6 +645,14 @@ What Makes This Powerful: Traditional Docker requires destroying and recreating 
     href="/docs/commands/network/"
     
   >network
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/ports/"
+    
+  >ports
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1120,9 +1134,9 @@ What Makes This Powerful: Traditional Docker requires destroying and recreating 
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/ports/"
+    href="/docs/commands/gpu/"
     
-  >ports
+  >gpus
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1131,6 +1145,14 @@ What Makes This Powerful: Traditional Docker requires destroying and recreating 
     href="/docs/commands/network/"
     
   >network
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/ports/"
+    
+  >ports
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1395,11 +1417,31 @@ What Makes This Powerful: Traditional Docker requires destroying and recreating 
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#-dynamic-port-management">🌐 Dynamic Port Management
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#-dynamic-gpu-management">🎮 Dynamic GPU Management
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
         <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#command-overview-3">Command Overview
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#adding-gpu-access">Adding GPU Access
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#removing-gpu-access">Removing GPU Access
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#creating-containers-with-gpu">Creating Containers with GPU
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#-dynamic-port-management">🌐 Dynamic Port Management
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#command-overview-4">Command Overview
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -1516,7 +1558,7 @@ What Makes This Powerful: Traditional Docker requires destroying and recreating 
         <div class="content">
           <h1>Dynamic Container Management</h1>
           <h2>Dynamic Container Management<span class="hx:absolute hx:-mt-20" id="dynamic-container-management"></span>
-    <a href="#dynamic-container-management" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>One of RF Swift&rsquo;s most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, and ports - allowing you to adapt containers to changing assessment needs in real-time.</p>
+    <a href="#dynamic-container-management" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>One of RF Swift&rsquo;s most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, GPUs, and ports - allowing you to adapt containers to changing assessment needs in real-time.</p>
 <div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
@@ -2118,10 +2160,89 @@ What Makes This Powerful: Traditional Docker requires destroying and recreating 
 </div>
 
 <hr>
-<h2>🌐 Dynamic Port Management<span class="hx:absolute hx:-mt-20" id="-dynamic-port-management"></span>
-    <a href="#-dynamic-port-management" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>RF Swift allows you to manage container ports dynamically, supporting both exposed ports (container-to-container) and bound ports (host-to-container).</p>
+<h2>🎮 Dynamic GPU Management<span class="hx:absolute hx:-mt-20" id="-dynamic-gpu-management"></span>
+    <a href="#-dynamic-gpu-management" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>RF Swift supports GPU passthrough for hardware-accelerated workloads. You can add or remove GPU access on existing containers dynamically.</p>
 <h3>Command Overview<span class="hx:absolute hx:-mt-20" id="command-overview-3"></span>
     <a href="#command-overview-3" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift gpus <span class="o">[</span>command<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Available Commands:
+</span></span><span class="line"><span class="cl">  add         Add GPU access to a container
+</span></span><span class="line"><span class="cl">  rm          Remove GPU access from a container
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Flags:
+</span></span><span class="line"><span class="cl">  -c, --container string   Container name or ID
+</span></span><span class="line"><span class="cl">  -g, --gpus string        GPU specifier: <span class="s1">&#39;all&#39;</span> or comma-separated IDs <span class="o">(</span>default: all<span class="o">)</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Adding GPU Access<span class="hx:absolute hx:-mt-20" id="adding-gpu-access"></span>
+    <a href="#adding-gpu-access" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add all GPUs</span>
+</span></span><span class="line"><span class="cl">rfswift gpus add -c sdr_work
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Add specific GPU</span>
+</span></span><span class="line"><span class="cl">rfswift gpus add -c sdr_work -g <span class="m">0</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Removing GPU Access<span class="hx:absolute hx:-mt-20" id="removing-gpu-access"></span>
+    <a href="#removing-gpu-access" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift gpus rm -c sdr_work</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Creating Containers with GPU<span class="hx:absolute hx:-mt-20" id="creating-containers-with-gpu"></span>
+    <a href="#creating-containers-with-gpu" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># At creation time</span>
+</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n gpu_sdr --gpus all
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Or via profile</span>
+</span></span><span class="line"><span class="cl">rfswift run --profile gpu-sdr -n my_gpu_container</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
+
+  <div class="hx:w-full hx:min-w-0 hx:leading-7">
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Host Setup Required</strong>: GPU passthrough requires the GPU runtime (NVIDIA Container Toolkit, ROCm, etc.) installed on the host. See <a href="/docs/commands/gpu/"><code>gpus</code></a> for setup instructions.</div>
+  </div>
+</div>
+
+<hr>
+<h2>🌐 Dynamic Port Management<span class="hx:absolute hx:-mt-20" id="-dynamic-port-management"></span>
+    <a href="#-dynamic-port-management" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>RF Swift allows you to manage container ports dynamically, supporting both exposed ports (container-to-container) and bound ports (host-to-container).</p>
+<h3>Command Overview<span class="hx:absolute hx:-mt-20" id="command-overview-4"></span>
+    <a href="#command-overview-4" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ports <span class="o">[</span>command<span class="o">]</span>
 </span></span><span class="line"><span class="cl">
@@ -2722,7 +2843,7 @@ What Makes This Powerful: Traditional Docker requires destroying and recreating 
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-03-18T23:18:52.000Z">March 18, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-04-03T22:36:25.000Z">April 3, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/guide/running-rf-swift/"
         title="Running RF Swift"
