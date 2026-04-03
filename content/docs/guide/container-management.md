@@ -9,7 +9,7 @@ cascade:
 
 ## Dynamic Container Management
 
-One of RF Swift's most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, and ports - allowing you to adapt containers to changing assessment needs in real-time.
+One of RF Swift's most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, GPUs, and ports - allowing you to adapt containers to changing assessment needs in real-time.
 
 {{< callout type="info" >}}
 **What Makes This Powerful**: Traditional Docker requires destroying and recreating containers to change most settings. RF Swift's dynamic management saves time and preserves your work environment while adapting to new requirements.
@@ -380,6 +380,56 @@ ls -l /dev/your_device
 
 {{< callout type="info" >}}
 **Cgroups vs Device Bindings**: Cgroups control which *types* of devices a container can access, while device bindings make *specific* devices available. You need both: cgroups allow access to the device class, and bindings expose the actual device.
+{{< /callout >}}
+
+---
+
+## 🎮 Dynamic GPU Management
+
+RF Swift supports GPU passthrough for hardware-accelerated workloads. You can add or remove GPU access on existing containers dynamically.
+
+### Command Overview
+
+```bash
+rfswift gpus [command]
+
+Available Commands:
+  add         Add GPU access to a container
+  rm          Remove GPU access from a container
+
+Flags:
+  -c, --container string   Container name or ID
+  -g, --gpus string        GPU specifier: 'all' or comma-separated IDs (default: all)
+```
+
+### Adding GPU Access
+
+```bash
+# Add all GPUs
+rfswift gpus add -c sdr_work
+
+# Add specific GPU
+rfswift gpus add -c sdr_work -g 0
+```
+
+### Removing GPU Access
+
+```bash
+rfswift gpus rm -c sdr_work
+```
+
+### Creating Containers with GPU
+
+```bash
+# At creation time
+rfswift run -i penthertz/rfswift_noble:sdr_full -n gpu_sdr --gpus all
+
+# Or via profile
+rfswift run --profile gpu-sdr -n my_gpu_container
+```
+
+{{< callout type="warning" >}}
+**Host Setup Required**: GPU passthrough requires the GPU runtime (NVIDIA Container Toolkit, ROCm, etc.) installed on the host. See [`gpus`](/docs/commands/gpu) for setup instructions.
 {{< /callout >}}
 
 ---

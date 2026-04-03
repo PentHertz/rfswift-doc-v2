@@ -1,7 +1,7 @@
 ---
 title: ports
-weight: 18
-prev: /docs/commands/cgroups
+weight: 19
+prev: /docs/commands/gpu
 next: /docs/commands/network
 ---
 

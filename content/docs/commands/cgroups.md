@@ -2,7 +2,7 @@
 title: cgroups
 weight: 17
 prev: /docs/commands/capabilities
-next: /docs/commands/ports
+next: /docs/commands/gpu
 ---
 
 # rfswift cgroups

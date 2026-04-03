@@ -51,6 +51,7 @@ Both flags are optional when using the interactive wizard. If omitted in an inte
 |------|-------------|---------|---------|
 | `--realtime` | Enable realtime mode for SDR operations | `false` | `--realtime` |
 | `--ulimits STRING` | Set custom ulimits (comma-separated) | None | `--ulimits "rtprio=95,memlock=-1"` |
+| `--gpus STRING` | GPU devices to pass through | None | `--gpus all` or `--gpus 0,1` |
 
 ### Workspace Options
 
@@ -507,6 +508,29 @@ rfswift exec -c sdr_work -e "ulimit -r"
 rfswift exec -c sdr_work
 chrt -f 50 rtl_sdr -f 433920000 -s 2048000 output.bin
 ```
+
+### GPU Passthrough (`--gpus`)
+
+Passes GPU devices into the container for hardware-accelerated workloads. Requires the appropriate GPU runtime (NVIDIA Container Toolkit, ROCm, etc.) installed on the host.
+
+| Specifier | Meaning |
+|-----------|---------|
+| `all` | All available GPUs |
+| `0` | First GPU only |
+| `0,1` | First and second GPU |
+
+```bash
+# All GPUs
+rfswift run -i sdr_full -n gpu_sdr --gpus all
+
+# Specific GPU
+rfswift run -i sdr_full -n gpu_sdr --gpus 0
+
+# Combined with other features
+rfswift run -i sdr_full -n gpu_sdr --gpus all --realtime --desktop
+```
+
+See [`gpus`](/docs/commands/gpu) for full documentation, prerequisites, and troubleshooting.
 
 ### Custom Ulimits (`--ulimits`)
 

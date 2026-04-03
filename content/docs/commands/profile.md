@@ -81,6 +81,7 @@ exposed_ports: ""
 port_bindings: ""
 caps: ""
 cgroups: ""
+gpus: ""
 vpn: ""
 ```
 
@@ -103,6 +104,7 @@ vpn: ""
 | `port_bindings` | string | Port bindings | `8080:8080/tcp` |
 | `caps` | string | Linux capabilities (comma-separated) | `NET_ADMIN,NET_RAW` |
 | `cgroups` | string | Cgroup device rules (comma-separated) | `c 189:* rwm` |
+| `gpus` | string | GPU passthrough (`all` or comma-separated IDs) | `all` |
 | `vpn` | string | VPN configuration | `tailscale` |
 
 ---

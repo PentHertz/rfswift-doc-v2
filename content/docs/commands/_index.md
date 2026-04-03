@@ -77,6 +77,7 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
   {{< card link="bindings" title="bindings" icon="link" subtitle="Manage device and volume bindings" >}}
   {{< card link="capabilities" title="capabilities" icon="shield-check" subtitle="Manage Linux capabilities" >}}
   {{< card link="cgroups" title="cgroups" icon="adjustments" subtitle="Manage cgroup device rules" >}}
+  {{< card link="gpu" title="gpus" icon="chip" subtitle="Manage GPU passthrough" >}}
   {{< card link="ports" title="ports" icon="server" subtitle="Manage container ports" >}}
 {{< /cards >}}
 
@@ -154,6 +155,7 @@ When disconnected mode is enabled, RF Swift skips checking for new versions and 
 | `rfswift --engine podman run` | Use Podman engine |
 | `rfswift doctor` | Diagnose environment |
 | `rfswift update` | Update RF Swift |
+| `rfswift gpus add -c CONTAINER` | Add GPU passthrough |
 | `rfswift realtime enable -c CONTAINER` | Enable realtime SDR mode |
 | `rfswift images versions` | List available image versions |
 | `rfswift cleanup all --dry-run` | Preview cleanup actions |
