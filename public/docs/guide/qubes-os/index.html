@@ -8,27 +8,47 @@
 <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
-<title>profile – RF Swift</title>
-  <meta name="description" content="rfswift profileManage container profiles — YAML presets for quick container creation.
-Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network mode, features (desktop, realtime, privileged), device mappings, capabilities, cgroup rules, and port bindings into a single named preset. Instead of typing long rfswift run commands, you can create a profile once and reuse it." /><link rel="canonical" href="https://rfswift.io/docs/commands/profile/" itemprop="url" />
+<title>QubesOS – RF Swift</title>
+  <meta name="description" content="Running RF Swift on QubesOSQubesOS provides security through compartmentalization using Xen virtual machines. RF Swift runs inside an AppVM with Docker or Podman — no special code or engine needed.
+Recommended setup: Podman in an AppVM. Podman is daemonless and rootless, which fits Qubes’ security model. See Using Podman for general Podman guidance. Architecture Overview ┌─────────────────────────────────────────────────┐ │ dom0 │ │ (Xen management, no containers) │ ├──────────┬──────────┬───────────────────────────┤ │ sys-usb │ sys-net │ rf-work (AppVM) │ │ │ ↓ │ ┌─────────────────────┐ │ │ USB HW ──┤ sys-fw │ │ Podman / Docker │ │ │ (/dev/*) │ ↓ │ │ └─ RF Swift container│ │ │ │ rf-work │ │ └─ SDR tools │ │ │ qvm-usb ──────────────→ /dev/ttyUSB0 │ │ │ │ │ └─────────────────────┘ │ └──────────┴──────────┴───────────────────────────┘ Key points:" /><link rel="canonical" href="https://rfswift.io/docs/guide/qubes-os/" itemprop="url" />
 
-<meta property="og:title" content="profile">
+<meta property="og:title" content="QubesOS">
 <meta
   property="og:description"
   content="
     
-      rfswift profileManage container profiles — YAML presets for quick container creation.
-Synopsis
+      Running RF Swift on QubesOSQubesOS provides security through compartmentalization using Xen virtual machines. RF Swift runs inside an AppVM with Docker or Podman — no special code or engine needed.
+
+  
+
+  
+    Recommended setup: Podman in an AppVM. Podman is daemonless and rootless, which fits Qubes&rsquo; security model. See Using Podman for general Podman guidance.
+  
+
+
+
+Architecture Overview
     
 
-rfswift profile [subcommand] [options]
+┌─────────────────────────────────────────────────┐
+│                    dom0                          │
+│            (Xen management, no containers)       │
+├──────────┬──────────┬───────────────────────────┤
+│ sys-usb  │ sys-net  │   rf-work (AppVM)         │
+│          │    ↓     │  ┌─────────────────────┐  │
+│ USB HW ──┤ sys-fw   │  │ Podman / Docker     │  │
+│ (/dev/*) │    ↓     │  │  └─ RF Swift container│ │
+│          │ rf-work  │  │     └─ SDR tools     │  │
+│  qvm-usb ──────────────→  /dev/ttyUSB0       │  │
+│          │          │  └─────────────────────┘  │
+└──────────┴──────────┴───────────────────────────┘
   
     
 
   
 
 
-Profiles bundle image, network mode, features (desktop, realtime, privileged), device mappings, capabilities, cgroup rules, and port bindings into a single named preset. Instead of typing long rfswift run commands, you can create a profile once and reuse it.
+Key points:
     
   ">
 <meta
@@ -36,7 +56,7 @@ Profiles bundle image, network mode, features (desktop, realtime, privileged), d
   content="
     article
   ">
-<meta property="og:url" content="https://rfswift.io/docs/commands/profile/"><meta property="article:section" content="docs">
+<meta property="og:url" content="https://rfswift.io/docs/guide/qubes-os/"><meta property="article:section" content="docs">
 
 
 <meta
@@ -45,15 +65,15 @@ Profiles bundle image, network mode, features (desktop, realtime, privileged), d
 
 
 
-  <meta itemprop="name" content="profile">
-  <meta itemprop="description" content="rfswift profileManage container profiles — YAML presets for quick container creation.
-Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network mode, features (desktop, realtime, privileged), device mappings, capabilities, cgroup rules, and port bindings into a single named preset. Instead of typing long rfswift run commands, you can create a profile once and reuse it.">
+  <meta itemprop="name" content="QubesOS">
+  <meta itemprop="description" content="Running RF Swift on QubesOSQubesOS provides security through compartmentalization using Xen virtual machines. RF Swift runs inside an AppVM with Docker or Podman — no special code or engine needed.
+Recommended setup: Podman in an AppVM. Podman is daemonless and rootless, which fits Qubes’ security model. See Using Podman for general Podman guidance. Architecture Overview ┌─────────────────────────────────────────────────┐ │ dom0 │ │ (Xen management, no containers) │ ├──────────┬──────────┬───────────────────────────┤ │ sys-usb │ sys-net │ rf-work (AppVM) │ │ │ ↓ │ ┌─────────────────────┐ │ │ USB HW ──┤ sys-fw │ │ Podman / Docker │ │ │ (/dev/*) │ ↓ │ │ └─ RF Swift container│ │ │ │ rf-work │ │ └─ SDR tools │ │ │ qvm-usb ──────────────→ /dev/ttyUSB0 │ │ │ │ │ └─────────────────────┘ │ └──────────┴──────────┴───────────────────────────┘ Key points:">
   <meta itemprop="dateModified" content="2026-04-04T15:21:31+02:00">
-  <meta itemprop="wordCount" content="939">
+  <meta itemprop="wordCount" content="1252">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="profile">
-  <meta name="twitter:description" content="rfswift profileManage container profiles — YAML presets for quick container creation.
-Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network mode, features (desktop, realtime, privileged), device mappings, capabilities, cgroup rules, and port bindings into a single named preset. Instead of typing long rfswift run commands, you can create a profile once and reuse it.">
+  <meta name="twitter:title" content="QubesOS">
+  <meta name="twitter:description" content="Running RF Swift on QubesOSQubesOS provides security through compartmentalization using Xen virtual machines. RF Swift runs inside an AppVM with Docker or Podman — no special code or engine needed.
+Recommended setup: Podman in an AppVM. Podman is daemonless and rootless, which fits Qubes’ security model. See Using Podman for general Podman guidance. Architecture Overview ┌─────────────────────────────────────────────────┐ │ dom0 │ │ (Xen management, no containers) │ ├──────────┬──────────┬───────────────────────────┤ │ sys-usb │ sys-net │ rf-work (AppVM) │ │ │ ↓ │ ┌─────────────────────┐ │ │ USB HW ──┤ sys-fw │ │ Podman / Docker │ │ │ (/dev/*) │ ↓ │ │ └─ RF Swift container│ │ │ │ rf-work │ │ └─ SDR tools │ │ │ qvm-usb ──────────────→ /dev/ttyUSB0 │ │ │ │ │ └─────────────────────┘ │ └──────────┴──────────┴───────────────────────────┘ Key points:">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
     <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -242,7 +262,7 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   >🚀 Quick Start
     </a>
               
-            </li><li class="hx:flex hx:flex-col "><a
+            </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/guide/"
@@ -323,13 +343,70 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   >Using Podman
     </a>
               
-            </li><li class="hx:flex hx:flex-col "><a
+            </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
     href="/docs/guide/qubes-os/"
     
   >QubesOS
     </a>
+  
+    <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
+              <a
+                href="#architecture-overview"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Architecture Overview</a>
+            </li>
+          <li>
+              <a
+                href="#setup"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Setup</a>
+            </li>
+          <li>
+              <a
+                href="#usb-device-passthrough"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >USB Device Passthrough</a>
+            </li>
+          <li>
+              <a
+                href="#network-configuration"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Network Configuration</a>
+            </li>
+          <li>
+              <a
+                href="#gpu-passthrough"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >GPU Passthrough</a>
+            </li>
+          <li>
+              <a
+                href="#recommended-profiles"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Recommended Profiles</a>
+            </li>
+          <li>
+              <a
+                href="#troubleshooting"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Troubleshooting</a>
+            </li>
+          <li>
+              <a
+                href="#security-considerations"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Security Considerations</a>
+            </li>
+          <li>
+              <a
+                href="#related"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Related</a>
+            </li>
+          </ul>
+  
               
             </li></ul>
       </div>
@@ -422,7 +499,7 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
               
             </li></ul>
       </div>
-            </li><li class="hx:flex hx:flex-col open"><a
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/"
@@ -447,64 +524,13 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   >exec
     </a>
               
-            </li><li class="hx:flex hx:flex-col open"><a
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/profile/"
     
   >profile
     </a>
-  
-    <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
-              <a
-                href="#synopsis"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Synopsis</a>
-            </li>
-          <li>
-              <a
-                href="#subcommands"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Subcommands</a>
-            </li>
-          <li>
-              <a
-                href="#profile-storage"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Profile Storage</a>
-            </li>
-          <li>
-              <a
-                href="#profile-format"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Profile Format</a>
-            </li>
-          <li>
-              <a
-                href="#examples"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Examples</a>
-            </li>
-          <li>
-              <a
-                href="#using-profiles-with-rfswift-run"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Using Profiles with rfswift run</a>
-            </li>
-          <li>
-              <a
-                href="#sharing-profiles"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Sharing Profiles</a>
-            </li>
-          <li>
-              <a
-                href="#related-commands"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Related Commands</a>
-            </li>
-          </ul>
-  
               
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -806,7 +832,7 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
     
   >🚀 Quick Start
     </a></li>
-          <li class=""><a
+          <li class="open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/guide/"
@@ -886,9 +912,9 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   >Using Podman
     </a>
               
-            </li><li class="hx:flex hx:flex-col "><a
+            </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
     href="/docs/guide/qubes-os/"
     
   >QubesOS
@@ -982,7 +1008,7 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
               
             </li></ul>
       </div></li>
-          <li class="open"><a
+          <li class=""><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/"
@@ -1006,9 +1032,9 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   >exec
     </a>
               
-            </li><li class="hx:flex hx:flex-col open"><a
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/profile/"
     
   >profile
@@ -1336,75 +1362,103 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
 <nav class="hextra-toc hx:order-last hx:hidden hx:w-64 hx:shrink-0 hx:xl:block hx:print:hidden hx:px-4" aria-label="table of contents">
     <div class="hextra-scrollbar hx:sticky hx:top-16 hx:overflow-y-auto hx:pr-4 hx:pt-6 hx:text-sm [hyphens:auto] hx:max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] hx:ltr:-mr-4 hx:rtl:-ml-4"><p class="hx:mb-4 hx:font-semibold hx:tracking-tight">On this page</p><ul>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#synopsis">Synopsis
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#architecture-overview">Architecture Overview
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#subcommands">Subcommands
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#setup">Setup
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#profile-storage">Profile Storage
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#1-install-in-the-templatevm">1. Install in the TemplateVM
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#profile-format">Profile Format
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#2-configure-the-appvm">2. Configure the AppVM
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#profile-fields">Profile Fields
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#3-persistent-storage-for-containers">3. Persistent storage for containers
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#examples">Examples
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#4-install-rf-swift">4. Install RF Swift
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#initialize-default-profiles">Initialize Default Profiles
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#usb-device-passthrough">USB Device Passthrough
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#list-profiles">List Profiles
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#attach-usb-devices">Attach USB devices
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#show-profile-details">Show Profile Details
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#verify-in-the-appvm">Verify in the AppVM
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#create-a-profile-interactively">Create a Profile Interactively
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#use-with-rf-swift">Use with RF Swift
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#delete-a-profile">Delete a Profile
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#auto-attach-usb-devices">Auto-attach USB devices
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#edit-a-profile-manually">Edit a Profile Manually
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#network-configuration">Network Configuration
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#using-profiles-with-rfswift-run">Using Profiles with rfswift run
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#isolated-rf-assessments">Isolated RF assessments
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#basic-usage">Basic Usage
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#gpu-passthrough">GPU Passthrough
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#profile--cli-overrides">Profile &#43; CLI Overrides
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#recommended-profiles">Recommended Profiles
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#profile-in-the-interactive-wizard">Profile in the Interactive Wizard
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#minimal-sdr-low-memory">Minimal SDR (low memory)
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#sharing-profiles">Sharing Profiles
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#wifi-assessment">WiFi assessment
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#related-commands">Related Commands
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#troubleshooting">Troubleshooting
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#usb-device-not-visible-in-container">USB device not visible in container
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#docker-daemon-not-starting-on-reboot">Docker daemon not starting on reboot
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#no-space-left-on-device">“No space left on device”
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#container-networking-fails">Container networking fails
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#permission-denied-on-usb-device">Permission denied on USB device
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#security-considerations">Security Considerations
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#related">Related
         </a>
       </li></ul>
       <div class="hx:mt-8 hx:border-t hx:bg-white hx:pt-8 hx:shadow-[0_-12px_16px_white] hx:dark:bg-dark hx:dark:shadow-[0_-12px_16px_#111] hx:sticky hx:bottom-0 hx:flex hx:flex-col hx:items-start hx:gap-2 hx:pb-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-t hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:border-neutral-400">
@@ -1426,158 +1480,65 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
           <a href="/docs/">Documentation</a>
         </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         <div class="hx:whitespace-nowrap hx:transition-colors hx:min-w-[24px] hx:overflow-hidden hx:text-ellipsis hx:hover:text-gray-900 hx:dark:hover:text-gray-100">
-          <a href="/docs/commands/">📘 Commands</a>
-        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">profile</div>
+          <a href="/docs/guide/">📖 Guide</a>
+        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">QubesOS</div>
   </div>
 
         <div class="content">
-          <h1>profile</h1>
-          <h1>rfswift profile</h1><p>Manage container profiles — YAML presets for quick container creation.</p>
-<h2>Synopsis<span class="hx:absolute hx:-mt-20" id="synopsis"></span>
-    <a href="#synopsis" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift profile <span class="o">[</span>subcommand<span class="o">]</span> <span class="o">[</span>options<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>Profiles bundle image, network mode, features (desktop, realtime, privileged), device mappings, capabilities, cgroup rules, and port bindings into a single named preset. Instead of typing long <code>rfswift run</code> commands, you can create a profile once and reuse it.</p>
+          <h1>QubesOS</h1>
+          <h1>Running RF Swift on QubesOS</h1><p>QubesOS provides security through compartmentalization using Xen virtual machines. RF Swift runs inside an AppVM with Docker or Podman — no special code or engine needed.</p>
 <div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Quick Start</strong>: Run <code>rfswift profile init</code> to generate default profiles, then use them with <code>rfswift run --profile sdr-full -n my_container</code>.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Recommended setup</strong>: Podman in an AppVM. Podman is daemonless and rootless, which fits Qubes&rsquo; security model. See <a href="/docs/guide/podman/">Using Podman</a> for general Podman guidance.</div>
   </div>
 </div>
 
 <hr>
-<h2>Subcommands<span class="hx:absolute hx:-mt-20" id="subcommands"></span>
-    <a href="#subcommands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><table>
-  <thead>
-      <tr>
-          <th>Subcommand</th>
-          <th>Description</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>list</code></td>
-          <td>List all available profiles</td>
-      </tr>
-      <tr>
-          <td><code>show [name]</code></td>
-          <td>Show detailed configuration for a profile</td>
-      </tr>
-      <tr>
-          <td><code>create</code></td>
-          <td>Create a new profile interactively</td>
-      </tr>
-      <tr>
-          <td><code>init</code></td>
-          <td>Generate default profile YAML files</td>
-      </tr>
-      <tr>
-          <td><code>delete [name]</code></td>
-          <td>Delete a profile</td>
-      </tr>
-  </tbody>
-</table>
+<h2>Architecture Overview<span class="hx:absolute hx:-mt-20" id="architecture-overview"></span>
+    <a href="#architecture-overview" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><pre><code>┌─────────────────────────────────────────────────┐
+│                    dom0                          │
+│            (Xen management, no containers)       │
+├──────────┬──────────┬───────────────────────────┤
+│ sys-usb  │ sys-net  │   rf-work (AppVM)         │
+│          │    ↓     │  ┌─────────────────────┐  │
+│ USB HW ──┤ sys-fw   │  │ Podman / Docker     │  │
+│ (/dev/*) │    ↓     │  │  └─ RF Swift container│ │
+│          │ rf-work  │  │     └─ SDR tools     │  │
+│  qvm-usb ──────────────→  /dev/ttyUSB0       │  │
+│          │          │  └─────────────────────┘  │
+└──────────┴──────────┴───────────────────────────┘</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p>Key points:</p>
+<ul>
+<li><strong>dom0</strong>: Never install Docker/Podman here</li>
+<li><strong>sys-usb</strong>: Holds USB controllers — attach devices to your AppVM via <code>qvm-usb</code></li>
+<li><strong>sys-net / sys-firewall</strong>: Network passes through transparently</li>
+<li><strong>AppVM</strong> (e.g. <code>rf-work</code>): Runs RF Swift + containers</li>
+</ul>
 <hr>
-<h2>Profile Storage<span class="hx:absolute hx:-mt-20" id="profile-storage"></span>
-    <a href="#profile-storage" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Profiles are stored as individual YAML files in a platform-specific directory:</p>
-<div class="hextra-scrollbar hx:overflow-x-auto hx:overflow-y-hidden hx:overscroll-x-contain">
-  <div class="hx:mt-4 hx:flex hx:w-max hx:min-w-full hx:border-b hx:border-gray-200 hx:pb-px hx:dark:border-neutral-800"><button
-        class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
-        role="tab"
-        type="button"
-        aria-controls="tabs-panel-0" aria-selected="true"  tabindex="0"  data-state="selected">Linux</button><button
-        class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
-        role="tab"
-        type="button"
-        aria-controls="tabs-panel-1">macOS</button><button
-        class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
-        role="tab"
-        type="button"
-        aria-controls="tabs-panel-2">Windows</button></div>
-</div>
-<div>
-  <div
-  class="hextra-tabs-panel hx:rounded-sm hx:pt-6 hx:hidden hx:data-[state=selected]:block"
-  id="tabs-panel-0"
-  role="tabpanel" tabindex="0"  data-state="selected" ><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><pre><code>~/.config/rfswift/profiles/</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-</div>
-  <div
-  class="hextra-tabs-panel hx:rounded-sm hx:pt-6 hx:hidden hx:data-[state=selected]:block"
-  id="tabs-panel-1"
-  role="tabpanel"><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><pre><code>~/Library/Application Support/rfswift/profiles/</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-</div>
-  <div
-  class="hextra-tabs-panel hx:rounded-sm hx:pt-6 hx:hidden hx:data-[state=selected]:block"
-  id="tabs-panel-2"
-  role="tabpanel"><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><pre><code>%APPDATA%\rfswift\profiles\</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-</div>
-</div>
-<p>Each profile is a standalone <code>.yaml</code> file that you can edit, copy, or share.</p>
-<hr>
-<h2>Profile Format<span class="hx:absolute hx:-mt-20" id="profile-format"></span>
-    <a href="#profile-format" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>A profile YAML file contains:</p>
+<h2>Setup<span class="hx:absolute hx:-mt-20" id="setup"></span>
+    <a href="#setup" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>1. Install in the TemplateVM<span class="hx:absolute hx:-mt-20" id="1-install-in-the-templatevm"></span>
+    <a href="#1-install-in-the-templatevm" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Install Docker or Podman in the TemplateVM so all derived AppVMs can use it.</p>
+<p><strong>Podman (recommended):</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">sdr-full</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">Full SDR suite with all tools and device support</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">penthertz/rfswift_noble:sdr_full</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l">host</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">desktop</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">desktop_ssl</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">no_x11</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">privileged</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">realtime</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">devices</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">bindings</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">exposed_ports</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">port_bindings</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">caps</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">cgroups</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">gpus</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">vpn</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># In the TemplateVM (e.g. fedora-41)</span>
+</span></span><span class="line"><span class="cl">sudo dnf install -y podman podman-plugins slirp4netns
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Or for Debian-based templates</span>
+</span></span><span class="line"><span class="cl">sudo apt-get install -y podman slirp4netns uidmap</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1587,128 +1548,14 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   </button>
 </div>
 </div>
-<h3>Profile Fields<span class="hx:absolute hx:-mt-20" id="profile-fields"></span>
-    <a href="#profile-fields" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><table>
-  <thead>
-      <tr>
-          <th>Field</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Example</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>name</code></td>
-          <td>string</td>
-          <td>Profile name (used with <code>--profile</code>)</td>
-          <td><code>sdr-full</code></td>
-      </tr>
-      <tr>
-          <td><code>description</code></td>
-          <td>string</td>
-          <td>Human-readable description</td>
-          <td><code>Full SDR suite</code></td>
-      </tr>
-      <tr>
-          <td><code>image</code></td>
-          <td>string</td>
-          <td>Container image to use</td>
-          <td><code>penthertz/rfswift_noble:sdr_full</code></td>
-      </tr>
-      <tr>
-          <td><code>network</code></td>
-          <td>string</td>
-          <td>Network mode (<code>host</code>, <code>nat</code>, <code>bridge</code>)</td>
-          <td><code>host</code></td>
-      </tr>
-      <tr>
-          <td><code>desktop</code></td>
-          <td>bool</td>
-          <td>Enable remote desktop</td>
-          <td><code>true</code></td>
-      </tr>
-      <tr>
-          <td><code>desktop_ssl</code></td>
-          <td>bool</td>
-          <td>Enable SSL for desktop</td>
-          <td><code>false</code></td>
-      </tr>
-      <tr>
-          <td><code>no_x11</code></td>
-          <td>bool</td>
-          <td>Disable X11 forwarding</td>
-          <td><code>false</code></td>
-      </tr>
-      <tr>
-          <td><code>privileged</code></td>
-          <td>bool</td>
-          <td>Enable privileged mode</td>
-          <td><code>false</code></td>
-      </tr>
-      <tr>
-          <td><code>realtime</code></td>
-          <td>bool</td>
-          <td>Enable realtime mode</td>
-          <td><code>true</code></td>
-      </tr>
-      <tr>
-          <td><code>devices</code></td>
-          <td>string</td>
-          <td>Device mappings (comma-separated)</td>
-          <td><code>/dev/ttyUSB0:/dev/ttyUSB0</code></td>
-      </tr>
-      <tr>
-          <td><code>bindings</code></td>
-          <td>string</td>
-          <td>Volume bindings (comma-separated)</td>
-          <td><code>~/data:/root/data</code></td>
-      </tr>
-      <tr>
-          <td><code>exposed_ports</code></td>
-          <td>string</td>
-          <td>Exposed ports</td>
-          <td><code>8080/tcp,443/tcp</code></td>
-      </tr>
-      <tr>
-          <td><code>port_bindings</code></td>
-          <td>string</td>
-          <td>Port bindings</td>
-          <td><code>8080:8080/tcp</code></td>
-      </tr>
-      <tr>
-          <td><code>caps</code></td>
-          <td>string</td>
-          <td>Linux capabilities (comma-separated)</td>
-          <td><code>NET_ADMIN,NET_RAW</code></td>
-      </tr>
-      <tr>
-          <td><code>cgroups</code></td>
-          <td>string</td>
-          <td>Cgroup device rules (comma-separated)</td>
-          <td><code>c 189:* rwm</code></td>
-      </tr>
-      <tr>
-          <td><code>gpus</code></td>
-          <td>string</td>
-          <td>GPU passthrough (<code>all</code> or comma-separated IDs)</td>
-          <td><code>all</code></td>
-      </tr>
-      <tr>
-          <td><code>vpn</code></td>
-          <td>string</td>
-          <td>VPN configuration</td>
-          <td><code>tailscale</code></td>
-      </tr>
-  </tbody>
-</table>
-<hr>
-<h2>Examples<span class="hx:absolute hx:-mt-20" id="examples"></span>
-    <a href="#examples" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Initialize Default Profiles<span class="hx:absolute hx:-mt-20" id="initialize-default-profiles"></span>
-    <a href="#initialize-default-profiles" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Generate the built-in starter profiles:</p>
+<p><strong>Docker:</strong></p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift profile init</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># In the TemplateVM</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Follow official Docker Engine install for your distro:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># https://docs.docker.com/engine/install/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Do NOT install Docker Desktop (requires nested virtualization, unavailable on Xen)</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1718,82 +1565,223 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   </button>
 </div>
 </div>
-<p>This creates 12 default profiles covering common RF/security use cases:</p>
+<p>Shut down the TemplateVM after installation.</p>
+<h3>2. Configure the AppVM<span class="hx:absolute hx:-mt-20" id="2-configure-the-appvm"></span>
+    <a href="#2-configure-the-appvm" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Create a dedicated AppVM for RF work:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># In dom0</span>
+</span></span><span class="line"><span class="cl">qvm-create rf-work --template fedora-41 --label orange
+</span></span><span class="line"><span class="cl">qvm-prefs rf-work netvm sys-firewall
+</span></span><span class="line"><span class="cl">qvm-prefs rf-work memory <span class="m">4096</span>
+</span></span><span class="line"><span class="cl">qvm-prefs rf-work maxmem <span class="m">8192</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>3. Persistent storage for containers<span class="hx:absolute hx:-mt-20" id="3-persistent-storage-for-containers"></span>
+    <a href="#3-persistent-storage-for-containers" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>AppVMs reset their root filesystem on reboot. Container images and data must be stored in the persistent <code>/rw</code> or <code>/home</code> partition.</p>
+<p><strong>Podman</strong> (automatic — images stored in <code>~/.local/share/containers/</code>):</p>
+<p>No extra configuration needed. Podman stores everything in the user&rsquo;s home directory, which persists across reboots.</p>
+<p><strong>Docker</strong> (requires configuration):</p>
+<p>Create <code>/rw/config/rc.local</code> in the AppVM:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Start Docker with persistent storage</span>
+</span></span><span class="line"><span class="cl">mkdir -p /home/user/docker
+</span></span><span class="line"><span class="cl">cat &gt; /etc/docker/daemon.json <span class="s">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">{
+</span></span></span><span class="line"><span class="cl"><span class="s">    &#34;data-root&#34;: &#34;/home/user/docker&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">    &#34;group&#34;: &#34;user&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">}
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">systemctl start docker</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p>Make it executable:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod +x /rw/config/rc.local</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>4. Install RF Swift<span class="hx:absolute hx:-mt-20" id="4-install-rf-swift"></span>
+    <a href="#4-install-rf-swift" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Download and install the RF Swift binary in the AppVM:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># In the rf-work AppVM</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Download latest release</span>
+</span></span><span class="line"><span class="cl">wget https://github.com/PentHertz/RF-Swift/releases/latest/download/rfswift_linux_amd64
+</span></span><span class="line"><span class="cl">chmod +x rfswift_linux_amd64
+</span></span><span class="line"><span class="cl">sudo mv rfswift_linux_amd64 /usr/local/bin/rfswift
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># For Podman, tell RF Swift to use it</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">RFSWIFT_ENGINE</span><span class="o">=</span>podman
+</span></span><span class="line"><span class="cl"><span class="c1"># Or use the --engine flag:</span>
+</span></span><span class="line"><span class="cl">rfswift --engine podman run ...</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p>To make the engine preference persistent, add to <code>~/.bashrc</code>:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;export RFSWIFT_ENGINE=podman&#39;</span> &gt;&gt; ~/.bashrc</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<hr>
+<h2>USB Device Passthrough<span class="hx:absolute hx:-mt-20" id="usb-device-passthrough"></span>
+    <a href="#usb-device-passthrough" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>USB devices on QubesOS go through <code>sys-usb</code>. You must attach them to your AppVM <strong>before</strong> RF Swift can use them.</p>
+<h3>Attach USB devices<span class="hx:absolute hx:-mt-20" id="attach-usb-devices"></span>
+    <a href="#attach-usb-devices" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># In dom0: list available USB devices</span>
+</span></span><span class="line"><span class="cl">qvm-usb list
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Example output:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sys-usb:2-1    0bda:2838  Realtek_RTL2838</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sys-usb:2-3    1d50:6089  Great_Scott_Gadgets_HackRF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Attach to your AppVM</span>
+</span></span><span class="line"><span class="cl">qvm-usb attach rf-work sys-usb:2-1    <span class="c1"># RTL-SDR</span>
+</span></span><span class="line"><span class="cl">qvm-usb attach rf-work sys-usb:2-3    <span class="c1"># HackRF</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Verify in the AppVM<span class="hx:absolute hx:-mt-20" id="verify-in-the-appvm"></span>
+    <a href="#verify-in-the-appvm" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># In rf-work AppVM</span>
+</span></span><span class="line"><span class="cl">lsusb
+</span></span><span class="line"><span class="cl"><span class="c1"># Should show your attached devices</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ls /dev/bus/usb/
+</span></span><span class="line"><span class="cl"><span class="c1"># Devices should be visible</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Use with RF Swift<span class="hx:absolute hx:-mt-20" id="use-with-rf-swift"></span>
+    <a href="#use-with-rf-swift" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Once attached, use RF Swift normally:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_work
+</span></span><span class="line"><span class="cl">rfswift <span class="nb">exec</span> -c sdr_work
+</span></span><span class="line"><span class="cl">rtl_test -t        <span class="c1"># Test RTL-SDR</span>
+</span></span><span class="line"><span class="cl">hackrf_info         <span class="c1"># Test HackRF</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Auto-attach USB devices<span class="hx:absolute hx:-mt-20" id="auto-attach-usb-devices"></span>
+    <a href="#auto-attach-usb-devices" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>For convenience, create a script in dom0 to auto-attach specific devices:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># /usr/local/bin/attach-sdr.sh (in dom0)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Attach all SDR devices to rf-work</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> dev in <span class="k">$(</span>qvm-usb list <span class="p">|</span> grep -E <span class="s2">&#34;0bda:|1d50:|2cf0:&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    qvm-usb attach rf-work <span class="s2">&#34;</span><span class="nv">$dev</span><span class="s2">&#34;</span> 2&gt;/dev/null
+</span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p>Common USB vendor IDs for SDR:</p>
 <table>
   <thead>
       <tr>
-          <th>Profile</th>
-          <th>Image</th>
-          <th>Features</th>
+          <th>Vendor ID</th>
+          <th>Device</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td><code>sdr-full</code></td>
-          <td><code>sdr_full</code></td>
-          <td>Realtime</td>
+          <td><code>0bda</code></td>
+          <td>RTL-SDR (Realtek)</td>
       </tr>
       <tr>
-          <td><code>sdr-light</code></td>
-          <td><code>sdr_light</code></td>
-          <td>—</td>
+          <td><code>1d50</code></td>
+          <td>HackRF, Ubertooth (Great Scott Gadgets)</td>
       </tr>
       <tr>
-          <td><code>wifi</code></td>
-          <td><code>wifi</code></td>
-          <td>Privileged</td>
+          <td><code>2cf0</code></td>
+          <td>BladeRF (Nuand)</td>
       </tr>
       <tr>
-          <td><code>bluetooth</code></td>
-          <td><code>bluetooth</code></td>
-          <td>—</td>
+          <td><code>0456</code></td>
+          <td>PlutoSDR (Analog Devices)</td>
       </tr>
       <tr>
-          <td><code>telecom</code></td>
-          <td><code>telecom_4Gto5G</code></td>
-          <td>Realtime</td>
+          <td><code>9ac4</code></td>
+          <td>Proxmark3</td>
       </tr>
       <tr>
-          <td><code>rfid</code></td>
-          <td><code>rfid</code></td>
-          <td>—</td>
-      </tr>
-      <tr>
-          <td><code>automotive</code></td>
-          <td><code>automotive</code></td>
-          <td>Realtime</td>
-      </tr>
-      <tr>
-          <td><code>hardware</code></td>
-          <td><code>hardware</code></td>
-          <td>—</td>
-      </tr>
-      <tr>
-          <td><code>reversing</code></td>
-          <td><code>reversing</code></td>
-          <td>Desktop</td>
-      </tr>
-      <tr>
-          <td><code>network</code></td>
-          <td><code>network</code></td>
-          <td>NAT network</td>
-      </tr>
-      <tr>
-          <td><code>pentest-full</code></td>
-          <td><code>sdr_full</code></td>
-          <td>Desktop, privileged, realtime, NAT</td>
-      </tr>
-      <tr>
-          <td><code>headless</code></td>
-          <td><code>sdr_light</code></td>
-          <td>No X11, NAT</td>
+          <td><code>1915</code></td>
+          <td>nRF Sniffer (Nordic)</td>
       </tr>
   </tbody>
 </table>
-<p>To overwrite existing profiles:</p>
+<hr>
+<h2>Network Configuration<span class="hx:absolute hx:-mt-20" id="network-configuration"></span>
+    <a href="#network-configuration" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Networking works transparently through the Qubes network stack:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift profile init --force</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><pre><code>Container → AppVM → sys-firewall → sys-net → Internet</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1803,92 +1791,98 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   </button>
 </div>
 </div>
-<h3>List Profiles<span class="hx:absolute hx:-mt-20" id="list-profiles"></span>
-    <a href="#list-profiles" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift profile list</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>Displays a table with name, description, image, network mode, and enabled features for all profiles.</p>
-<h3>Show Profile Details<span class="hx:absolute hx:-mt-20" id="show-profile-details"></span>
-    <a href="#show-profile-details" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># By name</span>
-</span></span><span class="line"><span class="cl">rfswift profile show sdr-full
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Interactive selection</span>
-</span></span><span class="line"><span class="cl">rfswift profile show</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>Shows the full configuration and the equivalent <code>rfswift run</code> CLI command.</p>
-<h3>Create a Profile Interactively<span class="hx:absolute hx:-mt-20" id="create-a-profile-interactively"></span>
-    <a href="#create-a-profile-interactively" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift profile create</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>Launches a step-by-step wizard to create a new profile:</p>
-<ol>
-<li><strong>Profile name</strong> — unique identifier (e.g., <code>my-sdr-setup</code>)</li>
-<li><strong>Description</strong> — what this profile is for</li>
-<li><strong>Image selection</strong> — pick from local images or enter manually</li>
-<li><strong>Network mode</strong> — host, NAT, bridge, or join existing NAT network</li>
-<li><strong>Feature toggles</strong> — desktop, SSL, no-X11, privileged, realtime</li>
-<li><strong>Device mappings</strong> — optional device paths</li>
-<li><strong>Volume bindings</strong> — optional host:container paths</li>
-<li><strong>Port mappings</strong> — simplified <code>hostPort:containerPort</code> format</li>
-<li><strong>Capabilities</strong> — multi-select from common Linux capabilities (NET_ADMIN, SYS_RAWIO, etc.)</li>
-<li><strong>Cgroup rules</strong> — multi-select from common device access rules (USB, serial, sound, etc.)</li>
-<li><strong>Recap and confirm</strong></li>
-</ol>
-<p>The profile is saved as a YAML file that you can further edit manually.</p>
-<h3>Delete a Profile<span class="hx:absolute hx:-mt-20" id="delete-a-profile"></span>
-    <a href="#delete-a-profile" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># By name</span>
-</span></span><span class="line"><span class="cl">rfswift profile delete wifi
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Interactive selection</span>
-</span></span><span class="line"><span class="cl">rfswift profile delete</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Edit a Profile Manually<span class="hx:absolute hx:-mt-20" id="edit-a-profile-manually"></span>
-    <a href="#edit-a-profile-manually" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Profiles are plain YAML files — edit them with any text editor:</p>
+<p>RF Swift&rsquo;s <code>host</code> network mode maps to the AppVM&rsquo;s network — not the physical host. This works fine for most use cases.</p>
+<h3>Isolated RF assessments<span class="hx:absolute hx:-mt-20" id="isolated-rf-assessments"></span>
+    <a href="#isolated-rf-assessments" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>For sensitive work, create an AppVM with no network:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Linux</span>
-</span></span><span class="line"><span class="cl">nano ~/.config/rfswift/profiles/sdr-full.yaml
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># In dom0</span>
+</span></span><span class="line"><span class="cl">qvm-create rf-airgap --template fedora-41 --label red
+</span></span><span class="line"><span class="cl">qvm-prefs rf-airgap netvm none</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p>Pre-pull images before disconnecting:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># While still connected</span>
+</span></span><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_noble:sdr_full
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># macOS</span>
-</span></span><span class="line"><span class="cl">nano ~/Library/Application<span class="se">\ </span>Support/rfswift/profiles/sdr-full.yaml</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># Then disconnect</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># In dom0: qvm-prefs rf-airgap netvm none</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<p>Or use <a href="/docs/air-gapped-installation/">air-gapped installation</a> to transfer images via USB.</p>
+<hr>
+<h2>GPU Passthrough<span class="hx:absolute hx:-mt-20" id="gpu-passthrough"></span>
+    <a href="#gpu-passthrough" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>GPU passthrough on QubesOS is <strong>severely limited</strong> due to Xen:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Limitation</th>
+          <th>Impact</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>3.5GB RAM ceiling</td>
+          <td>AppVM with GPU cannot exceed 3.5GB RAM</td>
+      </tr>
+      <tr>
+          <td>No hot-swap</td>
+          <td>GPU assigned at boot, cannot move between VMs</td>
+      </tr>
+      <tr>
+          <td>Device reset failures</td>
+          <td>Many GPUs fail to reset between VM assignments</td>
+      </tr>
+      <tr>
+          <td>Intel iGPU issues</td>
+          <td>Requires patches, often broken</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Recommendation</strong>: Do not rely on GPU passthrough for RF/SDR work on QubesOS. Use CPU-based processing or offload GPU workloads to a non-Qubes machine.</p>
+<hr>
+<h2>Recommended Profiles<span class="hx:absolute hx:-mt-20" id="recommended-profiles"></span>
+    <a href="#recommended-profiles" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Minimal SDR (low memory)<span class="hx:absolute hx:-mt-20" id="minimal-sdr-low-memory"></span>
+    <a href="#minimal-sdr-low-memory" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">qubes-sdr</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">SDR for QubesOS (memory-efficient)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">penthertz/rfswift_noble:sdr_light</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l">host</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">realtime</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<h3>WiFi assessment<span class="hx:absolute hx:-mt-20" id="wifi-assessment"></span>
+    <a href="#wifi-assessment" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">qubes-wifi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">WiFi assessment for QubesOS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">penthertz/rfswift_noble:wifi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="l">host</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">caps</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;NET_ADMIN,NET_RAW&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1899,34 +1893,20 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
 </div>
 </div>
 <hr>
-<h2>Using Profiles with <code>rfswift run</code><span class="hx:absolute hx:-mt-20" id="using-profiles-with-rfswift-run"></span>
-    <a href="#using-profiles-with-rfswift-run" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Basic Usage<span class="hx:absolute hx:-mt-20" id="basic-usage"></span>
-    <a href="#basic-usage" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Use a profile with the <code>--profile</code> flag:</p>
+<h2>Troubleshooting<span class="hx:absolute hx:-mt-20" id="troubleshooting"></span>
+    <a href="#troubleshooting" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>USB device not visible in container<span class="hx:absolute hx:-mt-20" id="usb-device-not-visible-in-container"></span>
+    <a href="#usb-device-not-visible-in-container" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem</strong>: Device attached via <code>qvm-usb</code> but not visible in RF Swift container</p>
+<p><strong>Solution</strong>:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run --profile sdr-full -n my_sdr</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>This applies all the profile&rsquo;s settings (image, network, features, devices, etc.) and creates the container.</p>
-<h3>Profile + CLI Overrides<span class="hx:absolute hx:-mt-20" id="profile--cli-overrides"></span>
-    <a href="#profile--cli-overrides" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>CLI flags override profile values, so you can customize on the fly:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use wifi profile but with a different image</span>
-</span></span><span class="line"><span class="cl">rfswift run --profile wifi -n my_wifi -i penthertz/rfswift_noble:sdr_full
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1. Verify device is attached to the AppVM</span>
+</span></span><span class="line"><span class="cl">lsusb  <span class="c1"># Should show device</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use sdr-full profile but in NAT mode</span>
-</span></span><span class="line"><span class="cl">rfswift run --profile sdr-full -n isolated_sdr -t nat
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. Check RF Swift device bindings</span>
+</span></span><span class="line"><span class="cl">rfswift bindings add -d -c container -s /dev/bus/usb -t /dev/bus/usb
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use headless profile but add realtime</span>
-</span></span><span class="line"><span class="cl">rfswift run --profile headless -n headless_rt --realtime</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. Check cgroup rules</span>
+</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1936,16 +1916,19 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   </button>
 </div>
 </div>
-<h3>Profile in the Interactive Wizard<span class="hx:absolute hx:-mt-20" id="profile-in-the-interactive-wizard"></span>
-    <a href="#profile-in-the-interactive-wizard" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>When you run <code>rfswift run</code> without <code>-i</code> and <code>-n</code>, the wizard offers profile selection as the first step:</p>
+<h3>Docker daemon not starting on reboot<span class="hx:absolute hx:-mt-20" id="docker-daemon-not-starting-on-reboot"></span>
+    <a href="#docker-daemon-not-starting-on-reboot" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem</strong>: Docker service doesn&rsquo;t persist across AppVM reboots</p>
+<p><strong>Solution</strong>: Ensure <code>/rw/config/rc.local</code> is configured (see Setup section) or switch to Podman (daemonless, no startup needed).</p>
+<h3>&ldquo;No space left on device&rdquo;<span class="hx:absolute hx:-mt-20" id="no-space-left-on-device"></span>
+    <a href="#no-space-left-on-device" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem</strong>: Container images fill up the AppVM private storage</p>
+<p><strong>Solution</strong>:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><pre><code>? Start from a profile?
-  &gt; No profile (manual configuration)
-    sdr-full — Full SDR suite with all tools and device support
-    wifi — WiFi pentesting and assessment tools
-    pentest-full — Full pentest setup: SDR &#43; desktop &#43; NAT isolation
-    ...</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Increase AppVM private storage (in dom0)</span>
+</span></span><span class="line"><span class="cl">qvm-volume resize rf-work:private 50G
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Clean up unused images</span>
+</span></span><span class="line"><span class="cl">rfswift cleanup images</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1955,12 +1938,19 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   </button>
 </div>
 </div>
-<p>After selecting a profile, you&rsquo;re asked:</p>
+<h3>Container networking fails<span class="hx:absolute hx:-mt-20" id="container-networking-fails"></span>
+    <a href="#container-networking-fails" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem</strong>: Container can&rsquo;t reach the internet</p>
+<p><strong>Solution</strong>:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><pre><code>? Use profile &#39;sdr-full&#39; as-is?
-  &gt; Yes, use as-is
-    No, let me customize</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check AppVM has a NetVM assigned (in dom0)</span>
+</span></span><span class="line"><span class="cl">qvm-prefs rf-work netvm
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Use host networking (default for RF Swift)</span>
+</span></span><span class="line"><span class="cl">rfswift run -i image -n name -t host
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># If using Podman rootless, check pasta/slirp4netns</span>
+</span></span><span class="line"><span class="cl">podman info <span class="p">|</span> grep network</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1970,42 +1960,89 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   </button>
 </div>
 </div>
+<h3>Permission denied on USB device<span class="hx:absolute hx:-mt-20" id="permission-denied-on-usb-device"></span>
+    <a href="#permission-denied-on-usb-device" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Problem</strong>: RF Swift container can&rsquo;t access USB device</p>
+<p><strong>Solution</strong>:</p>
+<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Qubes USB proxy may change device permissions</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Inside AppVM, fix permissions</span>
+</span></span><span class="line"><span class="cl">sudo chmod <span class="m">666</span> /dev/bus/usb/*/*
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Or run RF Swift container with privileged mode (less secure)</span>
+</span></span><span class="line"><span class="cl">rfswift run -i image -n name -u <span class="m">1</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  <button
+    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+    title="Copy code"
+  >
+    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
+<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
+  </button>
+</div>
+</div>
+<hr>
+<h2>Security Considerations<span class="hx:absolute hx:-mt-20" id="security-considerations"></span>
+    <a href="#security-considerations" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>QubesOS + RF Swift provides defense in depth:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Layer</th>
+          <th>Protection</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Xen hypervisor</strong></td>
+          <td>Isolates AppVMs from each other and dom0</td>
+      </tr>
+      <tr>
+          <td><strong>sys-usb</strong></td>
+          <td>Isolates USB hardware from dom0</td>
+      </tr>
+      <tr>
+          <td><strong>sys-firewall</strong></td>
+          <td>Network filtering between VMs</td>
+      </tr>
+      <tr>
+          <td><strong>Container</strong></td>
+          <td>Process/namespace isolation within the AppVM</td>
+      </tr>
+      <tr>
+          <td><strong>RF Swift config</strong></td>
+          <td>Capabilities, cgroups, seccomp for least privilege</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Best practices</strong>:</p>
 <ul>
-<li><strong>Yes, use as-is</strong>: Skips all configuration steps — only asks for the container name, shows a recap, and creates the container. This is the fastest way to spin up a container.</li>
-<li><strong>No, let me customize</strong>: Pre-fills all wizard fields with the profile&rsquo;s values, then lets you change anything before creation. You can also choose a different image while keeping all other profile settings.</li>
+<li>Use a dedicated AppVM for RF work (don&rsquo;t mix with personal data)</li>
+<li>Use Podman rootless when possible</li>
+<li>Prefer capabilities over privileged mode</li>
+<li>Use air-gapped AppVMs for sensitive assessments</li>
+<li>Detach USB devices when not in use (<code>qvm-usb detach</code>)</li>
 </ul>
 <hr>
-<h2>Sharing Profiles<span class="hx:absolute hx:-mt-20" id="sharing-profiles"></span>
-    <a href="#sharing-profiles" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Since profiles are plain YAML files, sharing is straightforward:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Copy a profile to another machine</span>
-</span></span><span class="line"><span class="cl">scp ~/.config/rfswift/profiles/my-setup.yaml user@remote:~/.config/rfswift/profiles/
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Share a team-wide profile</span>
-</span></span><span class="line"><span class="cl">cp team-standard.yaml ~/.config/rfswift/profiles/</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<hr>
-<h2>Related Commands<span class="hx:absolute hx:-mt-20" id="related-commands"></span>
-    <a href="#related-commands" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
-<li><a href="/docs/commands/run/"><code>run</code></a> - Create containers (supports <code>--profile</code> flag)</li>
-<li><a href="/docs/guide/configurations/">Configurations</a> - Global configuration file</li>
-<li><a href="/docs/guide/running-rf-swift/">Running RF Swift</a> - Core workflows and features</li>
+<h2>Related<span class="hx:absolute hx:-mt-20" id="related"></span>
+    <a href="#related" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
+<li><a href="/docs/guide/podman/">Using Podman</a> - Podman-specific guidance</li>
+<li><a href="/docs/air-gapped-installation/">Air-Gapped Installation</a> - Offline image transfer</li>
+<li><a href="/docs/guide/running-rf-swift/">Running RF Swift</a> - General usage guide</li>
+<li><a href="/docs/guide/container-management/">Container Management</a> - Dynamic device/capability management</li>
 </ul>
 <hr>
 <div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200">
-  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">💡</div></div>
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">🔒</div></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Tip</strong>: Create profiles for your most common setups (pentesting, SDR capture, hardware debug) and use <code>--profile</code> to skip repetitive configuration. Edit the YAML files directly for fine-tuning.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Security Stack</strong>: QubesOS (VM isolation) + RF Swift containers (process isolation) = defense in depth for RF assessments. USB devices are isolated through sys-usb, network through sys-firewall, and container privileges through capabilities and cgroups.</div>
+  </div>
+</div>
+
+<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200">
+  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
+
+  <div class="hx:w-full hx:min-w-0 hx:leading-7">
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>USB First</strong>: Always attach USB devices to your AppVM via <code>qvm-usb</code> in dom0 before starting RF Swift. Containers can only see devices that are available in the AppVM.</div>
   </div>
 </div>
 
@@ -2013,7 +2050,7 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Exegol-style Presets</strong>: RF Swift profiles are inspired by <a href="https://github.com/ThePorgs/Exegol"target="_blank" rel="noopener">Exegol&rsquo;s</a> profile system. If you&rsquo;re coming from Exegol, you&rsquo;ll find the concept familiar — profiles bundle all container settings into a reusable preset.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Podman Preferred</strong>: Podman&rsquo;s daemonless, rootless architecture is a natural fit for QubesOS. No daemon startup, no root required, persistent storage in home directory.</div>
   </div>
 </div>
 
@@ -2022,14 +2059,10 @@ Synopsis rfswift profile [subcommand] [options] Profiles bundle image, network m
         
     <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-04-04T15:21:31.000Z">April 4, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
-        href="/docs/commands/run/"
-        title="run"
+        href="/docs/guide/podman/"
+        title="Using Podman"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:pr-4 hx:rtl:pl-4"
-      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>run</a><a
-        href="/docs/commands/exec/"
-        title="exec"
-        class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:ml-auto hx:ltr:pl-4 hx:ltr:text-right hx:rtl:mr-auto hx:rtl:pr-4 hx:rtl:text-left"
-      >exec<svg class="hx:inline hx:h-5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
+      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>Using Podman</a></div>
         
       </main>
     </article>
