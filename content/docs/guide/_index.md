@@ -20,4 +20,5 @@ This section covers topics related on how to run RF Swift and use the different 
   {{< card link="/docs/commands/report" title="Assessment reports" icon="document-report" >}}
   {{< card link="/docs/guide/vpn" title="VPN Inside Containers" icon="shield-check" >}}
   {{< card link="/docs/guide/podman" title="Using Podman" icon="cube" >}}
+  {{< card link="/docs/guide/qubes-os" title="QubesOS" icon="shield-check" >}}
 {{< /cards >}}
