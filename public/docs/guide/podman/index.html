@@ -11,7 +11,7 @@
 <title>Using Podman – RF Swift</title>
   <meta name="description" content="Using RF Swift with PodmanRF Swift supports Podman as an alternative to Docker, enabling rootless and daemonless container workflows.
 Overview Podman is a daemonless container engine that can run containers without root privileges. RF Swift auto-detects Podman and adapts its behavior for rootless compatibility.
-Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (daemon) Daemonless (fork-exec) Root required Yes (daemon) No (rootless by default) Device passthrough Native Supported Cgroup rules Full support Not supported in rootless Privileged mode Full host access User-namespace scoped USB hotplug With cgroup rules Limited in rootless Networking Host/bridge slirp4netns/pasta Getting Started with Podman Installation Ubuntu/DebianFedoraArchmacOS sudo apt install podman sudo dnf install podman sudo pacman -S podman brew install podman podman machine init podman machine start Configuration # Ensure subordinate UID/GID ranges are configured grep $USER /etc/subuid /etc/subgid # If empty, add them sudo usermod --add-subuids 100000-165535 $USER sudo usermod --add-subgids 100000-165535 $USER # Enable lingering (containers survive logout) sudo loginctl enable-linger $USER # Configure default registry to avoid prompts echo &#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39; | sudo tee -a /etc/containers/registries.conf Using RF Swift with Podman # Auto-detected (if Podman is the only engine) rfswift run -i sdr_full -n my_sdr # Explicit engine selection (if both Docker and Podman are installed) rfswift --engine podman run -i sdr_full -n my_sdr Rootless Mode By default, Podman runs rootless — no sudo required. RF Swift automatically adapts:" /><link rel="canonical" href="https://rfswift.io/docs/guide/podman/" itemprop="url" />
+Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (daemon) Daemonless (fork-exec) Root required Yes (daemon) No (rootless by default) Device passthrough Native Supported Cgroup rules Full support Not supported in rootless Privileged mode Full host access User-namespace scoped USB hotplug With cgroup rules Limited in rootless Networking Host/bridge slirp4netns/pasta Getting Started with Podman Installation Ubuntu/DebianFedoraArchmacOS sudo apt install podman sudo dnf install podman sudo pacman -S podman brew install podman podman machine init podman machine start Configuration # Ensure subordinate UID/GID ranges are configured grep $USER /etc/subuid /etc/subgid # If empty, add them sudo usermod --add-subuids 100000-165535 $USER sudo usermod --add-subgids 100000-165535 $USER # Enable lingering (containers survive logout) sudo loginctl enable-linger $USER # Configure default registry to avoid prompts echo &#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39; | sudo tee -a /etc/containers/registries.conf Using RF Swift with Podman # Auto-detected (if Podman is the only engine) rfswift run -i sdr_full -n my_sdr # Explicit engine selection (if both Docker and Podman are installed) rfswift --engine podman run -i sdr_full -n my_sdr Rootless Mode By default, Podman runs rootless, so no sudo is required. RF Swift automatically adapts:" /><link rel="canonical" href="https://rfswift.io/docs/guide/podman/" itemprop="url" />
 
 <meta property="og:title" content="Using Podman">
 <meta
@@ -155,7 +155,7 @@ rfswift --engine podman run -i sdr_full -n my_sdr
 
 
 Rootless Mode
-    By default, Podman runs rootless — no sudo required. RF Swift automatically adapts:
+    By default, Podman runs rootless, so no sudo is required. RF Swift automatically adapts:
     
   ">
 <meta
@@ -168,21 +168,21 @@ Rootless Mode
 
 <meta
   property="article:modified_time"
-  content="2026-04-06T10:30:04+02:00">
+  content="2026-08-01T17:47:56+02:00">
 
 
 
   <meta itemprop="name" content="Using Podman">
   <meta itemprop="description" content="Using RF Swift with PodmanRF Swift supports Podman as an alternative to Docker, enabling rootless and daemonless container workflows.
 Overview Podman is a daemonless container engine that can run containers without root privileges. RF Swift auto-detects Podman and adapts its behavior for rootless compatibility.
-Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (daemon) Daemonless (fork-exec) Root required Yes (daemon) No (rootless by default) Device passthrough Native Supported Cgroup rules Full support Not supported in rootless Privileged mode Full host access User-namespace scoped USB hotplug With cgroup rules Limited in rootless Networking Host/bridge slirp4netns/pasta Getting Started with Podman Installation Ubuntu/DebianFedoraArchmacOS sudo apt install podman sudo dnf install podman sudo pacman -S podman brew install podman podman machine init podman machine start Configuration # Ensure subordinate UID/GID ranges are configured grep $USER /etc/subuid /etc/subgid # If empty, add them sudo usermod --add-subuids 100000-165535 $USER sudo usermod --add-subgids 100000-165535 $USER # Enable lingering (containers survive logout) sudo loginctl enable-linger $USER # Configure default registry to avoid prompts echo &#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39; | sudo tee -a /etc/containers/registries.conf Using RF Swift with Podman # Auto-detected (if Podman is the only engine) rfswift run -i sdr_full -n my_sdr # Explicit engine selection (if both Docker and Podman are installed) rfswift --engine podman run -i sdr_full -n my_sdr Rootless Mode By default, Podman runs rootless — no sudo required. RF Swift automatically adapts:">
-  <meta itemprop="dateModified" content="2026-04-06T10:30:04+02:00">
-  <meta itemprop="wordCount" content="1288">
+Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (daemon) Daemonless (fork-exec) Root required Yes (daemon) No (rootless by default) Device passthrough Native Supported Cgroup rules Full support Not supported in rootless Privileged mode Full host access User-namespace scoped USB hotplug With cgroup rules Limited in rootless Networking Host/bridge slirp4netns/pasta Getting Started with Podman Installation Ubuntu/DebianFedoraArchmacOS sudo apt install podman sudo dnf install podman sudo pacman -S podman brew install podman podman machine init podman machine start Configuration # Ensure subordinate UID/GID ranges are configured grep $USER /etc/subuid /etc/subgid # If empty, add them sudo usermod --add-subuids 100000-165535 $USER sudo usermod --add-subgids 100000-165535 $USER # Enable lingering (containers survive logout) sudo loginctl enable-linger $USER # Configure default registry to avoid prompts echo &#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39; | sudo tee -a /etc/containers/registries.conf Using RF Swift with Podman # Auto-detected (if Podman is the only engine) rfswift run -i sdr_full -n my_sdr # Explicit engine selection (if both Docker and Podman are installed) rfswift --engine podman run -i sdr_full -n my_sdr Rootless Mode By default, Podman runs rootless, so no sudo is required. RF Swift automatically adapts:">
+  <meta itemprop="dateModified" content="2026-08-01T17:47:56+02:00">
+  <meta itemprop="wordCount" content="1284">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Using Podman">
   <meta name="twitter:description" content="Using RF Swift with PodmanRF Swift supports Podman as an alternative to Docker, enabling rootless and daemonless container workflows.
 Overview Podman is a daemonless container engine that can run containers without root privileges. RF Swift auto-detects Podman and adapts its behavior for rootless compatibility.
-Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (daemon) Daemonless (fork-exec) Root required Yes (daemon) No (rootless by default) Device passthrough Native Supported Cgroup rules Full support Not supported in rootless Privileged mode Full host access User-namespace scoped USB hotplug With cgroup rules Limited in rootless Networking Host/bridge slirp4netns/pasta Getting Started with Podman Installation Ubuntu/DebianFedoraArchmacOS sudo apt install podman sudo dnf install podman sudo pacman -S podman brew install podman podman machine init podman machine start Configuration # Ensure subordinate UID/GID ranges are configured grep $USER /etc/subuid /etc/subgid # If empty, add them sudo usermod --add-subuids 100000-165535 $USER sudo usermod --add-subgids 100000-165535 $USER # Enable lingering (containers survive logout) sudo loginctl enable-linger $USER # Configure default registry to avoid prompts echo &#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39; | sudo tee -a /etc/containers/registries.conf Using RF Swift with Podman # Auto-detected (if Podman is the only engine) rfswift run -i sdr_full -n my_sdr # Explicit engine selection (if both Docker and Podman are installed) rfswift --engine podman run -i sdr_full -n my_sdr Rootless Mode By default, Podman runs rootless — no sudo required. RF Swift automatically adapts:">
+Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (daemon) Daemonless (fork-exec) Root required Yes (daemon) No (rootless by default) Device passthrough Native Supported Cgroup rules Full support Not supported in rootless Privileged mode Full host access User-namespace scoped USB hotplug With cgroup rules Limited in rootless Networking Host/bridge slirp4netns/pasta Getting Started with Podman Installation Ubuntu/DebianFedoraArchmacOS sudo apt install podman sudo dnf install podman sudo pacman -S podman brew install podman podman machine init podman machine start Configuration # Ensure subordinate UID/GID ranges are configured grep $USER /etc/subuid /etc/subgid # If empty, add them sudo usermod --add-subuids 100000-165535 $USER sudo usermod --add-subgids 100000-165535 $USER # Enable lingering (containers survive logout) sudo loginctl enable-linger $USER # Configure default registry to avoid prompts echo &#39;unqualified-search-registries = [&#34;docker.io&#34;]&#39; | sudo tee -a /etc/containers/registries.conf Using RF Swift with Podman # Auto-detected (if Podman is the only engine) rfswift run -i sdr_full -n my_sdr # Explicit engine selection (if both Docker and Podman are installed) rfswift --engine podman run -i sdr_full -n my_sdr Rootless Mode By default, Podman runs rootless, so no sudo is required. RF Swift automatically adapts:">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
     <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -345,6 +345,14 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
     href="/docs/supports/"
     
   >⚙️ Requirements &amp; supported platforms
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/release-notes-v3/"
+    
+  >🆕 What&#39;s new in v3.0.0 &#34;Resonance&#34;
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -925,6 +933,13 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
     href="/docs/supports/"
     
   >⚙️ Requirements &amp; supported platforms
+    </a></li>
+          <li class=""><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/release-notes-v3/"
+    
+  >🆕 What&#39;s new in v3.0.0 &#34;Resonance&#34;
     </a></li>
           <li class=""><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -1816,7 +1831,7 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
 </div>
 <hr>
 <h2>Rootless Mode<span class="hx:absolute hx:-mt-20" id="rootless-mode"></span>
-    <a href="#rootless-mode" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>By default, Podman runs rootless — no <code>sudo</code> required. RF Swift automatically adapts:</p>
+    <a href="#rootless-mode" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>By default, Podman runs rootless, so no <code>sudo</code> is required. RF Swift automatically adapts:</p>
 <h3>What Works in Rootless Mode<span class="hx:absolute hx:-mt-20" id="what-works-in-rootless-mode"></span>
     <a href="#what-works-in-rootless-mode" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
 <li>Container creation and management</li>
@@ -1878,7 +1893,7 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Devices still work</strong> — you can use USB devices that are plugged in before container start. What doesn&rsquo;t work without cgroup rules is <strong>hotplug</strong> (plugging/unplugging devices while the container is running).</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Devices still work</strong>: you can use USB devices that are plugged in before container start. What doesn&rsquo;t work without cgroup rules is <strong>hotplug</strong> (plugging/unplugging devices while the container is running).</div>
   </div>
 </div>
 
@@ -1943,7 +1958,7 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
 </span></span><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n my_sdr
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Full name (no resolution needed)</span>
-</span></span><span class="line"><span class="cl">rfswift --engine podman run -i docker.io/penthertz/rfswift_noble:sdr_full -n my_sdr</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl">rfswift --engine podman run -i docker.io/penthertz/rfswift_resolute:sdr_full -n my_sdr</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1987,7 +2002,7 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
     <a href="#rootless-networking" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Rootless Podman uses <code>slirp4netns</code> or <code>pasta</code> for networking instead of a real bridge:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Host network (default) — works with slirp4netns</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Host network (default), works with slirp4netns</span>
 </span></span><span class="line"><span class="cl">rfswift --engine podman run -i sdr_full -n my_sdr
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Bridge network</span>
@@ -2112,7 +2127,7 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
 </div>
 </div>
 <h3>&ldquo;Rootless Podman does not support device cgroup rules&rdquo;<span class="hx:absolute hx:-mt-20" id="rootless-podman-does-not-support-device-cgroup-rules"></span>
-    <a href="#rootless-podman-does-not-support-device-cgroup-rules" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Not an error</strong> — this is informational. Your container will still work; only USB hotplug is affected. Plug in devices before starting the container.</p>
+    <a href="#rootless-podman-does-not-support-device-cgroup-rules" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong>Not an error</strong>, just informational. Your container will still work; only USB hotplug is affected. Plug in devices before starting the container.</p>
 <p>To get full cgroup support:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
@@ -2151,7 +2166,7 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Option 1: Pull without sudo (rootless)</span>
-</span></span><span class="line"><span class="cl">podman pull penthertz/rfswift_noble:sdr_full
+</span></span><span class="line"><span class="cl">podman pull penthertz/rfswift_resolute:sdr_full
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Option 2: Configure additionalimage stores to see root images</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Add to ~/.config/containers/storage.conf:</span>
@@ -2213,7 +2228,7 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">🔒</div></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Security Advantage</strong>: Podman&rsquo;s rootless mode provides better isolation than Docker. Even if a container escape occurs, the attacker only has unprivileged user access — not root.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Security Advantage</strong>: Podman&rsquo;s rootless mode provides better isolation than Docker. Even if a container escape occurs, the attacker only has unprivileged user access, not root.</div>
   </div>
 </div>
 
@@ -2228,7 +2243,7 @@ Docker vs Podman at a Glance Feature Docker Podman Architecture Client-server (d
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-04-06T10:30:04.000Z">April 6, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-08-01T17:47:56.000Z">August 1, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/guide/vpn/"
         title="VPN Inside Containers"

@@ -41,15 +41,15 @@ The --engine flag is a global flag that overrides RF Swift&rsquo;s auto-detectio
 
 <meta
   property="article:modified_time"
-  content="2026-04-06T10:30:04+02:00">
+  content="2026-08-01T17:47:56+02:00">
 
 
 
   <meta itemprop="name" content="engine">
   <meta itemprop="description" content="rfswift –engineSelect the container engine used by RF Swift.
 Synopsis rfswift --engine ENGINE [command] [options] The --engine flag is a global flag that overrides RF Swift’s auto-detection and forces a specific container engine for the current command. It must be placed before any subcommand.">
-  <meta itemprop="dateModified" content="2026-04-06T10:30:04+02:00">
-  <meta itemprop="wordCount" content="1832">
+  <meta itemprop="dateModified" content="2026-08-01T17:47:56+02:00">
+  <meta itemprop="wordCount" content="1833">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="engine">
   <meta name="twitter:description" content="rfswift –engineSelect the container engine used by RF Swift.
@@ -216,6 +216,14 @@ Synopsis rfswift --engine ENGINE [command] [options] The --engine flag is a glob
     href="/docs/supports/"
     
   >⚙️ Requirements &amp; supported platforms
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/release-notes-v3/"
+    
+  >🆕 What&#39;s new in v3.0.0 &#34;Resonance&#34;
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -808,6 +816,13 @@ Synopsis rfswift --engine ENGINE [command] [options] The --engine flag is a glob
     href="/docs/supports/"
     
   >⚙️ Requirements &amp; supported platforms
+    </a></li>
+          <li class=""><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/release-notes-v3/"
+    
+  >🆕 What&#39;s new in v3.0.0 &#34;Resonance&#34;
     </a></li>
           <li class=""><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -1859,7 +1874,7 @@ Synopsis rfswift --engine ENGINE [command] [options] The --engine flag is a glob
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Full name (no prompt)</span>
-</span></span><span class="line"><span class="cl">rfswift --engine podman images pull -i docker.io/penthertz/rfswift_noble:sdr_full
+</span></span><span class="line"><span class="cl">rfswift --engine podman images pull -i docker.io/penthertz/rfswift_resolute:sdr_full
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Short name (may prompt for registry selection)</span>
 </span></span><span class="line"><span class="cl">rfswift --engine podman images pull -i sdr_full</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
@@ -2072,7 +2087,7 @@ Synopsis rfswift --engine ENGINE [command] [options] The --engine flag is a glob
 </div>
 
 <h3>Automatic VM Lifecycle Management<span class="hx:absolute hx:-mt-20" id="automatic-vm-lifecycle-management"></span>
-    <a href="#automatic-vm-lifecycle-management" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>RF Swift now <strong>automatically manages the Lima VM</strong> — no manual <code>limactl</code> commands required. When you run any command with <code>--engine lima</code>, RF Swift transparently handles the full VM lifecycle:</p>
+    <a href="#automatic-vm-lifecycle-management" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>RF Swift now <strong>automatically manages the Lima VM</strong>, so you never need to run <code>limactl</code> yourself. When you run any command with <code>--engine lima</code>, RF Swift transparently handles the full VM lifecycle:</p>
 <ol>
 <li><strong>Instance detection</strong>: Checks if the Lima instance exists</li>
 <li><strong>Auto-creation</strong>: If the instance doesn&rsquo;t exist, creates it from the best available template (searches standard paths, falls back to a built-in inline template)</li>
@@ -2082,18 +2097,18 @@ Synopsis rfswift --engine ENGINE [command] [options] The --engine flag is a glob
 </ol>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># First run — RF Swift creates the VM, installs Docker + USB tools, starts everything</span>
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># First run: RF Swift creates the VM, installs Docker + USB tools, starts everything</span>
 </span></span><span class="line"><span class="cl">rfswift --engine lima run -i sdr_full -n my_sdr
 </span></span><span class="line"><span class="cl"><span class="c1"># → &#34;Lima instance &#39;rfswift&#39; not found. Creating it...&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># → &#34;Lima instance &#39;rfswift&#39; created and started&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># → Container runs normally</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Second run — VM already exists, RF Swift just starts it if stopped</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Second run: the VM already exists, RF Swift just starts it if stopped</span>
 </span></span><span class="line"><span class="cl">rfswift --engine lima run -i sdr_full -n another_sdr
 </span></span><span class="line"><span class="cl"><span class="c1"># → &#34;Starting Lima instance &#39;rfswift&#39;...&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># → Container runs normally</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># VM already running — no extra steps, runs immediately</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># VM already running, so this runs immediately with no extra steps</span>
 </span></span><span class="line"><span class="cl">rfswift --engine lima <span class="nb">exec</span> -c my_sdr</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
@@ -2116,7 +2131,7 @@ Synopsis rfswift --engine ENGINE [command] [options] The --engine flag is a glob
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Zero-configuration USB workflow on macOS</strong>: Just plug in your SDR, run <code>rfswift --engine lima run ...</code>, and the VM is created, started, and ready — all automatically.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Zero-configuration USB workflow on macOS</strong>: Just plug in your SDR, run <code>rfswift --engine lima run ...</code>, and the VM is created, started and ready, all automatically.</div>
   </div>
 </div>
 
@@ -2163,7 +2178,7 @@ Synopsis rfswift --engine ENGINE [command] [options] The --engine flag is a glob
 <li>Docker socket path (for container engine routing)</li>
 </ul>
 <h3>engine lima reconfig<span class="hx:absolute hx:-mt-20" id="engine-lima-reconfig"></span>
-    <a href="#engine-lima-reconfig" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Apply an updated YAML template to the VM. By default this is <strong>non-destructive</strong> — the VM is stopped, the template is applied, and the VM is restarted. The VM filesystem (Docker images, containers, etc.) is preserved.</p>
+    <a href="#engine-lima-reconfig" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Apply an updated YAML template to the VM. By default this is <strong>non-destructive</strong>: the VM is stopped, the template is applied, and the VM is restarted. The VM filesystem (Docker images, containers, etc.) is preserved.</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Non-destructive: stop → apply template → restart</span>
@@ -2299,14 +2314,14 @@ Synopsis rfswift --engine ENGINE [command] [options] The --engine flag is a glob
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">💡</div></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Tip</strong>: If you always use the same engine, you don&rsquo;t need <code>--engine</code> at all — RF Swift auto-detects and uses whatever is available. The flag is only needed when both engines are installed and you want to force a specific one.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0"><strong>Tip</strong>: If you always use the same engine, you don&rsquo;t need <code>--engine</code> at all, because RF Swift auto-detects and uses whatever is available. The flag is only needed when both engines are installed and you want to force a specific one.</div>
   </div>
 </div>
 
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-04-06T10:30:04.000Z">April 6, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-08-01T17:47:56.000Z">August 1, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/commands/"
         title="📘 Commands"

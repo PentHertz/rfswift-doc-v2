@@ -69,7 +69,7 @@
   role=&#34;tabpanel&#34;&gt;&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
 &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
 &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
-  &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;&lt;strong&gt;Podman runs rootless by default&lt;/strong&gt; — no &lt;code&gt;sudo&lt;/code&gt;, no daemon, no group membership required. Just ensure your subordinate UID/GID ranges are configured:&lt;/p&gt;
+  &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;&lt;strong&gt;Podman runs rootless by default&lt;/strong&gt;, so there is no &lt;code&gt;sudo&lt;/code&gt;, no daemon and no group membership to worry about. Just ensure your subordinate UID/GID ranges are configured:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo usermod --add-subuids 100000-165535 &lt;span class=&#34;nv&#34;&gt;$USER&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo usermod --add-subgids 100000-165535 &lt;span class=&#34;nv&#34;&gt;$USER&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
@@ -192,7 +192,7 @@
 &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
   &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;&lt;strong&gt;Podman privilege model:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Linux&lt;/strong&gt;: No &lt;code&gt;sudo&lt;/code&gt; needed — Podman runs in your user namespace by default&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Linux&lt;/strong&gt;: No &lt;code&gt;sudo&lt;/code&gt; needed, because Podman runs in your user namespace by default&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Device access&lt;/strong&gt;: Some &lt;code&gt;/dev&lt;/code&gt; devices may require explicit &lt;code&gt;--device&lt;/code&gt; flags or &lt;code&gt;podman unshare&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Windows/macOS&lt;/strong&gt;: Podman runs inside a lightweight VM (podman machine); no extra privileges needed&lt;/li&gt;
 &lt;/ul&gt;&lt;/div&gt;
@@ -219,12 +219,12 @@
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift update
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;!&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Current version: 0.6.5-rc3
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Latest version: v0.6.5-rc4
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;!&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Your current version is obsolete. Please update to version: v0.6.5-rc4
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;!&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Current version: 2.1.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Latest version: v3.0.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;!&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Your current version is obsolete. Please update to version: v3.0.0
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Do you want to update to the latest version? &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;yes/no&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;: 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;yes
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Latest release download URL: https://github.com/PentHertz/RF-Swift/releases/download/v0.6.5-rc4/rfswift_Linux_x86_64.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Latest release download URL: https://github.com/PentHertz/RF-Swift/releases/download/v3.0.0/rfswift_Linux_x86_64.tar.gz
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;4.58 MiB / 4.58 MiB &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;----------------------------------------------------------------------------------------------------------------------------------------&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; 100.00%%
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;+&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; File downloaded, extracted, and replaced successfully.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
@@ -387,7 +387,7 @@
   &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;The interactive wizard also offers profile selection as the first step — select a profile, choose &amp;ldquo;Use as-is&amp;rdquo;, enter a container name, and you&amp;rsquo;re done. See &lt;a href=&#34;https://rfswift.io/docs/commands/profile/&#34;&gt;&lt;code&gt;rfswift profile&lt;/code&gt;&lt;/a&gt; for details.&lt;/p&gt;
+&lt;p&gt;The interactive wizard also offers profile selection as the first step. Select a profile, choose &amp;ldquo;Use as-is&amp;rdquo;, enter a container name, and you&amp;rsquo;re done. See &lt;a href=&#34;https://rfswift.io/docs/commands/profile/&#34;&gt;&lt;code&gt;rfswift profile&lt;/code&gt;&lt;/a&gt; for details.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;With Realtime Mode for SDR Operations:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;For optimal SDR performance with reduced buffer underruns, use the &lt;code&gt;--realtime&lt;/code&gt; flag:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
@@ -444,11 +444,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;┌───────────────────────────┬─────────────────────────────┬───────────────────────────────────────────────────────┬──────────────┬──────────┐
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ Created                   │ Image Tag &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;ID&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;              │ Container Name                                        │ Container ID │ Command  │
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ 2025-04-11T16:47:02+02:00 │ penthertz/rfswift_noble:hardware  │ hardware                                              │ b6e43a87e1f6 │ /bin/zsh │
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ 2025-04-11T16:47:02+02:00 │ penthertz/rfswift_resolute:hardware  │ hardware                                              │ b6e43a87e1f6 │ /bin/zsh │
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ 2025-04-11T16:23:43+02:00 │ penthertz/rfswift_noble:bluetooth │ missionbluetooth                                      │ 3d92cb59560f │ /bin/zsh │
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ 2025-04-11T16:23:43+02:00 │ penthertz/rfswift_resolute:bluetooth │ missionbluetooth                                      │ 3d92cb59560f │ /bin/zsh │
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ 2025-04-11T16:18:22+02:00 │ penthertz/rfswift_noble:rfid      │ missionrfid2                                          │ 50cbccef53f5 │ /bin/zsh │
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;│ 2025-04-11T16:18:22+02:00 │ penthertz/rfswift_resolute:rfid      │ missionrfid2                                          │ 50cbccef53f5 │ /bin/zsh │
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
@@ -548,7 +548,7 @@
 &lt;p&gt;&lt;strong&gt;Delete an image:&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift delete -c penthertz/rfswift_noble:tag_name&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift delete -c penthertz/rfswift_resolute:tag_name&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -696,7 +696,7 @@
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
 
   &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
-    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Automatic audio management&lt;/strong&gt;: RF Swift automatically detects your audio system (PulseAudio or PipeWire), starts it if not running, and loads the TCP module — all in one command. On macOS with Lima, it also automatically configures network ACLs so containers inside the VM can access the host audio server. No manual PulseAudio setup required.&lt;/div&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Automatic audio management&lt;/strong&gt;: RF Swift automatically detects your audio system (PulseAudio or PipeWire), starts it if not running, and loads the TCP module, all in one command. On macOS with Lima, it also automatically configures network ACLs so containers inside the VM can access the host audio server. No manual PulseAudio setup required.&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -978,7 +978,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
     C--&amp;gt;F[Container from image 2]
 &lt;/pre&gt;&lt;p&gt;This architecture provides significant advantages:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Portability&lt;/strong&gt;: Move environments between systems easily — images work with both Docker and Podman&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Portability&lt;/strong&gt;: Move environments between systems easily, since images work with both Docker and Podman&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Isolation&lt;/strong&gt;: Create separate environments for different tasks&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Disposability&lt;/strong&gt;: Create, experiment with, and destroy environments without impact&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Specialization&lt;/strong&gt;: Tailored environments for specific assessment needs&lt;/li&gt;
@@ -1074,7 +1074,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
   &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;Without a password, the desktop is unauthenticated — safe on &lt;code&gt;127.0.0.1&lt;/code&gt; (default), but a security risk when exposed. The password can also be set in the config file:&lt;/p&gt;
+&lt;p&gt;Without a password, the desktop is unauthenticated. That is safe on &lt;code&gt;127.0.0.1&lt;/code&gt; (the default), but a security risk when exposed. The password can also be set in the config file:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;[desktop]&lt;/span&gt;
@@ -1138,7 +1138,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
 
   &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
-    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;When desktop mode is enabled, RF Swift automatically handles VNC server startup, port binding configuration, and environment variable injection — no manual setup required inside the container. The desktop provides a full LXQt environment with application menu, taskbar, and window management.&lt;/div&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;When desktop mode is enabled, RF Swift automatically handles VNC server startup, port binding configuration, and environment variable injection, so no manual setup is required inside the container. The desktop provides a full LXQt environment with application menu, taskbar, and window management.&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1184,7 +1184,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
     &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;GUI applications require either X11 forwarding or remote desktop mode:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;X11 forwarding&lt;/strong&gt;: Linux needs &lt;code&gt;xhost&lt;/code&gt;, macOS needs &lt;code&gt;XQuartz&lt;/code&gt;, Windows has native support via Docker Desktop&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Remote desktop&lt;/strong&gt; (&lt;code&gt;--desktop&lt;/code&gt;): Works on any platform — access GUI tools from a web browser with no X11 setup required&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Remote desktop&lt;/strong&gt; (&lt;code&gt;--desktop&lt;/code&gt;): Works on any platform, letting you reach GUI tools from a web browser with no X11 setup&lt;/li&gt;
 &lt;/ul&gt;&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
@@ -1378,7 +1378,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
 &lt;p&gt;&lt;strong&gt;Run with specific privileges and capabilities&lt;/strong&gt;:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:wifi -n wifi_tools -u &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; -a NET_ADMIN,NET_RAW&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:wifi -n wifi_tools -u &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; -a NET_ADMIN,NET_RAW&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -1394,7 +1394,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
 &lt;p&gt;&lt;strong&gt;Add custom cgroup rules and device mappings&lt;/strong&gt;:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr -n rtlsdr -g &lt;span class=&#34;s2&#34;&gt;&amp;#34;c 226:* rwm&amp;#34;&lt;/span&gt; -s &lt;span class=&#34;s2&#34;&gt;&amp;#34;/dev/bus/usb:/dev/bus/usb&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr -n rtlsdr -g &lt;span class=&#34;s2&#34;&gt;&amp;#34;c 226:* rwm&amp;#34;&lt;/span&gt; -s &lt;span class=&#34;s2&#34;&gt;&amp;#34;/dev/bus/usb:/dev/bus/usb&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -1410,7 +1410,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
 &lt;p&gt;&lt;strong&gt;Set a custom seccomp profile&lt;/strong&gt;:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:security -n forensics -m ~/custom_seccomp.json&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:security -n forensics -m ~/custom_seccomp.json&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -1426,7 +1426,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
 &lt;p&gt;&lt;strong&gt;High-performance SDR setup with realtime mode&lt;/strong&gt;:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_capture &lt;span class=&#34;se&#34;&gt;\
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_capture &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  --realtime &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -s &lt;span class=&#34;s2&#34;&gt;&amp;#34;/dev/bus/usb:/dev/bus/usb&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -g &lt;span class=&#34;s2&#34;&gt;&amp;#34;c 189:* rwm&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
@@ -1454,7 +1454,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
 &lt;p&gt;&lt;strong&gt;Combined security settings with recording&lt;/strong&gt;:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:bluetooth -n bt_scanner &lt;span class=&#34;se&#34;&gt;\
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:bluetooth -n bt_scanner &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -t bridge &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -a NET_ADMIN &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -g &lt;span class=&#34;s2&#34;&gt;&amp;#34;c 226:* rwm,c 116:* rwm&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
@@ -1484,7 +1484,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
 &lt;p&gt;&lt;strong&gt;Rootless Podman with explicit engine selection&lt;/strong&gt;:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift --engine podman run -i penthertz/rfswift_noble:sdr_full -n rootless_sdr &lt;span class=&#34;se&#34;&gt;\
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift --engine podman run -i penthertz/rfswift_resolute:sdr_full -n rootless_sdr &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -s &lt;span class=&#34;s2&#34;&gt;&amp;#34;/dev/bus/usb:/dev/bus/usb&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -b ~/captures:/root/captures &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  --realtime&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
@@ -1574,11 +1574,11 @@ Be cautious when adding capabilities as they increase security risks if the cont
 ┌──────────────────────────────┬──────────────────────┬────────────────────────────────────────────────┬──────────────┐
 │ Tag                          │ Pushed Date          │ Image                                          │ Architecture │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ sdr_full_nvidiagpu_amd64     │ 2025-03-24T17:37:59Z │ penthertz/rfswift_noble:sdr_full_nvidiagpu_amd64     │ amd64        │
-│ hardware                     │ 2025-03-24T17:33:21Z │ penthertz/rfswift_noble:hardware                     │ amd64        │
-│ sdr_full_intelgpu_amd64      │ 2025-03-24T17:09:38Z │ penthertz/rfswift_noble:sdr_full_intelgpu_amd64      │ amd64        │
-│ sdr_full                     │ 2025-03-24T16:43:07Z │ penthertz/rfswift_noble:sdr_full                     │ amd64        │
-│ telecom_5G                   │ 2025-03-24T16:36:22Z │ penthertz/rfswift_noble:telecom_5G                   │ amd64        │
+│ sdr_full_nvidiagpu_amd64     │ 2025-03-24T17:37:59Z │ penthertz/rfswift_resolute:sdr_full_nvidiagpu_amd64     │ amd64        │
+│ hardware                     │ 2025-03-24T17:33:21Z │ penthertz/rfswift_resolute:hardware                     │ amd64        │
+│ sdr_full_intelgpu_amd64      │ 2025-03-24T17:09:38Z │ penthertz/rfswift_resolute:sdr_full_intelgpu_amd64      │ amd64        │
+│ sdr_full                     │ 2025-03-24T16:43:07Z │ penthertz/rfswift_resolute:sdr_full                     │ amd64        │
+│ telecom_5G                   │ 2025-03-24T16:36:22Z │ penthertz/rfswift_resolute:telecom_5G                   │ amd64        │
 ...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
@@ -1617,7 +1617,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
       &lt;tr&gt;
           &lt;td&gt;&lt;strong&gt;SDR&lt;/strong&gt;&lt;/td&gt;
           &lt;td&gt;Software-defined radio tools&lt;/td&gt;
-          &lt;td&gt;&lt;code&gt;sdr_light&lt;/code&gt;, &lt;code&gt;sdr_full&lt;/code&gt;, &lt;code&gt;sdr_light_intelgpu&lt;/code&gt;, &lt;code&gt;sdr_full_nvidiagpu&lt;/code&gt;, &lt;code&gt;deeptempest&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;sdr_light&lt;/code&gt;, &lt;code&gt;sdr_full&lt;/code&gt;, &lt;code&gt;sdr_light_intelgpu&lt;/code&gt;, &lt;code&gt;sdr_full_nvidiagpu&lt;/code&gt;, &lt;code&gt;deeptempest&lt;/code&gt;, &lt;code&gt;sdr_gnuradio4&lt;/code&gt; 🆕&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;&lt;strong&gt;Telecom&lt;/strong&gt;&lt;/td&gt;
@@ -1645,12 +1645,35 @@ Be cautious when adding capabilities as they increase security risks if the cont
           &lt;td&gt;&lt;code&gt;network&lt;/code&gt;&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Active Directory&lt;/strong&gt; 🆕&lt;/td&gt;
+          &lt;td&gt;Windows domain engagements&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;ad&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Mobile&lt;/strong&gt; 🆕&lt;/td&gt;
+          &lt;td&gt;Android application and device assessment&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;android&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;OSINT&lt;/strong&gt; 🆕&lt;/td&gt;
+          &lt;td&gt;Open-source intelligence and reconnaissance&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;osint&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
           &lt;td&gt;&lt;strong&gt;Base images&lt;/strong&gt;&lt;/td&gt;
           &lt;td&gt;Foundation for other images&lt;/td&gt;
           &lt;td&gt;&lt;code&gt;corebuild&lt;/code&gt;, &lt;code&gt;sdrsa_devices&lt;/code&gt;, &lt;code&gt;sdrsa_devices_antsdr&lt;/code&gt;, &lt;code&gt;sdrsa_devices_rtlsdrv4&lt;/code&gt;&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;div class=&#34;hx:select-none hx:text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;🆕&lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;New in v3.0.0 &amp;ldquo;Resonance&amp;rdquo;&lt;/strong&gt;: &lt;code&gt;ad&lt;/code&gt;, &lt;code&gt;android&lt;/code&gt; and &lt;code&gt;osint&lt;/code&gt; extend RF Swift beyond radio into full engagement territory, and &lt;code&gt;sdr_gnuradio4&lt;/code&gt; lets you try GNU Radio 4.0 in seconds without disturbing the GNU Radio 3.10 setup you already rely on. See the &lt;a href=&#34;https://rfswift.io/docs/release-notes-v3/&#34;&gt;v3.0.0 release notes&lt;/a&gt; for the full picture.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
 &lt;h2&gt;Image Hierarchy&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;image-hierarchy&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#image-hierarchy&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;RF Swift images are structured in a layered hierarchy, with specialized images building on more general base images:&lt;/p&gt;
 &lt;pre class=&#34;mermaid hx:mt-6&#34;&gt;
@@ -1667,7 +1690,13 @@ Be cautious when adding capabilities as they increase security risks if the cont
     B[sdrsa_devices]--&amp;gt;R[hardware];
     B[sdrsa_devices]--&amp;gt;S[network];
     B[sdrsa_devices]--&amp;gt;DT[deeptempest];
-    S[network]--&amp;gt;J[wifi];
+    A--&amp;gt;OS[osint];
+    A--&amp;gt;AN[android];
+    S[network]--&amp;gt;WB[wifi_basic];
+    WB--&amp;gt;WF[wifi_full];
+    S[network]--&amp;gt;AD[ad];
+    H--&amp;gt;J[wifi];
+    H--&amp;gt;G4[sdr_gnuradio4];
     H--&amp;gt;K[sdr_full];
     H--&amp;gt;H2[sdr_light_intelgpu];
     H--&amp;gt;H3[sdr_light_nvidiagpu];
@@ -1877,6 +1906,22 @@ Be cautious when adding capabilities as they increase security risks if the cont
         
           &lt;tr&gt;
             
+              &lt;td&gt;sdr_gnuradio4&lt;/td&gt;
+            
+              &lt;td&gt;- Linux - Windows - macOS&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;❌ (not yet)&lt;/td&gt;
+            
+              &lt;td&gt;🆕 GNU Radio 4.0 (RC) built from source alongside the GNU Radio 3.10 of sdr_light so you can try GR4 without touching your existing flowgraph environment&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
               &lt;td&gt;deeptempest&lt;/td&gt;
             
               &lt;td&gt;- Linux - Windows - macOS&lt;/td&gt;
@@ -1949,9 +1994,9 @@ Be cautious when adding capabilities as they increase security risks if the cont
             
               &lt;td&gt;✅&lt;/td&gt;
             
-              &lt;td&gt;❌ (not yet)&lt;/td&gt;
+              &lt;td&gt;✅&lt;/td&gt;
             
-              &lt;td&gt;Reversing image for security tests using tools included in reversing.docker&lt;/td&gt;
+              &lt;td&gt;Reversing and SAST image for firmware analysis and static code review using tools included in reversing.docker&lt;/td&gt;
             
           &lt;/tr&gt;
         
@@ -1965,7 +2010,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
             
               &lt;td&gt;✅&lt;/td&gt;
             
-              &lt;td&gt;❌ (not yet)&lt;/td&gt;
+              &lt;td&gt;✅&lt;/td&gt;
             
               &lt;td&gt;Automotive image for security tests using tools included in automotive.docker&lt;/td&gt;
             
@@ -2109,7 +2154,7 @@ Be cautious when adding capabilities as they increase security risks if the cont
             
               &lt;td&gt;✅&lt;/td&gt;
             
-              &lt;td&gt;❌ (not yet)&lt;/td&gt;
+              &lt;td&gt;✅&lt;/td&gt;
             
               &lt;td&gt;Network security testing image using tools included in general_network.docker&lt;/td&gt;
             
@@ -2144,6 +2189,54 @@ Be cautious when adding capabilities as they increase security risks if the cont
               &lt;td&gt;✅&lt;/td&gt;
             
               &lt;td&gt;Wi-Fi image with standard toolset using wifi.docker&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;ad&lt;/td&gt;
+            
+              &lt;td&gt;- Linux - Windows - macOS&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;🆕 Active Directory engagement image (builds on network) with Impacket NetExec BloodHound.py Certipy bloodyAD and the rest of the AD toolchain&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;android&lt;/td&gt;
+            
+              &lt;td&gt;- Linux - Windows - macOS&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;🆕 Android and mobile assessment image with adb/fastboot apktool smali Frida objection androguard drozer and MobSF&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;osint&lt;/td&gt;
+            
+              &lt;td&gt;- Linux - Windows - macOS&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;🆕 OSINT and reconnaissance image with theHarvester Sherlock maigret holehe GHunt SpiderFoot recon-ng and FinalRecon&lt;/td&gt;
             
           &lt;/tr&gt;
         
@@ -2987,7 +3080,7 @@ The sizes displayed by &lt;code&gt;rfswift images local&lt;/code&gt; show the vi
     &lt;a href=&#34;#creating-containers-with-gpu&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# At creation time&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_full -n gpu_sdr --gpus all
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_full -n gpu_sdr --gpus all
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Or via profile&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run --profile gpu-sdr -n my_gpu_container&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
@@ -3661,7 +3754,13 @@ The sizes displayed by &lt;code&gt;rfswift images local&lt;/code&gt; show the vi
     B[sdrsa_devices]--&amp;gt;L[hardware];
     B[sdrsa_devices]--&amp;gt;H[network];
     B[sdrsa_devices]--&amp;gt;DT[deeptempest];
-    H[network]--&amp;gt;M[wifi];
+    A--&amp;gt;OS[osint];
+    A--&amp;gt;AN[android];
+    H[network]--&amp;gt;AD[ad];
+    H[network]--&amp;gt;WB[wifi_basic];
+    WB--&amp;gt;WF[wifi_full];
+    I[sdr_light]--&amp;gt;M[wifi];
+    I[sdr_light]--&amp;gt;G4[sdr_gnuradio4];
     I[sdr_light]--&amp;gt;N[sdr_full];
     I[sdr_light]--&amp;gt;I2[sdr_light_intelgpu];
     I[sdr_light]--&amp;gt;I3[sdr_light_nvidiagpu];
@@ -5050,6 +5149,66 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
             
           &lt;/tr&gt;
         
+          &lt;tr&gt;
+            
+              &lt;td&gt;gr-hydrasdr&lt;/td&gt;
+            
+              &lt;td&gt;GNU Radio OOT source block for HydraSDR (PentHertz fork)&lt;/td&gt;
+            
+              &lt;td&gt;GNU Radio hydrasdr source block&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;grhydrasdr_grmod_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;hydrasdr_433&lt;/td&gt;
+            
+              &lt;td&gt;rtl_433-style decoder for HydraSDR receivers&lt;/td&gt;
+            
+              &lt;td&gt;hydrasdr_433&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;hydrasdr433_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;FISSURE&lt;/td&gt;
+            
+              &lt;td&gt;RF and reverse-engineering framework (AInfoSec) in an isolated venv reusing the image SDR stack&lt;/td&gt;
+            
+              &lt;td&gt;fissure&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;❓&lt;/td&gt;
+            
+              &lt;td&gt;fissure_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
       &lt;/tbody&gt;
     
   &lt;/table&gt;
@@ -5062,9 +5221,18 @@ Scanning for IIO contexts failed: Text file busy (26)&lt;/code&gt;&lt;/pre&gt;&l
 Most SDR tools are installed in standard system paths (&lt;code&gt;/usr/bin&lt;/code&gt;, &lt;code&gt;/usr/local/bin&lt;/code&gt;), with specialized tools in:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;/rftools/sdr/&lt;/code&gt; - SDR-specific applications&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/rftools/sdr/oot/&lt;/code&gt; - GNU Radio out-of-tree modules&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;/rftools/analysers/&lt;/code&gt; - Spectrum analyzer software&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;/rftools/generators/&lt;/code&gt; - Signal generator software&lt;/li&gt;
 &lt;/ul&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;div class=&#34;hx:select-none hx:text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;🆕&lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;New in v3.0.0:&lt;/strong&gt; &lt;strong&gt;FISSURE&lt;/strong&gt;, the AInfoSec RF framework, is installed in a dedicated virtual environment created with &lt;code&gt;--system-site-packages&lt;/code&gt; so it reuses the GNU Radio, SoapySDR and driver stack already present in the image instead of pip-installing its own pinned copies over your system Python. Launch it with &lt;code&gt;fissure&lt;/code&gt;. HydraSDR support also lands here, with the &lt;code&gt;gr-hydrasdr&lt;/code&gt; GNU Radio source block and the &lt;code&gt;hydrasdr_433&lt;/code&gt; decoder.&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -6760,6 +6928,137 @@ Most SDR tools are installed in standard system paths (&lt;code&gt;/usr/bin&lt;/
   &lt;/div&gt;
 &lt;/div&gt;
 
+&lt;h3&gt;GNU Radio 4.0 🆕&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;gnu-radio-40-&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#gnu-radio-40-&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;sdr_gnuradio4&lt;/code&gt; image builds &lt;strong&gt;GNU Radio 4.0 (RC2)&lt;/strong&gt; from source &lt;em&gt;alongside&lt;/em&gt; the GNU Radio 3.10 already present in &lt;code&gt;sdr_light&lt;/code&gt;. GR4 is a separate C++23 codebase with its own headers, namespace and prefix, so nothing about your existing 3.10 flowgraphs changes:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_gnuradio4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+
+  &lt;table&gt;
+    
+      &lt;thead&gt;
+        &lt;tr&gt;
+          
+            &lt;th&gt;Tool(s)&lt;/th&gt;
+          
+            &lt;th&gt;Description&lt;/th&gt;
+          
+            &lt;th&gt;Available commands&lt;/th&gt;
+          
+            &lt;th&gt;amd64&lt;/th&gt;
+          
+            &lt;th&gt;aarch64&lt;/th&gt;
+          
+            &lt;th&gt;riscv64&lt;/th&gt;
+          
+            &lt;th&gt;Installation function&lt;/th&gt;
+          
+            &lt;th&gt;Installed by default&lt;/th&gt;
+          
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;GNU Radio 4.0 (RC2)&lt;/td&gt;
+            
+              &lt;td&gt;Next-generation GNU Radio runtime (C&amp;#43;&amp;#43;23) built from source in /opt/gnuradio4 alongside the apt GNU Radio 3.10&lt;/td&gt;
+            
+              &lt;td&gt;GR4 binaries under /opt/gnuradio4/install/bin and /opt/gnuradio4/build/bin (added to PATH by /etc/profile.d/gnuradio4.sh)&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;❌ (not yet)&lt;/td&gt;
+            
+              &lt;td&gt;gnuradio4_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;GNU Radio 4 Python env&lt;/td&gt;
+            
+              &lt;td&gt;Dedicated Python 3.12 virtual environment for GR4&amp;#39;s embedded PythonBlock interpreter&lt;/td&gt;
+            
+              &lt;td&gt;/opt/gnuradio4/venv/bin/python&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;❌ (not yet)&lt;/td&gt;
+            
+              &lt;td&gt;gnuradio4_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;GNU Radio 3.10&lt;/td&gt;
+            
+              &lt;td&gt;The stock GNU Radio inherited from sdr_light - untouched by the GR4 build&lt;/td&gt;
+            
+              &lt;td&gt;gnuradio-companion | gr_modtool | gnuradio-config-info&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;gnuradio_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+      &lt;/tbody&gt;
+    
+  &lt;/table&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;&lt;strong&gt;How GR4 is isolated:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Built into &lt;code&gt;/opt/gnuradio4&lt;/code&gt;, exposed through &lt;code&gt;/etc/profile.d/gnuradio4.sh&lt;/code&gt; (which prepends &lt;code&gt;/opt/gnuradio4/install/bin&lt;/code&gt; and &lt;code&gt;/opt/gnuradio4/build/bin&lt;/code&gt; to &lt;code&gt;PATH&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Ships its own &lt;strong&gt;Python 3.12 virtual environment&lt;/strong&gt; at &lt;code&gt;/opt/gnuradio4/venv&lt;/code&gt; for the embedded &lt;code&gt;PythonBlock&lt;/code&gt; interpreter, so it never touches the system Python (3.14 on Resolute) or GNU Radio 3.10&amp;rsquo;s bindings&lt;/li&gt;
+&lt;li&gt;The apt GNU Radio 3.10 remains the default &lt;code&gt;gnuradio-companion&lt;/code&gt; in the image&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;GNU Radio 4 is a release candidate.&lt;/strong&gt; It is experimental, its install tooling is still maturing upstream, and the build is heavy and template-intensive. Expect API churn. This image is for evaluating GR4, not for production flowgraphs. Not yet available on RISC-V64.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
 &lt;h3&gt;RFID Tools&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;rfid-tools&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#rfid-tools&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;rfid&lt;/code&gt; image focuses on radio-frequency identification analysis and exploitation:&lt;/p&gt;
 
@@ -7377,6 +7676,46 @@ When using RFID tools, you need to ensure that your RFID reader device (typicall
             
           &lt;/tr&gt;
         
+          &lt;tr&gt;
+            
+              &lt;td&gt;Caeruleus&lt;/td&gt;
+            
+              &lt;td&gt;Single-binary BLE assessment workflow (scan GATT enumerate read/write/notify fuzz assess) with JSON/JSONL output&lt;/td&gt;
+            
+              &lt;td&gt;caeruleus&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;caeruleus_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;BlueSploit&lt;/td&gt;
+            
+              &lt;td&gt;Bluetooth exploitation framework&lt;/td&gt;
+            
+              &lt;td&gt;bluesploit&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;bluesploit_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
       &lt;/tbody&gt;
     
   &lt;/table&gt;
@@ -7414,6 +7753,7 @@ Some Bluetooth tools run in isolated Python environments:&lt;/p&gt;
 &lt;li&gt;&lt;strong&gt;Mirage&lt;/strong&gt;: Uses Python 3.10 venv at &lt;code&gt;/opt/mirage-env/&lt;/code&gt;, accessed via wrapper script at &lt;code&gt;/usr/sbin/mirage&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Bluing&lt;/strong&gt;: Uses Python 3.10 venv at &lt;code&gt;/rftools/bluetooth/bluing/&lt;/code&gt;, run with &lt;code&gt;bluing_run&lt;/code&gt; script&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;New in v3.0.0:&lt;/strong&gt; &lt;strong&gt;Caeruleus&lt;/strong&gt;, a single Go binary covering the whole BLE assessment workflow on BlueZ (scan, GATT enumeration, read/write/notify, fuzzing and structured assessment with JSON/JSONL output), and &lt;strong&gt;BlueSploit&lt;/strong&gt;, a Bluetooth exploitation framework. Both sit next to the existing &lt;strong&gt;WhisperPair&lt;/strong&gt; exploit for CVE-2025-36911.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Tool Locations:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;/rftools/bluetooth/&lt;/code&gt; - Main Bluetooth tools directory&lt;/li&gt;
@@ -8037,6 +8377,46 @@ Some Bluetooth tools run in isolated Python environments:&lt;/p&gt;
             
           &lt;/tr&gt;
         
+          &lt;tr&gt;
+            
+              &lt;td&gt;Kismet&lt;/td&gt;
+            
+              &lt;td&gt;Wireless and Bluetooth packet capture sniffing and IDS&lt;/td&gt;
+            
+              &lt;td&gt;kismet | kismet_cap_linux_wifi | kismetdb_dump_devices&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;kismet_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;bettercap&lt;/td&gt;
+            
+              &lt;td&gt;Network and wireless attack framework (Wi-Fi BLE and Ethernet)&lt;/td&gt;
+            
+              &lt;td&gt;bettercap&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;bettercap_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
       &lt;/tbody&gt;
     
   &lt;/table&gt;
@@ -8506,6 +8886,16 @@ RF Swift includes a complete suite of WPA3 vulnerability testing tools:&lt;/p&gt
   &lt;/div&gt;
 &lt;/div&gt;
 
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;div class=&#34;hx:select-none hx:text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;🆕&lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;&lt;strong&gt;OpenBTS and OpenBTS-UMTS on Resolute.&lt;/strong&gt; Both are legacy C++ code bases that GCC 15 (the compiler shipping with Ubuntu 26.04) rejects outright. RF Swift installs them from PentHertz forks on dedicated &lt;code&gt;resolute&lt;/code&gt; branches, &lt;a href=&#34;https://github.com/PentHertz/OpenBTS&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PentHertz/OpenBTS&lt;/a&gt; and &lt;a href=&#34;https://github.com/PentHertz/OpenBTS-UMTS&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PentHertz/OpenBTS-UMTS&lt;/a&gt;, rather than from the dead upstreams.&lt;/p&gt;
+&lt;p&gt;Porting is still in progress: some translation units (notably the OpenBTS-UHD &lt;code&gt;Transceiver&lt;/code&gt; code, which trips a &lt;code&gt;std::complex&lt;/code&gt; ambiguity under GCC 15) may still fail to build. RF Swift records these as build failures instead of aborting the image, so check &lt;code&gt;/var/lib/db/rfswift_build_report.tsv&lt;/code&gt; inside a &lt;code&gt;telecom_2Gto3G&lt;/code&gt; container to see exactly what landed in &lt;em&gt;your&lt;/em&gt; build. YateBTS and the OsmoCom suite are unaffected and remain the recommended 2G/3G path.&lt;/p&gt;
+&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
 &lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
 
@@ -8668,9 +9058,9 @@ Complete LTE stack including:&lt;/p&gt;
         
           &lt;tr&gt;
             
-              &lt;td&gt;srsRAN Project&lt;/td&gt;
+              &lt;td&gt;OCUDU 🆕&lt;/td&gt;
             
-              &lt;td&gt;5G SA gNB implementation&lt;/td&gt;
+              &lt;td&gt;5G SA CU/DU stack - replaces srsRAN Project as the default gNB in RF Swift v3.0.0&lt;/td&gt;
             
               &lt;td&gt;gnb&lt;/td&gt;
             
@@ -8680,7 +9070,7 @@ Complete LTE stack including:&lt;/p&gt;
             
               &lt;td&gt;✅&lt;/td&gt;
             
-              &lt;td&gt;srsran5GSA_soft_install&lt;/td&gt;
+              &lt;td&gt;ocudu_soft_install (also aliased as srsran5GSA_soft_install)&lt;/td&gt;
             
               &lt;td&gt;✅&lt;/td&gt;
             
@@ -8690,7 +9080,7 @@ Complete LTE stack including:&lt;/p&gt;
             
               &lt;td&gt;srsRAN Project (bladeRF)&lt;/td&gt;
             
-              &lt;td&gt;5G SA gNB with bladeRF support&lt;/td&gt;
+              &lt;td&gt;5G SA gNB fork with bladeRF support&lt;/td&gt;
             
               &lt;td&gt;gnb&lt;/td&gt;
             
@@ -8702,7 +9092,7 @@ Complete LTE stack including:&lt;/p&gt;
             
               &lt;td&gt;srsran5GSA_bladerf_soft_install&lt;/td&gt;
             
-              &lt;td&gt;❌ (alternative)&lt;/td&gt;
+              &lt;td&gt;❌ (alternative used by the telecom_5G_bladerf image)&lt;/td&gt;
             
           &lt;/tr&gt;
         
@@ -8849,6 +9239,16 @@ Complete LTE stack including:&lt;/p&gt;
       &lt;/tbody&gt;
     
   &lt;/table&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;div class=&#34;hx:select-none hx:text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;🆕&lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;&lt;strong&gt;5G SA now runs on OCUDU.&lt;/strong&gt; As of v3.0.0, the CU/DU stack installed in the 5G images is &lt;a href=&#34;https://gitlab.com/ocudu/ocudu&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;OCUDU&lt;/a&gt; instead of srsRAN Project. The &lt;code&gt;srsran5GSA_soft_install&lt;/code&gt; function is kept as an alias so existing recipes and scripts keep working, but it now installs OCUDU. It builds into &lt;code&gt;/telecom/5G/ocudu&lt;/code&gt; and still provides the &lt;code&gt;gnb&lt;/code&gt; binary, so your existing configuration files and workflows carry over.&lt;/p&gt;
+&lt;p&gt;srsRAN 4G is unaffected and remains the 4G/5G-NSA stack. See the &lt;a href=&#34;#4g5g-analysis-tools&#34;&gt;4G/5G section&lt;/a&gt; above.&lt;/p&gt;
+&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 
 &lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200&#34;&gt;
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
@@ -9037,8 +9437,8 @@ Open5GS requires MongoDB for subscriber database. The container includes:&lt;/p&
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;h3&gt;Hardware Reverse Engineering&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;hardware-reverse-engineering&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#hardware-reverse-engineering&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;reversing&lt;/code&gt; image provides tools for firmware analysis and hardware reverse engineering:&lt;/p&gt;
+&lt;h3&gt;Reverse Engineering &amp;amp; SAST&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;reverse-engineering--sast&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#reverse-engineering--sast&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;reversing&lt;/code&gt; image provides tools for firmware analysis, hardware reverse engineering and static application security testing:&lt;/p&gt;
 
 
 
@@ -9571,9 +9971,57 @@ Open5GS requires MongoDB for subscriber database. The container includes:&lt;/p&
             
           &lt;/tr&gt;
         
+          &lt;tr&gt;
+            
+              &lt;td&gt;Trivy&lt;/td&gt;
+            
+              &lt;td&gt;Vulnerability misconfiguration secret and SBOM scanner for images filesystems and repos&lt;/td&gt;
+            
+              &lt;td&gt;trivy&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;❓ (no upstream binary)&lt;/td&gt;
+            
+              &lt;td&gt;trivy_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Sighthound&lt;/td&gt;
+            
+              &lt;td&gt;Tree-sitter based static vulnerability scanner with source-to-sink taint flow (Python JS/TS Java PHP C# Go Ruby; text/JSON/CSV/SARIF output)&lt;/td&gt;
+            
+              &lt;td&gt;sighthound&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;sighthound_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
       &lt;/tbody&gt;
     
   &lt;/table&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;div class=&#34;hx:select-none hx:text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;🆕&lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Static analysis alongside the RE tooling.&lt;/strong&gt; Beyond the disassemblers and unpackers, the image carries a full SAST/fuzzing set you can point at extracted firmware and source trees: &lt;strong&gt;Semgrep&lt;/strong&gt;, &lt;strong&gt;Joern&lt;/strong&gt;, &lt;strong&gt;cppcheck&lt;/strong&gt;, the &lt;strong&gt;Clang static analyzer&lt;/strong&gt;, &lt;strong&gt;AFL&lt;/strong&gt; and &lt;strong&gt;honggfuzz&lt;/strong&gt;. Two of those are new in v3.0.0: &lt;strong&gt;Trivy&lt;/strong&gt;, which scans images, filesystems and repos for vulnerabilities, misconfigurations, secrets and SBOMs, and &lt;strong&gt;Sighthound&lt;/strong&gt;, a tree-sitter based scanner that follows source-to-sink taint flows through Python, JS/TS, Java, PHP, C#, Go and Ruby and reports in text, JSON, CSV or SARIF.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 
 &lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200&#34;&gt;
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
@@ -10576,6 +11024,286 @@ Open5GS requires MongoDB for subscriber database. The container includes:&lt;/p&
             
           &lt;/tr&gt;
         
+          &lt;tr&gt;
+            
+              &lt;td&gt;SecLists&lt;/td&gt;
+            
+              &lt;td&gt;Collection of wordlists for fuzzing discovery and password attacks&lt;/td&gt;
+            
+              &lt;td&gt;Wordlists in /opt/fuzzing/SecLists&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;seclist_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;whosthere&lt;/td&gt;
+            
+              &lt;td&gt;Identify hosts and services on the local network&lt;/td&gt;
+            
+              &lt;td&gt;whosthere&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;whosthere_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Ettercap&lt;/td&gt;
+            
+              &lt;td&gt;Man-in-the-middle attack suite (text-only build)&lt;/td&gt;
+            
+              &lt;td&gt;ettercap&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;ettercap_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;ISC DHCP server&lt;/td&gt;
+            
+              &lt;td&gt;Rogue/lab DHCP server for network attack setups&lt;/td&gt;
+            
+              &lt;td&gt;dhcpd&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;isc_dhcp_server_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;lighttpd&lt;/td&gt;
+            
+              &lt;td&gt;Lightweight web server for hosting payloads and captive portals&lt;/td&gt;
+            
+              &lt;td&gt;lighttpd&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;lighttpd_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;crunch&lt;/td&gt;
+            
+              &lt;td&gt;Wordlist generator&lt;/td&gt;
+            
+              &lt;td&gt;crunch&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;crunch_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;NetWatch&lt;/td&gt;
+            
+              &lt;td&gt;Terminal UI network monitor&lt;/td&gt;
+            
+              &lt;td&gt;netwatch&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;netwatch_soft_install_fromsource&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Sniffnet&lt;/td&gt;
+            
+              &lt;td&gt;Cross-platform network traffic monitor with a graphical UI&lt;/td&gt;
+            
+              &lt;td&gt;sniffnet&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;sniffnet_soft_install_fromsource&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;betterleaks&lt;/td&gt;
+            
+              &lt;td&gt;Search engine and collection tooling for leaked credential datasets&lt;/td&gt;
+            
+              &lt;td&gt;betterleaks&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;betterleaks_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;SSRFmap&lt;/td&gt;
+            
+              &lt;td&gt;Automatic SSRF fuzzer and exploitation tool&lt;/td&gt;
+            
+              &lt;td&gt;ssrfmap&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;ssrfmap_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;GraphQLmap&lt;/td&gt;
+            
+              &lt;td&gt;Scripting engine to interact with and attack GraphQL endpoints&lt;/td&gt;
+            
+              &lt;td&gt;graphqlmap&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;graphqlmap_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;John the Ripper (jumbo)&lt;/td&gt;
+            
+              &lt;td&gt;Password cracker with the community jumbo patch set&lt;/td&gt;
+            
+              &lt;td&gt;JohnJumbo&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;johnjumbo_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Hetty&lt;/td&gt;
+            
+              &lt;td&gt;HTTP toolkit for security research (open-source Burp alternative)&lt;/td&gt;
+            
+              &lt;td&gt;hetty&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;hetty_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;HExHTTP&lt;/td&gt;
+            
+              &lt;td&gt;HTTP header analysis and web cache poisoning testing&lt;/td&gt;
+            
+              &lt;td&gt;hexhttp&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;hexhttp_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
       &lt;/tbody&gt;
     
   &lt;/table&gt;
@@ -10592,6 +11320,1105 @@ Open5GS requires MongoDB for subscriber database. The container includes:&lt;/p&
 &lt;li&gt;&lt;strong&gt;Caido&lt;/strong&gt;: Modern web security testing platform&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Burp Suite Community&lt;/strong&gt;: Multi-architecture support (JAR fallback for non-x86_64)&lt;/li&gt;
 &lt;/ul&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Active Directory 🆕&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;active-directory-&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#active-directory-&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;ad&lt;/code&gt; image builds on &lt;code&gt;network&lt;/code&gt; and packs the tooling needed for Windows domain engagements, the part of an assessment that starts once you are past the radio layer:&lt;/p&gt;
+
+
+
+
+
+
+
+  &lt;table&gt;
+    
+      &lt;thead&gt;
+        &lt;tr&gt;
+          
+            &lt;th&gt;Tool(s)&lt;/th&gt;
+          
+            &lt;th&gt;Description&lt;/th&gt;
+          
+            &lt;th&gt;Available commands&lt;/th&gt;
+          
+            &lt;th&gt;amd64&lt;/th&gt;
+          
+            &lt;th&gt;aarch64&lt;/th&gt;
+          
+            &lt;th&gt;riscv64&lt;/th&gt;
+          
+            &lt;th&gt;Installation function&lt;/th&gt;
+          
+            &lt;th&gt;Installed by default&lt;/th&gt;
+          
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;AD apt toolchain&lt;/td&gt;
+            
+              &lt;td&gt;Base AD client tooling (SMB LDAP Kerberos)&lt;/td&gt;
+            
+              &lt;td&gt;smbclient | ldapsearch | kinit | klist | samdump2 | onesixtyone | nbtscan | dig | nslookup&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;ad_apt_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Impacket&lt;/td&gt;
+            
+              &lt;td&gt;Python classes for Windows network protocols&lt;/td&gt;
+            
+              &lt;td&gt;psexec.py | smbexec.py | wmiexec.py | secretsdump.py | GetNPUsers.py | GetUserSPNs.py | ntlmrelayx.py&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;impacket_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Responder&lt;/td&gt;
+            
+              &lt;td&gt;LLMNR NBT-NS and MDNS poisoner&lt;/td&gt;
+            
+              &lt;td&gt;Responder.py in /opt/network/Responder&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;responder_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;NetExec&lt;/td&gt;
+            
+              &lt;td&gt;Network protocol exploitation and AD enumeration (CrackMapExec successor)&lt;/td&gt;
+            
+              &lt;td&gt;netexec | nxc&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;netexec_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;DonPAPI&lt;/td&gt;
+            
+              &lt;td&gt;Remote DPAPI secret dumping&lt;/td&gt;
+            
+              &lt;td&gt;DonPAPI&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;donpapi_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;DonPwner&lt;/td&gt;
+            
+              &lt;td&gt;AD exploitation automation on top of DonPAPI&lt;/td&gt;
+            
+              &lt;td&gt;Python scripts in /opt/network/DonPwner&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;donpwner_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;ldapdomaindump&lt;/td&gt;
+            
+              &lt;td&gt;LDAP-based domain information dumper&lt;/td&gt;
+            
+              &lt;td&gt;ldapdomaindump&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;ldapdomaindump_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;BloodHound.py&lt;/td&gt;
+            
+              &lt;td&gt;Python ingestor for BloodHound AD graphs&lt;/td&gt;
+            
+              &lt;td&gt;bloodhound-python&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;bloodhound_py_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Certipy&lt;/td&gt;
+            
+              &lt;td&gt;AD Certificate Services (ADCS) enumeration and abuse&lt;/td&gt;
+            
+              &lt;td&gt;certipy&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;certipy_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;bloodyAD&lt;/td&gt;
+            
+              &lt;td&gt;AD privilege escalation framework&lt;/td&gt;
+            
+              &lt;td&gt;bloodyAD&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;bloodyad_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;certsync&lt;/td&gt;
+            
+              &lt;td&gt;Dump NTDS hashes through ADCS certificates&lt;/td&gt;
+            
+              &lt;td&gt;certsync&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;certsync_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;mitm6&lt;/td&gt;
+            
+              &lt;td&gt;IPv6 DNS takeover for NTLM relaying&lt;/td&gt;
+            
+              &lt;td&gt;mitm6&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;mitm6_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;lsassy&lt;/td&gt;
+            
+              &lt;td&gt;Remote LSASS credential extraction&lt;/td&gt;
+            
+              &lt;td&gt;lsassy&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;lsassy_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;sprayhound&lt;/td&gt;
+            
+              &lt;td&gt;AD password spraying with BloodHound integration&lt;/td&gt;
+            
+              &lt;td&gt;sprayhound&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;sprayhound_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;kerbrute&lt;/td&gt;
+            
+              &lt;td&gt;Kerberos user enumeration and password spraying&lt;/td&gt;
+            
+              &lt;td&gt;kerbrute&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;kerbrute_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;SharpLAPS&lt;/td&gt;
+            
+              &lt;td&gt;Retrieve LAPS passwords from LDAP (staged as source for the target)&lt;/td&gt;
+            
+              &lt;td&gt;SharpLAPS.exe (if a prebuilt binary ships upstream)&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;sharplaps_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅ (staged in /opt/ad)&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;pyGoldenGMSA&lt;/td&gt;
+            
+              &lt;td&gt;Golden gMSA attack against Group Managed Service Accounts&lt;/td&gt;
+            
+              &lt;td&gt;pygoldengmsa&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;install_pyGoldenGMSA&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;skewrun&lt;/td&gt;
+            
+              &lt;td&gt;Wrap a process with a DC-synchronised clock to survive KRB_AP_ERR_SKEW&lt;/td&gt;
+            
+              &lt;td&gt;skewrun&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅ (built with cargo)&lt;/td&gt;
+            
+              &lt;td&gt;skewrun_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+      &lt;/tbody&gt;
+    
+  &lt;/table&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;&lt;strong&gt;Tool Locations:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/opt/ad/&lt;/code&gt; - Staged AD tooling (SharpLAPS and other target-side payloads)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/opt/network/&lt;/code&gt; - Shared network tooling inherited from the &lt;code&gt;network&lt;/code&gt; image (Responder, DonPAPI, DonPwner, pyGoldenGMSA)&lt;/li&gt;
+&lt;li&gt;pipx-installed tools are symlinked into &lt;code&gt;/usr/sbin/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Kerberos clock skew:&lt;/strong&gt; domain controllers reject tickets when your clock drifts more than a few minutes, and inside a container you usually cannot (and should not) change the system clock. &lt;code&gt;skewrun&lt;/code&gt; resolves the DC&amp;rsquo;s time over AD protocols and fakes it via &lt;code&gt;LD_PRELOAD&lt;/code&gt;/libfaketime &lt;strong&gt;for the wrapped process only&lt;/strong&gt;, so Impacket, NetExec and friends survive &lt;code&gt;KRB_AP_ERR_SKEW&lt;/code&gt; without root and without touching the host clock. Run &lt;code&gt;skewrun --help&lt;/code&gt; for the exact invocation.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;SharpLAPS&lt;/strong&gt; is a C#/.NET tool meant to run against Windows targets. RF Swift stages the repository under &lt;code&gt;/opt/ad/SharpLAPS&lt;/code&gt; rather than compiling it on Linux. Build it on or against your Windows target.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Mobile / Android 🆕&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;mobile--android-&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#mobile--android-&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;android&lt;/code&gt; image covers Android application and device assessment, from pulling an APK off a handset to running it through a full static analysis pipeline:&lt;/p&gt;
+
+
+
+
+
+
+
+  &lt;table&gt;
+    
+      &lt;thead&gt;
+        &lt;tr&gt;
+          
+            &lt;th&gt;Tool(s)&lt;/th&gt;
+          
+            &lt;th&gt;Description&lt;/th&gt;
+          
+            &lt;th&gt;Available commands&lt;/th&gt;
+          
+            &lt;th&gt;amd64&lt;/th&gt;
+          
+            &lt;th&gt;aarch64&lt;/th&gt;
+          
+            &lt;th&gt;riscv64&lt;/th&gt;
+          
+            &lt;th&gt;Installation function&lt;/th&gt;
+          
+            &lt;th&gt;Installed by default&lt;/th&gt;
+          
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Android platform tools&lt;/td&gt;
+            
+              &lt;td&gt;Device communication flashing and screen mirroring&lt;/td&gt;
+            
+              &lt;td&gt;adb | fastboot | scrcpy&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;mobile_apt_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Apktool&lt;/td&gt;
+            
+              &lt;td&gt;APK decompiler and rebuilder&lt;/td&gt;
+            
+              &lt;td&gt;apktool&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;mobile_apt_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;apksigner / zipalign&lt;/td&gt;
+            
+              &lt;td&gt;APK signing and alignment&lt;/td&gt;
+            
+              &lt;td&gt;apksigner | zipalign&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;mobile_apt_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;smali / baksmali&lt;/td&gt;
+            
+              &lt;td&gt;Dalvik bytecode assembler and disassembler&lt;/td&gt;
+            
+              &lt;td&gt;smali | baksmali | dexdump&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;mobile_apt_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;dex2jar&lt;/td&gt;
+            
+              &lt;td&gt;Convert Android DEX to Java JAR for decompilation&lt;/td&gt;
+            
+              &lt;td&gt;d2j-dex2jar | d2j-jar2dex | d2j-apk-sign (in /mobile/dex-tools-v2.4)&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;dex2jar_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Frida&lt;/td&gt;
+            
+              &lt;td&gt;Dynamic instrumentation toolkit&lt;/td&gt;
+            
+              &lt;td&gt;frida | frida-ps | frida-trace | frida-discover&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;❓&lt;/td&gt;
+            
+              &lt;td&gt;frida_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;objection&lt;/td&gt;
+            
+              &lt;td&gt;Runtime mobile exploration built on Frida&lt;/td&gt;
+            
+              &lt;td&gt;objection&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;❓&lt;/td&gt;
+            
+              &lt;td&gt;objection_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;androguard&lt;/td&gt;
+            
+              &lt;td&gt;Android APK static analysis framework&lt;/td&gt;
+            
+              &lt;td&gt;androguard&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;androguard_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;drozer&lt;/td&gt;
+            
+              &lt;td&gt;Android security assessment framework (ReversecLabs)&lt;/td&gt;
+            
+              &lt;td&gt;drozer&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;drozer_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;MobSF&lt;/td&gt;
+            
+              &lt;td&gt;Mobile Security Framework - automated static and dynamic analysis&lt;/td&gt;
+            
+              &lt;td&gt;mobsf (web UI on port 8000)&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;❓&lt;/td&gt;
+            
+              &lt;td&gt;mobsf_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+      &lt;/tbody&gt;
+    
+  &lt;/table&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;&lt;strong&gt;USB device access:&lt;/strong&gt; &lt;code&gt;adb&lt;/code&gt; and &lt;code&gt;fastboot&lt;/code&gt; need the handset bound into the container. Pass the device (or the whole USB bus) at creation time:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i android -n mobile_lab -s /dev/bus/usb:/dev/bus/usb&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;On macOS, use &lt;code&gt;rfswift macusb&lt;/code&gt; to attach the device through the Lima VM first.&lt;/p&gt;
+&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;&lt;strong&gt;Tool Locations and Notes:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/mobile/&lt;/code&gt; - dex2jar (&lt;code&gt;/mobile/dex-tools-v2.4&lt;/code&gt;) and the MobSF checkout&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MobSF&lt;/strong&gt; only supports Python 3.12-3.13, so RF Swift provisions a dedicated interpreter with &lt;code&gt;uv&lt;/code&gt; at &lt;code&gt;/mobile/.mobsf-python&lt;/code&gt; and drives MobSF through it. Start it with &lt;code&gt;mobsf&lt;/code&gt; and browse to &lt;code&gt;http://localhost:8000&lt;/code&gt; (expose the port with &lt;code&gt;-p 8000:8000&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PDF report export&lt;/strong&gt; in MobSF relies on &lt;code&gt;wkhtmltopdf&lt;/code&gt;, which Ubuntu removed. The upstream static build is installed best-effort on amd64/arm64; MobSF runs fine without it&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;OSINT 🆕&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;osint-&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#osint-&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The &lt;code&gt;osint&lt;/code&gt; image collects open-source intelligence and reconnaissance tooling on top of &lt;code&gt;corebuild&lt;/code&gt;:&lt;/p&gt;
+
+
+
+
+
+
+
+  &lt;table&gt;
+    
+      &lt;thead&gt;
+        &lt;tr&gt;
+          
+            &lt;th&gt;Tool(s)&lt;/th&gt;
+          
+            &lt;th&gt;Description&lt;/th&gt;
+          
+            &lt;th&gt;Available commands&lt;/th&gt;
+          
+            &lt;th&gt;amd64&lt;/th&gt;
+          
+            &lt;th&gt;aarch64&lt;/th&gt;
+          
+            &lt;th&gt;riscv64&lt;/th&gt;
+          
+            &lt;th&gt;Installation function&lt;/th&gt;
+          
+            &lt;th&gt;Installed by default&lt;/th&gt;
+          
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;OSINT apt toolchain&lt;/td&gt;
+            
+              &lt;td&gt;Metadata DNS and WHOIS utilities&lt;/td&gt;
+            
+              &lt;td&gt;exiftool | exiftran | dnsenum | tor | whois | dig | nslookup&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_apt_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;theHarvester&lt;/td&gt;
+            
+              &lt;td&gt;E-mail subdomain and name harvesting from public sources&lt;/td&gt;
+            
+              &lt;td&gt;theHarvester&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_pipx_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Sherlock&lt;/td&gt;
+            
+              &lt;td&gt;Hunt usernames across social networks&lt;/td&gt;
+            
+              &lt;td&gt;sherlock&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_pipx_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;maigret&lt;/td&gt;
+            
+              &lt;td&gt;Profile collection from thousands of sites by username&lt;/td&gt;
+            
+              &lt;td&gt;maigret&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_pipx_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;holehe&lt;/td&gt;
+            
+              &lt;td&gt;Check which sites an e-mail address is registered on&lt;/td&gt;
+            
+              &lt;td&gt;holehe&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_pipx_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;Sublist3r&lt;/td&gt;
+            
+              &lt;td&gt;Subdomain enumeration via search engines&lt;/td&gt;
+            
+              &lt;td&gt;sublist3r&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_pipx_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;h8mail&lt;/td&gt;
+            
+              &lt;td&gt;E-mail breach and password hunting&lt;/td&gt;
+            
+              &lt;td&gt;h8mail&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_pipx_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;GHunt&lt;/td&gt;
+            
+              &lt;td&gt;Google account investigation&lt;/td&gt;
+            
+              &lt;td&gt;ghunt&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_pipx_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;instaloader&lt;/td&gt;
+            
+              &lt;td&gt;Instagram profile and media collection&lt;/td&gt;
+            
+              &lt;td&gt;instaloader&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_pipx_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;toutatis&lt;/td&gt;
+            
+              &lt;td&gt;Extract information from Instagram accounts&lt;/td&gt;
+            
+              &lt;td&gt;toutatis&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_pipx_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;censys&lt;/td&gt;
+            
+              &lt;td&gt;Censys search CLI for host and certificate data&lt;/td&gt;
+            
+              &lt;td&gt;censys&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_pipx_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;subfinder&lt;/td&gt;
+            
+              &lt;td&gt;Passive subdomain discovery (ProjectDiscovery)&lt;/td&gt;
+            
+              &lt;td&gt;subfinder&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_go_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;assetfinder&lt;/td&gt;
+            
+              &lt;td&gt;Find domains and subdomains related to a target&lt;/td&gt;
+            
+              &lt;td&gt;assetfinder&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_go_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;waybackurls&lt;/td&gt;
+            
+              &lt;td&gt;Fetch known URLs from the Wayback Machine&lt;/td&gt;
+            
+              &lt;td&gt;waybackurls&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;osint_go_tools_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;SpiderFoot&lt;/td&gt;
+            
+              &lt;td&gt;Automated OSINT collection and correlation platform&lt;/td&gt;
+            
+              &lt;td&gt;spiderfoot (web UI)&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;spiderfoot_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;recon-ng&lt;/td&gt;
+            
+              &lt;td&gt;Modular web reconnaissance framework&lt;/td&gt;
+            
+              &lt;td&gt;recon-ng&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;reconng_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;FinalRecon&lt;/td&gt;
+            
+              &lt;td&gt;All-in-one web reconnaissance tool&lt;/td&gt;
+            
+              &lt;td&gt;finalrecon&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;finalrecon_soft_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+      &lt;/tbody&gt;
+    
+  &lt;/table&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;&lt;strong&gt;Tool Locations:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/opt/osint/&lt;/code&gt; - SpiderFoot, recon-ng and FinalRecon, each in its own Python virtual environment with a wrapper script in &lt;code&gt;/usr/local/bin&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;pipx-installed tools are symlinked into &lt;code&gt;/usr/sbin/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Go tools (&lt;code&gt;subfinder&lt;/code&gt;, &lt;code&gt;assetfinder&lt;/code&gt;, &lt;code&gt;waybackurls&lt;/code&gt;) land in &lt;code&gt;/usr/local/bin&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;API keys:&lt;/strong&gt; many OSINT tools (Censys, GHunt, SpiderFoot modules, subfinder sources) need credentials to return useful results. Configure them inside the container and commit the result with &lt;code&gt;rfswift commit&lt;/code&gt;, or bind a configuration directory from the host so your keys survive container recreation.&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -11069,6 +12896,66 @@ Open5GS requires MongoDB for subscriber database. The container includes:&lt;/p&
             
           &lt;/tr&gt;
         
+          &lt;tr&gt;
+            
+              &lt;td&gt;findus&lt;/td&gt;
+            
+              &lt;td&gt;Python module driving the PicoGlitcher fault-injection board&lt;/td&gt;
+            
+              &lt;td&gt;Python findus module&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;pythonfindus_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;rd6006&lt;/td&gt;
+            
+              &lt;td&gt;Python module for RD6006 programmable power supplies&lt;/td&gt;
+            
+              &lt;td&gt;Python rd6006 module&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;pythonrd6006_install&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
+          &lt;tr&gt;
+            
+              &lt;td&gt;SLogic PulseView&lt;/td&gt;
+            
+              &lt;td&gt;Sipeed SLogic build of PulseView/sigrok isolated in /opt/slogic&lt;/td&gt;
+            
+              &lt;td&gt;/opt/slogic/bin/pulseview&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+              &lt;td&gt;slogic_pulseview_install_fromsources&lt;/td&gt;
+            
+              &lt;td&gt;✅&lt;/td&gt;
+            
+          &lt;/tr&gt;
+        
       &lt;/tbody&gt;
     
   &lt;/table&gt;
@@ -11128,6 +13015,12 @@ Open5GS requires MongoDB for subscriber database. The container includes:&lt;/p&
 &lt;/li&gt;
 &lt;li&gt;&lt;code&gt;/security/&lt;/code&gt; - Security testing tools (Caido, etc.)&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;/opt/network/&lt;/code&gt; - Network security tools&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/opt/ad/&lt;/code&gt; - Active Directory tooling (&lt;code&gt;ad&lt;/code&gt; image) 🆕&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/opt/osint/&lt;/code&gt; - OSINT frameworks in their own venvs (&lt;code&gt;osint&lt;/code&gt; image) 🆕&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/mobile/&lt;/code&gt; - Android and mobile tooling (&lt;code&gt;android&lt;/code&gt; image) 🆕&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/opt/gnuradio4/&lt;/code&gt; - GNU Radio 4.0 tree and its Python venv (&lt;code&gt;sdr_gnuradio4&lt;/code&gt; image) 🆕&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/opt/fuzzing/&lt;/code&gt; - Wordlists and fuzzing resources (SecLists)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/nettools/&lt;/code&gt; - Network monitoring tools built from source&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;/opt/crack/&lt;/code&gt; - Password cracking tools&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;/sast/&lt;/code&gt; - Static analysis security testing&lt;/li&gt;
 &lt;/ul&gt;
@@ -11175,13 +13068,35 @@ Open5GS requires MongoDB for subscriber database. The container includes:&lt;/p&
 &lt;/div&gt;
 &lt;p&gt;Common manually-installed tools:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;kismet_soft_install&lt;/code&gt; - Kismet wireless sniffer&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;bettercap_soft_install&lt;/code&gt; - Network attack framework&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;mdk3_soft_install&lt;/code&gt; - WiFi DoS testing&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;wifipumpkin3_soft_install&lt;/code&gt; - Rogue AP framework&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;install_soapy_modules&lt;/code&gt; - Additional SoapySDR device support&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;pocketvna_sa_device&lt;/code&gt; - PocketVNA software (x86_64 only)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;srsran5GSA_bladerf_soft_install&lt;/code&gt; - 5G SA gNB fork with bladeRF support&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;To find out what is available in a given image, check the &lt;strong&gt;Installation function&lt;/strong&gt; column of the tables above. Every entry marked ❌ can be installed this way.&lt;/p&gt;
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;p&gt;&lt;strong&gt;Check what actually built.&lt;/strong&gt; RF Swift images record install failures instead of aborting the whole build, so a tool listed as installed by default may still be missing if its build broke on your architecture. Every image carries its build report at &lt;code&gt;/var/lib/db/rfswift_build_report.tsv&lt;/code&gt;. Inspect it from inside a running container:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat /var/lib/db/rfswift_build_report.tsv&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;An empty or missing file means nothing failed. Failures are recorded as &lt;code&gt;CATEGORY / STAGE / ITEM / DETAIL&lt;/code&gt;, so you can see exactly which tool broke and why, then reinstall it manually with &lt;code&gt;rfswift install&lt;/code&gt; once the upstream issue is fixed.&lt;/p&gt;
+&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
 &lt;h3&gt;Tool Documentation&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;tool-documentation&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#tool-documentation&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Most tools include built-in help available through the &lt;code&gt;-h&lt;/code&gt; or &lt;code&gt;--help&lt;/code&gt; flags:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
@@ -11342,7 +13257,7 @@ Open5GS requires MongoDB for subscriber database. The container includes:&lt;/p&
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;[general]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;na&#34;&gt;imagename&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;myrfswift:latest&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;na&#34;&gt;repotag&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;penthertz/rfswift&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;na&#34;&gt;repotag&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;penthertz/rfswift_resolute&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;[container]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;na&#34;&gt;shell&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;/bin/zsh&lt;/span&gt;
@@ -11397,7 +13312,7 @@ Open5GS requires MongoDB for subscriber database. The container includes:&lt;/p&
       &lt;tr&gt;
           &lt;td&gt;&lt;code&gt;repotag&lt;/code&gt;&lt;/td&gt;
           &lt;td&gt;Default repository for RF Swift images&lt;/td&gt;
-          &lt;td&gt;&lt;code&gt;penthertz/rfswift&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;penthertz/rfswift_resolute&lt;/code&gt;&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -11405,7 +13320,7 @@ Open5GS requires MongoDB for subscriber database. The container includes:&lt;/p&
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
 
   &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
-    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;RF Swift images by default are built in Jammy version of Ubuntu, but are available in Beta version with Noble build. If you want to try Ubuntu Noble versions, please change repotag to &lt;code&gt;penthertz/rfswift_noble&lt;/code&gt;.&lt;/div&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;Since v3.0.0 &amp;ldquo;Resonance&amp;rdquo;, official RF Swift images are built on &lt;strong&gt;Ubuntu 26.04 &amp;ldquo;Resolute&amp;rdquo;&lt;/strong&gt; and published under &lt;code&gt;penthertz/rfswift_resolute&lt;/code&gt;, which is the default &lt;code&gt;repotag&lt;/code&gt;. The previous Ubuntu 24.04 &amp;ldquo;Noble&amp;rdquo; images are still available. Set &lt;code&gt;repotag = penthertz/rfswift_noble&lt;/code&gt; if you need to fall back to them.&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -11564,8 +13479,7 @@ Open5GS requires MongoDB for subscriber database. The container includes:&lt;/p&
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;h4&gt;Changing repository&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;changing-repository&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#changing-repository&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;RF Swift Ubuntu Noble (version 24.04) images are in the way, and you can also test them using the &lt;code&gt;penthertz/rfswift_noble:&amp;lt;tag&amp;gt;&lt;/code&gt; prefix.
-In case you want to use Noble images with a short tag name, modify you RF Swift profile &lt;code&gt;config.ini&lt;/code&gt; file as follows:&lt;/p&gt;
+    &lt;a href=&#34;#changing-repository&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The &lt;code&gt;repotag&lt;/code&gt; value is the repository RF Swift prepends to short image tags, so &lt;code&gt;rfswift run -i sdr_full&lt;/code&gt; resolves to &lt;code&gt;penthertz/rfswift_resolute:sdr_full&lt;/code&gt; by default. You can point it at something else, such as the legacy Noble images, a mirror, or your own registry, by editing your &lt;code&gt;config.ini&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
 &lt;div&gt;&lt;pre&gt;&lt;code&gt;[general]
@@ -11583,7 +13497,7 @@ repotag = penthertz/rfswift_noble
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;h2&gt;Container Profiles&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;container-profiles&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#container-profiles&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In addition to the global &lt;code&gt;config.ini&lt;/code&gt;, RF Swift supports &lt;strong&gt;profiles&lt;/strong&gt; — YAML presets that bundle image, network mode, features, device mappings, capabilities, cgroup rules, and port bindings into a single named preset.&lt;/p&gt;
+    &lt;a href=&#34;#container-profiles&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In addition to the global &lt;code&gt;config.ini&lt;/code&gt;, RF Swift supports &lt;strong&gt;profiles&lt;/strong&gt;: YAML presets that bundle image, network mode, features, device mappings, capabilities, cgroup rules, and port bindings into a single named preset.&lt;/p&gt;
 &lt;h3&gt;Profile Storage&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;profile-storage&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#profile-storage&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Profiles are stored as individual &lt;code&gt;.yaml&lt;/code&gt; files in a platform-specific directory:&lt;/p&gt;
 &lt;div class=&#34;hextra-scrollbar hx:overflow-x-auto hx:overflow-y-hidden hx:overscroll-x-contain&#34;&gt;
@@ -11658,7 +13572,7 @@ repotag = penthertz/rfswift_noble
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run --profile sdr-full -n my_sdr
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# CLI flags override profile values&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run --profile wifi -n my_wifi -i penthertz/rfswift_noble:sdr_full&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run --profile wifi -n my_wifi -i penthertz/rfswift_resolute:sdr_full&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -11732,19 +13646,19 @@ Global Flags:
     &lt;a href=&#34;#examples&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Run with custom image and name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_full -n my_sdr_container
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_full -n my_sdr_container
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Share a host directory with the container&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_full -b /home/user/captures:/data/captures
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_full -b /home/user/captures:/data/captures
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Add network capabilities for Wi-Fi tools&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:wifi -a NET_ADMIN
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:wifi -a NET_ADMIN
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Use bridge network with port mapping&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_full -t bridge -w 8080:80/tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_full -t bridge -w 8080:80/tcp
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Specify a custom shell&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_full -e /bin/bash&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_full -e /bin/bash&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -11932,7 +13846,7 @@ Global Flags:
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
 
   &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
-    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;Using quiet mode doesn&amp;rsquo;t affect RF Swift&amp;rsquo;s functionality—it only disables the automatic update checks. Consider periodically checking for updates manually with &lt;code&gt;rfswift update&lt;/code&gt; to ensure you have the latest features and security improvements.&lt;/div&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;Using quiet mode doesn&amp;rsquo;t affect RF Swift&amp;rsquo;s functionality. It only disables the automatic update checks. Consider periodically checking for updates manually with &lt;code&gt;rfswift update&lt;/code&gt; to ensure you have the latest features and security improvements.&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -11948,7 +13862,7 @@ Global Flags:
     &lt;a href=&#34;#common-configuration-scenarios&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;SDR Development Environment&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;sdr-development-environment&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#sdr-development-environment&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_dev &lt;span class=&#34;se&#34;&gt;\
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_dev &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -b ~/sdr_projects:/projects &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -s /dev/ttyUSB0:/dev/ttyUSB0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
@@ -11963,7 +13877,7 @@ Global Flags:
 &lt;h3&gt;Wi-Fi Security Testing&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;wi-fi-security-testing&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#wi-fi-security-testing&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:wifi -n wifi_testing &lt;span class=&#34;se&#34;&gt;\
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:wifi -n wifi_testing &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -a NET_ADMIN,NET_RAW &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -b ~/wifi_captures:/captures&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
@@ -11979,7 +13893,7 @@ Global Flags:
     &lt;a href=&#34;#offline-device-analysis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create a container with no network&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:reversing -n firmware_analysis &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:reversing -n firmware_analysis &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -t none &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -b ~/firmware:/firmware&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
@@ -12012,7 +13926,7 @@ Global Flags:
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
 
   &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
-    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Automatic handling&lt;/strong&gt;: RF Swift now automatically detects your audio system (PulseAudio or PipeWire), starts it if needed, and configures the TCP module — all in a single command. On macOS with Lima, it also automatically configures network ACLs so containers inside the VM can reach the host audio server. Simply run &lt;code&gt;rfswift host audio enable&lt;/code&gt; and everything is handled for you.&lt;/div&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Automatic handling&lt;/strong&gt;: RF Swift now automatically detects your audio system (PulseAudio or PipeWire), starts it if needed, and configures the TCP module, all in a single command. On macOS with Lima, it also automatically configures network ACLs so containers inside the VM can reach the host audio server. Simply run &lt;code&gt;rfswift host audio enable&lt;/code&gt; and everything is handled for you.&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -12426,7 +14340,7 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
         
         &lt;h1&gt;Sharing Files and Devices&lt;/h1&gt;&lt;p&gt;When conducting RF assessments with RF Swift, you&amp;rsquo;ll need to exchange files between your host system and containers, as well as connect specialized hardware devices. This guide covers the automatic workspace, manual file sharing, and device binding techniques.&lt;/p&gt;
 &lt;h2&gt;Automatic Workspace&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;automatic-workspace&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#automatic-workspace&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Every RF Swift container gets a &lt;strong&gt;shared workspace directory&lt;/strong&gt; automatically — no configuration needed.&lt;/p&gt;
+    &lt;a href=&#34;#automatic-workspace&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Every RF Swift container gets a &lt;strong&gt;shared workspace directory&lt;/strong&gt; automatically, with no configuration needed.&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
 &lt;div&gt;&lt;pre&gt;&lt;code&gt;~/rfswift-workspace/
@@ -12470,8 +14384,8 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 &lt;p&gt;&lt;strong&gt;No &lt;code&gt;--bind&lt;/code&gt; flag needed for the common case.&lt;/strong&gt; Just save files to &lt;code&gt;/workspace&lt;/code&gt; inside the container and they&amp;rsquo;re immediately available on your host.&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create a container — workspace is automatic&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_full -n capture_session
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create a container, the workspace is automatic&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_full -n capture_session
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Inside the container, /workspace is your shared folder&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /workspace
@@ -12569,7 +14483,7 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 &lt;h3&gt;Basic Directory Sharing&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;basic-directory-sharing&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#basic-directory-sharing&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:telecom -n telecom_analysis -b ~/shared_data:/root/shared&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:telecom -n telecom_analysis -b ~/shared_data:/root/shared&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -12584,7 +14498,7 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
     &lt;a href=&#34;#multiple-directory-bindings&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;You can bind multiple directories by separating them with commas:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_project &lt;span class=&#34;se&#34;&gt;\
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_project &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -b ~/captures:/root/captures,~/scripts:/root/scripts,~/reports:/root/reports&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
@@ -12619,7 +14533,7 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 ├─────────────────┼──────────────────────────────────────────────────────────┤
 │ Network Mode    │ host                                                     │
 ├─────────────────┼──────────────────────────────────────────────────────────┤
-│ Image Name      │ penthertz/rfswift_noble:telecom                                │
+│ Image Name      │ penthertz/rfswift_resolute:telecom                                │
 ├─────────────────┼──────────────────────────────────────────────────────────┤
 │ Size on Disk    │ 11150.42 MB                                              │
 ├─────────────────┼──────────────────────────────────────────────────────────┤
@@ -12729,10 +14643,10 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Default Proxmark3 device&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:rfid -n rfid_scanner -s /dev/ttyACM0:/dev/ttyACM0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:rfid -n rfid_scanner -s /dev/ttyACM0:/dev/ttyACM0
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# For multiple Proxmark3 devices&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:rfid -n multi_proxmark &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:rfid -n multi_proxmark &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -s /dev/ttyACM0:/dev/ttyACM0,/dev/ttyACM1:/dev/ttyACM1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
@@ -12747,7 +14661,7 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
     &lt;a href=&#34;#bluetooth-device-binding&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;For Bluetooth scanning and analysis:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:bluetooth -n bt_scanner &lt;span class=&#34;se&#34;&gt;\
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:bluetooth -n bt_scanner &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -s /dev/vhci:/dev/vhci &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -a NET_ADMIN&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
@@ -12793,7 +14707,7 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
     &lt;a href=&#34;#2-bind-calibration-directory&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;When creating your container, bind the calibration directory to the proper location:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_light -n harogic_analysis &lt;span class=&#34;se&#34;&gt;\
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_light -n harogic_analysis &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -b ~/harogic_cal:/rftools/analysers/SAStudio4_x86_64_05_23_17_06/bin/CalFile&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
@@ -12886,7 +14800,7 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
     &lt;a href=&#34;#missing-bindings&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;If default bindings are missing, you can restore them while adding your custom bindings:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_analysis &lt;span class=&#34;se&#34;&gt;\
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_analysis &lt;span class=&#34;se&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -b /tmp/.X11-unix:/tmp/.X11-unix,/dev/bus/usb:/dev/bus/usb,~/my_data:/root/my_data&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
@@ -12920,7 +14834,7 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
         
         &lt;h1&gt;VPN Inside Containers&lt;/h1&gt;&lt;p&gt;Connect your RF Swift containers to VPN networks for remote access, mesh networking, and secure tunneling.&lt;/p&gt;
 &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;RF Swift supports launching VPN clients &lt;strong&gt;inside containers&lt;/strong&gt; at startup, allowing your containerized tools to reach remote networks, Tailscale/Netbird mesh peers, or corporate VPNs — all without modifying your host network.&lt;/p&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;RF Swift supports launching VPN clients &lt;strong&gt;inside containers&lt;/strong&gt; at startup, allowing your containerized tools to reach remote networks, Tailscale/Netbird mesh peers, or corporate VPNs, all without modifying your host network.&lt;/p&gt;
 &lt;h3&gt;Supported VPN Providers&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;supported-vpn-providers&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#supported-vpn-providers&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;table&gt;
   &lt;thead&gt;
@@ -12981,7 +14895,7 @@ BusID: 2-4, DeviceID: 13d3:56d5, VendorID: Integrated, ProductID: Camera, Descri
 &lt;p&gt;RF Swift will:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Start the Tailscale daemon inside the container&lt;/li&gt;
-&lt;li&gt;Print a login URL — open it in your browser to authenticate&lt;/li&gt;
+&lt;li&gt;Print a login URL that you open in your browser to authenticate&lt;/li&gt;
 &lt;li&gt;Once authenticated, drop you into the shell with Tailscale connected&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;WireGuard (config file)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;wireguard-config-file&#34;&gt;&lt;/span&gt;
@@ -13137,7 +15051,7 @@ PING 100.68.119.76: 64 bytes from 100.68.119.76: icmp_seq=0 ttl=64 time=12.3 ms&
 &lt;li&gt;No kernel interface (not visible in &lt;code&gt;ip addr&lt;/code&gt;)&lt;/li&gt;
 &lt;li&gt;TCP/UDP works via SOCKS5/HTTP proxy&lt;/li&gt;
 &lt;li&gt;Ping (ICMP) does not work&lt;/li&gt;
-&lt;li&gt;WireGuard and OpenVPN are &lt;strong&gt;not supported&lt;/strong&gt; — a warning is displayed&lt;/li&gt;
+&lt;li&gt;WireGuard and OpenVPN are &lt;strong&gt;not supported&lt;/strong&gt;, and a warning is displayed&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;hextra-scrollbar hx:overflow-x-auto hx:overflow-y-hidden hx:overscroll-x-contain&#34;&gt;
   &lt;div class=&#34;hx:mt-4 hx:flex hx:w-max hx:min-w-full hx:border-b hx:border-gray-200 hx:pb-px hx:dark:border-neutral-800&#34;&gt;&lt;button
@@ -13343,7 +15257,7 @@ PING 100.68.119.76: 64 bytes from 100.68.119.76: icmp_seq=0 ttl=64 time=12.3 ms&
   &lt;/button&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;A login URL will be printed — open it in your browser to authenticate. Once approved, the shell session starts.&lt;/p&gt;
+&lt;p&gt;A login URL will be printed. Open it in your browser to authenticate. Once approved, the shell session starts.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Headless with auth key:&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
@@ -13594,7 +15508,7 @@ PING 100.68.119.76: 64 bytes from 100.68.119.76: icmp_seq=0 ttl=64 time=12.3 ms&
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;div class=&#34;hx:select-none hx:text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;🔒&lt;/div&gt;&lt;/div&gt;
 
   &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
-    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Security Tip&lt;/strong&gt;: Prefer Tailscale or Netbird for mesh networking — they work without privileged mode and don&amp;rsquo;t require exposing ports. Use WireGuard/OpenVPN for site-to-site tunnels where privileged mode is acceptable.&lt;/div&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Security Tip&lt;/strong&gt;: Prefer Tailscale or Netbird for mesh networking, because they work without privileged mode and don&amp;rsquo;t require exposing ports. Use WireGuard/OpenVPN for site-to-site tunnels where privileged mode is acceptable.&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -13802,7 +15716,7 @@ PING 100.68.119.76: 64 bytes from 100.68.119.76: icmp_seq=0 ttl=64 time=12.3 ms&
 &lt;/div&gt;
 &lt;hr&gt;
 &lt;h2&gt;Rootless Mode&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;rootless-mode&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#rootless-mode&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;By default, Podman runs rootless — no &lt;code&gt;sudo&lt;/code&gt; required. RF Swift automatically adapts:&lt;/p&gt;
+    &lt;a href=&#34;#rootless-mode&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;By default, Podman runs rootless, so no &lt;code&gt;sudo&lt;/code&gt; is required. RF Swift automatically adapts:&lt;/p&gt;
 &lt;h3&gt;What Works in Rootless Mode&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;what-works-in-rootless-mode&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#what-works-in-rootless-mode&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;Container creation and management&lt;/li&gt;
@@ -13864,7 +15778,7 @@ PING 100.68.119.76: 64 bytes from 100.68.119.76: icmp_seq=0 ttl=64 time=12.3 ms&
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
 
   &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
-    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Devices still work&lt;/strong&gt; — you can use USB devices that are plugged in before container start. What doesn&amp;rsquo;t work without cgroup rules is &lt;strong&gt;hotplug&lt;/strong&gt; (plugging/unplugging devices while the container is running).&lt;/div&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Devices still work&lt;/strong&gt;: you can use USB devices that are plugged in before container start. What doesn&amp;rsquo;t work without cgroup rules is &lt;strong&gt;hotplug&lt;/strong&gt; (plugging/unplugging devices while the container is running).&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -13929,7 +15843,7 @@ PING 100.68.119.76: 64 bytes from 100.68.119.76: icmp_seq=0 ttl=64 time=12.3 ms&
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift --engine podman run -i sdr_full -n my_sdr
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Full name (no resolution needed)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift --engine podman run -i docker.io/penthertz/rfswift_noble:sdr_full -n my_sdr&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift --engine podman run -i docker.io/penthertz/rfswift_resolute:sdr_full -n my_sdr&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
   &lt;button
     class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
     title=&#34;Copy code&#34;
@@ -13973,7 +15887,7 @@ PING 100.68.119.76: 64 bytes from 100.68.119.76: icmp_seq=0 ttl=64 time=12.3 ms&
     &lt;a href=&#34;#rootless-networking&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Rootless Podman uses &lt;code&gt;slirp4netns&lt;/code&gt; or &lt;code&gt;pasta&lt;/code&gt; for networking instead of a real bridge:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
-&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Host network (default) — works with slirp4netns&lt;/span&gt;
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Host network (default), works with slirp4netns&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift --engine podman run -i sdr_full -n my_sdr
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Bridge network&lt;/span&gt;
@@ -14098,7 +16012,7 @@ PING 100.68.119.76: 64 bytes from 100.68.119.76: icmp_seq=0 ttl=64 time=12.3 ms&
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;h3&gt;&amp;ldquo;Rootless Podman does not support device cgroup rules&amp;rdquo;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;rootless-podman-does-not-support-device-cgroup-rules&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#rootless-podman-does-not-support-device-cgroup-rules&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Not an error&lt;/strong&gt; — this is informational. Your container will still work; only USB hotplug is affected. Plug in devices before starting the container.&lt;/p&gt;
+    &lt;a href=&#34;#rootless-podman-does-not-support-device-cgroup-rules&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Not an error&lt;/strong&gt;, just informational. Your container will still work; only USB hotplug is affected. Plug in devices before starting the container.&lt;/p&gt;
 &lt;p&gt;To get full cgroup support:&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
@@ -14137,7 +16051,7 @@ PING 100.68.119.76: 64 bytes from 100.68.119.76: icmp_seq=0 ttl=64 time=12.3 ms&
 &lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Option 1: Pull without sudo (rootless)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;podman pull penthertz/rfswift_noble:sdr_full
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;podman pull penthertz/rfswift_resolute:sdr_full
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Option 2: Configure additionalimage stores to see root images&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Add to ~/.config/containers/storage.conf:&lt;/span&gt;
@@ -14199,7 +16113,7 @@ PING 100.68.119.76: 64 bytes from 100.68.119.76: icmp_seq=0 ttl=64 time=12.3 ms&
   &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;div class=&#34;hx:select-none hx:text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;🔒&lt;/div&gt;&lt;/div&gt;
 
   &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
-    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Security Advantage&lt;/strong&gt;: Podman&amp;rsquo;s rootless mode provides better isolation than Docker. Even if a container escape occurs, the attacker only has unprivileged user access — not root.&lt;/div&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Security Advantage&lt;/strong&gt;: Podman&amp;rsquo;s rootless mode provides better isolation than Docker. Even if a container escape occurs, the attacker only has unprivileged user access, not root.&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
