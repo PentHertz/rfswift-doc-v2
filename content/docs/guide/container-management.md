@@ -422,7 +422,7 @@ rfswift gpus rm -c sdr_work
 
 ```bash
 # At creation time
-rfswift run -i penthertz/rfswift_noble:sdr_full -n gpu_sdr --gpus all
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n gpu_sdr --gpus all
 
 # Or via profile
 rfswift run --profile gpu-sdr -n my_gpu_container

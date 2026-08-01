@@ -126,10 +126,10 @@ You have two options for Docker images:
 # (or use existing installation)
 
 # Download RF Swift images with custom output names
-rfswift download -i penthertz/rfswift_noble:sdr_full -o rfswift_sdr_full.tar.gz
-rfswift download -i penthertz/rfswift_noble:telecom -o rfswift_telecom.tar.gz
-rfswift download -i penthertz/rfswift_noble:wifi -o rfswift_wifi.tar.gz
-rfswift download -i penthertz/rfswift_noble:automotive -o rfswift_automotive.tar.gz
+rfswift download -i penthertz/rfswift_resolute:sdr_full -o rfswift_sdr_full.tar.gz
+rfswift download -i penthertz/rfswift_resolute:telecom -o rfswift_telecom.tar.gz
+rfswift download -i penthertz/rfswift_resolute:wifi -o rfswift_wifi.tar.gz
+rfswift download -i penthertz/rfswift_resolute:automotive -o rfswift_automotive.tar.gz
 
 # Images are saved with custom names as specified with -o flag
 ls -lh *.tar.gz
@@ -267,7 +267,7 @@ rfswift -q images local
 echo ""
 echo "=== Installation Complete ==="
 echo ""
-echo "Run: rfswift -q run -i penthertz/rfswift_noble:sdr_full -n test"
+echo "Run: rfswift -q run -i penthertz/rfswift_resolute:sdr_full -n test"
 echo "(Use -q flag for disconnected mode)"
 EOF
 
@@ -480,7 +480,7 @@ rfswift -q last
 rfswift -q images local
 
 # Create test container
-rfswift -q run -i penthertz/rfswift_noble:sdr_full -n airgap_test
+rfswift -q run -i penthertz/rfswift_resolute:sdr_full -n airgap_test
 
 # Test GUI (if X11 configured)
 rfswift -q exec -c airgap_test -e "xclock"

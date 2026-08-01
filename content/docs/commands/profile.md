@@ -7,7 +7,7 @@ next: /docs/commands/exec
 
 # rfswift profile
 
-Manage container profiles — YAML presets for quick container creation.
+Manage container profiles, the YAML presets used for quick container creation.
 
 ## Synopsis
 
@@ -68,7 +68,7 @@ A profile YAML file contains:
 ```yaml
 name: sdr-full
 description: Full SDR suite with all tools and device support
-image: penthertz/rfswift_noble:sdr_full
+image: penthertz/rfswift_resolute:sdr_full
 network: host
 desktop: false
 desktop_ssl: false
@@ -91,7 +91,7 @@ vpn: ""
 |-------|------|-------------|---------|
 | `name` | string | Profile name (used with `--profile`) | `sdr-full` |
 | `description` | string | Human-readable description | `Full SDR suite` |
-| `image` | string | Container image to use | `penthertz/rfswift_noble:sdr_full` |
+| `image` | string | Container image to use | `penthertz/rfswift_resolute:sdr_full` |
 | `network` | string | Network mode (`host`, `nat`, `bridge`) | `host` |
 | `desktop` | bool | Enable remote desktop | `true` |
 | `desktop_ssl` | bool | Enable SSL for desktop | `false` |
@@ -124,13 +124,13 @@ This creates 12 default profiles covering common RF/security use cases:
 | Profile | Image | Features |
 |---------|-------|----------|
 | `sdr-full` | `sdr_full` | Realtime |
-| `sdr-light` | `sdr_light` | — |
+| `sdr-light` | `sdr_light` | None |
 | `wifi` | `wifi` | Privileged |
-| `bluetooth` | `bluetooth` | — |
+| `bluetooth` | `bluetooth` | None |
 | `telecom` | `telecom_4Gto5G` | Realtime |
-| `rfid` | `rfid` | — |
+| `rfid` | `rfid` | None |
 | `automotive` | `automotive` | Realtime |
-| `hardware` | `hardware` | — |
+| `hardware` | `hardware` | None |
 | `reversing` | `reversing` | Desktop |
 | `network` | `network` | NAT network |
 | `pentest-full` | `sdr_full` | Desktop, privileged, realtime, NAT |
@@ -169,16 +169,16 @@ rfswift profile create
 
 Launches a step-by-step wizard to create a new profile:
 
-1. **Profile name** — unique identifier (e.g., `my-sdr-setup`)
-2. **Description** — what this profile is for
-3. **Image selection** — pick from local images or enter manually
-4. **Network mode** — host, NAT, bridge, or join existing NAT network
-5. **Feature toggles** — desktop, SSL, no-X11, privileged, realtime
-6. **Device mappings** — optional device paths
-7. **Volume bindings** — optional host:container paths
-8. **Port mappings** — simplified `hostPort:containerPort` format
-9. **Capabilities** — multi-select from common Linux capabilities (NET_ADMIN, SYS_RAWIO, etc.)
-10. **Cgroup rules** — multi-select from common device access rules (USB, serial, sound, etc.)
+1. **Profile name**: unique identifier (e.g., `my-sdr-setup`)
+2. **Description**: what this profile is for
+3. **Image selection**: pick from local images or enter manually
+4. **Network mode**: host, NAT, bridge, or join existing NAT network
+5. **Feature toggles**: desktop, SSL, no-X11, privileged, realtime
+6. **Device mappings**: optional device paths
+7. **Volume bindings**: optional host:container paths
+8. **Port mappings**: simplified `hostPort:containerPort` format
+9. **Capabilities**: multi-select from common Linux capabilities (NET_ADMIN, SYS_RAWIO, etc.)
+10. **Cgroup rules**: multi-select from common device access rules (USB, serial, sound, etc.)
 11. **Recap and confirm**
 
 The profile is saved as a YAML file that you can further edit manually.
@@ -195,7 +195,7 @@ rfswift profile delete
 
 ### Edit a Profile Manually
 
-Profiles are plain YAML files — edit them with any text editor:
+Profiles are plain YAML files, so you can edit them with any text editor:
 
 ```bash
 # Linux
@@ -225,7 +225,7 @@ CLI flags override profile values, so you can customize on the fly:
 
 ```bash
 # Use wifi profile but with a different image
-rfswift run --profile wifi -n my_wifi -i penthertz/rfswift_noble:sdr_full
+rfswift run --profile wifi -n my_wifi -i penthertz/rfswift_resolute:sdr_full
 
 # Use sdr-full profile but in NAT mode
 rfswift run --profile sdr-full -n isolated_sdr -t nat
@@ -241,9 +241,9 @@ When you run `rfswift run` without `-i` and `-n`, the wizard offers profile sele
 ```
 ? Start from a profile?
   > No profile (manual configuration)
-    sdr-full — Full SDR suite with all tools and device support
-    wifi — WiFi pentesting and assessment tools
-    pentest-full — Full pentest setup: SDR + desktop + NAT isolation
+    sdr-full: Full SDR suite, realtime and USB hotplug
+    wifi: Wi-Fi monitor mode and injection, unprivileged
+    pentest-full: Everything on: privileged, USB, realtime, GPU
     ...
 ```
 
@@ -255,7 +255,7 @@ After selecting a profile, you're asked:
     No, let me customize
 ```
 
-- **Yes, use as-is**: Skips all configuration steps — only asks for the container name, shows a recap, and creates the container. This is the fastest way to spin up a container.
+- **Yes, use as-is**: Skips all configuration steps. It only asks for the container name, shows a recap, and creates the container. This is the fastest way to spin up a container.
 - **No, let me customize**: Pre-fills all wizard fields with the profile's values, then lets you change anything before creation. You can also choose a different image while keeping all other profile settings.
 
 ---
@@ -287,5 +287,5 @@ cp team-standard.yaml ~/.config/rfswift/profiles/
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**Exegol-style Presets**: RF Swift profiles are inspired by [Exegol's](https://github.com/ThePorgs/Exegol) profile system. If you're coming from Exegol, you'll find the concept familiar — profiles bundle all container settings into a reusable preset.
+**Exegol-style Presets**: RF Swift profiles are inspired by [Exegol's](https://github.com/ThePorgs/Exegol) profile system. If you're coming from Exegol, you'll find the concept familiar: profiles bundle all container settings into a reusable preset.
 {{< /callout >}}

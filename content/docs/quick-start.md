@@ -28,7 +28,7 @@ newgrp docker
   {{< /tab >}}
   {{< tab >}}
 {{< callout type="info" >}}
-**Podman runs rootless by default** — no `sudo` or group membership required. Just make sure your subordinate UID/GID ranges are configured:
+**Podman runs rootless by default**, so you need no `sudo` and no group membership. Just make sure your subordinate UID/GID ranges are configured:
 
 ```bash
 sudo usermod --add-subuids 100000-165535 $USER
@@ -141,13 +141,14 @@ rfswift images pull -i sdr_full -t my_custom_tag
 All RF Swift images are **OCI-compatible** and work identically with both Docker and Podman. The same `rfswift images pull` command works regardless of which engine you have installed.
 {{< /callout >}}
 
-RF Swift Ubuntu Noble (version 24.04) images are in the way, and you can also test them using the `penthertz/rfswift_noble:<tag>` prefix.
-In case you want to use Noble images with a short tag name, modify you RF Swift profile `config.ini` file as follows:
+Since v3.0.0 "Resonance", official images are built on **Ubuntu 26.04 "Resolute"** and published under the `penthertz/rfswift_resolute:<tag>` prefix, which is the CLI default. The previous Ubuntu 24.04 "Noble" images remain available under `penthertz/rfswift_noble:<tag>` if you need to fall back.
+
+To pin a different repository (for example to keep using the Noble images with short tag names), edit the `[general]` section of your RF Swift profile `config.ini`:
 
 ```
 [general]
 imagename = myrfswift:latest
-repotag = penthertz/rfswift_noble
+repotag = penthertz/rfswift_resolute
 
 ...
 ``` 
@@ -155,10 +156,10 @@ repotag = penthertz/rfswift_noble
 **Available Options:**
 - `-i`: Remote image label (required)
 - `-t`: Local tag to assign to the pulled image (optional)
-- `-r`: Repository to pull from (defaults to penthertz/rfswift)
+- `-r`: Repository to pull from (defaults to `penthertz/rfswift_resolute`)
 
 {{< callout type="info" >}}
-You can use the complete image tag `penthertz/rfswift_noble:sdr_full` if you prefer, or change the default repository in your RF Swift profile.
+You can use the complete image tag `penthertz/rfswift_resolute:sdr_full` if you prefer, or change the default repository in your RF Swift profile.
 {{< /callout >}}
 
 ### Run the Container
@@ -171,7 +172,7 @@ rfswift run -i sdr_full -n my_sdr_container
 
 This will start a container using the `sdr_full` image with the name `my_sdr_container`.
 
-A **workspace directory** is automatically created at `~/rfswift-workspace/my_sdr_container/` and mounted at `/workspace` inside the container. Files saved there are immediately accessible on your host — no extra flags needed.
+A **workspace directory** is automatically created at `~/rfswift-workspace/my_sdr_container/` and mounted at `/workspace` inside the container. Files saved there are immediately accessible on your host, with no extra flags needed.
 
 {{< callout type="info" >}}
 Use `--workspace /path` for a custom workspace, `--cwd` to mount the current directory, or `--no-workspace` to disable it. See [`run` command reference](/docs/commands/run#workspace-options) for details.
@@ -409,7 +410,7 @@ rfswift macusb list
 rfswift macusb attach --vid 0x1d50 --pid 0x604b
 
 # 3. Run container via Lima's Docker (where USB device lives)
-rfswift --engine lima run -i penthertz/rfswift_noble:sdr_light -n sdr_work
+rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_light -n sdr_work
 
 # 4. When done, detach the device
 rfswift macusb detach --vid 0x1d50 --pid 0x604b
@@ -420,7 +421,7 @@ Use `--engine lima` when you need USB devices. Without it, containers run in Doc
 {{< /callout >}}
 
 {{< callout type="info" >}}
-Lima auto-creates the VM on first use — no manual `limactl` setup needed. The VM comes pre-configured with Docker, USB libraries, kernel modules, and udev rules for all common SDR/RF hardware.
+Lima auto-creates the VM on first use, so there is no manual `limactl` setup to do. The VM comes pre-configured with Docker, USB libraries, kernel modules, and udev rules for all common SDR/RF hardware.
 {{< /callout >}}
 
 ## Managing Existing Containers

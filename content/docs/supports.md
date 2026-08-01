@@ -1,7 +1,7 @@
 ---
 title: ⚙️ Requirements & supported platforms
 weight: 2
-next: /docs/comparisons
+next: /docs/release-notes-v3
 prev: /docs
 cascade:
   type: docs

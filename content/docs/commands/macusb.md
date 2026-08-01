@@ -151,7 +151,7 @@ rfswift macusb attach --vid 0x1d50 --pid 0x604b
 rfswift macusb vm-devices
 
 # 5. Run container via Lima's Docker (where USB device lives)
-rfswift --engine lima run -i penthertz/rfswift_noble:sdr_light -n sdr_work
+rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_light -n sdr_work
 
 # 6. Inside the container, the device is accessible
 # $ hackrf_info
@@ -169,7 +169,7 @@ rfswift macusb attach --vid 0x0bda --pid 0x2838
 rfswift macusb attach --vid 0x1d50 --pid 0x604b
 
 # Run container with both devices available
-rfswift --engine lima run -i penthertz/rfswift_noble:sdr_full -n multi_sdr
+rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_full -n multi_sdr
 ```
 
 ### Using a Custom Lima Instance
@@ -200,11 +200,11 @@ QEMU is the virtualization backend that Lima uses to run the Linux VM. Lima mana
 
 ### First-Time Setup
 
-RF Swift **automatically manages the Lima VM** — no manual setup required. On first use, RF Swift creates, provisions, and starts the VM transparently:
+RF Swift **automatically manages the Lima VM**, so there is no manual setup to do. On first use, RF Swift creates, provisions, and starts the VM transparently:
 
 ```bash
-# Just run it — RF Swift handles everything automatically
-rfswift --engine lima run -i penthertz/rfswift_noble:sdr_light -n my_sdr
+# Just run it, RF Swift handles everything automatically
+rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_light -n my_sdr
 # → "Lima instance 'rfswift' not found. Creating it..."
 # → Creates VM, installs Docker + USB tools + udev rules
 # → Starts VM and waits for Docker to be ready
@@ -254,17 +254,17 @@ The Lima VM is configured via a YAML file. RF Swift ships a default template at 
 ### Editing the Configuration
 
 ```bash
-# Before creating the VM — edit the template
+# Before creating the VM, edit the template
 vim lima/rfswift.yaml
 limactl create --name rfswift lima/rfswift.yaml
 
-# After creating — edit the live config (requires VM restart)
+# After creating, edit the live config (requires VM restart)
 vim ~/.lima/rfswift/lima.yaml
 limactl stop rfswift && limactl start rfswift
 ```
 
 {{< callout type="warning" >}}
-After editing `~/.lima/rfswift/lima.yaml`, you must stop and start the VM for changes to take effect. Changes to `provision` scripts only run on first creation — use `limactl shell rfswift` to run commands in an existing VM.
+After editing `~/.lima/rfswift/lima.yaml`, you must stop and start the VM for changes to take effect. Changes to `provision` scripts only run on first creation, so use `limactl shell rfswift` to run commands in an existing VM.
 {{< /callout >}}
 
 ### Configuration Reference
@@ -286,7 +286,7 @@ disk: "200GiB"   # default: 100GiB
 **Must be `qemu`** for USB passthrough. Do not change to `vz`:
 
 ```yaml
-vmType: qemu     # required — Apple Virtualization (vz) has no USB support
+vmType: qemu     # required, Apple Virtualization (vz) has no USB support
 ```
 
 #### Host Directory Mounts
@@ -311,7 +311,7 @@ Forward additional ports from the VM to the macOS host:
 
 ```yaml
 portForwards:
-  # Docker socket (required — do not remove)
+  # Docker socket (required, do not remove)
   - guestSocket: "/run/docker.sock"
     hostSocket: "{{.Dir}}/sock/docker.sock"
   # noVNC desktop
@@ -320,7 +320,7 @@ portForwards:
   # PulseAudio
   - guestPort: 34567
     hostPort: 34567
-  # Add your own — e.g., srsRAN web UI
+  # Add your own, e.g. the srsRAN web UI
   - guestPort: 7681
     hostPort: 7681
   # Jupyter notebook
@@ -415,10 +415,10 @@ limactl start rfswift
 ```
 
 {{< callout type="info" >}}
-Deleting the VM does **not** delete your workspace files (`~/rfswift-workspace/`) or Docker images — those live on the host.
+Deleting the VM does **not** delete your workspace files (`~/rfswift-workspace/`) or Docker images, which live on the host.
 {{< /callout >}}
 
-For non-destructive reconfiguration (e.g., changing CPU/memory/ports), use [`rfswift engine lima reconfig`](/docs/commands/engine/#engine-lima-reconfig) instead — it preserves the VM filesystem.
+For non-destructive reconfiguration (e.g., changing CPU/memory/ports), use [`rfswift engine lima reconfig`](/docs/commands/engine/#engine-lima-reconfig) instead, which preserves the VM filesystem.
 
 ### Using a Custom Template Location
 

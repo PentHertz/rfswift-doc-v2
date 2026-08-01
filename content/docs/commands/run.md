@@ -65,7 +65,7 @@ By default, every container gets a **shared workspace directory** automatically 
 - **Host**: `~/rfswift-workspace/<container-name>/`
 - **Container**: `/workspace`
 
-Files saved to `/workspace` inside the container are immediately available on the host. IQ captures, logs, reports, scripts — all in one place without manual `--bind` flags.
+Files saved to `/workspace` inside the container are immediately available on the host. IQ captures, logs, reports and scripts all land in one place, without manual `--bind` flags.
 
 {{< callout type="info" >}}
 The workspace directory persists after the container is deleted. Your data stays on the host.
@@ -200,7 +200,7 @@ rfswift run --profile sdr-full -n my_sdr
 
 **Profile with image override:**
 ```bash
-rfswift run --profile wifi -n wifi_custom -i penthertz/rfswift_noble:sdr_full
+rfswift run --profile wifi -n wifi_custom -i penthertz/rfswift_resolute:sdr_full
 ```
 
 **Profile with NAT isolation:**
@@ -275,7 +275,7 @@ rfswift run -i analysis -n offline_analysis \
 
 **Custom host entries:**
 ```bash
-rfswift run -i penthertz/rfswift_noble:telecom -n network_test \
+rfswift run -i penthertz/rfswift_resolute:telecom -n network_test \
   -x "device1.local:192.168.1.10,device2.local:192.168.1.11"
 ```
 
@@ -443,9 +443,9 @@ Specifies which RF Swift image to use for the container.
 **Formats:**
 ```bash
 # Full registry path
--i penthertz/rfswift_noble:sdr_full
+-i penthertz/rfswift_resolute:sdr_full
 
-# Short name (resolves to penthertz/rfswift_noble:IMAGE)
+# Short name (resolves to penthertz/rfswift_resolute:IMAGE)
 -i sdr_full
 
 # Custom registry
@@ -797,7 +797,7 @@ Set a VNC password to secure the desktop session. Recommended when binding to `0
 --desktop --desktop-config "http:0.0.0.0:6080" --desktop-pass "mysecretpass"
 ```
 
-When a password is set, both noVNC (browser) and VNC clients will prompt for it before connecting. Without a password, access is unauthenticated — safe when bound to `127.0.0.1` (default), but a security risk when exposed on the network.
+When a password is set, both noVNC (browser) and VNC clients will prompt for it before connecting. Without a password, access is unauthenticated. That is safe when bound to `127.0.0.1` (the default), but a security risk when exposed on the network.
 
 **SSL/TLS encryption (`--desktop-ssl`):**
 
@@ -811,7 +811,7 @@ Enable SSL/TLS to encrypt the desktop connection. A self-signed certificate is a
 --desktop --desktop-config "vnc:0.0.0.0:5900" --desktop-pass "mysecretpass" --desktop-ssl
 ```
 
-With SSL enabled, noVNC uses `https://` and VNC clients connect via `vncs://` (TLS-wrapped VNC). The self-signed certificate will trigger a browser warning on first connection — this is expected.
+With SSL enabled, noVNC uses `https://` and VNC clients connect via `vncs://` (TLS-wrapped VNC). The self-signed certificate will trigger a browser warning on first connection, which is expected.
 
 The password and SSL can also be set in the config file (`~/.config/rfswift/config.ini`):
 ```ini
@@ -821,7 +821,7 @@ ssl = true
 ```
 
 {{< callout type="info" >}}
-**Tip**: Combine `--desktop` with `--no-x11` when you only need browser-based GUI access — this removes the X11 socket binding entirely, improving security and avoiding the need for `xhost` or X11 configuration on the host.
+**Tip**: Combine `--desktop` with `--no-x11` when you only need browser-based GUI access. This removes the X11 socket binding entirely, which improves security and avoids the need for `xhost` or X11 configuration on the host.
 {{< /callout >}}
 
 ### Recording Options
@@ -896,13 +896,13 @@ The wizard guides you through the following steps:
 11. **Capabilities** -- Multi-select from 18 common Linux capabilities with descriptions (NET_ADMIN, NET_RAW, SYS_RAWIO, SYS_ADMIN, SYS_PTRACE, SYS_NICE, etc.).
 
 12. **Cgroup Rules** -- Multi-select from common device cgroup rules with descriptions:
-    - `c 189:* rwm` — USB devices (SDR dongles, serial adapters)
-    - `c 188:* rwm` — USB serial (ttyUSB)
-    - `c 166:* rwm` — ACM modems (ttyACM)
-    - `c 116:* rwm` — ALSA sound devices
-    - `c 226:* rwm` — DRI/GPU rendering
-    - `c 13:* rwm` — Input devices (HID, joystick)
-    - `c 137:* rwm` — VHCI (virtual HCI for Bluetooth)
+    - `c 189:* rwm`: USB devices (SDR dongles, serial adapters)
+    - `c 188:* rwm`: USB serial (ttyUSB)
+    - `c 166:* rwm`: ACM modems (ttyACM)
+    - `c 116:* rwm`: ALSA sound devices
+    - `c 226:* rwm`: DRI/GPU rendering
+    - `c 13:* rwm`: Input devices (HID, joystick)
+    - `c 137:* rwm`: VHCI (virtual HCI for Bluetooth)
     - And more...
 
 13. **USB Devices** (macOS with `--engine lima` only) -- Asks whether to attach USB devices to the Lima VM, then shows a multi-select picker of discovered host USB devices.
@@ -917,7 +917,7 @@ The wizard guides you through the following steps:
 
 ```
 ? Start from a profile?
-  > sdr-full — Full SDR suite with all tools and device support
+  > sdr-full: Full SDR suite, realtime and USB hotplug
 
 ? Use profile 'sdr-full' as-is?
   > Yes, use as-is
@@ -926,7 +926,7 @@ The wizard guides you through the following steps:
 
 ──────────────────────────────────────────────────
 Container Configuration (from profile):
-  Image:    penthertz/rfswift_noble:sdr_full
+  Image:    penthertz/rfswift_resolute:sdr_full
   Name:     my_sdr_work
   Network:  host
   Realtime: enabled
@@ -942,7 +942,7 @@ Container Configuration (from profile):
   > No profile (manual configuration)
 
 ? Select an image:
-  > penthertz/rfswift_noble:sdr_full
+  > penthertz/rfswift_resolute:sdr_full
 
 ? Container name: my_sdr_work
 
@@ -974,7 +974,7 @@ Container Configuration (from profile):
 
 ──────────────────────────────────────────────────
 Container Configuration:
-  Image:        penthertz/rfswift_noble:sdr_full
+  Image:        penthertz/rfswift_resolute:sdr_full
   Name:         my_sdr_work
   Bindings:     ~/captures:/root/captures
   Devices:      /dev/bus/usb
@@ -985,7 +985,7 @@ Container Configuration:
 ──────────────────────────────────────────────────
 
 Equivalent CLI command:
-  rfswift run -i penthertz/rfswift_noble:sdr_full -n my_sdr_work \
+  rfswift run -i penthertz/rfswift_resolute:sdr_full -n my_sdr_work \
     -b ~/captures:/root/captures -s /dev/bus/usb \
     -a NET_ADMIN,NET_RAW -g "c 189:* rwm" --realtime --vpn tailscale
 
@@ -1092,7 +1092,7 @@ rfswift run -i image -n container_name_2
 
 ### Image Not Found
 
-**Error:** `Error: No such image: penthertz/rfswift_noble:image_name`
+**Error:** `Error: No such image: penthertz/rfswift_resolute:image_name`
 
 **Solution:**
 ```bash

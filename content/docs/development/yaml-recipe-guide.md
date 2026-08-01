@@ -107,10 +107,10 @@ Start from RF Swift's optimized base images for best results:
 
 ```yaml
 # Core RF Swift base (recommended)
-base_image: "penthertz/rfswift_noble:core"
+base_image: "penthertz/rfswift_resolute:core"
 
 # Ubuntu Noble (24.04) - Latest LTS
-base_image: "penthertz/rfswift_noble:base"
+base_image: "penthertz/rfswift_resolute:base"
 
 # Ubuntu Jammy (22.04) - Stable LTS
 base_image: "ubuntu:22.04"
@@ -528,7 +528,7 @@ run_commands:
 Complete RF security assessment toolkit:
 
 ```yaml
-base_image: "penthertz/rfswift_noble:core"
+base_image: "penthertz/rfswift_resolute:core"
 tag: "rf-hacking:latest"
 
 packages:

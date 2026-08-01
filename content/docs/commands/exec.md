@@ -48,7 +48,7 @@ The `exec` command enters an existing container with an interactive shell. If no
 |------|-------------|---------|
 | `--vpn STRING` | Start VPN inside the container | `--vpn tailscale` |
 
-**Format:** `--vpn TYPE[:ARGUMENT]` — same syntax as [`run --vpn`](/docs/commands/run#vpn-options).
+**Format:** `--vpn TYPE[:ARGUMENT]`, the same syntax as [`run --vpn`](/docs/commands/run#vpn-options).
 
 {{< callout type="info" >}}
 When using `--vpn` with `exec`, the VPN client starts inside the already-running container. For WireGuard/OpenVPN, the container must have been created with privileged mode (`-u 1`). See [VPN Inside Containers](/docs/guide/vpn) for details.

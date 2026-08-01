@@ -158,7 +158,7 @@ rfswift exec -c <Tab>
 **Image names:**
 ```bash
 rfswift run -i <Tab>
-# Shows: penthertz/rfswift_noble:sdr_full, penthertz/rfswift_noble:wifi, etc.
+# Shows: penthertz/rfswift_resolute:sdr_full, penthertz/rfswift_resolute:wifi, etc.
 ```
 
 ### Completion Features

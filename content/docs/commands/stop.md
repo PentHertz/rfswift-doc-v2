@@ -75,7 +75,7 @@ For now you can do the following trick:
 
 ```bash
 # Stop all RF Swift containers before system update
-for container in $(docker ps -q --filter "ancestor=penthertz/rfswift_noble"); do
+for container in $(docker ps -q --filter "ancestor=penthertz/rfswift_resolute"); do
     rfswift stop -c $container
 done
 ```

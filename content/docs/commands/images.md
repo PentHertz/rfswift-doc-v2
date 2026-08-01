@@ -92,7 +92,7 @@ rfswift images pull -i IMAGE_NAME [-t TAG] [-V version]
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-i, --image STRING` | Image reference to pull | Yes | `-i penthertz/rfswift_noble:sdr_full` |
+| `-i, --image STRING` | Image reference to pull | Yes | `-i penthertz/rfswift_resolute:sdr_full` |
 | `-t, --tag STRING` | Rename to target tag locally | No | `-t my_sdr:v1` |
 | `-V, --version STRING` | Rename to wanted version | No | `-V 0.1.1` |
 
@@ -125,11 +125,11 @@ rfswift images versions -f wifi
 ┌──────────────────────────────────────┬────────────────────┬──────────────┐
 │ Image                                │ Version            │ Status       │
 ├──────────────────────────────────────┼────────────────────┼──────────────┤
-│ penthertz/rfswift_noble:wifi         │ latest, 0.1.1      │ Up to date   │
+│ penthertz/rfswift_resolute:wifi         │ latest, 0.1.1      │ Up to date   │
 ├──────────────────────────────────────┼────────────────────┼──────────────┤
-│ penthertz/rfswift_noble:sdr_full     │ latest, 0.1.1      │ Up to date   │
+│ penthertz/rfswift_resolute:sdr_full     │ latest, 0.1.1      │ Up to date   │
 ├──────────────────────────────────────┼────────────────────┼──────────────┤
-│ penthertz/rfswift_noble:sdr_light    │ latest, 0.1.1      │ Up to date   │
+│ penthertz/rfswift_resolute:sdr_light    │ latest, 0.1.1      │ Up to date   │
 └──────────────────────────────────────┴────────────────────┴──────────────┘
 ```
 
@@ -151,9 +151,9 @@ rfswift images remote -v
 ┌──────────────────────┬────────────────────┬─────────────────────────────────────┬──────────────┬──────────────────────────────────────────────────────────────┐
 │ Tag                  │ Pushed Date        │ Image                               │ Size         │ Versions                                                     │
 ├──────────────────────┼────────────────────┼─────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
-│ wifi                 │ 2026-01-27 16:27   │ penthertz/rfswift_noble:wifi        │ 7981.2 MB    │ latest, 0.1.1                                                │
+│ wifi                 │ 2026-01-27 16:27   │ penthertz/rfswift_resolute:wifi        │ 7981.2 MB    │ latest, 0.1.1                                                │
 ├──────────────────────┼────────────────────┼─────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
-│ sdr_full             │ 2026-01-27 16:27   │ penthertz/rfswift_noble:sdr_full    │ 14176.2 MB   │ latest, 0.1.1                                                │
+│ sdr_full             │ 2026-01-27 16:27   │ penthertz/rfswift_resolute:sdr_full    │ 14176.2 MB   │ latest, 0.1.1                                                │
 ├──────────────────────┼────────────────────┼─────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
 ```
 
@@ -174,7 +174,7 @@ rfswift images pull -i sdr_full -V 0.1.1
 ┌──────────────────────────────┬─────────────────┬──────────────┬───────────────────────────┬─────────────┬────────────┬─────────┐
 │ Repository                   │ Tag             │ Image ID     │ Created                   │ Size        │ Status     │ Version │
 ├──────────────────────────────┼─────────────────┼──────────────┼───────────────────────────┼─────────────┼────────────┼─────────┤
-│ penthertz/rfswift_noble      │ sdr_light_0.1.1 │ cdf39442893e │ 2026-01-19T20:17:49+01:00 │ 13076.96 MB │ Up to date │ 0.1.1   │
+│ penthertz/rfswift_resolute      │ sdr_light_0.1.1 │ cdf39442893e │ 2026-01-19T20:17:49+01:00 │ 13076.96 MB │ Up to date │ 0.1.1   │
 ...
 ```
 
@@ -211,7 +211,7 @@ ping registry.hub.docker.com
 curl -I https://hub.docker.com
 
 # Try direct docker search
-docker search penthertz/rfswift_noble
+docker search penthertz/rfswift_resolute
 
 # Check if behind proxy/firewall
 ```
@@ -226,7 +226,7 @@ docker search penthertz/rfswift_noble
 rfswift images remote -v  # Verify exact name and version
 
 # Try with docker directly
-docker pull penthertz/rfswift_noble:sdr_full
+docker pull penthertz/rfswift_resolute:sdr_full
 
 # Check disk space
 df -h

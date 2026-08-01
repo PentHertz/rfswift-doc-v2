@@ -154,7 +154,7 @@ rfswift log list --dir ~/rfswift-tutorials
 rfswift log start -o sdr-tutorial-basics.cast
 
 # Perform tutorial steps
-rfswift run -i penthertz/rfswift_noble:sdr_full -n tutorial
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n tutorial
 rfswift exec -c tutorial
 rtl_test -t
 # ... demonstrate features ...

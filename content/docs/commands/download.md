@@ -23,7 +23,7 @@ The `download` command pulls Docker images from registries (Docker Hub, private 
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-i, --image STRING` | Image name to download | Yes | `-i penthertz/rfswift_noble:sdr_full` |
+| `-i, --image STRING` | Image name to download | Yes | `-i penthertz/rfswift_resolute:sdr_full` |
 | `-o, --output STRING` | Output file path | No | `-o rfswift-sdr.tar.gz` |
 | `--pull` | Pull image first if not present locally | No | `--pull` |
 
@@ -39,22 +39,22 @@ The `download` command pulls Docker images from registries (Docker Hub, private 
 
 **Download RF Swift image:**
 ```bash
-rfswift download -i penthertz/rfswift_noble:sdr_full -o rfswift-sdr-full.tar.gz
+rfswift download -i penthertz/rfswift_resolute:sdr_full -o rfswift-sdr-full.tar.gz
 ```
 
 **Download with automatic pull:**
 ```bash
-rfswift download -i penthertz/rfswift_noble:sdr_full -o sdr_full.tar.gz --pull
+rfswift download -i penthertz/rfswift_resolute:sdr_full -o sdr_full.tar.gz --pull
 ```
 
 **Download specific version:**
 ```bash
-rfswift download -i penthertz/rfswift_noble:bluetooth -o bluetooth-tools-v2025.tar.gz
+rfswift download -i penthertz/rfswift_resolute:bluetooth -o bluetooth-tools-v2025.tar.gz
 ```
 
 **Download to specific directory:**
 ```bash
-rfswift download -i penthertz/rfswift_noble:wifi \
+rfswift download -i penthertz/rfswift_resolute:wifi \
   -o ~/offline-images/wifi-tools-$(date +%Y%m%d).tar.gz
 ```
 
@@ -63,13 +63,13 @@ rfswift download -i penthertz/rfswift_noble:wifi \
 **Prepare offline installation media:**
 ```bash
 # Download all required RF Swift images
-rfswift download -i penthertz/rfswift_noble:sdr_full \
+rfswift download -i penthertz/rfswift_resolute:sdr_full \
   -o /media/usb/rfswift-sdr-full.tar.gz --pull
 
-rfswift download -i penthertz/rfswift_noble:bluetooth \
+rfswift download -i penthertz/rfswift_resolute:bluetooth \
   -o /media/usb/rfswift-bluetooth.tar.gz --pull
 
-rfswift download -i penthertz/rfswift_noble:wifi \
+rfswift download -i penthertz/rfswift_resolute:wifi \
   -o /media/usb/rfswift-wifi.tar.gz --pull
 
 # Create README for offline users
@@ -78,7 +78,7 @@ RF Swift Offline Installation
 
 To install:
 1. Import images: rfswift import image -i rfswift-*.tar.gz
-2. Run container: rfswift run -i penthertz/rfswift_noble:sdr_full -n workspace
+2. Run container: rfswift run -i penthertz/rfswift_resolute:sdr_full -n workspace
 EOF
 ```
 
@@ -89,10 +89,10 @@ OFFLINE_DIR=~/offline-bundle
 mkdir -p "$OFFLINE_DIR"
 
 # Download latest images
-rfswift download -i penthertz/rfswift_noble:sdr_full \
+rfswift download -i penthertz/rfswift_resolute:sdr_full \
   -o "$OFFLINE_DIR/sdr_full_$(date +%Y%m%d).tar.gz" --pull
 
-rfswift download -i penthertz/rfswift_noble:hardware \
+rfswift download -i penthertz/rfswift_resolute:hardware \
   -o "$OFFLINE_DIR/hardware_$(date +%Y%m%d).tar.gz" --pull
 
 # Create checksum file
@@ -105,7 +105,7 @@ sha256sum *.tar.gz > checksums.sha256
 **Version archival:**
 ```bash
 # Archive specific version before upgrade
-rfswift download -i penthertz/rfswift_noble:sdr_full \
+rfswift download -i penthertz/rfswift_resolute:sdr_full \
   -o archives/rfswift-sdr-full-v0.6.5.tar.gz
 
 # Document version
@@ -119,7 +119,7 @@ echo "RF Swift SDR Full v0.6.5 - Archived $(date)" \
 
 ### Image Not Found in Registry
 
-**Error:** `Error: image not found: penthertz/rfswift_noble:unknown_tag`
+**Error:** `Error: image not found: penthertz/rfswift_resolute:unknown_tag`
 
 **Solutions:**
 ```bash
@@ -127,7 +127,7 @@ echo "RF Swift SDR Full v0.6.5 - Archived $(date)" \
 rfswift images remote
 
 # Verify spelling
-rfswift download -i penthertz/rfswift_noble:sdr_full -o output.tar.gz
+rfswift download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz
 ```
 
 ### Network Connection Failed
@@ -184,7 +184,7 @@ ls -lh output.tar.gz
 rm output.tar.gz
 
 # Retry download
-rfswift download -i penthertz/rfswift_noble:sdr_full -o output.tar.gz --pull
+rfswift download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz --pull
 
 # For unstable connections, use screen/tmux
 screen -S download
@@ -222,8 +222,8 @@ rfswift download -i image -o output.tar.gz --pull
 # Not: --pull=true
 
 # Manually pull first if needed
-docker pull penthertz/rfswift_noble:sdr_full
-rfswift download -i penthertz/rfswift_noble:sdr_full -o output.tar.gz
+docker pull penthertz/rfswift_resolute:sdr_full
+rfswift download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz
 
 # Check image exists after pull
 docker images | grep rfswift

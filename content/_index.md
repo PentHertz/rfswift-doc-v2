@@ -2,9 +2,9 @@
 title: RF Swift
 layout: hextra-home
 ---
-{{< hextra/hero-badge >}}
+{{< hextra/hero-badge link="docs/release-notes-v3" >}}
   <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-primary-400"></div>
-  <span>Free, open source</span>
+  <span>New: v3.0.0 "Resonance"</span>
   {{< icon name="arrow-circle-right" attributes="height=14" >}}
 {{< /hextra/hero-badge >}}
 

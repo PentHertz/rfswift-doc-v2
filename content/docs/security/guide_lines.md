@@ -187,7 +187,7 @@ Session recordings capture **everything** displayed in your terminal session, in
 
 ## 🖥️ Remote Desktop Security
 
-RF Swift's `--desktop` feature starts a VNC/noVNC server inside the container for remote GUI access. While convenient, VNC connections carry security risks that must be addressed — especially when the desktop is exposed beyond localhost.
+RF Swift's `--desktop` feature starts a VNC/noVNC server inside the container for remote GUI access. While convenient, VNC connections carry security risks that must be addressed, especially when the desktop is exposed beyond localhost.
 
 ### Understanding the Attack Surface
 
@@ -204,11 +204,11 @@ By default, these bind to `127.0.0.1` (localhost only), which means only the hos
 
 | Threat | Risk | Mitigation |
 |--------|------|------------|
-| Unauthenticated access | **Critical** — full desktop control | Use `--desktop-pass` |
-| Eavesdropping on VNC traffic | **High** — keystrokes, screen content visible | Use `--desktop-ssl` |
-| Brute-force VNC password | **Medium** — VNC passwords are limited to 8 chars | Combine with firewall rules, use SSL |
-| Exposed port on public network | **High** — internet-wide scanning for VNC | Bind to `127.0.0.1` (default), use SSH tunnel, or restrict with firewall |
-| Self-signed certificate MITM | **Low** — attacker on same network could intercept | Pin certificate or use trusted CA cert |
+| Unauthenticated access | **Critical**: full desktop control | Use `--desktop-pass` |
+| Eavesdropping on VNC traffic | **High**: keystrokes and screen content are visible | Use `--desktop-ssl` |
+| Brute-force VNC password | **Medium**: VNC passwords are limited to 8 chars | Combine with firewall rules, use SSL |
+| Exposed port on public network | **High**: internet-wide scanning for VNC | Bind to `127.0.0.1` (default), use SSH tunnel, or restrict with firewall |
+| Self-signed certificate MITM | **Low**: an attacker on the same network could intercept | Pin certificate or use trusted CA cert |
 
 ### Security Levels
 
@@ -216,7 +216,7 @@ Choose the appropriate level based on your environment:
 
 #### Level 1: Local-only (Default) ✅
 
-Desktop bound to localhost — only reachable from the host machine:
+Desktop bound to localhost, so it is only reachable from the host machine:
 
 ```bash
 rfswift run -i sdr_full -n my_sdr --desktop
@@ -247,7 +247,7 @@ rfswift run -i sdr_full -n my_sdr \
 
 #### Level 3: SSL + Password (Recommended for network exposure) 🔐
 
-Full encryption with authentication — the recommended setup for any non-localhost deployment:
+Full encryption with authentication, the recommended setup for any non-localhost deployment:
 
 ```bash
 rfswift run -i sdr_full -n my_sdr \
@@ -275,10 +275,10 @@ rfswift run -i sdr_full -n my_sdr \
 For the highest security, keep the desktop on localhost and tunnel through SSH:
 
 ```bash
-# On the RF Swift host — desktop stays on localhost
+# On the RF Swift host, the desktop stays on localhost
 rfswift run -i sdr_full -n my_sdr --desktop
 
-# From your remote machine — create an SSH tunnel
+# From your remote machine, create an SSH tunnel
 ssh -L 6080:127.0.0.1:6080 user@rfswift-host
 # Then open http://127.0.0.1:6080 in your local browser
 ```
@@ -344,7 +344,7 @@ Before exposing a desktop on the network, verify:
 - [ ] Config file permissions are set to `600`
 
 {{< callout type="warning" >}}
-**Never expose a VNC desktop on a network-facing address (`0.0.0.0` or a specific IP like `192.168.1.10`) without a password.** Automated scanners actively probe for open VNC ports, and an unauthenticated desktop grants full GUI control over the container — including access to any connected hardware devices. Only `127.0.0.1` and `localhost` are safe without authentication.
+**Never expose a VNC desktop on a network-facing address (`0.0.0.0` or a specific IP like `192.168.1.10`) without a password.** Automated scanners actively probe for open VNC ports, and an unauthenticated desktop grants full GUI control over the container, including access to any connected hardware devices. Only `127.0.0.1` and `localhost` are safe without authentication.
 {{< /callout >}}
 
 ## 🌟 Real-World Secure Configurations

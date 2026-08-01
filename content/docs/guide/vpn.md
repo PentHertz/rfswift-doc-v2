@@ -11,7 +11,7 @@ Connect your RF Swift containers to VPN networks for remote access, mesh network
 
 ## Overview
 
-RF Swift supports launching VPN clients **inside containers** at startup, allowing your containerized tools to reach remote networks, Tailscale/Netbird mesh peers, or corporate VPNs — all without modifying your host network.
+RF Swift supports launching VPN clients **inside containers** at startup, allowing your containerized tools to reach remote networks, Tailscale/Netbird mesh peers, or corporate VPNs, all without modifying your host network.
 
 ### Supported VPN Providers
 
@@ -34,7 +34,7 @@ rfswift run -i sdr_full -n my_sdr --vpn tailscale
 
 RF Swift will:
 1. Start the Tailscale daemon inside the container
-2. Print a login URL — open it in your browser to authenticate
+2. Print a login URL that you open in your browser to authenticate
 3. Once authenticated, drop you into the shell with Tailscale connected
 
 ### WireGuard (config file)
@@ -120,7 +120,7 @@ Userspace networking (Tailscale and Netbird only):
 - No kernel interface (not visible in `ip addr`)
 - TCP/UDP works via SOCKS5/HTTP proxy
 - Ping (ICMP) does not work
-- WireGuard and OpenVPN are **not supported** — a warning is displayed
+- WireGuard and OpenVPN are **not supported**, and a warning is displayed
 
 {{< tabs items="Tailscale,Netbird" >}}
   {{< tab >}}
@@ -236,7 +236,7 @@ ip addr show tun0
 rfswift run -i sdr_full -n ts_container --vpn tailscale
 ```
 
-A login URL will be printed — open it in your browser to authenticate. Once approved, the shell session starts.
+A login URL will be printed. Open it in your browser to authenticate. Once approved, the shell session starts.
 
 **Headless with auth key:**
 
@@ -413,7 +413,7 @@ For full ICMP support, use privileged mode (`-u 1`).
 ---
 
 {{< callout emoji="🔒" >}}
-**Security Tip**: Prefer Tailscale or Netbird for mesh networking — they work without privileged mode and don't require exposing ports. Use WireGuard/OpenVPN for site-to-site tunnels where privileged mode is acceptable.
+**Security Tip**: Prefer Tailscale or Netbird for mesh networking, because they work without privileged mode and don't require exposing ports. Use WireGuard/OpenVPN for site-to-site tunnels where privileged mode is acceptable.
 {{< /callout >}}
 
 {{< callout type="info" >}}

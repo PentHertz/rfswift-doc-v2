@@ -55,9 +55,13 @@ cascade:
   </table>
 </div>
 
+{{< callout emoji="🆕" >}}
+**RF Swift v3.0.0 "Resonance" is out.** New Ubuntu 26.04 "Resolute" base, a CLI rebuilt on the new Moby SDK, a dedicated GNU Radio 4 image, OCUDU for 5G SA, and new `ad`, `android` and `osint` images for full engagements. → [Read the release notes](/docs/release-notes-v3)
+{{< /callout >}}
+
 ## What is RF Swift?
 
-**RF Swift** is a toolbox for creating a laboratory environment for your RF assessments, easily adaptable to your requirements:
+**RF Swift** builds you a complete hardware and RF security lab in seconds, from a ham shack on a Sunday afternoon to a full engagement on Monday morning. It is a toolbox for creating a laboratory environment for your RF assessments, easily adaptable to your requirements:
 
 - Working tools for specific engagements available in seconds
 - Reproducible setups for each context
@@ -75,12 +79,12 @@ So this toolbox is probably the **best solution** to deploy a generic, as well a
 
 RF Swift was born from real-world operational needs at [Penthertz](https://penthertz.com/) that no existing distribution could fully address.
 
-During security engagements, we often work on multiple projects within the same week—sometimes even the same day. This creates several challenges that traditional distributions struggle to handle:
+During security engagements, we often work on multiple projects within the same week, sometimes even the same day. This creates several challenges that traditional distributions struggle to handle:
 
 - **Isolation between engagements**: Each project needs to remain completely separate to preserve integrity and avoid cross-contamination of traces and artifacts
 - **Reproducible environments**: The ability to spin up known-working configurations instantly, without worrying about dependency conflicts or broken toolchains
 - **Experimentation without risk**: Installing experimental tools or libraries for one engagement shouldn't break the setup relied on for another
-- **Scalability and time saving**: Consultants spend around 1–2 days setting up their computers with all the necessary tools—sometimes more when newly hired
+- **Scalability and time saving**: Consultants spend around 1 to 2 days setting up their computers with all the necessary tools, and sometimes more when newly hired
 - **No conflict with company environments, especially on Linux**: Not everyone has the luxury of a second laptop for dedicated security work. This solution lets you keep your internal corporate environment intact
 - **Maintain own images**: People can maintain their own image and fit them on their needs
 
@@ -117,7 +121,7 @@ graph TD
     style G fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
-RF Swift handles everything from container creation and execution to pulling images, committing changes, and re-tagging. What sets it apart is the seamless integration of USB, video, and audio forwarding in a user-friendly interface—tasks that typically require significant expertise in standard Docker environments.
+RF Swift handles everything from container creation and execution to pulling images, committing changes, and re-tagging. What sets it apart is the seamless integration of USB, video, and audio forwarding in a user-friendly interface. Those are tasks that typically require significant expertise in standard Docker environments.
 
 ### Key Components
 
@@ -148,6 +152,7 @@ Dive right into the following section to get started:
 
 {{< cards >}}
   {{< card link="/docs/supports" title="Requirements & supports" icon="support" subtitle="Requirements & supported platforms" >}}
+  {{< card link="/docs/release-notes-v3" title="What's new in v3.0.0" icon="sparkles" subtitle="Resolute base, new CLI, GNU Radio 4, and the ad / android / osint images" >}}
   {{< card link="/docs/comparisons" title="Comparisons with dedicated distributions" icon="star" subtitle="Compare RF Swift with dedicated distributions" >}}
   {{< card link="/docs/getting-started" title="Getting Started" icon="document-text" subtitle="Setup your environment" >}}
   {{< card link="/docs/quick-start" title="Quick Start" icon="document-text" subtitle="Quickly run RF Swift and start a container" >}}

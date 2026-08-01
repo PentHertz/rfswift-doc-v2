@@ -28,7 +28,7 @@ newgrp docker
   {{< /tab >}}
   {{< tab >}}
 {{< callout type="info" >}}
-**Podman runs rootless by default** — no `sudo`, no daemon, no group membership required. Just ensure your subordinate UID/GID ranges are configured:
+**Podman runs rootless by default**, so there is no `sudo`, no daemon and no group membership to worry about. Just ensure your subordinate UID/GID ranges are configured:
 
 ```bash
 sudo usermod --add-subuids 100000-165535 $USER
@@ -116,7 +116,7 @@ Use "rfswift [command] --help" for more information about a command.
   {{< tab >}}
 {{< callout type="info" >}}
 **Podman privilege model:**
-- **Linux**: No `sudo` needed — Podman runs in your user namespace by default
+- **Linux**: No `sudo` needed, because Podman runs in your user namespace by default
 - **Device access**: Some `/dev` devices may require explicit `--device` flags or `podman unshare`
 - **Windows/macOS**: Podman runs inside a lightweight VM (podman machine); no extra privileges needed
 {{< /callout >}}
@@ -138,12 +138,12 @@ You can then trigger updates:
 ```bash
 rfswift update
 
-[!] Current version: 0.6.5-rc3
-Latest version: v0.6.5-rc4
-[!] Your current version is obsolete. Please update to version: v0.6.5-rc4
+[!] Current version: 2.1.0
+Latest version: v3.0.0
+[!] Your current version is obsolete. Please update to version: v3.0.0
 [i] Do you want to update to the latest version? (yes/no): 
 yes
-[i] Latest release download URL: https://github.com/PentHertz/RF-Swift/releases/download/v0.6.5-rc4/rfswift_Linux_x86_64.tar.gz
+[i] Latest release download URL: https://github.com/PentHertz/RF-Swift/releases/download/v3.0.0/rfswift_Linux_x86_64.tar.gz
 4.58 MiB / 4.58 MiB [----------------------------------------------------------------------------------------------------------------------------------------] 100.00%%
 [+] File downloaded, extracted, and replaced successfully.
 
@@ -229,7 +229,7 @@ rfswift run --profile sdr-full -n my_sdr
 rfswift profile list
 ```
 
-The interactive wizard also offers profile selection as the first step — select a profile, choose "Use as-is", enter a container name, and you're done. See [`rfswift profile`](/docs/commands/profile/) for details.
+The interactive wizard also offers profile selection as the first step. Select a profile, choose "Use as-is", enter a container name, and you're done. See [`rfswift profile`](/docs/commands/profile/) for details.
 
 **With Realtime Mode for SDR Operations:**
 
@@ -274,11 +274,11 @@ rfswift last
 ┌───────────────────────────┬─────────────────────────────┬───────────────────────────────────────────────────────┬──────────────┬──────────┐
 │ Created                   │ Image Tag (ID)              │ Container Name                                        │ Container ID │ Command  │
 ├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-│ 2025-04-11T16:47:02+02:00 │ penthertz/rfswift_noble:hardware  │ hardware                                              │ b6e43a87e1f6 │ /bin/zsh │
+│ 2025-04-11T16:47:02+02:00 │ penthertz/rfswift_resolute:hardware  │ hardware                                              │ b6e43a87e1f6 │ /bin/zsh │
 ├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-│ 2025-04-11T16:23:43+02:00 │ penthertz/rfswift_noble:bluetooth │ missionbluetooth                                      │ 3d92cb59560f │ /bin/zsh │
+│ 2025-04-11T16:23:43+02:00 │ penthertz/rfswift_resolute:bluetooth │ missionbluetooth                                      │ 3d92cb59560f │ /bin/zsh │
 ├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-│ 2025-04-11T16:18:22+02:00 │ penthertz/rfswift_noble:rfid      │ missionrfid2                                          │ 50cbccef53f5 │ /bin/zsh │
+│ 2025-04-11T16:18:22+02:00 │ penthertz/rfswift_resolute:rfid      │ missionrfid2                                          │ 50cbccef53f5 │ /bin/zsh │
 ├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
 ...
 ``` 
@@ -328,7 +328,7 @@ rfswift remove -c container_name
 
 **Delete an image:**
 ```bash
-rfswift delete -c penthertz/rfswift_noble:tag_name
+rfswift delete -c penthertz/rfswift_resolute:tag_name
 ```
 
 ### 4. Session Recording and Playback
@@ -432,7 +432,7 @@ rfswift host audio enable
 ```
 
 {{< callout type="info" >}}
-**Automatic audio management**: RF Swift automatically detects your audio system (PulseAudio or PipeWire), starts it if not running, and loads the TCP module — all in one command. On macOS with Lima, it also automatically configures network ACLs so containers inside the VM can access the host audio server. No manual PulseAudio setup required.
+**Automatic audio management**: RF Swift automatically detects your audio system (PulseAudio or PipeWire), starts it if not running, and loads the TCP module, all in one command. On macOS with Lima, it also automatically configures network ACLs so containers inside the VM can access the host audio server. No manual PulseAudio setup required.
 {{< /callout >}}
 
 #### Dynamic Device and Volume Binding
@@ -584,7 +584,7 @@ graph TD;
 ```
 
 This architecture provides significant advantages:
-- **Portability**: Move environments between systems easily — images work with both Docker and Podman
+- **Portability**: Move environments between systems easily, since images work with both Docker and Podman
 - **Isolation**: Create separate environments for different tasks
 - **Disposability**: Create, experiment with, and destroy environments without impact
 - **Specialization**: Tailored environments for specific assessment needs
@@ -644,7 +644,7 @@ rfswift run -i sdr_full -n sdr_desktop \
   --desktop-pass "mysecretpass"
 ```
 
-Without a password, the desktop is unauthenticated — safe on `127.0.0.1` (default), but a security risk when exposed. The password can also be set in the config file:
+Without a password, the desktop is unauthenticated. That is safe on `127.0.0.1` (the default), but a security risk when exposed. The password can also be set in the config file:
 
 ```ini
 [desktop]
@@ -686,7 +686,7 @@ rfswift exec -c my_container \
 ```
 
 {{< callout type="info" >}}
-When desktop mode is enabled, RF Swift automatically handles VNC server startup, port binding configuration, and environment variable injection — no manual setup required inside the container. The desktop provides a full LXQt environment with application menu, taskbar, and window management.
+When desktop mode is enabled, RF Swift automatically handles VNC server startup, port binding configuration, and environment variable injection, so no manual setup is required inside the container. The desktop provides a full LXQt environment with application menu, taskbar, and window management.
 {{< /callout >}}
 
 {{< callout type="info" >}}
@@ -711,7 +711,7 @@ Once your container is running, you can use any included RF tools. For example, 
 {{< callout type="warning" >}}
 GUI applications require either X11 forwarding or remote desktop mode:
 - **X11 forwarding**: Linux needs `xhost`, macOS needs `XQuartz`, Windows has native support via Docker Desktop
-- **Remote desktop** (`--desktop`): Works on any platform — access GUI tools from a web browser with no X11 setup required
+- **Remote desktop** (`--desktop`): Works on any platform, letting you reach GUI tools from a web browser with no X11 setup
 {{< /callout >}}
 
 {{< callout emoji="⚡" >}}
@@ -847,25 +847,25 @@ Desktop Options:
 
 1. **Run with specific privileges and capabilities**:
    ```bash
-   rfswift run -i penthertz/rfswift_noble:wifi -n wifi_tools -u 0 -a NET_ADMIN,NET_RAW
+   rfswift run -i penthertz/rfswift_resolute:wifi -n wifi_tools -u 0 -a NET_ADMIN,NET_RAW
    ```
    This runs a container in unprivileged mode but adds the NET_ADMIN and NET_RAW capabilities.
 
 2. **Add custom cgroup rules and device mappings**:
    ```bash
-   rfswift run -i penthertz/rfswift_noble:sdr -n rtlsdr -g "c 226:* rwm" -s "/dev/bus/usb:/dev/bus/usb"
+   rfswift run -i penthertz/rfswift_resolute:sdr -n rtlsdr -g "c 226:* rwm" -s "/dev/bus/usb:/dev/bus/usb"
    ```
    This adds permission for device major number 226 and maps a specific RTL-SDR device.
 
 3. **Set a custom seccomp profile**:
    ```bash
-   rfswift run -i penthertz/rfswift_noble:security -n forensics -m ~/custom_seccomp.json
+   rfswift run -i penthertz/rfswift_resolute:security -n forensics -m ~/custom_seccomp.json
    ```
    This applies a custom seccomp profile to the container.
 
 4. **High-performance SDR setup with realtime mode**:
    ```bash
-   rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_capture \
+   rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_capture \
      --realtime \
      -s "/dev/bus/usb:/dev/bus/usb" \
      -g "c 189:* rwm" \
@@ -881,7 +881,7 @@ Desktop Options:
 
 5. **Combined security settings with recording**:
    ```bash
-   rfswift run -i penthertz/rfswift_noble:bluetooth -n bt_scanner \
+   rfswift run -i penthertz/rfswift_resolute:bluetooth -n bt_scanner \
      -t bridge \
      -a NET_ADMIN \
      -g "c 226:* rwm,c 116:* rwm" \
@@ -899,7 +899,7 @@ Desktop Options:
 
 6. **Rootless Podman with explicit engine selection**:
    ```bash
-   rfswift --engine podman run -i penthertz/rfswift_noble:sdr_full -n rootless_sdr \
+   rfswift --engine podman run -i penthertz/rfswift_resolute:sdr_full -n rootless_sdr \
      -s "/dev/bus/usb:/dev/bus/usb" \
      -b ~/captures:/root/captures \
      --realtime

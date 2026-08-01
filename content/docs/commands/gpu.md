@@ -10,7 +10,7 @@ next: /docs/commands/ports
 Enable GPU access in containers for hardware-accelerated workloads: CUDA/OpenCL computing, GPU-based signal processing, machine learning inference, and GUI rendering.
 
 {{< callout emoji="🔍" >}}
-**Auto-detection**: RF Swift automatically detects your GPU vendor (NVIDIA, AMD, or Intel) and configures the container accordingly. Just use `--gpus all` — RF Swift handles the rest.
+**Auto-detection**: RF Swift automatically detects your GPU vendor (NVIDIA, AMD, or Intel) and configures the container accordingly. Just use `--gpus all` and RF Swift handles the rest.
 {{< /callout >}}
 
 ## How It Works
@@ -49,7 +49,7 @@ The interactive wizard also offers "GPU passthrough" as a feature toggle.
 
 ## Prerequisites
 
-You need the GPU drivers and runtime installed on the **host** — not inside the container.
+You need the GPU drivers and runtime installed on the **host**, not inside the container.
 
 ### NVIDIA GPUs
 
@@ -99,8 +99,8 @@ You need the GPU drivers and runtime installed on the **host** — not inside th
 rfswift exec -c gpu_sdr -e "nvidia-smi"
 
 # Specific GPU in multi-GPU system (NVIDIA only)
-rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_gpu --gpus 0
-rfswift run -i penthertz/rfswift_noble:sdr_full -n ml_gpu --gpus 1
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_gpu --gpus 0
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n ml_gpu --gpus 1
 
 # CUDA / PyTorch verification
 rfswift exec -c gpu_sdr
@@ -142,11 +142,11 @@ When RF Swift detects an AMD GPU (vendor `0x1002` or `/dev/kfd`), `--gpus all` a
 
 ### Usage
 
-With auto-detection, just use `--gpus all` — RF Swift handles the rest:
+With auto-detection, just use `--gpus all` and RF Swift handles the rest:
 
 ```bash
 # Create container (auto-detects AMD and adds /dev/kfd + /dev/dri + cgroup)
-rfswift run -i penthertz/rfswift_noble:sdr_full -n rocm_sdr --gpus all
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n rocm_sdr --gpus all
 
 # Add GPU to existing container
 rfswift gpus add -c sdr_work
@@ -162,8 +162,8 @@ RF Swift adds the following automatically:
 
 | What | Value | Purpose |
 |------|-------|---------|
-| Device | `/dev/kfd` | Kernel Fusion Driver — ROCm compute interface |
-| Device | `/dev/dri` | Direct Rendering Infrastructure — GPU render nodes |
+| Device | `/dev/kfd` | Kernel Fusion Driver, the ROCm compute interface |
+| Device | `/dev/dri` | Direct Rendering Infrastructure, the GPU render nodes |
 | Cgroup rule | `c 226:* rwm` | Allow access to DRI device nodes |
 
 You can also configure manually if needed:
@@ -197,7 +197,7 @@ Or expose only specific render nodes:
 
 ```bash
 # Only first GPU
-rfswift run -i penthertz/rfswift_noble:sdr_full -n rocm_gpu0 \
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n rocm_gpu0 \
   -s /dev/kfd:/dev/kfd,/dev/dri/renderD128:/dev/dri/renderD128 \
   -g "c 226:* rwm"
 ```
@@ -207,7 +207,7 @@ rfswift run -i penthertz/rfswift_noble:sdr_full -n rocm_gpu0 \
 ```yaml
 name: rocm-sdr
 description: SDR with AMD GPU (ROCm)
-image: penthertz/rfswift_noble:sdr_full
+image: penthertz/rfswift_resolute:sdr_full
 gpus: all
 ```
 
@@ -244,7 +244,7 @@ When RF Swift detects an Intel GPU (vendor `0x8086`), `--gpus all` automatically
 
 ```bash
 # Create container (auto-detects Intel and adds /dev/dri + cgroup)
-rfswift run -i penthertz/rfswift_noble:sdr_full -n intel_sdr --gpus all
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n intel_sdr --gpus all
 
 # Add GPU to existing container
 rfswift gpus add -c sdr_work
@@ -275,7 +275,7 @@ python3 -c "import intel_extension_for_pytorch as ipex; print('Intel GPU availab
 ```yaml
 name: intel-sdr
 description: SDR with Intel GPU
-image: penthertz/rfswift_noble:sdr_full
+image: penthertz/rfswift_resolute:sdr_full
 gpus: all
 ```
 
@@ -283,7 +283,7 @@ gpus: all
 
 ## Quick Comparison
 
-All three vendors use the same `--gpus all` flag — RF Swift auto-detects and configures accordingly:
+All three vendors use the same `--gpus all` flag, and RF Swift auto-detects and configures accordingly:
 
 | | NVIDIA | AMD (ROCm) | Intel |
 |--|--------|-----------|-------|
@@ -319,10 +319,10 @@ nvidia-ctk cdi list  # verify
 
 ### Podman with AMD/Intel
 
-Works the same as Docker — device bindings and cgroup rules are standard Linux features:
+Works the same as Docker, since device bindings and cgroup rules are standard Linux features:
 
 ```bash
-rfswift --engine podman run -i penthertz/rfswift_noble:sdr_full -n rocm_sdr \
+rfswift --engine podman run -i penthertz/rfswift_resolute:sdr_full -n rocm_sdr \
   -s /dev/kfd:/dev/kfd,/dev/dri:/dev/dri \
   -g "c 226:* rwm"
 ```
@@ -420,7 +420,7 @@ rfswift gpus add -c container
 ---
 
 {{< callout emoji="🎮" >}}
-**Quick Start (any GPU)**: `rfswift run -n my_gpu -i penthertz/rfswift_noble:sdr_full --gpus all` — RF Swift auto-detects NVIDIA, AMD, or Intel and configures the container accordingly.
+**Quick Start (any GPU)**: `rfswift run -n my_gpu -i penthertz/rfswift_resolute:sdr_full --gpus all`. RF Swift auto-detects NVIDIA, AMD, or Intel and configures the container accordingly.
 {{< /callout >}}
 
 {{< callout type="warning" >}}
@@ -428,5 +428,5 @@ rfswift gpus add -c container
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**Profiles**: `gpus: all` in a profile YAML works for any GPU vendor — the auto-detection runs at container creation time.
+**Profiles**: `gpus: all` in a profile YAML works for any GPU vendor, because the auto-detection runs at container creation time.
 {{< /callout >}}

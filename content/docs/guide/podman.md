@@ -87,7 +87,7 @@ rfswift --engine podman run -i sdr_full -n my_sdr
 
 ## Rootless Mode
 
-By default, Podman runs rootless — no `sudo` required. RF Swift automatically adapts:
+By default, Podman runs rootless, so no `sudo` is required. RF Swift automatically adapts:
 
 ### What Works in Rootless Mode
 
@@ -136,7 +136,7 @@ Rootless Podman doesn't support device cgroup rules. RF Swift detects this and p
 ```
 
 {{< callout type="info" >}}
-**Devices still work** — you can use USB devices that are plugged in before container start. What doesn't work without cgroup rules is **hotplug** (plugging/unplugging devices while the container is running).
+**Devices still work**: you can use USB devices that are plugged in before container start. What doesn't work without cgroup rules is **hotplug** (plugging/unplugging devices while the container is running).
 {{< /callout >}}
 
 ---
@@ -189,7 +189,7 @@ Podman may prompt for a registry when using short image names. RF Swift normaliz
 rfswift --engine podman run -i sdr_full -n my_sdr
 
 # Full name (no resolution needed)
-rfswift --engine podman run -i docker.io/penthertz/rfswift_noble:sdr_full -n my_sdr
+rfswift --engine podman run -i docker.io/penthertz/rfswift_resolute:sdr_full -n my_sdr
 ```
 
 ### Container Management
@@ -223,7 +223,7 @@ rfswift --engine podman import container -i backup.tar.gz
 Rootless Podman uses `slirp4netns` or `pasta` for networking instead of a real bridge:
 
 ```bash
-# Host network (default) — works with slirp4netns
+# Host network (default), works with slirp4netns
 rfswift --engine podman run -i sdr_full -n my_sdr
 
 # Bridge network
@@ -310,7 +310,7 @@ rfswift --engine podman run -i sdr_full -n my_sdr -s /dev/bus/usb:/dev/bus/usb
 
 ### "Rootless Podman does not support device cgroup rules"
 
-**Not an error** — this is informational. Your container will still work; only USB hotplug is affected. Plug in devices before starting the container.
+**Not an error**, just informational. Your container will still work; only USB hotplug is affected. Plug in devices before starting the container.
 
 To get full cgroup support:
 ```bash
@@ -338,7 +338,7 @@ rfswift --engine podman exec -c my_container
 **Solutions:**
 ```bash
 # Option 1: Pull without sudo (rootless)
-podman pull penthertz/rfswift_noble:sdr_full
+podman pull penthertz/rfswift_resolute:sdr_full
 
 # Option 2: Configure additionalimage stores to see root images
 # Add to ~/.config/containers/storage.conf:
@@ -381,7 +381,7 @@ Or use `sudo` for full access.
 ---
 
 {{< callout emoji="🔒" >}}
-**Security Advantage**: Podman's rootless mode provides better isolation than Docker. Even if a container escape occurs, the attacker only has unprivileged user access — not root.
+**Security Advantage**: Podman's rootless mode provides better isolation than Docker. Even if a container escape occurs, the attacker only has unprivileged user access, not root.
 {{< /callout >}}
 
 {{< callout emoji="💡" >}}

@@ -91,7 +91,7 @@ chrt -f 50 hackrf_transfer -r samples.bin -f 433920000 -s 8000000
 **Create new container with realtime mode:**
 ```bash
 # Use --realtime flag during creation
-rfswift run -n sdr_realtime -i penthertz/rfswift_noble:sdr_full --realtime
+rfswift run -n sdr_realtime -i penthertz/rfswift_resolute:sdr_full --realtime
 
 # Container is ready for low-latency SDR work
 rfswift exec -c sdr_realtime
@@ -100,7 +100,7 @@ rfswift exec -c sdr_realtime
 **Professional RF testing setup:**
 ```bash
 # Create optimized container
-rfswift run -n rf_pentest -i penthertz/rfswift_noble:rfid --realtime
+rfswift run -n rf_pentest -i penthertz/rfswift_resolute:rfid --realtime
 
 # Verify configuration
 rfswift realtime status -c rf_pentest

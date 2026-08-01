@@ -97,7 +97,7 @@ An editable section for assessor findings, observations, and conclusions.
 
 {{< tabs items="Markdown,HTML,PDF" >}}
   {{< tab >}}
-**Markdown** (default) — no dependencies, works everywhere.
+**Markdown** (the default) has no dependencies and works everywhere.
 
 ```bash
 rfswift report generate -c my_sdr
@@ -111,7 +111,7 @@ The Markdown output can be:
 - Included in Git repositories alongside your code
   {{< /tab >}}
   {{< tab >}}
-**HTML** — styled, print-ready, zero dependencies.
+**HTML** is styled and print-ready, with zero dependencies.
 
 ```bash
 rfswift report generate -c my_sdr --format html
@@ -126,7 +126,7 @@ The HTML output features:
 - No external dependencies (all CSS inline)
   {{< /tab >}}
   {{< tab >}}
-**PDF** — requires `pandoc` or `wkhtmltopdf`.
+**PDF** requires `pandoc` or `wkhtmltopdf`.
 
 ```bash
 rfswift report generate -c my_sdr --format pdf -o assessment.pdf
@@ -155,7 +155,7 @@ If neither tool is installed, RF Swift generates an HTML file instead and shows 
 
 ```bash
 # Run an SDR assessment
-rfswift run -i penthertz/rfswift_noble:sdr_full -n hackrf_assessment --record
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n hackrf_assessment --record
 
 # ... do your work inside the container ...
 # hackrf_info
@@ -170,7 +170,7 @@ rfswift report generate -c hackrf_assessment --format html -o hackrf-report.html
 
 ```bash
 rfswift report generate -c client_pentest \
-  --title "Wireless Security Assessment — Client X — March 2026" \
+  --title "Wireless Security Assessment - Client X - March 2026" \
   --format pdf \
   -o client-x-wireless-assessment.pdf
 ```
@@ -178,7 +178,7 @@ rfswift report generate -c client_pentest \
 ### Interactive Mode
 
 ```bash
-# No flags — picks container from a list, generates Markdown
+# No flags: picks container from a list, generates Markdown
 rfswift report generate
 ```
 
@@ -186,7 +186,7 @@ rfswift report generate
 
 ```bash
 # 1. Create container with workspace and recording
-rfswift run -i penthertz/rfswift_noble:sdr_full -n pentest_wifi --record
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n pentest_wifi --record
 
 # 2. All captures go to ~/rfswift-workspace/pentest_wifi/
 #    Inside the container, /workspace is the shared directory
@@ -197,7 +197,7 @@ airodump-ng wlan0 -w captures/scan
 
 # 3. Generate report with all artifacts
 rfswift report generate -c pentest_wifi \
-  --title "Wi-Fi Penetration Test — Site Alpha" \
+  --title "Wi-Fi Penetration Test - Site Alpha" \
   --format html
 
 # 4. Report includes:

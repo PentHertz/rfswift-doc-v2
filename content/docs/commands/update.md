@@ -37,12 +37,12 @@ rfswift update
 **Example output:**
 ```
 Checking for updates...
-Current version: v0.6.4
-Latest version: v0.6.5
+Current version: v2.1.0
+Latest version: v3.0.0
 Downloading update...
-Installing RF Swift v0.6.5...
+Installing RF Swift v3.0.0...
 ✓ Update successful!
-RF Swift updated to v0.6.5
+RF Swift updated to v3.0.0
 ```
 
 ---
@@ -119,7 +119,7 @@ curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main
 rfswift --version
 
 # Check latest release
-# Visit: https://github.com/penthertz/rfswift/releases
+# Visit: https://github.com/PentHertz/RF-Swift/releases
 
 # Force reinstall if needed
 curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh

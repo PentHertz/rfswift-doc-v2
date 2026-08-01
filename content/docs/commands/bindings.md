@@ -136,7 +136,7 @@ When you add a binding to a running container:
 
 1. **Container configuration updated** by the active engine (Docker or Podman)
 2. **Namespace modified** to include new mount/device
-3. **Immediate access** — no restart needed
+3. **Immediate access**, with no restart needed
 4. **Persists** until removed or container deleted
 
 ```mermaid

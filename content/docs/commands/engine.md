@@ -199,7 +199,7 @@ Podman may prompt for a registry when using short image names:
 
 ```bash
 # Full name (no prompt)
-rfswift --engine podman images pull -i docker.io/penthertz/rfswift_noble:sdr_full
+rfswift --engine podman images pull -i docker.io/penthertz/rfswift_resolute:sdr_full
 
 # Short name (may prompt for registry selection)
 rfswift --engine podman images pull -i sdr_full
@@ -345,7 +345,7 @@ Manage the Lima QEMU VM lifecycle on macOS. These commands give you direct contr
 
 ### Automatic VM Lifecycle Management
 
-RF Swift now **automatically manages the Lima VM** — no manual `limactl` commands required. When you run any command with `--engine lima`, RF Swift transparently handles the full VM lifecycle:
+RF Swift now **automatically manages the Lima VM**, so you never need to run `limactl` yourself. When you run any command with `--engine lima`, RF Swift transparently handles the full VM lifecycle:
 
 1. **Instance detection**: Checks if the Lima instance exists
 2. **Auto-creation**: If the instance doesn't exist, creates it from the best available template (searches standard paths, falls back to a built-in inline template)
@@ -354,18 +354,18 @@ RF Swift now **automatically manages the Lima VM** — no manual `limactl` comma
 5. **Socket routing**: Sets `DOCKER_HOST` to the Lima Docker socket so all container operations work transparently
 
 ```bash
-# First run — RF Swift creates the VM, installs Docker + USB tools, starts everything
+# First run: RF Swift creates the VM, installs Docker + USB tools, starts everything
 rfswift --engine lima run -i sdr_full -n my_sdr
 # → "Lima instance 'rfswift' not found. Creating it..."
 # → "Lima instance 'rfswift' created and started"
 # → Container runs normally
 
-# Second run — VM already exists, RF Swift just starts it if stopped
+# Second run: the VM already exists, RF Swift just starts it if stopped
 rfswift --engine lima run -i sdr_full -n another_sdr
 # → "Starting Lima instance 'rfswift'..."
 # → Container runs normally
 
-# VM already running — no extra steps, runs immediately
+# VM already running, so this runs immediately with no extra steps
 rfswift --engine lima exec -c my_sdr
 ```
 
@@ -377,7 +377,7 @@ The auto-created VM is fully provisioned with:
 - Udev rules for 100+ RF/USB devices (HackRF, RTL-SDR, USRP, BladeRF, Airspy, PlutoSDR, LimeSDR, etc.)
 
 {{< callout type="info" >}}
-**Zero-configuration USB workflow on macOS**: Just plug in your SDR, run `rfswift --engine lima run ...`, and the VM is created, started, and ready — all automatically.
+**Zero-configuration USB workflow on macOS**: Just plug in your SDR, run `rfswift --engine lima run ...`, and the VM is created, started and ready, all automatically.
 {{< /callout >}}
 
 ### engine lima status
@@ -404,7 +404,7 @@ rfswift engine lima status --instance my_custom_vm
 
 ### engine lima reconfig
 
-Apply an updated YAML template to the VM. By default this is **non-destructive** — the VM is stopped, the template is applied, and the VM is restarted. The VM filesystem (Docker images, containers, etc.) is preserved.
+Apply an updated YAML template to the VM. By default this is **non-destructive**: the VM is stopped, the template is applied, and the VM is restarted. The VM filesystem (Docker images, containers, etc.) is preserved.
 
 ```bash
 # Non-destructive: stop → apply template → restart
@@ -475,5 +475,5 @@ rfswift engine lima reset --template ~/my-custom-lima.yaml
 ---
 
 {{< callout emoji="💡" >}}
-**Tip**: If you always use the same engine, you don't need `--engine` at all — RF Swift auto-detects and uses whatever is available. The flag is only needed when both engines are installed and you want to force a specific one.
+**Tip**: If you always use the same engine, you don't need `--engine` at all, because RF Swift auto-detects and uses whatever is available. The flag is only needed when both engines are installed and you want to force a specific one.
 {{< /callout >}}

@@ -45,9 +45,9 @@ The installer will detect your system and prompt you to choose a container engin
 
 ```
 📝 Which container engine would you like to install?
-   🐳 Docker  — Industry standard, requires daemon (root)
-   🦭 Podman  — Daemonless, rootless by default
-   🦙 Lima    — QEMU VM with USB passthrough (macOS only)
+   🐳 Docker  - Industry standard, requires daemon (root)
+   🦭 Podman  - Daemonless, rootless by default
+   🦙 Lima    - QEMU VM with USB passthrough (macOS only)
 1) Docker   2) Podman   3) Both   4) Lima   5) Skip
 ```
 
@@ -84,7 +84,7 @@ On Linux, Docker or Podman, BuildX, and Go can be directly installed with the `s
 
 {{< tabs items="Docker,Podman" >}}
   {{< tab >}}
-**Docker** — Industry standard container engine
+**Docker** is the industry standard container engine
 
 ```bash
 # Install Docker via official script
@@ -99,7 +99,7 @@ docker run hello-world
 ```
   {{< /tab >}}
   {{< tab >}}
-**Podman** — Daemonless, rootless container engine
+**Podman** is a daemonless, rootless container engine
 
 ```bash
 # Debian / Ubuntu
@@ -187,7 +187,7 @@ You may need to log out and back in for the changes to take effect. Verify it wo
   {{< tab >}}
 **Podman Rootless Mode**
 
-Podman runs rootless by default — no group membership or daemon required. Just make sure subordinate UID/GID ranges are configured:
+Podman runs rootless by default, so you need no group membership and no daemon. Just make sure subordinate UID/GID ranges are configured:
 
 ```bash
 # Check your ranges
@@ -286,7 +286,7 @@ Like Docker Desktop, Podman on macOS cannot forward USB devices into containers.
 {{< /callout >}}
   {{< /tab >}}
   {{< tab >}}
-**Lima — USB passthrough for macOS**
+**Lima: USB passthrough for macOS**
 
 Lima runs a QEMU VM with USB hot-plug support. RF Swift containers run inside Lima's Docker, where USB devices are visible.
 
@@ -315,7 +315,7 @@ rfswift macusb list
 rfswift macusb attach --vid 0x1d50 --pid 0x604b
 
 # 3. Run container via Lima (not Docker Desktop)
-rfswift --engine lima run -i penthertz/rfswift_noble:sdr_light -n sdr_work
+rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_light -n sdr_work
 
 # 4. When done, detach
 rfswift macusb detach --vid 0x1d50 --pid 0x604b
@@ -375,4 +375,4 @@ If you encounter issues with the one-line installer:
 
 - **"WARN[0000] "/" is not a shared mount"**: Run `sudo mount --make-rshared /` or add it to `/etc/fstab`
 - **Device passthrough not working**: Some devices may require `--privileged` or explicit `--device` flags; RF Swift handles this automatically in most cases
-- **Image pull fails with "short-name resolution"**: Use the full image name, e.g., `docker.io/penthertz/rfswift_noble:sdr_light`
+- **Image pull fails with "short-name resolution"**: Use the full image name, e.g., `docker.io/penthertz/rfswift_resolute:sdr_light`

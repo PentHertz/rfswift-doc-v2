@@ -44,7 +44,7 @@ The `config.ini` file is organized into sections for different aspects of RF Swi
 ```ini
 [general]
 imagename = myrfswift:latest
-repotag = penthertz/rfswift
+repotag = penthertz/rfswift_resolute
 
 [container]
 shell = /bin/zsh
@@ -80,11 +80,11 @@ ssl = false
 | Parameter | Description | Example |
 |-----------|-------------|---------|
 | `imagename` | Default image used when running containers without `-i` | `myrfswift:latest` |
-| `repotag` | Default repository for RF Swift images | `penthertz/rfswift` |
+| `repotag` | Default repository for RF Swift images | `penthertz/rfswift_resolute` |
 
 
   {{< callout type="info" >}}
-  RF Swift images by default are built in Jammy version of Ubuntu, but are available in Beta version with Noble build. If you want to try Ubuntu Noble versions, please change repotag to `penthertz/rfswift_noble`.
+  Since v3.0.0 "Resonance", official RF Swift images are built on **Ubuntu 26.04 "Resolute"** and published under `penthertz/rfswift_resolute`, which is the default `repotag`. The previous Ubuntu 24.04 "Noble" images are still available. Set `repotag = penthertz/rfswift_noble` if you need to fall back to them.
   {{< /callout >}}
 
 #### Container Section
@@ -134,8 +134,7 @@ ssl = false
 
 #### Changing repository
 
-RF Swift Ubuntu Noble (version 24.04) images are in the way, and you can also test them using the `penthertz/rfswift_noble:<tag>` prefix.
-In case you want to use Noble images with a short tag name, modify you RF Swift profile `config.ini` file as follows:
+The `repotag` value is the repository RF Swift prepends to short image tags, so `rfswift run -i sdr_full` resolves to `penthertz/rfswift_resolute:sdr_full` by default. You can point it at something else, such as the legacy Noble images, a mirror, or your own registry, by editing your `config.ini`:
 
 ```
 [general]
@@ -147,7 +146,7 @@ repotag = penthertz/rfswift_noble
 
 ## Container Profiles
 
-In addition to the global `config.ini`, RF Swift supports **profiles** — YAML presets that bundle image, network mode, features, device mappings, capabilities, cgroup rules, and port bindings into a single named preset.
+In addition to the global `config.ini`, RF Swift supports **profiles**: YAML presets that bundle image, network mode, features, device mappings, capabilities, cgroup rules, and port bindings into a single named preset.
 
 ### Profile Storage
 
@@ -178,7 +177,7 @@ Generate default profiles with `rfswift profile init`, then use them:
 rfswift run --profile sdr-full -n my_sdr
 
 # CLI flags override profile values
-rfswift run --profile wifi -n my_wifi -i penthertz/rfswift_noble:sdr_full
+rfswift run --profile wifi -n my_wifi -i penthertz/rfswift_resolute:sdr_full
 ```
 
 See the [`profile` command reference](/docs/commands/profile/) for full details on creating, listing, and managing profiles.
@@ -234,19 +233,19 @@ Global Flags:
 
 ```bash
 # Run with custom image and name
-rfswift run -i penthertz/rfswift_noble:sdr_full -n my_sdr_container
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n my_sdr_container
 
 # Share a host directory with the container
-rfswift run -i penthertz/rfswift_noble:sdr_full -b /home/user/captures:/data/captures
+rfswift run -i penthertz/rfswift_resolute:sdr_full -b /home/user/captures:/data/captures
 
 # Add network capabilities for Wi-Fi tools
-rfswift run -i penthertz/rfswift_noble:wifi -a NET_ADMIN
+rfswift run -i penthertz/rfswift_resolute:wifi -a NET_ADMIN
 
 # Use bridge network with port mapping
-rfswift run -i penthertz/rfswift_noble:sdr_full -t bridge -w 8080:80/tcp
+rfswift run -i penthertz/rfswift_resolute:sdr_full -t bridge -w 8080:80/tcp
 
 # Specify a custom shell
-rfswift run -i penthertz/rfswift_noble:sdr_full -e /bin/bash
+rfswift run -i penthertz/rfswift_resolute:sdr_full -e /bin/bash
 ```
 
 ## Dynamic Container Modification with Bindings
@@ -360,7 +359,7 @@ rfswift -q exec -c my_container
 The quiet/disconnected mode can be combined with any RF Swift command and its respective options.
 
 {{< callout type="info" >}}
-Using quiet mode doesn't affect RF Swift's functionality—it only disables the automatic update checks. Consider periodically checking for updates manually with `rfswift update` to ensure you have the latest features and security improvements.
+Using quiet mode doesn't affect RF Swift's functionality. It only disables the automatic update checks. Consider periodically checking for updates manually with `rfswift update` to ensure you have the latest features and security improvements.
 {{< /callout >}}
 
 ## Best Practices
@@ -376,7 +375,7 @@ Using quiet mode doesn't affect RF Swift's functionality—it only disables the 
 ### SDR Development Environment
 
 ```bash
-rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_dev \
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_dev \
   -b ~/sdr_projects:/projects \
   -s /dev/ttyUSB0:/dev/ttyUSB0
 ```
@@ -384,7 +383,7 @@ rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_dev \
 ### Wi-Fi Security Testing
 
 ```bash
-rfswift run -i penthertz/rfswift_noble:wifi -n wifi_testing \
+rfswift run -i penthertz/rfswift_resolute:wifi -n wifi_testing \
   -a NET_ADMIN,NET_RAW \
   -b ~/wifi_captures:/captures
 ```
@@ -393,7 +392,7 @@ rfswift run -i penthertz/rfswift_noble:wifi -n wifi_testing \
 
 ```bash
 # Create a container with no network
-rfswift run -i penthertz/rfswift_noble:reversing -n firmware_analysis \
+rfswift run -i penthertz/rfswift_resolute:reversing -n firmware_analysis \
   -t none \
   -b ~/firmware:/firmware
 ```

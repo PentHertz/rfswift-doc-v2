@@ -40,11 +40,11 @@ This command displays a table of available images with important details:
 ┌──────────────────────────────┬──────────────────────┬────────────────────────────────────────────────┬──────────────┐
 │ Tag                          │ Pushed Date          │ Image                                          │ Architecture │
 ├──────────────────────────────┼──────────────────────┼────────────────────────────────────────────────┼──────────────┤
-│ sdr_full_nvidiagpu_amd64     │ 2025-03-24T17:37:59Z │ penthertz/rfswift_noble:sdr_full_nvidiagpu_amd64     │ amd64        │
-│ hardware                     │ 2025-03-24T17:33:21Z │ penthertz/rfswift_noble:hardware                     │ amd64        │
-│ sdr_full_intelgpu_amd64      │ 2025-03-24T17:09:38Z │ penthertz/rfswift_noble:sdr_full_intelgpu_amd64      │ amd64        │
-│ sdr_full                     │ 2025-03-24T16:43:07Z │ penthertz/rfswift_noble:sdr_full                     │ amd64        │
-│ telecom_5G                   │ 2025-03-24T16:36:22Z │ penthertz/rfswift_noble:telecom_5G                   │ amd64        │
+│ sdr_full_nvidiagpu_amd64     │ 2025-03-24T17:37:59Z │ penthertz/rfswift_resolute:sdr_full_nvidiagpu_amd64     │ amd64        │
+│ hardware                     │ 2025-03-24T17:33:21Z │ penthertz/rfswift_resolute:hardware                     │ amd64        │
+│ sdr_full_intelgpu_amd64      │ 2025-03-24T17:09:38Z │ penthertz/rfswift_resolute:sdr_full_intelgpu_amd64      │ amd64        │
+│ sdr_full                     │ 2025-03-24T16:43:07Z │ penthertz/rfswift_resolute:sdr_full                     │ amd64        │
+│ telecom_5G                   │ 2025-03-24T16:36:22Z │ penthertz/rfswift_resolute:telecom_5G                   │ amd64        │
 ...
 ```
 
@@ -64,13 +64,20 @@ When in doubt, use the generic tags (without architecture suffix) as RF Swift wi
 
 | Category | Description | Example Images |
 |----------|-------------|----------------|
-| **SDR** | Software-defined radio tools | `sdr_light`, `sdr_full`, `sdr_light_intelgpu`, `sdr_full_nvidiagpu`, `deeptempest` |
+| **SDR** | Software-defined radio tools | `sdr_light`, `sdr_full`, `sdr_light_intelgpu`, `sdr_full_nvidiagpu`, `deeptempest`, `sdr_gnuradio4` 🆕 |
 | **Telecom** | Mobile network analysis | `telecom_utils`, `telecom_2Gto3G`, `telecom_4G_5GNSA`, `telecom_5G`, `telecom_5G_bladerf`, `telecom_4Gto5G`, `telecom_5G_train` |
 | **Short-range** | Bluetooth, Wi-Fi and RFID | `bluetooth`, `wifi`, `rfid` |
 | **Hardware** | Hardware security tools | `hardware`, `reversing` |
 | **Automotive** | Vehicle communications | `automotive` |
 | **Network** | General network security tools | `network` |
+| **Active Directory** 🆕 | Windows domain engagements | `ad` |
+| **Mobile** 🆕 | Android application and device assessment | `android` |
+| **OSINT** 🆕 | Open-source intelligence and reconnaissance | `osint` |
 | **Base images** | Foundation for other images | `corebuild`, `sdrsa_devices`, `sdrsa_devices_antsdr`, `sdrsa_devices_rtlsdrv4` |
+
+{{< callout emoji="🆕" >}}
+**New in v3.0.0 "Resonance"**: `ad`, `android` and `osint` extend RF Swift beyond radio into full engagement territory, and `sdr_gnuradio4` lets you try GNU Radio 4.0 in seconds without disturbing the GNU Radio 3.10 setup you already rely on. See the [v3.0.0 release notes](/docs/release-notes-v3) for the full picture.
+{{< /callout >}}
 
 ## Image Hierarchy
 
@@ -90,7 +97,13 @@ graph TD;
     B[sdrsa_devices]-->R[hardware];
     B[sdrsa_devices]-->S[network];
     B[sdrsa_devices]-->DT[deeptempest];
-    S[network]-->J[wifi];
+    A-->OS[osint];
+    A-->AN[android];
+    S[network]-->WB[wifi_basic];
+    WB-->WF[wifi_full];
+    S[network]-->AD[ad];
+    H-->J[wifi];
+    H-->G4[sdr_gnuradio4];
     H-->K[sdr_full];
     H-->H2[sdr_light_intelgpu];
     H-->H3[sdr_light_nvidiagpu];

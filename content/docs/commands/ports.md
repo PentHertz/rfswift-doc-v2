@@ -153,7 +153,7 @@ rfswift ports unexpose -c web_server -p "80/tcp"
 **Web server on custom port:**
 ```bash
 # Start container
-rfswift run -i penthertz/rfswift_noble:sdr_full -n web_service
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n web_service
 
 # Add web server port
 rfswift ports bind -c web_service -b "8080:80/tcp"
@@ -169,7 +169,7 @@ exit
 **Multiple service ports:**
 ```bash
 # API server container
-rfswift run -i penthertz/rfswift_noble:sdr_full -n api_server
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n api_server
 
 # Bind HTTP and HTTPS
 rfswift ports bind -c api_server -b "8080:80/tcp"
@@ -187,7 +187,7 @@ rfswift ports expose -c api_server -p "9090/tcp"
 **UDP service:**
 ```bash
 # Network analysis container
-rfswift run -i penthertz/rfswift_noble:sdr_full -n netflow
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n netflow
 
 # Add UDP port for netflow
 rfswift ports bind -c netflow -b "2055:2055/udp"
@@ -201,7 +201,7 @@ exit
 **Development server:**
 ```bash
 # Development container
-rfswift run -i penthertz/rfswift_noble:sdr_full -n dev_env
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n dev_env
 
 # Add development ports
 rfswift ports bind -c dev_env -b "3000:3000/tcp"  # React dev server
@@ -212,7 +212,7 @@ rfswift ports bind -c dev_env -b "35729:35729/tcp" # LiveReload
 **Temporary port for testing:**
 ```bash
 # Test container
-rfswift run -i penthertz/rfswift_noble:sdr_full -n test_service
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n test_service
 
 # Bind port temporarily
 rfswift ports bind -c test_service -b "9999:80/tcp"

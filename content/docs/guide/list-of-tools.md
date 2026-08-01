@@ -40,7 +40,13 @@ graph TD;
     B[sdrsa_devices]-->L[hardware];
     B[sdrsa_devices]-->H[network];
     B[sdrsa_devices]-->DT[deeptempest];
-    H[network]-->M[wifi];
+    A-->OS[osint];
+    A-->AN[android];
+    H[network]-->AD[ad];
+    H[network]-->WB[wifi_basic];
+    WB-->WF[wifi_full];
+    I[sdr_light]-->M[wifi];
+    I[sdr_light]-->G4[sdr_gnuradio4];
     I[sdr_light]-->N[sdr_full];
     I[sdr_light]-->I2[sdr_light_intelgpu];
     I[sdr_light]-->I3[sdr_light_nvidiagpu];
@@ -109,8 +115,13 @@ The `sdr_light` image includes essential software-defined radio tools for signal
 **Tool Locations:**
 Most SDR tools are installed in standard system paths (`/usr/bin`, `/usr/local/bin`), with specialized tools in:
 - `/rftools/sdr/` - SDR-specific applications
+- `/rftools/sdr/oot/` - GNU Radio out-of-tree modules
 - `/rftools/analysers/` - Spectrum analyzer software
 - `/rftools/generators/` - Signal generator software
+{{< /callout >}}
+
+{{< callout emoji="🆕" >}}
+**New in v3.0.0:** **FISSURE**, the AInfoSec RF framework, is installed in a dedicated virtual environment created with `--system-site-packages` so it reuses the GNU Radio, SoapySDR and driver stack already present in the image instead of pip-installing its own pinned copies over your system Python. Launch it with `fissure`. HydraSDR support also lands here, with the `gr-hydrasdr` GNU Radio source block and the `hydrasdr_433` decoder.
 {{< /callout >}}
 
 ### SDR Full Environment
@@ -142,6 +153,27 @@ These modules extend GNU Radio's capabilities for specific protocols and signal 
 - **GQRX**: Popular SDR receiver powered by GNU Radio
 - **SigDigger**: Signal analysis and reverse engineering tool
 - **URH**: Universal Radio Hacker for wireless protocol analysis (with HydraSDR fork enhancements)
+{{< /callout >}}
+
+### GNU Radio 4.0 🆕
+
+The `sdr_gnuradio4` image builds **GNU Radio 4.0 (RC2)** from source *alongside* the GNU Radio 3.10 already present in `sdr_light`. GR4 is a separate C++23 codebase with its own headers, namespace and prefix, so nothing about your existing 3.10 flowgraphs changes:
+
+```bash
+rfswift run -i penthertz/rfswift_resolute:sdr_gnuradio4
+```
+
+{{< csv-table "content/docs/guide/tools_for_gnuradio4.csv" >}}
+
+{{< callout type="info" >}}
+**How GR4 is isolated:**
+- Built into `/opt/gnuradio4`, exposed through `/etc/profile.d/gnuradio4.sh` (which prepends `/opt/gnuradio4/install/bin` and `/opt/gnuradio4/build/bin` to `PATH`)
+- Ships its own **Python 3.12 virtual environment** at `/opt/gnuradio4/venv` for the embedded `PythonBlock` interpreter, so it never touches the system Python (3.14 on Resolute) or GNU Radio 3.10's bindings
+- The apt GNU Radio 3.10 remains the default `gnuradio-companion` in the image
+{{< /callout >}}
+
+{{< callout type="warning" >}}
+**GNU Radio 4 is a release candidate.** It is experimental, its install tooling is still maturing upstream, and the build is heavy and template-intensive. Expect API churn. This image is for evaluating GR4, not for production flowgraphs. Not yet available on RISC-V64.
 {{< /callout >}}
 
 ### RFID Tools
@@ -185,6 +217,8 @@ Without this capability, many Bluetooth tools will fail with permission errors w
 Some Bluetooth tools run in isolated Python environments:
 - **Mirage**: Uses Python 3.10 venv at `/opt/mirage-env/`, accessed via wrapper script at `/usr/sbin/mirage`
 - **Bluing**: Uses Python 3.10 venv at `/rftools/bluetooth/bluing/`, run with `bluing_run` script
+
+**New in v3.0.0:** **Caeruleus**, a single Go binary covering the whole BLE assessment workflow on BlueZ (scan, GATT enumeration, read/write/notify, fuzzing and structured assessment with JSON/JSONL output), and **BlueSploit**, a Bluetooth exploitation framework. Both sit next to the existing **WhisperPair** exploit for CVE-2025-36911.
 
 **Tool Locations:**
 - `/rftools/bluetooth/` - Main Bluetooth tools directory
@@ -250,6 +284,12 @@ Tools for GSM, UMTS, and related technologies:
 - **OsmoCom suite**: Builds on all architectures but requires significant system resources
 {{< /callout >}}
 
+{{< callout emoji="🆕" >}}
+**OpenBTS and OpenBTS-UMTS on Resolute.** Both are legacy C++ code bases that GCC 15 (the compiler shipping with Ubuntu 26.04) rejects outright. RF Swift installs them from PentHertz forks on dedicated `resolute` branches, [PentHertz/OpenBTS](https://github.com/PentHertz/OpenBTS) and [PentHertz/OpenBTS-UMTS](https://github.com/PentHertz/OpenBTS-UMTS), rather than from the dead upstreams.
+
+Porting is still in progress: some translation units (notably the OpenBTS-UHD `Transceiver` code, which trips a `std::complex` ambiguity under GCC 15) may still fail to build. RF Swift records these as build failures instead of aborting the image, so check `/var/lib/db/rfswift_build_report.tsv` inside a `telecom_2Gto3G` container to see exactly what landed in *your* build. YateBTS and the OsmoCom suite are unaffected and remain the recommended 2G/3G path.
+{{< /callout >}}
+
 {{< callout type="info" >}}
 **Tool Locations:**
 - `/telecom/2G/` - 2G base stations and tools
@@ -278,6 +318,12 @@ Tools for 5G standalone (SA) and core networks:
 
 {{< csv-table "content/docs/guide/tools_for_telecom_5g.csv" >}}
 
+{{< callout emoji="🆕" >}}
+**5G SA now runs on OCUDU.** As of v3.0.0, the CU/DU stack installed in the 5G images is [OCUDU](https://gitlab.com/ocudu/ocudu) instead of srsRAN Project. The `srsran5GSA_soft_install` function is kept as an alias so existing recipes and scripts keep working, but it now installs OCUDU. It builds into `/telecom/5G/ocudu` and still provides the `gnb` binary, so your existing configuration files and workflows carry over.
+
+srsRAN 4G is unaffected and remains the 4G/5G-NSA stack. See the [4G/5G section](#4g5g-analysis-tools) above.
+{{< /callout >}}
+
 {{< callout type="warning" >}}
 **MongoDB Requirement:**
 Open5GS requires MongoDB for subscriber database. The container includes:
@@ -302,11 +348,15 @@ The `automotive` image contains tools for vehicle network analysis and communica
 - Vehicle protocol analyzers
 {{< /callout >}}
 
-### Hardware Reverse Engineering
+### Reverse Engineering & SAST
 
-The `reversing` image provides tools for firmware analysis and hardware reverse engineering:
+The `reversing` image provides tools for firmware analysis, hardware reverse engineering and static application security testing:
 
 {{< csv-table "content/docs/guide/tools_for_reversing.csv" >}}
+
+{{< callout emoji="🆕" >}}
+**Static analysis alongside the RE tooling.** Beyond the disassemblers and unpackers, the image carries a full SAST/fuzzing set you can point at extracted firmware and source trees: **Semgrep**, **Joern**, **cppcheck**, the **Clang static analyzer**, **AFL** and **honggfuzz**. Two of those are new in v3.0.0: **Trivy**, which scans images, filesystems and repos for vulnerabilities, misconfigurations, secrets and SBOMs, and **Sighthound**, a tree-sitter based scanner that follows source-to-sink taint flows through Python, JS/TS, Java, PHP, C#, Go and Ruby and reports in text, JSON, CSV or SARIF.
+{{< /callout >}}
 
 {{< callout type="warning" >}}
 **Architecture-Specific Tools:**
@@ -336,6 +386,67 @@ The `network` image contains general network analysis and security tools:
 - **Kismet**: Wireless/Bluetooth packet capture and analysis
 - **Caido**: Modern web security testing platform
 - **Burp Suite Community**: Multi-architecture support (JAR fallback for non-x86_64)
+{{< /callout >}}
+
+### Active Directory 🆕
+
+The `ad` image builds on `network` and packs the tooling needed for Windows domain engagements, the part of an assessment that starts once you are past the radio layer:
+
+{{< csv-table "content/docs/guide/tools_for_ad.csv" >}}
+
+{{< callout type="info" >}}
+**Tool Locations:**
+- `/opt/ad/` - Staged AD tooling (SharpLAPS and other target-side payloads)
+- `/opt/network/` - Shared network tooling inherited from the `network` image (Responder, DonPAPI, DonPwner, pyGoldenGMSA)
+- pipx-installed tools are symlinked into `/usr/sbin/`
+{{< /callout >}}
+
+{{< callout type="warning" >}}
+**Kerberos clock skew:** domain controllers reject tickets when your clock drifts more than a few minutes, and inside a container you usually cannot (and should not) change the system clock. `skewrun` resolves the DC's time over AD protocols and fakes it via `LD_PRELOAD`/libfaketime **for the wrapped process only**, so Impacket, NetExec and friends survive `KRB_AP_ERR_SKEW` without root and without touching the host clock. Run `skewrun --help` for the exact invocation.
+{{< /callout >}}
+
+{{< callout type="warning" >}}
+**SharpLAPS** is a C#/.NET tool meant to run against Windows targets. RF Swift stages the repository under `/opt/ad/SharpLAPS` rather than compiling it on Linux. Build it on or against your Windows target.
+{{< /callout >}}
+
+### Mobile / Android 🆕
+
+The `android` image covers Android application and device assessment, from pulling an APK off a handset to running it through a full static analysis pipeline:
+
+{{< csv-table "content/docs/guide/tools_for_android.csv" >}}
+
+{{< callout type="warning" >}}
+**USB device access:** `adb` and `fastboot` need the handset bound into the container. Pass the device (or the whole USB bus) at creation time:
+
+```bash
+rfswift run -i android -n mobile_lab -s /dev/bus/usb:/dev/bus/usb
+```
+
+On macOS, use `rfswift macusb` to attach the device through the Lima VM first.
+{{< /callout >}}
+
+{{< callout type="info" >}}
+**Tool Locations and Notes:**
+- `/mobile/` - dex2jar (`/mobile/dex-tools-v2.4`) and the MobSF checkout
+- **MobSF** only supports Python 3.12-3.13, so RF Swift provisions a dedicated interpreter with `uv` at `/mobile/.mobsf-python` and drives MobSF through it. Start it with `mobsf` and browse to `http://localhost:8000` (expose the port with `-p 8000:8000`)
+- **PDF report export** in MobSF relies on `wkhtmltopdf`, which Ubuntu removed. The upstream static build is installed best-effort on amd64/arm64; MobSF runs fine without it
+{{< /callout >}}
+
+### OSINT 🆕
+
+The `osint` image collects open-source intelligence and reconnaissance tooling on top of `corebuild`:
+
+{{< csv-table "content/docs/guide/tools_for_osint.csv" >}}
+
+{{< callout type="info" >}}
+**Tool Locations:**
+- `/opt/osint/` - SpiderFoot, recon-ng and FinalRecon, each in its own Python virtual environment with a wrapper script in `/usr/local/bin`
+- pipx-installed tools are symlinked into `/usr/sbin/`
+- Go tools (`subfinder`, `assetfinder`, `waybackurls`) land in `/usr/local/bin`
+{{< /callout >}}
+
+{{< callout type="warning" >}}
+**API keys:** many OSINT tools (Censys, GHunt, SpiderFoot modules, subfinder sources) need credentials to return useful results. Configure them inside the container and commit the result with `rfswift commit`, or bind a configuration directory from the host so your keys survive container recreation.
 {{< /callout >}}
 
 ### Hardware Security
@@ -383,6 +494,12 @@ RF Swift organizes tools in specialized directories for easier discovery:
   - `/telecom/SIM/` - SIM card tools
 - `/security/` - Security testing tools (Caido, etc.)
 - `/opt/network/` - Network security tools
+- `/opt/ad/` - Active Directory tooling (`ad` image) 🆕
+- `/opt/osint/` - OSINT frameworks in their own venvs (`osint` image) 🆕
+- `/mobile/` - Android and mobile tooling (`android` image) 🆕
+- `/opt/gnuradio4/` - GNU Radio 4.0 tree and its Python venv (`sdr_gnuradio4` image) 🆕
+- `/opt/fuzzing/` - Wordlists and fuzzing resources (SecLists)
+- `/nettools/` - Network monitoring tools built from source
 - `/opt/crack/` - Password cracking tools
 - `/sast/` - Static analysis security testing
 
@@ -418,12 +535,23 @@ rfswift install -c container_name -i <installation_function_name>
 ```
 
 Common manually-installed tools:
-- `kismet_soft_install` - Kismet wireless sniffer
-- `bettercap_soft_install` - Network attack framework
 - `mdk3_soft_install` - WiFi DoS testing
 - `wifipumpkin3_soft_install` - Rogue AP framework
 - `install_soapy_modules` - Additional SoapySDR device support
 - `pocketvna_sa_device` - PocketVNA software (x86_64 only)
+- `srsran5GSA_bladerf_soft_install` - 5G SA gNB fork with bladeRF support
+
+To find out what is available in a given image, check the **Installation function** column of the tables above. Every entry marked ❌ can be installed this way.
+
+{{< callout type="info" >}}
+**Check what actually built.** RF Swift images record install failures instead of aborting the whole build, so a tool listed as installed by default may still be missing if its build broke on your architecture. Every image carries its build report at `/var/lib/db/rfswift_build_report.tsv`. Inspect it from inside a running container:
+
+```bash
+cat /var/lib/db/rfswift_build_report.tsv
+```
+
+An empty or missing file means nothing failed. Failures are recorded as `CATEGORY / STAGE / ITEM / DETAIL`, so you can see exactly which tool broke and why, then reinstall it manually with `rfswift install` once the upstream issue is fixed.
+{{< /callout >}}
 
 ### Tool Documentation
 

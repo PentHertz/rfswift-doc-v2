@@ -22,7 +22,7 @@ rfswift host audio unload
 The `host` command configures the host system to support RF Swift containers, primarily managing pulseaudio server settings for audio passthrough to containers.
 
 {{< callout type="info" >}}
-**Automatic audio management**: RF Swift now automatically detects and starts the audio system (PulseAudio or PipeWire) when you enable audio. No need to manually start PulseAudio — RF Swift handles it for you. See [Automatic Pulse Server Handling](#automatic-pulse-server-handling) below.
+**Automatic audio management**: RF Swift now automatically detects and starts the audio system (PulseAudio or PipeWire) when you enable audio. You no longer need to start PulseAudio yourself, RF Swift handles it for you. See [Automatic Pulse Server Handling](#automatic-pulse-server-handling) below.
 {{< /callout >}}
 
 ---
@@ -74,7 +74,7 @@ rfswift host audio unload
 rfswift host audio enable
 
 # Create container with audio
-rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_audio \
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_audio \
   -p tcp:127.0.0.1:34567
 
 # Audio now works in container
@@ -122,7 +122,7 @@ rfswift host audio unload
 
 ## Automatic Pulse Server Handling
 
-RF Swift now **automatically manages the PulseAudio/PipeWire server** when you run `host audio enable`. You no longer need to manually check if PulseAudio is running or start it yourself — RF Swift handles everything:
+RF Swift now **automatically manages the PulseAudio/PipeWire server** when you run `host audio enable`. You no longer need to check whether PulseAudio is running or start it yourself. RF Swift handles everything:
 
 ### What happens automatically
 
@@ -156,7 +156,7 @@ RF Swift now **automatically manages the PulseAudio/PipeWire server** when you r
 ### Example: fully automatic workflow
 
 ```bash
-# Just run this — RF Swift will start PulseAudio/PipeWire if needed,
+# Just run this, RF Swift will start PulseAudio/PipeWire if needed,
 # load the TCP module, and configure the right ACLs
 rfswift host audio enable
 
@@ -242,7 +242,7 @@ pactl list modules | grep tcp
 # Kill existing modules
 pactl unload-module module-native-protocol-tcp
 
-# Try again — RF Swift will auto-start the audio server
+# Try again, RF Swift will auto-start the audio server
 rfswift host audio enable
 ```
 

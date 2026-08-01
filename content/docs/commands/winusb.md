@@ -127,7 +127,7 @@ rfswift winusb list
 rfswift winusb attach -i 1-2
 
 # 3. Run an RF Swift container
-rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_work
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_work
 
 # 4. Work with the SDR inside the container
 rfswift exec -c sdr_work

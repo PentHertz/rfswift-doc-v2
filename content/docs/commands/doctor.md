@@ -113,7 +113,7 @@ chmod 600 ~/.config/rfswift/config.ini
 ### No RF Swift images
 
 ```bash
-rfswift images pull -i penthertz/rfswift_noble:sdr_full
+rfswift images pull -i penthertz/rfswift_resolute:sdr_full
 ```
 
 ## Platform Notes

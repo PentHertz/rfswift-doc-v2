@@ -1,7 +1,7 @@
 ---
 title: Comparisons with dedicated distributions
 next: /docs/getting-started
-prev: /docs/supports
+prev: /docs/release-notes-v3
 weight: 4
 cascade:
   type: docs
@@ -22,11 +22,11 @@ With RF Swift's container-based architecture, each engagement runs in its own is
 | 🔧 **Tool Availability** | ✅ Extensive collection for RF, hardware security, and reversing | ✅ Extensive collection for general pentesting | ✅ Specialized for RF |
 | 🔄 **Tool Updates** | ✅ Independent container updates | ⚠️ Tied to system update cycle | ⚠️ Tied to system update cycle |
 | 🔁 **Rollback Capability** | ✅ Instant rollback via container images | ❌ Requires snapshots or manual backup | ❌ Requires snapshots or manual backup |
-| 💾 **Storage Efficiency** | ✅ Modular—install only what you need | ❌ Requires significant disk space | ❌ Requires significant disk space |
+| 💾 **Storage Efficiency** | ✅ Modular, install only what you need | ❌ Requires significant disk space | ❌ Requires significant disk space |
 | 🛡️ **Security Isolation** | ✅ Strong container isolation with custom confinement | ⚠️ Limited isolation between applications | ⚠️ Limited isolation between applications |
 | 🔌 **Network Containment** | ✅ Per-container network isolation | ⚠️ Requires additional setup | ⚠️ Requires additional setup |
 | 🏗️ **Architecture Support** | ✅ x86_64, ARM64, RISC-V64 | ✅ x86_64, ARM64 | ⚠️ Primarily x86_64 |
-| 🧩 **Customization** | ✅ Highly modular—pick specific tools | ✅ Customizable, but changes affect entire system | ⚠️ Limited customization |
+| 🧩 **Customization** | ✅ Highly modular, pick specific tools | ✅ Customizable, but changes affect entire system | ⚠️ Limited customization |
 | 📱 **USB Device Access** | ✅ Streamlined USB forwarding | ✅ Direct access | ✅ Direct access |
 | 🔊 **Audio Support** | ✅ Container-based audio support | ✅ Native audio support | ✅ Native audio support |
 | 🌐 **Internet Connectivity** | ✅ Configurable per container | ✅ System-wide configuration | ✅ System-wide configuration |

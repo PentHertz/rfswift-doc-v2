@@ -56,7 +56,7 @@ rfswift install -c wifi_analysis -i wireless_tools_install
 **Setup new SDR container:**
 ```bash
 # Create container
-rfswift run -i penthertz/rfswift_noble:sdr_light -n sdr_custom
+rfswift run -i penthertz/rfswift_resolute:sdr_light -n sdr_custom
 
 # Install additional tools
 rfswift install -c sdr_custom -i sdrpp_soft_install
@@ -101,7 +101,7 @@ done
 **Custom toolchain setup:**
 ```bash
 # Create specialized container
-rfswift run -i penthertz/rfswift_noble:base -n custom_rf
+rfswift run -i penthertz/rfswift_resolute:base -n custom_rf
 
 # Install specific tools
 rfswift install -c custom_rf -i gnuradio_install

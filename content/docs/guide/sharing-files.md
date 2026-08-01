@@ -12,7 +12,7 @@ When conducting RF assessments with RF Swift, you'll need to exchange files betw
 
 ## Automatic Workspace
 
-Every RF Swift container gets a **shared workspace directory** automatically — no configuration needed.
+Every RF Swift container gets a **shared workspace directory** automatically, with no configuration needed.
 
 ```
 ~/rfswift-workspace/
@@ -36,8 +36,8 @@ When you run `rfswift run -n my_sdr`, RF Swift automatically:
 **No `--bind` flag needed for the common case.** Just save files to `/workspace` inside the container and they're immediately available on your host.
 
 ```bash
-# Create a container — workspace is automatic
-rfswift run -i penthertz/rfswift_noble:sdr_full -n capture_session
+# Create a container, the workspace is automatic
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n capture_session
 
 # Inside the container, /workspace is your shared folder
 cd /workspace
@@ -95,7 +95,7 @@ For directories beyond the workspace, use the `-b` flag to bind additional host 
 ### Basic Directory Sharing
 
 ```bash
-rfswift run -i penthertz/rfswift_noble:telecom -n telecom_analysis -b ~/shared_data:/root/shared
+rfswift run -i penthertz/rfswift_resolute:telecom -n telecom_analysis -b ~/shared_data:/root/shared
 ```
 
 This binds your host's `~/shared_data` directory to `/root/shared` inside the container, **in addition to** the automatic workspace at `/workspace`.
@@ -105,7 +105,7 @@ This binds your host's `~/shared_data` directory to `/root/shared` inside the co
 You can bind multiple directories by separating them with commas:
 
 ```bash
-rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_project \
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_project \
   -b ~/captures:/root/captures,~/scripts:/root/scripts,~/reports:/root/reports
 ```
 
@@ -130,7 +130,7 @@ The container summary will display all active bindings:
 ├─────────────────┼──────────────────────────────────────────────────────────┤
 │ Network Mode    │ host                                                     │
 ├─────────────────┼──────────────────────────────────────────────────────────┤
-│ Image Name      │ penthertz/rfswift_noble:telecom                                │
+│ Image Name      │ penthertz/rfswift_resolute:telecom                                │
 ├─────────────────┼──────────────────────────────────────────────────────────┤
 │ Size on Disk    │ 11150.42 MB                                              │
 ├─────────────────┼──────────────────────────────────────────────────────────┤
@@ -189,10 +189,10 @@ For Proxmark3 and similar RFID tools, you may need to bind specific device paths
 
 ```bash
 # Default Proxmark3 device
-rfswift run -i penthertz/rfswift_noble:rfid -n rfid_scanner -s /dev/ttyACM0:/dev/ttyACM0
+rfswift run -i penthertz/rfswift_resolute:rfid -n rfid_scanner -s /dev/ttyACM0:/dev/ttyACM0
 
 # For multiple Proxmark3 devices
-rfswift run -i penthertz/rfswift_noble:rfid -n multi_proxmark \
+rfswift run -i penthertz/rfswift_resolute:rfid -n multi_proxmark \
   -s /dev/ttyACM0:/dev/ttyACM0,/dev/ttyACM1:/dev/ttyACM1
 ```
 
@@ -201,7 +201,7 @@ rfswift run -i penthertz/rfswift_noble:rfid -n multi_proxmark \
 For Bluetooth scanning and analysis:
 
 ```bash
-rfswift run -i penthertz/rfswift_noble:bluetooth -n bt_scanner \
+rfswift run -i penthertz/rfswift_resolute:bluetooth -n bt_scanner \
   -s /dev/vhci:/dev/vhci \
   -a NET_ADMIN
 ```
@@ -232,7 +232,7 @@ cp -R /media/username/37B6-82D6/CalFile ~/harogic_cal
 When creating your container, bind the calibration directory to the proper location:
 
 ```bash
-rfswift run -i penthertz/rfswift_noble:sdr_light -n harogic_analysis \
+rfswift run -i penthertz/rfswift_resolute:sdr_light -n harogic_analysis \
   -b ~/harogic_cal:/rftools/analysers/SAStudio4_x86_64_05_23_17_06/bin/CalFile
 ```
 
@@ -291,7 +291,7 @@ chmod -R 777 ~/shared_data
 If default bindings are missing, you can restore them while adding your custom bindings:
 
 ```bash
-rfswift run -i penthertz/rfswift_noble:sdr_full -n sdr_analysis \
+rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_analysis \
   -b /tmp/.X11-unix:/tmp/.X11-unix,/dev/bus/usb:/dev/bus/usb,~/my_data:/root/my_data
 ```
 
