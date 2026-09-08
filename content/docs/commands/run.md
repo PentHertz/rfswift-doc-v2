@@ -5,17 +5,23 @@ prev: /docs/commands/engine
 next: /docs/commands/exec
 ---
 
-# rfswift run
+# rfswift container create (run)
 
-Create and start a new container from an RF Swift image.
+Create and start a new container from an RF Swift image, or, with `--engine nix`, a native Nix environment.
+
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift container create`. The legacy form `rfswift run` and the short aliases `rfswift create` and `rfswift new` still work and print a notice. Flags are identical on every spelling; the examples below use the short legacy form for brevity.
+{{< /callout >}}
 
 ## Synopsis
 
 ```bash
-rfswift run -i IMAGE -n CONTAINER_NAME [options]
+rfswift container create -i IMAGE -n CONTAINER_NAME [options]
+rfswift run -i IMAGE -n CONTAINER_NAME [options]                    # legacy spelling
+rfswift container create --engine nix -i ENVIRONMENT -n NAME [--lazy] [--pure] [--isolate] [--flake REF] [--create-only]
 ```
 
-The `run` command is the primary way to create new containers in RF Swift. It pulls the specified image (if not already available), creates a container with the given name, and starts it with an interactive shell.
+The command pulls the image if it is not local, checks that the engine can map the devices you asked for (and says which it cannot, with the reason, before dropping them on your confirmation), checks USB reachability, creates the container with a workspace, and enters it with an interactive shell. On Windows it offers the usbipd device picker when it detects RF hardware.
 
 {{< callout type="info" >}}
 **Interactive Wizard**: When run without `-i` and `-n` flags in an interactive terminal, RF Swift launches a guided wizard that walks you through all options step by step. See [Interactive Wizard](#interactive-wizard) below.
@@ -40,7 +46,7 @@ Both flags are optional when using the interactive wizard. If omitted in an inte
 
 | Flag | Description | Default | Example |
 |------|-------------|---------|---------|
-| `-u, --privileged INT` | Privilege level (1=privileged, 0=unprivileged) | `0` | `-u 0` |
+| `-u, --privileged INT` | Privilege level (1=privileged, 0=unprivileged). Never required for USB devices | `0` | `-u 0` |
 | `-a, --capabilities STRING` | Additional capabilities (comma-separated) | None | `-a NET_ADMIN,NET_RAW` |
 | `-g, --cgroups STRING` | Cgroup device rules (comma-separated) | See config | `-g "c 189:* rwm"` |
 | `-m, --seccomp STRING` | Custom seccomp profile path | Default | `-m /path/to/profile.json` |
@@ -141,6 +147,25 @@ rfswift run --profile wifi -n my_wifi -t nat --realtime
 | `--record` | Enable session recording | `--record` |
 | `--record-output STRING` | Custom recording filename | `--record-output session.cast` |
 
+### Shell
+
+| Flag | Description | Default | Example |
+|------|-------------|---------|---------|
+| `-e, --command STRING` | Shell or command to run in the container | `/bin/zsh` (Bash when zsh is missing) | `-e /bin/bash`, `-e "gnuradio-companion"` |
+
+### Nix engine options (`--engine nix`)
+
+| Flag | Description |
+|------|-------------|
+| `--lazy` | On-demand environment: each tool builds the first time it is called and is then pinned |
+| `--pure` | Pure shell (`nix develop --ignore-environment`) |
+| `--isolate` | Enter inside a jail (bubblewrap on Linux, Seatbelt on macOS): hides `$HOME` and the host filesystem, keeps USB and serial devices, the display and the network. Stored on the environment |
+| `--flake REF` | Flake reference instead of the default (a local RF-Swift-nix checkout or `github:PentHertz/RF-Swift-nix`) |
+| `--rebuild` | Force re-realisation of the closure at creation |
+| `--create-only` | Create and realise without entering (scripts, the Workbench) |
+
+With the Nix engine the workspace, `--cwd`, `--no-workspace`, `--record`, `-e` and the wizard behave as for containers; container-only flags (devices, capabilities, ports, desktop, VPN) do not apply. See the [Nix engine guide](/docs/guide/nix-engine).
+
 ---
 
 ## Examples
@@ -149,7 +174,14 @@ rfswift run --profile wifi -n my_wifi -t nat --realtime
 
 **Create a simple SDR container:**
 ```bash
-rfswift run -i sdr_full -n my_sdr
+rfswift container create -i sdr_full -n my_sdr
+rfswift run -i sdr_full -n my_sdr            # same, legacy spelling
+```
+
+**Create a native Nix environment instead:**
+```bash
+rfswift container create --engine nix -i sdr_light -n radio
+rfswift container create --engine nix -i rfid -n badge --lazy --isolate
 ```
 
 **Create with default image from config:**
@@ -639,7 +671,7 @@ ls -l /dev/your_device
 
 ### Device Mappings (`-s, --devices`)
 
-Make specific host devices available in the container.
+Make specific host devices available in the container. Serial ports (`/dev/ttyACM*`, `/dev/ttyUSB*`, `/dev/ttyAMA*`) named here are **hot-pluggable** on Docker and rootful Podman: plugged in at creation they are mapped, absent they are attached on demand when you plug them in and open a shell. Before creation RF Swift lists the devices this engine cannot map on your host (rootless Podman root-only nodes, a device absent from the Lima VM, USB on Docker Desktop for macOS) and asks once before dropping them.
 
 **Format:** `host_device:container_device` or just `host_device` (same path in container)
 
@@ -652,7 +684,7 @@ Make specific host devices available in the container.
 ```
 
 {{< callout type="info" >}}
-**Cgroups + Devices**: You need BOTH cgroup rules and device mappings. Cgroups allow access to device types, mappings make specific devices available.
+**Cgroups + Devices**: You need BOTH cgroup rules and device mappings. Cgroups allow access to device types, mappings make specific devices available. For USB, the default `/dev/bus/usb` mapping with `c 189:* rwm` is what makes a device reachable; a bind mount alone lists the nodes but cannot open them, and `--privileged` is not required. RF Swift checks this before creating the container.
 {{< /callout >}}
 
 ### Volume Bindings (`-b, --bind`)
@@ -868,10 +900,10 @@ The wizard guides you through the following steps:
 2. **Container Name** -- Required text input (placeholder: `my_sdr`).
 
 3. **Workspace Directory** -- Select how to mount the shared workspace:
-   - **Auto** (default): `~/rfswift-workspace/<name>/` → `/workspace`
-   - **Custom path**: Enter a host directory to mount as `/workspace`
-   - **Current directory**: Mount `$PWD` as `/workspace`
-   - **Disable**: No workspace mount
+ - **Auto** (default): `~/rfswift-workspace/<name>/` -> `/workspace`
+ - **Custom path**: Enter a host directory to mount as `/workspace`
+ - **Current directory**: Mount `$PWD` as `/workspace`
+ - **Disable**: No workspace mount
 
 4. **Volume Bindings** -- Asks if you want to add *additional* volume bindings beyond the workspace.
 
@@ -882,12 +914,12 @@ The wizard guides you through the following steps:
 7. **Network Mode** -- Select from host, NAT (create new isolated network), join existing NAT network, or bridge.
 
 8. **Feature Toggles** -- Multi-select checklist:
-   - Remote Desktop (VNC/noVNC)
-   - Desktop SSL/TLS
-   - Disable X11 forwarding
-   - Privileged mode
-   - Realtime mode (audio/SDR)
-   - VPN (WireGuard/OpenVPN/Tailscale/Netbird)
+ - Remote Desktop (VNC/noVNC)
+ - Desktop SSL/TLS
+ - Disable X11 forwarding
+ - Privileged mode
+ - Realtime mode (audio/SDR)
+ - VPN (WireGuard/OpenVPN/Tailscale/Netbird)
 
 9. **Desktop Port Configuration** (if desktop enabled with non-host network) -- Choose the host bind address (`127.0.0.1` or `0.0.0.0`) and port for the desktop service.
 
@@ -896,14 +928,14 @@ The wizard guides you through the following steps:
 11. **Capabilities** -- Multi-select from 18 common Linux capabilities with descriptions (NET_ADMIN, NET_RAW, SYS_RAWIO, SYS_ADMIN, SYS_PTRACE, SYS_NICE, etc.).
 
 12. **Cgroup Rules** -- Multi-select from common device cgroup rules with descriptions:
-    - `c 189:* rwm`: USB devices (SDR dongles, serial adapters)
-    - `c 188:* rwm`: USB serial (ttyUSB)
-    - `c 166:* rwm`: ACM modems (ttyACM)
-    - `c 116:* rwm`: ALSA sound devices
-    - `c 226:* rwm`: DRI/GPU rendering
-    - `c 13:* rwm`: Input devices (HID, joystick)
-    - `c 137:* rwm`: VHCI (virtual HCI for Bluetooth)
-    - And more...
+ - `c 189:* rwm`: USB devices (SDR dongles, serial adapters)
+ - `c 188:* rwm`: USB serial (ttyUSB)
+ - `c 166:* rwm`: ACM modems (ttyACM)
+ - `c 116:* rwm`: ALSA sound devices
+ - `c 226:* rwm`: DRI/GPU rendering
+ - `c 13:* rwm`: Input devices (HID, joystick)
+ - `c 137:* rwm`: VHCI (virtual HCI for Bluetooth)
+ - And more...
 
 13. **USB Devices** (macOS with `--engine lima` only) -- Asks whether to attach USB devices to the Lima VM, then shows a multi-select picker of discovered host USB devices.
 
@@ -965,12 +997,12 @@ Container Configuration (from profile):
 
 ? Add extra Linux capabilities? Yes
 ? Select capabilities:
-  [x] NET_ADMIN — network config, monitor mode, packet capture
-  [x] NET_RAW — raw sockets, packet injection
+  [x] NET_ADMIN - network config, monitor mode, packet capture
+  [x] NET_RAW - raw sockets, packet injection
 
 ? Add device cgroup rules? Yes
 ? Select cgroup rules:
-  [x] c 189:* rwm — USB devices (SDR dongles, serial adapters)
+  [x] c 189:* rwm - USB devices (SDR dongles, serial adapters)
 
 ──────────────────────────────────────────────────
 Container Configuration:
@@ -1115,7 +1147,7 @@ rfswift run -i image -n container \
   -g "c 189:* rwm"
 
 # Or add dynamically
-rfswift cgroups add -c container -g "c 189:* rwm"
+rfswift config cgroups add -c container -r "c 189:* rwm"
 ```
 
 ### Permission Denied for Device
@@ -1238,7 +1270,7 @@ Always start with `-u 0` and add capabilities as needed:
 rfswift run -i wifi -n wifi_scan -u 0
 
 # Add capabilities if needed
-rfswift capabilities add -c wifi_scan -a NET_ADMIN
+rfswift config capabilities add -c wifi_scan -p NET_ADMIN
 ```
 
 ### 3. Use Realtime Mode for SDR Work

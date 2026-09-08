@@ -115,11 +115,11 @@ RF Swift automatically drops devices that can't be mapped in rootless mode:
 
 ```
 [!] Dropping 5 inaccessible device(s) for rootless mode:
-  - /dev/vhci
-  - /dev/console
-  - /dev/tty0
-  - /dev/tty1
-  - /dev/uinput
+ - /dev/vhci
+ - /dev/console
+ - /dev/tty0
+ - /dev/tty1
+ - /dev/uinput
 ```
 
 Devices that remain accessible (e.g., `/dev/bus/usb`, `/dev/snd`, `/dev/dri`) are kept.
@@ -387,3 +387,13 @@ Or use `sudo` for full access.
 {{< callout emoji="💡" >}}
 **Tip**: For most RF work, rootless Podman is sufficient. Only use `sudo` when you need USB hotplug or WireGuard/OpenVPN VPN.
 {{< /callout >}}
+
+## What changed in v4 for Podman users
+
+- **Host udev rules**: rootless Podman runs containers as your user, so a USB device is only reachable once the host grants you access. `rfswift host udev` installs RF Swift's rules (group `plugdev`, seat ACL); rules inside a container are never evaluated.
+- **Your groups are kept**: with the crun runtime, `dialout` and `plugdev` follow you into the container, so a device you may open on the host is usable inside.
+- **Automatic adjustments**: cgroup device rules are dropped with a warning, root-only device nodes (`/dev/console`, `/dev/tty*`, `/dev/vhci`, `/dev/uinput`) are left out, and realtime ulimits above your host hard limits are skipped instead of failing the start. `rfswift container create` and the Workbench list what will be dropped before creation.
+- **Serial ports** must be present at creation under rootless Podman (no `mknod`, no cgroup rules); the hot-plug works on rootful Podman and Docker.
+- **Configuration changes** (`rfswift config ...`) commit the container and re-create it, since Podman has no editable store; one snapshot image per change remains.
+- **Images**: `rfswift image pull` works the same; use `docker.io/penthertz/rfswift_resolute:...` or set `unqualified-search-registries` to avoid the short-name prompt.
+- **Audit**: `rfswift image audit` runs trivy as a container through Podman when no host trivy is installed.

@@ -7,6 +7,10 @@ next: /docs/commands/install
 
 # rfswift completion
 
+{{< callout type="info" >}}
+`rfswift completion bash|zsh|fish --install` writes the script into the platform's completion directory for you; the Linux packages install bash, zsh and fish completions already. Completions cover the whole v4 tree, including `rfswift env install` package names.
+{{< /callout >}}
+
 Generate and install shell completion scripts for tab-completion.
 
 ## Synopsis

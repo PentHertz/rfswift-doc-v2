@@ -7,6 +7,10 @@ next: /docs/commands/ports
 
 # GPU Passthrough
 
+{{< callout type="info" >}}
+**RF Swift v4**: this group lives under the `config` parent as `rfswift config gpus` and remains available as `rfswift gpus`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
+{{< /callout >}}
+
 Enable GPU access in containers for hardware-accelerated workloads: CUDA/OpenCL computing, GPU-based signal processing, machine learning inference, and GUI rendering.
 
 {{< callout emoji="🔍" >}}
@@ -136,7 +140,7 @@ When RF Swift detects an AMD GPU (vendor `0x1002` or `/dev/kfd`), `--gpus all` a
 3. **Verify device nodes exist:**
    ```bash
    ls -l /dev/kfd /dev/dri/render*
-   # /dev/kfd          - Kernel Fusion Driver (compute)
+   # /dev/kfd - Kernel Fusion Driver (compute)
    # /dev/dri/renderD* - DRM render nodes (per-GPU)
    ```
 
@@ -400,8 +404,8 @@ apt-get install -y intel-opencl-icd
 ### GPU Works in Docker But Not RF Swift
 
 ```bash
-# Check container config
-rfswift properties -c container | grep -i gpu
+# Check the GPU request the engine recorded
+docker inspect container --format \'{{json .HostConfig.DeviceRequests}}\'
 
 # Add GPU (auto-detects vendor)
 rfswift gpus add -c container

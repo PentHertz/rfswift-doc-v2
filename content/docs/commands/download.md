@@ -7,6 +7,10 @@ next: /docs/commands/upgrade
 
 # rfswift download
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift image download`. The legacy form `rfswift download` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Download Docker images from registries and save them as compressed archives for offline use.
 
 ## Synopsis

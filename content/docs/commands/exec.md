@@ -5,20 +5,26 @@ prev: /docs/commands/run
 next: /docs/commands/stop
 ---
 
-# rfswift exec
+# rfswift container shell (exec)
 
-Execute commands in a running or stopped container, typically used to enter containers with an interactive shell.
+Enter an existing container with an interactive shell, or run a single command in it. Stopped containers are started first.
+
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift container shell`. The legacy form `rfswift exec` and the aliases `rfswift shell` and `rfswift enter` still work and print a notice. With `--engine nix` the same command enters a native Nix environment (`rfswift env shell NAME` is the dedicated form).
+{{< /callout >}}
 
 ## Synopsis
 
 ```bash
-rfswift exec [-c CONTAINER] [-w WORKDIR] [options]
+rfswift container shell [-c CONTAINER] [-w WORKDIR] [-e COMMAND] [options]
+rfswift exec [-c CONTAINER] [-w WORKDIR] [options]                  # legacy spelling
+rfswift container shell -c CONTAINER -e "rtl_test -t"               # one command, no shell
 ```
 
-The `exec` command enters an existing container with an interactive shell. If no container is specified, it automatically uses the most recently created container.
+Without `-c`, an interactive picker lists your containers (the most recent one is marked); in a script the most recent container is used. Entering prints the container summary (image version and freshness, size, shell, display, privileges, mounts, devices, seccomp, ulimits, GPUs, network, ports) and syncs the hot-pluggable serial ports.
 
 {{< callout type="info" >}}
-**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable container picker listing all containers with their name, ID, image, and state. The most recent container is marked with `← latest`.
+**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable container picker listing all containers with their name, ID, image, and state. The most recent container is marked with `<- latest`.
 {{< /callout >}}
 
 ---
@@ -31,6 +37,8 @@ The `exec` command enters an existing container with an interactive shell. If no
 |------|-------------|---------|---------|
 | `-c, --container STRING` | Container name or ID | Most recent | `-c my_container` |
 | `-w, --workdir STRING` | Working directory inside container | `/root` | `-w /root/projects` |
+| `-e, --command STRING` | Shell or command to run | `/bin/zsh` (Bash when missing) | `-e /bin/bash`, `-e "hackrf_info"` |
+| `-i, --install STRING` | Run an install function from the image's scripts before the shell | | `-i sdrpp_soft_install` |
 
 ### Display Options
 
@@ -304,7 +312,7 @@ Sets the initial directory when entering the container. Useful for:
 rfswift exec -c container -w /root/nonexistent
 
 # Solution: Create in container first or bind from host
-rfswift bindings add -c container -b /pathto/projects:/root/projects
+rfswift config bindings add -c container -s /pathto/projects -t /root/projects
 rfswift exec -c container -w /root/projects
 ```
 
@@ -601,7 +609,7 @@ mkdir -p /root/nonexistent
 exit
 
 # Or bind from host
-rfswift bindings add -c container -b /pathto/host-dir:/root/nonexistent
+rfswift config bindings add -c container -s /pathto/host-dir -t /root/nonexistent
 rfswift exec -c container -w /root/nonexistent
 ```
 
@@ -686,14 +694,11 @@ rfswift last
 
 ### Execute Single Command (Non-Interactive)
 
-While `exec` is primarily for interactive shells, you can execute single commands:
+Pass the command with `-e`; the container is started if needed and the command runs with the container's environment (display, audio, workspace):
 
 ```bash
-# Note: This requires using docker directly
-docker exec -it container_name command
-
-# For RF Swift interactive access, use:
-rfswift exec -c container_name
+rfswift container shell -c container_name -e "rtl_test -t"
+rfswift container shell -c container_name -e "ulimit -r"
 ```
 
 ### Enter as Different User

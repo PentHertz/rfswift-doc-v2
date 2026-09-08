@@ -15,7 +15,7 @@ RF Swift v3.0.0 rebases the whole image collection on **Ubuntu 26.04 "Resolute"*
 **In one line:** a hardware and RF security lab in seconds, from a ham shack on a Sunday afternoon to a full engagement on Monday morning.
 {{< /callout >}}
 
-## 📦 New base: Ubuntu Noble → Resolute (26.04)
+## 📦 New base: Ubuntu Noble -> Resolute (26.04)
 
 Every official image now builds on `ubuntu:26.04`. The published repository moved accordingly:
 
@@ -41,7 +41,7 @@ Resolute is not a cosmetic bump. The toolchain moved under everything at once:
 
 Rather than freezing on an old base, we patched what was broken and maintain the forks publicly:
 
-`gr-osmosdr_resolute` · `gr-gsm_resolute` · `gr-fosphor_resolute` · `gr-dvbs2_resolute` · `gr-nordic_resolute` · `gr-grnet_resolute` · `gr-pdu_utils_resolute` · `gr-sandia_utils_resolute` · `gr-fhss_utils_resolute` · `gr-timing_utils_resolute` · `srsRAN_4G_resolute` · `yate_resolute`
+`gr-osmosdr_resolute`, `gr-gsm_resolute`, `gr-fosphor_resolute`, `gr-dvbs2_resolute`, `gr-nordic_resolute`, `gr-grnet_resolute`, `gr-pdu_utils_resolute`, `gr-sandia_utils_resolute`, `gr-fhss_utils_resolute`, `gr-timing_utils_resolute`, `srsRAN_4G_resolute`, `yate_resolute`
 
 **OpenBTS** and **OpenBTS-UMTS** are legacy C++ that GCC 15 rejects outright; both are maintained on the `resolute` branches of the [PentHertz/OpenBTS](https://github.com/PentHertz/OpenBTS) and [PentHertz/OpenBTS-UMTS](https://github.com/PentHertz/OpenBTS-UMTS) forks, with porting still in progress.
 

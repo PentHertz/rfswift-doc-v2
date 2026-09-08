@@ -7,529 +7,306 @@ cascade:
   type: docs
 ---
 
-## Getting Up and Running with RF Swift
+## Getting up and running with RF Swift
 
-Here we will quickly get started with RF Swift using pre-built binaries and container images.
+Here we quickly get started with RF Swift using the installers, pre-built images and, if you prefer, native Nix environments.
 
-{{< tabs items="Docker,Podman" >}}
+{{< tabs items="Docker,Podman,Nix" >}}
   {{< tab >}}
-{{< callout type="warning" >}}
-**On Linux**, unless you are using Docker Desktop, you may need to use `sudo` with the `rfswift` command for operations that require elevated privileges.
-{{< /callout >}}
-
 {{< callout type="info" >}}
-To avoid using `sudo` for every Docker command, add your user to the `docker` group:
+**Docker on Linux**: grant your user access to the socket once, no `sudo` and no logout afterwards:
 
 ```bash
-sudo usermod -aG docker $USER
-newgrp docker
+rfswift host docker-access
 ```
 {{< /callout >}}
   {{< /tab >}}
   {{< tab >}}
 {{< callout type="info" >}}
-**Podman runs rootless by default**, so you need no `sudo` and no group membership. Just make sure your subordinate UID/GID ranges are configured:
+**Podman runs rootless by default**. Configure subordinate IDs and install the udev rules that let your user open RF hardware:
 
 ```bash
 sudo usermod --add-subuids 100000-165535 $USER
 sudo usermod --add-subgids 100000-165535 $USER
+rfswift host udev
 ```
 {{< /callout >}}
   {{< /tab >}}
+  {{< tab >}}
+{{< callout type="info" >}}
+**No container engine at all?** The Nix engine installs the tool sets natively: `rfswift host setup --engine none --nix yes`, then `rfswift container create --engine nix`. It is also the way to add RF Swift to a distribution you already use, Kali or DragonOS for instance, without touching its packages. See [Nix engine](/docs/guide/nix-engine) and [Keep your distribution, add RF Swift](/docs/comparisons#complete-the-distribution-you-already-run).
+{{< /callout >}}
+  {{< /tab >}}
 {{< /tabs >}}
-
-To install RF Swift, you can either use pre-compiled binaries and existing container images (quickest method) or compile the Go project and/or container images from source. This guide focuses on the fastest way to get up and running.
 
 {{% steps %}}
 
 ### Install RF Swift
 
-Skip this step if you already did it. This is just a reminder to show that the installation is pretty fast.
+Skip this step if you already did it. Full details, including the native Linux packages and Homebrew, are in [Getting Started](/docs/getting-started).
 
-#### Linux and macOS
-
-The easiest way to install RF Swift with this command line:
-
-{{< tabs items="curl,wget" >}}
+{{< tabs items="Linux / macOS (script),macOS (DMG),Windows (installer)" >}}
   {{< tab >}}
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
+
+The installer asks for the release channel, what to install (CLI, Workbench or both), the container engine (Docker, Podman, both, Lima on macOS, or skip), whether to install Nix for the native engine, the udev rules and the Nix jail helper. Every question can be answered up front with an environment variable (`RFSWIFT_ENGINE=podman RFSWIFT_NIX=1 ...`). It verifies every download against the release SHA-256 manifest.
   {{< /tab >}}
   {{< tab >}}
-```bash
-curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
-```
+**The DMG, no terminal needed.** Download `rfswift_Darwin_universal.dmg` from the [releases page](https://github.com/PentHertz/RF-Swift/releases), open it and drag `rfswift-workbench.app` to Applications. Two helpers sit next to it: **Install RF Swift CLI** copies `rfswift` to `/usr/local/bin`, and **RF Swift Setup** installs and picks your container engine. Everything in the image is Developer ID signed and notarized, so Gatekeeper opens it without a warning. Then open the Workbench from Applications, or `rfswift` from a terminal.
+  {{< /tab >}}
+  {{< tab >}}
+Run `RFSwift-Setup-<version>-x64.exe` (or `-arm64`) from the [releases](https://github.com/PentHertz/RF-Swift/releases): it installs WSL 2 with WSLg, usbipd-win, Docker Desktop or Podman Desktop (or "Nix only"), and RF Swift itself under one UAC prompt. Then open "RF Swift Console" from the Start Menu. See [Windows](/docs/guide/windows).
   {{< /tab >}}
 {{< /tabs >}}
 
-The installer will prompt you to choose a container engine if none is detected:
+On first run RF Swift creates its configuration file with the shipped defaults (it asks first on an interactive terminal):
 
 ```
-📝 Which container engine would you like to install?
-1) Docker   2) Podman   3) Both   4) Lima (macOS USB)   5) Skip
-```
-
-But if you want to install it securely, we recommend using the installation script after downloading [the latest version here](https://github.com/PentHertz/RF-Swift/tags):
-  
-```bash
-# Run the installation script
-./scripts/install.sh
-```
-
-The `install.sh` script will:
-- Install your chosen container engine (Docker, Podman, or both)
-- Install all required dependencies (BuildX, Go)
-- Configure necessary services (xhost, PulseAudio/PipeWire)
-- Set up proper permissions and rootless configuration
-- Create a system-wide alias for the `rfswift` command
-- Install the latest RF Swift binary
-
-#### Alternative: from sources 
-
-You can also download the latest (unstable) version from GitHub by cloning the repository, but you will need to build and use `install.sh` script as follows:
-
-```bash
-git clone https://github.com/PentHertz/RF-Swift.git
-cd RF-Swift
-
-# Step 1 - Building the project requirements
-./scripts/build_project.sh
-
-# Step 2 - Run the installation script
-./scripts/install.sh
-```
-
-Then you should have the binary installed as well as all the requirements ;)
-
-#### Windows or Manual Installation
-
-If you prefer manual installation or are using Windows:
-
-1. Download the latest binary from [the official repository ↗](https://github.com/PentHertz/RF-Swift/releases)
-2. Rename the binary to `rfswift` (or `rfswift.exe` on Windows)
-3. Make the binary executable (on Linux/macOS): `chmod +x rfswift`
-
-When you run the binary for the first time, it will guide you through configuration:
-
-```bash
-rfswift 
-Config file not found. Would you like to create one with default values? (y/n)
-```
-
-Select `y` to create a default configuration file or `n` to configure manually.
-
-{{< callout type="info" >}}
-RF Swift **auto-detects** the available container engine (Docker or Podman) at startup. You can override this with `rfswift --engine docker` or `rfswift --engine podman`.
-{{< /callout >}}
-
-### Pull a Pre-built Image
-
-RF Swift provides several pre-built images to get you started quickly. For example, let's pull a complete SDR image:
-
-```bash
-rfswift images pull -i sdr_full
-```
-
-You can also specify a custom tag for the image:
-
-```bash
-rfswift images pull -i sdr_full -t my_custom_tag
+Config file not found in your user profile. Would you like to create one with default values? (y/n)
 ```
 
 {{< callout type="info" >}}
-All RF Swift images are **OCI-compatible** and work identically with both Docker and Podman. The same `rfswift images pull` command works regardless of which engine you have installed.
+RF Swift **auto-detects** the container engine (Docker, Podman, Lima). Override it with `rfswift --engine podman ...`, `RFSWIFT_ENGINE`, or `engine = ...` in `config.ini`.
 {{< /callout >}}
 
-Since v3.0.0 "Resonance", official images are built on **Ubuntu 26.04 "Resolute"** and published under the `penthertz/rfswift_resolute:<tag>` prefix, which is the CLI default. The previous Ubuntu 24.04 "Noble" images remain available under `penthertz/rfswift_noble:<tag>` if you need to fall back.
+### Check the host
 
-To pin a different repository (for example to keep using the Noble images with short tag names), edit the `[general]` section of your RF Swift profile `config.ini`:
-
+```bash
+rfswift doctor
 ```
+
+The doctor reports the engines and their services, Docker access, the host udev rules, the Nix engine and its jail, images, X11 and `xhost`, the audio server, USB, the config file and kernel modules (plus usbipd-win, WSLg and the WSL 2 distribution on Windows, the Lima VM on macOS). On a Linux desktop, `rfswift host setup` walks through the opt-in steps: udev rules, engine installation, Nix, Docker access, the Nix jail.
+
+### Pull a pre-built image
+
+```bash
+rfswift image pull -i sdr_full
+rfswift image pull -i sdr_full -t my_custom_tag      # local tag of your choice
+rfswift image pull -i sdr_full -V 0.1.1              # a specific published version
+```
+
+All images are OCI-compatible and work identically on Docker, Podman and Lima. Since v3.0.0 they are built on Ubuntu 26.04 "Resolute" and published under `penthertz/rfswift_resolute:<tag>`, the CLI default; the previous `penthertz/rfswift_noble` images remain available. Pin another repository in the `[general]` section of `config.ini`:
+
+```ini
 [general]
 imagename = myrfswift:latest
 repotag = penthertz/rfswift_resolute
-
-...
-``` 
-
-**Available Options:**
-- `-i`: Remote image label (required)
-- `-t`: Local tag to assign to the pulled image (optional)
-- `-r`: Repository to pull from (defaults to `penthertz/rfswift_resolute`)
-
-{{< callout type="info" >}}
-You can use the complete image tag `penthertz/rfswift_resolute:sdr_full` if you prefer, or change the default repository in your RF Swift profile.
-{{< /callout >}}
-
-### Run the Container
-
-Once you have an image, you can create and run a container:
-
-```bash
-rfswift run -i sdr_full -n my_sdr_container
 ```
 
-This will start a container using the `sdr_full` image with the name `my_sdr_container`.
+`rfswift image remote` lists what is published for your architecture, `rfswift image local` what you have, and `rfswift image audit sdr_full` scans an image for known vulnerabilities before you rely on it.
 
-A **workspace directory** is automatically created at `~/rfswift-workspace/my_sdr_container/` and mounted at `/workspace` inside the container. Files saved there are immediately accessible on your host, with no extra flags needed.
+### Run the container
 
-{{< callout type="info" >}}
-Use `--workspace /path` for a custom workspace, `--cwd` to mount the current directory, or `--no-workspace` to disable it. See [`run` command reference](/docs/commands/run#workspace-options) for details.
-{{< /callout >}}
+```bash
+rfswift container create -i sdr_full -n my_sdr_container
+```
+
+This creates a container named `my_sdr_container` from the `sdr_full` image and opens a shell in it. A **workspace** is created at `~/rfswift-workspace/my_sdr_container/` and mounted at `/workspace`: files saved there are immediately on your host. Use `--workspace /path`, `--cwd` or `--no-workspace` to change that.
+
+Without `-i` and `-n` in a terminal, the **wizard** guides you through profiles, image, workspace, mounts, devices, ports, network and features. `rfswift run` still works as the old spelling.
 
 {{< callout type="warning" >}}
-With some platforms, some default devices may be non-existent. You can use `bindings` or modify RF Swift's configuration file to remove the device from the mapped device list.
+Before creating anything, RF Swift lists the default devices this engine cannot map on your host (a device absent from the Lima VM, a root-only node on rootless Podman, USB on Docker Desktop for macOS) and asks once before dropping them. You can also edit the `devices` list in `config.ini`.
 {{< /callout >}}
 
 ## Advanced features
 
-**Run Command Options:**
-
-```bash
-rfswift run -i sdr_full -n my_sdr_container
-```
-
-The `run` command has numerous options for configuring your container environment:
+The `container create` command has many options; the most common:
 
 | Flag | Description |
 |------|-------------|
-| `-i, --image string` | Image name/tag to use (default: 'myrfswift:latest') |
-| `-n, --name string` | Name for the container (makes it easier to reference later) |
-| `-b, --bind string` | Extra bind mounts, separated by commas (e.g., `/host/path:/container/path,/another/path:/in/container`) |
-| `-s, --devices string` | Extra device mappings in unprivileged mode, separated by commas (e.g., `/dev/ttyUSB0:/dev/ttyUSB0`) |
-| `-a, --capabilities string` | Extra Linux capabilities, separated by commas (e.g., `NET_ADMIN,SYS_ADMIN`) |
-| `-t, --network string` | Network mode (default: 'host') |
-| `-u, --privileged int` | Set privilege level (1: privileged, 0: unprivileged) |
-| `-e, --command string` | Command to execute (default: '/bin/bash') |
-| `-d, --display string` | Set X Display (duplicates host's env by default) (default "DISPLAY=:0") |
-| `-p, --pulseserver string` | PulseAudio server TCP address (default: "tcp:127.0.0.1:34567") |
-| `-w, --bindedports string` | Ports to bind (between container and host) |
-| `-z, --exposedports string` | Ports to expose |
-| `-x, --extrahosts string` | Set extra hosts (default: 'pluto.local:192.168.1.2'), separated by commas |
-| `-g, --cgroups string` | Extra cgroup rules, separated by commas |
-| `-m, --seccomp string` | Set Seccomp profile (default: 'default') |
-| `--no-x11` | Disable X11 forwarding |
-| `--record` | Record the container session |
-| `--record-output string` | Custom output filename for recording (default: auto-generated) |
+| `-i, --image string` | Image name or tag (default from `config.ini`) |
+| `-n, --name string` | Container name |
+| `--profile string` | Start from a preset (`rfswift profile list`) |
+| `-b, --bind string` | Extra bind mounts, comma-separated (`~/data:/root/data:ro` for read-only) |
+| `-s, --devices string` | Extra device mappings, comma-separated |
+| `-a, --capabilities string` | Extra Linux capabilities, comma-separated |
+| `-g, --cgroups string` | Extra cgroup device rules, comma-separated |
+| `-t, --network string` | `host` (default), `nat`, `nat:NAME`, `bridge`, `none` |
+| `-w, --bindedports`, `-z, --exposedports` | Published and exposed ports |
+| `-u, --privileged int` | 1 privileged, 0 unprivileged (default) |
+| `-e, --command string` | Shell or command to run (default `/bin/zsh`) |
+| `--realtime`, `--ulimits string` | SDR performance settings |
+| `--record`, `--record-output string` | Session recording |
+| `--desktop`, `--desktop-config`, `--desktop-pass`, `--desktop-ssl` | Browser or VNC desktop |
+| `--vpn string` | WireGuard, OpenVPN, Tailscale or Netbird inside the container |
+| `--no-x11` | No X11 forwarding |
+| `--gpus string` | GPU request (`all`, `0,1`) |
+| `--lazy`, `--pure`, `--isolate`, `--flake` | Nix engine only |
 
-**Share Files with the Container:**
+The complete list with examples: [container create](/docs/commands/run).
 
-To share files between your host system and the container:
+**Share files with the container**
 
 ```bash
-rfswift run -i sdr_full -n my_sdr_container -b ~/sdr_projects:/home/user/projects
+rfswift container create -i sdr_full -n my_sdr_container -b ~/sdr_projects:/root/projects
+rfswift container create -i sdr_full -n my_sdr_container -b ~/sdr_projects:/root/projects,~/datasets:/root/data
 ```
 
-You can bind multiple directories by separating them with commas:
+**Share specific devices**
 
 ```bash
-rfswift run -i sdr_full -n my_sdr_container -b ~/sdr_projects:/home/user/projects,~/datasets:/home/user/data
-```
-
-**Share Specific Devices:**
-
-When running in unprivileged mode, you can share specific devices:
-
-```bash
-rfswift run -i sdr_full -n my_sdr_container -s /dev/ttyUSB0:/dev/ttyUSB0
-```
-
-Multiple devices can be shared by separating them with commas:
-
-```bash
-rfswift run -i sdr_full -n my_sdr_container -s /dev/ttyUSB0:/dev/ttyUSB0,/dev/ttyACM0:/dev/ttyACM0
+rfswift container create -i sdr_full -n my_sdr_container -s /dev/ttyUSB0:/dev/ttyUSB0
+rfswift container create -i sdr_full -n my_sdr_container -s /dev/ttyUSB0:/dev/ttyUSB0,/dev/ttyACM0:/dev/ttyACM0
 ```
 
 {{< callout type="info" >}}
-If you plug the device after the container has started, or replug it later, you will have to stop it with command `rfswift stop -c <container name>`. You can avoid this manipulation by mounting `/dev/bus/usb:/dev/bus/usb` as a volume instead with option `-b` when creating and running the container. This last manipulation may degrade the container's isolation.
+The USB tree (`/dev/bus/usb`) is mapped by default with the cgroup rule that makes it usable, so a USB device plugged in later is visible in the next shell. Serial ports named at creation are **hot-pluggable** on Docker and rootful Podman: unplugged at creation, they are attached on demand when you plug them in and open a shell.
 {{< /callout >}}
 
 {{< tabs items="Docker device notes,Podman device notes" >}}
   {{< tab >}}
-Device passthrough works natively with Docker. When running in privileged mode (`-u 1`), all host devices are accessible inside the container.
+Device passthrough works natively. Privileged mode (`-u 1`) exposes every host device but is never required for USB.
   {{< /tab >}}
   {{< tab >}}
-With Podman in rootless mode, device passthrough may require additional steps:
-
-- Use `--device` flags explicitly via the `-s` option
-- For USB SDR devices, binding `/dev/bus/usb` as a volume (`-b /dev/bus/usb:/dev/bus/usb`) is often the simplest approach
-- RF Swift auto-detects cgroup v1/v2 and configures device access rules accordingly
+Rootless Podman cannot set cgroup device rules or create device nodes: RF Swift drops the rules with a warning and needs serial ports present at creation. Install `rfswift host udev` so your user may open the hardware. RF Swift auto-detects cgroup v1 and v2.
   {{< /tab >}}
 {{< /tabs >}}
 
-**Add Linux Capabilities:**
-
-For Wi-Fi and Bluetooth tools, you may need additional Linux capabilities:
+**Add Linux capabilities**
 
 ```bash
-rfswift run -i wifi_tools -n my_wifi_container -a NET_ADMIN
-```
-
-For multiple capabilities:
-
-```bash
-rfswift run -i advanced_tools -n my_container -a NET_ADMIN,SYS_ADMIN
+rfswift container create -i wifi -n my_wifi_container -a NET_ADMIN
+rfswift container create -i wifi -n my_container -a NET_ADMIN,NET_RAW
 ```
 
 {{< callout type="warning" >}}
-**Security Consideration:** Be cautious when adding capabilities like `NET_ADMIN`. If the container becomes compromised, malicious programs could capture or manipulate network interfaces! Only add capabilities that are strictly necessary for your work.
+**Security**: capabilities such as `NET_ADMIN` let a compromised container capture or manipulate network interfaces. Add only what is strictly necessary, and remove it afterwards with `rfswift config capabilities rm`.
 {{< /callout >}}
 
 {{< callout type="info" >}}
-If your container is already running, you will be able to configure bindings, exposed ports, capabilities, cgroups later with `bindings`, `cgroups`, and `capabilities` (maybe more properties later ;))
+Bindings, devices, ports, capabilities, cgroup rules, GPUs and ulimits can all be changed later with `rfswift config ...` ([Dynamic container management](/docs/guide/container-management)).
 {{< /callout >}}
 
-**Network Configuration:**
-
-By default, containers use the host network mode. To use a different network:
+**Network**
 
 ```bash
-rfswift run -i sdr_full -n my_sdr_container -t bridge
+rfswift container create -i sdr_full -n my_sdr_container -t bridge
+rfswift container create -i sdr_full -n isolated_sdr -t nat
 ```
 
-{{< tabs items="Docker networking,Podman networking" >}}
+**Privilege level**
+
+```bash
+rfswift container create -i sdr_full -n my_sdr_container -u 0    # unprivileged (default)
+rfswift container create -i sdr_full -n my_sdr_container -u 1    # privileged, use with caution
+```
+
+**Custom command**
+
+```bash
+rfswift container create -i sdr_full -n signal_processor -e "gnuradio-companion"
+```
+
+**Recording**
+
+```bash
+rfswift container create -i sdr_full -n my_sdr_container --record
+rfswift container create -i sdr_full -n my_sdr_container --record --record-output my-session.cast
+```
+
+### Use RF tools in the container
+
+Connect your SDR and run, for example, `sdrpp` inside the container.
+
+{{< callout type="warning" >}}
+No sound? On Linux and macOS the host audio server module is loaded automatically at every start; `rfswift host audio enable` does it by hand and names the package to install when `pactl` is missing. Windows plays through WSLg without any setup.
+{{< /callout >}}
+
+### USB devices by platform
+
+{{< tabs items="Linux,Windows,macOS" >}}
   {{< tab >}}
-Docker uses its built-in bridge, host, and overlay networks. Host mode is the default for RF Swift.
+Map devices at creation with `-s`, or later:
+
+```bash
+rfswift config bindings add -c my_container -d -t /dev/ttyUSB0
+rfswift config bindings add -c my_container -s /home/user/data -t /root/data
+rfswift config bindings rm  -c my_container -d -t /dev/ttyUSB0
+```
+
+The `-d` switch means "a device, not a volume".
   {{< /tab >}}
   {{< tab >}}
-Podman supports the same network modes. In rootless mode, `slirp4netns` or `pasta` handles networking. Host mode works identically when running as root or with sufficient privileges.
+Forward the device into WSL 2 first (usbipd-win; one administrator approval per device to share, unprivileged attach):
+
+```powershell
+rfswift usb list
+rfswift usb attach --busid 2-3
+rfswift container create -i sdr_full -n my_container
+rfswift usb detach --busid 2-3
+```
+
+`container create` offers the picker itself when it sees RF hardware. See [Windows](/docs/guide/windows).
+  {{< /tab >}}
+  {{< tab >}}
+Docker Desktop and Podman cannot forward USB devices; RF Swift uses **Lima** (a QEMU VM created on first use):
+
+```bash
+brew install lima qemu
+rfswift usb list
+rfswift usb attach --vid 0x1d50 --pid 0x604b
+rfswift --engine lima container create -i sdr_light -n sdr_work
+rfswift usb detach --vid 0x1d50 --pid 0x604b
+```
+
+Use `--engine lima` for hardware, Docker Desktop for everything else. See [usb](/docs/commands/usb) and [engine](/docs/commands/engine).
   {{< /tab >}}
 {{< /tabs >}}
-
-**Privilege Levels:**
-
-Control container privilege level:
-
-```bash
-# Run in unprivileged mode
-rfswift run -i sdr_full -n my_sdr_container -u 0
-
-# Run in privileged mode (use with caution)
-rfswift run -i sdr_full -n my_sdr_container -u 1
-```
-
-{{< callout type="info" >}}
-With **Podman in rootless mode**, privileged mode (`-u 1`) grants privileges within the user namespace, which is still more restricted than Docker's privileged mode. This provides an extra layer of safety.
-{{< /callout >}}
-
-**Custom Commands:**
-
-Run a specific command instead of the default shell:
-
-```bash
-rfswift run -i gnuradio -n signal_processor -e "gnuradio-companion"
-```
-
-**Recording Sessions:**
-
-You can record your container sessions for documentation or debugging purposes:
-
-```bash
-# Record with auto-generated filename
-rfswift run -i sdr_full -n my_sdr_container --record
-
-# Record with custom filename
-rfswift run -i sdr_full -n my_sdr_container --record --record-output my-session.cast
-```
-
-Session recordings are saved as `.cast` files (asciinema format) that can be replayed later.
-
-{{< callout type="info" >}}
-Using a named container with the `-n` flag makes it much easier to restart or access the container later.
-{{< /callout >}}
-
-### Use RF Tools in the Container
-
-Once the container is running, you can use any of the pre-installed RF tools. For example, to run SDR++:
-
-1. Connect your SDR device to your computer
-2. Inside the container, run: `sdrpp`
-
-{{< callout type="warning" >}}
-If you encounter audio issues, you can enable audio forwarding with: `rfswift host audio enable`
-This requires `pulseaudio` or `pipewire-pulse` to be properly configured on your host system.
-{{< /callout >}}
-
-### USB Device Management
-
-USB device handling varies by platform:
-
-#### Windows USB Forwarding
-
-On Windows, you'll need to explicitly forward USB devices to your container using the `winusb` commands in Administrator mode:
-
-```bash
-# List available USB devices on Windows
-rfswift winusb list
-
-# Attach a specific device on Windows
-rfswift winusb attach -i <USB ID>
-```
-
-#### Linux USB Device Access
-
-On Linux, you can access USB devices in two ways:
-
-1. **During container creation** - use the `-s` option to bind specific devices:
-   ```bash
-   rfswift run -i sdr_full -n my_container -s /dev/ttyUSB0:/dev/ttyUSB0
-   ```
-
-2. **After container creation** - use the powerful `bindings` feature to add devices to an existing container:
-   ```bash
-   # Add a new USB device to an existing container
-   rfswift bindings add -c my_container -d -s /dev/ttyUSB0 -t /dev/ttyUSB0
-
-   # Same but shorter: Add a new USB device to an existing container with same destination
-   rfswift bindings add -c my_container -t /dev/ttyUSB0
-   
-   # Add a new volume to an existing container
-   rfswift bindings add -c my_container -s /home/user/data -t /root/data
-   
-   # Remove a binding
-   rfswift bindings rm -c my_container -s /dev/ttyUSB0
-   ```
-
-Note that to rebind a device, you need the `-d` switch.
 
 {{% /steps %}}
 
-#### macOS USB Device Access
-
-Docker Desktop and Podman on macOS cannot forward USB devices into containers. RF Swift solves this with **Lima**, which runs a QEMU VM with USB hot-plug support:
+## Managing existing containers
 
 ```bash
-# Install Lima (one-time)
-brew install lima qemu
-
-# 1. List USB devices on your Mac
-rfswift macusb list
-
-# 2. Attach your SDR dongle to the Lima VM
-rfswift macusb attach --vid 0x1d50 --pid 0x604b
-
-# 3. Run container via Lima's Docker (where USB device lives)
-rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_light -n sdr_work
-
-# 4. When done, detach the device
-rfswift macusb detach --vid 0x1d50 --pid 0x604b
+rfswift container stop -c my_sdr_container       # stop
+rfswift container shell -c my_sdr_container      # start again and enter
+rfswift container shell                          # the most recent container (or a picker)
+rfswift container last                           # list containers
+rfswift container commit -c my_sdr_container -i my_custom_image   # save the state as an image
+rfswift container rm -c my_sdr_container         # remove (the workspace stays)
 ```
 
-{{< callout type="warning" >}}
-Use `--engine lima` when you need USB devices. Without it, containers run in Docker Desktop which has no USB access. See [`macusb` command reference](/docs/commands/macusb) for details.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-Lima auto-creates the VM on first use, so there is no manual `limactl` setup to do. The VM comes pre-configured with Docker, USB libraries, kernel modules, and udev rules for all common SDR/RF hardware.
-{{< /callout >}}
-
-## Managing Existing Containers
-
-### Stop a Running Container
-
-Running containers can be stopped using the `stop` command as follows:
+Record `shell` sessions too:
 
 ```bash
-rfswift stop -c my_sdr_container
+rfswift container shell -c my_sdr_container --record
+rfswift container shell -c my_sdr_container -w /root/projects --record --record-output debug-session.cast
 ```
 
-### Restart an Existing Container
-
-To return to a previously created container:
+## Session playback
 
 ```bash
-rfswift exec -c my_sdr_container
-```
-
-You can also use the short command if you want to recall the last container:
-
-```bash
-rfswift exec
-```
-
-This restarts the container if it's stopped and gives you a shell inside it.
-
-**Recording Run and Exec sessions:**
-
-With `run` and `exec`, you can record exec sessions with `--record` argument:
-
-```bash
-# Record a new container session
-rfswift run -i sdr_full -n my_container --record
-
-# Record with auto-generated filename
-rfswift exec -c my_sdr_container --record
-
-# Record with custom filename and working directory
-rfswift exec -c my_sdr_container -w /root/projects --record --record-output debug-session.cast
-```
-
-### List Running Containers
-
-View all RF Swift containers:
-
-```bash
-rfswift last
-```
-
-### Save Container State
-
-If you've made changes to a container that you want to preserve:
-
-```bash
-rfswift commit -c my_sdr_container -i my_custom_image
-```
-
-This saves the current state of the container as a new image.
-
-## Session Playback
-
-### Replaying Recordings
-
-Play back recorded sessions:
-
-```bash
-# Normal speed playback
 rfswift log replay -i rfswift-exec-mycontainer-20260112-134651.cast
-
-# 2x speed playback
 rfswift log replay -i session.cast -s 2.0
-```
-
-### Managing Recordings
-
-```bash
-# List all recordings in current directory
 rfswift log list
-
-# List recordings in specific directory
 rfswift log list --dir ~/recordings
 ```
 
-{{< callout type="info" >}}
-Session recordings are stored as `.cast` files in asciinema format, which can be uploaded to asciinema.org for sharing or embedded in documentation.
-{{< /callout >}}
+Recordings are asciinema `.cast` files: replay them, embed them in documentation, or let `rfswift report generate` inventory them.
 
-## Common Commands Reference
+## Common commands reference
 
 | Command | Description |
 |---------|-------------|
-| `rfswift run -i IMAGE -n NAME` | Create and run a new container |
-| `rfswift exec -c CONTAINER` | Enter an existing container |
-| `rfswift images local` | List available local images |
-| `rfswift last` | List all containers |
-| `rfswift host audio enable` | Enable audio forwarding |
-| `rfswift bindings add` | Add device or volume binding to existing container |
-| `rfswift log replay -i FILE` | Replay a recorded session |
-| `rfswift log list` | List all recorded sessions |
-| `rfswift --engine docker ...` | Force Docker engine |
-| `rfswift --engine podman ...` | Force Podman engine |
+| `rfswift container create -i IMAGE -n NAME` | Create and run a new container |
+| `rfswift container shell -c NAME` | Enter an existing container |
+| `rfswift --engine nix container create -i sdr_light -n NAME` | Create a native Nix environment |
+| `rfswift env shell NAME` | Enter a Nix environment |
+| `rfswift image local` | Local images |
+| `rfswift container last` | All containers |
+| `rfswift config bindings add` | Add a device or volume to an existing container |
+| `rfswift host audio enable` | Host audio for containers (Linux, macOS) |
+| `rfswift usb attach` | Forward a USB device (macOS, Windows) |
+| `rfswift log replay -i FILE` | Replay a recording |
+| `rfswift doctor` | Check the host |
+| `rfswift --engine podman ...` | Force an engine |
 
-## Next Steps
-
-Dive right into the following section to learn more:
+## Next steps
 
 {{< cards >}}
-  {{< card link="/docs/guide" title="Follow the Guide" icon="document-text" subtitle="Read the complete guide and learn how to use RF Swift for your daily assessments." >}}
+  {{< card link="/docs/guide" title="Follow the guide" icon="document-text" subtitle="The complete guide to daily assessments with RF Swift" >}}
+  {{< card link="/docs/guide/workbench" title="Try the Workbench" icon="desktop-computer" subtitle="Missions, notes, findings, captures and reports in a GUI" >}}
 {{< /cards >}}

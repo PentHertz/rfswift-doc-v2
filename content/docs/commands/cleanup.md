@@ -7,6 +7,10 @@ next: /docs/commands/log
 
 # rfswift cleanup
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift system cleanup`. The legacy form `rfswift cleanup` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Clean up containers and images to free disk space.
 
 ## Synopsis

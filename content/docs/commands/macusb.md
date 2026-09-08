@@ -6,6 +6,10 @@ prev: /docs/commands/winusb
 
 # rfswift macusb
 
+{{< callout type="info" >}}
+**RF Swift v4**: the cross-platform front door is `rfswift usb` (`rfswift usb list|attach|detach|status|vm-devices`), which dispatches to this backend. `rfswift macusb` remains available. See [usb](/docs/commands/usb).
+{{< /callout >}}
+
 Manage USB device passthrough on macOS via Lima QEMU VM.
 
 ## Synopsis
@@ -205,11 +209,11 @@ RF Swift **automatically manages the Lima VM**, so there is no manual setup to d
 ```bash
 # Just run it, RF Swift handles everything automatically
 rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_light -n my_sdr
-# → "Lima instance 'rfswift' not found. Creating it..."
-# → Creates VM, installs Docker + USB tools + udev rules
-# → Starts VM and waits for Docker to be ready
-# → "Lima instance 'rfswift' created and started"
-# → Container runs normally
+# -> "Lima instance 'rfswift' not found. Creating it..."
+# -> Creates VM, installs Docker + USB tools + udev rules
+# -> Starts VM and waits for Docker to be ready
+# -> "Lima instance 'rfswift' created and started"
+# -> Container runs normally
 ```
 
 On subsequent runs, RF Swift automatically detects the VM state:
@@ -295,12 +299,12 @@ Add extra host directories accessible inside the VM:
 
 ```yaml
 mounts:
-  - location: "~"
+ - location: "~"
     writable: true
-  - location: "/tmp/lima"
+ - location: "/tmp/lima"
     writable: true
   # Add your own:
-  - location: "/Volumes/ExternalSSD/captures"
+ - location: "/Volumes/ExternalSSD/captures"
     writable: true
     mountPoint: "/captures"
 ```
@@ -312,19 +316,19 @@ Forward additional ports from the VM to the macOS host:
 ```yaml
 portForwards:
   # Docker socket (required, do not remove)
-  - guestSocket: "/run/docker.sock"
+ - guestSocket: "/run/docker.sock"
     hostSocket: "{{.Dir}}/sock/docker.sock"
   # noVNC desktop
-  - guestPort: 6080
+ - guestPort: 6080
     hostPort: 6080
   # PulseAudio
-  - guestPort: 34567
+ - guestPort: 34567
     hostPort: 34567
   # Add your own, e.g. the srsRAN web UI
-  - guestPort: 7681
+ - guestPort: 7681
     hostPort: 7681
   # Jupyter notebook
-  - guestPort: 8888
+ - guestPort: 8888
     hostPort: 8888
 ```
 
@@ -334,9 +338,9 @@ Change the base Linux image (default is Ubuntu 24.04):
 
 ```yaml
 images:
-  - location: "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-amd64.img"
+ - location: "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-amd64.img"
     arch: "x86_64"
-  - location: "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-arm64.img"
+ - location: "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-arm64.img"
     arch: "aarch64"
 ```
 
@@ -344,8 +348,8 @@ images:
 
 ```yaml
 dns:
-  - 8.8.8.8
-  - 8.8.4.4
+ - 8.8.8.8
+ - 8.8.4.4
 ```
 
 ### Adding Custom Udev Rules
@@ -354,7 +358,7 @@ If you have RF hardware not covered by the defaults, add udev rules in the `prov
 
 ```bash
 # Option 1: Add to the YAML template before creation
-# In the provision → system script section, add:
+# In the provision -> system script section, add:
 cat > /etc/udev/rules.d/99-custom.rules << 'UDEV'
 SUBSYSTEMS=="usb", ATTRS{idVendor}=="xxxx", ATTRS{idProduct}=="yyyy", MODE="0666"
 UDEV

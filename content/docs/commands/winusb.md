@@ -1,259 +1,84 @@
 ---
 title: winusb
 weight: 28
-prev: /docs/commands/realtime
+prev: /docs/commands/ulimits
+next: /docs/commands/macusb
 ---
 
 # rfswift winusb
 
-Manage USB devices on Windows hosts for WSL2 container passthrough.
+USB passthrough on Windows: forward host USB devices (SDR dongles, HackRF, Proxmark, serial adapters) into the WSL 2 virtual machine where Docker Desktop, Podman and the Nix engine run. Built on [usbipd-win](https://github.com/dorssel/usbipd-win) with the least privilege the tool allows.
+
+{{< callout type="info" >}}
+**RF Swift v4**: the cross-platform front door is `rfswift usb ...`, which runs these commands on Windows. `rfswift winusb ...` remains available. See [usb](/docs/commands/usb).
+{{< /callout >}}
 
 ## Synopsis
 
-```bash
-# List USB devices on Windows host
-rfswift winusb list
-
-# Attach a USB device to WSL container
-rfswift winusb attach -i BUSID
-
-# Detach a USB device from WSL container
-rfswift winusb detach -i BUSID
+```powershell
+rfswift usb status                     # usbipd-win version, WSL 2 distribution, shared devices
+rfswift usb list                       # host devices with their usbipd state
+rfswift usb attach [--busid 2-3] [--yes]
+rfswift usb detach [--busid 2-3]
+rfswift usb bind   [--busid 2-3] [--yes]
+rfswift usb unbind [--busid 2-3 | --guid GUID] [--yes]
+rfswift usb vm-devices                 # devices as seen inside WSL 2
 ```
 
-The `winusb` command manages USB device passthrough between a Windows host and WSL2 containers. It uses `usbipd` under the hood to bind and attach USB devices, making them accessible inside RF Swift containers running in WSL2.
+## Requirements
 
-{{< callout type="warning" >}}
-This command is **Windows/WSL2 only**. On native Linux, use [`bindings`](/docs/commands/bindings) to manage USB device access instead.
-{{< /callout >}}
+- Windows 10 or 11 with WSL 2 (installed by the RF Swift installer bundle, or `wsl --install`).
+- usbipd-win 4.0 or later (`winget install usbipd`, or the installer bundle).
+- Docker Desktop or Podman Desktop in WSL 2 mode, or the Nix engine in a WSL 2 distribution.
 
----
+## How it works
+
+Containers on Windows run inside the WSL 2 VM, which cannot see the host USB bus. usbipd-win **shares** a device (registers it for forwarding) and **attaches** it to WSL 2, where it appears under `/dev/bus/usb` for every distribution, Docker Desktop's included, because they share one kernel.
+
+- **Sharing a device the first time needs administrator rights.** RF Swift requests them through a single UAC prompt for `usbipd.exe` itself, never a shell, once per device. `--yes` allows the prompt without asking, for scripts.
+- **Attaching and detaching never need elevation.**
+- A device stays shared after a reboot; `unbind` forgets it (administrator approval again; `--guid` addresses a shared device that is currently unplugged).
 
 ## Subcommands
 
 | Subcommand | Description |
 |------------|-------------|
-| `winusb list` | List all USB devices connected to the Windows host |
-| `winusb attach` | Attach a USB device from the Windows host to the WSL container |
-| `winusb detach` | Detach a USB device from the WSL container |
+| `list` | Host devices with bus ID, vendor and product, and usbipd state (`host`, `shared`, `attached`, `unplugged`). Common RF hardware gets a friendly name (RTL-SDR, HackRF, bladeRF, Proxmark, LimeSDR, USRP, ...) |
+| `attach` | Share if needed (UAC, once) and attach to WSL 2. Without `--busid` an interactive picker opens; keyboard- and mouse-like devices are warned about before forwarding |
+| `detach` | Give the device back to Windows |
+| `bind` | Share only (administrator approval) |
+| `unbind` | Stop sharing (administrator approval) |
+| `status` | usbipd-win version, connected, shared and attached counts, the default WSL 2 distribution |
+| `vm-devices` | `/dev/bus/usb` and `lsusb` as seen inside WSL 2 |
 
----
+`attach`, `detach`, `bind` and `unbind` take `-i, --busid` (the bus ID from `list`, for example `2-3`); `attach`, `bind` and `unbind` take `-y, --yes`.
 
-### winusb list
+## Workflow
 
-List all USB devices connected to the Windows host, showing bus IDs, device IDs, vendor/product IDs, and descriptions.
-
-**No additional options.**
-
-### winusb attach
-
-Attach a USB device from the Windows host to the WSL2 container by bus ID.
-
-**Options:**
-
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-i, --busid STRING` | Bus ID of the USB device to attach | Yes | `-i 2-3` |
-
-### winusb detach
-
-Detach a USB device from the WSL2 container, returning it to the Windows host.
-
-**Options:**
-
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-i, --busid STRING` | Bus ID of the USB device to detach | Yes | `-i 2-3` |
-
----
-
-## Examples
-
-### Listing USB Devices
-
-**List all available USB devices:**
-```bash
-rfswift winusb list
+```powershell
+rfswift usb list
+rfswift usb attach --busid 2-3            # or just: rfswift usb attach  (picker)
+rfswift container create -i sdr_light -n sdr_work
+rfswift container shell -c sdr_work -e "lsusb"
+rfswift usb detach --busid 2-3
 ```
 
-**Example output:**
-```
-USB Devices:
-BusID: 1-2, DeviceID: 0bda:2838, VendorID: 0bda, ProductID: 2838, Description: RTL2838UHIDIR
-BusID: 2-3, DeviceID: 1d50:6089, VendorID: 1d50, ProductID: 6089, Description: HackRF One
-```
+`rfswift container create`, `container shell` and `env shell` offer the same picker themselves when they detect shared or known RF hardware; plain keyboards and webcams never trigger the question. In the Workbench the dialog is **USB passthrough...** on Docker, Podman and Nix missions, with one-click share and attach, detach, unshare and a view of what WSL 2 currently sees.
 
-### Attaching a USB Device
-
-**Attach an SDR device to the WSL container:**
-```bash
-# First, find the bus ID
-rfswift winusb list
-
-# Attach using the bus ID
-rfswift winusb attach -i 2-3
-```
-
-**Attach and use in a container:**
-```bash
-# Attach device
-rfswift winusb attach -i 1-2
-
-# Enter container and use
-rfswift exec -c sdr_work
-# Device is now available inside the container
-```
-
-### Detaching a USB Device
-
-**Return a device to the Windows host:**
-```bash
-rfswift winusb detach -i 2-3
-```
-
-**Detach before unplugging:**
-```bash
-# Always detach before physically removing the device
-rfswift winusb detach -i 1-2
-```
-
-### Typical WSL2 SDR Workflow
-
-```bash
-# 1. List devices to find your SDR
-rfswift winusb list
-
-# 2. Attach the SDR to WSL
-rfswift winusb attach -i 1-2
-
-# 3. Run an RF Swift container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_work
-
-# 4. Work with the SDR inside the container
-rfswift exec -c sdr_work
-
-# 5. When done, detach the device
-rfswift winusb detach -i 1-2
-```
-
----
-
-## How It Works
-
-### usbipd Integration
-
-The `winusb` command relies on [usbipd-win](https://github.com/dorssel/usbipd-win), which must be installed on the Windows host. The workflow is:
-
-1. **List** queries `usbipd` for all connected USB devices
-2. **Attach** binds the device via `usbipd` and forwards it over USB/IP to WSL2
-3. **Detach** releases the device from WSL2 and returns it to the Windows host
-
-```mermaid
-graph LR
-    A[Windows USB Device] -->|usbipd bind + attach| B[WSL2 Kernel]
-    B -->|/dev/bus/usb| C[RF Swift Container]
-    C -->|detach| A
-```
-
----
+Inside the container `/dev/bus/usb` must be mapped **and** major 189 allowed (`c 189:* rwm`), both part of RF Swift's defaults; a bind mount alone lists the devices but cannot open them, and privileged mode is not required. `rfswift container create` and the Workbench check this before creating a container.
 
 ## Troubleshooting
 
-### usbipd Not Found
+| Symptom | Fix |
+|---------|-----|
+| `usbipd-win is not installed` | `winget install usbipd`, then open a new terminal |
+| "administrator approval was declined" | Accept the UAC prompt, or run `usbipd bind --busid 2-3` once in an administrator terminal |
+| Device attached but the tool does not see it | Check `rfswift usb vm-devices`; make sure the container maps `/dev/bus/usb` with the USB cgroup rule (`rfswift usb`, or "Apply USB hotplug defaults" in the Workbench) |
+| Device disappears after a replug | Attach it again (`rfswift usb attach --busid 2-3`); the container needs no re-creation when `/dev/bus/usb` is mapped |
+| Windows cannot use the device any more | It is attached to WSL 2: `rfswift usb detach --busid 2-3` |
+| The Nix environment cannot open the device without root | `rfswift env udev <name>` inside the distribution (no password prompt) |
 
-**Problem:** `winusb` commands fail because `usbipd` is not installed
+## Related
 
-**Solutions:**
-```powershell
-# Install usbipd-win on Windows (run in PowerShell as Administrator)
-winget install --interactive --exact dorssel.usbipd-win
-
-# Verify installation
-usbipd --version
-```
-
-### Device Not Showing in List
-
-**Problem:** `winusb list` does not show your USB device
-
-**Solutions:**
-```bash
-# Ensure the device is physically connected to the Windows host
-# Check Windows Device Manager for the device
-
-# On the Windows side, verify usbipd can see it
-# (run in PowerShell)
-usbipd list
-```
-
-### Attach Fails with Permission Error
-
-**Problem:** `winusb attach` returns a permission error
-
-**Solutions:**
-```bash
-# usbipd requires Administrator privileges on Windows
-# Run your WSL terminal as Administrator
-
-# Alternatively, ensure the usbipd service is running
-# (run in PowerShell as Administrator)
-sc query usbipd
-```
-
-### Device Not Visible in Container After Attach
-
-**Problem:** Device is attached but not visible inside the container
-
-**Solutions:**
-```bash
-# Check if the device appears in WSL
-lsusb
-
-# If visible in WSL but not in the container, add a device binding
-rfswift bindings add -d -c sdr_work \
-  -s /dev/bus/usb \
-  -t /dev/bus/usb
-
-# You may also need cgroup rules
-rfswift cgroups add -c sdr_work -r "c 189:* rwm"
-```
-
-### Device Disconnects Unexpectedly
-
-**Problem:** USB device disconnects from WSL during use
-
-**Solutions:**
-```bash
-# Re-attach the device
-rfswift winusb attach -i 1-2
-
-# If the issue persists, check Windows power management:
-# Open Device Manager > USB devices > Properties > Power Management
-# Uncheck "Allow the computer to turn off this device to save power"
-
-# Ensure WSL2 kernel supports USB/IP
-wsl --update
-```
-
----
-
-## Related Commands
-
-- [`macusb`](/docs/commands/macusb) - USB device management on macOS (via Lima)
-- [`run`](/docs/commands/run) - Create containers to use with attached USB devices
-- [`bindings`](/docs/commands/bindings) - Manage device bindings inside containers (Linux and WSL2)
-- [`host`](/docs/commands/host) - Configure host system settings
-
----
-
-{{< callout type="info" >}}
-**Prerequisites**: The `winusb` command requires [usbipd-win](https://github.com/dorssel/usbipd-win) to be installed on the Windows host. Install it via `winget install dorssel.usbipd-win` in an elevated PowerShell prompt.
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Windows/WSL2 Only**: This command is exclusively for Windows hosts running RF Swift through WSL2. On native Linux, USB devices are directly accessible and should be passed to containers using the [`bindings`](/docs/commands/bindings) command instead.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Administrator Access**: Attaching and detaching USB devices via `usbipd` typically requires Administrator privileges on Windows. Run your terminal as Administrator if you encounter permission errors.
-{{< /callout >}}
+- [usb](/docs/commands/usb), [Windows guide](/docs/guide/windows)
+- [doctor](/docs/commands/doctor) reports the usbipd-win state

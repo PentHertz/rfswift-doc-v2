@@ -6,6 +6,10 @@ prev: /docs/commands/macusb
 
 # rfswift report
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift system report`. The legacy form `rfswift report` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Generate structured assessment reports from container sessions.
 
 ## Synopsis
@@ -101,7 +105,7 @@ An editable section for assessor findings, observations, and conclusions.
 
 ```bash
 rfswift report generate -c my_sdr
-# → rfswift-report-my_sdr-20260317-143022.md
+# -> rfswift-report-my_sdr-20260317-143022.md
 ```
 
 The Markdown output can be:
@@ -115,7 +119,7 @@ The Markdown output can be:
 
 ```bash
 rfswift report generate -c my_sdr --format html
-# → rfswift-report-my_sdr-20260317-143022.html
+# -> rfswift-report-my_sdr-20260317-143022.html
 ```
 
 The HTML output features:
@@ -201,10 +205,10 @@ rfswift report generate -c pentest_wifi \
   --format html
 
 # 4. Report includes:
-#    - Container config (image, caps, devices)
-#    - Session recording from --record
-#    - Shell history (all commands you ran)
-#    - Workspace files (captures/scan-01.cap, etc.)
+# - Container config (image, caps, devices)
+# - Session recording from --record
+# - Shell history (all commands you ran)
+# - Workspace files (captures/scan-01.cap, etc.)
 ```
 
 ---
@@ -227,7 +231,7 @@ graph TD
     I --> J{Format?}
     J -->|markdown| K[.md file]
     J -->|html| L[.html file]
-    J -->|pdf| M[pandoc/wkhtmltopdf → .pdf]
+    J -->|pdf| M[pandoc/wkhtmltopdf -> .pdf]
 ```
 
 The report generator:

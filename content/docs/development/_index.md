@@ -38,14 +38,14 @@ Create a custom image with just a YAML recipe file:
 base_image: "ubuntu:24.04"
 tag: "my-custom-sdr:latest"
 packages:
-  - rtl-sdr
-  - hackrf
-  - gqrx-sdr
+ - rtl-sdr
+ - hackrf
+ - gqrx-sdr
 python_packages:
-  - numpy
-  - scipy
+ - numpy
+ - scipy
 run_commands:
-  - "echo 'Custom image ready!'"
+ - "echo 'Custom image ready!'"
 ```
 Build it with a single command:
 ```bash
@@ -64,8 +64,8 @@ Before diving into RF Swift development, ensure your environment meets these pre
 
 ### Prerequisites
 
-- **Go 1.20+**: Required for compiling the RF Swift binary
-- **Docker**: Required for building and testing container images
+- **Go 1.27+**: Required for compiling the RF Swift binary and the Workbench
+- **Docker or Podman**: Required for building and testing container images (the Nix engine needs Nix instead)
 - **BuildX**: Required for cross-platform image building
 - **Git**: Required for source code management
 

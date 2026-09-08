@@ -1,7 +1,7 @@
 ---
 title: Dynamic Container Management
 weight: 2
-next: /docs/guide/list-of-images/
+next: /docs/guide/nix-engine
 prev: /docs/guide/running-rf-swift
 cascade:
   type: docs
@@ -9,858 +9,304 @@ cascade:
 
 ## Dynamic Container Management
 
-One of RF Swift's most powerful features is the ability to modify running containers without recreation. This page covers dynamic management of bindings, capabilities, cgroups, GPUs, and ports - allowing you to adapt containers to changing assessment needs in real-time.
+One of RF Swift's most useful features is the ability to change a container after it was created: bind mounts and devices, Linux capabilities, cgroup device rules, GPU requests, ports and resource limits, without rebuilding it from scratch. This page covers the `rfswift config` group (every subcommand is also available at the top level: `rfswift bindings ...`, `rfswift ports ...`).
 
 {{< callout type="info" >}}
-**What Makes This Powerful**: Traditional Docker requires destroying and recreating containers to change most settings. RF Swift's dynamic management saves time and preserves your work environment while adapting to new requirements.
+**What makes this useful**: with plain Docker most of these settings are frozen at `docker run`. RF Swift edits the container's configuration for you and restarts it, so you keep the container, its name, its workspace and everything installed in it.
 {{< /callout >}}
 
 ---
 
-## 🔌 Dynamic Device and Volume Bindings
+## How changes are applied
 
-The `bindings` command allows you to add or remove device and volume bindings to running containers without interruption.
+| Engine | Method | What to expect |
+|--------|--------|----------------|
+| Docker on Linux | Edits the container's files under `/var/lib/docker` and restarts the Docker service | One `sudo` prompt per command (RF Swift re-runs itself as root); the container comes back running, other containers stopped by the restart are started again. No extra disk |
+| Docker in the Lima VM (macOS) | Same edit, through the VM's sudo | No prompt |
+| Podman | Commits the container to a snapshot image and re-creates it with the new setting | No root; one snapshot image per change. Rootless Podman cannot add cgroup rules or `mknod` |
+| Any engine with `--recreate` | Commit and re-create instead of editing | Use it when you prefer not to touch the daemon's files |
+| Through a remote agent (Workbench) | The same operation on the agent host | |
 
-### Command Overview
+{{< callout type="warning" >}}
+**The container restarts** either way. Processes running inside are interrupted. Save your work before changing a setting. A change that cannot work (for example a rootless Podman cgroup rule) is refused before any password prompt.
+{{< /callout >}}
+
+To see the current configuration of a container, enter it: `rfswift container shell` prints a summary (image, mounts, devices, capabilities, cgroups, ulimits, GPUs, network, ports). `rfswift config ulimits list -c NAME` lists the limits; the other groups have no `list` subcommand (use `docker inspect NAME` or `podman inspect NAME` for the raw data).
+
+---
+
+## 🔌 Bindings: volumes and devices
 
 ```bash
-rfswift bindings [command]
-
-Available Commands:
-  add         Add device or volume binding to a container
-  rm          Remove device or volume binding from a container (aliases: rm)
-
-Flags:
-  -c, --container string   Container name or ID
-  -d, --device            Manage devices (not volumes)
-  -s, --source string     Source path (host)
-  -t, --target string     Target path (container)
+rfswift config bindings add -c CONTAINER -s HOST_PATH -t CONTAINER_PATH      # bind mount
+rfswift config bindings add -c CONTAINER -d -t /dev/ttyUSB0                  # device (source = target)
+rfswift config bindings add -c CONTAINER -d -s /dev/ttyUSB0 -t /dev/ttyUSB0  # device, explicit source
+rfswift config bindings rm  -c CONTAINER [-d] -t CONTAINER_PATH
 ```
 
-### Adding Device Bindings
+| Flag | Description |
+|------|-------------|
+| `-c, --container` | Container name or ID |
+| `-s, --source` | Host path (defaults to the target) |
+| `-t, --target` | Path inside the container |
+| `-d, --devices` | Manage a **device** mapping rather than a volume |
+| `--recreate` | Commit and re-create instead of editing |
 
-**Syntax for devices:**
+What happens with a device path:
+
+- `-d /dev/ttyACM0`: a **device mapping**. A serial port (`/dev/ttyACM*`, `/dev/ttyUSB*`, `/dev/ttyAMA*`) added this way is attached on demand and hot-pluggable on Docker and rootful Podman (see [serial hot-plug](#serial-hot-plug)).
+- a device node without `-d`: bind-mounted as asked, with the cgroup rule its major needs.
+- a `/dev` tree such as `/dev/bus/usb` without `-d`: mounted with the cgroup rule that makes its nodes usable (USB major 189).
+
+**Examples**
+
 ```bash
-# Full syntax with source and target
-rfswift bindings add -c CONTAINER -d -s /dev/ttyUSB0 -t /dev/ttyUSB0
+# Add a Proxmark3 to an RFID container after it was created
+rfswift config bindings add -c rfid -d -t /dev/ttyACM0
 
-# Shortcut when source and target are identical
-rfswift bindings add -c CONTAINER -d -t /dev/ttyUSB0
+# All USB devices (hot-plug friendly: the tree, not a single node)
+rfswift config bindings add -c sdr -t /dev/bus/usb
+
+# Share a project directory, then a captures directory
+rfswift config bindings add -c sdr -s ~/projects -t /root/projects
+rfswift config bindings add -c sdr -s ~/captures -t /root/captures
+
+# Remove a mount, remove a device
+rfswift config bindings rm -c sdr -t /root/projects
+rfswift config bindings rm -c rfid -d -t /dev/ttyACM0
 ```
 
-**Real-world examples:**
+Read-only mounts are set at creation time (`rfswift container create ... -b ~/samples:/root/samples:ro`).
+
+### Serial hot-plug
+
+Docker and rootful Podman containers created by RF Swift can open serial ports through their device cgroup, and RF Swift creates the port's node inside the container when it starts and whenever a shell opens, removing nodes whose device is gone. A port that is unplugged at creation is recorded and attached on demand: plug it in, run `rfswift container shell`, and the port is there. Switch it per container:
 
 ```bash
-# Add a specific RTL-SDR device
-rfswift bindings add -c sdr_container -d -t /dev/rtlsdr0
-
-# Add all USB devices
-rfswift bindings add -c sdr_container -d -t /dev/bus/usb
-
-# Add USB serial device
-rfswift bindings add -c my_container -d -s /dev/ttyUSB0 -t /dev/ttyUSB0
-
-# Example with a Proxmark3 on /dev/ttyACM0
-rfswift bindings add -c rfid_container -d -t /dev/ttyACM0
+rfswift config serial-hotplug on  -c rfid
+rfswift config serial-hotplug off -c rfid     # removes the serial cgroup rules, leaves /dev alone
 ```
 
-### Adding Volume Bindings
+Rootless Podman keeps the mapping and needs the port present at creation; Lima on macOS and Windows hosts forward USB devices into their VM first ([usb](/docs/commands/usb)).
 
-**Syntax for volumes:**
+### Hot-plugging workflow
+
 ```bash
-# Using -b flag (recommended)
-rfswift bindings add -c CONTAINER -b /host/path:/container/path
+# 1. Start a container without the device
+rfswift container create -i sdr_full -n sdr_work
 
-# Using -s and -t flags
-rfswift bindings add -c CONTAINER -s /host/path -t /container/path
+# 2. Plug in the RTL-SDR: it is under /dev/bus/usb, mapped by default with the USB cgroup rule,
+#    so rtl_test works right away in a new shell
+rfswift container shell -c sdr_work -e "rtl_test -t"
+
+# 3. A serial device (Proxmark3, Arduino) gets a node on demand
+rfswift config serial-hotplug on -c sdr_work
+rfswift container shell -c sdr_work -e "ls -l /dev/ttyACM0"
 ```
 
-**Real-world examples:**
+{{< callout type="info" >}}
+Earlier RF Swift versions could leave an empty, root-owned `/dev/ttyACM0` directory on the host when a device node was bind-mounted while unplugged. `rfswift host devclean` finds and removes such directories.
+{{< /callout >}}
+
+---
+
+## 🧢 Capabilities
 
 ```bash
-# Mount project directory
-rfswift bindings add -c my_container -b ~/projects:/root/projects
-
-# Mount captures directory
-rfswift bindings add -c pentest_container -b ~/captures:/root/captures
-
-# Mount tool configuration
-rfswift bindings add -c sdr_container -b ~/.config/gqrx:/root/.config/gqrx
-
-# Mount shared data directory 
-rfswift bindings add -c analysis_container -b /data/samples:/root/samples
-
-# Mount shared data directory in RO mode (read-only would need Docker API)
-rfswift bindings add -c analysis_container -b /data/samples:/root/samples:ro
-
-# Mount USB drive for data exfiltration
-rfswift bindings add -c assessment_container -b /media/usb:/mnt/usb
+rfswift config capabilities add -c CONTAINER -p CAPABILITY
+rfswift config capabilities rm  -c CONTAINER -p CAPABILITY
 ```
 
-### Removing Bindings
+One capability per command (`-p NET_ADMIN`). Names are compared in their short form, so removing a capability the daemon reports as `CAP_NET_ADMIN` works, and adding one twice does not duplicate it.
 
-**Remove device bindings:**
-```bash
-# Remove by target path
-rfswift bindings remove -c my_container -d -t /dev/ttyUSB0
-
-# Alternative: use rm alias
-rfswift bindings rm -c my_container -d -t /dev/ttyUSB0
-```
-
-**Remove volume bindings:**
-```bash
-# Remove by target path
-rfswift bindings remove -c my_container -t /root/projects
-
-# Remove multiple bindings
-rfswift bindings rm -c my_container -t /root/captures
-rfswift bindings rm -c my_container -t /root/samples
-```
-
-### Hot-Plugging Workflow
-
-RF Swift excels at handling devices that are plugged in after container creation:
+| Capability | Use case | Risk |
+|-----------|----------|------|
+| `NET_ADMIN` | Network configuration, monitor mode, Wi-Fi and Bluetooth tools | Medium |
+| `NET_RAW` | Raw sockets, packet injection | Medium |
+| `SYS_PTRACE` | Debugging, memory inspection | High |
+| `SYS_NICE` | Realtime scheduling (added by `--realtime`) | Low |
+| `NET_BIND_SERVICE` | Bind ports below 1024 | Low |
+| `SYS_RAWIO` | Raw I/O for hardware tools | High |
+| `DAC_OVERRIDE`, `CHOWN` | File permission and ownership changes | High / Medium |
+| `SYS_ADMIN`, `SYS_MODULE` | Mounts, kernel modules: nearly root | Very high |
 
 ```bash
-# 1. Start container without device
-rfswift run -i sdr_full -n sdr_work
+# Wi-Fi monitor mode and injection
+rfswift config capabilities add -c wifi_tools -p NET_ADMIN
+rfswift config capabilities add -c wifi_tools -p NET_RAW
 
-# 2. Plug in RTL-SDR device
-# (Device appears as /dev/rtlsdr0)
-
-# 3. Add device to running container
-rfswift bindings add -c sdr_work -d -t /dev/rtlsdr0
-
-# 4. Use the device immediately
-rfswift exec -c sdr_work
-rtl_test -t
-
-# 5. When done, you can also remove the device binding
-rfswift bindings rm -c sdr_work -d -t /dev/rtlsdr0
-
-# 6. Physically unplug the device
+# Debugging in a reversing container, removed when done
+rfswift config capabilities add -c reversing -p SYS_PTRACE
+rfswift config capabilities rm  -c reversing -p SYS_PTRACE
 ```
 
 {{< callout type="warning" >}}
-**Container Recreation**: Adding or removing bindings requires RF Swift to stop the container, modify its configuration, and restart it. Any processes running in the container will be interrupted. Save your work before modifying bindings!
-{{< /callout >}}
-
-
-### Permanent device binding
-
-If you need to plug and unplug devices and do not want to stop the container everytime, use the volume binding feature instead of device bindings in Linux (without `-d`).
-
----
-
-## 🧢 Dynamic Capability Management
-
-Linux capabilities provide fine-grained control over privileged operations. RF Swift allows you to add or remove capabilities from running containers.
-
-### Command Overview
-
-```bash
-rfswift capabilities [command]
-
-Available Commands:
-  add         Add capabilities to a container
-  rm          Remove capabilities from a container (aliases: rm)
-
-Flags:
-  -c, --container string      Container name or ID
-  -a, --capabilities string   Capabilities to add/remove (comma-separated)
-```
-
-### Common Capabilities
-
-| Capability | Use Case | Risk Level |
-|-----------|----------|------------|
-| `NET_ADMIN` | Network configuration, Wi-Fi/Bluetooth tools | Medium |
-| `NET_RAW` | Raw socket access, packet crafting | Medium |
-| `SYS_PTRACE` | Process debugging, memory inspection | High |
-| `SYS_ADMIN` | Mount operations, system administration | Very High |
-| `DAC_OVERRIDE` | Bypass file permission checks | High |
-| `CHOWN` | Change file ownership | Medium |
-| `SETUID/SETGID` | Change process UID/GID | High |
-| `NET_BIND_SERVICE` | Bind to ports < 1024 | Low |
-| `SYS_MODULE` | Load kernel modules | Very High |
-| `SYS_RAWIO` | Raw I/O operations | High |
-
-### Adding Capabilities
-
-```bash
-# Add single capability
-rfswift capabilities add -c wifi_container -a NET_ADMIN
-
-# Add multiple capabilities
-rfswift capabilities add -c pentest_container -a NET_ADMIN,NET_RAW,SYS_PTRACE
-```
-
-**Real-world examples:**
-
-```bash
-# Enable Wi-Fi monitoring mode
-rfswift capabilities add -c wifi_tools -a NET_ADMIN,NET_RAW
-
-# Enable Bluetooth scanning
-rfswift capabilities add -c bluetooth_scanner -a NET_ADMIN
-
-# Enable debugging tools
-rfswift capabilities add -c reversing_container -a SYS_PTRACE
-
-# Enable raw I/O for hardware access
-rfswift capabilities add -c hardware_tools -a SYS_RAWIO
-
-# Enable low port binding for testing
-rfswift capabilities add -c web_server -a NET_BIND_SERVICE
-```
-
-### Listing Capabilities
-
-View current capabilities:
-
-```bash
-rfswift capabilities list -c my_container
-
-Current Capabilities:
-  NET_ADMIN
-  NET_RAW
-```
-
-### Removing Capabilities
-
-Remove capabilities when they're no longer needed:
-
-```bash
-# Remove single capability
-rfswift capabilities remove -c wifi_container -a NET_ADMIN
-
-# Remove multiple capabilities
-rfswift capabilities rm -c pentest_container -a NET_ADMIN,NET_RAW
-```
-
-### Security Best Practice: Temporary Capabilities
-
-Use capabilities only when needed and remove them immediately:
-
-```bash
-# Add capability for specific task
-rfswift capabilities add -c assessment -a NET_ADMIN
-
-# Enter container and perform task
-rfswift exec -c assessment
-# ... perform network configuration ...
-# exit
-
-# Remove capability after task completes
-rfswift capabilities rm -c assessment -a NET_ADMIN
-```
-
-{{< callout type="warning" >}}
-**Security Risk**: Capabilities like `SYS_ADMIN` and `SYS_MODULE` are nearly equivalent to full root access. Only add them when absolutely necessary and remove them immediately after use.
+`SYS_ADMIN` and `SYS_MODULE` are close to full root on the host. Add them only when a tool cannot work otherwise, and remove them immediately after. `rfswift audit CONTAINER` lists the capabilities a container carries.
 {{< /callout >}}
 
 ---
 
-## 🧩 Dynamic Cgroup Management
-
-Control groups (cgroups) restrict container access to specific device types. RF Swift allows dynamic modification of cgroup rules.
-
-### Command Overview
+## 🧩 Cgroup device rules
 
 ```bash
-rfswift cgroups [command]
-
-Available Commands:
-  add     Add cgroup rules to a container
-  rm      Remove cgroup rules from a container (aliases: rm)
-
-Flags:
-  -c, --container string   Container name or ID
-  -g, --cgroups string     Cgroup rules (comma-separated)
+rfswift config cgroups add -c CONTAINER -r "c 189:* rwm"
+rfswift config cgroups rm  -c CONTAINER -r "c 189:* rwm"
 ```
 
-### Cgroup Rule Format
+One rule per command. A rule is `type major:minor permissions`: `c` (character) or `b` (block), the device numbers (`*` for any), and `r` (read), `w` (write), `m` (mknod).
 
-Rules follow the pattern: `type major:minor permissions`
-
-**Components:**
-- `type`: `c` (character device) or `b` (block device)
-- `major:minor`: Device numbers (use `*` for wildcard)
-- `permissions`: `r` (read), `w` (write), `m` (mknod - create device files)
-
-**Common device major numbers:**
-
-| Major | Devices | Example Use |
+| Major | Devices | Typical use |
 |-------|---------|-------------|
-| 189 | USB serial (ttyUSB*) | RTL-SDR, HackRF, GPS receivers |
-| 166 | ACM devices (ttyACM*) | Proxmark3, Arduino |
-| 188 | USB serial converters | FTDI adapters, CH340 |
-| 116 | ALSA audio | Audio capture, SDR audio |
-| 226 | DRI (GPU) | OpenCL, GPU acceleration |
+| 189 | USB devices (`/dev/bus/usb`) | SDR dongles, HackRF, Proxmark over USB |
+| 166 | CDC-ACM serial (`/dev/ttyACM*`) | Proxmark3, Arduino, many dev boards |
+| 188 | USB serial converters (`/dev/ttyUSB*`) | FTDI, CH340, CP210x adapters |
+| 116 | ALSA sound | Audio capture and playback |
+| 226 | DRI (GPU) | OpenCL, hardware rendering |
 | 81 | Video4Linux | Webcams, video capture |
-| 180 | USB devices | General USB access |
-| 89 | I2C devices | Hardware interfaces |
-| 13 | Input devices | Keyboards, mice, gamepads |
+| 13 | Input devices | HID, joysticks |
+| 137 | VHCI | Virtual Bluetooth HCI |
+| 89 | I2C | Hardware interfaces |
 
-Find device major numbers:
 ```bash
 ls -l /dev/ttyUSB0
-crw-rw---- 1 root dialout 188, 0 Jan 12 10:30 /dev/ttyUSB0
-#                          ^^^ major number
+# crw-rw---- 1 root dialout 188, 0 ... /dev/ttyUSB0    <- major 188
 ```
-
-### Adding Cgroup Rules
 
 ```bash
-# Add single rule
-rfswift cgroups add -c my_container -g "c 189:* rwm"
-
-# Add multiple rules
-rfswift cgroups add -c my_container -g "c 189:* rwm,c 166:* rwm,c 188:* rwm"
+rfswift config cgroups add -c sdr -r "c 189:* rwm"      # USB
+rfswift config cgroups add -c rfid -r "c 166:* rwm"     # ACM serial
+rfswift config cgroups add -c gpu_work -r "c 226:* rwm" # DRI
 ```
 
-**Real-world examples:**
-
-```bash
-# Grant access to RTL-SDR (USB serial)
-rfswift cgroups add -c sdr_container -g "c 189:* rwm"
-
-# Grant access to Proxmark3 (ACM device)
-rfswift cgroups add -c rfid_container -g "c 166:* rwm"
-
-# Grant access to FTDI USB serial converters
-rfswift cgroups add -c hardware_tools -g "c 188:* rwm"
-
-# Grant access to ALSA audio devices
-rfswift cgroups add -c audio_analysis -g "c 116:* rwm"
-
-# Grant GPU access for OpenCL
-rfswift cgroups add -c gpu_container -g "c 226:* rwm"
-
-# Grant access to Video4Linux (webcams)
-rfswift cgroups add -c video_capture -g "c 81:* rwm"
-
-# Comprehensive hardware access
-rfswift cgroups add -c hardware_lab -g "c 189:* rwm,c 166:* rwm,c 188:* rwm,c 116:* rwm,c 226:* rwm"
-```
-
-### Removing Cgroup Rules
-
-Remove specific cgroup rules:
-
-```bash
-# Remove single rule
-rfswift cgroups remove -c my_container -g "c 189:* rwm"
-
-# Remove multiple rules
-rfswift cgroups rm -c my_container -g "c 189:* rwm,c 166:* rwm"
-```
-
-### Identifying Required Cgroups
-
-When a tool fails to access a device:
-
-```bash
-# 1. Check device information on host
-ls -l /dev/your_device
-crw-rw---- 1 root dialout 189, 0 Jan 12 10:30 /dev/your_device
-#                          ^^^ major number: 189
-
-# 2. Add corresponding cgroup rule
-rfswift cgroups add -c your_container -g "c 189:* rwm"
-
-# 3. Add device binding
-rfswift bindings add -c your_container -d -t /dev/your_device
-
-# 4. Test access
-rfswift exec -c your_container
-ls -l /dev/your_device
-```
-
-{{< callout type="info" >}}
-**Cgroups vs Device Bindings**: Cgroups control which *types* of devices a container can access, while device bindings make *specific* devices available. You need both: cgroups allow access to the device class, and bindings expose the actual device.
-{{< /callout >}}
+RF Swift auto-detects cgroup v1 and v2. Rootless Podman cannot set device rules at all: they are dropped with a warning and access depends on the host udev rules (`rfswift host udev`).
 
 ---
 
-## 🎮 Dynamic GPU Management
-
-RF Swift supports GPU passthrough for hardware-accelerated workloads. You can add or remove GPU access on existing containers dynamically.
-
-### Command Overview
+## 🎮 GPU requests
 
 ```bash
-rfswift gpus [command]
-
-Available Commands:
-  add         Add GPU access to a container
-  rm          Remove GPU access from a container
-
-Flags:
-  -c, --container string   Container name or ID
-  -g, --gpus string        GPU specifier: 'all' or comma-separated IDs (default: all)
+rfswift config gpus add -c CONTAINER [-g all|0,1]
+rfswift config gpus rm  -c CONTAINER [-g SPEC]      # empty spec removes all
 ```
 
-### Adding GPU Access
+Requires the vendor runtime on the host (NVIDIA Container Toolkit, ROCm, ...). The request is stored as given (`all`, `0,1`) and survives a re-creation. See [gpus](/docs/commands/gpu).
 
 ```bash
-# Add all GPUs
-rfswift gpus add -c sdr_work
-
-# Add specific GPU
-rfswift gpus add -c sdr_work -g 0
+rfswift config gpus add -c sdr_gpu -g all
+rfswift config gpus rm  -c sdr_gpu
 ```
-
-### Removing GPU Access
-
-```bash
-rfswift gpus rm -c sdr_work
-```
-
-### Creating Containers with GPU
-
-```bash
-# At creation time
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n gpu_sdr --gpus all
-
-# Or via profile
-rfswift run --profile gpu-sdr -n my_gpu_container
-```
-
-{{< callout type="warning" >}}
-**Host Setup Required**: GPU passthrough requires the GPU runtime (NVIDIA Container Toolkit, ROCm, etc.) installed on the host. See [`gpus`](/docs/commands/gpu) for setup instructions.
-{{< /callout >}}
 
 ---
 
-## 🌐 Dynamic Port Management
-
-RF Swift allows you to manage container ports dynamically, supporting both exposed ports (container-to-container) and bound ports (host-to-container).
-
-### Command Overview
+## 🌐 Ports
 
 ```bash
-rfswift ports [command]
-
-Available Commands:
-  bind        Bind a port between host and container
-  expose      Expose a container port
-  unbind      Remove a port binding
-  unexpose    Remove an exposed port
-
-Flags:
-  -c, --container string   Container name or ID
-  -p, --port string        Port specification
+rfswift config ports expose   -c CONTAINER -p 8080/tcp                 # visible to other containers
+rfswift config ports unexpose -c CONTAINER -p 8080/tcp
+rfswift config ports bind     -c CONTAINER -b 8080:80/tcp              # published on the host
+rfswift config ports bind     -c CONTAINER -b 127.0.0.1:8080:80/tcp    # localhost only
+rfswift config ports unbind   -c CONTAINER -b 8080:80/tcp
 ```
 
-### Port Concepts
-
-**Exposed Ports** (`expose`):
-- Make ports available to other containers on the same network
-- Don't publish to host
-- Used for container-to-container communication
-
-**Bound Ports** (`bind`):
-- Publish container ports to host
-- Format: `host_port:container_port/protocol`
-- Optional host IP: `host_ip:host_port:container_port/protocol`
-
-### Exposing Ports
-
-Make ports available for inter-container communication:
+Bindings accept `HOST:CONTAINER/proto`, `CONTAINER/proto:HOST` and `IP:HOST:CONTAINER/proto`. Port publishing needs a non-host network mode (`-t bridge` or `-t nat` at creation); in host mode the container already shares the host's ports.
 
 ```bash
-# Expose single port
-rfswift ports expose -c web_server -p 8080
+# A web UI reachable from the host only
+rfswift config ports bind -c web -b 127.0.0.1:8080:80/tcp
 
-# Expose multiple ports (add one at a time)
-rfswift ports expose -c api_server -p 3000
-rfswift ports expose -c api_server -p 3001
-rfswift ports expose -c api_server -p 3002
+# A service other containers on the same NAT network can reach
+rfswift config ports expose -c api -p 3000/tcp
 ```
-
-### Binding Ports
-
-Publish container ports to host:
-
-```bash
-# Bind with automatic host port
-rfswift ports bind -c web_server -p 8080:80/tcp
-
-# Bind to specific host IP
-rfswift ports bind -c api_server -p 127.0.0.1:8080:80/tcp
-
-# Bind UDP port
-rfswift ports bind -c dns_server -p 5353:53/udp
-
-# Bind to all interfaces
-rfswift ports bind -c http_server -p 0.0.0.0:8080:80/tcp
-```
-
-**Real-world examples:**
-
-```bash
-# Web server for assessment results
-rfswift ports bind -c pentest_container -p 8080:80/tcp
-
-# API server for tool integration
-rfswift ports bind -c automation -p 127.0.0.1:5000:5000/tcp
-
-# Database for analysis results
-rfswift ports bind -c analysis -p 127.0.0.1:5432:5432/tcp
-
-# Jupyter notebook for RF analysis
-rfswift ports bind -c jupyter_sdr -p 8888:8888/tcp
-
-# SSH for remote access
-rfswift ports bind -c remote_lab -p 2222:22/tcp
-
-# VNC for remote GUI
-rfswift ports bind -c gui_tools -p 5900:5900/tcp
-
-# Multiple service ports
-rfswift ports bind -c full_stack -p 80:80/tcp
-rfswift ports bind -c full_stack -p 443:443/tcp
-rfswift ports bind -c full_stack -p 3306:3306/tcp
-```
-
-### Removing Ports
-
-**Unexpose ports:**
-```bash
-rfswift ports unexpose -c web_server -p 8080
-```
-
-**Unbind ports:**
-```bash
-# Unbind by host port
-rfswift ports unbind -c web_server -p 8080:80/tcp
-
-# Unbind from specific IP
-rfswift ports unbind -c api_server -p 127.0.0.1:5000:5000/tcp
-```
-
-### Port Management Workflow
-
-Typical workflow for adding web interface to analysis container:
-
-```bash
-# 1. Start container without ports
-rfswift run -i analysis -n data_analysis
-
-# 2. Run analysis, realize you need web interface
-# (inside container, start jupyter notebook)
-
-# 3. Exit container and bind port
-exit
-rfswift ports bind -c data_analysis -p 8888:8888/tcp
-
-# 4. Access from host browser
-# Open http://localhost:8888
-
-# 5. When done, unbind port for security
-rfswift ports unbind -c data_analysis -p 8888:8888/tcp
-```
-
-{{< callout type="warning" >}}
-**Security Consideration**: Binding ports to `0.0.0.0` makes services accessible from any network interface. Use `127.0.0.1` to restrict access to localhost only, especially for sensitive services.
-{{< /callout >}}
 
 ---
 
-## 🎯 Real-World Workflows
-
-### Workflow 1: Multi-SDR Assessment
-
-Handle multiple SDR devices during a site survey:
+## 🎚️ Ulimits and realtime
 
 ```bash
-# Day 1: Start with RTL-SDR only
-rfswift run -i sdr_full -n site_survey
-rfswift bindings add -c site_survey -d -t /dev/rtlsdr0
-
-# Day 2: Client provides HackRF for specific test
-rfswift bindings add -c site_survey -d -t /dev/hackrf
-rfswift cgroups add -c site_survey -g "c 189:* rwm"  # If not already present
-
-# Day 3: Need to analyze with Airspy
-rfswift bindings add -c site_survey -d -t /dev/airspy0
-
-# Day 4: Return HackRF, continue with others
-rfswift bindings rm -c site_survey -d -t /dev/hackrf
-
-# Cleanup: List all active bindings
-rfswift bindings list -c site_survey
+rfswift config ulimits add  -c CONTAINER -n rtprio  -v 95
+rfswift config ulimits add  -c CONTAINER -n memlock -v -1
+rfswift config ulimits add  -c CONTAINER -n nofile  -v 1024:65536
+rfswift config ulimits list -c CONTAINER
+rfswift config ulimits rm   -c CONTAINER -n nofile
 ```
 
-### Workflow 2: Secure Wireless Assessment
+For SDR work use the one-command form: `rfswift realtime enable -c CONTAINER` sets `SYS_NICE`, `rtprio=95`, `memlock=unlimited` and `nice=40`; `realtime status` and `realtime disable` inspect and revert. Rootless Podman skips limits above your host hard limits instead of failing the start.
 
-Progressive security hardening for Wi-Fi assessment:
+---
+
+## 🎯 Real-world workflows
+
+**Multi-SDR site survey**
 
 ```bash
-# Start with minimal privileges
-rfswift run -i wifi -n wifi_assess -u 0 -t bridge
-
-# Need monitor mode - add NET_ADMIN temporarily
-rfswift capabilities add -c wifi_assess -a NET_ADMIN,NET_RAW
-
-# Perform monitoring
-rfswift exec -c wifi_assess
-airmon-ng start wlan0
-airodump-ng wlan0mon
-# ... perform capture ...
-exit
-
-# Remove capabilities after capture
-rfswift capabilities rm -c wifi_assess -a NET_ADMIN,NET_RAW
-
-# Add web server for reporting
-rfswift ports bind -c wifi_assess -p 127.0.0.1:8080:80/tcp
-
-# Share results directory
-rfswift bindings add -c wifi_assess -b ~/client-results:/root/results
+rfswift container create -i sdr_full -n site_survey --realtime
+# HackRF plugged in later: already reachable through /dev/bus/usb
+rfswift container shell -c site_survey -e "hackrf_info"
+# a GPS receiver on a USB-serial adapter
+rfswift config bindings add -c site_survey -d -t /dev/ttyUSB0
+rfswift config bindings add -c site_survey -s ~/survey -t /root/survey
 ```
 
-### Workflow 3: Hardware Reverse Engineering
-
-Iterative device exploration:
+**Secure wireless assessment**
 
 ```bash
-# Start with basic tools
-rfswift run -i hardware -n rev_eng -u 0
-
-# Connect device, add binding
-rfswift bindings add -c rev_eng -d -t /dev/ttyUSB0
-rfswift cgroups add -c rev_eng -g "c 188:* rwm"
-
-# Need JTAG - add more devices
-rfswift bindings add -c rev_eng -d -t /dev/ttyACM0
-rfswift cgroups add -c rev_eng -g "c 166:* rwm"
-
-# Need debugging capabilities
-rfswift capabilities add -c rev_eng -a SYS_PTRACE
-
-# Need shared workspace with host
-rfswift bindings add -c rev_eng -b ~/projects/device-re:/root/work
-
-# Export results over network
-rfswift ports bind -c rev_eng -p 2222:22/tcp
-
-# Security: Remove capabilities when done
-rfswift capabilities rm -c rev_eng -a SYS_PTRACE
+rfswift container create -i wifi -n wifi_assess -t nat
+rfswift config capabilities add -c wifi_assess -p NET_ADMIN
+rfswift config capabilities add -c wifi_assess -p NET_RAW
+rfswift config ports bind -c wifi_assess -b 127.0.0.1:8080:80/tcp
+# ... assessment ...
+rfswift config capabilities rm -c wifi_assess -p NET_ADMIN
+rfswift config capabilities rm -c wifi_assess -p NET_RAW
 ```
 
-### Workflow 4: Bluetooth Security Assessment
-
-Complete Bluetooth engagement workflow:
+**Hardware reverse engineering**
 
 ```bash
-# Initial setup
-rfswift run -i bluetooth -n bt_assess -u 0 -t bridge
-
-# Add Bluetooth capabilities
-rfswift capabilities add -c bt_assess -a NET_ADMIN,NET_RAW
-
-# Add Ubertooth device when it arrives
-rfswift bindings add -c bt_assess -d -t /dev/ttyACM0
-rfswift cgroups add -c bt_assess -g "c 166:* rwm"
-
-# Add second Bluetooth adapter
-rfswift bindings add -c bt_assess -d -t /dev/ttyACM1
-
-# Share capture directory
-rfswift bindings add -c bt_assess -b ~/bt-captures:/root/captures
-
-# Set up web interface for results
-rfswift ports bind -c bt_assess -p 127.0.0.1:8000:8000/tcp
-
-# When assessment complete, remove sensitive capabilities
-rfswift capabilities rm -c bt_assess -a NET_ADMIN,NET_RAW
+rfswift container create -i hardware -n rev_eng
+rfswift config bindings add -c rev_eng -d -t /dev/ttyUSB0        # JTAG / UART adapter
+rfswift config bindings add -c rev_eng -d -t /dev/ttyACM0        # dev board, hot-pluggable
+rfswift config capabilities add -c rev_eng -p SYS_PTRACE
+rfswift config bindings add -c rev_eng -s ~/projects/device-re -t /root/work
 ```
 
-### Workflow 5: Teaching Lab Environment
-
-Classroom setup with controlled progression:
+**Teaching lab**
 
 ```bash
-# Week 1: Basic SDR concepts (no hardware)
-rfswift run -i sdr_light -n student_lab
-
-# Week 2: Add RTL-SDR access
-rfswift bindings add -c student_lab -d -t /dev/rtlsdr0
-rfswift cgroups add -c student_lab -g "c 189:* rwm"
-
-# Week 3: Add audio for AM/FM demodulation
-rfswift cgroups add -c student_lab -g "c 116:* rwm"
-
-# Week 4: Share project directories
-rfswift bindings add -c student_lab -b ~/student-projects:/root/projects
-
-# Week 5: Enable web access for visualization
-rfswift ports bind -c student_lab -p 8080:8080/tcp
-
-# End of semester: Review container configuration
-docker inspect student_lab
+rfswift container create -i sdr_light -n student_lab -t nat
+rfswift config bindings add -c student_lab -s ~/student-projects -t /root/projects
+rfswift config ports bind -c student_lab -b 8888:8888/tcp        # Jupyter
 ```
 
 ---
 
 ## 🔍 Troubleshooting
 
-### Device Not Accessible After Binding
+**Device not accessible after binding**: the node is mapped but its major is not allowed. Add the rule (`rfswift config cgroups add -c NAME -r "c 189:* rwm"`), or map the whole `/dev/bus/usb` tree, which carries the rule. On rootless Podman, install `rfswift host udev` so your user may open the node on the host.
 
-**Problem**: Device binding added but tool can't access it.
+**Capability not taking effect**: check with `rfswift container shell -c NAME -e "capsh --print"`. Some tools need two capabilities (`NET_ADMIN` and `NET_RAW` for injection).
 
-**Solution**:
-```bash
-# 1. Check if cgroup rule allows device type
-rfswift cgroups list -c my_container
+**Port already in use**: `sudo lsof -i :8080` on the host, then bind another host port (`-b 8081:80/tcp`).
 
-# 2. Add missing cgroup rule
-rfswift cgroups add -c my_container -g "c 189:* rwm"
+**Container will not restart after a change**: `docker logs NAME` (or `podman logs`) shows why; a missing device that was mapped explicitly is the usual cause. Remove the mapping (`rfswift config bindings rm -c NAME -d -t /dev/...`) or plug the device in.
 
-# 3. Verify device exists in container
-rfswift exec -c my_container
-ls -l /dev/your_device
-```
-
-### Capability Not Taking Effect
-
-**Problem**: Added capability but operation still fails.
-
-**Solution**:
-```bash
-# 1. Check if you need multiple capabilities
-rfswift capabilities add -c my_container -a NET_ADMIN,NET_RAW
-
-# 2. Some operations may need privileged mode
-rfswift run -i image -n new_container -u 1  # Recreate if necessary
-```
-
-### Port Already in Use
-
-**Problem**: Can't bind port because it's already in use.
-
-**Solution**:
-```bash
-# 1. Check what's using the port
-sudo lsof -i :8080
-
-# 2. Use a different host port
-rfswift ports bind -c my_container -p 8081:80/tcp
-
-# 3. Or stop the conflicting service
-sudo systemctl stop service_name
-rfswift ports bind -c my_container -p 8080:80/tcp
-```
-
-### Container Won't Restart After Changes
-
-**Problem**: Container fails to restart after adding bindings.
-
-**Solution**:
-```bash
-# 1. Check container status
-docker ps -a | grep my_container
-
-# 2. View container logs
-docker logs my_container
-
-# 3. Remove problematic binding
-rfswift bindings rm -c my_container -t /problematic/path
-
-# 4. Try manual restart
-docker start my_container
-```
-
-### Permission Denied Inside Container
-
-**Problem**: Can't access device even with binding and cgroup.
-
-**Solution**:
-```bash
-# 1. Check host device permissions
-ls -l /dev/your_device
-
-# 2. Add user to required group on host
-sudo usermod -aG dialout $USER
-
-# 3. Restart container
-docker restart my_container
-
-# 4. Or run container as privileged (less secure)
-rfswift capabilities add -c my_container -a DAC_OVERRIDE
-```
+**Permission denied on the Docker files**: the `config` commands ask for `sudo` on Linux Docker. If you cannot escalate, use `--recreate`.
 
 ---
 
-## 🛡️ Security Best Practices
+## 🛡️ Security best practices
 
-### Principle of Least Privilege
+- **Least privilege**: start unprivileged, add capabilities and devices as needed, remove them when the task is done. `rfswift audit NAME` shows what a container carries.
+- **Temporary escalation**: `capabilities add`, do the work, `capabilities rm`.
+- **Network isolation**: `-t nat` or `-t bridge` at creation, then publish only the ports you need on `127.0.0.1`.
+- **Devices**: prefer the USB tree over `--privileged`; privileged mode is never required for USB access.
 
-```bash
-# Bad: Start with everything
-rfswift run -i image -n container -u 1 -a ALL
+## 📊 Comparison with plain Docker
 
-# Good: Add only what's needed, when needed
-rfswift run -i image -n container -u 0
-# ... later, when needed:
-rfswift capabilities add -c container -a NET_ADMIN
-# ... when done:
-rfswift capabilities rm -c container -a NET_ADMIN
-```
-
-### Temporary Privilege Escalation
-
-```bash
-# Workflow for sensitive operations
-# 1. Add capability
-rfswift capabilities add -c assessment -a SYS_PTRACE
-
-# 2. Perform task
-rfswift exec -c assessment
-# ... do debugging work ...
-exit
-
-# 3. Remove capability immediately
-rfswift capabilities rm -c assessment -a SYS_PTRACE
-```
-
-### Network Isolation
-
-```bash
-# Start with network isolation
-rfswift run -i tools -n isolated -t none
-
-# Add specific ports only when needed
-rfswift ports expose -c isolated -p 8080
-
-# Bind to localhost only for host access
-rfswift ports bind -c isolated -p 127.0.0.1:8080:8080/tcp
-```
-
----
-
-## 📊 Comparison with Traditional Docker
-
-| Operation | Traditional Docker | RF Swift |
-|-----------|-------------------|----------|
-| Add device | Stop, remove, recreate container | `rfswift bindings add` |
-| Add volume | Stop, remove, recreate container | `rfswift bindings add` |
-| Add capability | Stop, remove, recreate container | `rfswift capabilities add` |
-| Modify cgroups | Stop, remove, recreate container | `rfswift cgroups add` |
-| Add port | Stop, remove, recreate container | `rfswift ports bind` |
-| Time to modify | 2-5 minutes | 5-10 seconds |
-| Data preservation | Manual backup/restore | Automatic |
-| Risk of data loss | High | Low |
-
----
-
-{{< callout emoji="💡" >}}
-**Pro Tip**: Use `rfswift last` to quickly find container names, then pipe operations together for rapid configuration changes during assessments!
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Remember**: All dynamic management commands require stopping and restarting the container. Save your work before making changes!
-{{< /callout >}}
+| Task | Plain Docker | RF Swift |
+|------|--------------|----------|
+| Add a bind mount | Re-create the container | `config bindings add` |
+| Add a device | Re-create, or `--privileged` | `config bindings add -d`, serial hot-plug |
+| Change capabilities | Re-create | `config capabilities add` / `rm` |
+| Publish a port | Re-create | `config ports bind` |
+| Realtime limits | `--ulimit` at creation | `realtime enable` any time |
+| Keep tools installed in the container | Commit by hand first | Kept (Docker edit) or snapshotted for you (Podman) |

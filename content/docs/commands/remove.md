@@ -7,6 +7,10 @@ next: /docs/commands/rename
 
 # rfswift remove
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift container rm`. The legacy form `rfswift remove` and the short alias `rfswift rm` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Permanently delete a container and free associated disk space.
 
 ## Synopsis
@@ -164,7 +168,7 @@ exit
 rfswift commit -c container_name -i backup_image
 
 # 4. Export if needed for transfer
-rfswift export -c container_name -o container_backup.tar.gz
+rfswift image export container -c container_name -o container_backup.tar.gz
 
 # 5. Remove
 rfswift remove -c container_name
@@ -321,7 +325,7 @@ docker volume rm volume_name
 rfswift run -i backup_image -n restored_container
 
 # From exported tar
-rfswift import -i backup.tar.gz
+rfswift image import container -i backup.tar.gz
 ```
 
 **If no backups:**
@@ -513,7 +517,7 @@ mkdir -p "$ARCHIVE_DIR"
 
 # Export container
 echo "Archiving $CONTAINER..."
-rfswift export -c "$CONTAINER" -o "$ARCHIVE_DIR/${CONTAINER}_$(date +%Y%m%d).tar.gz"
+rfswift image export container -c "$CONTAINER" -o "$ARCHIVE_DIR/${CONTAINER}_$(date +%Y%m%d).tar.gz"
 
 # Verify export
 if [ -f "$ARCHIVE_DIR/${CONTAINER}_$(date +%Y%m%d).tar.gz" ]; then

@@ -119,22 +119,26 @@ Generate the built-in starter profiles:
 rfswift profile init
 ```
 
-This creates 12 default profiles covering common RF/security use cases:
+This creates the built-in profiles covering common RF and security use cases:
 
-| Profile | Image | Features |
-|---------|-------|----------|
-| `sdr-full` | `sdr_full` | Realtime |
-| `sdr-light` | `sdr_light` | None |
-| `wifi` | `wifi` | Privileged |
-| `bluetooth` | `bluetooth` | None |
-| `telecom` | `telecom_4Gto5G` | Realtime |
-| `rfid` | `rfid` | None |
-| `automotive` | `automotive` | Realtime |
-| `hardware` | `hardware` | None |
-| `reversing` | `reversing` | Desktop |
-| `network` | `network` | NAT network |
-| `pentest-full` | `sdr_full` | Desktop, privileged, realtime, NAT |
-| `headless` | `sdr_light` | No X11, NAT |
+| Profile | Purpose |
+|---------|---------|
+| `yolo` | Everything on: privileged, USB, realtime, GPU; for quick experiments, not for engagements |
+| `network-host` | Network tools on the host network |
+| `network-nat` | Network tools on an isolated RF Swift NAT network |
+| `sdr-full` | Full SDR suite, realtime and USB hot-plug |
+| `sdr-light` | Lightweight SDR tools |
+| `wifi` | Wi-Fi monitor mode and injection |
+| `bluetooth` | Bluetooth tools |
+| `telecom` | 2G to 4G/5G-NSA stacks |
+| `telecom-5g` | 5G SA (OCUDU) |
+| `rfid` | RFID/NFC tools (Proxmark3, libnfc) over USB, with the console the Proxmark3 client needs and hot-pluggable serial ports |
+| `automotive` | CAN tools, realtime |
+| `hardware` | Hardware hacking tools |
+| `reversing` | Reversing tools with a desktop |
+| `headless` | No X11, NAT network |
+
+Run `rfswift profile show NAME` for the exact settings of each. A built-in profile you never edited is refreshed automatically when RF Swift improves it (a fingerprint records what RF Swift wrote); an edited copy is kept and reported.
 
 To overwrite existing profiles:
 ```bash

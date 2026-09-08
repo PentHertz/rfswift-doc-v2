@@ -7,6 +7,10 @@ next: /docs/commands/retag
 
 # rfswift delete
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift image rm`. The legacy form `rfswift delete` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Delete Docker images from the local system to free disk space.
 
 ## Synopsis

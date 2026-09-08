@@ -7,6 +7,10 @@ next: /docs/commands/bindings
 
 # rfswift retag
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift image tag`. The legacy form `rfswift retag` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Create new tags for existing Docker images or rename image tags.
 
 ## Synopsis

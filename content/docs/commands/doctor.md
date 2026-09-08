@@ -7,41 +7,45 @@ cascade:
 
 # doctor
 
-Diagnose your system environment for RF Swift compatibility. The `doctor` command performs a series of checks and reports the status of each component needed to run RF Swift containers.
+Diagnose the host for RF Swift. `rfswift doctor` (also `rfswift system doctor`) checks every engine, the display, audio, devices, the Nix engine and the host prerequisites, and tells you which command fixes what is wrong.
 
 ## Syntax
 
 ```bash
 rfswift doctor
+rfswift system doctor
 ```
 
-## What It Checks
+## What it checks
 
 | Check | What it verifies |
-|-------|-----------------|
-| **Container engine** | Docker or Podman is installed and detected |
-| **Engine service** | The container engine daemon is running and reachable |
-| **Engine version** | Reports the engine and API version |
-| **Docker permissions** | Current user is in the `docker` group (Linux) |
-| **RF Swift images** | RF Swift images are pulled and available locally |
-| **X11 display** | `DISPLAY` is set and `/tmp/.X11-unix` socket exists |
-| **xhost** | `xhost` command is installed for X11 forwarding |
-| **Audio system** | PulseAudio or PipeWire is running |
-| **Audio TCP server** | Audio server is listening on the configured TCP port |
-| **USB devices** | `/dev/bus/usb` is present and accessible |
-| **Config file** | Config file exists and has secure permissions |
-| **Kernel modules** | Key kernel modules are loaded (USB, sound, Bluetooth, Wi-Fi) |
+|-------|------------------|
+| **Container engine** | Docker, Podman or Lima detected, which one is active |
+| **Engine service** | The daemon or VM is running and reachable, with its version |
+| **Docker permissions** | Your user can talk to the Docker socket (group membership and the session ACL); fix: `rfswift host docker-access` |
+| **Host udev rules** | RF Swift's rules are installed and current, your user is in `plugdev`; fix: `rfswift host udev` |
+| **Nix engine** | Nix is installed with flakes; on Windows, the WSL 2 distribution that hosts it, the Linux `rfswift` inside and version skew |
+| **Nix jail (--isolate)** | bubblewrap is present and may create a user namespace (AppArmor profile on Ubuntu 24.04+); fix: `rfswift host isolate` |
+| **Lima VM** (macOS) | Instance state, QMP socket for USB passthrough, Docker socket |
+| **RF Swift images** | Images pulled locally |
+| **X11 display** | `DISPLAY` set and the X11 socket present; on Windows the WSLg socket, asked from WSL |
+| **xhost** | Installed for local X11 authorisation |
+| **Audio system** | PulseAudio or PipeWire running (Windows: WSLg audio socket) |
+| **Audio TCP server** | The module listens on the configured port; fix: `rfswift host audio enable` |
+| **USB devices** | `/dev/bus/usb` present; on Windows the usbipd-win version with connected, shared and attached counts and the default WSL 2 distribution |
+| **Config file** | Exists with safe permissions |
+| **Kernel modules** | USB, sound, Bluetooth, Wi-Fi modules loaded (Linux) |
 
-## Status Icons
+## Status icons
 
 | Icon | Meaning |
 |------|---------|
-| `✓` (green) | Check passed |
-| `!` (yellow) | Warning -- functional but could be improved |
-| `✗` (red) | Check failed -- something needs to be fixed |
-| `-` (gray) | Skipped -- not applicable on this platform |
+| `✓` (green) | Passed |
+| `!` (yellow) | Warning, works but could be better |
+| `✗` (red) | Failed, needs a fix |
+| `-` (gray) | Skipped, not applicable on this platform |
 
-## Example Output
+## Example output
 
 ```
 🩺 RF Swift Doctor
@@ -49,8 +53,11 @@ rfswift doctor
 
   ✓  Container engine               Docker (docker)
   ✓  Engine service                 Running and reachable
-  ✓  Engine version                 27.3.1 (API 1.47)
-  ✓  Docker permissions             User 'user' is in docker group
+  ✓  Engine version                 29.1.4 (API 1.53)
+  ✓  Docker permissions             User 'user' can use the Docker socket
+  ✓  Host udev rules                /etc/udev/rules.d/70-rfswift.rules installed, user in plugdev
+  ✓  Nix engine                     nix 2.30 with flakes
+  ✓  Nix jail (--isolate)           bubblewrap ready (/usr/bin/bwrap, AppArmor profile loaded)
   ✓  RF Swift images                3 RF Swift image(s) available
   ✓  X11 display                    DISPLAY=:0, X11 socket present
   ✓  xhost                          Installed
@@ -61,63 +68,28 @@ rfswift doctor
   ✓  Kernel modules                 Loaded: USB support, Sound/ALSA, Bluetooth, Wi-Fi/802.11
 
 ──────────────────────────────────────────────────────────
-  11 passed  1 warnings
+  14 passed  1 warnings
 ```
 
-## Common Issues and Fixes
-
-### Container engine not found
+## Common issues and fixes
 
 ```bash
-# Install Docker
-curl -fsSL https://get.docker.com | sh
-
-# Or install Podman
-sudo apt install podman  # Debian/Ubuntu
-sudo dnf install podman  # Fedora/RHEL
-```
-
-### User not in docker group
-
-```bash
-sudo usermod -aG docker $USER
-newgrp docker
-```
-
-### Audio TCP server not reachable
-
-The audio server TCP module needs to be loaded for container audio passthrough:
-
-```bash
-rfswift host audio enable
-```
-
-### X11 display not set
-
-If you're running headless or via SSH without X forwarding:
-
-```bash
-# Option 1: Use desktop mode instead
-rfswift run -i sdr_full -n my_sdr --desktop
-
-# Option 2: Forward X11 via SSH
-ssh -X user@host
-```
-
-### Config file permissions
-
-```bash
+rfswift host setup                  # everything below, asked step by step
+rfswift host docker-access          # Docker socket "permission denied"
+rfswift host udev                   # hardware needs root on rootless Podman or Nix
+rfswift host isolate                # bwrap "setting up uid map: Permission denied"
+rfswift host audio enable           # audio TCP server not reachable
+rfswift image pull -i sdr_full      # no RF Swift images
+rfswift env wsl setup               # Windows: Nix backend not provisioned
 chmod 600 ~/.config/rfswift/config.ini
 ```
 
-### No RF Swift images
+Headless or over SSH without X forwarding: use `--desktop` for a browser desktop, or `ssh -X`.
 
-```bash
-rfswift images pull -i penthertz/rfswift_resolute:sdr_full
-```
+## Platform notes
 
-## Platform Notes
+- **Linux**: all checks run.
+- **macOS**: the Lima VM check replaces Docker permissions and kernel modules; audio expects PulseAudio from Homebrew.
+- **Windows**: WSLg display and audio, usbipd-win, the default WSL 2 distribution and the Nix WSL backend are reported; if the WSLg sockets are missing run `wsl --update` then `wsl --shutdown`.
 
-- **Linux**: All checks are performed
-- **macOS**: Docker permissions and kernel module checks are skipped
-- **Windows/WSL**: Checks for WSLg X11 socket and `usbipd` availability
+The Workbench's **Engine doctor** shows the same checks with buttons that apply the fixes.

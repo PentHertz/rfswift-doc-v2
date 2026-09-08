@@ -209,8 +209,8 @@ rfswift exec -c container -e "grep Cap /proc/self/status"
 
 # If using rootless Docker, also set host ulimits
 # Edit /etc/security/limits.conf:
-# your_user  -  rtprio  95
-# your_user  -  memlock unlimited
+# your_user - rtprio  95
+# your_user - memlock unlimited
 ```
 
 ### Container Won't Start After Enable

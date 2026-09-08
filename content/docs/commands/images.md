@@ -5,30 +5,23 @@ prev: /docs/commands/build
 next: /docs/commands/delete
 ---
 
-# rfswift images
+# rfswift image local / remote / pull / versions
 
-Manage Docker images - list local images, browse remote registry, pull images, and track versions.
+List local images, browse the official registry, pull images and track their versions.
+
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift image ...`. The legacy `rfswift images ...` tree still works and prints a notice. The whole group, including `build`, `rm`, `tag`, `download`, `export`, `import` and `audit`, is described on the [image](/docs/commands/image) page.
+{{< /callout >}}
 
 ## Synopsis
 
 ```bash
-# List local images
-rfswift images local
-
-# List remote registry images
-rfswift images remote
-
-# List remote images with versions
-rfswift images remote -v
-
-# Pull image from registry
-rfswift images pull -i IMAGE_NAME [-t TAG] [-V version]
-
-# List available versions for images
-rfswift images versions [-f FILTER]
+rfswift image local [-v] [-f FILTER]              # local images with version status
+rfswift image remote [-v] [-f FILTER]             # images published for your architecture
+rfswift image pull -i IMAGE [-t TAG] [-V VERSION] # pull, optionally a specific version, optionally retag
+rfswift image versions [-f FILTER]                # every published version of each image
+rfswift image audit IMAGE [--format ...]          # CVE scan, see the audit page
 ```
-
-The `images` command provides comprehensive image management: view locally available images, discover images in the RF Swift registry, pull images from Docker registries, and **track image versions** for better environment control.
 
 ---
 
@@ -40,7 +33,7 @@ List all RF Swift images present on the local system.
 
 **Usage:**
 ```bash
-rfswift images local [-v] [-f FILTER]
+rfswift image local [-v] [-f FILTER]
 ```
 
 **Options:**
@@ -63,7 +56,7 @@ List available RF Swift images from the official Penthertz registry.
 
 **Usage:**
 ```bash
-rfswift images remote [-v] [-f FILTER]
+rfswift image remote [-v] [-f FILTER]
 ```
 
 **Options:**
@@ -85,7 +78,7 @@ Pull images from Docker registries to local system.
 
 **Usage:**
 ```bash
-rfswift images pull -i IMAGE_NAME [-t TAG] [-V version]
+rfswift image pull -i IMAGE_NAME [-t TAG] [-V version]
 ```
 
 **Options:**
@@ -102,7 +95,7 @@ List all available versions for RF Swift images.
 
 **Usage:**
 ```bash
-rfswift images versions [-f FILTER]
+rfswift image versions [-f FILTER]
 ```
 
 **Options:**
@@ -217,6 +210,10 @@ docker search penthertz/rfswift_resolute
 ```
 
 ### Pull Fails
+
+**Error:** `unable to retrieve auth token: invalid username/password`
+
+The engine presents a stored `docker login` or `podman login` for Docker Hub that is no longer valid; RF Swift sends no credentials. The message names the credential file and the `logout` command that clears it.
 
 **Error:** `Error pulling image`
 

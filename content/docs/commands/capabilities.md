@@ -7,6 +7,10 @@ next: /docs/commands/cgroups
 
 # rfswift capabilities
 
+{{< callout type="info" >}}
+**RF Swift v4**: this group lives under the `config` parent as `rfswift config capabilities` and remains available as `rfswift capabilities`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
+{{< /callout >}}
+
 Dynamically add or remove Linux capabilities to running containers for fine-grained privilege control.
 
 ## Synopsis
@@ -333,16 +337,16 @@ rfswift capabilities add -c analysis -p NET_ADMIN
 **Solutions:**
 ```bash
 # Identify needed capability
-# Network operations → NET_ADMIN
+# Network operations -> NET_ADMIN
 rfswift capabilities add -c container -p NET_ADMIN
 
-# Raw sockets → NET_RAW  
+# Raw sockets -> NET_RAW  
 rfswift capabilities add -c container -p NET_RAW
 
-# Debugging → SYS_PTRACE
+# Debugging -> SYS_PTRACE
 rfswift capabilities add -c container -p SYS_PTRACE
 
-# Privileged ports → NET_BIND_SERVICE
+# Privileged ports -> NET_BIND_SERVICE
 rfswift capabilities add -c container -p NET_BIND_SERVICE
 ```
 

@@ -7,6 +7,10 @@ next: /docs/commands/gpu
 
 # rfswift cgroups
 
+{{< callout type="info" >}}
+**RF Swift v4**: this group lives under the `config` parent as `rfswift config cgroups` and remains available as `rfswift cgroups`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
+{{< /callout >}}
+
 Dynamically add or remove cgroup device access rules to running containers.
 
 ## Synopsis

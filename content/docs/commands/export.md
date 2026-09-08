@@ -7,6 +7,10 @@ next: /docs/commands/import
 
 # rfswift export
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift image export`. The legacy form `rfswift export` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Export containers or images to compressed archive files for backup or transfer.
 
 ## Synopsis

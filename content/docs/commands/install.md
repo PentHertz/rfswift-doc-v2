@@ -5,17 +5,23 @@ prev: /docs/commands/completion
 next: /docs/commands/ulimits
 ---
 
-# rfswift install
+# rfswift container install
 
-Install software and tools inside containers using predefined function scripts.
+Install extra tools in a container with the install functions its image ships, or in a Nix environment with the guided package installer.
+
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift container install`. The legacy `rfswift install` still works and prints a notice.
+{{< /callout >}}
 
 ## Synopsis
 
 ```bash
-rfswift install -c CONTAINER -i FUNCTION_NAME
+rfswift container install -c CONTAINER                 # pick a function from a searchable list
+rfswift container install -c CONTAINER -i FUNCTION     # run one by name
+rfswift --engine nix container install                 # the Nix package wizard (same as: rfswift env install)
 ```
 
-The `install` command executes predefined installation functions inside containers to add software, tools, or configurations. These functions are part of RF Swift's installation script library and handle dependencies, compilation, and setup automatically.
+Every RF Swift image carries `/root/scripts` with install functions for tools that are not preinstalled (`sdrpp_soft_install`, `gnuradio_modules_install`, ...). Without `-i`, RF Swift lists the functions found inside the container in a filterable picker, so you never have to look up a function name. The function's exit status is checked: a failed build is reported with the tail of its output instead of being called installed; apt housekeeping errors are only warnings. The Workbench offers the same picker as **Install tools...** on a mission.
 
 ---
 
@@ -23,8 +29,8 @@ The `install` command executes predefined installation functions inside containe
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | ✅ Yes | `-c my_container` |
-| `-i, --install STRING` | Function name to execute | ✅ Yes | `-i sdrpp_soft_install` |
+| `-c, --container STRING` | Container ID or name (interactive picker if omitted) | No | `-c my_container` |
+| `-i, --install STRING` | Function name to execute (searchable list if omitted) | No | `-i sdrpp_soft_install` |
 
 {{< callout type="info" >}}
 **Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable container picker to select the installation target.
@@ -149,15 +155,11 @@ rfswift install -c container -i function_name
 
 **Solutions:**
 ```bash
-# Check available functions or in the documentation https://rfswift.io/docs/guide/list-of-tools/
-# See RF Swift documentation or GitHub
+# Let RF Swift list the functions found inside the container
+rfswift container install -c container
 
-# Verify function name spelling
-rfswift install -c container -i sdrpp_soft_install  # Correct
-rfswift install -c container -i sdrpp_install        # Wrong
-
-# Update RF Swift for new functions
-rfswift update
+# Refresh the scripts inside the container (update_rfscripts), then retry
+rfswift container shell -c container -e "update_rfscripts"
 ```
 
 ---

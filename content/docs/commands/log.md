@@ -7,6 +7,10 @@ next: /docs/commands/host
 
 # rfswift log
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift system log`. The legacy form `rfswift log` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Record and replay terminal sessions for documentation and training.
 
 ## Synopsis

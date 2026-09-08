@@ -7,6 +7,10 @@ next: /docs/commands/commit
 
 # rfswift rename
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift container rename`. The legacy form `rfswift rename` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Change a container's name to a new identifier.
 
 ## Synopsis

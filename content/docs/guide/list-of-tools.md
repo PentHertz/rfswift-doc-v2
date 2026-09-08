@@ -469,6 +469,30 @@ The `hardware` image focuses on general hardware security testing and analysis:
 - OpenOCD with extensive debug probe support
 {{< /callout >}}
 
+## Native Nix environments
+
+The same categories exist as native environments for the [Nix engine](/docs/guide/nix-engine), defined in [RF-Swift-nix](https://github.com/PentHertz/RF-Swift-nix). `rfswift env catalog` lists them on your machine, `rfswift env tools <name>` shows what one carries, and `rfswift env run <environment> <tool>` runs a single tool without creating anything. This table comes from the catalog (RF-Swift-nix 4.0.0):
+
+| Environment | Category | Packages | What it covers |
+|---|---|---|---|
+| `ad` | Network | 20 | Active Directory attack tooling: impacket, NetExec, kerbrute, Samba/LDAP/Kerberos clients. |
+| `android` | Mobile | 21 | Android / mobile: adb/fastboot, apktool, frida, androguard, scrcpy, jadx and reversing tools. |
+| `automotive` | Automotive | 13 | Automotive / CAN bus: can-utils, SavvyCAN, gallia and CAN analysis tooling. |
+| `bluetooth` | Bluetooth | 29 | Bluetooth Classic + BLE: BlueZ stack, Ubertooth, and Python BLE tooling, on the SDR device layer. |
+| `cyberether` | SDR | 11 | CyberEther: heterogeneous SDR signal visualisation (Vulkan), with the SoapySDR device stack. |
+| `hardware` | Hardware | 29 | Hardware hacking: avrdude, sigrok/PulseView, OpenOCD, flashrom, openFPGALoader, esptool, dfu-util. |
+| `network` | Network | 126 | General network & web pentest: nmap, Wireshark, Metasploit, bettercap, Kismet, hashcat/john, sqlmap and more. |
+| `osint` | OSINT | 24 | OSINT: theHarvester, sherlock, recon-ng, subfinder, exiftool and reconnaissance tools. |
+| `reversing` | Reversing | 46 | Reverse engineering & firmware analysis: Ghidra, rizin/Cutter, radare2, binwalk, AFL++, semgrep, ImHex. |
+| `rfid` | RFID | 23 | RFID / NFC toolkit: Proxmark3 (Iceman), libnfc, MIFARE crackers and NFC utilities. |
+| `sdr_full` | SDR | 78 | Full SDR arsenal: sdr_light plus SDRangel, SatDump, SigDigger, GQRX and many GNU Radio OOT modules available in nixpkgs. |
+| `sdr_light` | SDR | 59 | Light SDR set: GNU Radio, everyday SDR apps and the full device/driver layer (sdrsa_devices). |
+| `telecom` | Telecom | 50 | Mobile telecom 2G-5G: Osmocom stack, srsRAN, Open5GS, UERANSIM, YATE and SDR. |
+| `telecom_5g_bladerf` | Telecom | 26 | 5G SA on a bladeRF: srsRAN Project bladeRF fork with its SoapyBladeRF variant, Open5GS core, and the telecom utility set (telecom_5G_bladerf image). |
+| `wifi` | WiFi | 45 | Wi-Fi audit suite: aircrack-ng, hcxtools, WPS/WPA3 attacks and rogue-AP frameworks, on top of the network toolkit. |
+
+Packages are nixpkgs attribute names (`python3Packages.impacket`, `gnuradioPackages.gr-osmosdr`), which is also what `rfswift env install` and `rfswift env search --nixpkgs` accept, so a tool the catalog does not carry is one `env install` away. The catalog records the packages that do not build on an architecture, and the environment simply ships without them there. See [Installing software](/docs/guide/installing-software) for how this compares with the images.
+
 ## Tool Usage Tips
 
 ### Tool Directory Organization
@@ -476,22 +500,22 @@ The `hardware` image focuses on general hardware security testing and analysis:
 RF Swift organizes tools in specialized directories for easier discovery:
 
 - `/rftools/` - Radio frequency analysis tools
-  - `/rftools/sdr/` - SDR software and utilities
-  - `/rftools/bluetooth/` - Bluetooth tools and firmwares
-  - `/rftools/wifi/` - WiFi security tools
-  - `/rftools/rfid/` - RFID readers and utilities
-  - `/rftools/calibration/` - VNA and calibration tools
-  - `/rftools/analysers/` - Spectrum analyzer software
-  - `/rftools/generators/` - Signal generator software
+ - `/rftools/sdr/` - SDR software and utilities
+ - `/rftools/bluetooth/` - Bluetooth tools and firmwares
+ - `/rftools/wifi/` - WiFi security tools
+ - `/rftools/rfid/` - RFID readers and utilities
+ - `/rftools/calibration/` - VNA and calibration tools
+ - `/rftools/analysers/` - Spectrum analyzer software
+ - `/rftools/generators/` - Signal generator software
 - `/hardware/` - Hardware security and testing tools
 - `/automotive/` - Vehicle communication and analysis tools
 - `/reverse/` - Reverse engineering and firmware analysis tools
 - `/telecom/` - Telecommunications tools
-  - `/telecom/2G/` - GSM/2G base stations
-  - `/telecom/3G/` - UMTS/3G tools  
-  - `/telecom/4G/` - LTE/4G tools
-  - `/telecom/5G/` - 5G SA/NSA tools
-  - `/telecom/SIM/` - SIM card tools
+ - `/telecom/2G/` - GSM/2G base stations
+ - `/telecom/3G/` - UMTS/3G tools  
+ - `/telecom/4G/` - LTE/4G tools
+ - `/telecom/5G/` - 5G SA/NSA tools
+ - `/telecom/SIM/` - SIM card tools
 - `/security/` - Security testing tools (Caido, etc.)
 - `/opt/network/` - Network security tools
 - `/opt/ad/` - Active Directory tooling (`ad` image) 🆕
@@ -531,8 +555,10 @@ find /usr/bin /usr/local/bin /rftools /hardware /automotive /reverse /telecom -n
 Some tools are not installed by default but can be added after container creation. To install these tools:
 
 ```bash
-rfswift install -c container_name -i <installation_function_name>
+rfswift container install -c container_name -i <installation_function_name>
 ```
+
+The [Installing software](/docs/guide/installing-software) page compares this with `apt` inside the container, committing the result, recipes, and the Nix engine's `env install` and `env run`.
 
 Common manually-installed tools:
 - `mdk3_soft_install` - WiFi DoS testing

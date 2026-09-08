@@ -2,7 +2,7 @@
 title: YAML Recipe Guide
 weight: 2
 prev: /docs/development/compiling-rfswift
-next: /docs/development/helper-functions
+next: /docs/development/building-images
 cascade:
   type: docs
 ---
@@ -28,16 +28,16 @@ base_image: "ubuntu:24.04"
 tag: "my-sdr:latest"
 
 packages:
-  - rtl-sdr
-  - gqrx-sdr
-  - hackrf
+ - rtl-sdr
+ - gqrx-sdr
+ - hackrf
 
 python_packages:
-  - numpy
-  - scipy
+ - numpy
+ - scipy
 
 run_commands:
-  - "echo 'SDR tools installed successfully!'"
+ - "echo 'SDR tools installed successfully!'"
 ```
 
 Build it:
@@ -61,20 +61,20 @@ tag: "my-image:latest"            # Tag for the resulting image
 
 # Package management (optional)
 packages:                          # APT packages to install
-  - package1
-  - package2-dev
-  - package3
+ - package1
+ - package2-dev
+ - package3
 
 python_packages:                   # Python packages via pip
-  - numpy
-  - scipy==1.10.0                 # Can specify versions
-  - git+https://github.com/user/repo.git  # From git
+ - numpy
+ - scipy==1.10.0                 # Can specify versions
+ - git+https://github.com/user/repo.git  # From git
 
 # Custom commands (optional)
 run_commands:                      # Bash commands to execute
-  - "echo 'Starting build...'"
-  - "mkdir -p /opt/tools"
-  - |
+ - "echo 'Starting build...'"
+ - "mkdir -p /opt/tools"
+ - |
     cmake_clone_and_build \
       'https://github.com/osmocom/rtl-sdr.git' \
       'build' \
@@ -174,26 +174,26 @@ The `packages` section installs system packages using apt:
 ```yaml
 packages:
   # Development tools
-  - build-essential
-  - cmake
-  - git
-  - pkg-config
+ - build-essential
+ - cmake
+ - git
+ - pkg-config
   
   # Libraries
-  - libusb-1.0-0-dev
-  - libfftw3-dev
-  - libsoapysdr-dev
+ - libusb-1.0-0-dev
+ - libfftw3-dev
+ - libsoapysdr-dev
   
   # SDR tools
-  - rtl-sdr
-  - hackrf
-  - gqrx-sdr
-  - gnuradio
+ - rtl-sdr
+ - hackrf
+ - gqrx-sdr
+ - gnuradio
   
   # Utilities
-  - wget
-  - curl
-  - vim
+ - wget
+ - curl
+ - vim
 ```
 
 **Best Practices:**
@@ -208,30 +208,30 @@ The `python_packages` section installs Python packages:
 ```yaml
 python_packages:
   # Basic scientific stack
-  - numpy
-  - scipy
-  - matplotlib
+ - numpy
+ - scipy
+ - matplotlib
   
   # Specific versions
-  - "pandas==2.0.0"
-  - "scikit-learn>=1.3.0"
+ - "pandas==2.0.0"
+ - "scikit-learn>=1.3.0"
   
   # From git repositories
-  - "git+https://github.com/pyrtlsdr/pyrtlsdr.git"
-  - "git+https://github.com/mossmann/hackrf.git@master#subdirectory=host/libhackrf/python"
+ - "git+https://github.com/pyrtlsdr/pyrtlsdr.git"
+ - "git+https://github.com/mossmann/hackrf.git@master#subdirectory=host/libhackrf/python"
   
   # With extras
-  - "matplotlib[all]"
-  - "jupyter[notebook]"
+ - "matplotlib[all]"
+ - "jupyter[notebook]"
 ```
 
 **Version Specifications:**
 ```yaml
 python_packages:
-  - "package"           # Latest version
-  - "package==1.0.0"    # Exact version
-  - "package>=1.0.0"    # Minimum version
-  - "package>=1.0,<2.0" # Version range
+ - "package"           # Latest version
+ - "package==1.0.0"    # Exact version
+ - "package>=1.0.0"    # Minimum version
+ - "package>=1.0,<2.0" # Version range
 ```
 
 ---
@@ -244,10 +244,10 @@ The `run_commands` section executes bash commands during the build:
 
 ```yaml
 run_commands:
-  - "echo 'Build starting...'"
-  - "mkdir -p /opt/tools"
-  - "useradd -m rfuser"
-  - "chmod 755 /opt/tools"
+ - "echo 'Build starting...'"
+ - "mkdir -p /opt/tools"
+ - "useradd -m rfuser"
+ - "chmod 755 /opt/tools"
 ```
 
 ### Multi-line Commands
@@ -256,7 +256,7 @@ Use YAML's pipe (`|`) syntax for complex commands:
 
 ```yaml
 run_commands:
-  - |
+ - |
     echo "Installing custom tool..."
     cd /opt
     git clone https://github.com/user/tool.git
@@ -272,13 +272,13 @@ RF Swift provides powerful helper functions:
 ```yaml
 run_commands:
   # Colored output
-  - "colorecho 'Starting RTL-SDR installation...'"
+ - "colorecho 'Starting RTL-SDR installation...'"
   
   # Install with retry logic
-  - "installfromnet 'git clone https://github.com/osmocom/rtl-sdr.git'"
+ - "installfromnet 'git clone https://github.com/osmocom/rtl-sdr.git'"
   
   # Build from source with CMake
-  - |
+ - |
     cmake_clone_and_build \
       'https://github.com/osmocom/rtl-sdr.git' \
       'build' \
@@ -288,14 +288,14 @@ run_commands:
       -DINSTALL_UDEV_RULES=ON
   
   # GNU Radio OOT modules
-  - |
+ - |
     grclone_and_build \
       'https://github.com/osmocom/gr-osmosdr.git' \
       'gr-osmosdr' \
       'gr_osmosdr_install'
   
   # Success message
-  - "goodecho 'Installation complete!'"
+ - "goodecho 'Installation complete!'"
 ```
 
 See the [Helper Functions Reference](/docs/development/helper-functions) for complete documentation.
@@ -313,17 +313,17 @@ base_image: "ubuntu:24.04"
 tag: "sdr-beginner:latest"
 
 packages:
-  - rtl-sdr
-  - gqrx-sdr
-  - dump1090-mutability
-  - multimon-ng
+ - rtl-sdr
+ - gqrx-sdr
+ - dump1090-mutability
+ - multimon-ng
 
 python_packages:
-  - numpy
-  - matplotlib
+ - numpy
+ - matplotlib
 
 run_commands:
-  - "echo 'SDR tools ready!'"
+ - "echo 'SDR tools ready!'"
 ```
 
 Build: `rfswift build -r sdr-beginner.yaml`
@@ -340,40 +340,40 @@ tag: "gnuradio-dev:3.10"
 
 packages:
   # GNU Radio dependencies
-  - git
-  - cmake
-  - g++
-  - libboost-all-dev
-  - libgmp-dev
-  - swig
-  - python3-numpy
-  - python3-mako
-  - python3-sphinx
-  - python3-lxml
-  - doxygen
-  - libfftw3-dev
-  - libsdl1.2-dev
-  - libgsl-dev
-  - libqwt-qt5-dev
-  - libqt5opengl5-dev
-  - python3-pyqt5
-  - liblog4cpp5-dev
-  - libzmq3-dev
+ - git
+ - cmake
+ - g++
+ - libboost-all-dev
+ - libgmp-dev
+ - swig
+ - python3-numpy
+ - python3-mako
+ - python3-sphinx
+ - python3-lxml
+ - doxygen
+ - libfftw3-dev
+ - libsdl1.2-dev
+ - libgsl-dev
+ - libqwt-qt5-dev
+ - libqt5opengl5-dev
+ - python3-pyqt5
+ - liblog4cpp5-dev
+ - libzmq3-dev
   
   # Additional tools
-  - vim
-  - git
-  - pkg-config
+ - vim
+ - git
+ - pkg-config
 
 python_packages:
-  - numpy
-  - scipy
-  - matplotlib
+ - numpy
+ - scipy
+ - matplotlib
 
 run_commands:
   # Build GNU Radio from source
-  - "colorecho 'Building GNU Radio 3.10...'"
-  - |
+ - "colorecho 'Building GNU Radio 3.10...'"
+ - |
     cmake_clone_and_build \
       'https://github.com/gnuradio/gnuradio.git' \
       'build' \
@@ -385,14 +385,14 @@ run_commands:
       -DENABLE_PYTHON=ON
   
   # Build gr-osmosdr
-  - "colorecho 'Building gr-osmosdr...'"
-  - |
+ - "colorecho 'Building gr-osmosdr...'"
+ - |
     grclone_and_build \
       'https://github.com/osmocom/gr-osmosdr.git' \
       'gr-osmosdr' \
       'gr_osmosdr_install'
   
-  - "goodecho 'GNU Radio environment ready!'"
+ - "goodecho 'GNU Radio environment ready!'"
 ```
 
 ---
@@ -407,28 +407,28 @@ tag: "multi-sdr:latest"
 
 packages:
   # Build essentials
-  - build-essential
-  - cmake
-  - git
-  - pkg-config
-  - libusb-1.0-0-dev
+ - build-essential
+ - cmake
+ - git
+ - pkg-config
+ - libusb-1.0-0-dev
   
   # Libraries
-  - libfftw3-dev
-  - libsoapysdr-dev
+ - libfftw3-dev
+ - libsoapysdr-dev
   
   # Pre-built tools
-  - gqrx-sdr
+ - gqrx-sdr
 
 python_packages:
-  - numpy
-  - scipy
-  - pyrtlsdr
+ - numpy
+ - scipy
+ - pyrtlsdr
 
 run_commands:
   # RTL-SDR
-  - "colorecho 'Installing RTL-SDR support...'"
-  - |
+ - "colorecho 'Installing RTL-SDR support...'"
+ - |
     cmake_clone_and_build \
       'https://github.com/osmocom/rtl-sdr.git' \
       'build' \
@@ -439,8 +439,8 @@ run_commands:
       -DDETACH_KERNEL_DRIVER=ON
   
   # HackRF
-  - "colorecho 'Installing HackRF support...'"
-  - |
+ - "colorecho 'Installing HackRF support...'"
+ - |
     cmake_clone_and_build \
       'https://github.com/mossmann/hackrf.git' \
       'host/build' \
@@ -450,8 +450,8 @@ run_commands:
       -DINSTALL_UDEV_RULES=ON
   
   # Airspy
-  - "colorecho 'Installing Airspy support...'"
-  - |
+ - "colorecho 'Installing Airspy support...'"
+ - |
     cmake_clone_and_build \
       'https://github.com/airspy/airspyone_host.git' \
       'build' \
@@ -461,8 +461,8 @@ run_commands:
       -DINSTALL_UDEV_RULES=ON
   
   # LimeSDR (via SoapySDR)
-  - "colorecho 'Installing LimeSDR support...'"
-  - |
+ - "colorecho 'Installing LimeSDR support...'"
+ - |
     cmake_clone_and_build \
       'https://github.com/myriadrf/LimeSuite.git' \
       'builddir' \
@@ -470,7 +470,7 @@ run_commands:
       '' \
       'limesdr_install'
   
-  - "goodecho 'All SDR devices supported!'"
+ - "goodecho 'All SDR devices supported!'"
 ```
 
 ---
@@ -485,29 +485,29 @@ tag: "bluetooth-tools:latest"
 
 packages:
   # Bluetooth stack
-  - bluez
-  - bluez-tools
-  - bluetooth
-  - libbluetooth-dev
+ - bluez
+ - bluez-tools
+ - bluetooth
+ - libbluetooth-dev
   
   # Build tools
-  - build-essential
-  - cmake
-  - git
-  - libusb-1.0-0-dev
+ - build-essential
+ - cmake
+ - git
+ - libusb-1.0-0-dev
   
   # Analysis tools
-  - wireshark-common
-  - tcpdump
+ - wireshark-common
+ - tcpdump
 
 python_packages:
-  - pybluez
-  - scapy
+ - pybluez
+ - scapy
 
 run_commands:
   # Ubertooth tools
-  - "colorecho 'Installing Ubertooth...'"
-  - |
+ - "colorecho 'Installing Ubertooth...'"
+ - |
     cmake_clone_and_build \
       'https://github.com/greatscottgadgets/ubertooth.git' \
       'host/build' \
@@ -516,9 +516,9 @@ run_commands:
       'ubertooth_install'
   
   # Install additional Python tools
-  - "pip3install crackle"
+ - "pip3install crackle"
   
-  - "goodecho 'Bluetooth tools ready!'"
+ - "goodecho 'Bluetooth tools ready!'"
 ```
 
 ---
@@ -533,39 +533,39 @@ tag: "rf-hacking:latest"
 
 packages:
   # SDR tools
-  - gqrx-sdr
-  - inspectrum
-  - urh
+ - gqrx-sdr
+ - inspectrum
+ - urh
   
   # RF utilities
-  - kalibrate-rtl
-  - multimon-ng
-  - dump1090-mutability
+ - kalibrate-rtl
+ - multimon-ng
+ - dump1090-mutability
   
   # Analysis
-  - wireshark
-  - audacity
+ - wireshark
+ - audacity
 
 python_packages:
-  - numpy
-  - scipy
-  - matplotlib
-  - jupyter
-  - rfcat
+ - numpy
+ - scipy
+ - matplotlib
+ - jupyter
+ - rfcat
 
 run_commands:
   # Universal Radio Hacker with dependencies
-  - "colorecho 'Setting up Universal Radio Hacker...'"
-  - "pip3install pyqt5 numpy psutil cython"
+ - "colorecho 'Setting up Universal Radio Hacker...'"
+ - "pip3install pyqt5 numpy psutil cython"
   
   # Install YardStick One tools
-  - "colorecho 'Installing RfCat for YardStick One...'"
-  - "pip3install git+https://github.com/atlas0fd00m/rfcat.git"
+ - "colorecho 'Installing RfCat for YardStick One...'"
+ - "pip3install git+https://github.com/atlas0fd00m/rfcat.git"
   
   # Create workspace
-  - "mkdir -p /root/rf-projects"
+ - "mkdir -p /root/rf-projects"
   
-  - "goodecho 'RF Hacking suite ready!'"
+ - "goodecho 'RF Hacking suite ready!'"
 ```
 
 ---
@@ -579,16 +579,16 @@ base_image: "ubuntu:24.04"
 tag: "optimized-sdr:latest"
 
 packages:
-  - build-essential
-  - cmake
-  - libusb-1.0-0-dev
+ - build-essential
+ - cmake
+ - libusb-1.0-0-dev
 
 run_commands:
   # Build in /tmp for cleanup
-  - "cd /tmp"
+ - "cd /tmp"
   
   # Build RTL-SDR
-  - |
+ - |
     cmake_clone_and_build \
       'https://github.com/osmocom/rtl-sdr.git' \
       'build' \
@@ -597,9 +597,9 @@ run_commands:
       'rtlsdr_install'
   
   # Cleanup to reduce image size
-  - "rm -rf /tmp/*"
-  - "apt-get clean"
-  - "rm -rf /var/lib/apt/lists/*"
+ - "rm -rf /tmp/*"
+ - "apt-get clean"
+ - "rm -rf /var/lib/apt/lists/*"
 ```
 
 ### Conditional Builds
@@ -610,7 +610,7 @@ tag: "arch-specific:latest"
 
 run_commands:
   # Build different components based on architecture
-  - |
+ - |
     if [ "$(uname -m)" = "aarch64" ]; then
       colorecho "Building for ARM64..."
       # ARM-specific optimizations
@@ -627,17 +627,17 @@ base_image: "ubuntu:24.04"
 tag: "reproducible-sdr:v1.0.0"
 
 packages:
-  - rtl-sdr=0.6.0-1
-  - hackrf=2021.03.1-2
+ - rtl-sdr=0.6.0-1
+ - hackrf=2021.03.1-2
 
 python_packages:
-  - "numpy==1.24.3"
-  - "scipy==1.10.1"
-  - "matplotlib==3.7.1"
+ - "numpy==1.24.3"
+ - "scipy==1.10.1"
+ - "matplotlib==3.7.1"
 
 run_commands:
   # Pin specific git commits
-  - |
+ - |
     cmake_clone_and_build \
       'https://github.com/osmocom/rtl-sdr.git' \
       'build' \
@@ -654,9 +654,9 @@ tag: "custom-env:latest"
 
 run_commands:
   # Set environment variables
-  - "echo 'export PATH=/opt/tools/bin:$PATH' >> /root/.bashrc"
-  - "echo 'export LD_LIBRARY_PATH=/opt/tools/lib:$LD_LIBRARY_PATH' >> /root/.bashrc"
-  - "echo 'export PYTHONPATH=/opt/tools/python:$PYTHONPATH' >> /root/.bashrc"
+ - "echo 'export PATH=/opt/tools/bin:$PATH' >> /root/.bashrc"
+ - "echo 'export LD_LIBRARY_PATH=/opt/tools/lib:$LD_LIBRARY_PATH' >> /root/.bashrc"
+ - "echo 'export PYTHONPATH=/opt/tools/python:$PYTHONPATH' >> /root/.bashrc"
 ```
 
 ---
@@ -712,28 +712,28 @@ tag: "my-sdr:v1.0"
 
 packages:
   # Build dependencies
-  - build-essential
-  - cmake
+ - build-essential
+ - cmake
   
   # SDR libraries
-  - libusb-1.0-0-dev
-  - libfftw3-dev
+ - libusb-1.0-0-dev
+ - libfftw3-dev
   
   # SDR tools
-  - rtl-sdr
-  - gqrx-sdr
+ - rtl-sdr
+ - gqrx-sdr
 
 python_packages:
   # Scientific computing
-  - numpy
-  - scipy
+ - numpy
+ - scipy
   
   # SDR-specific
-  - pyrtlsdr
+ - pyrtlsdr
 
 run_commands:
-  - "colorecho 'Build starting...'"
-  - "goodecho 'Build complete!'"
+ - "colorecho 'Build starting...'"
+ - "goodecho 'Build complete!'"
 ```
 
 ### Version Control
@@ -776,13 +776,13 @@ tag: "sdr-analysis:v1.2"
 
 # Core SDR packages - tested with RTL-SDR V3 and HackRF One
 packages:
-  - rtl-sdr
-  - hackrf
+ - rtl-sdr
+ - hackrf
 
 # Python stack for signal processing
 python_packages:
-  - numpy>=1.24.0  # Required for scipy
-  - scipy>=1.10.0  # Signal processing
+ - numpy>=1.24.0  # Required for scipy
+ - scipy>=1.10.0  # Signal processing
 ```
 
 ---
@@ -795,37 +795,37 @@ python_packages:
 ```yaml
 # Problem: Package name incorrect or not available
 packages:
-  - rtl-sdr-tools  # Wrong name
+ - rtl-sdr-tools  # Wrong name
 
 # Solution: Use correct package name
 packages:
-  - rtl-sdr
+ - rtl-sdr
 ```
 
 **Issue: "Python package install fails"**
 ```yaml
 # Problem: Missing system dependencies
 python_packages:
-  - matplotlib  # Needs system libraries
+ - matplotlib  # Needs system libraries
 
 # Solution: Install system dependencies first
 packages:
-  - python3-dev
-  - libfreetype6-dev
-  - libpng-dev
+ - python3-dev
+ - libfreetype6-dev
+ - libpng-dev
 python_packages:
-  - matplotlib
+ - matplotlib
 ```
 
 **Issue: "Command not found in run_commands"**
 ```yaml
 # Problem: Helper functions not available
 run_commands:
-  - "cmake_clone_and_build ..."  # Fails
+ - "cmake_clone_and_build ..."  # Fails
 
 # Solution: They're automatically available - check syntax
 run_commands:
-  - |
+ - |
     cmake_clone_and_build \
       'https://...' \
       'build' \
@@ -842,8 +842,8 @@ Before building, validate your YAML:
 # Check YAML syntax
 python3 -c "import yaml; yaml.safe_load(open('recipe.yaml'))"
 
-# Dry-run (validate without building)
-rfswift build -r recipe.yaml --dry-run  # Coming soon
+# There is no dry-run flag yet: build into a throwaway tag to validate
+rfswift image build -r recipe.yaml -t recipe-check:test
 ```
 
 ### Debugging Builds

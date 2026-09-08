@@ -7,6 +7,14 @@ next: /docs/commands/completion
 
 # rfswift update
 
+{{< callout type="warning" >}}
+**Packaged installs**: on a deb, rpm, pacman or Homebrew install, `rfswift update` explains how to upgrade through the package manager instead of overwriting the packaged binary (which desynced the package database and was reverted by the next package upgrade). Re-running `get_rfswift.sh` also upgrades a packaged install.
+{{< /callout >}}
+
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift system update`. The legacy form `rfswift update` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Update RF Swift to the latest version from the official Penthertz repository.
 
 ## Synopsis

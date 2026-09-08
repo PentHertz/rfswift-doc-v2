@@ -9,259 +9,104 @@ cascade:
 
 # Building RF Swift from Source
 
-This guide explains how to compile RF Swift from source code, allowing you to customize the binary, contribute to development, or build for specific architectures.
+RF Swift is two Go programs in one repository: the lean `rfswift` CLI/TUI (which also contains the remote agent) and the `rfswift-workbench` desktop GUI. This guide builds both, for your machine or for another architecture.
 
 ## Prerequisites
 
-Before you begin, ensure your system has sufficient resources:
-- At least 2GB of RAM
-- At least 4GB of free disk space
-- Internet connection (for downloading dependencies)
-- Administrator/root access for installation
-
-## Compilation Process
+- **Go 1.27 or later** (the modules declare `go 1.27.1` and the Go toolchain downloads it on its own when yours is older; distribution packages are often older, take the archive from [go.dev/dl](https://go.dev/dl/))
+- Git
+- A container engine (Docker or Podman) or Nix to run what you build
+- For the Workbench on Linux: the GTK 3 and WebKitGTK 4.1 development packages (`make deps` installs them on apt, dnf, pacman, zypper and apk). macOS and Windows need nothing extra, the webview ships with the OS
 
 {{% steps %}}
 
-### Clone the Repository
-
-First, clone the RF Swift source code from the official repository:
+### Clone the repository
 
 ```bash
 git clone https://github.com/PentHertz/RF-Swift.git
 cd RF-Swift
 ```
 
-### Build Using Installation Scripts
-
-RF Swift provides platform-specific scripts to handle the entire build process:
-
-#### Linux/macOS
-
-Use the `scripts/install.sh` script which handles all dependencies and compilation:
+### Build the CLI
 
 ```bash
-./scripts/install.sh
-```
-
-The script will:
-1. Check for and install required dependencies (Docker, BuildX, Go)
-2. Compile the RF Swift binary for your architecture
-3. Offer to create a system-wide alias for the `rfswift` command
-4. Provide options for building or pulling container images
-
-#### Windows
-
-For Windows systems, use the `scripts/build-windows.bat` script:
-
-```cmd
-scripts\build-windows.bat
-```
-
-This script will set up the required dependencies and compile the RF Swift binary for Windows.
-
-#### Special Platform: Steam Deck
-
-The Linux installation script includes special handling for Steam Deck:
-
-```bash
-./scripts/install.sh
-[+] Checking Docker installation
-Are you installing on a Steam Deck? (yes/no): yes
-```
-
-Selecting "yes" will:
-- Unlock Steam OS from read-only mode
-- Configure Steam Deck-specific settings
-- Install appropriate dependencies for the Steam Deck hardware
-
-### Configure Your Installation
-
-During installation, you'll be prompted with several configuration options:
-
-```bash
-Do you want to create an alias for the binary? (yes/no): yes
-```
-
-Creating an alias allows you to run RF Swift from any directory using the `rfswift` command.
-
-After compilation completes, you'll be asked whether to build or pull container images:
-
-```bash
-Docker is already installed. Moving on.
-Docker Buildx is already installed. Moving on.
-Docker Compose v2 is already installed. Moving on.
-[+] Installing Go
-golang is already installed in /usr/local/go/bin. Moving on.
-[+] Building RF Swift Go Project
-RF Swift Go Project built successfully.
-Do you want to build a Docker container, pull an existing image, or exit?
-1) Build Docker container
-2) Pull Docker image
-3) Exit
-Choose an option (1, 2, or 3): 
-```
-
-You can choose to:
-- Build a custom container image (option 1)
-- Pull an existing pre-built image from the repository (option 2)
-- Exit and handle images later (option 3)
-
-{{< callout type="info" >}}
-You can always build or pull images later using the RF Swift command-line interface.
-{{< /callout >}}
-
-### Test Your Compilation
-
-Once compiled, verify that your RF Swift binary works correctly:
-
-```bash
-# If you created an alias
-rfswift --version
-
-# Or using the direct path
+cd go/rfswift
+CGO_ENABLED=0 go build -tags netgo -o rfswift .
 ./rfswift --version
 ```
 
-This should display the version information and confirm the binary is functioning properly.
+`CGO_ENABLED=0` with `netgo` gives the static binary the releases ship (it runs on a headless Raspberry Pi as well as on a laptop). Cross-compile by setting the target:
+
+```bash
+CGO_ENABLED=0 GOOS=linux   GOARCH=arm64   go build -tags netgo -o rfswift_arm64 .
+CGO_ENABLED=0 GOOS=linux   GOARCH=riscv64 go build -tags netgo -o rfswift_riscv64 .
+CGO_ENABLED=0 GOOS=windows GOARCH=amd64   go build -tags netgo -o rfswift.exe .
+CGO_ENABLED=0 GOOS=darwin  GOARCH=arm64   go build -tags netgo -o rfswift_macos .
+```
+
+`scripts/build_project.sh` runs the same build for the host, and `scripts/build-windows.bat` does it on Windows.
+
+### Build the Workbench
+
+The Workbench is a separate module under `go/rfswift-workbench` (it links the CLI's packages through a module replacement, never shells out to the CLI). It needs cgo and the platform webview, so it cannot be a static binary on Linux.
+
+```bash
+cd go/rfswift-workbench
+make deps          # Linux only: GTK 3 + WebKitGTK 4.1 headers
+make build         # runs the Wails CLI through `go run`, no separate install needed
+ls build/bin/
+```
+
+Build it against your own system's WebKit: a binary linked to another WebKit (one built inside Nix, for example) can fail to initialise OpenGL and show a blank window. The `Makefile` and `.github/workflows/workbench.yml` hold the release matrix (native Linux and AppImage, universal macOS `.app`, Windows `.exe`).
+
+### Test
+
+```bash
+cd go/rfswift
+go test ./...
+go vet ./...
+
+cd ../rfswift-workbench
+make security-test         # go test, go vet, frontend sink guards, short fuzz campaigns
+```
+
+`scripts/test-remote.sh unit|fuzz|all` exercises the remote agent's security core, and `scripts/test-installer.sh` the shell installer.
+
+### Install
+
+```bash
+sudo install -m 0755 go/rfswift/rfswift /usr/local/bin/rfswift
+```
+
+Man pages for the Linux packages are generated from the command tree with `go run ./tools/genman <dir>` (from `go/rfswift`), and `scripts/generate-packaging-assets.sh` prepares everything the deb, rpm and pacman packages contain.
 
 {{% /steps %}}
 
-## Manual Compilation
-
-If you prefer to handle the compilation process manually or need more control over the build, you can follow these steps:
-
-### Install Dependencies
-
-First, ensure you have all required dependencies. **Go 1.26.1 or later is required.**
+## Running what you built
 
 ```bash
-# Ubuntu/Debian
-sudo apt update
-sudo apt install -y git docker.io
-# Install Go 1.26.1+ from https://go.dev/dl/ (distro packages may be outdated)
-wget https://go.dev/dl/go1.26.1.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.26.1.linux-amd64.tar.gz
-export PATH=$PATH:/usr/local/go/bin
-
-# Fedora/CentOS/RHEL
-sudo dnf install -y git docker
-# Install Go 1.26.1+ from https://go.dev/dl/
-
-# Arch Linux
-sudo pacman -S git go docker
-
-# macOS (using Homebrew)
-brew install go docker
+rfswift doctor
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n my_sdr_container
+rfswift container shell -c my_sdr_container
 ```
 
-### Compile the Binary
+On Linux Docker, grant your user socket access once with `rfswift host docker-access` instead of running the binary with `sudo`.
 
-Navigate to the Go source directory and compile the binary:
+## Developing the Nix engine
 
-```bash
-cd RF-Swift/go/rfswift
-go build -o rfswift
-```
+The environments live in the companion [RF-Swift-nix](https://github.com/PentHertz/RF-Swift-nix) flake. Clone it next to `RF-Swift` and RF Swift uses your local checkout automatically (or set `RFSWIFT_NIX_FLAKE=/path/to/RF-Swift-nix`); `rfswift env update --input nixpkgs <name>` and `rfswift env rebuild <name>` work against that writable checkout.
 
-For a **static binary** (recommended for air-gapped or production use):
+## Troubleshooting
 
-```bash
-cd RF-Swift/go/rfswift
-CGO_ENABLED=0 go build -tags netgo -o rfswift
-```
+- **Go module issues**: `go clean -modcache`, then build again.
+- **Wrong Go version**: `go version` must print 1.27 or later; distribution packages lag behind.
+- **Workbench blank window on Linux**: rebuild against the system WebKit (`make deps` then `make build`), or use the AppImage.
+- **Docker permissions**: `rfswift host docker-access`.
 
-For cross-compilation (building for a different architecture):
-
-```bash
-cd RF-Swift/go/rfswift
-
-# For ARM64 (e.g., Raspberry Pi)
-CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -tags netgo -o rfswift_arm64
-
-# For RISC-V64
-CGO_ENABLED=0 GOOS=linux GOARCH=riscv64 go build -tags netgo -o rfswift_riscv64
-
-# For Windows
-CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -tags netgo -o rfswift.exe
-
-# For macOS
-CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -tags netgo -o rfswift_macos
-```
-
-### Install the Binary
-
-Move the compiled binary to a location in your PATH:
-
-```bash
-# Linux/macOS
-sudo mv rfswift /usr/local/bin/
-sudo chmod +x /usr/local/bin/rfswift
-
-# Or for local user only
-mv rfswift ~/bin/
-chmod +x ~/bin/rfswift
-```
-
-## Running RF Swift
-
-After compiling RF Swift, you can start using it to manage containers:
-
-### Create and Run a Container
-
-To create and run a container using an image:
-
-```bash
-# With sudo (Linux without Docker Desktop)
-sudo rfswift run -i penthertz/rfswift_resolute:sdr_full -n my_sdr_container
-
-# Without sudo (macOS, Windows, or Linux with Docker Desktop)
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n my_sdr_container
-```
-
-### Resume Existing Containers
-
-To resume work with previously created containers:
-
-```bash
-rfswift exec -c my_sdr_container
-```
-
-## Troubleshooting Compilation Issues
-
-If you encounter issues during compilation:
-
-### Go Module Issues
-
-```bash
-# Reset the Go module cache
-go clean -modcache
-# Try building again
-go build -o rfswift
-```
-
-### Docker Permissions
-
-```bash
-# Add your user to the docker group
-sudo usermod -aG docker $USER
-# Log out and back in for changes to take effect
-```
-
-### Dependency Version Conflicts
-
-```bash
-# Force use of specific versions in go.mod
-go mod edit -require=github.com/some/dependency@v1.2.3
-go mod tidy
-```
-
-## Next Steps
-
-Now that you have successfully compiled RF Swift, you can:
+## Next steps
 
 {{< cards >}}
-  {{< card link="/docs/development/building-images" title="Build Custom Images" icon="beaker" subtitle="Create your own specialized container images with custom tools" >}}
-  {{< card link="/docs/getting-started" title="Getting Started" icon="play" subtitle="Learn how to use RF Swift with pre-built images" >}}
-  {{< card link="/docs/guide" title="User Guide" icon="book-open" subtitle="Explore the complete RF Swift documentation" >}}
+  {{< card link="/docs/development/building-images" title="Build Custom Images" icon="beaker" subtitle="Create your own specialized container images" >}}
+  {{< card link="/docs/development/yaml-recipe-guide" title="YAML Recipe Guide" icon="document-text" subtitle="Images from simple recipes" >}}
+  {{< card link="/docs/guide" title="User Guide" icon="book-open" subtitle="Explore the complete documentation" >}}
 {{< /cards >}}

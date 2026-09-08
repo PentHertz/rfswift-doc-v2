@@ -17,7 +17,7 @@ cascade:
       <td><strong>Supported OSes</strong></td>
       <td><img alt="linux supported" src="https://img.shields.io/badge/linux-supported-success"></td>
       <td><img alt="windows supported" src="https://img.shields.io/badge/windows-supported-success"></td>
-      <td><img alt="macOS supported" src="https://img.shields.io/badge/macos-supported%20without%20USB%20forward-success"></td>
+      <td><img alt="macOS supported" src="https://img.shields.io/badge/macos-supported-success"></td>
     </tr>
     <tr>
       <td><strong>Supported architectures</strong></td>
@@ -56,7 +56,7 @@ cascade:
 </div>
 
 {{< callout emoji="🆕" >}}
-**RF Swift v3.0.0 "Resonance" is out.** New Ubuntu 26.04 "Resolute" base, a CLI rebuilt on the new Moby SDK, a dedicated GNU Radio 4 image, OCUDU for 5G SA, and new `ad`, `android` and `osint` images for full engagements. → [Read the release notes](/docs/release-notes-v3)
+**RF Swift v4.0 "Nucleus" is out (v4.0.2).** A native Nix engine that runs the tool sets without containers (and inside a jail with `--isolate` on Linux and macOS), the RF Swift Workbench GUI for assessments, a secure remote agent to drive a lab machine from your laptop, a resource-first CLI, built-in security audits, and native installers for Linux, macOS and Windows. [Read the release notes](/docs/release-notes-v4)
 {{< /callout >}}
 
 ## What is RF Swift?
@@ -71,8 +71,8 @@ cascade:
 
 So this toolbox is probably the **best solution** to deploy a generic, as well as a special environment securely, skipping the headache and waste of time when installing and using RF tools on same host.
 
-{{< callout type="warning" >}}
-  Even if the project could work on macOS with some manual workaround, we do not advertise it for the moment, but this system will be fully supported in the near future.
+{{< callout type="info" >}}
+  RF Swift runs on Linux, Windows and macOS with one installer each: a shell installer and native packages on Linux, a Homebrew cask or a signed DMG on macOS, and a one-click installer bundle on Windows. See [Getting Started](/docs/getting-started).
 {{< /callout >}}
 
 ## An actively used tool
@@ -91,53 +91,68 @@ During security engagements, we often work on multiple projects within the same 
 ## Key Benefits of RF Swift
 
 - **Flexibility**: Use RF tools without disrupting your daily work environment
-- **Efficiency**: Deploy only the tools you need, when you need them
-- **Security**: Manage isolation between containers preventing cross-contamination
+- **Efficiency**: Deploy only the tools you need, when you need them, down to a single tool with the Nix engine
+- **Security**: Manage isolation between containers, and jail native Nix environments, preventing cross-contamination
 - **Portability**: Works across multiple architectures with consistent experience
 - **Resource Management**: Optimized resource usage compared to full VMs
  
-## Comprehensive Container Orchestration
+## One workflow for containers and native environments
 
-RF Swift provides a complete orchestration solution that goes beyond traditional containers. Unlike standard Docker, RF Swift simplifies the entire workflow with a straightforward learning curve:
+RF Swift is more than a wrapper around a container engine. One command line, one GUI and one set of ideas (create, enter, configure, audit, export) drive four engines: Docker, Podman and Lima for containers, and Nix for native environments. The engines differ in what they run; the host plumbing they all need (USB, display, sound, udev rules, GPU) is handled by RF Swift, so the learning curve stays flat whichever you pick, and you can switch from a container to a native environment with one flag.
 
 ```mermaid
 graph TD
-    A[rfswift] --> B[Host manager]
-    B --> C[Host]
-    B --> D[USB]
-    B --> F[Sound]
-    B --> G[Images Container manager]
-    H[Dockerfiles] --> G
-    G --> I[Pull]
-    G --> J[List]
-    G --> K[Save]
-    G --> L[Tag]
-    G --> M[Run]
-    G --> N[Exec]
-    
+    W[RF Swift Workbench] --> A[rfswift CLI and TUI]
+    R[Remote agent over mTLS] --> A
+    A --> B[Host manager]
+    B --> C[udev rules]
+    B --> D[USB passthrough]
+    B --> F[Display and sound]
+    B --> E[GPU]
+    A --> G[Container engines: Docker, Podman, Lima]
+    A --> N[Nix engine: native environments]
+    H[Dockerfiles and YAML recipes] --> G
+    X[RF-Swift-nix flake] --> N
+    G --> I[pull, versions, local, remote]
+    G --> J[create, shell, config, commit, upgrade]
+    G --> K[export and import]
+    N --> O[create, shell, run one tool]
+    N --> P[install, update, rollback, generations]
+    N --> Q[isolate jail, export .rfenv]
+    A --> S[audit: image, container or environment]
+
     style A fill:#f9f,stroke:#333,stroke-width:4px
     style B fill:#bbf,stroke:#333,stroke-width:2px
-    style H fill:#afa,stroke:#333,stroke-width:2px
     style G fill:#bbf,stroke:#333,stroke-width:2px
+    style N fill:#bfb,stroke:#333,stroke-width:2px
+    style H fill:#afa,stroke:#333,stroke-width:2px
+    style X fill:#afa,stroke:#333,stroke-width:2px
 ```
 
-RF Swift handles everything from container creation and execution to pulling images, committing changes, and re-tagging. What sets it apart is the seamless integration of USB, video, and audio forwarding in a user-friendly interface. Those are tasks that typically require significant expertise in standard Docker environments.
+RF Swift handles everything from creation and entry to pulling images or building closures, committing or updating, re-tagging or rolling back. What sets it apart is the seamless integration of USB, display and audio forwarding, the same for a container and for a native environment, tasks that usually take real expertise with a bare engine or a hand-made Nix setup. On Linux and macOS a native environment can also run inside a jail (`--isolate`) that hides your home and the host filesystem while the hardware keeps working. The [command reference](/docs/commands) groups it all by resource: `container`, `image`, `env`, `config`, `network`, `host`, `usb`, `audit`, `agent` and `system`.
 
 ### Key Components
 
 - **Go binary (rfswift)** 
-  - Instruments containers and hosts to simplify the use of tools that may require:
-  - Internet connectivity
-  - Display
-  - Sounds
-  - USB accesses
+ - Instruments containers and hosts to simplify the use of tools that may require:
+ - Internet connectivity
+ - Display
+ - Sounds
+ - USB accesses
   
   This ``rfswift`` is the main program you will interact with to:
-  - Run clean containers
-  - Execute inside running or paused containers
-  - Perform many magic actions that will make things work without a headache
+ - Run clean containers
+ - Execute inside running or paused containers
+ - Create, enter, update and roll back native Nix environments, jailed or not
+ - Perform many magic actions that will make things work without a headache
 
-- **Docker images** - Pre-built Docker container images are available in RF Swift's repository. In case you want to bake your own environment, preserve some space, and have a special set-up, you will also find some Docker files you can edit to fit your expectations.
+- **Container images** - Pre-built OCI images are published for x86_64, arm64 and riscv64. To bake your own environment you will also find YAML recipes and Dockerfiles you can edit.
+
+- **Nix environments** - The same tool sets as native, pinned Nix environments (`--engine nix`), defined in the companion [RF-Swift-nix](https://github.com/PentHertz/RF-Swift-nix) repository.
+
+- **RF Swift Workbench** - A desktop GUI (Linux, macOS, Windows) for running assessments: missions, terminals with recordings, notebook, findings, captures, secrets, reports, and an optional coding-agent bridge.
+
+- **Remote agent** - `rfswift agent` serves the engines of a lab machine to the Workbench over mutual TLS.
 
 ## Questions or Feedback?
 
@@ -152,9 +167,10 @@ Dive right into the following section to get started:
 
 {{< cards >}}
   {{< card link="/docs/supports" title="Requirements & supports" icon="support" subtitle="Requirements & supported platforms" >}}
-  {{< card link="/docs/release-notes-v3" title="What's new in v3.0.0" icon="sparkles" subtitle="Resolute base, new CLI, GNU Radio 4, and the ad / android / osint images" >}}
+  {{< card link="/docs/release-notes-v4" title="What's new in v4.0" icon="sparkles" subtitle="Nix engine, Workbench, remote agent, resource-first CLI" >}}
   {{< card link="/docs/comparisons" title="Comparisons with dedicated distributions" icon="star" subtitle="Compare RF Swift with dedicated distributions" >}}
   {{< card link="/docs/getting-started" title="Getting Started" icon="document-text" subtitle="Setup your environment" >}}
   {{< card link="/docs/quick-start" title="Quick Start" icon="document-text" subtitle="Quickly run RF Swift and start a container" >}}
+  {{< card link="/docs/guide/workbench" title="RF Swift Workbench" icon="desktop-computer" subtitle="The assessment GUI" >}}
   {{< card link="/docs/development/compiling-rfswift" title="Compile RF Swift binary" icon="document-text" subtitle="Compile RF Swift and develop around the framework" >}}
 {{< /cards >}}

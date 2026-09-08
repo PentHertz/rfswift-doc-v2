@@ -7,6 +7,10 @@ next: /docs/commands/download
 
 # rfswift import
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift image import`. The legacy form `rfswift import` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Import containers or images from compressed archive files.
 
 ## Synopsis

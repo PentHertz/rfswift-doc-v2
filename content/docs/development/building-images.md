@@ -143,8 +143,8 @@ base_image: "ubuntu:24.04"
 tag: "my-custom-image:latest"
 
 run_commands:
-  - "installfromnet 'wget http://example.com/tool.tar.gz'"
-  - "installfromnet 'git clone https://github.com/user/repo.git'"
+ - "installfromnet 'wget http://example.com/tool.tar.gz'"
+ - "installfromnet 'git clone https://github.com/user/repo.git'"
 ```
 
 **In Dockerfiles:**
@@ -198,13 +198,13 @@ base_image: "ubuntu:24.04"
 tag: "gnuradio-image:latest"
 
 packages:
-  - python3-numpy
-  - python3-scipy
-  - g++
-  - cmake
-  - libusb-1.0-0-dev
-  - libfftw3-dev
-  - libboost-all-dev
+ - python3-numpy
+ - python3-scipy
+ - g++
+ - cmake
+ - libusb-1.0-0-dev
+ - libfftw3-dev
+ - libboost-all-dev
 ```
 
 **In Bash/Dockerfiles:**
@@ -233,37 +233,37 @@ base_image: "ubuntu:24.04"
 tag: "gnuradio:latest"
 
 packages:
-  - git
-  - cmake
-  - g++
-  - libboost-all-dev
-  - libgmp-dev
-  - swig
-  - python3-numpy
-  - python3-mako
-  - python3-sphinx
-  - python3-lxml
-  - doxygen
-  - libfftw3-dev
-  - libsdl1.2-dev
-  - libgsl-dev
-  - libqwt-qt5-dev
-  - libqt5opengl5-dev
-  - python3-pyqt5
-  - liblog4cpp5-dev
-  - libzmq3-dev
-  - python3-yaml
-  - python3-click
-  - python3-click-plugins
-  - python3-zmq
-  - python3-scipy
-  - python3-gi
-  - python3-gi-cairo
-  - gobject-introspection
-  - gir1.2-gtk-3.0
+ - git
+ - cmake
+ - g++
+ - libboost-all-dev
+ - libgmp-dev
+ - swig
+ - python3-numpy
+ - python3-mako
+ - python3-sphinx
+ - python3-lxml
+ - doxygen
+ - libfftw3-dev
+ - libsdl1.2-dev
+ - libgsl-dev
+ - libqwt-qt5-dev
+ - libqt5opengl5-dev
+ - python3-pyqt5
+ - liblog4cpp5-dev
+ - libzmq3-dev
+ - python3-yaml
+ - python3-click
+ - python3-click-plugins
+ - python3-zmq
+ - python3-scipy
+ - python3-gi
+ - python3-gi-cairo
+ - gobject-introspection
+ - gir1.2-gtk-3.0
 
 run_commands:
-  - "echo 'GNU Radio dependencies installed'"
+ - "echo 'GNU Radio dependencies installed'"
 ```
 
 **Bash - Installing dependencies for GNU Radio:**
@@ -355,11 +355,11 @@ base_image: "ubuntu:24.04"
 tag: "sdr-tools:latest"
 
 python_packages:
-  - numpy
-  - scipy
-  - matplotlib
-  - pyrtlsdr
-  - "gnuradio==3.10.5.0"  # Specific version
+ - numpy
+ - scipy
+ - matplotlib
+ - pyrtlsdr
+ - "gnuradio==3.10.5.0"  # Specific version
 ```
 
 **In Bash/Dockerfiles:**
@@ -596,12 +596,12 @@ base_image: "ubuntu:24.04"
 tag: "rtlsdr:latest"
 
 packages:
-  - cmake
-  - build-essential
-  - libusb-1.0-0-dev
+ - cmake
+ - build-essential
+ - libusb-1.0-0-dev
 
 run_commands:
-  - "cmake_clone_and_build 'https://github.com/osmocom/rtl-sdr.git' 'build' 'master' '' 'rtlsdr_install' -DINSTALL_UDEV_RULES=ON -DDETACH_KERNEL_DRIVER=ON"
+ - "cmake_clone_and_build 'https://github.com/osmocom/rtl-sdr.git' 'build' 'master' '' 'rtlsdr_install' -DINSTALL_UDEV_RULES=ON -DDETACH_KERNEL_DRIVER=ON"
 ```
 
 **YAML Recipe - Complex Build with Multiple Options:**
@@ -610,14 +610,14 @@ base_image: "ubuntu:24.04"
 tag: "gnuradio:3.10"
 
 packages:
-  - cmake
-  - g++
-  - libboost-all-dev
-  - python3-dev
-  - swig
+ - cmake
+ - g++
+ - libboost-all-dev
+ - python3-dev
+ - swig
 
 run_commands:
-  - |
+ - |
     cmake_clone_and_build \
       'https://github.com/gnuradio/gnuradio.git' \
       'build' \
@@ -780,10 +780,10 @@ grclone_and_build \
 | **Output** | `goodecho` | No | Console | No |
 | **Output** | `criticalecho` | No | Console | Yes |
 | **Output** | `criticalecho-noexit` | No | Console | No |
-| **Install** | `installfromnet` | Yes (5×) | Console | Yes (on failure) |
+| **Install** | `installfromnet` | Yes (5x) | Console | Yes (on failure) |
 | **Install** | `install_dependencies` | Yes (implicit) | apt logs | Yes (on failure) |
 | **Install** | `check_and_install_lib` | Yes (implicit) | Console + apt | Yes (on failure) |
-| **Python** | `pip3install` | Yes (5×) | pip logs | Yes (on failure) |
+| **Python** | `pip3install` | Yes (5x) | pip logs | Yes (on failure) |
 | **Git** | `gitinstall` | No | Console + DB | Yes (on failure) |
 | **Build** | `cmake_clone_and_build` | No | Console + DB | Yes (on failure) |
 | **Build** | `grclone_and_build` | No | Console + DB | Yes (on failure) |
@@ -801,22 +801,22 @@ tag: "hackrf:latest"
 
 # System packages
 packages:
-  - libusb-1.0-0-dev
-  - libfftw3-dev
-  - build-essential
-  - cmake
-  - git
+ - libusb-1.0-0-dev
+ - libfftw3-dev
+ - build-essential
+ - cmake
+ - git
 
 # Python packages
 python_packages:
-  - numpy
-  - pyusb
+ - numpy
+ - pyusb
 
 # Build from source
 run_commands:
-  - "colorecho 'Installing HackRF support...'"
-  - "cmake_clone_and_build 'https://github.com/mossmann/hackrf.git' 'host/build' 'master' '' 'hackrf_install' -DINSTALL_UDEV_RULES=ON"
-  - "goodecho 'HackRF installation complete!'"
+ - "colorecho 'Installing HackRF support...'"
+ - "cmake_clone_and_build 'https://github.com/mossmann/hackrf.git' 'host/build' 'master' '' 'hackrf_install' -DINSTALL_UDEV_RULES=ON"
+ - "goodecho 'HackRF installation complete!'"
 ```
 
 Build it with:
@@ -871,13 +871,13 @@ base_image: "ubuntu:24.04"
 tag: "rtlsdr:latest"
 
 packages:
-  - build-essential
-  - cmake
-  - git
+ - build-essential
+ - cmake
+ - git
 
 run_commands:
-  - "install_dependencies 'libusb-1.0-0-dev'"
-  - "cmake_clone_and_build 'https://github.com/osmocom/rtl-sdr.git' 'build' 'master' '' 'rtlsdr_install' -DINSTALL_UDEV_RULES=ON"
+ - "install_dependencies 'libusb-1.0-0-dev'"
+ - "cmake_clone_and_build 'https://github.com/osmocom/rtl-sdr.git' 'build' 'master' '' 'rtlsdr_install' -DINSTALL_UDEV_RULES=ON"
 ```
 
 Build with:
@@ -916,16 +916,16 @@ base_image: "ubuntu:24.04"
 tag: "optimized:latest"
 
 packages:
-  - pkg1
-  - pkg2
-  - pkg3
+ - pkg1
+ - pkg2
+ - pkg3
 
 python_packages:
-  - package1
-  - package2
+ - package1
+ - package2
 
 run_commands:
-  - "cmake_clone_and_build [...]"
+ - "cmake_clone_and_build [...]"
   # Cleanup is handled automatically
 ```
 
@@ -961,13 +961,13 @@ RUN cmake_clone_and_build [...]
 base_image: "ubuntu:24.04"
 tag: "my-sdr:latest"
 packages:
-  - rtl-sdr
-  - hackrf
+ - rtl-sdr
+ - hackrf
 python_packages:
-  - numpy
-  - scipy
+ - numpy
+ - scipy
 run_commands:
-  - "echo 'Build complete!'"
+ - "echo 'Build complete!'"
 ```
 
 ### Use Dockerfiles When:

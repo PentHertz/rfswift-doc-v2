@@ -22,10 +22,14 @@ Air-gapped installation requires downloading all components while online, then t
 ### What You'll Need
 
 **Downloaded while online:**
-- Docker static binaries
-- RF Swift binary (static compilation)
-- Docker images (via download or export)
+- Docker static binaries (or Podman from the distribution's repositories)
+- The RF Swift binary (static, `rfswift_Linux_<arch>.tar.gz`) or the native package (`.deb`, `.rpm`, `.pkg.tar.zst`), which also brings `xhost` and `pactl` as dependencies
+- Container images (`rfswift image download`), or Nix environments (`rfswift env export`)
 - X11 utilities (for GUI applications)
+
+{{< callout type="info" >}}
+**Nix engine without a container engine**: an air-gapped machine with Nix installed can run native environments from `.rfenv` archives. Export on the online machine with `rfswift env export mysdr -o mysdr.rfenv` (the closure and the workspace travel together) and import with `rfswift env import mysdr.rfenv`. The Workbench exports the same archives from a mission's right-click menu.
+{{< /callout >}}
 
 **Target system requirements:**
 - A Linux system - Debian or Ubuntu recommended
@@ -65,7 +69,7 @@ Download the latest RF Swift static binary from GitHub releases:
 
 ```bash
 # Download latest release for x86_64
-wget https://github.com/PentHertz/RF-Swift/releases/download/v2.0.0/rfswift_Linux_x86_64.tar.gz
+wget https://github.com/PentHertz/RF-Swift/releases/download/v4.0.2/rfswift_Linux_x86_64.tar.gz
 
 tar -zvxf rfswift_Linux_x86_64.tar.gz
 
@@ -78,14 +82,14 @@ chmod +x rfswift
 
 **For ARM64 systems:**
 ```bash
-wget https://github.com/PentHertz/RF-Swift/releases/download/v2.0.0/rfswift_Linux_arm64.tar.gz
+wget https://github.com/PentHertz/RF-Swift/releases/download/v4.0.2/rfswift_Linux_arm64.tar.gz
 tar -zvxf rfswift_Linux_arm64.tar.gz
 chmod +x rfswift
 ```
 
 **For RISCV64 systems:**
 ```bash
-wget https://github.com/PentHertz/RF-Swift/releases/download/v2.0.0/rfswift_Linux_riscv64.tar.gz
+wget https://github.com/PentHertz/RF-Swift/releases/download/v4.0.2/rfswift_Linux_riscv64.tar.gz
 tar -zvxf rfswift_Linux_riscv64.tar.gz
 chmod +x rfswift
 ```
@@ -244,7 +248,7 @@ echo "[4/5] Loading Docker images..."
 for image in *.tar.gz; do
     if [[ "$image" != "docker-"* ]] && [[ "$image" != "rfswift_"* ]]; then
         echo "  Loading: $image"
-        rfswift import -t image -i "$image"
+        rfswift image import image -i "$image"
     fi
 done
 
@@ -252,7 +256,7 @@ done
 for image in rfswift_*.tar.gz; do
     if [ -f "$image" ]; then
         echo "  Loading: $image"
-        rfswift import -t image -i "$image"
+        rfswift image import image -i "$image"
     fi
 done
 
@@ -563,7 +567,7 @@ docker system df
 df -h /var/lib/docker
 
 # Clean up space if needed
-rfswift -q cleanup --all
+rfswift -q system cleanup all
 ```
 
 ### Permission Denied
@@ -583,8 +587,8 @@ sudo chmod 666 /dev/ttyUSB0
 rfswift -q bindings add -c container -d -t /dev/ttyUSB0
 
 # Add necessary capabilities
-rfswift -q capabilities add -c container -a NET_ADMIN
-rfswift -q capabilities add -c container -a SYS_ADMIN
+rfswift -q config capabilities add -c container -p NET_ADMIN
+rfswift -q config capabilities add -c container -p SYS_ADMIN
 ```
 
 ### Network Checks Hanging

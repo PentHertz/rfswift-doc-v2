@@ -174,6 +174,6 @@ rsync -av "$TEMP_DIR/" "$TARGET_DIR/"
 
 ## Related Documentation
 
-- [RF Swift Utilities](/docs/guide/utilities)
-- [Custom Script Development](/docs/development/custom-scripts)
-- [Troubleshooting](/docs/guide/troubleshooting)
+- [RF Swift Utilities](/docs/container_scripts)
+- [Custom Script Development](/docs/development/yaml-recipe-guide)
+- [Troubleshooting](/docs/getting-started#troubleshooting)

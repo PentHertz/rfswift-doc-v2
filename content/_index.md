@@ -2,9 +2,9 @@
 title: RF Swift
 layout: hextra-home
 ---
-{{< hextra/hero-badge link="docs/release-notes-v3" >}}
+{{< hextra/hero-badge link="docs/release-notes-v4" >}}
   <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-primary-400"></div>
-  <span>New: v3.0.0 "Resonance"</span>
+  <span>New: v4.0 "Nucleus"</span>
   {{< icon name="arrow-circle-right" attributes="height=14" >}}
 {{< /hextra/hero-badge >}}
 
@@ -27,30 +27,48 @@ layout: hextra-home
 
 <div class="hx:mt-6 hx:mb-12 hx:px-4 hx:sm:px-6 hx:md:px-8 hx:lg:px-12 max-w-screen-lg mx-auto">
   <h2 class="hx:text-3xl hx:font-bold hx:mb-4">Easy Installation</h2>
-  <p class="hx:mb-6">Get RF-Swift up and running on your system with our one-line installer - no technical expertise required!</p>
+  <p class="hx:mb-6">Get RF Swift up and running in a minute: a one-line installer on Linux and macOS, a signed disk image on macOS, and a one-click installer on Windows. No technical expertise required.</p>
 
-{{< tabs items="Linux/macOS (curl),Linux/macOS (wget),Windows" >}}
+{{< tabs items="Linux / macOS (script),macOS (DMG),Windows (installer)" >}}
   {{< tab >}}
+
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
-After installation, simply run: `rfswift`
+
+Then run `rfswift`. The script installs the CLI, the Workbench or both, and sets up Docker, Podman or Nix for you.
+
   {{< /tab >}}
   {{< tab >}}
+
 ```bash
-wget -qO- "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
+# Homebrew: CLI and Workbench from the signed release
+brew install --cask penthertz/rfswift/rfswift
+
+# or the signed and notarized disk image
+curl -LO https://github.com/PentHertz/RF-Swift/releases/latest/download/rfswift_Darwin_universal.dmg && open rfswift_Darwin_universal.dmg
 ```
-After installation, simply run: `rfswift`
+
+In the disk image, drag the Workbench to Applications and run **Install RF Swift CLI** next to it. The same image is on the [releases page](https://github.com/PentHertz/RF-Swift/releases).
+
   {{< /tab >}}
   {{< tab >}}
-See our [installation documentation](docs/quick-start) for Windows installation instructions.
+
+```powershell
+# Fetch the latest installer (x64 here, arm64 exists too) and run it
+$setup = (Invoke-RestMethod https://api.github.com/repos/PentHertz/RF-Swift/releases/latest).assets | Where-Object name -like 'RFSwift-Setup-*-x64.exe'
+Invoke-WebRequest $setup.browser_download_url -OutFile RFSwift-Setup.exe; .\RFSwift-Setup.exe
+```
+
+Or download it by hand from the [releases page](https://github.com/PentHertz/RF-Swift/releases). One UAC prompt installs WSL 2, USB passthrough, the container engine of your choice or Nix, and RF Swift with its Start Menu entries.
+
   {{< /tab >}}
 {{< /tabs >}}
 
 {{< youtube vDInlPsriUg >}}
 
-{{< callout type="Warning" >}}
-For security reasons, it is advised to review the script before execution. As we don't currently have a fully secured installation method, the recommended approach is to perform a manual installation. Always download the script from the official repository to ensure authenticity.
+{{< callout type="info" >}}
+Every download is verified against the release SHA-256 manifest, with an optional Sigstore build-provenance check. Native packages (deb, rpm, pacman, Homebrew cask, MSI) and all the details are in [Getting Started](docs/getting-started).
 {{< /callout >}}
 </div>
 
@@ -67,8 +85,8 @@ For security reasons, it is advised to review the script before execution. As we
   >}}
   
   {{< hextra/feature-card
-    title="Efficient Container Management"
-    subtitle="Simple to use yet powerful orchestration for RF and security tools with optimized resource usage."
+    title="Containers or native environments"
+    subtitle="Run the tool sets in Docker, Podman or Lima containers, or natively with the Nix engine: pinned, reproducible, and closest to your hardware."
     image="images/docs/sdrangel.png"
     imageClass="hx:top-[40%] hx:left-[24px] hx:w-[180%] hx:sm:w-[110%] hx:dark:opacity-80"
     class="hx:aspect-auto hx:md:aspect-[1.1/1] hx:max-lg:min-h-[340px]"
@@ -111,7 +129,13 @@ For security reasons, it is advised to review the script before execution. As we
   {{< hextra/feature-card
     title="Portable Testing Lab"
     icon="device-mobile"
-    subtitle="Turn any computer into a complete RF testing lab in minutes. Perfect for field work and remote assessments."
+    subtitle="Turn any computer into a complete RF testing lab in minutes, and drive a remote lab machine securely with the RF Swift agent."
+  >}}
+  
+  {{< hextra/feature-card
+    title="Workbench GUI"
+    icon="desktop-computer"
+    subtitle="Missions, terminals with recordings, notebook, findings, captures and branded reports in one desktop app."
   >}}
   
   {{< hextra/feature-card

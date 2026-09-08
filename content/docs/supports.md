@@ -1,150 +1,98 @@
 ---
 title: ⚙️ Requirements & supported platforms
 weight: 2
-next: /docs/release-notes-v3
+next: /docs/release-notes-v4
 prev: /docs
 cascade:
   type: docs
 ---
 
-## System Requirements
+## System requirements
 
-The minimum requirements to run RF Swift are:
+- **CPU**: any dual-core CPU (quad-core recommended)
+- **RAM**: 4 GB minimum (8 GB or more recommended; the Workbench and GUI tools like more)
+- **Storage**: 10 GB free (20 GB or more for several images; the Nix store shares tools between environments)
+- **An engine**: Docker, Podman or Lima for containers, or Nix for native environments (the installers set them up)
+- **Internet**: for the installation and the image or environment downloads; afterwards everything runs offline (`-q`)
 
-- **CPU**: Any dual-core CPU (quad-core recommended for better performance)
-- **RAM**: 4GB minimum (8GB or more recommended)
-- **Storage**: 10GB free space (20GB+ recommended for multiple container images)
-- **Container Engine**: Docker or Podman (automatically installed by the one-line installer)
-- **Internet Connection**: Required for initial setup and image downloads
+## Engines
 
-## Container Engine Support
-
-RF Swift supports both **Docker** and **Podman** as container engines. All RF Swift images are OCI-compatible and work identically with either engine.
-
-| | Docker | Podman |
-|---|---|---|
-| **Architecture** | Client-server (daemon) | Daemonless (fork-exec) |
-| **Root required** | Yes (daemon runs as root) | No (rootless by default) |
-| **Linux** | ✅ Fully supported | ✅ Fully supported |
-| **Windows** | ✅ Docker Desktop | ✅ Via WSL2 or Podman Desktop |
-| **macOS** | ✅ Docker Desktop | ✅ `podman machine` or Podman Desktop |
-| **SBCs (ARM64/RISC-V)** | ✅ Supported | ✅ Supported |
-| **Best for** | Broad ecosystem, Windows/macOS | Security-focused, air-gapped, embedded |
+| | Docker | Podman | Lima | Nix |
+|---|---|---|---|---|
+| **Architecture** | Client-server daemon | Daemonless | Docker in a QEMU VM | Native environments, no daemon |
+| **Root required** | Daemon as root | No (rootless by default) | No | No |
+| **Linux** | ✅ | ✅ | - | ✅ |
+| **Windows** | ✅ Docker Desktop (WSL 2) | ✅ Podman Desktop / WSL 2 | - | ✅ inside a WSL 2 distribution |
+| **macOS** | ✅ Docker Desktop (no USB) | ✅ `podman machine` (no USB) | ✅ USB passthrough, optional GPU VM | ✅ |
+| **SBCs (arm64, riscv64)** | ✅ | ✅ | - | ✅ (arm64) |
+| **Best for** | Broad ecosystem | Security-focused, air-gapped, embedded | macOS with RF hardware | No container engine, closest to the hardware |
 
 {{< callout type="info" >}}
-RF Swift **auto-detects** the available container engine at startup. If both are installed, you can force a specific one with `rfswift --engine docker` or `rfswift --engine podman`. See the [engine command reference](/docs/commands/engine) for details.
+RF Swift auto-detects the engine. Force one with `rfswift --engine docker|podman|lima|nix`, `RFSWIFT_ENGINE`, or `engine =` in `config.ini`. See [engine](/docs/commands/engine) and the [Nix engine guide](/docs/guide/nix-engine).
 {{< /callout >}}
 
-{{< tabs items="Docker setup,Podman setup" >}}
-  {{< tab >}}
-**Quick Docker setup:**
-
-```bash
-# Install Docker
-curl -fsSL https://get.docker.com | sudo sh
-
-# Add your user to the docker group (avoid sudo)
-sudo usermod -aG docker $USER
-newgrp docker
-
-# Verify
-docker run hello-world
-```
-  {{< /tab >}}
-  {{< tab >}}
-**Quick Podman setup:**
-
-```bash
-# Debian / Ubuntu
-sudo apt install podman slirp4netns fuse-overlayfs uidmap
-
-# Fedora / RHEL
-sudo dnf install podman slirp4netns fuse-overlayfs
-
-# Arch Linux
-sudo pacman -S podman slirp4netns fuse-overlayfs crun
-
-# macOS
-brew install podman
-# RF Swift will automatically init and start the Podman machine when needed
-
-# Configure rootless (Linux)
-sudo usermod --add-subuids 100000-165535 $USER
-sudo usermod --add-subgids 100000-165535 $USER
-
-# Verify
-podman run hello-world
-```
-  {{< /tab >}}
-{{< /tabs >}}
-
-Or let the RF Swift installer handle everything:
+Let the installer handle everything:
 
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
 
-The installer will prompt you to choose Docker, Podman, or both if no engine is detected.
+## Supported platforms
 
-## Supported Platforms
+| Platform | x86_64 / amd64 | arm64 | riscv64 |
+|----------|----------------|-------|---------|
+| Linux | ✅ Fully supported (deb, rpm, pacman, tarball, AppImage) | ✅ Fully supported | ✅ CLI and images (no Workbench) |
+| Windows 10/11 | ✅ Fully supported (installer bundle, MSI) | ✅ Supported (installer bundle, MSI) | ❌ |
+| macOS 13+ | ✅ Supported (universal binaries; Lima for USB) | ✅ Supported (Lima for USB, krunkit GPU VM on macOS 14+) | ❌ |
 
-RF Swift is designed to work across multiple platforms and architectures to suit your specific environment.
+### Tested single-board computers
 
-### Operating Systems
-
-| Platform | x86_64/amd64 | arm64/v8 | riscv64 |
-|----------|--------------|----------|---------|
-| Windows  | ✅ Fully supported | ❓ Limited testing | ❌ Not supported |
-| Linux    | ✅ Fully supported | ✅ Fully supported | ✅ Fully supported |
-| macOS    | ❓ Limited support | ✅ Supported (better inside a VM for USB devices) | ❌ Not supported |
-
-### Tested Single-Board Computers
-
-| SBC | Status | Container Engine | Comments |
-|-----|--------|------------------|----------|
-| Raspberry Pi 5 | ✅ | Docker ✅ Podman ✅ | Works perfectly with most tools |
-| Milk-V Jupiter | ✅ | Docker ✅ Podman ✅ | Works perfectly with most tools, but slower than Raspberry Pi 5 |
-| Orange Pi RV2  | ✅ | Docker ✅ Podman ✅ | Works perfectly with most tools, but slower than Milk-V Jupiter |
-| Milk-V Mars | ❌ | ❌ | Software support is currently unavailable. Docker/Podman installation is problematic |
-| UP Squared Series | ✅ | Docker ✅ Podman ✅ | Works perfectly with most tools |
-| Nano Pi T6 | ✅ | Docker ✅ Podman ✅ | Works perfectly with most tools |
-| Orange pi 5 ultra | ✅ | Docker ✅ Podman ✅ | Works perfectly with most tools |
-| Radxa ROCK 5B+ | ✅ | Docker ✅ Podman ✅ | Works perfectly with most tools |
-
-And more!
+| SBC | Status | Engines | Comments |
+|-----|--------|---------|----------|
+| Raspberry Pi 5 | ✅ | Docker, Podman | Works with most tools |
+| Milk-V Jupiter | ✅ | Docker, Podman | Slower than a Raspberry Pi 5 |
+| Orange Pi RV2 | ✅ | Docker, Podman | Slower than the Milk-V Jupiter |
+| Milk-V Mars | ❌ | | Docker and Podman installation is problematic on its software stack |
+| UP Squared series | ✅ | Docker, Podman | |
+| NanoPi T6 | ✅ | Docker, Podman | |
+| Orange Pi 5 Ultra | ✅ | Docker, Podman | |
+| Radxa ROCK 5B+ | ✅ | Docker, Podman | |
 
 {{< callout type="info" >}}
-On resource-constrained SBCs, **Podman** can be a better choice than Docker since it has no background daemon consuming memory and CPU.
+On resource-constrained boards, **Podman** avoids a background daemon, and the **Nix engine** avoids image layers altogether.
 {{< /callout >}}
 
-## Feature Compatibility Matrix
+## Feature compatibility matrix
 
 | Feature | Linux | Windows | macOS |
 |---------|-------|---------|-------|
-| Container Execution (Docker) | ✅ | ✅ | ✅ |
-| Container Execution (Podman) | ✅ | ✅ (via WSL2) | ✅ (via podman machine) |
-| GUI Applications | ✅ | ✅ | ✅ (with XQuartz) |
-| USB Device Forwarding | ✅ | ✅ (with usbipd) | ❌ |
-| Rootless Containers | ✅ (Podman) | ✅ (Podman in WSL2) | ✅ (Podman) |
-| Audio Support | ✅ | ✅ (with PulseAudio) | ❓ Limited |
-| Hardware Acceleration | ✅ | ❓ Limited | ❓ Limited |
-| Cross-Compilation | ✅ | ✅ (in WSL) | ✅ |
-| One-Line Installer | ✅ | ❌ | ✅ |
+| Containers (Docker) | ✅ | ✅ Docker Desktop | ✅ Docker Desktop |
+| Containers (Podman) | ✅ rootless | ✅ WSL 2 / Podman Desktop | ✅ podman machine |
+| Native Nix environments | ✅ | ✅ inside WSL 2 | ✅ |
+| GUI tools | ✅ X11 | ✅ WSLg | ✅ XQuartz (EGL) or `--desktop` |
+| USB / SDR hardware in containers | ✅ mapped | ✅ usbipd-win into WSL 2 | ✅ Lima VM (not Docker Desktop) |
+| Serial hot-plug | ✅ Docker, rootful Podman | ✅ via usbipd | ❌ (attach to the VM) |
+| Audio | ✅ host PulseAudio / PipeWire | ✅ WSLg, no setup | ✅ host PulseAudio (Homebrew) |
+| GPU in containers | ✅ vendor runtime | ❓ limited | ✅ Vulkan compute in the krunkit VM (no USB) |
+| Nix `--isolate` jail | ✅ bubblewrap | ✅ inside WSL 2 | ✅ Seatbelt (no PID namespace) |
+| Workbench GUI | ✅ AppImage, native | ✅ | ✅ universal app |
+| Remote agent (host and client) | ✅ | ✅ | ✅ |
+| One-line installer | ✅ | ❌ (installer bundle instead) | ✅ |
+| Native packages | ✅ deb, rpm, pacman | ✅ MSI, bundle | ✅ Homebrew cask, DMG |
 
-## Questions or Feedback?
+The constraints behind each cell are listed in [Known limits](/docs/guide/limitations).
+
+## Questions or feedback?
 
 {{< callout emoji="❓" >}}
-  RF Swift is still in active development.
-  Have a question or feedback? Feel free to [open an issue](https://github.com/PentHertz/RF-Swift/issues)!
+  RF Swift is in active development. Have a question or feedback? [Open an issue](https://github.com/PentHertz/RF-Swift/issues) or join the [Discord](https://discord.gg/NS3HayKrpA).
 {{< /callout >}}
 
-## Next Steps
-
-Dive right into the following section to get started:
+## Next steps
 
 {{< cards >}}
+  {{< card link="/docs/release-notes-v4" title="What's new in v4.0" icon="sparkles" subtitle="Nix engine, Workbench, remote agent, new CLI" >}}
   {{< card link="/docs/comparisons" title="Comparisons with dedicated distributions" icon="star" subtitle="Compare RF Swift with dedicated distributions" >}}
-  {{< card link="/docs/getting-started" title="Getting Started" icon="document-text" subtitle="Setup your environment" >}}
-  {{< card link="/docs/quick-start" title="Quick Start" icon="document-text" subtitle="Quickly run RF Swift and start a container" >}}
-  {{< card link="/docs/development/compiling-rfswift" title="Compile RF Swift binary" icon="document-text" subtitle="Compile RF Swift and develop around the framework" >}}
+  {{< card link="/docs/getting-started" title="Getting Started" icon="document-text" subtitle="Set up your environment" >}}
+  {{< card link="/docs/quick-start" title="Quick Start" icon="document-text" subtitle="Run RF Swift and start a container" >}}
 {{< /cards >}}

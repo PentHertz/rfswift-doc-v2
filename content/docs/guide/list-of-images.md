@@ -13,15 +13,20 @@ RF Swift provides a comprehensive set of container images to support various rad
 
 ## Image Management Commands
 
-RF Swift offers the `images` command group to interact with both remote and local images:
+RF Swift offers the `image` command group to interact with both remote and local images (`rfswift images ...` is the legacy spelling):
 
 ```bash
-rfswift images --help
+rfswift image --help
 ```
 
 Key subcommands include:
 - `remote`: List available images from the repository
 - `local`: List downloaded images on your system
+- `pull`, `versions`, `audit`, `build`, `rm`, `tag`, `download`, `export`, `import`: see the [image](/docs/commands/image) reference
+
+{{< callout type="info" >}}
+The same tool sets exist as **native Nix environments**: `rfswift env catalog` lists them and `rfswift container create --engine nix -i sdr_light -n radio` creates one without any container engine. See the [Nix engine guide](/docs/guide/nix-engine).
+{{< /callout >}}
 
 ## Remote Image Repository
 
@@ -30,7 +35,7 @@ Key subcommands include:
 To view all available images for your architecture from the official repository:
 
 ```bash
-rfswift images remote
+rfswift image remote
 ```
 
 This command displays a table of available images with important details:
@@ -76,7 +81,7 @@ When in doubt, use the generic tags (without architecture suffix) as RF Swift wi
 | **Base images** | Foundation for other images | `corebuild`, `sdrsa_devices`, `sdrsa_devices_antsdr`, `sdrsa_devices_rtlsdrv4` |
 
 {{< callout emoji="🆕" >}}
-**New in v3.0.0 "Resonance"**: `ad`, `android` and `osint` extend RF Swift beyond radio into full engagement territory, and `sdr_gnuradio4` lets you try GNU Radio 4.0 in seconds without disturbing the GNU Radio 3.10 setup you already rely on. See the [v3.0.0 release notes](/docs/release-notes-v3) for the full picture.
+**Added in v3.0.0 "Resonance"**: `ad`, `android` and `osint` extend RF Swift beyond radio into full engagement territory, and `sdr_gnuradio4` lets you try GNU Radio 4.0 in seconds without disturbing the GNU Radio 3.10 setup you already rely on. See the [v3.0.0 release notes](/docs/release-notes-v3) for the full picture.
 {{< /callout >}}
 
 ## Image Hierarchy
@@ -190,10 +195,10 @@ For offline use or transfer between systems:
 
 ```bash
 # Export an image to a file
-rfswift images save -i sdr_light -o sdr_light.tar.gz
+rfswift image download -i sdr_light -o sdr_light.tar.gz
 
 # Import an image from a file
-rfswift images load -i sdr_light.tar.gz
+rfswift image import image -i sdr_light.tar.gz
 ```
 
 ## Disk Space Considerations

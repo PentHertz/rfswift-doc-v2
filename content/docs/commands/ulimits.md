@@ -7,6 +7,10 @@ next: /docs/commands/realtime
 
 # rfswift ulimits
 
+{{< callout type="info" >}}
+**RF Swift v4**: this group lives under the `config` parent as `rfswift config ulimits` and remains available as `rfswift ulimits`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
+{{< /callout >}}
+
 Manage resource limits (ulimits) for containers to optimize SDR performance.
 
 ## Synopsis

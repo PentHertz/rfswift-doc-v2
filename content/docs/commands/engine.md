@@ -5,17 +5,20 @@ prev: /docs/commands
 next: /docs/commands/run
 ---
 
-# rfswift --engine
+# rfswift --engine and rfswift engine
 
-Select the container engine used by RF Swift.
+Select the engine used by RF Swift, and manage the Lima VM on macOS.
 
 ## Synopsis
 
 ```bash
-rfswift --engine ENGINE [command] [options]
+rfswift --engine ENGINE [command] [options]      # docker, podman, lima, nix, auto
+rfswift --gpu [command] [options]                 # macOS Apple Silicon: the krunkit GPU VM (implies --engine lima)
+rfswift engine                                    # which engine is active, and why
+rfswift engine lima status|set|reconfig|reset     # macOS
 ```
 
-The `--engine` flag is a **global flag** that overrides RF Swift's auto-detection and forces a specific container engine for the current command. It must be placed **before** any subcommand.
+`--engine` is a **global flag** placed before any subcommand. Precedence when several are set: the `--engine` flag, then the `RFSWIFT_ENGINE` environment variable, then `engine =` in the `[general]` section of `config.ini`, then auto-detection. `nix` selects the native [Nix engine](/docs/guide/nix-engine), which needs no container daemon: `rfswift container create --engine nix` creates a native environment and `rfswift env ...` manages them.
 
 ---
 
@@ -23,7 +26,14 @@ The `--engine` flag is a **global flag** that overrides RF Swift's auto-detectio
 
 | Flag | Description | Values |
 |------|-------------|--------|
-| `--engine STRING` | Force a specific container engine | `docker`, `podman`, `lima` |
+| `--engine STRING` | Engine for this command | `auto` (default), `docker`, `podman`, `lima`, `nix` |
+| `--gpu` | macOS Apple Silicon: use the GPU-accelerated Lima VM (krunkit, Vulkan through Venus and MoltenVK). Separate instance `rfswift-gpu`, GPU compute but **no** USB passthrough | |
+
+```ini
+# make Podman (or nix) the default without typing --engine
+[general]
+engine = podman
+```
 
 ---
 
@@ -32,10 +42,10 @@ The `--engine` flag is a **global flag** that overrides RF Swift's auto-detectio
 When `--engine` is **not specified**, RF Swift automatically detects the available container engine at startup using the following priority:
 
 ```
-1. Is Podman installed?        → check podman binary + fallback paths
-2. Is Docker installed?        → check docker binary
-3. Is podman-docker shim active? → detect via `docker --version` containing "podman"
-4. Is Docker daemon running?   → verify daemon connectivity
+1. Is Podman installed?        -> check podman binary + fallback paths
+2. Is Docker installed?        -> check docker binary
+3. Is podman-docker shim active? -> detect via `docker --version` containing "podman"
+4. Is Docker daemon running?   -> verify daemon connectivity
 ```
 
 {{< tabs items="Both installed,Only Docker,Only Podman,Neither" >}}
@@ -55,7 +65,7 @@ Docker is used automatically. No `--engine` flag needed.
 
 ```bash
 rfswift run -i sdr_full -n my_container
-# → uses Docker
+# -> uses Docker
 ```
   {{< /tab >}}
   {{< tab >}}
@@ -63,7 +73,7 @@ Podman is used automatically. No `--engine` flag needed.
 
 ```bash
 rfswift run -i sdr_full -n my_container
-# → uses Podman
+# -> uses Podman
 ```
 
 {{< callout type="info" >}}
@@ -71,12 +81,7 @@ If `podman-docker` is installed, RF Swift detects it and treats the system as Po
 {{< /callout >}}
   {{< /tab >}}
   {{< tab >}}
-RF Swift will display an error and prompt you to install a container engine:
-
-```
-❌ No container engine found. Please install Docker or Podman.
-   Run ./scripts/install.sh or visit https://rfswift.io/docs/getting-started/
-```
+RF Swift reports that no container engine is available. When the Nix engine is set up on the host it points at it instead: run tools natively with `rfswift --engine nix ...`, or make it the default with `engine = nix` in `config.ini`. `rfswift host setup` installs Docker, Podman or Nix on Linux.
   {{< /tab >}}
 {{< /tabs >}}
 
@@ -165,6 +170,8 @@ Containers created with one engine are **not visible** to the other. A container
 | **Privileged mode** | Full host access | User-namespace scoped | Full access inside VM |
 | **Platform** | Linux, macOS, Windows | Linux, macOS, Windows | macOS only |
 | **Best for** | Broad ecosystem | Security-focused, air-gapped | macOS + USB hardware |
+
+The fourth engine, **Nix**, is not a container engine: it installs the tool sets natively as pinned environments (no daemon, direct hardware access, optional `--isolate` jail). See the [Nix engine guide](/docs/guide/nix-engine).
 
 {{< callout type="info" >}}
 **macOS USB passthrough**: On macOS, Docker Desktop and Podman cannot forward USB devices into containers. Use `--engine lima` when you need SDR dongles or other USB RF hardware. See [`macusb`](/docs/commands/macusb) for details.
@@ -265,8 +272,9 @@ newgrp docker
 
 **Solution:**
 ```bash
-# Install via RF Swift installer
-curl -fsSL "https://get.rfswift.io/" | sh
+# Install via RF Swift installer, or the host wizard on a packaged install
+curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
+rfswift host setup --engine podman
 
 # Or install manually
 sudo apt install podman     # Debian/Ubuntu
@@ -310,8 +318,8 @@ rfswift --engine podman exec -c my_container
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `RFSWIFT_ENGINE` | Override the container engine (`docker`, `podman`, `lima`) | `auto` |
-| `RFSWIFT_LIMA_INSTANCE` | Custom Lima VM instance name | `rfswift` |
+| `RFSWIFT_ENGINE` | Override the engine (`docker`, `podman`, `lima`, `nix`); the `--engine` flag wins | `auto` |
+| `RFSWIFT_LIMA_INSTANCE` | Custom Lima VM instance name (`--gpu` uses `rfswift-gpu`) | `rfswift` |
 
 ```bash
 # Use Lima engine via environment variable
@@ -356,14 +364,14 @@ RF Swift now **automatically manages the Lima VM**, so you never need to run `li
 ```bash
 # First run: RF Swift creates the VM, installs Docker + USB tools, starts everything
 rfswift --engine lima run -i sdr_full -n my_sdr
-# → "Lima instance 'rfswift' not found. Creating it..."
-# → "Lima instance 'rfswift' created and started"
-# → Container runs normally
+# -> "Lima instance 'rfswift' not found. Creating it..."
+# -> "Lima instance 'rfswift' created and started"
+# -> Container runs normally
 
 # Second run: the VM already exists, RF Swift just starts it if stopped
 rfswift --engine lima run -i sdr_full -n another_sdr
-# → "Starting Lima instance 'rfswift'..."
-# → Container runs normally
+# -> "Starting Lima instance 'rfswift'..."
+# -> Container runs normally
 
 # VM already running, so this runs immediately with no extra steps
 rfswift --engine lima exec -c my_sdr
@@ -407,7 +415,7 @@ rfswift engine lima status --instance my_custom_vm
 Apply an updated YAML template to the VM. By default this is **non-destructive**: the VM is stopped, the template is applied, and the VM is restarted. The VM filesystem (Docker images, containers, etc.) is preserved.
 
 ```bash
-# Non-destructive: stop → apply template → restart
+# Non-destructive: stop -> apply template -> restart
 rfswift engine lima reconfig
 
 # Use a specific template
@@ -439,6 +447,23 @@ rfswift engine lima reconfig --force
 - Added new port forwards or host directory mounts
 - Updated provisioning scripts (udev rules, kernel modules)
 - With `--force`: changed base OS image or disk size (requires full recreation)
+
+### engine lima set
+
+Change the VM's CPUs, memory or disk without editing the YAML by hand. Changes are written to your user template (`~/.config/rfswift/lima.yaml`, or `lima-gpu.yaml` with `--gpu`); CPU and memory apply with a restart (`--apply`), a disk change needs a destructive rebuild.
+
+```bash
+rfswift engine lima set --memory 16GiB
+rfswift engine lima set --cpus 8 --memory 16GiB --apply
+rfswift --gpu engine lima set --disk 300GiB     # target the GPU VM
+```
+
+| Flag | Description |
+|------|-------------|
+| `--cpus INT` | Number of vCPUs |
+| `--memory STRING` | VM memory, e.g. `16GiB` |
+| `--disk STRING` | VM disk size, e.g. `200GiB` (recreate to apply) |
+| `--apply` | Apply now: restart for CPU and memory, recreate (after confirmation) for disk |
 
 ### engine lima reset
 

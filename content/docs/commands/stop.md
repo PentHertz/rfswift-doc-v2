@@ -7,6 +7,10 @@ next: /docs/commands/remove
 
 # rfswift stop
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift container stop`. The legacy form `rfswift stop` and the short alias `rfswift halt` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Stop a running container without removing it.
 
 ## Synopsis
@@ -283,7 +287,7 @@ docker ps -a | grep my_container
 **Solutions:**
 ```bash
 # List all containers
-rfswift las
+rfswift container last
 
 # Container may have been removed
 # Need to create new one

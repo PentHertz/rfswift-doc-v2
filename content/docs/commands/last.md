@@ -7,6 +7,10 @@ next: /docs/commands/cleanup
 
 # rfswift last
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift container last`. The legacy form `rfswift last` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 List all RF Swift containers with their status and information.
 
 ## Synopsis

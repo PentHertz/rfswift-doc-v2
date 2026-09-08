@@ -16,9 +16,9 @@ Every RF Swift container gets a **shared workspace directory** automatically, wi
 
 ```
 ~/rfswift-workspace/
-├── my_sdr/            → /workspace inside container "my_sdr"
-├── wifi_pentest/      → /workspace inside container "wifi_pentest"
-└── client_assessment/ → /workspace inside container "client_assessment"
+├── my_sdr/            -> /workspace inside container "my_sdr"
+├── wifi_pentest/      -> /workspace inside container "wifi_pentest"
+└── client_assessment/ -> /workspace inside container "client_assessment"
 ```
 
 | Location | Path |
@@ -302,3 +302,17 @@ Now that you understand how to share files and devices, you might want to create
 {{< cards >}}
   {{< card link="/docs/development/building-images/" title="Build Your Own Image" icon="beaker" subtitle="Become a master chef and create your own custom RF Swift images." >}}
 {{< /cards >}}
+
+## Nix environments and the workspace
+
+Native Nix environments get the same workspace: `~/rfswift-workspace/<name>/` by default, `--workspace`, `--cwd` and `--no-workspace` to change it. Natively the directory is used in place at its host path. Under `--isolate` on Linux it is mounted at `/workspace` inside the jail (and the private home carries a `workspace` link); on macOS the jail keeps the real path. Entering an environment prints `Workspace: <dir>`, and `RFSWIFT_WORKSPACE` names it inside the shell. `rfswift env export` packs the workspace together with the closure, and `rfswift env remove --workspace` deletes it along with the environment.
+
+## Adding mounts and devices later
+
+Bind mounts and devices of an existing container are managed with `rfswift config bindings` (see [Dynamic container management](/docs/guide/container-management)):
+
+```bash
+rfswift config bindings add -c my_container -s ~/captures -t /root/captures
+rfswift config bindings add -c my_container -d -t /dev/ttyACM0      # serial port, attached on demand
+rfswift config bindings rm  -c my_container -t /root/captures
+```

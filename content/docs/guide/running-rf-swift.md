@@ -9,720 +9,278 @@ cascade:
 
 # Important settings
 
-RF Swift provides a streamlined command-line interface to manage containers for RF and hardware security applications. This guide covers essential commands and workflows.
+RF Swift provides a streamlined command line to manage containers and native Nix environments for RF and hardware security work. This guide covers the essential commands and workflows.
 
-{{< tabs items="Docker,Podman" >}}
+{{< tabs items="Docker,Podman,Nix" >}}
   {{< tab >}}
-{{< callout type="warning" >}}
-**On Linux**, unless you are using Docker Desktop, you will need to use `sudo` with the `rfswift` command for operations that require elevated privileges.
-{{< /callout >}}
-
 {{< callout type="info" >}}
-To avoid using `sudo` for every Docker command, add your user to the `docker` group:
+**Docker on Linux** talks to a root-owned socket. Instead of `sudo rfswift ...`, grant your user access once:
 
 ```bash
-sudo usermod -aG docker $USER
-newgrp docker
+rfswift host docker-access     # docker group + a socket ACL, effective right away, no logout
 ```
+
+Docker Desktop on macOS and Windows needs nothing. Members of the `docker` group are root-equivalent on the host.
 {{< /callout >}}
   {{< /tab >}}
   {{< tab >}}
 {{< callout type="info" >}}
-**Podman runs rootless by default**, so there is no `sudo`, no daemon and no group membership to worry about. Just ensure your subordinate UID/GID ranges are configured:
+**Podman runs rootless by default**: no `sudo`, no daemon, no group. Make sure your subordinate UID/GID ranges exist, and install RF Swift's udev rules so your user may open the RF hardware (rules inside a container are never evaluated):
 
 ```bash
 sudo usermod --add-subuids 100000-165535 $USER
 sudo usermod --add-subgids 100000-165535 $USER
+rfswift host udev
 ```
 {{< /callout >}}
-
+  {{< /tab >}}
+  {{< tab >}}
 {{< callout type="info" >}}
-RF Swift auto-detects the available container engine. You can force a specific one with `rfswift --engine podman` or `rfswift --engine docker`.
+**The Nix engine** runs the same tool sets natively, as your user, with no container. Select it per command with `--engine nix`, per session with `RFSWIFT_ENGINE=nix`, or permanently with `engine = nix` in `config.ini`. See the [Nix engine guide](/docs/guide/nix-engine).
 {{< /callout >}}
   {{< /tab >}}
 {{< /tabs >}}
 
-## Command Overview
+RF Swift auto-detects the available container engine (Docker, Podman, Lima). Force one with `rfswift --engine podman ...`; the precedence is the flag, then `RFSWIFT_ENGINE`, then `[general] engine` in the config file.
 
-Let's explore the available commands with `rfswift --help`:
+## Command overview
 
-```bash
-  888~-_   888~~        ,d88~~\                ,e,   88~\   d8   
-  888   \  888___       8888    Y88b    e    /  "  _888__ _d88__ 
-  888    | 888          'Y88b    Y88b  d8b  /  888  888    888   
-  888   /  888           'Y88b,   Y888/Y88b/   888  888    888   
-  888_-~   888             8888    Y8/  Y8/    888  888    888   
-  888 ~-_  888          \__88P'     Y    Y     888  888    "88_/       
+`rfswift --help` groups the commands by resource:
 
-                          v1.0.0 "Skywave"
-                RF toolbox for HAMs and professionals                                                                             
+```
+Containers:
+  container    Create and manage RF Swift containers
 
-rfswift is THE toolbox for any HAM & radiocommunications and hardware professionals
+Images and portability:
+  image        Manage container images
 
-Usage:
-  rfswift [flags]
-  rfswift [command]
+Native Nix environments:
+  env          Create and manage native Nix environments
 
-Available Commands:
-  bindings     Manage devices and volumes bindings
-  build        Build an image from a recipe
-  capabilities Manage container capabilities
-  cgroups      Manage container cgroup rules
+Runtime configuration:
+  bindings       Manage devices and volumes bindings
+  capabilities   Manage container capabilities
+  cgroups        Manage container cgroup rules
+  config       Configure container devices, privileges, ports and resources
+  gpus           Manage container GPU device requests
+  ports          Manage container ports
+  ulimits        Manage container ulimits
+
+Networking:
+  network      Manage container networks
+
+Devices (USB / host):
+  host         Host configuration (setup, udev rules, Docker access, audio)
+  usb          Attach/detach USB devices to a container (macOS/Windows)
+
+Security:
+  audit        Audit a Nix environment, a container image, or a container for security
+  report       Generate assessment reports
+
+Remote access:
+  agent        Serve RF Swift engines to authenticated remote clients
+
+System & maintenance:
   cleanup      Clean up containers and images
-  commit       Commit a container
-  completion   Generate and install completion script
-  delete       Delete an rfswift images
-  doctor       Diagnose system environment
-  download     Download and save an image to tar.gz
-  exec         Exec a command
-  export       Export containers or images
-  help         Help about any command
-  host         Host configuration
-  images       RF Swift images management remote/local
-  import       Import containers or images
-  install      Install function script
-  last         Last container run
+  completion   Generate a shell completion script
+  doctor       Check system environment and configuration
+  engine       Container engine information and management
   log          Record and replay terminal sessions
-  ports        Manage container ports
-  profile      Manage container profiles (presets)
+  profile      Manage container profiles
   realtime     Manage realtime mode for SDR operations
-  remove       Remove a container
-  rename       Rename a container
-  retag        Rename an image
-  run          Create and run a program
-  stop         Stop a container
-  ulimits      Manage container ulimits
+  system       Maintain and diagnose the RF Swift host
   update       Update RF Swift
-  upgrade      Upgrade container to a new/latest/another image
 
 Flags:
-      --engine string  Force container engine (docker or podman)
-  -q, --disconnect     Don't query updates (disconnected mode)
-  -h, --help           help for rfswift
-
-Use "rfswift [command] --help" for more information about a command.
-
+  -q, --disconnect      Don't query updates (disconnected mode)
+      --engine string   Engine to use: auto, docker, podman, lima, or nix (default "auto")
+      --gpu             Use the GPU-accelerated Lima VM on macOS Apple Silicon (krunkit/Vulkan)
+  -v, --version         version for rfswift
 ```
 
-{{< tabs items="Docker privileges,Podman privileges" >}}
-  {{< tab >}}
-{{< callout type="info" >}}
-**Privilege requirements by platform:**
-- **Linux**: `sudo` is required for most container operations when not using Docker Desktop
-- **Windows/macOS**: With Docker Desktop or OrbStack, `sudo` is not necessary
-- **Windows**: Commands related to USB binding require Administrator privileges
-{{< /callout >}}
-  {{< /tab >}}
-  {{< tab >}}
-{{< callout type="info" >}}
-**Podman privilege model:**
-- **Linux**: No `sudo` needed, because Podman runs in your user namespace by default
-- **Device access**: Some `/dev` devices may require explicit `--device` flags or `podman unshare`
-- **Windows/macOS**: Podman runs inside a lightweight VM (podman machine); no extra privileges needed
-{{< /callout >}}
-  {{< /tab >}}
-{{< /tabs >}}
+The commands you used before v4 (`rfswift run`, `rfswift exec`, `rfswift images pull`, `rfswift nix install`, ...) still work and print a notice with the new spelling. The full mapping is in the [command reference](/docs/commands).
 
-## Core Workflows
+## Core workflows
 
-### 1. Keeping RF Swift Updated
+### 1. Keeping RF Swift updated
 
-RF Swift automatically checks for updates when launched:
-
-```bash
-[!] You are running version: 0.4.8 (Obsolete)
-```
-
-You can then trigger updates:
+RF Swift checks for a new release at start (skip it with `-q`). Update with:
 
 ```bash
 rfswift update
-
-[!] Current version: 2.1.0
-Latest version: v3.0.0
-[!] Your current version is obsolete. Please update to version: v3.0.0
-[i] Do you want to update to the latest version? (yes/no): 
-yes
-[i] Latest release download URL: https://github.com/PentHertz/RF-Swift/releases/download/v3.0.0/rfswift_Linux_x86_64.tar.gz
-4.58 MiB / 4.58 MiB [----------------------------------------------------------------------------------------------------------------------------------------] 100.00%%
-[+] File downloaded, extracted, and replaced successfully.
-
 ```
 
-If you don't want to make any requests over the internet, you can also use `-q` or `--disconnect` option when using `rfswift`.
+On a deb, rpm, pacman or Homebrew install, `update` tells you to upgrade through your package manager instead of overwriting the packaged binary. `rfswift --version` prints the version without touching the network.
 
-### 2. Image Management
-
-#### Customizing Image Tags
-
-You can rename image tags for convenience or to match your default configuration:
+### 2. Creating and running containers
 
 ```bash
-rfswift retag -i penthertz/rfswiftdev:sdr_full_amd64 -t myrfswift:latest
-[+] You are running version: 0.4.9 (Up to date)
-[+] Image renamed!
+rfswift container create -i sdr_full -n my_sdr_container
 ```
 
-This allows you to use the default tag in your configuration file:
+Short image names resolve through the `repotag` of your `config.ini` (`penthertz/rfswift_resolute` by default). The container gets a workspace (`~/rfswift-workspace/my_sdr_container/` on the host, `/workspace` inside), the USB tree, sound, display and the host audio server, and opens a `zsh` shell. Without `-i` and `-n` the interactive wizard walks you through profiles, image, workspace, mounts, devices, ports, network and features.
 
-{{< tabs items="Linux,Windows,macOS" >}}
-  {{< tab >}}
-```bash
-cat /home/username/.config/rfswift/config.ini
-[general]
-imagename = myrfswift:latest
-...
-```
-  {{< /tab >}}
-  {{< tab >}}
-```powershell
-type C:\Users\username\AppData\Roaming\rfswift\config.ini
-[general]
-imagename = myrfswift:latest
-...
-```
-  {{< /tab >}}
-  {{< tab >}}
-```bash
-cat /Users/username/.config/rfswift/config.ini
-[general]
-imagename = myrfswift:latest
-...
-```
-  {{< /tab >}}
-{{< /tabs >}}
-
-With the default tag set, you can simplify the `run` command:
+**Profiles** bundle image, network, features, devices and rules into a preset:
 
 ```bash
-rfswift run -n my_container  # Equivalent to: rfswift run -i myrfswift:latest -n my_container
-```
-
-{{< callout type="info" >}}
-Changing an image's tag makes it a "custom" image in RF Swift, which means it won't receive automatic updates from the official registry.
-{{< /callout >}}
-
-### 3. Container Management
-
-#### Creating and Running Containers
-
-Create a new container from an image:
-
-```bash
-rfswift run -i sdr_full -n my_sdr_container
-```
-
-RF Swift auto-detects whether Docker or Podman is available and uses the appropriate engine. All commands work identically regardless of the backend.
-
-**Using Profiles for Quick Setup:**
-
-Profiles are YAML presets that bundle image, network, features, and device settings. Use them to skip repetitive configuration:
-
-```bash
-# Initialize default profiles (first time)
-rfswift profile init
-
-# Create a container from a profile
-rfswift run --profile sdr-full -n my_sdr
-
-# List available profiles
+rfswift profile init                              # generate the built-in presets
 rfswift profile list
+rfswift container create --profile sdr-full -n my_sdr
 ```
 
-The interactive wizard also offers profile selection as the first step. Select a profile, choose "Use as-is", enter a container name, and you're done. See [`rfswift profile`](/docs/commands/profile/) for details.
-
-**With Realtime Mode for SDR Operations:**
-
-For optimal SDR performance with reduced buffer underruns, use the `--realtime` flag:
+**Realtime mode** for SDR captures (rtprio, memlock, `SYS_NICE`):
 
 ```bash
-rfswift run -i sdr_full -n my_sdr_container --realtime
+rfswift container create -i sdr_full -n my_sdr_container --realtime
 ```
 
-This automatically configures real-time scheduling priority, memory locking, and the SYS_NICE capability.
-
-**Recording Container Sessions:**
-
-RF Swift includes built-in session recording for documentation, debugging, or training purposes:
+**Session recording** in asciinema format:
 
 ```bash
-# Record with auto-generated filename
-rfswift run -i sdr_full -n my_sdr_container --record
-
-# Record with custom filename
-rfswift run -i sdr_full -n my_sdr_container --record --record-output my-session.cast
+rfswift container create -i sdr_full -n my_sdr_container --record
+rfswift container create -i sdr_full -n my_sdr_container --record --record-output my-session.cast
 ```
 
-During recording, your terminal title will display "🔴 RECORDING - RF Swift" as a visual reminder.
+During a recording the terminal title reads "REC | RF Swift" and `RFSWIFT_RECORDING=1` is set inside the container.
 
-{{< callout type="info" >}}
-Session recordings use the asciinema format (.cast files) which can be replayed, shared, or even uploaded to asciinema.org for embedding in documentation.
-{{< /callout >}}
-
-#### Container Listing and Selection
-
-If you forget container names, use the `last` command:
+### 3. Finding and re-entering containers
 
 ```bash
-rfswift last
-┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ ℹ️  Up-to-date                                                                                    │
-├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ You are running the latest version: 0.6.0-dev                                                    │
-└──────────────────────────────────────────────────────────────────────────────────────────────────┘
-  🤖 Last Run Containers                                                                                                                   
-┌───────────────────────────┬─────────────────────────────┬───────────────────────────────────────────────────────┬──────────────┬──────────┐
-│ Created                   │ Image Tag (ID)              │ Container Name                                        │ Container ID │ Command  │
-├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-│ 2025-04-11T16:47:02+02:00 │ penthertz/rfswift_resolute:hardware  │ hardware                                              │ b6e43a87e1f6 │ /bin/zsh │
-├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-│ 2025-04-11T16:23:43+02:00 │ penthertz/rfswift_resolute:bluetooth │ missionbluetooth                                      │ 3d92cb59560f │ /bin/zsh │
-├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-│ 2025-04-11T16:18:22+02:00 │ penthertz/rfswift_resolute:rfid      │ missionrfid2                                          │ 50cbccef53f5 │ /bin/zsh │
-├───────────────────────────┼─────────────────────────────┼───────────────────────────────────────────────────────┼──────────────┼──────────┤
-...
-``` 
-
-#### Restarting Existing Containers
-
-To restart the most recently used container:
-
-```bash
-rfswift exec
+rfswift container last            # containers RF Swift created, most recent first
+rfswift container shell           # picker, or the most recent container
+rfswift container shell -c my_sdr_container
+rfswift container shell -c my_sdr_container -w /root/projects --record
+rfswift container shell -c my_sdr_container -e "rtl_test -t"    # one command, no shell
 ```
 
-To restart a specific container by name:
+A stopped container is started before you enter it. `rfswift container stop -c NAME` stops it; `rfswift container rm -c NAME` removes it (the workspace stays on the host).
+
+### 4. Container lifecycle
 
 ```bash
-rfswift exec -c my_sdr_container
+rfswift container commit -c my_container -i my_new_image          # save changes as an image
+rfswift container rename -n old_name -d new_name
+rfswift container upgrade -c my_container -r /root/captures        # newer image, keep a directory
+rfswift container rm -c container_name
+rfswift image rm -i penthertz/rfswift_resolute:tag_name
 ```
 
-**Recording Exec Sessions:**
+### 5. Installing more tools
 
-You can also record when entering existing containers:
+Every image ships install functions for tools that are not preinstalled. Pick one from a searchable list, or name it:
 
 ```bash
-# Record with auto-generated filename
-rfswift exec -c my_sdr_container --record
-
-# Record with custom filename and working directory
-rfswift exec -c my_sdr_container -w /root/projects --record --record-output debug-session.cast
+rfswift container install -c my_container
+rfswift container install -c my_container -i sdrpp_soft_install
 ```
 
-#### Container Lifecycle Management
+Failures now surface with the tail of the build output. Commit the container afterwards if you want to keep the result as an image.
 
-**Save container changes as a new image:**
-```bash
-rfswift commit -c my_container -i my_new_image
-```
-
-**Rename a container:**
-```bash
-rfswift rename -n old_name -d new_name
-```
-
-**Remove a container:**
-```bash
-rfswift remove -c container_name
-```
-
-**Delete an image:**
-```bash
-rfswift delete -c penthertz/rfswift_resolute:tag_name
-```
-
-### 4. Session Recording and Playback
-
-RF Swift provides comprehensive session recording capabilities for documentation, debugging, training, and compliance purposes.
-
-#### Recording Sessions
-
-Record your container sessions automatically:
+### 6. Session recording and playback
 
 ```bash
-# Record during container creation
-rfswift run -i sdr_full -n my_container --record
-
-# Record when entering existing container
-rfswift exec -c my_container --record
-
-# Specify custom output filename
-rfswift run -i sdr_full -n my_container --record --record-output pentest-session.cast
-```
-
-**What Gets Recorded:**
-- All terminal input and output
-- Command execution and results
-- Tool outputs and GUI application launches
-- Timing information for accurate playback
-
-**Recording Format:**
-- Sessions are saved as `.cast` files (asciinema format)
-- Compatible with asciinema.org for sharing
-- Can be replayed at variable speeds
-- Lightweight text-based format
-
-
-#### Replaying Sessions
-
-Play back recorded sessions for review or demonstration:
-
-```bash
-# Normal speed playback
-rfswift log replay -i rfswift-exec-mycontainer-20260112-134651.cast
-
-# 2x speed playback (useful for long sessions)
-rfswift log replay -i session.cast -s 2.0
-
-# Slow motion for detailed analysis
-rfswift log replay -i session.cast -s 0.5
-```
-
-#### Managing Recordings
-
-List and organize your recorded sessions:
-
-```bash
-# List recordings in current directory
-rfswift log list
-
-# List recordings in specific directory
+rfswift log replay -i session.cast            # or pick from the current directory
+rfswift log replay -i session.cast -s 2.0     # 2x
 rfswift log list --dir ~/recordings
-
-# List recordings from assessment project
-rfswift log list --dir /projects/client-assessment/recordings
+rfswift log start -o my-session.cast          # record outside a container; rfswift log stop ends it
 ```
 
-#### Advanced Recording Workflows
+Recordings are `.cast` files (asciinema), also produced by the Workbench terminals, and are inventoried by `rfswift report generate`.
 
-**Standalone Recording:**
+### 7. Devices and resources
 
-For situations where you want to record without immediately entering a container:
+**Audio**: on Linux and macOS the host PulseAudio/PipeWire TCP module is loaded automatically whenever a container starts, and `rfswift host audio enable` does it by hand (as your user, never root); `host audio unload` removes it. Windows uses WSLg's audio socket and needs nothing.
+
+**Devices and mounts after creation** (details in [Dynamic container management](/docs/guide/container-management)):
 
 ```bash
-# Start recording
-rfswift log start -o my-session.cast
-
-# ... perform your work ...
-
-# Stop recording
-rfswift log stop
+rfswift config bindings add -c my_container -d -t /dev/ttyUSB0            # a device, hot-pluggable serial
+rfswift config bindings add -c my_container -s ~/projects -t /root/projects
+rfswift config bindings rm  -c my_container -t /root/projects
+rfswift config capabilities add -c my_container -p NET_ADMIN
+rfswift config cgroups add -c my_container -r "c 226:* rwm"
+rfswift config ports bind -c my_container -b 127.0.0.1:8080:80/tcp
 ```
 
-### 5. Device and Resource Management
-
-#### Audio Support
-
-RF Swift will warn if audio support is not properly configured:
-
-```
-┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ ⚠️  Warning                                                                                       │
-├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Warning: Unable to connect to Pulse server at 127.0.0.1:34567                                    │
-...
-└──────────────────────────────────────────────────────────────────────────────────────────────────┘
-```
-
-Enable audio support (run **without sudo**):
+**Realtime** on an existing container:
 
 ```bash
-rfswift host audio enable
-[+] Successfully loaded module-native-protocol-tcp with index 29
-```
-
-{{< callout type="info" >}}
-**Automatic audio management**: RF Swift automatically detects your audio system (PulseAudio or PipeWire), starts it if not running, and loads the TCP module, all in one command. On macOS with Lima, it also automatically configures network ACLs so containers inside the VM can access the host audio server. No manual PulseAudio setup required.
-{{< /callout >}}
-
-#### Dynamic Device and Volume Binding
-
-One of RF Swift's most powerful features is the ability to add or remove device bindings to running containers:
-
-```bash
-# Add a USB device to an existing container
-rfswift bindings add -c my_container -d -s /dev/ttyUSB0:/dev/ttyUSB0
-
-# For same destination, use shortcuts with -t only
-rfswift bindings add -c my_container -d -t /dev/ttyUSB0
-
-# Add a shared folder
-rfswift bindings add -c my_container -b ~/projects:/root/projects
-
-# Remove a binding
-rfswift bindings rm -c my_container -t /dev/ttyUSB0 [-d]
-
-# List current bindings
-rfswift bindings list -c my_container
-```
-
-Don't forget the `-d` switch if you want to deal with devices and not volumes.
-
-{{< tabs items="Docker device notes,Podman device notes" >}}
-  {{< tab >}}
-Device passthrough works natively with Docker. In privileged mode (`-u 1`), all host devices are accessible. In unprivileged mode, use `-s` to map specific devices and `-g` for cgroup rules.
-  {{< /tab >}}
-  {{< tab >}}
-With Podman in rootless mode, device access may need additional configuration:
-
-- Explicitly map devices with `-s /dev/ttyUSB0:/dev/ttyUSB0`
-- Bind `/dev/bus/usb:/dev/bus/usb` as a volume (`-b`) for broad USB access
-- RF Swift auto-detects cgroup v1/v2 and configures device access rules accordingly
-- For stubborn devices, `podman unshare` can help with permission issues
-  {{< /tab >}}
-{{< /tabs >}}
-
-#### Realtime Mode for SDR Performance
-
-If you experience buffer underruns or dropped samples with your SDR hardware, enable realtime mode:
-
-```bash
-# Enable on existing container
-rfswift realtime enable -c my_sdr_container
-
-# Check current status
-rfswift realtime status -c my_sdr_container
-
-# Disable if no longer needed
+rfswift realtime enable  -c my_sdr_container
+rfswift realtime status  -c my_sdr_container
 rfswift realtime disable -c my_sdr_container
 ```
 
-Realtime mode configures:
-- `rtprio=95` ulimit for real-time scheduling
-- `memlock=unlimited` to prevent buffer swapping
-- `SYS_NICE` capability for priority control
+Inside: `chrt -f 50 rtl_sdr -f 433920000 -s 2048000 out.bin`, and `ulimit -r` shows 95.
 
-Once enabled, you can use real-time scheduling inside the container:
-
-```bash
-# Run SDR tool with real-time priority
-chrt -f 50 rtl_sdr -f 433920000 -s 2048000 output.bin
-
-# Verify rtprio is set
-ulimit -r  # Should show 95
-```
-
-{{< callout type="info" >}}
-For fine-grained control, use `rfswift ulimits` to manage individual resource limits. See the [ulimits documentation](/docs/commands/ulimits/) for details.
-{{< /callout >}}
-
-### 6. Network Configuration
-
-RF Swift supports various network isolation modes:
-
-{{< tabs items="Docker networking,Podman networking" >}}
+{{< tabs items="Docker device notes,Podman device notes" >}}
   {{< tab >}}
-| Mode | Description |
-|------|-------------|
-| `host` | No network isolation (default) |
-| `nat` | RF Swift managed NAT network with automatic subnet allocation |
-| `nat:NAME` | Join a specific named NAT network (shared with other containers) |
-| `bridge` | Default Docker network driver with isolation |
-| `none` | Complete network isolation |
-| `overlay` | Connect multiple Docker daemons |
-| `ipvlan` | Full IPv4/IPv6 addressing control |
-| `macvlan` | Assign MAC addresses to containers |
+Device passthrough works natively. The USB tree is mapped by default with the USB cgroup rule, serial ports are hot-pluggable, and `-u 1` (privileged) is never needed for USB.
   {{< /tab >}}
   {{< tab >}}
-| Mode | Description |
-|------|-------------|
-| `host` | No network isolation (default) |
-| `nat` | RF Swift managed NAT network with automatic subnet allocation |
-| `nat:NAME` | Join a specific named NAT network (shared with other containers) |
-| `bridge` | Podman CNI/netavark bridge with isolation |
-| `none` | Complete network isolation |
-| `slirp4netns` | Rootless user-mode networking (default in rootless) |
-| `pasta` | Newer rootless networking alternative to slirp4netns |
-| `macvlan` | Assign MAC addresses to containers |
-
-{{< callout type="info" >}}
-In rootless mode, Podman uses `slirp4netns` or `pasta` for networking. Host mode requires root or sufficient privileges. For most RF Swift use cases, host mode is recommended.
-{{< /callout >}}
+Rootless Podman cannot set cgroup device rules or create nodes, so RF Swift drops the rules with a warning, leaves root-only nodes out, skips realtime limits above your host limits, and requires serial ports to be present at creation. Install `rfswift host udev` so your user may open the hardware on the host; your groups (`dialout`, `plugdev`) are kept inside the container with the crun runtime.
   {{< /tab >}}
 {{< /tabs >}}
 
-Example of using bridge mode with port mapping:
+### 8. Network configuration
+
+| Mode | Description |
+|------|-------------|
+| `host` | No network isolation (default) |
+| `nat` | RF Swift managed NAT network with automatic subnet allocation |
+| `nat:NAME` | Join a named NAT network shared by several containers |
+| `bridge` | The engine's default bridge |
+| `none` | No network |
+| `container:NAME` | Share another container's network |
 
 ```bash
-rfswift run -i bluetooth -n my_container -t bridge -z 8000 -w 8000:127.0.0.1:80/tcp
+rfswift container create -i bluetooth -n my_container -t bridge -w 127.0.0.1:8000:80/tcp
+rfswift container create -i sdr_full -n sdr_work -t nat:lab_network
+rfswift container create -i bluetooth -n bt_work -t nat:lab_network
+rfswift network list
+rfswift network create -n pentest_lab --subnet 172.30.10.0/24
+rfswift network cleanup
 ```
 
-This command:
-- Uses the `-t bridge` option to enable bridge networking
-- Maps container port 8000 to host port 80 on localhost with `-w 8000:127.0.0.1:80/tcp`
-- Exposes port 8000 to other containers with `-z 8000`
+Wi-Fi and Bluetooth tools need `-a NET_ADMIN` (and often `NET_RAW`). Add capabilities sparingly.
 
-**NAT Mode:**
-
-RF Swift provides a managed NAT mode (`-t nat`) that automatically creates an isolated Docker network with its own subnet. Multiple containers can share the same NAT network using the `nat:NAME` syntax:
+### 9. Remote desktop mode
 
 ```bash
-# Create a container in its own NAT network
-rfswift run -i sdr_full -n isolated_sdr -t nat
-
-# Create containers that share a NAT network
-rfswift run -i sdr_full -n sdr_work -t nat:lab_network
-rfswift run -i bluetooth -n bt_work -t nat:lab_network
+rfswift container create -i sdr_full -n sdr_desktop --desktop                       # http://127.0.0.1:6080
+rfswift container create -i sdr_full -n sdr_desktop --desktop --desktop-config "vnc::5900"
+rfswift container create -i sdr_full -n sdr_desktop --desktop --desktop-config "http:0.0.0.0:6080" --desktop-pass "secret" --desktop-ssl
+rfswift container shell -c my_container --desktop                                   # on an existing container
 ```
 
-NAT mode is useful for network isolation, pentest labs, or when host mode is not desirable. Port forwarding works the same as bridge mode (`-w` flag).
+`--desktop-config` is `proto:host:port` (`http` for noVNC on 6080, `vnc` on 5900). On the network always set `--desktop-pass` and `--desktop-ssl`; combine with `--no-x11` when the browser is your only GUI. In `nat` or `bridge` mode the in-container listener is forced to `0.0.0.0` so port forwarding reaches it, and the wizard asks for the bind address and port.
 
-{{< callout type="warning" >}}
-For Wi-Fi and Bluetooth tools, you may need to add the `NET_ADMIN` capability: `rfswift run -i wifi_tools -n my_container -a NET_ADMIN`
-Be cautious when adding capabilities as they increase security risks if the container is compromised.
-{{< /callout >}}
-
-## Container Architecture Benefits
-
-```mermaid
-graph TD;
-    A[Core build]-->B[Image 1];
-    A-->C[OCI Image 2];
-    B-->D[Container #1 from image 1];
-    B-->E[Container #2 from image 1];
-    C-->F[Container from image 2]
-```
-
-This architecture provides significant advantages:
-- **Portability**: Move environments between systems easily, since images work with both Docker and Podman
-- **Isolation**: Create separate environments for different tasks
-- **Disposability**: Create, experiment with, and destroy environments without impact
-- **Specialization**: Tailored environments for specific assessment needs
-- **Efficiency**: No need to reinstall entire systems
-- **Performance**: Less resource-intensive than VMs
-- **Rootless security**: Run entire RF labs without root privileges (Podman)
-- **Time-saving**: Quick deployment for last-minute assessment preparations
-- **Documentation**: Built-in session recording for compliance and reporting
-
-{{< callout type="info" >}}
-RF Swift significantly flattens the container learning curve while providing powerful features like dynamic device binding, host resource integration, and session recording that would otherwise require considerable Docker or Podman expertise.
-{{< /callout >}}
-
-### 7. Remote Desktop Mode
-
-RF Swift supports remote desktop access via **noVNC** (browser-based) or **raw VNC**, allowing you to run GUI tools without X11 forwarding on the host. This is especially useful for headless servers, remote machines, or when X11 is not available.
-
-#### Basic Usage
+### 10. Native environments (Nix)
 
 ```bash
-# Start a container with browser-based desktop
-rfswift run -i sdr_full -n sdr_desktop --desktop
+rfswift container create --engine nix -i sdr_light -n radio
+rfswift env shell radio
+rfswift env update --check radio
 ```
 
-Once started, open `http://127.0.0.1:6080` in your browser to access the full GUI desktop inside the container.
+The [Nix engine guide](/docs/guide/nix-engine) covers build modes, the `--isolate` jail, hardware rules and Windows.
 
-#### Custom Configuration
+## Using RF tools
 
-The `--desktop-config` flag accepts a `proto:host:port` format:
-
-```bash
-# Expose on all interfaces (for remote access)
-rfswift run -i sdr_full -n sdr_desktop \
-  --desktop --desktop-config "http:0.0.0.0:6080"
-
-# Use raw VNC protocol instead of noVNC
-rfswift run -i sdr_full -n sdr_desktop \
-  --desktop --desktop-config "vnc::5900"
-
-# Custom port
-rfswift run -i sdr_full -n sdr_desktop \
-  --desktop --desktop-config "http:0.0.0.0:8080"
-```
-
-| Protocol | Default Port | Access Method |
-|----------|-------------|---------------|
-| `http`   | `6080`      | Web browser (noVNC) |
-| `vnc`    | `5900`      | VNC client (TigerVNC, RealVNC, etc.) |
-
-#### Password Protection
-
-When exposing the desktop on the network (`0.0.0.0`), use `--desktop-pass` to require a VNC password:
-
-```bash
-rfswift run -i sdr_full -n sdr_desktop \
-  --desktop --desktop-config "http:0.0.0.0:6080" \
-  --desktop-pass "mysecretpass"
-```
-
-Without a password, the desktop is unauthenticated. That is safe on `127.0.0.1` (the default), but a security risk when exposed. The password can also be set in the config file:
-
-```ini
-[desktop]
-password = mysecretpass
-```
-
-#### Combining with Other Options
-
-Desktop mode works well with `--no-x11` since you no longer need X11 forwarding. Using `--no-x11` also removes the `/tmp/.X11-unix` socket binding from the container for improved security:
-
-```bash
-rfswift run -i sdr_full -n sdr_desktop \
-  --desktop \
-  --desktop-config "http:0.0.0.0:6080" \
-  --desktop-pass "mysecretpass" \
-  -s /dev/bus/usb:/dev/bus/usb \
-  -g "c 189:* rwm" \
-  --no-x11 \
-  --realtime
-```
-
-#### Desktop Mode with exec
-
-You can also enable desktop mode when entering an existing container with `exec`, even if it wasn't created with `--desktop`:
-
-```bash
-# Start desktop on-the-fly
-rfswift exec -c my_container --desktop
-
-# With password and network exposure
-rfswift exec -c my_container \
-  --desktop --desktop-config "http:0.0.0.0:6080" \
-  --desktop-pass "mysecretpass"
-
-# With SSL encryption
-rfswift exec -c my_container \
-  --desktop --desktop-config "http:0.0.0.0:6080" \
-  --desktop-pass "mysecretpass" --desktop-ssl
-```
-
-{{< callout type="info" >}}
-When desktop mode is enabled, RF Swift automatically handles VNC server startup, port binding configuration, and environment variable injection, so no manual setup is required inside the container. The desktop provides a full LXQt environment with application menu, taskbar, and window management.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Desktop in NAT/bridge mode**: When using desktop mode with a non-host network (`nat`, `bridge`), RF Swift automatically forces the in-container listen address to `0.0.0.0` so that Docker's port forwarding can reach the VNC server. The interactive wizard will also prompt you to configure the bind address and port when desktop is enabled with a non-host network.
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-When exposing the desktop on a network-facing address (`0.0.0.0` or a specific IP like `192.168.1.10`), the VNC/noVNC port will be accessible from the network. Always use `--desktop-pass` to set a VNC password and `--desktop-ssl` to encrypt the connection, and make sure your firewall rules are properly configured. See the [Remote Desktop Security](/docs/security/guide_lines/#-remote-desktop-security) section for detailed guidance.
-{{< /callout >}}
-
-## Using RF Tools
-
-Once your container is running, you can use any included RF tools. For example, with an SDR device connected:
-
-```bash
-┌─[root@topms] - [~] - [Tue Sep 03, 15:15]
-└─[$]> sdrangel
-```
+Once inside, run any included tool, for example `sdrangel` with an RTL-SDR plugged in:
 
 ![Running SDRAngel with an RTL-SDR](/images/docs/sdrangel.png "Running SDRAngel with an RTL-SDR")
 
 {{< callout type="warning" >}}
-GUI applications require either X11 forwarding or remote desktop mode:
-- **X11 forwarding**: Linux needs `xhost`, macOS needs `XQuartz`, Windows has native support via Docker Desktop
-- **Remote desktop** (`--desktop`): Works on any platform, letting you reach GUI tools from a web browser with no X11 setup
+GUI applications need a display: X11 with `xhost` on Linux, XQuartz on macOS (RF Swift switches OpenGL to EGL there), WSLg on Windows, or `--desktop` for a browser desktop on any platform.
 {{< /callout >}}
 
 {{< callout emoji="⚡" >}}
-**SDR Performance Tip**: If you experience buffer underruns or dropped samples, create your container with the `--realtime` flag or enable it afterwards with `rfswift realtime enable -c container_name`. See the [realtime documentation](/docs/commands/realtime/) for details.
+**SDR performance**: buffer underruns or dropped samples usually go away with `--realtime` (or `rfswift realtime enable -c NAME`).
 {{< /callout >}}
 
-## Advanced Features
+## Host isolation
 
-### Host Isolation
-
-RF Swift implements host isolation through several security mechanisms configured in your `config.ini` file:
+Containers start unprivileged with the cgroup rules of `config.ini`:
 
 ```ini
 [container]
@@ -732,189 +290,77 @@ seccomp =
 cgroups = c 189:* rwm,c 166:* rwm,c 188:* rwm
 ```
 
-#### Default Security Configuration
+- `privileged = false`: no full root on the host.
+- cgroup rules limit device access by major number (189 USB, 166 ACM serial, 188 USB serial). RF Swift adapts to cgroup v1 and v2.
+- `caps` and `seccomp` add capabilities or a custom seccomp profile for every container.
 
-By default, RF Swift runs containers in unprivileged mode with specific cgroup restrictions:
-
-- **Unprivileged Mode**: Containers run without full root privileges on the host (`privileged = false`)
-- **Cgroup Restrictions**: Controlled device access through character device major numbers:
-  - `c 189:* rwm`: Access to USB serial devices (ttyUSB*)
-  - `c 166:* rwm`: Access to ACM devices (ttyACM*)
-  - `c 188:* rwm`: Access to USB serial converters
-
-This provides a reasonable balance between functionality and security for RF applications.
+Override per container with `-u`, `-a`, `-g`, `-m`, `-s` on `rfswift container create`, and audit what you granted with `rfswift audit NAME`.
 
 {{< tabs items="Docker isolation,Podman isolation" >}}
   {{< tab >}}
-Docker runs its daemon as root, so unprivileged mode still operates within a root-owned daemon context. The cgroup rules restrict which devices the container can access within that context.
+Docker's daemon runs as root; an unprivileged container is still confined by capabilities, seccomp and the device cgroup.
   {{< /tab >}}
   {{< tab >}}
-Podman in rootless mode provides an additional layer of isolation: the container runs inside a user namespace, meaning even "root" inside the container maps to your unprivileged user on the host. Combined with cgroup v2 device controllers, this gives defense-in-depth for RF labs where untrusted firmware or protocols may be analyzed.
+Rootless Podman adds a user namespace: root inside the container maps to your unprivileged user on the host. `-u 1` grants privileges within that namespace only.
   {{< /tab >}}
 {{< /tabs >}}
 
-#### Customizing Security Settings
+### Security-related flags of `container create`
 
-You can customize security settings both in the config file and via command-line parameters:
+```
+Security:
+  -u, --privileged int        1 privileged, 0 unprivileged (default 0)
+  -a, --capabilities string   extra capabilities, comma-separated
+  -g, --cgroups string        extra cgroup rules, comma-separated
+  -m, --seccomp string        seccomp profile ('default' by default)
+  -s, --devices string        extra device mappings, comma-separated
 
-**Adding Capabilities**:
-```bash
-# Via command line
-rfswift run -i sdr_full -n my_container -a NET_ADMIN,SYS_PTRACE
+Network:
+  -t, --network string        host (default), nat, nat:NAME, bridge, none, container:NAME
+  -z, --exposedports string   exposed ports
+  -w, --bindedports string    published ports
+  -x, --extrahosts string     extra hosts (default 'pluto.local:192.168.1.2')
 
-# Via config.ini
-caps = NET_ADMIN,SYS_PTRACE
+Resources:
+  -b, --bind string           extra bind mounts, comma-separated
+  --workspace / --cwd / --no-workspace
+  -d, --display string        X display (default DISPLAY=:0)
+  -p, --pulseserver string    audio server (default tcp:127.0.0.1:34567)
+  --gpus string               GPU request ('all' or IDs)
+
+Performance:
+  --realtime                  SYS_NICE + rtprio=95 + memlock=unlimited
+  --ulimits string            e.g. 'rtprio=95,memlock=-1'
+
+Recording and display:
+  --record, --record-output string
+  --no-x11
+  --desktop, --desktop-config, --desktop-pass, --desktop-ssl
+  --vpn string                wireguard:FILE, openvpn:FILE, tailscale[:KEY], netbird[:KEY]
+
+Nix engine only:
+  --lazy, --pure, --isolate, --flake REF, --rebuild, --create-only
 ```
 
-**Custom Seccomp Profile**:
-```bash
-# Via command line
-rfswift run -i sdr_full -n my_container -m /path/to/seccomp.json
-
-# Via config.ini
-seccomp = /path/to/seccomp.json
-```
-
-**Additional Cgroup Rules**:
-```bash
-# Via command line
-rfswift run -i sdr_full -n my_container -g "c 226:* rwm"
-
-# Via config.ini
-cgroups = c 189:* rwm,c 166:* rwm,c 188:* rwm,c 226:* rwm
-```
-
-{{< callout type="info" >}}
-Cgroup rules use the format `type major:minor permission` where:
-- `type` is c (character) or b (block)
-- `major:minor` defines the device number (use * for wildcard)
-- `permission` is r (read), w (write), m (mknod)
-
-For example, `c 189:* rwm` grants full access to all devices with major number 189.
-
-RF Swift auto-detects whether your system uses **cgroup v1** or **cgroup v2** and applies rules accordingly.
-{{< /callout >}}
-
-#### Command-Line Security Configuration
-
-RF Swift allows you to override or extend security settings directly from the command line when running containers. This is particularly useful for one-off tasks or testing configurations before adding them to your config file.
-
-**Complete List of Security-Related Flags:**
+Examples:
 
 ```bash
-rfswift run [options]
-
-Container Engine:
-  --engine string             Force container engine (docker or podman)
-
-Security Options:
-  -u, --privileged int        Set privilege level (1: privileged, 0: unprivileged)
-  -a, --capabilities string   Extra capabilities (separate with commas)
-  -g, --cgroups string        Extra cgroup rules (separate with commas)
-  -m, --seccomp string        Set Seccomp profile ('default' one used by default)
-  -s, --devices string        Extra devices mapping (separate with commas)
-  
-Network Options:  
-  -t, --network string        Network mode (default: 'host')
-  -z, --exposedports string   Exposed ports
-  -w, --bindedports string    Ports to bind between host and container
-  -x, --extrahosts string     Set extra hosts (default: 'pluto.local:192.168.1.2')
-  
-Resource Options:
-  -b, --bind string           Extra volume bindings (separate with commas)
-  -d, --display string        Set X Display (default "DISPLAY=:0")
-  -p, --pulseserver string    PULSE SERVER TCP address (default "tcp:127.0.0.1:34567")
-
-Performance Options:
-  --realtime                  Enable realtime mode (SYS_NICE + rtprio + memlock)
-  --ulimits string            Set custom ulimits (e.g., 'rtprio=95,memlock=-1')
-
-Recording Options:
-  --record                    Record the container session
-  --record-output string      Custom output filename for recording (default: auto-generated)
-
-Display Options:
-  --no-x11                    Disable X11 forwarding and remove X11 socket binding
-
-Desktop Options:
-  --desktop                   Enable remote desktop via VNC/noVNC (access GUI from a browser)
-  --desktop-config string     Desktop config as proto:host:port (e.g., 'http:0.0.0.0:6080')
-  --desktop-pass string       Set VNC password for desktop access (recommended on 0.0.0.0)
-  --desktop-ssl               Enable SSL/TLS for desktop connections (auto-generates self-signed cert)
+rfswift container create -i penthertz/rfswift_resolute:wifi -n wifi_tools -u 0 -a NET_ADMIN,NET_RAW
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n rtlsdr -g "c 226:* rwm" -s "/dev/bus/usb:/dev/bus/usb"
+rfswift container create -i penthertz/rfswift_resolute:reversing -n forensics -m ~/custom_seccomp.json -t none
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdr_capture --realtime -b ~/captures:/root/captures --record
+rfswift --engine podman container create -i penthertz/rfswift_resolute:sdr_full -n rootless_sdr --realtime
 ```
-
-**Examples of Command-Line Security Configurations:**
-
-1. **Run with specific privileges and capabilities**:
-   ```bash
-   rfswift run -i penthertz/rfswift_resolute:wifi -n wifi_tools -u 0 -a NET_ADMIN,NET_RAW
-   ```
-   This runs a container in unprivileged mode but adds the NET_ADMIN and NET_RAW capabilities.
-
-2. **Add custom cgroup rules and device mappings**:
-   ```bash
-   rfswift run -i penthertz/rfswift_resolute:sdr -n rtlsdr -g "c 226:* rwm" -s "/dev/bus/usb:/dev/bus/usb"
-   ```
-   This adds permission for device major number 226 and maps a specific RTL-SDR device.
-
-3. **Set a custom seccomp profile**:
-   ```bash
-   rfswift run -i penthertz/rfswift_resolute:security -n forensics -m ~/custom_seccomp.json
-   ```
-   This applies a custom seccomp profile to the container.
-
-4. **High-performance SDR setup with realtime mode**:
-   ```bash
-   rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_capture \
-     --realtime \
-     -s "/dev/bus/usb:/dev/bus/usb" \
-     -g "c 189:* rwm" \
-     -b ~/captures:/root/captures \
-     --record
-   ```
-   This creates a container with:
-   - Realtime mode for optimal SDR performance
-   - USB device access
-   - Cgroup rules for USB serial devices
-   - Shared captures folder
-   - Session recording enabled
-
-5. **Combined security settings with recording**:
-   ```bash
-   rfswift run -i penthertz/rfswift_resolute:bluetooth -n bt_scanner \
-     -t bridge \
-     -a NET_ADMIN \
-     -g "c 226:* rwm,c 116:* rwm" \
-     -s "/dev/bluetooth:/dev/bluetooth" \
-     -u 0 \
-     --record --record-output bluetooth-assessment.cast
-   ```
-   This creates a container with:
-   - Bridge networking mode
-   - NET_ADMIN capability
-   - Custom cgroup rules for devices with major numbers 226 and 116
-   - Specific Bluetooth device mapping
-   - Unprivileged mode
-   - Session recording enabled
-
-6. **Rootless Podman with explicit engine selection**:
-   ```bash
-   rfswift --engine podman run -i penthertz/rfswift_resolute:sdr_full -n rootless_sdr \
-     -s "/dev/bus/usb:/dev/bus/usb" \
-     -b ~/captures:/root/captures \
-     --realtime
-   ```
-   This forces the Podman engine for a fully rootless SDR setup with USB passthrough and realtime performance.
 
 {{< callout type="warning" >}}
-Command-line settings always take precedence over config file settings. When using both, command-line options will extend or override the corresponding settings in your config.ini file.
+Command-line settings extend or override the config file. Keep `privileged = false` and add only the capabilities and devices a task needs.
 {{< /callout >}}
 
-## Next Steps
-
-Now you can dive right into:
+## Next steps
 
 {{< cards >}}
-  {{< card link="/docs/container-management" title="Container Management" icon="scissors" subtitle="Manage running containers with remapping features" >}}
+  {{< card link="/docs/guide/container-management" title="Dynamic container management" icon="scissors" subtitle="Change mounts, devices, capabilities and ports after creation" >}}
+  {{< card link="/docs/guide/nix-engine" title="Nix engine" icon="sparkles" subtitle="The same tools, natively" >}}
+  {{< card link="/docs/guide/workbench" title="Workbench" icon="desktop-computer" subtitle="The assessment GUI" >}}
   {{< card link="/docs/guide/list-of-images/" title="Container images" icon="database" subtitle="Pre-built images" >}}
 {{< /cards >}}

@@ -7,6 +7,10 @@ next: /docs/commands/bindings
 
 # rfswift commit
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift container commit`. The legacy form `rfswift commit` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Save a container's current state as a new Docker image.
 
 ## Synopsis

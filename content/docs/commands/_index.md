@@ -1,7 +1,7 @@
 ---
 linkTitle: 📘 Commands
 title: RF Swift Command Reference
-next: /docs/commands/run
+next: /docs/commands/container
 prev: /docs/container_scripts/
 weight: 11
 cascade:
@@ -10,175 +10,228 @@ cascade:
 
 # RF Swift Command Reference
 
-Complete reference for all RF Swift commands. Each command has its own dedicated page with syntax, options, and examples.
+Complete reference for the `rfswift` command line. Each command has its own page with syntax, options and examples.
 
 {{< callout type="info" >}}
-**Quick Help**: Use `rfswift [command] --help` for instant command help.
+**Quick Help**: `rfswift --help` shows the grouped overview, `rfswift [command] --help` the details of one command. The Linux packages also ship man pages (`man rfswift-container-create`) and bash, zsh and fish completions.
 {{< /callout >}}
 
 {{< callout emoji="🧙" >}}
-**Interactive Mode**: Most RF Swift commands feature interactive TUI pickers when run without required flags in a terminal. For example, `rfswift run` (without `-i` and `-n`) launches a guided wizard, and `rfswift exec` (without `-c`) shows a container picker. All interactive features gracefully degrade to standard CLI flags when scripting or piping.
+**Interactive Mode**: most commands open a TUI picker when a required flag is missing in a terminal. `rfswift container create` without `-i` and `-n` launches the guided wizard, `rfswift container shell` without `-c` shows a container picker, and `rfswift env update` without a name opens the update wizard. Everything degrades to plain flags when scripting or piping.
 {{< /callout >}}
 
 ---
 
-## 🔌 Global Flags
+## 🗂️ The v4 command tree
 
-### Disconnected Mode
+RF Swift v4.0 "Nucleus" reorganised the CLI around **resources**. The old flat commands (`rfswift run`, `rfswift exec`, `rfswift images pull`, `rfswift nix install`, ...) all still work and print a notice pointing at the new spelling, so existing scripts and muscle memory are safe.
 
-All RF Swift commands support the `-q` or `--disconnect` flag to disable update checks when working offline or in air-gapped environments:
-
-```bash
-# Work without querying for updates
-rfswift -q run -i sdr_full -n work
-rfswift --disconnect last
-rfswift -q images local
-
-# Useful for:
-# - Offline/air-gapped systems
-# - Avoiding network delays
-# - Scripting/automation
-# - Systems behind firewalls
+```
+rfswift
+├── container   create | shell | last | install | stop | rm | rename | commit | upgrade
+├── image       local | remote | pull | rm | build | tag | download | export | import | audit | versions
+├── env         catalog | list | info | shell | run | install | search | tools | remove | export | import
+│               update | rebuild | rollback | generations | audit | gc | gl | udev | versions | wsl (Windows)
+├── config      bindings | capabilities | cgroups | gpus | ports | ulimits | serial-hotplug
+├── network     create | list | remove | cleanup
+├── host        setup | udev | docker-access | isolate | devclean | audio
+├── usb         list | attach | detach | status | vm-devices (+ bind | unbind on Windows)
+├── audit       <environment | image | container>
+├── agent       (serve) | certs init | certs client | certs export | certs import
+├── profile     list | show | create | init | delete
+├── realtime    enable | disable | status
+├── engine      lima status | set | reconfig | reset (macOS)
+└── system      doctor | cleanup | update | upgrade | log | report
 ```
 
-When disconnected mode is enabled, RF Swift skips checking for new versions and runs immediately without any network queries. All functionality remains available - only the update notification system is disabled.
+### Canonical and legacy spellings
+
+| Canonical (v4) | Legacy (still works) | Short aliases |
+|---|---|---|
+| `rfswift container create` | `rfswift run` | `rfswift create`, `rfswift new` |
+| `rfswift container shell` | `rfswift exec` | `rfswift shell`, `rfswift enter` |
+| `rfswift container stop` | `rfswift stop` | `rfswift halt` |
+| `rfswift container rm` | `rfswift remove` | `rfswift rm` |
+| `rfswift container last` | `rfswift last` | |
+| `rfswift container install` | `rfswift install` | |
+| `rfswift container rename` / `commit` / `upgrade` | `rfswift rename` / `commit` / `upgrade` | |
+| `rfswift image pull` / `local` / `remote` / `versions` / `audit` | `rfswift images pull` / ... | |
+| `rfswift image build` / `rm` / `tag` / `download` / `export` / `import` | `rfswift build` / `delete` / `retag` / `download` / `export` / `import` | |
+| `rfswift env ...` | `rfswift nix ...` | |
+| `rfswift config ports bind` | `rfswift ports bind` | `rfswift cfg ports bind` |
+| `rfswift system doctor` / `cleanup` / `update` / `log` / `report` | `rfswift doctor` / `cleanup` / `update` / `log` / `report` | `rfswift admin ...` |
+| `rfswift agent` | | `rfswift remote` |
+| `rfswift usb ...` | `rfswift macusb ...` (macOS), `rfswift winusb ...` (Windows) | |
+
+The runtime-configuration groups (`bindings`, `capabilities`, `cgroups`, `gpus`, `ports`, `ulimits`) and the maintenance commands (`doctor`, `cleanup`, `update`, `log`, `report`) exist both at the top level and under their `config` / `system` parent. Neither form is deprecated.
 
 ---
 
-## 📋 Command Categories
+## 🔌 Global flags
 
-### 🐳 Container Management
+| Flag | Description |
+|------|-------------|
+| `--engine auto\|docker\|podman\|lima\|nix` | Engine to use. Precedence: this flag, then `RFSWIFT_ENGINE`, then `[general] engine` in `config.ini`, then auto-detection. `nix` selects the native [Nix engine](/docs/guide/nix-engine). |
+| `--gpu` | macOS Apple Silicon only: use the GPU-accelerated Lima VM (krunkit, Vulkan). Implies `--engine lima`, provides GPU compute but **no** USB passthrough. |
+| `-q, --disconnect` | Disconnected mode: no update check, no network query. |
+| `-v, --version` | Print the version and exit, without touching the network or an engine. |
+
+```bash
+# Work without querying for updates
+rfswift -q container create -i sdr_full -n work
+
+# Run the same command natively with the Nix engine
+rfswift --engine nix container create -i sdr_light -n radio
+
+# Set an engine once for the shell session
+export RFSWIFT_ENGINE=podman
+```
+
+The ASCII banner is printed on interactive terminals only. It is skipped when stdout is a pipe (scripts, `--json` consumers) and when `RFSWIFT_NO_BANNER` is set.
+
+---
+
+## 📋 Command groups
+
+### 🐳 Containers
 
 {{< cards >}}
-  {{< card link="run" title="run" icon="play" subtitle="Create and start a new container" >}}
-  {{< card link="profile" title="profile" icon="collection" subtitle="Manage container profiles (presets)" >}}
-  {{< card link="exec" title="exec" icon="terminal" subtitle="Execute commands in a running container" >}}
-  {{< card link="stop" title="stop" icon="pause" subtitle="Stop a running container" >}}
-  {{< card link="remove" title="remove" icon="trash" subtitle="Remove a container" >}}
-  {{< card link="rename" title="rename" icon="pencil" subtitle="Rename a container" >}}
-  {{< card link="commit" title="commit" icon="save" subtitle="Save container as new image" >}}
+  {{< card link="container" title="container" icon="cube" subtitle="Create, enter, stop, remove, rename, commit and upgrade containers" >}}
+  {{< card link="run" title="container create (run)" icon="play" subtitle="Create and start a new container, all options" >}}
+  {{< card link="exec" title="container shell (exec)" icon="terminal" subtitle="Enter a container or run a command in it" >}}
+  {{< card link="install" title="container install" icon="puzzle" subtitle="Guided tool installation in a container or Nix environment" >}}
+  {{< card link="profile" title="profile" icon="collection" subtitle="YAML presets for quick container creation" >}}
+  {{< card link="stop" title="container stop" icon="pause" subtitle="Stop a running container" >}}
+  {{< card link="remove" title="container rm" icon="trash" subtitle="Remove a container" >}}
+  {{< card link="rename" title="container rename" icon="pencil" subtitle="Rename a container" >}}
+  {{< card link="commit" title="container commit" icon="save" subtitle="Save a container as a new image" >}}
+  {{< card link="last" title="container last" icon="clock" subtitle="List recently used containers" >}}
+  {{< card link="upgrade" title="container upgrade" icon="arrow-up" subtitle="Move a container to a new image" >}}
 {{< /cards >}}
 
-### 🖼️ Image Management
+### 🖼️ Images and portability
 
 {{< cards >}}
-  {{< card link="images" title="images" icon="photograph" subtitle="Manage RF Swift images (pull, list, search)" >}}
-  {{< card link="build" title="build" icon="beaker" subtitle="Build image from YAML recipe" >}}
-  {{< card link="delete" title="delete" icon="x" subtitle="Delete an image" >}}
-  {{< card link="retag" title="retag" icon="tag" subtitle="Rename an image tag" >}}
-  {{< card link="download" title="download" icon="download" subtitle="Download and save image to tar.gz" >}}
-  {{< card link="import" title="import" icon="upload" subtitle="Import containers or images" >}}
-  {{< card link="export" title="export" icon="share" subtitle="Export containers or images" >}}
+  {{< card link="image" title="image" icon="photograph" subtitle="List, pull, audit, build, tag, export and import images" >}}
+  {{< card link="images" title="image local / remote / pull / versions" icon="cloud-download" subtitle="Registry browsing, pulling and version tracking" >}}
+  {{< card link="build" title="image build" icon="beaker" subtitle="Build an image from a YAML recipe" >}}
+  {{< card link="delete" title="image rm" icon="x" subtitle="Delete an image" >}}
+  {{< card link="retag" title="image tag" icon="tag" subtitle="Rename an image tag" >}}
+  {{< card link="download" title="image download" icon="download" subtitle="Save an image to tar.gz" >}}
+  {{< card link="export" title="image export" icon="share" subtitle="Export containers or images" >}}
+  {{< card link="import" title="image import" icon="upload" subtitle="Import containers or images" >}}
 {{< /cards >}}
 
-### ⚙️ Dynamic Configuration
+### ❄️ Native Nix environments
 
 {{< cards >}}
-  {{< card link="bindings" title="bindings" icon="link" subtitle="Manage device and volume bindings" >}}
-  {{< card link="capabilities" title="capabilities" icon="shield-check" subtitle="Manage Linux capabilities" >}}
-  {{< card link="cgroups" title="cgroups" icon="adjustments" subtitle="Manage cgroup device rules" >}}
-  {{< card link="gpu" title="gpus" icon="chip" subtitle="Manage GPU passthrough" >}}
-  {{< card link="ports" title="ports" icon="server" subtitle="Manage container ports" >}}
+  {{< card link="env" title="env" icon="sparkles" subtitle="Create, enter, update, roll back, audit and export native Nix environments" >}}
+  {{< card link="/docs/guide/nix-engine" title="Nix engine guide" icon="book-open" subtitle="How the native engine works, isolation, GPU, udev, Windows" >}}
 {{< /cards >}}
 
-### 📹 Session Recording & Reporting
+### ⚙️ Runtime configuration
 
 {{< cards >}}
-  {{< card link="log" title="log" icon="film" subtitle="Record and replay terminal sessions" >}}
-  {{< card link="report" title="report" icon="document-report" subtitle="Generate assessment reports" >}}
-{{< /cards >}}
-
-### 🔧 System Operations
-
-{{< cards >}}
-  {{< card link="host" title="host" icon="desktop-computer" subtitle="Host system configuration" >}}
-  {{< card link="doctor" title="doctor" icon="shield-check" subtitle="Diagnose system environment" >}}
-  {{< card link="update" title="update" icon="refresh" subtitle="Update RF Swift binary" >}}
-  {{< card link="completion" title="completion" icon="code" subtitle="Generate shell completion scripts" >}}
-  {{< card link="install" title="install" icon="puzzle" subtitle="Install helper scripts" >}}
-{{< /cards >}}
-
-### 🎚️ Performance & Resources
-
-{{< cards >}}
-  {{< card link="realtime" title="realtime" icon="lightning-bolt" subtitle="Enable/disable realtime SDR mode" >}}
-  {{< card link="ulimits" title="ulimits" icon="adjustments" subtitle="Manage container resource limits" >}}
-  {{< card link="engine" title="engine" icon="cog" subtitle="Show or set container engine" >}}
+  {{< card link="config" title="config" icon="adjustments" subtitle="Change devices, mounts, capabilities, cgroups, GPUs, ports and ulimits of an existing container" >}}
+  {{< card link="bindings" title="config bindings" icon="link" subtitle="Device and volume bindings" >}}
+  {{< card link="capabilities" title="config capabilities" icon="shield-check" subtitle="Linux capabilities" >}}
+  {{< card link="cgroups" title="config cgroups" icon="adjustments" subtitle="cgroup device rules" >}}
+  {{< card link="gpu" title="config gpus" icon="chip" subtitle="GPU passthrough" >}}
+  {{< card link="ports" title="config ports" icon="server" subtitle="Exposed and published ports" >}}
+  {{< card link="ulimits" title="config ulimits" icon="adjustments" subtitle="Resource limits" >}}
+  {{< card link="realtime" title="realtime" icon="lightning-bolt" subtitle="One-command realtime mode for SDR work" >}}
 {{< /cards >}}
 
 ### 🌐 Networking
 
 {{< cards >}}
-  {{< card link="network" title="network" icon="globe-alt" subtitle="Manage NAT networks for container isolation" >}}
+  {{< card link="network" title="network" icon="globe-alt" subtitle="Managed NAT networks for container isolation" >}}
 {{< /cards >}}
 
-### 🛠️ Utilities
+### 🔌 Devices and host
 
 {{< cards >}}
-  {{< card link="last" title="last" icon="clock" subtitle="Show recently used containers" >}}
-  {{< card link="cleanup" title="cleanup" icon="trash" subtitle="Clean up old containers and images" >}}
-  {{< card link="upgrade" title="upgrade" icon="arrow-up" subtitle="Upgrade container to new image" >}}
+  {{< card link="host" title="host" icon="desktop-computer" subtitle="Host setup: udev rules, Docker access, Nix jail, audio server" >}}
+  {{< card link="usb" title="usb" icon="device-mobile" subtitle="USB passthrough on macOS (Lima) and Windows (usbipd)" >}}
+  {{< card link="macusb" title="macusb" icon="device-mobile" subtitle="macOS USB backend details" >}}
+  {{< card link="winusb" title="winusb" icon="device-mobile" subtitle="Windows USB backend details" >}}
+  {{< card link="engine" title="engine" icon="cog" subtitle="Engine selection, Lima VM management" >}}
 {{< /cards >}}
 
-### 🪟 Windows (WSL2)
+### 🛡️ Security
 
 {{< cards >}}
-  {{< card link="winusb" title="winusb" icon="device-mobile" subtitle="Manage USB devices in WSL2" >}}
+  {{< card link="audit" title="audit" icon="shield-check" subtitle="Vulnerability and attack-surface audit of environments, images and containers" >}}
+  {{< card link="report" title="report" icon="document-report" subtitle="Assessment reports from a container and its workspace" >}}
 {{< /cards >}}
 
-### 🍎 macOS (Lima)
+### 📡 Remote access
 
 {{< cards >}}
-  {{< card link="macusb" title="macusb" icon="device-mobile" subtitle="Manage USB devices via Lima VM" >}}
+  {{< card link="agent" title="agent" icon="wifi" subtitle="Serve the engines of a lab machine to authenticated remote clients (mTLS)" >}}
+  {{< card link="/docs/guide/remote-agent" title="Remote agent guide" icon="book-open" subtitle="Setup, credential files, Workbench connection, limits" >}}
+{{< /cards >}}
+
+### 🔧 System and maintenance
+
+{{< cards >}}
+  {{< card link="system" title="system" icon="cog" subtitle="doctor, cleanup, update, upgrade, log and report under one parent" >}}
+  {{< card link="doctor" title="doctor" icon="shield-check" subtitle="Diagnose the host: engines, Nix, USB, display, audio, udev rules, jail" >}}
+  {{< card link="cleanup" title="cleanup" icon="trash" subtitle="Remove old containers and images" >}}
+  {{< card link="update" title="update" icon="refresh" subtitle="Update the RF Swift binary" >}}
+  {{< card link="log" title="log" icon="film" subtitle="Record and replay terminal sessions" >}}
+  {{< card link="completion" title="completion" icon="code" subtitle="Shell completion scripts" >}}
 {{< /cards >}}
 
 ---
 
-## 🚀 Quick Reference
+## 🚀 Quick reference
 
 | Command | Purpose |
 |---------|---------|
-| `rfswift run -i IMAGE -n NAME` | Create new container |
-| `rfswift run --profile PROFILE -n NAME` | Create container from profile |
-| `rfswift profile list` | List available profiles |
-| `rfswift profile init` | Generate default profiles |
-| `rfswift exec -c CONTAINER` | Enter container |
-| `rfswift last` | List recent containers |
-| `rfswift bindings add -c CONTAINER -d -t DEVICE` | Add device |
-| `rfswift capabilities add -c CONTAINER -a CAP` | Add capability |
-| `rfswift ports bind -c CONTAINER -p PORT` | Bind port |
-| `rfswift images pull -i IMAGE` | Download image |
-| `rfswift build -r RECIPE.yaml` | Build from recipe |
-| `rfswift log replay -i FILE.cast` | Replay session |
-| `rfswift run --vpn tailscale` | Create container with VPN |
-| `rfswift exec --vpn tailscale` | Enter container with VPN |
-| `rfswift --engine podman run` | Use Podman engine |
-| `rfswift doctor` | Diagnose environment |
-| `rfswift update` | Update RF Swift |
-| `rfswift gpus add -c CONTAINER` | Add GPU passthrough |
-| `rfswift realtime enable -c CONTAINER` | Enable realtime SDR mode |
-| `rfswift images versions` | List available image versions |
-| `rfswift cleanup all --dry-run` | Preview cleanup actions |
-| `rfswift winusb list` | List USB devices (Windows/WSL2) |
-| `rfswift macusb list` | List USB devices (macOS) |
-| `rfswift --engine lima run` | Run container with USB (macOS) |
-| `rfswift engine lima status` | Show Lima VM status (macOS) |
-| `rfswift engine lima reconfig` | Reconfigure Lima VM (macOS) |
-| `rfswift engine lima reset` | Reset Lima VM from scratch (macOS) |
-| `rfswift network list` | List NAT networks |
-| `rfswift network create -n NAME` | Create isolated NAT network |
-| `rfswift network cleanup` | Remove orphaned networks |
-| `rfswift report generate -c NAME` | Generate assessment report |
-| `rfswift report generate -c NAME -f html` | HTML report |
+| `rfswift container create -i IMAGE -n NAME` | Create a new container |
+| `rfswift container create --profile sdr-full -n NAME` | Create a container from a profile |
+| `rfswift --engine nix container create -i sdr_light -n NAME` | Create a native Nix environment |
+| `rfswift --engine nix container create -i sdr_light -n NAME --isolate` | Same, inside the bubblewrap / Seatbelt jail |
+| `rfswift container shell -c NAME` | Enter a container (starts it if stopped) |
+| `rfswift env shell NAME` | Enter a Nix environment |
+| `rfswift container last` | List recent containers |
+| `rfswift container install -c NAME` | Pick and run an install function |
+| `rfswift image pull -i sdr_full` | Download an image |
+| `rfswift image audit penthertz/rfswift_resolute:sdr_full` | Scan an image for CVEs |
+| `rfswift audit NAME` | Audit a container, image or Nix environment (auto-detected) |
+| `rfswift env catalog` | Nix environments you can create |
+| `rfswift env update --check NAME` | Preview a Nix environment update |
+| `rfswift env rollback NAME` | Restore the previous generation |
+| `rfswift config bindings add -c NAME -d -t /dev/ttyUSB0` | Add a device to an existing container |
+| `rfswift config serial-hotplug on -c NAME` | Hot-pluggable serial ports |
+| `rfswift config ports bind -c NAME -b 8080:80/tcp` | Publish a port |
+| `rfswift realtime enable -c NAME` | Realtime SDR mode |
+| `rfswift network create -n lab` | Create an isolated NAT network |
+| `rfswift host setup` | udev rules, engine install, Nix, Docker access, jail |
+| `rfswift host udev` | RF Swift's udev rules (rootless Podman, Nix) |
+| `rfswift host docker-access` | docker group + socket ACL, no logout |
+| `rfswift host audio enable` | Host audio server for containers (Linux, macOS) |
+| `rfswift usb attach` | Forward a USB device (macOS Lima, Windows usbipd) |
+| `rfswift agent certs init --dir DIR --host HOST` | Generate remote-agent certificates |
+| `rfswift agent --bundle DIR` | Serve this machine's engines remotely |
+| `rfswift doctor` | Diagnose the environment |
+| `rfswift system cleanup all --dry-run` | Preview a cleanup |
+| `rfswift log replay -i FILE.cast` | Replay a session |
+| `rfswift report generate -c NAME -f html` | HTML assessment report |
+| `rfswift engine lima status` | Lima VM status (macOS) |
+| `rfswift update` | Update RF Swift (or tells you to use your package manager) |
 
 ---
 
-## 🆘 Getting Help
+## 🆘 Getting help
 
 ```bash
-rfswift --help              # All commands
-rfswift run --help          # Specific command
-rfswift bindings add --help # Subcommand
+rfswift --help                      # grouped overview
+rfswift container create --help     # one command
+rfswift config bindings add --help  # a subcommand
+man rfswift-env-update              # Linux packages ship man pages
+rfswift completion zsh --install    # completions
 ```
 
 ---

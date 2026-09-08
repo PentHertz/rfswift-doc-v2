@@ -7,6 +7,10 @@ next: /docs/commands/images
 
 # rfswift build
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift image build`. The legacy form `rfswift build` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Build custom Docker images from simplified YAML recipe files.
 
 ## Synopsis
@@ -63,12 +67,12 @@ name: my_sdr_custom
 tag: sdr_custom:v1.0
 base: penthertz/rfswift_resolute:sdr_light
 packages:
-  - gqrx-sdr
-  - inspectrum
-  - urh
+ - gqrx-sdr
+ - inspectrum
+ - urh
 scripts:
-  - apt-get clean
-  - rm -rf /var/lib/apt/lists/*
+ - apt-get clean
+ - rm -rf /var/lib/apt/lists/*
 EOF
 
 # Build
@@ -89,29 +93,29 @@ base: penthertz/rfswift_resolute:sdr_full
 
 # Package installation
 packages:
-  - package1
-  - package2
-  - package3
+ - package1
+ - package2
+ - package3
 
 # Environment variables
 environment:
-  - VAR1=value1
-  - VAR2=value2
+ - VAR1=value1
+ - VAR2=value2
 
 # File copies
 files:
-  - src: local/file.txt
+ - src: local/file.txt
     dest: /container/path/
 
 # Custom commands
 commands:
-  - command1
-  - command2
+ - command1
+ - command2
 
 # Cleanup scripts
 scripts:
-  - cleanup_command1
-  - cleanup_command2
+ - cleanup_command1
+ - cleanup_command2
 
 # Working directory
 workdir: /root/workspace
@@ -126,42 +130,42 @@ base: penthertz/rfswift_resolute:sdr_full
 
 # Install additional tools
 packages:
-  - gqrx-sdr
-  - inspectrum
-  - urh
-  - universal-radio-hacker
-  - gr-gsm
-  - gr-lte
+ - gqrx-sdr
+ - inspectrum
+ - urh
+ - universal-radio-hacker
+ - gr-gsm
+ - gr-lte
 
 # Set environment
 environment:
-  - SDR_BUFFER_SIZE=262144
-  - DISPLAY=:0
-  - PULSE_SERVER=tcp:127.0.0.1:34567
+ - SDR_BUFFER_SIZE=262144
+ - DISPLAY=:0
+ - PULSE_SERVER=tcp:127.0.0.1:34567
 
 # Copy custom files
 files:
-  - src: ./configs/sdr-config.conf
+ - src: ./configs/sdr-config.conf
     dest: /root/.config/
-  - src: ./scripts/startup.sh
+ - src: ./scripts/startup.sh
     dest: /usr/local/bin/
-  - src: ./tools/custom-tool
+ - src: ./tools/custom-tool
     dest: /opt/tools/
 
 # Post-installation commands
 commands:
-  - chmod +x /usr/local/bin/startup.sh
-  - chmod +x /opt/tools/custom-tool
-  - ln -s /opt/tools/custom-tool /usr/local/bin/
-  - mkdir -p /root/captures
-  - mkdir -p /root/analysis
+ - chmod +x /usr/local/bin/startup.sh
+ - chmod +x /opt/tools/custom-tool
+ - ln -s /opt/tools/custom-tool /usr/local/bin/
+ - mkdir -p /root/captures
+ - mkdir -p /root/analysis
 
 # Cleanup
 scripts:
-  - apt-get clean
-  - rm -rf /var/lib/apt/lists/*
-  - rm -rf /tmp/*
-  - rm -rf /root/.cache/*
+ - apt-get clean
+ - rm -rf /var/lib/apt/lists/*
+ - rm -rf /tmp/*
+ - rm -rf /root/.cache/*
 
 # Set working directory
 workdir: /root/workspace
@@ -213,10 +217,10 @@ APT packages to install.
 
 ```yaml
 packages:
-  - gqrx-sdr
-  - inspectrum
-  - wireshark
-  - python3-pip
+ - gqrx-sdr
+ - inspectrum
+ - wireshark
+ - python3-pip
 ```
 
 ### environment (Optional)
@@ -225,9 +229,9 @@ Environment variables to set.
 
 ```yaml
 environment:
-  - PATH=/opt/tools:$PATH
-  - CUSTOM_VAR=value
-  - DEBUG=1
+ - PATH=/opt/tools:$PATH
+ - CUSTOM_VAR=value
+ - DEBUG=1
 ```
 
 ### files (Optional)
@@ -236,11 +240,11 @@ Files to copy into the image.
 
 ```yaml
 files:
-  - src: ./local/config.txt
+ - src: ./local/config.txt
     dest: /root/.config/
-  - src: ./scripts/
+ - src: ./scripts/
     dest: /opt/scripts/
-  - src: ./tool
+ - src: ./tool
     dest: /usr/local/bin/tool
 ```
 
@@ -254,10 +258,10 @@ Commands to run during build.
 
 ```yaml
 commands:
-  - chmod +x /usr/local/bin/script.sh
-  - pip3 install custom-package
-  - git clone https://github.com/user/repo /opt/repo
-  - make -C /opt/repo install
+ - chmod +x /usr/local/bin/script.sh
+ - pip3 install custom-package
+ - git clone https://github.com/user/repo /opt/repo
+ - make -C /opt/repo install
 ```
 
 ### scripts (Optional)
@@ -266,10 +270,10 @@ Cleanup scripts run at the end of the build.
 
 ```yaml
 scripts:
-  - apt-get clean
-  - rm -rf /var/lib/apt/lists/*
-  - rm -rf /tmp/*
-  - history -c
+ - apt-get clean
+ - rm -rf /var/lib/apt/lists/*
+ - rm -rf /tmp/*
+ - history -c
 ```
 
 ### workdir (Optional)
@@ -342,12 +346,12 @@ grep "^base:" recipe.yaml
 ```bash
 # Update package lists in recipe
 packages:
-  - apt-update  # Add this first
+ - apt-update  # Add this first
 
 # Or add to commands section
 commands:
-  - apt-get update
-  - apt-get install -y your-package
+ - apt-get update
+ - apt-get install -y your-package
 
 # Check package name spelling
 apt-cache search package-name
@@ -364,7 +368,7 @@ ls -l ./configs/file.txt
 
 # Use correct relative path
 files:
-  - src: ./configs/file.txt  # Relative to recipe location
+ - src: ./configs/file.txt  # Relative to recipe location
     dest: /root/.config/
 
 # Verify directory structure

@@ -9,18 +9,16 @@ cascade:
 
 # RF Swift Configuration
 
-RF Swift provides flexible configuration options to customize your environment. You can configure settings through a profile configuration file for persistent preferences or via command-line arguments for one-time adjustments.
+RF Swift reads a small INI file for persistent preferences, YAML **profiles** for container presets, environment variables for one-off overrides, and command-line flags that win over everything.
 
-## Profile Configuration
+## The configuration file
 
-### Configuration File Location
-
-RF Swift looks for a profile configuration file in a platform-specific location:
+### Location
 
 {{< tabs items="Linux,Windows,macOS" >}}
   {{< tab >}}
 ```
-/home/username/.config/rfswift/config.ini
+~/.config/rfswift/config.ini
 ```
   {{< /tab >}}
   {{< tab >}}
@@ -30,21 +28,20 @@ C:\Users\username\AppData\Roaming\rfswift\config.ini
   {{< /tab >}}
   {{< tab >}}
 ```
-/Users/username/.config/rfswift/config.ini
+~/.config/rfswift/config.ini
 ```
   {{< /tab >}}
 {{< /tabs >}}
 
-If this file doesn't exist when you first run RF Swift, you'll be prompted to create one with default settings.
+On first run RF Swift asks whether to create the file with the shipped defaults; when there is no terminal to answer (the Workbench, a script) it is created silently.
 
-### Configuration File Structure
-
-The `config.ini` file is organized into sections for different aspects of RF Swift's behavior:
+### Structure
 
 ```ini
 [general]
 imagename = myrfswift:latest
 repotag = penthertz/rfswift_resolute
+engine = auto
 
 [container]
 shell = /bin/zsh
@@ -71,86 +68,58 @@ host = 127.0.0.1
 port = 6080
 password =
 ssl = false
+
+[nix]
+wsl_distro =
 ```
 
-### Configuration Sections Explained
+The device defaults depend on the operating system the file was created on.
 
-#### General Section
+### Sections
 
-| Parameter | Description | Example |
-|-----------|-------------|---------|
-| `imagename` | Default image used when running containers without `-i` | `myrfswift:latest` |
-| `repotag` | Default repository for RF Swift images | `penthertz/rfswift_resolute` |
+**`[general]`**
 
+| Key | Description | Example |
+|-----|-------------|---------|
+| `imagename` | Image used when `container create` has no `-i` | `myrfswift:latest` |
+| `repotag` | Repository prepended to short image names | `penthertz/rfswift_resolute` |
+| `engine` | Default engine when neither `--engine` nor `RFSWIFT_ENGINE` is set: `auto`, `docker`, `podman`, `lima`, `nix` | `nix` |
 
-  {{< callout type="info" >}}
-  Since v3.0.0 "Resonance", official RF Swift images are built on **Ubuntu 26.04 "Resolute"** and published under `penthertz/rfswift_resolute`, which is the default `repotag`. The previous Ubuntu 24.04 "Noble" images are still available. Set `repotag = penthertz/rfswift_noble` if you need to fall back to them.
-  {{< /callout >}}
+{{< callout type="info" >}}
+Official images are built on Ubuntu 26.04 "Resolute" and published under `penthertz/rfswift_resolute`. Set `repotag = penthertz/rfswift_noble` to fall back to the Ubuntu 24.04 images, or point it at a mirror or your own registry.
+{{< /callout >}}
 
-#### Container Section
+**`[container]`**
 
-| Parameter | Description | Example |
-|-----------|-------------|---------|
-| `shell` | Default shell inside containers | `/bin/zsh` |
-| `bindings` | Host directories to share with containers | `/home/user/data:/data` |
-| `network` | Network mode for containers | `host`, `bridge`, `none` |
-| `exposedports` | Ports exposed from the container | `8080`, `443` |
-| `portbindings` | Host-to-container port mappings | `8080:80/tcp` |
-| `x11forward` | X11 binding for GUI applications | `/tmp/.X11-unix:/tmp/.X11-unix` |
-| `xdisplay` | X11 display environment variable | `"DISPLAY=:0"` |
-| `extrahost` | Custom host-to-IP mappings | `pluto.local:192.168.2.1` |
-| `extraenv` | Additional environment variables | `VAR1=value1,VAR2=value2` |
-| `devices` | Device mappings for hardware access | `/dev/bus/usb:/dev/bus/usb` |
-| `privileged` | Run containers in privileged mode | `false` |
-| `caps` | Linux capabilities to add | `NET_ADMIN,SYS_PTRACE` |
-| `seccomp` | Seccomp profile for syscall filtering | `/path/to/profile.json` |
-| `cgroups` | Control group rules for device access | `c 189:* rwm,c 166:* rwm` |
+| Key | Description | Example |
+|-----|-------------|---------|
+| `shell` | Shell opened in containers (Bash fallback when missing) | `/bin/zsh` |
+| `bindings` | Extra bind mounts for every container | `/home/user/data:/data` |
+| `network` | Default network mode | `host`, `nat`, `bridge`, `none` |
+| `exposedports`, `portbindings` | Default exposed and published ports | `8080/tcp`, `8080:80/tcp` |
+| `x11forward` | X11 socket binding | `/tmp/.X11-unix:/tmp/.X11-unix` |
+| `xdisplay` | Display variable | `"DISPLAY=:0"` |
+| `extrahost` | Extra `/etc/hosts` entries | `pluto.local:192.168.2.1` |
+| `extraenv` | Extra environment variables | `VAR1=value1,VAR2=value2` |
+| `devices` | Default device mappings. Devices the engine cannot map on this host are listed before creation and dropped after you confirm | `/dev/bus/usb:/dev/bus/usb` |
+| `privileged` | Privileged mode | `false` |
+| `caps` | Capabilities added to every container | `NET_ADMIN,SYS_PTRACE` |
+| `seccomp` | Seccomp profile | `/path/to/profile.json` |
+| `cgroups` | Device cgroup rules | `c 189:* rwm,c 166:* rwm` |
 
-#### Audio Section
+**`[audio]`**: `pulse_server` is the host audio server address containers get in `PULSE_SERVER` and the port `rfswift host audio enable` opens (`tcp:localhost:PORT` yields a local-only ACL). Windows ignores it and uses WSLg.
 
-| Parameter | Description | Example |
-|-----------|-------------|---------|
-| `pulse_server` | PulseAudio/PipeWire server address | `tcp:localhost:34567` |
+**`[desktop]`**: `proto` (`vnc` or `http` for noVNC), `host`, `port`, `password`, `ssl` are the defaults of `--desktop`.
 
-#### Desktop Section
+**`[nix]`**: `wsl_distro` names the WSL 2 distribution that hosts the Nix engine on Windows (`rfswift env wsl use` writes it).
 
-| Parameter | Description | Example |
-|-----------|-------------|---------|
-| `proto` | Desktop protocol | `vnc`, `noVNC` |
-| `host` | Host address for desktop connections | `127.0.0.1` |
-| `port` | Port for desktop connections | `6080` |
-| `password` | VNC password (optional) | `mysecretpass` |
-| `ssl` | Enable SSL encryption for VNC | `true`, `false` |
+### Changing the repository
 
-Example:
-```ini
-[desktop]
-proto = vnc
-host = 127.0.0.1
-port = 6080
-password =
-ssl = false
-```
+`repotag` is what RF Swift prepends to short tags, so `rfswift container create -i sdr_full` resolves to `penthertz/rfswift_resolute:sdr_full` by default. Edit the `[general]` section to use another repository.
 
-#### Changing repository
+## Container profiles
 
-The `repotag` value is the repository RF Swift prepends to short image tags, so `rfswift run -i sdr_full` resolves to `penthertz/rfswift_resolute:sdr_full` by default. You can point it at something else, such as the legacy Noble images, a mirror, or your own registry, by editing your `config.ini`:
-
-```
-[general]
-imagename = myrfswift:latest
-repotag = penthertz/rfswift_noble
-
-...
-``` 
-
-## Container Profiles
-
-In addition to the global `config.ini`, RF Swift supports **profiles**: YAML presets that bundle image, network mode, features, device mappings, capabilities, cgroup rules, and port bindings into a single named preset.
-
-### Profile Storage
-
-Profiles are stored as individual `.yaml` files in a platform-specific directory:
+Profiles are YAML presets bundling image, network mode, features, devices, mounts, ports, capabilities, cgroup rules, GPU and VPN into one name. They live in:
 
 {{< tabs items="Linux,macOS,Windows" >}}
   {{< tab >}}
@@ -170,229 +139,98 @@ Profiles are stored as individual `.yaml` files in a platform-specific directory
   {{< /tab >}}
 {{< /tabs >}}
 
-Generate default profiles with `rfswift profile init`, then use them:
+```bash
+rfswift profile init                                   # write the built-in presets
+rfswift profile list
+rfswift container create --profile sdr-full -n my_sdr
+rfswift container create --profile wifi -n my_wifi -i penthertz/rfswift_resolute:sdr_full   # flags override the profile
+```
+
+Built-in profiles: `yolo`, `network-host`, `network-nat`, `sdr-full`, `sdr-light`, `wifi`, `bluetooth`, `telecom`, `telecom-5g`, `rfid`, `automotive`, `hardware`, `reversing`, `headless`. A built-in profile you never edited is refreshed automatically when RF Swift improves it (a fingerprint records what RF Swift wrote); an edited copy is kept. The Workbench create dialog offers the same presets. See [profile](/docs/commands/profile).
+
+## Environment variables
+
+| Variable | Effect |
+|----------|--------|
+| `RFSWIFT_ENGINE` | Engine (`docker`, `podman`, `lima`, `nix`); overrides the config file, `--engine` wins |
+| `RFSWIFT_LIMA_INSTANCE` | Lima instance name (default `rfswift`; `--gpu` uses `rfswift-gpu`) |
+| `RFSWIFT_NO_BANNER` | Skip the ASCII banner (it is already skipped when stdout is not a terminal) |
+| `RFSWIFT_NIX_FLAKE` | Flake reference or local path of RF-Swift-nix |
+| `RFSWIFT_NIX_HOME` | State directory of the Nix engine (default `~/.rfswift/nix`) |
+| `RFSWIFT_NIX_CATALOG` | Alternate environment catalog |
+| `RFSWIFT_NIX_GL` | OpenGL runtime for Nix environments: `mesa` forces Mesa, `off` disables it |
+| `RFSWIFT_NIX_WAYLAND` | `1` keeps GUI tools on Wayland under WSLg (X11 is the default there) |
+| `RFSWIFT_WSL_DISTRO` | WSL 2 distribution hosting the Nix engine (Windows) |
+| `RFSWIFT_WSLG_AUTORESET` | `0` disables the automatic WSLg display-client restart (Windows) |
+| `RFSWIFT_GL_PLATFORM` | `egl` is set for containers on macOS so GUI tools create OpenGL contexts through EGL |
+| `RFSWIFT_WORKSPACE` | Exported inside Nix environment shells: the workspace path the shell sees |
+| `RFSWIFT_NIX_GL_RUNTIME` | Exported inside Nix environment shells when the OpenGL runtime was applied |
+| `RFSWIFT_RECORDING` | Set to `1` inside a recorded session |
+| `DOCKER_API_VERSION` | Pin the Docker API version when the daemon is older than the client |
+
+Installer variables (`get_rfswift.sh`) are listed in [Getting Started](/docs/getting-started#installation).
+
+## Command-line overrides
+
+Every setting can be overridden per container on `rfswift container create` (`-b`, `-s`, `-a`, `-g`, `-t`, `-u`, `-e`, `-d`, `-p`, `-w`, `-z`, `-x`, `-m`, `--workspace`, `--realtime`, `--desktop*`, `--vpn`, ...). The full list with examples is on the [container create](/docs/commands/run) page; the security-related flags are summarised in [Running RF Swift](/docs/guide/running-rf-swift#security-related-flags-of-container-create).
 
 ```bash
-# Create a container from a profile
-rfswift run --profile sdr-full -n my_sdr
-
-# CLI flags override profile values
-rfswift run --profile wifi -n my_wifi -i penthertz/rfswift_resolute:sdr_full
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n my_sdr_container
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n captures -b /home/user/captures:/data/captures
+rfswift container create -i penthertz/rfswift_resolute:wifi -n wifi -a NET_ADMIN
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n web -t bridge -w 8080:80/tcp
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n bash_only -e /bin/bash
 ```
 
-See the [`profile` command reference](/docs/commands/profile/) for full details on creating, listing, and managing profiles.
+## Changing a container afterwards
 
----
-
-## Command-Line Configuration
-
-You can override any configuration setting when running a container using command-line flags with the `run` command:
+Bind mounts, devices, capabilities, cgroup rules, GPUs, ports and ulimits of an existing container are managed with `rfswift config ...` ([Dynamic container management](/docs/guide/container-management)):
 
 ```bash
-rfswift run [flags]
+rfswift config bindings add -c my_sdr_container -s /home/user/data -t /data
+rfswift config bindings add -c my_container -d -t /dev/ttyUSB0
+rfswift config bindings rm  -c my_container -t /data
 ```
 
-### Available Flags
+### Docker API version
 
-```
-Flags:
-  -b, --bind string           Extra bindings (separate with commas)
-  -w, --bindedports string    Ports to bind between host and container
-      --profile string        Use a named profile preset
-  -a, --capabilities string   Extra capabilities (separate with commas)
-  -g, --cgroups string        Extra cgroup rules (separate with commas)
-  -e, --command string        Command to execute (default: '/bin/bash')
-      --desktop               Enable desktop mode (VNC/noVNC)
-      --desktop-config string Desktop config as proto:host:port (e.g., vnc:127.0.0.1:6080)
-      --desktop-pass string   VNC password for desktop mode
-      --desktop-ssl           Enable SSL for desktop connection
-  -s, --devices string        Extra device mappings (separate with commas)
-  -d, --display string        Set X Display (default: "DISPLAY=:0")
-  -z, --exposedports string   Ports to expose
-  -x, --extrahosts string     Set extra hosts (default: 'pluto.local:192.168.1.2')
-  -h, --help                  Help for run command
-  -i, --image string          Image to use (default: 'myrfswift:latest')
-  -n, --name string           Container name
-  -t, --network string        Network mode (default: 'host')
-      --no-x11                Disable X11 forwarding
-  -u, --privileged int        Set privilege level (1: privileged, 0: unprivileged)
-  -p, --pulseserver string    PulseAudio server address (default: "tcp:127.0.0.1:34567")
-      --realtime              Enable realtime mode for SDR performance
-      --record                Record terminal session (asciinema format)
-      --record-output string  Output path for recording file
-  -m, --seccomp string        Set Seccomp profile (default: 'default')
-      --ulimits string        Additional ulimits (e.g., rtprio=95)
-      --vpn string            VPN type[:argument] (wireguard:file, openvpn:file, tailscale[:key], netbird[:key])
-
-Global Flags:
-  -q, --disconnect            Don't query updates (disconnected mode)
-      --engine string         Container engine to use (docker, podman, auto)
-```
-
-### Examples
+If the daemon is older than the client library you may see `client version 1.47 is too new. Maximum supported API version is 1.45`. Pin the version:
 
 ```bash
-# Run with custom image and name
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n my_sdr_container
-
-# Share a host directory with the container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -b /home/user/captures:/data/captures
-
-# Add network capabilities for Wi-Fi tools
-rfswift run -i penthertz/rfswift_resolute:wifi -a NET_ADMIN
-
-# Use bridge network with port mapping
-rfswift run -i penthertz/rfswift_resolute:sdr_full -t bridge -w 8080:80/tcp
-
-# Specify a custom shell
-rfswift run -i penthertz/rfswift_resolute:sdr_full -e /bin/bash
+DOCKER_API_VERSION=1.45 rfswift config bindings add -c my_container -s /tmp -t /root/myshare
+export DOCKER_API_VERSION=1.45     # in ~/.bashrc or ~/.zshrc for good
 ```
 
-## Dynamic Container Modification with Bindings
-
-RF Swift offers a unique feature that Docker doesn't provide natively: the ability to modify bindings for existing containers. This eliminates the need to recreate containers when you need to add or remove bindings.
-
-### Bindings Command Overview
+## Disconnected mode
 
 ```bash
-rfswift bindings
+rfswift -q container create -i sdr_full -n quick_analysis
+rfswift --disconnect image local
+rfswift -q container shell -c my_container
 ```
 
-This command has two subcommands:
-- `add`: Add a binding to an existing container
-- `rm`: Remove a binding from an existing container
+`-q` / `--disconnect` skips the release check and every network query. Use it in air-gapped labs, in scripts, and on slow links; everything else works the same. `rfswift --version` never touches the network either.
 
-### Adding Bindings to Existing Containers
+## Best practices
 
-To add a new binding to a running or stopped container:
+1. Put your common preferences in `config.ini` and the default engine in `[general] engine`.
+2. Use profiles for recurring setups and flags for one-off changes.
+3. Keep `privileged = false`; add capabilities per container and remove them afterwards.
+4. Be selective with `devices`: the USB tree plus the serial hot-plug covers most hardware.
+5. Use `rfswift config ...` for changes instead of re-creating containers.
+
+## Common scenarios
 
 ```bash
-rfswift bindings add -c <container_name> -t <target_path> [-s <source_path>]
-```
+# SDR development environment
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdr_dev -b ~/sdr_projects:/projects -s /dev/ttyUSB0:/dev/ttyUSB0
 
-Parameters:
-- `-c, --container`: Container name or ID (required)
-- `-t, --target`: Path inside the container (required)
-- `-s, --source`: Path on the host (optional, defaults to same as target)
+# Wi-Fi security testing
+rfswift container create -i penthertz/rfswift_resolute:wifi -n wifi_testing -a NET_ADMIN,NET_RAW -b ~/wifi_captures:/captures
 
-Examples:
+# Offline firmware analysis
+rfswift container create -i penthertz/rfswift_resolute:reversing -n firmware_analysis -t none -b ~/firmware:/firmware
 
-```bash
-# Add a simple directory binding
-rfswift bindings add -c my_sdr_container -s /home/user/data -t /data
-
-# Add a device binding
-rfswift bindings add -c my_bt_container -s /dev/bluetooth -t /dev/bluetooth
-
-# When source and target are identical
-rfswift bindings add -c my_container -t /dev/ttyUSB0
-```
-
-### Removing Bindings from Containers
-
-To remove an existing binding:
-
-```bash
-rfswift bindings rm -c <container_name> -t <target_path> [-s <source_path>]
-```
-
-Example:
-
-```bash
-# Remove a binding
-rfswift bindings rm -c my_container -t /data
-```
-
-### Docker API Version Compatibility
-
-If you encounter a Docker API version mismatch error:
-
-```
-Error response from daemon: client version 1.47 is too new. Maximum supported API version is 1.45
-```
-
-You can set the API version to match your Docker engine:
-
-```bash
-sudo DOCKER_API_VERSION=1.45 rfswift bindings add -c my_container -s /tmp -t /root/myshare
-```
-
-For persistent configuration, add this to your shell profile:
-
-```bash
-# Add to ~/.bashrc, ~/.zshrc, etc.
-export DOCKER_API_VERSION=1.45
-```
-
-## Quiet Mode / Disconnected Mode
-
-RF Swift includes a global flag that allows you to run in "disconnected mode," which prevents the tool from checking for updates or requiring internet connectivity:
-
-```bash
-rfswift -q [command]
-# or
-rfswift --disconnect [command]
-```
-
-### When to Use Quiet Mode
-
-This mode is particularly useful in several scenarios:
-
-1. **Air-gapped Environments**: When working in secure environments without internet access
-2. **Bandwidth-limited Situations**: When working with limited connectivity (field operations, remote locations)
-3. **Automated Scripts**: When running RF Swift as part of automated workflows where update checks are not desired
-4. **Rapid Execution**: When you need immediate tool execution without the delay of update checking
-
-### Examples
-
-```bash
-# Run a container without checking for updates
-rfswift -q run -i sdr_full -n quick_analysis
-
-# List local images in disconnected mode
-rfswift --disconnect images local
-
-# Execute a command in a container without update checks
-rfswift -q exec -c my_container
-```
-
-The quiet/disconnected mode can be combined with any RF Swift command and its respective options.
-
-{{< callout type="info" >}}
-Using quiet mode doesn't affect RF Swift's functionality. It only disables the automatic update checks. Consider periodically checking for updates manually with `rfswift update` to ensure you have the latest features and security improvements.
-{{< /callout >}}
-
-## Best Practices
-
-1. **Base Configuration**: Set your common preferences in the `config.ini` file
-2. **Special Cases**: Use command-line flags for one-time or specialized settings
-3. **Security First**: Keep the `privileged = false` setting when possible and only add specific capabilities as needed
-4. **Dynamic Adjustments**: Use the `bindings` feature for on-the-fly modifications
-5. **Device Access**: Be selective about device mappings; only share what is needed
-
-## Common Configuration Scenarios
-
-### SDR Development Environment
-
-```bash
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_dev \
-  -b ~/sdr_projects:/projects \
-  -s /dev/ttyUSB0:/dev/ttyUSB0
-```
-
-### Wi-Fi Security Testing
-
-```bash
-rfswift run -i penthertz/rfswift_resolute:wifi -n wifi_testing \
-  -a NET_ADMIN,NET_RAW \
-  -b ~/wifi_captures:/captures
-```
-
-### Offline Device Analysis
-
-```bash
-# Create a container with no network
-rfswift run -i penthertz/rfswift_resolute:reversing -n firmware_analysis \
-  -t none \
-  -b ~/firmware:/firmware
+# Native, no container engine
+rfswift container create --engine nix -i sdr_light -n radio
 ```

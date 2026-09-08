@@ -9,370 +9,178 @@ cascade:
 
 # Getting Started with RF Swift 🚀
 
-This guide will help you get started with RF Swift by covering system requirements, installation steps, and next actions. First we will need to setup the environment.
+This guide covers installation on Linux, macOS and Windows, what the installer sets up for you, and the few host steps that are left to you on purpose.
+
+The current release is **v4.0.2**. Linux and macOS have a one-line install script; every platform also has native installers on the [releases page](https://github.com/PentHertz/RF-Swift/releases): deb, rpm and pacman packages and a Workbench AppImage for Linux, a Homebrew cask and a signed DMG for macOS, and a one-click bundle or an MSI for Windows. Pick the tab that matches your machine.
 
 ## Installation
 
-RF Swift now offers a streamlined one-line installer that automatically installs all dependencies and configures your system for optimal performance.
-
-Our new installer takes care of everything for you in a single command! It will:
-
-- Install **Docker** or **Podman** (your choice) if not already present
-- Download and install the latest RF Swift release
-- Configure your system for USB, audio, and GUI support
-- Create a convenient shell alias for easy access
-- Set up proper permissions and configurations
-
-{{< tabs items="Linux/macOS (curl),Linux/macOS (wget),Windows" >}}
+{{< tabs items="Linux / macOS (one line),Linux packages,macOS (DMG / Homebrew),Windows (installer)" >}}
   {{< tab >}}
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
-After installation, simply run: `rfswift`
-  {{< /tab >}}
-  {{< tab >}}
-```bash
-curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
-```
-After installation, simply run: `rfswift`
-  {{< /tab >}}
-  {{< tab >}}
-See our [installation documentation](/docs/quick-start) for Windows installation instructions.
-  {{< /tab >}}
-{{< /tabs >}}
 
-The installer will detect your system and prompt you to choose a container engine if none is found:
-
-```
-📝 Which container engine would you like to install?
-   🐳 Docker  - Industry standard, requires daemon (root)
-   🦭 Podman  - Daemonless, rootless by default
-   🦙 Lima    - QEMU VM with USB passthrough (macOS only)
-1) Docker   2) Podman   3) Both   4) Lima   5) Skip
-```
-
-On macOS, the installer also offers **Lima** for USB device passthrough (SDR dongles, HackRF, etc.), even when Docker or Podman is already installed.
-
-If both engines are already installed, RF Swift will auto-detect the available one at runtime.
-
-### Choosing a Container Engine
-
-RF Swift supports both **Docker** and **Podman** as container engines. All RF Swift images are OCI-compatible and work identically with either engine.
-
-| | Docker | Podman |
-|---|---|---|
-| **Architecture** | Client-server daemon | Daemonless, fork-exec |
-| **Root required** | Yes (daemon runs as root) | No (rootless by default) |
-| **Best for** | Broad ecosystem, Windows/macOS | Security-focused, air-gapped, embedded |
-| **Device passthrough** | Native | Supported (may need extra config) |
-
-{{< callout type="info" >}}
-You can override the auto-detected engine at any time with `rfswift --engine docker`, `rfswift --engine podman`, or `rfswift --engine lima` (macOS USB passthrough).
-{{< /callout >}}
-
-### Manual Installation
-
-If you prefer to have more control over the installation process, you can install the components separately.
-
-#### Linux Manual Installation
-
-{{< callout type="info" >}}
-On Linux, Docker or Podman, BuildX, and Go can be directly installed with the `scripts/install.sh` script included in the repository.
-{{< /callout >}}
-
-**Essential Components**
-
-{{< tabs items="Docker,Podman" >}}
-  {{< tab >}}
-**Docker** is the industry standard container engine
+or with wget:
 
 ```bash
-# Install Docker via official script
-curl -fsSL https://get.docker.com | sudo sh
-
-# Add your user to the docker group
-sudo usermod -aG docker $USER
-newgrp docker
-
-# Verify installation
-docker run hello-world
-```
-  {{< /tab >}}
-  {{< tab >}}
-**Podman** is a daemonless, rootless container engine
-
-```bash
-# Debian / Ubuntu
-sudo apt install podman podman-compose slirp4netns fuse-overlayfs uidmap
-
-# Fedora / RHEL
-sudo dnf install podman podman-compose slirp4netns fuse-overlayfs
-
-# Arch Linux
-sudo pacman -S podman podman-compose slirp4netns fuse-overlayfs crun
-
-# macOS (via Homebrew)
-brew install podman
-# Note: RF Swift will automatically run 'podman machine init' and
-# 'podman machine start' if needed when you run a container.
+wget -qO- "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
 
-**Rootless configuration** (Linux only):
+The installer asks a handful of questions and does the rest:
+
+1. **Release channel**: stable, or the development prerelease.
+2. **What to install**: the `rfswift` CLI/TUI, the Workbench GUI, or both. On Linux the Workbench comes as a portable AppImage or a smaller native build.
+3. **Install method**: the native package (deb, rpm, pacman; the signed Homebrew cask on macOS) when a package manager and root are available, else a tarball in a directory of your choice.
+4. **Container engine** when none is found: Docker, Podman, both, Lima (macOS, USB passthrough), or skip.
+5. **Nix** for the native engine, and **bubblewrap** for its `--isolate` jail (the sandbox is tested on every run).
+6. **udev rules** for RF hardware (Linux), then Docker session access, `xhost` and `pactl`.
+
+Every download is verified against the release SHA-256 manifest; with a recent, logged-in GitHub CLI it also offers to check the Sigstore build-provenance attestation. On Debian, where the first user is not in `sudo`, the installer offers the fix or runs from a root shell (`su -`).
+
+Answer everything up front for automation:
+
+| Variable | Values |
+|----------|--------|
+| `RFSWIFT_CHANNEL` | `stable`, `dev` |
+| `RFSWIFT_INSTALL` | `cli`, `workbench`, `both` |
+| `RFSWIFT_PKG_FORMAT` | `native`, `tarball` |
+| `RFSWIFT_WORKBENCH_FORMAT` | `native`, `appimage` |
+| `RFSWIFT_INSTALL_DIR` | directory for a tarball install |
+| `RFSWIFT_ENGINE` | `docker`, `podman`, `both`, `skip` |
+| `RFSWIFT_NIX`, `RFSWIFT_ISOLATE`, `RFSWIFT_UDEV`, `RFSWIFT_ATTEST` | `1` or `0` |
 
 ```bash
-# Ensure subordinate UID/GID ranges are set
-sudo usermod --add-subuids 100000-165535 $USER
-sudo usermod --add-subgids 100000-165535 $USER
-
-# Enable lingering so containers survive logout
-sudo loginctl enable-linger $USER
-
-# Enable the Podman socket (Docker API compatibility)
-systemctl --user enable --now podman.socket
-```
-
-Verify installation:
-
-```bash
-podman run hello-world
-```
-  {{< /tab >}}
-{{< /tabs >}}
-
-**Other Essential Components**
-
-- **xhost**: Required for GUI application support (install via your distribution's package manager)
-- **PulseAudio/PipeWire**: Required for audio support (install via your distribution's package manager)
-
-**Optional Components**
-
-- **Go Compiler**: Required if you want to build RF Swift from source
-- **BuildX**: Required for cross-architecture compilation (Docker only)
-- **asciinema**: Required for recording sessions
-
-**Repository Installation**
-
-```bash
-# Clone the repository
-git clone https://github.com/PentHertz/RF-Swift.git
-cd RF-Swift
-
-# Run the installation script to automatically install all dependencies
-./scripts/install.sh
-```
-
-The `scripts/install.sh` script will:
-- Offer to install Docker, Podman, or both
-- Set up BuildX for cross-architecture support (Docker)
-- Configure rootless mode (Podman)
-- Install Go compiler if needed
-- Configure xhost for GUI application access
-- Set up PulseAudio/PipeWire for sound
-- Configure user permissions
-- Download and install the latest RF Swift binary
-
-{{< tabs items="Docker post-install,Podman post-install" >}}
-  {{< tab >}}
-**Running Docker Without Sudo**
-
-To avoid using `sudo` for every Docker command, add your user to the `docker` group:
-
-```bash
-sudo usermod -aG docker $USER
-newgrp docker
-```
-
-You may need to log out and back in for the changes to take effect. Verify it works by running `docker ps` without sudo.
-  {{< /tab >}}
-  {{< tab >}}
-**Podman Rootless Mode**
-
-Podman runs rootless by default, so you need no group membership and no daemon. Just make sure subordinate UID/GID ranges are configured:
-
-```bash
-# Check your ranges
-grep $USER /etc/subuid /etc/subgid
-
-# If empty, add them
-sudo usermod --add-subuids 100000-165535 $USER
-sudo usermod --add-subgids 100000-165535 $USER
-```
-
-For Docker CLI compatibility (so tools expecting `docker` work with Podman):
-
-```bash
-# Some distros provide podman-docker package
-sudo apt install podman-docker   # Debian/Ubuntu
-sudo dnf install podman-docker   # Fedora
-```
-  {{< /tab >}}
-{{< /tabs >}}
-
-#### Windows Manual Installation
-
-**Required Software**
-
-- [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/) to run containers
-- [usbipd](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) to bind USB devices to the host
-
-**For Audio Support**
-
-For programs requiring PulseAudio:
-
-1. Follow the setup guide on [Linux Uprising](https://www.linuxuprising.com/2021/03/how-to-get-sound-pulseaudio-to-work-on.html)
-2. Use the updated binaries available at [pgaskin.net/pulseaudio-win32](https://pgaskin.net/pulseaudio-win32/)
-
-{{< callout type="warning" >}}
-Make sure Docker Desktop runs in [WSL2 mode](https://docs.docker.com/desktop/wsl/#enabling-docker-support-in-wsl-2-distros) for optimal performance and compatibility.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Podman on Windows**: Podman can also be used on Windows via WSL2. Install it inside your WSL2 distribution using the Linux instructions above. Podman Desktop is also available at [podman-desktop.io](https://podman-desktop.io/).
-{{< /callout >}}
-
-**Installation Steps**
-
-1. Install Docker Desktop (or Podman via WSL2) and ensure WSL2 integration is enabled
-2. Install usbipd for USB device support
-3. Set up PulseAudio if audio functionality is needed
-4. Download the latest RF Swift binary from the releases page
-
-#### macOS Manual Installation
-
-RF Swift on macOS works in **two modes** depending on whether you need USB hardware:
-
-| Mode | What you need | USB access | Best for |
-|------|---------------|------------|----------|
-| **Standard** | Docker Desktop or Podman | No USB | Software-only work, analysis, simulation |
-| **USB passthrough** | Lima (+ Docker Desktop optionally) | Full USB hot-plug | SDR dongles, RF hardware, HackRF, RTL-SDR, etc. |
-
-{{< tabs items="Docker,Podman,Lima (USB passthrough)" >}}
-  {{< tab >}}
-**Docker Desktop for macOS**
-
-- Install [Docker Desktop](https://docs.docker.com/desktop/install/mac-install/) from the official website
-- XQuartz for X11 forwarding (optional)
-
-```bash
-# Verify
-docker run hello-world
-```
-
-{{< callout type="info" >}}
-Docker Desktop runs containers inside its own Linux VM. This works for all RF Swift tools, but **USB devices cannot be forwarded** into containers. For USB hardware, add Lima (see the Lima tab).
-{{< /callout >}}
-  {{< /tab >}}
-  {{< tab >}}
-**Podman on macOS**
-
-```bash
-# Install via Homebrew
-brew install podman
-
-# RF Swift will automatically run 'podman machine init' and
-# 'podman machine start' when needed, but you can also do it manually:
-podman machine init
-podman machine start
-
-# Verify
-podman run hello-world
-```
-
-- XQuartz for X11 forwarding (optional)
-- Podman Desktop available at [podman-desktop.io](https://podman-desktop.io/)
-
-{{< callout type="info" >}}
-Like Docker Desktop, Podman on macOS cannot forward USB devices into containers. For USB hardware, add Lima (see the Lima tab).
-{{< /callout >}}
-  {{< /tab >}}
-  {{< tab >}}
-**Lima: USB passthrough for macOS**
-
-Lima runs a QEMU VM with USB hot-plug support. RF Swift containers run inside Lima's Docker, where USB devices are visible.
-
-```bash
-# Install Lima
-brew install lima qemu
-
-# (Optional) Create the rfswift VM manually
-# RF Swift will auto-create it on first 'rfswift --engine lima run'
-limactl create --name rfswift lima/rfswift.yaml
-limactl start rfswift
-```
-
-The Lima VM is pre-configured with:
-- Docker engine
-- USB libraries and kernel modules
-- Udev rules for all common SDR/RF devices (HackRF, RTL-SDR, USRP, BladeRF, Airspy, PlutoSDR, LimeSDR, etc.)
-
-**Workflow:**
-
-```bash
-# 1. See host USB devices
-rfswift macusb list
-
-# 2. Attach your SDR dongle to the Lima VM
-rfswift macusb attach --vid 0x1d50 --pid 0x604b
-
-# 3. Run container via Lima (not Docker Desktop)
-rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_light -n sdr_work
-
-# 4. When done, detach
-rfswift macusb detach --vid 0x1d50 --pid 0x604b
+RFSWIFT_CHANNEL=stable RFSWIFT_INSTALL=both RFSWIFT_ENGINE=podman RFSWIFT_NIX=1 RFSWIFT_UDEV=1 sh get_rfswift.sh
 ```
 
 {{< callout type="warning" >}}
-You **must** use `--engine lima` when running containers that need USB access. Without it, containers run in Docker Desktop which has no USB passthrough.
+Review a script before piping it into a shell. Download `get_rfswift.sh` from the official repository, read it, and run the local copy; or use the native packages below. See [Security](/docs/security/audit) for the trust model.
 {{< /callout >}}
+  {{< /tab >}}
+  {{< tab >}}
+Two packages ship with every release on the [releases page](https://github.com/PentHertz/RF-Swift/releases): `rfswift` (CLI/TUI, man pages, bash/zsh/fish completions) and `rfswift-workbench` (desktop GUI). They pull in `xhost` and `pactl`, the two host tools every container needs; `bubblewrap` and a container engine are recommended.
 
-Lima can coexist with Docker Desktop. Use Docker Desktop for general work and switch to `--engine lima` when you need USB hardware.
+```bash
+sudo apt install ./rfswift_<version>_amd64.deb            # Debian / Ubuntu
+sudo dnf install ./rfswift-<version>-1.x86_64.rpm         # Fedora / RHEL
+sudo pacman -U rfswift-<version>-1-x86_64.pkg.tar.zst     # Arch Linux
+```
+
+The packages install `rfswift` in `/usr/bin` and leave three host changes to you, asked for rather than applied:
+
+```bash
+rfswift host setup           # asks each step; --yes takes the defaults
+rfswift host udev            # RF Swift's udev rules only (rootless Podman and Nix need them, Docker does not)
+rfswift host docker-access   # docker group + socket ACL, effective without logging out
+rfswift host isolate         # Nix jail on Ubuntu 24.04+: bubblewrap and its AppArmor profile
+```
+
+The wizard also offers to install Docker and/or Podman from your distribution, or Nix. A packaged `rfswift` is upgraded with the next package; `rfswift update` says so instead of overwriting it. The installer removes the copies an earlier tarball install left in `/usr/local/bin` or `~/.rfswift/bin` when you agree.
+  {{< /tab >}}
+  {{< tab >}}
+**The DMG, no terminal needed.** Download `rfswift_Darwin_universal.dmg` from the [releases page](https://github.com/PentHertz/RF-Swift/releases), open it and drag `rfswift-workbench.app` to Applications. Two helpers sit next to it: **Install RF Swift CLI** copies `rfswift` to `/usr/local/bin`, and **RF Swift Setup** installs and picks your container engine. Everything in the image is Developer ID signed and notarized, so Gatekeeper opens it without a warning.
+
+**Homebrew** does the same from the terminal:
+
+```bash
+brew install --cask penthertz/rfswift/rfswift
+curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/main/scripts/setup-macos.sh" | bash
+```
+
+The cask installs the CLI and the Workbench from the signed release; the setup script picks your engine. The one-line installer of the first tab works on macOS too.
+
+For USB hardware install Lima (`brew install qemu lima`); for GUI tools install XQuartz (`scripts/setup-xquartz-macos.sh` configures it). See [engine](/docs/commands/engine) and [usb](/docs/commands/usb).
+  {{< /tab >}}
+  {{< tab >}}
+Download `RFSwift-Setup-<version>-x64.exe` (or `-arm64`) from the [releases page](https://github.com/PentHertz/RF-Swift/releases) and run it. Under a single UAC prompt it installs what you tick: WSL 2 with WSLg, usbipd-win for USB passthrough, Docker Desktop or Podman Desktop (or none for a Nix-only setup), optionally Nix inside WSL 2, and RF Swift with its Start Menu entries. `RFSwift-<version>-<arch>.msi` installs RF Swift alone for managed deployments.
+
+Then open **RF Swift Console** or **RF Swift Workbench** from the Start Menu, or type `rfswift` in any terminal. Details, silent switches and the trust model: [Windows](/docs/guide/windows).
   {{< /tab >}}
 {{< /tabs >}}
 
-## Creating an Alias (Linux/macOS)
+{{< callout emoji="🐉" >}}
+**Already on Kali, Parrot, BlackArch or DragonOS?** Keep it. RF Swift installs inside the distribution like on any Linux (Kali gets its own `docker.io` package), and the Nix engine adds pinned per-engagement environments, single tools on demand and the `--isolate` jail without touching the distribution's packages: `rfswift host setup --engine none --nix yes`, then `rfswift env run sdr_light sdrpp`. See [Keep your distribution, add RF Swift](/docs/comparisons#complete-the-distribution-you-already-run).
+{{< /callout >}}
 
-This part can be considered if you manually downloaded the binary.
+## Choosing an engine
 
-For convenience, you can create an alias to run RF Swift from anywhere. If you didn't use the `install.sh` script (which creates this automatically), you can add an alias manually:
+| | Docker | Podman | Lima | Nix |
+|---|---|---|---|---|
+| **What it is** | Client-server daemon | Daemonless, rootless by default | Docker inside a QEMU VM (macOS) | Native, pinned tool environments |
+| **Root required** | Daemon runs as root (join the `docker` group) | No | No | No (udev rules for hardware) |
+| **USB hardware** | Linux; Windows via usbipd | Linux (host udev rules); Windows via usbipd | macOS hot-plug | Direct |
+| **Best for** | Broad ecosystem, Windows and macOS | Security-focused, air-gapped, shared machines | macOS with RF hardware | Laptops without a container engine, lowest latency to hardware, GPU |
 
+RF Swift auto-detects Docker, Podman and Lima. Override with `--engine`, `RFSWIFT_ENGINE`, or `engine =` in `config.ini`. All engines can coexist and the Workbench lists their targets side by side. See [engine](/docs/commands/engine), [Using Podman](/docs/guide/podman) and [Nix engine](/docs/guide/nix-engine).
+
+### Engine setup by hand
+
+{{< tabs items="Docker,Podman,Nix" >}}
+  {{< tab >}}
 ```bash
-echo "alias rfswift='$(pwd)/rfswift'" >> "$HOME/.$(basename $SHELL)rc"
-source "$HOME/.$(basename $SHELL)rc"
+curl -fsSL https://get.docker.com | sudo sh      # or your distribution's package
+rfswift host docker-access                       # docker group + socket ACL, no logout needed
+docker run hello-world
 ```
 
-Replace `$(pwd)/rfswift` with the full path to your RF Swift binary.
+Kali installs `docker.io` from its own repository (Docker's script refuses it). Docker Desktop on macOS and Windows needs no group setup.
+  {{< /tab >}}
+  {{< tab >}}
+```bash
+sudo apt install podman slirp4netns fuse-overlayfs uidmap   # Debian / Ubuntu
+sudo dnf install podman slirp4netns fuse-overlayfs          # Fedora / RHEL
+sudo pacman -S podman slirp4netns fuse-overlayfs crun       # Arch
+brew install podman                                         # macOS (RF Swift runs 'podman machine init/start' for you)
 
-## Next Steps
+sudo usermod --add-subuids 100000-165535 $USER
+sudo usermod --add-subgids 100000-165535 $USER
+sudo loginctl enable-linger $USER                           # containers survive logout
+rfswift host udev                                           # your user may open RF hardware
+podman run hello-world
+```
+  {{< /tab >}}
+  {{< tab >}}
+```bash
+sh <(curl -L https://nixos.org/nix/install) --daemon        # or: rfswift host setup --nix yes
+rfswift container create --engine nix                       # wizard
+```
 
-After installation, you can dive right into:
+On Windows: `rfswift env wsl setup`. Details in the [Nix engine guide](/docs/guide/nix-engine).
+  {{< /tab >}}
+{{< /tabs >}}
+
+## Check the host
+
+```bash
+rfswift doctor
+```
+
+The doctor lists every engine and its service, Docker access, the host udev rules, the Nix engine (and its WSL 2 backend on Windows), the Nix jail, the Lima VM, images, X11 and `xhost`, the audio server, USB devices, the config file and kernel modules. Each failing row names the command that fixes it.
+
+## Verifying downloads
+
+```bash
+gh attestation verify rfswift_Linux_x86_64.tar.gz --repo PentHertz/RF-Swift
+```
+
+Every release asset carries a Sigstore build-provenance attestation proving it was built by the official release workflow from a specific commit. The installer runs this check when a recent, logged-in `gh` is available and always verifies the SHA-256 manifest.
+
+## Next steps
 
 {{< cards >}}
-  {{< card link="/docs/quick-start" title="Quick Start" icon="document-text" subtitle="Running RF Swift with pre-built images and binary" >}}
-  {{< card link="/docs/development" title="Developing and Contributing" icon="document-text" subtitle="Compile binary and build images from sources, contribute to the project" >}}
+  {{< card link="/docs/quick-start" title="Quick Start" icon="document-text" subtitle="Pull an image and run your first container or environment" >}}
+  {{< card link="/docs/guide/workbench" title="Workbench" icon="desktop-computer" subtitle="The assessment GUI" >}}
+  {{< card link="/docs/development" title="Developing and contributing" icon="document-text" subtitle="Compile the binaries, build images, contribute" >}}
 {{< /cards >}}
 
 ## Troubleshooting
 
-If you encounter issues during installation or usage:
-
-1. Check the [GitHub Issues](https://github.com/PentHertz/RF-Swift/issues) page for known problems
-2. Verify your container engine is working correctly:
-   - Docker: `docker run hello-world`
-   - Podman: `podman run hello-world`
-3. Ensure you have the required permissions (e.g., user is in the docker group for Docker, or subuid/subgid configured for Podman)
-4. Join our [Discord community](https://discord.gg/NS3HayKrpA) for direct assistance
-
-### Common Issues with the One-Line Installer
-
-If you encounter issues with the one-line installer:
-
-- **Permission Denied**: Ensure you have sudo privileges for Linux/macOS installation
-- **Docker/Podman Service Not Starting**: Try restarting your system after installation
-- **Shell Alias Not Working**: Open a new terminal window or manually source your shell configuration file
-- **GitHub API Rate Limiting**: If you see an error about GitHub API limits, wait a few minutes and try again
-
-### Podman-Specific Issues
-
-- **"WARN[0000] "/" is not a shared mount"**: Run `sudo mount --make-rshared /` or add it to `/etc/fstab`
-- **Device passthrough not working**: Some devices may require `--privileged` or explicit `--device` flags; RF Swift handles this automatically in most cases
-- **Image pull fails with "short-name resolution"**: Use the full image name, e.g., `docker.io/penthertz/rfswift_resolute:sdr_light`
+1. Run `rfswift doctor`; it points at the missing piece.
+2. Check the [GitHub issues](https://github.com/PentHertz/RF-Swift/issues) for known problems, and join the [Discord](https://discord.gg/NS3HayKrpA).
+3. Verify the engine: `docker run hello-world` or `podman run hello-world`.
+4. Docker "permission denied" on the socket: `rfswift host docker-access`.
+5. Podman "`/` is not a shared mount": `sudo mount --make-rshared /`.
+6. Podman short-name resolution: use the full name, `docker.io/penthertz/rfswift_resolute:sdr_light`, or set `unqualified-search-registries = ["docker.io"]` in `/etc/containers/registries.conf`.
+7. Image pull fails with `invalid username/password`: a stale `docker login` for Docker Hub; the message names the credential file and the `logout` command.
+8. `rfswift` still runs an old copy after a package install: the installer offers to remove `/usr/local/bin/rfswift` and `~/.rfswift/bin`; check `which -a rfswift`.

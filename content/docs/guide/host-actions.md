@@ -1,7 +1,7 @@
 ---
 title: Host Actions
 weight: 5
-next: /docs/guide/file-sharing
+next: /docs/guide/sharing-files
 prev: /docs/guide/configurations
 cascade:
   type: docs
@@ -10,6 +10,20 @@ cascade:
 # Host Actions
 
 After learning how to run, configure, and manage RF Swift containers and images, this section covers important host-level operations that enhance the functionality of your RF tools and containers.
+
+## Host setup on Linux
+
+The Linux packages and the installer leave three host changes to you on purpose, and ask for them instead of applying them silently. `rfswift host setup` walks through all of them; each also exists as a single command:
+
+```bash
+rfswift host setup             # udev rules, engine install, Nix, Docker access, Nix jail; --yes takes the defaults
+rfswift host udev              # RF Swift's udev rules: rootless Podman and Nix environments need them, Docker does not
+rfswift host docker-access     # docker group + a socket ACL, works without logging out
+rfswift host isolate           # Nix --isolate jail on Ubuntu 24.04+: bubblewrap and its AppArmor profile
+rfswift host devclean          # remove empty directories an old container left where a device node belongs
+```
+
+The rules grant group `plugdev` plus the logged-in user's seat ACL (never world-writable nodes) and udev is reloaded on the spot; log out and in once, then re-plug the device. `rfswift doctor` reports the state of each item, and the Workbench's Engine doctor has the same actions behind a polkit prompt. Full reference: [host](/docs/commands/host).
 
 ## Audio Configuration
 

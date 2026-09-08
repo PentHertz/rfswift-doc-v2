@@ -7,6 +7,10 @@ next: /docs/commands/build
 
 # rfswift upgrade
 
+{{< callout type="info" >}}
+**RF Swift v4 canonical spelling**: `rfswift container upgrade`. The legacy form `rfswift upgrade` and the short alias `rfswift system upgrade` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
+
 Upgrade containers to newer image versions while preserving selected data directories.
 
 ## Synopsis
@@ -15,7 +19,7 @@ Upgrade containers to newer image versions while preserving selected data direct
 rfswift upgrade -c CONTAINER_NAME [-i IMAGE_NAME] [-r REPOSITORIES]
 ```
 
-The `upgrade` command follows this pattern: pull new image → create new container → copy preserved directories → inherit original container name. This enables seamless version upgrades while maintaining important data.
+The `upgrade` command follows this pattern: pull new image -> create new container -> copy preserved directories -> inherit original container name. This enables seamless version upgrades while maintaining important data.
 
 ---
 
