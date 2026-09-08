@@ -9,26 +9,27 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 <title>doctor – RF Swift</title>
-  <meta name="description" content="doctorDiagnose your system environment for RF Swift compatibility. The doctor command performs a series of checks and reports the status of each component needed to run RF Swift containers.
-Syntax rfswift doctor What It Checks Check What it verifies Container engine Docker or Podman is installed and detected Engine service The container engine daemon is running and reachable Engine version Reports the engine and API version Docker permissions Current user is in the docker group (Linux) RF Swift images RF Swift images are pulled and available locally X11 display DISPLAY is set and /tmp/.X11-unix socket exists xhost xhost command is installed for X11 forwarding Audio system PulseAudio or PipeWire is running Audio TCP server Audio server is listening on the configured TCP port USB devices /dev/bus/usb is present and accessible Config file Config file exists and has secure permissions Kernel modules Key kernel modules are loaded (USB, sound, Bluetooth, Wi-Fi) Status Icons Icon Meaning ✓ (green) Check passed ! (yellow) Warning – functional but could be improved ✗ (red) Check failed – something needs to be fixed - (gray) Skipped – not applicable on this platform Example Output 🩺 RF Swift Doctor ══════════════════════════════════════════════════════════ ✓ Container engine Docker (docker) ✓ Engine service Running and reachable ✓ Engine version 27.3.1 (API 1.47) ✓ Docker permissions User &#39;user&#39; is in docker group ✓ RF Swift images 3 RF Swift image(s) available ✓ X11 display DISPLAY=:0, X11 socket present ✓ xhost Installed ✓ Audio system PipeWire ! Audio TCP server Not reachable at localhost:34567 (run: rfswift host audio enable) ✓ USB devices /dev/bus/usb present (4 bus(es)) ✓ Config file /home/user/.config/rfswift/config.ini ✓ Kernel modules Loaded: USB support, Sound/ALSA, Bluetooth, Wi-Fi/802.11 ────────────────────────────────────────────────────────── 11 passed 1 warnings Common Issues and Fixes Container engine not found # Install Docker curl -fsSL https://get.docker.com | sh # Or install Podman sudo apt install podman # Debian/Ubuntu sudo dnf install podman # Fedora/RHEL User not in docker group sudo usermod -aG docker $USER newgrp docker Audio TCP server not reachable The audio server TCP module needs to be loaded for container audio passthrough:" /><link rel="canonical" href="https://rfswift.io/docs/commands/doctor/" itemprop="url" />
+  <meta name="description" content="doctorDiagnose the host for RF Swift. rfswift doctor (also rfswift system doctor) checks every engine, the display, audio, devices, the Nix engine and the host prerequisites, and tells you which command fixes what is wrong.
+Syntax rfswift doctor rfswift system doctor What it checks Check What it verifies Container engine Docker, Podman or Lima detected, which one is active Engine service The daemon or VM is running and reachable, with its version Docker permissions Your user can talk to the Docker socket (group membership and the session ACL); fix: rfswift host docker-access Host udev rules RF Swift’s rules are installed and current, your user is in plugdev; fix: rfswift host udev Nix engine Nix is installed with flakes; on Windows, the WSL 2 distribution that hosts it, the Linux rfswift inside and version skew Nix jail (–isolate) bubblewrap is present and may create a user namespace (AppArmor profile on Ubuntu 24.04&#43;); fix: rfswift host isolate Lima VM (macOS) Instance state, QMP socket for USB passthrough, Docker socket RF Swift images Images pulled locally X11 display DISPLAY set and the X11 socket present; on Windows the WSLg socket, asked from WSL xhost Installed for local X11 authorisation Audio system PulseAudio or PipeWire running (Windows: WSLg audio socket) Audio TCP server The module listens on the configured port; fix: rfswift host audio enable USB devices /dev/bus/usb present; on Windows the usbipd-win version with connected, shared and attached counts and the default WSL 2 distribution Config file Exists with safe permissions Kernel modules USB, sound, Bluetooth, Wi-Fi modules loaded (Linux) Status icons Icon Meaning ✓ (green) Passed ! (yellow) Warning, works but could be better ✗ (red) Failed, needs a fix - (gray) Skipped, not applicable on this platform Example output 🩺 RF Swift Doctor ══════════════════════════════════════════════════════════ ✓ Container engine Docker (docker) ✓ Engine service Running and reachable ✓ Engine version 29.1.4 (API 1.53) ✓ Docker permissions User &#39;user&#39; can use the Docker socket ✓ Host udev rules /etc/udev/rules.d/70-rfswift.rules installed, user in plugdev ✓ Nix engine nix 2.30 with flakes ✓ Nix jail (--isolate) bubblewrap ready (/usr/bin/bwrap, AppArmor profile loaded) ✓ RF Swift images 3 RF Swift image(s) available ✓ X11 display DISPLAY=:0, X11 socket present ✓ xhost Installed ✓ Audio system PipeWire ! Audio TCP server Not reachable at localhost:34567 (run: rfswift host audio enable) ✓ USB devices /dev/bus/usb present (4 bus(es)) ✓ Config file /home/user/.config/rfswift/config.ini ✓ Kernel modules Loaded: USB support, Sound/ALSA, Bluetooth, Wi-Fi/802.11 ────────────────────────────────────────────────────────── 14 passed 1 warnings Common issues and fixes rfswift host setup # everything below, asked step by step rfswift host docker-access # Docker socket &#34;permission denied&#34; rfswift host udev # hardware needs root on rootless Podman or Nix rfswift host isolate # bwrap &#34;setting up uid map: Permission denied&#34; rfswift host audio enable # audio TCP server not reachable rfswift image pull -i sdr_full # no RF Swift images rfswift env wsl setup # Windows: Nix backend not provisioned chmod 600 ~/.config/rfswift/config.ini Headless or over SSH without X forwarding: use --desktop for a browser desktop, or ssh -X." /><link rel="canonical" href="https://rfswift.io/docs/commands/doctor/" itemprop="url" />
 
 <meta property="og:title" content="doctor">
 <meta
   property="og:description"
   content="
     
-      doctorDiagnose your system environment for RF Swift compatibility. The doctor command performs a series of checks and reports the status of each component needed to run RF Swift containers.
+      doctorDiagnose the host for RF Swift. rfswift doctor (also rfswift system doctor) checks every engine, the display, audio, devices, the Nix engine and the host prerequisites, and tells you which command fixes what is wrong.
 Syntax
     
 
 rfswift doctor
+rfswift system doctor
   
     
 
   
 
 
-What It Checks
+What it checks
     
   
       
@@ -39,55 +40,67 @@ What It Checks
   
       
           Container engine
-          Docker or Podman is installed and detected
+          Docker, Podman or Lima detected, which one is active
       
       
           Engine service
-          The container engine daemon is running and reachable
-      
-      
-          Engine version
-          Reports the engine and API version
+          The daemon or VM is running and reachable, with its version
       
       
           Docker permissions
-          Current user is in the docker group (Linux)
+          Your user can talk to the Docker socket (group membership and the session ACL); fix: rfswift host docker-access
+      
+      
+          Host udev rules
+          RF Swift&rsquo;s rules are installed and current, your user is in plugdev; fix: rfswift host udev
+      
+      
+          Nix engine
+          Nix is installed with flakes; on Windows, the WSL 2 distribution that hosts it, the Linux rfswift inside and version skew
+      
+      
+          Nix jail (&ndash;isolate)
+          bubblewrap is present and may create a user namespace (AppArmor profile on Ubuntu 24.04&#43;); fix: rfswift host isolate
+      
+      
+          Lima VM (macOS)
+          Instance state, QMP socket for USB passthrough, Docker socket
       
       
           RF Swift images
-          RF Swift images are pulled and available locally
+          Images pulled locally
       
       
           X11 display
-          DISPLAY is set and /tmp/.X11-unix socket exists
+          DISPLAY set and the X11 socket present; on Windows the WSLg socket, asked from WSL
       
       
           xhost
-          xhost command is installed for X11 forwarding
+          Installed for local X11 authorisation
       
       
           Audio system
-          PulseAudio or PipeWire is running
+          PulseAudio or PipeWire running (Windows: WSLg audio socket)
       
       
           Audio TCP server
-          Audio server is listening on the configured TCP port
+          The module listens on the configured port; fix: rfswift host audio enable
       
       
           USB devices
-          /dev/bus/usb is present and accessible
+          /dev/bus/usb present; on Windows the usbipd-win version with connected, shared and attached counts and the default WSL 2 distribution
       
       
           Config file
-          Config file exists and has secure permissions
+          Exists with safe permissions
       
       
           Kernel modules
-          Key kernel modules are loaded (USB, sound, Bluetooth, Wi-Fi)
+          USB, sound, Bluetooth, Wi-Fi modules loaded (Linux)
       
   
 
-Status Icons
+Status icons
     
   
       
@@ -98,23 +111,23 @@ Status Icons
   
       
           ✓ (green)
-          Check passed
+          Passed
       
       
           ! (yellow)
-          Warning &ndash; functional but could be improved
+          Warning, works but could be better
       
       
           ✗ (red)
-          Check failed &ndash; something needs to be fixed
+          Failed, needs a fix
       
       
           - (gray)
-          Skipped &ndash; not applicable on this platform
+          Skipped, not applicable on this platform
       
   
 
-Example Output
+Example output
     
 
 🩺 RF Swift Doctor
@@ -122,8 +135,11 @@ Example Output
 
   ✓  Container engine               Docker (docker)
   ✓  Engine service                 Running and reachable
-  ✓  Engine version                 27.3.1 (API 1.47)
-  ✓  Docker permissions             User &#39;user&#39; is in docker group
+  ✓  Engine version                 29.1.4 (API 1.53)
+  ✓  Docker permissions             User &#39;user&#39; can use the Docker socket
+  ✓  Host udev rules                /etc/udev/rules.d/70-rfswift.rules installed, user in plugdev
+  ✓  Nix engine                     nix 2.30 with flakes
+  ✓  Nix jail (--isolate)           bubblewrap ready (/usr/bin/bwrap, AppArmor profile loaded)
   ✓  RF Swift images                3 RF Swift image(s) available
   ✓  X11 display                    DISPLAY=:0, X11 socket present
   ✓  xhost                          Installed
@@ -134,42 +150,31 @@ Example Output
   ✓  Kernel modules                 Loaded: USB support, Sound/ALSA, Bluetooth, Wi-Fi/802.11
 
 ──────────────────────────────────────────────────────────
-  11 passed  1 warnings
+  14 passed  1 warnings
   
     
 
   
 
 
-Common Issues and Fixes
-    Container engine not found
+Common issues and fixes
     
 
-# Install Docker
-curl -fsSL https://get.docker.com | sh
-
-# Or install Podman
-sudo apt install podman  # Debian/Ubuntu
-sudo dnf install podman  # Fedora/RHEL
+rfswift host setup                  # everything below, asked step by step
+rfswift host docker-access          # Docker socket &#34;permission denied&#34;
+rfswift host udev                   # hardware needs root on rootless Podman or Nix
+rfswift host isolate                # bwrap &#34;setting up uid map: Permission denied&#34;
+rfswift host audio enable           # audio TCP server not reachable
+rfswift image pull -i sdr_full      # no RF Swift images
+rfswift env wsl setup               # Windows: Nix backend not provisioned
+chmod 600 ~/.config/rfswift/config.ini
   
     
 
   
 
 
-User not in docker group
-    
-
-sudo usermod -aG docker $USER
-newgrp docker
-  
-    
-
-  
-
-
-Audio TCP server not reachable
-    The audio server TCP module needs to be loaded for container audio passthrough:
+Headless or over SSH without X forwarding: use --desktop for a browser desktop, or ssh -X.
     
   ">
 <meta
@@ -182,19 +187,19 @@ Audio TCP server not reachable
 
 <meta
   property="article:modified_time"
-  content="2026-08-01T17:47:56+02:00">
+  content="2026-09-08T15:02:43+02:00">
 
 
 
   <meta itemprop="name" content="doctor">
-  <meta itemprop="description" content="doctorDiagnose your system environment for RF Swift compatibility. The doctor command performs a series of checks and reports the status of each component needed to run RF Swift containers.
-Syntax rfswift doctor What It Checks Check What it verifies Container engine Docker or Podman is installed and detected Engine service The container engine daemon is running and reachable Engine version Reports the engine and API version Docker permissions Current user is in the docker group (Linux) RF Swift images RF Swift images are pulled and available locally X11 display DISPLAY is set and /tmp/.X11-unix socket exists xhost xhost command is installed for X11 forwarding Audio system PulseAudio or PipeWire is running Audio TCP server Audio server is listening on the configured TCP port USB devices /dev/bus/usb is present and accessible Config file Config file exists and has secure permissions Kernel modules Key kernel modules are loaded (USB, sound, Bluetooth, Wi-Fi) Status Icons Icon Meaning ✓ (green) Check passed ! (yellow) Warning – functional but could be improved ✗ (red) Check failed – something needs to be fixed - (gray) Skipped – not applicable on this platform Example Output 🩺 RF Swift Doctor ══════════════════════════════════════════════════════════ ✓ Container engine Docker (docker) ✓ Engine service Running and reachable ✓ Engine version 27.3.1 (API 1.47) ✓ Docker permissions User &#39;user&#39; is in docker group ✓ RF Swift images 3 RF Swift image(s) available ✓ X11 display DISPLAY=:0, X11 socket present ✓ xhost Installed ✓ Audio system PipeWire ! Audio TCP server Not reachable at localhost:34567 (run: rfswift host audio enable) ✓ USB devices /dev/bus/usb present (4 bus(es)) ✓ Config file /home/user/.config/rfswift/config.ini ✓ Kernel modules Loaded: USB support, Sound/ALSA, Bluetooth, Wi-Fi/802.11 ────────────────────────────────────────────────────────── 11 passed 1 warnings Common Issues and Fixes Container engine not found # Install Docker curl -fsSL https://get.docker.com | sh # Or install Podman sudo apt install podman # Debian/Ubuntu sudo dnf install podman # Fedora/RHEL User not in docker group sudo usermod -aG docker $USER newgrp docker Audio TCP server not reachable The audio server TCP module needs to be loaded for container audio passthrough:">
-  <meta itemprop="dateModified" content="2026-08-01T17:47:56+02:00">
-  <meta itemprop="wordCount" content="424">
+  <meta itemprop="description" content="doctorDiagnose the host for RF Swift. rfswift doctor (also rfswift system doctor) checks every engine, the display, audio, devices, the Nix engine and the host prerequisites, and tells you which command fixes what is wrong.
+Syntax rfswift doctor rfswift system doctor What it checks Check What it verifies Container engine Docker, Podman or Lima detected, which one is active Engine service The daemon or VM is running and reachable, with its version Docker permissions Your user can talk to the Docker socket (group membership and the session ACL); fix: rfswift host docker-access Host udev rules RF Swift’s rules are installed and current, your user is in plugdev; fix: rfswift host udev Nix engine Nix is installed with flakes; on Windows, the WSL 2 distribution that hosts it, the Linux rfswift inside and version skew Nix jail (–isolate) bubblewrap is present and may create a user namespace (AppArmor profile on Ubuntu 24.04&#43;); fix: rfswift host isolate Lima VM (macOS) Instance state, QMP socket for USB passthrough, Docker socket RF Swift images Images pulled locally X11 display DISPLAY set and the X11 socket present; on Windows the WSLg socket, asked from WSL xhost Installed for local X11 authorisation Audio system PulseAudio or PipeWire running (Windows: WSLg audio socket) Audio TCP server The module listens on the configured port; fix: rfswift host audio enable USB devices /dev/bus/usb present; on Windows the usbipd-win version with connected, shared and attached counts and the default WSL 2 distribution Config file Exists with safe permissions Kernel modules USB, sound, Bluetooth, Wi-Fi modules loaded (Linux) Status icons Icon Meaning ✓ (green) Passed ! (yellow) Warning, works but could be better ✗ (red) Failed, needs a fix - (gray) Skipped, not applicable on this platform Example output 🩺 RF Swift Doctor ══════════════════════════════════════════════════════════ ✓ Container engine Docker (docker) ✓ Engine service Running and reachable ✓ Engine version 29.1.4 (API 1.53) ✓ Docker permissions User &#39;user&#39; can use the Docker socket ✓ Host udev rules /etc/udev/rules.d/70-rfswift.rules installed, user in plugdev ✓ Nix engine nix 2.30 with flakes ✓ Nix jail (--isolate) bubblewrap ready (/usr/bin/bwrap, AppArmor profile loaded) ✓ RF Swift images 3 RF Swift image(s) available ✓ X11 display DISPLAY=:0, X11 socket present ✓ xhost Installed ✓ Audio system PipeWire ! Audio TCP server Not reachable at localhost:34567 (run: rfswift host audio enable) ✓ USB devices /dev/bus/usb present (4 bus(es)) ✓ Config file /home/user/.config/rfswift/config.ini ✓ Kernel modules Loaded: USB support, Sound/ALSA, Bluetooth, Wi-Fi/802.11 ────────────────────────────────────────────────────────── 14 passed 1 warnings Common issues and fixes rfswift host setup # everything below, asked step by step rfswift host docker-access # Docker socket &#34;permission denied&#34; rfswift host udev # hardware needs root on rootless Podman or Nix rfswift host isolate # bwrap &#34;setting up uid map: Permission denied&#34; rfswift host audio enable # audio TCP server not reachable rfswift image pull -i sdr_full # no RF Swift images rfswift env wsl setup # Windows: Nix backend not provisioned chmod 600 ~/.config/rfswift/config.ini Headless or over SSH without X forwarding: use --desktop for a browser desktop, or ssh -X.">
+  <meta itemprop="dateModified" content="2026-09-08T15:02:43+02:00">
+  <meta itemprop="wordCount" content="567">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="doctor">
-  <meta name="twitter:description" content="doctorDiagnose your system environment for RF Swift compatibility. The doctor command performs a series of checks and reports the status of each component needed to run RF Swift containers.
-Syntax rfswift doctor What It Checks Check What it verifies Container engine Docker or Podman is installed and detected Engine service The container engine daemon is running and reachable Engine version Reports the engine and API version Docker permissions Current user is in the docker group (Linux) RF Swift images RF Swift images are pulled and available locally X11 display DISPLAY is set and /tmp/.X11-unix socket exists xhost xhost command is installed for X11 forwarding Audio system PulseAudio or PipeWire is running Audio TCP server Audio server is listening on the configured TCP port USB devices /dev/bus/usb is present and accessible Config file Config file exists and has secure permissions Kernel modules Key kernel modules are loaded (USB, sound, Bluetooth, Wi-Fi) Status Icons Icon Meaning ✓ (green) Check passed ! (yellow) Warning – functional but could be improved ✗ (red) Check failed – something needs to be fixed - (gray) Skipped – not applicable on this platform Example Output 🩺 RF Swift Doctor ══════════════════════════════════════════════════════════ ✓ Container engine Docker (docker) ✓ Engine service Running and reachable ✓ Engine version 27.3.1 (API 1.47) ✓ Docker permissions User &#39;user&#39; is in docker group ✓ RF Swift images 3 RF Swift image(s) available ✓ X11 display DISPLAY=:0, X11 socket present ✓ xhost Installed ✓ Audio system PipeWire ! Audio TCP server Not reachable at localhost:34567 (run: rfswift host audio enable) ✓ USB devices /dev/bus/usb present (4 bus(es)) ✓ Config file /home/user/.config/rfswift/config.ini ✓ Kernel modules Loaded: USB support, Sound/ALSA, Bluetooth, Wi-Fi/802.11 ────────────────────────────────────────────────────────── 11 passed 1 warnings Common Issues and Fixes Container engine not found # Install Docker curl -fsSL https://get.docker.com | sh # Or install Podman sudo apt install podman # Debian/Ubuntu sudo dnf install podman # Fedora/RHEL User not in docker group sudo usermod -aG docker $USER newgrp docker Audio TCP server not reachable The audio server TCP module needs to be loaded for container audio passthrough:">
+  <meta name="twitter:description" content="doctorDiagnose the host for RF Swift. rfswift doctor (also rfswift system doctor) checks every engine, the display, audio, devices, the Nix engine and the host prerequisites, and tells you which command fixes what is wrong.
+Syntax rfswift doctor rfswift system doctor What it checks Check What it verifies Container engine Docker, Podman or Lima detected, which one is active Engine service The daemon or VM is running and reachable, with its version Docker permissions Your user can talk to the Docker socket (group membership and the session ACL); fix: rfswift host docker-access Host udev rules RF Swift’s rules are installed and current, your user is in plugdev; fix: rfswift host udev Nix engine Nix is installed with flakes; on Windows, the WSL 2 distribution that hosts it, the Linux rfswift inside and version skew Nix jail (–isolate) bubblewrap is present and may create a user namespace (AppArmor profile on Ubuntu 24.04&#43;); fix: rfswift host isolate Lima VM (macOS) Instance state, QMP socket for USB passthrough, Docker socket RF Swift images Images pulled locally X11 display DISPLAY set and the X11 socket present; on Windows the WSLg socket, asked from WSL xhost Installed for local X11 authorisation Audio system PulseAudio or PipeWire running (Windows: WSLg audio socket) Audio TCP server The module listens on the configured port; fix: rfswift host audio enable USB devices /dev/bus/usb present; on Windows the usbipd-win version with connected, shared and attached counts and the default WSL 2 distribution Config file Exists with safe permissions Kernel modules USB, sound, Bluetooth, Wi-Fi modules loaded (Linux) Status icons Icon Meaning ✓ (green) Passed ! (yellow) Warning, works but could be better ✗ (red) Failed, needs a fix - (gray) Skipped, not applicable on this platform Example output 🩺 RF Swift Doctor ══════════════════════════════════════════════════════════ ✓ Container engine Docker (docker) ✓ Engine service Running and reachable ✓ Engine version 29.1.4 (API 1.53) ✓ Docker permissions User &#39;user&#39; can use the Docker socket ✓ Host udev rules /etc/udev/rules.d/70-rfswift.rules installed, user in plugdev ✓ Nix engine nix 2.30 with flakes ✓ Nix jail (--isolate) bubblewrap ready (/usr/bin/bwrap, AppArmor profile loaded) ✓ RF Swift images 3 RF Swift image(s) available ✓ X11 display DISPLAY=:0, X11 socket present ✓ xhost Installed ✓ Audio system PipeWire ! Audio TCP server Not reachable at localhost:34567 (run: rfswift host audio enable) ✓ USB devices /dev/bus/usb present (4 bus(es)) ✓ Config file /home/user/.config/rfswift/config.ini ✓ Kernel modules Loaded: USB support, Sound/ALSA, Bluetooth, Wi-Fi/802.11 ────────────────────────────────────────────────────────── 14 passed 1 warnings Common issues and fixes rfswift host setup # everything below, asked step by step rfswift host docker-access # Docker socket &#34;permission denied&#34; rfswift host udev # hardware needs root on rootless Podman or Nix rfswift host isolate # bwrap &#34;setting up uid map: Permission denied&#34; rfswift host audio enable # audio TCP server not reachable rfswift image pull -i sdr_full # no RF Swift images rfswift env wsl setup # Windows: Nix backend not provisioned chmod 600 ~/.config/rfswift/config.ini Headless or over SSH without X forwarding: use --desktop for a browser desktop, or ssh -X.">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
     <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -370,6 +375,14 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/release-notes-v4/"
+    
+  >🆕 What&#39;s new in v4.0 &#34;Nucleus&#34;
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/comparisons/"
     
   >Comparisons with dedicated distributions
@@ -435,9 +448,25 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/nix-engine/"
+    
+  >Nix engine (native environments)
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/guide/configurations/"
     
   >Configurations
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/installing-software/"
+    
+  >📦 Installing software
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -467,6 +496,14 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/caches/"
+    
+  >⚡ Caches and fast delivery
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/guide/podman/"
     
   >Using Podman
@@ -478,6 +515,46 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
     href="/docs/guide/qubes-os/"
     
   >QubesOS
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/windows/"
+    
+  >Windows
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/workbench/"
+    
+  >RF Swift Workbench (GUI)
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/ai-assistant/"
+    
+  >AI assistant (MCP)
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/remote-agent/"
+    
+  >Remote agent
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/limitations/"
+    
+  >Known limits
     </a>
               
             </li></ul>
@@ -534,6 +611,30 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
   >Security guidelines
     </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/audit/"
+    
+  >Audits and hardened deployment
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/remote-agent/"
+    
+  >Remote agent hardening
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/mcp/"
+    
+  >AI bridge (MCP) best practices
+    </a>
+              
             </li></ul>
       </div>
             </li><li class="hx:flex hx:flex-col "><a
@@ -581,6 +682,14 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
     </a>
               <div class="hx:ltr:pr-0 hx:overflow-hidden">
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/container/"
+    
+  >container
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/run/"
@@ -658,6 +767,14 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
     href="/docs/commands/download/"
     
   >download
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/image/"
+    
+  >image
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -759,9 +876,25 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/env/"
+    
+  >env
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/last/"
     
   >last
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/config/"
+    
+  >config
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -844,6 +977,38 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
   >report
     </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/usb/"
+    
+  >usb
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/audit/"
+    
+  >audit
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/agent/"
+    
+  >agent
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/system/"
+    
+  >system
+    </a>
+              
             </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
@@ -862,31 +1027,31 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
               <a
                 href="#what-it-checks"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >What It Checks</a>
+              >What it checks</a>
             </li>
           <li>
               <a
                 href="#status-icons"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Status Icons</a>
+              >Status icons</a>
             </li>
           <li>
               <a
                 href="#example-output"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Example Output</a>
+              >Example output</a>
             </li>
           <li>
               <a
                 href="#common-issues-and-fixes"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Common Issues and Fixes</a>
+              >Common issues and fixes</a>
             </li>
           <li>
               <a
                 href="#platform-notes"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Platform Notes</a>
+              >Platform notes</a>
             </li>
           </ul>
   
@@ -909,6 +1074,25 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
   >📵 Air-Gapped Installation
     </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/archive/"
+    
+  >📜 Archive
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
+    </a>
+              <div class="hx:ltr:pr-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/archive/release-notes-v3/"
+    
+  >What&#39;s new in v3.0.0 &#34;Resonance&#34;
+    </a>
+              
+            </li></ul>
+      </div>
             </li></ul>
       </div></li>
     </ul>
@@ -928,6 +1112,13 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
     href="/docs/release-notes-v3/"
     
   >🆕 What&#39;s new in v3.0.0 &#34;Resonance&#34;
+    </a></li>
+          <li class=""><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/release-notes-v4/"
+    
+  >🆕 What&#39;s new in v4.0 &#34;Nucleus&#34;
     </a></li>
           <li class=""><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -993,9 +1184,25 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/nix-engine/"
+    
+  >Nix engine (native environments)
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/guide/configurations/"
     
   >Configurations
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/installing-software/"
+    
+  >📦 Installing software
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1025,6 +1232,14 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/caches/"
+    
+  >⚡ Caches and fast delivery
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/guide/podman/"
     
   >Using Podman
@@ -1036,6 +1251,46 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
     href="/docs/guide/qubes-os/"
     
   >QubesOS
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/windows/"
+    
+  >Windows
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/workbench/"
+    
+  >RF Swift Workbench (GUI)
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/ai-assistant/"
+    
+  >AI assistant (MCP)
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/remote-agent/"
+    
+  >Remote agent
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/limitations/"
+    
+  >Known limits
     </a>
               
             </li></ul>
@@ -1088,6 +1343,30 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
     href="/docs/security/guide_lines/"
     
   >Security guidelines
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/audit/"
+    
+  >Audits and hardened deployment
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/remote-agent/"
+    
+  >Remote agent hardening
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/mcp/"
+    
+  >AI bridge (MCP) best practices
     </a>
               
             </li></ul>
@@ -1137,6 +1416,14 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/container/"
+    
+  >container
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/run/"
     
   >run
@@ -1212,6 +1499,14 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
     href="/docs/commands/download/"
     
   >download
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/image/"
+    
+  >image
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1313,9 +1608,25 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/env/"
+    
+  >env
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/last/"
     
   >last
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/config/"
+    
+  >config
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1398,6 +1709,38 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
   >report
     </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/usb/"
+    
+  >usb
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/audit/"
+    
+  >audit
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/agent/"
+    
+  >agent
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/system/"
+    
+  >system
+    </a>
+              
             </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
@@ -1423,6 +1766,24 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
     
   >📵 Air-Gapped Installation
     </a></li>
+          <li class=""><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/archive/"
+    
+  >📜 Archive
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
+    </a><div class="hx:ltr:pr-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/archive/release-notes-v3/"
+    
+  >What&#39;s new in v3.0.0 &#34;Resonance&#34;
+    </a>
+              
+            </li></ul>
+      </div></li>
         
       </ul>
     </div>
@@ -1484,47 +1845,23 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#what-it-checks">What It Checks
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#what-it-checks">What it checks
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#status-icons">Status Icons
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#status-icons">Status icons
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#example-output">Example Output
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#example-output">Example output
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#common-issues-and-fixes">Common Issues and Fixes
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#common-issues-and-fixes">Common issues and fixes
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#container-engine-not-found">Container engine not found
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#user-not-in-docker-group">User not in docker group
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#audio-tcp-server-not-reachable">Audio TCP server not reachable
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#x11-display-not-set">X11 display not set
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#config-file-permissions">Config file permissions
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#no-rf-swift-images">No RF Swift images
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#platform-notes">Platform Notes
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#platform-notes">Platform notes
         </a>
       </li></ul>
       <div class="hx:mt-8 hx:border-t hx:bg-white hx:pt-8 hx:shadow-[0_-12px_16px_white] hx:dark:bg-dark hx:dark:shadow-[0_-12px_16px_#111] hx:sticky hx:bottom-0 hx:flex hx:flex-col hx:items-start hx:gap-2 hx:pb-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-t hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:border-neutral-400">
@@ -1552,11 +1889,12 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
 
         <div class="content">
           <h1>doctor</h1>
-          <h1>doctor</h1><p>Diagnose your system environment for RF Swift compatibility. The <code>doctor</code> command performs a series of checks and reports the status of each component needed to run RF Swift containers.</p>
+          <h1>doctor</h1><p>Diagnose the host for RF Swift. <code>rfswift doctor</code> (also <code>rfswift system doctor</code>) checks every engine, the display, audio, devices, the Nix engine and the host prerequisites, and tells you which command fixes what is wrong.</p>
 <h2>Syntax<span class="hx:absolute hx:-mt-20" id="syntax"></span>
     <a href="#syntax" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift doctor</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift doctor
+</span></span><span class="line"><span class="cl">rfswift system doctor</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1566,7 +1904,7 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
   </button>
 </div>
 </div>
-<h2>What It Checks<span class="hx:absolute hx:-mt-20" id="what-it-checks"></span>
+<h2>What it checks<span class="hx:absolute hx:-mt-20" id="what-it-checks"></span>
     <a href="#what-it-checks" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><table>
   <thead>
       <tr>
@@ -1577,55 +1915,67 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
   <tbody>
       <tr>
           <td><strong>Container engine</strong></td>
-          <td>Docker or Podman is installed and detected</td>
+          <td>Docker, Podman or Lima detected, which one is active</td>
       </tr>
       <tr>
           <td><strong>Engine service</strong></td>
-          <td>The container engine daemon is running and reachable</td>
-      </tr>
-      <tr>
-          <td><strong>Engine version</strong></td>
-          <td>Reports the engine and API version</td>
+          <td>The daemon or VM is running and reachable, with its version</td>
       </tr>
       <tr>
           <td><strong>Docker permissions</strong></td>
-          <td>Current user is in the <code>docker</code> group (Linux)</td>
+          <td>Your user can talk to the Docker socket (group membership and the session ACL); fix: <code>rfswift host docker-access</code></td>
+      </tr>
+      <tr>
+          <td><strong>Host udev rules</strong></td>
+          <td>RF Swift&rsquo;s rules are installed and current, your user is in <code>plugdev</code>; fix: <code>rfswift host udev</code></td>
+      </tr>
+      <tr>
+          <td><strong>Nix engine</strong></td>
+          <td>Nix is installed with flakes; on Windows, the WSL 2 distribution that hosts it, the Linux <code>rfswift</code> inside and version skew</td>
+      </tr>
+      <tr>
+          <td><strong>Nix jail (&ndash;isolate)</strong></td>
+          <td>bubblewrap is present and may create a user namespace (AppArmor profile on Ubuntu 24.04+); fix: <code>rfswift host isolate</code></td>
+      </tr>
+      <tr>
+          <td><strong>Lima VM</strong> (macOS)</td>
+          <td>Instance state, QMP socket for USB passthrough, Docker socket</td>
       </tr>
       <tr>
           <td><strong>RF Swift images</strong></td>
-          <td>RF Swift images are pulled and available locally</td>
+          <td>Images pulled locally</td>
       </tr>
       <tr>
           <td><strong>X11 display</strong></td>
-          <td><code>DISPLAY</code> is set and <code>/tmp/.X11-unix</code> socket exists</td>
+          <td><code>DISPLAY</code> set and the X11 socket present; on Windows the WSLg socket, asked from WSL</td>
       </tr>
       <tr>
           <td><strong>xhost</strong></td>
-          <td><code>xhost</code> command is installed for X11 forwarding</td>
+          <td>Installed for local X11 authorisation</td>
       </tr>
       <tr>
           <td><strong>Audio system</strong></td>
-          <td>PulseAudio or PipeWire is running</td>
+          <td>PulseAudio or PipeWire running (Windows: WSLg audio socket)</td>
       </tr>
       <tr>
           <td><strong>Audio TCP server</strong></td>
-          <td>Audio server is listening on the configured TCP port</td>
+          <td>The module listens on the configured port; fix: <code>rfswift host audio enable</code></td>
       </tr>
       <tr>
           <td><strong>USB devices</strong></td>
-          <td><code>/dev/bus/usb</code> is present and accessible</td>
+          <td><code>/dev/bus/usb</code> present; on Windows the usbipd-win version with connected, shared and attached counts and the default WSL 2 distribution</td>
       </tr>
       <tr>
           <td><strong>Config file</strong></td>
-          <td>Config file exists and has secure permissions</td>
+          <td>Exists with safe permissions</td>
       </tr>
       <tr>
           <td><strong>Kernel modules</strong></td>
-          <td>Key kernel modules are loaded (USB, sound, Bluetooth, Wi-Fi)</td>
+          <td>USB, sound, Bluetooth, Wi-Fi modules loaded (Linux)</td>
       </tr>
   </tbody>
 </table>
-<h2>Status Icons<span class="hx:absolute hx:-mt-20" id="status-icons"></span>
+<h2>Status icons<span class="hx:absolute hx:-mt-20" id="status-icons"></span>
     <a href="#status-icons" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><table>
   <thead>
       <tr>
@@ -1636,23 +1986,23 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
   <tbody>
       <tr>
           <td><code>✓</code> (green)</td>
-          <td>Check passed</td>
+          <td>Passed</td>
       </tr>
       <tr>
           <td><code>!</code> (yellow)</td>
-          <td>Warning &ndash; functional but could be improved</td>
+          <td>Warning, works but could be better</td>
       </tr>
       <tr>
           <td><code>✗</code> (red)</td>
-          <td>Check failed &ndash; something needs to be fixed</td>
+          <td>Failed, needs a fix</td>
       </tr>
       <tr>
           <td><code>-</code> (gray)</td>
-          <td>Skipped &ndash; not applicable on this platform</td>
+          <td>Skipped, not applicable on this platform</td>
       </tr>
   </tbody>
 </table>
-<h2>Example Output<span class="hx:absolute hx:-mt-20" id="example-output"></span>
+<h2>Example output<span class="hx:absolute hx:-mt-20" id="example-output"></span>
     <a href="#example-output" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><pre><code>🩺 RF Swift Doctor
@@ -1660,8 +2010,11 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
 
   ✓  Container engine               Docker (docker)
   ✓  Engine service                 Running and reachable
-  ✓  Engine version                 27.3.1 (API 1.47)
-  ✓  Docker permissions             User &#39;user&#39; is in docker group
+  ✓  Engine version                 29.1.4 (API 1.53)
+  ✓  Docker permissions             User &#39;user&#39; can use the Docker socket
+  ✓  Host udev rules                /etc/udev/rules.d/70-rfswift.rules installed, user in plugdev
+  ✓  Nix engine                     nix 2.30 with flakes
+  ✓  Nix jail (--isolate)           bubblewrap ready (/usr/bin/bwrap, AppArmor profile loaded)
   ✓  RF Swift images                3 RF Swift image(s) available
   ✓  X11 display                    DISPLAY=:0, X11 socket present
   ✓  xhost                          Installed
@@ -1672,7 +2025,7 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
   ✓  Kernel modules                 Loaded: USB support, Sound/ALSA, Bluetooth, Wi-Fi/802.11
 
 ──────────────────────────────────────────────────────────
-  11 passed  1 warnings</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+  14 passed  1 warnings</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1682,16 +2035,17 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
   </button>
 </div>
 </div>
-<h2>Common Issues and Fixes<span class="hx:absolute hx:-mt-20" id="common-issues-and-fixes"></span>
-    <a href="#common-issues-and-fixes" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Container engine not found<span class="hx:absolute hx:-mt-20" id="container-engine-not-found"></span>
-    <a href="#container-engine-not-found" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+<h2>Common issues and fixes<span class="hx:absolute hx:-mt-20" id="common-issues-and-fixes"></span>
+    <a href="#common-issues-and-fixes" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install Docker</span>
-</span></span><span class="line"><span class="cl">curl -fsSL https://get.docker.com <span class="p">|</span> sh
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or install Podman</span>
-</span></span><span class="line"><span class="cl">sudo apt install podman  <span class="c1"># Debian/Ubuntu</span>
-</span></span><span class="line"><span class="cl">sudo dnf install podman  <span class="c1"># Fedora/RHEL</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host setup                  <span class="c1"># everything below, asked step by step</span>
+</span></span><span class="line"><span class="cl">rfswift host docker-access          <span class="c1"># Docker socket &#34;permission denied&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift host udev                   <span class="c1"># hardware needs root on rootless Podman or Nix</span>
+</span></span><span class="line"><span class="cl">rfswift host isolate                <span class="c1"># bwrap &#34;setting up uid map: Permission denied&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span>           <span class="c1"># audio TCP server not reachable</span>
+</span></span><span class="line"><span class="cl">rfswift image pull -i sdr_full      <span class="c1"># no RF Swift images</span>
+</span></span><span class="line"><span class="cl">rfswift env wsl setup               <span class="c1"># Windows: Nix backend not provisioned</span>
+</span></span><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.config/rfswift/config.ini</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1701,93 +2055,23 @@ Syntax rfswift doctor What It Checks Check What it verifies Container engine Doc
   </button>
 </div>
 </div>
-<h3>User not in docker group<span class="hx:absolute hx:-mt-20" id="user-not-in-docker-group"></span>
-    <a href="#user-not-in-docker-group" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
-</span></span><span class="line"><span class="cl">newgrp docker</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Audio TCP server not reachable<span class="hx:absolute hx:-mt-20" id="audio-tcp-server-not-reachable"></span>
-    <a href="#audio-tcp-server-not-reachable" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>The audio server TCP module needs to be loaded for container audio passthrough:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host audio enable</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>X11 display not set<span class="hx:absolute hx:-mt-20" id="x11-display-not-set"></span>
-    <a href="#x11-display-not-set" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>If you&rsquo;re running headless or via SSH without X forwarding:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Option 1: Use desktop mode instead</span>
-</span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n my_sdr --desktop
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Option 2: Forward X11 via SSH</span>
-</span></span><span class="line"><span class="cl">ssh -X user@host</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Config file permissions<span class="hx:absolute hx:-mt-20" id="config-file-permissions"></span>
-    <a href="#config-file-permissions" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.config/rfswift/config.ini</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>No RF Swift images<span class="hx:absolute hx:-mt-20" id="no-rf-swift-images"></span>
-    <a href="#no-rf-swift-images" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift images pull -i penthertz/rfswift_resolute:sdr_full</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h2>Platform Notes<span class="hx:absolute hx:-mt-20" id="platform-notes"></span>
+<p>Headless or over SSH without X forwarding: use <code>--desktop</code> for a browser desktop, or <code>ssh -X</code>.</p>
+<h2>Platform notes<span class="hx:absolute hx:-mt-20" id="platform-notes"></span>
     <a href="#platform-notes" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
-<li><strong>Linux</strong>: All checks are performed</li>
-<li><strong>macOS</strong>: Docker permissions and kernel module checks are skipped</li>
-<li><strong>Windows/WSL</strong>: Checks for WSLg X11 socket and <code>usbipd</code> availability</li>
+<li><strong>Linux</strong>: all checks run.</li>
+<li><strong>macOS</strong>: the Lima VM check replaces Docker permissions and kernel modules; audio expects PulseAudio from Homebrew.</li>
+<li><strong>Windows</strong>: WSLg display and audio, usbipd-win, the default WSL 2 distribution and the Nix WSL backend are reported; if the WSLg sockets are missing run <code>wsl --update</code> then <code>wsl --shutdown</code>.</li>
 </ul>
+<p>The Workbench&rsquo;s <strong>Engine doctor</strong> shows the same checks with buttons that apply the fixes.</p>
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-08-01T17:47:56.000Z">August 1, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-09-08T15:02:43.000Z">September 8, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
-        href="/docs/commands/report/"
-        title="report"
+        href="/docs/commands/system/"
+        title="system"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:pr-4 hx:rtl:pl-4"
-      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>report</a><a
+      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>system</a><a
         href="/docs/commands/engine/"
         title="engine"
         class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:ml-auto hx:ltr:pl-4 hx:ltr:text-right hx:rtl:mr-auto hx:rtl:pr-4 hx:rtl:text-left"

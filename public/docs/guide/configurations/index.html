@@ -9,26 +9,24 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 <title>Configurations – RF Swift</title>
-  <meta name="description" content="RF Swift ConfigurationRF Swift provides flexible configuration options to customize your environment. You can configure settings through a profile configuration file for persistent preferences or via command-line arguments for one-time adjustments.
-Profile Configuration Configuration File Location RF Swift looks for a profile configuration file in a platform-specific location:
-LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\AppData\Roaming\rfswift\config.ini /Users/username/.config/rfswift/config.ini If this file doesn’t exist when you first run RF Swift, you’ll be prompted to create one with default settings." /><link rel="canonical" href="https://rfswift.io/docs/guide/configurations/" itemprop="url" />
+  <meta name="description" content="RF Swift ConfigurationRF Swift reads a small INI file for persistent preferences, YAML profiles for container presets, environment variables for one-off overrides, and command-line flags that win over everything.
+The configuration file Location LinuxWindowsmacOS ~/.config/rfswift/config.ini C:\Users\username\AppData\Roaming\rfswift\config.ini ~/.config/rfswift/config.ini On first run RF Swift asks whether to create the file with the shipped defaults; when there is no terminal to answer (the Workbench, a script) it is created silently." /><link rel="canonical" href="https://rfswift.io/docs/guide/configurations/" itemprop="url" />
 
 <meta property="og:title" content="Configurations">
 <meta
   property="og:description"
   content="
     
-      RF Swift ConfigurationRF Swift provides flexible configuration options to customize your environment. You can configure settings through a profile configuration file for persistent preferences or via command-line arguments for one-time adjustments.
-Profile Configuration
-    Configuration File Location
-    RF Swift looks for a profile configuration file in a platform-specific location:
-
+      RF Swift ConfigurationRF Swift reads a small INI file for persistent preferences, YAML profiles for container presets, environment variables for one-off overrides, and command-line flags that win over everything.
+The configuration file
+    Location
+    
   LinuxWindowsmacOS
 
 
   
 
-/home/username/.config/rfswift/config.ini
+~/.config/rfswift/config.ini
   
     
 
@@ -48,7 +46,7 @@ C:\Users\username\AppData\Roaming\rfswift\config.ini
 
   
 
-/Users/username/.config/rfswift/config.ini
+~/.config/rfswift/config.ini
   
     
 
@@ -57,7 +55,7 @@ C:\Users\username\AppData\Roaming\rfswift\config.ini
 
 
 
-If this file doesn&rsquo;t exist when you first run RF Swift, you&rsquo;ll be prompted to create one with default settings.
+On first run RF Swift asks whether to create the file with the shipped defaults; when there is no terminal to answer (the Workbench, a script) it is created silently.
     
   ">
 <meta
@@ -70,21 +68,19 @@ If this file doesn&rsquo;t exist when you first run RF Swift, you&rsquo;ll be pr
 
 <meta
   property="article:modified_time"
-  content="2026-08-01T17:47:56+02:00">
+  content="2026-09-08T15:02:43+02:00">
 
 
 
   <meta itemprop="name" content="Configurations">
-  <meta itemprop="description" content="RF Swift ConfigurationRF Swift provides flexible configuration options to customize your environment. You can configure settings through a profile configuration file for persistent preferences or via command-line arguments for one-time adjustments.
-Profile Configuration Configuration File Location RF Swift looks for a profile configuration file in a platform-specific location:
-LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\AppData\Roaming\rfswift\config.ini /Users/username/.config/rfswift/config.ini If this file doesn’t exist when you first run RF Swift, you’ll be prompted to create one with default settings.">
-  <meta itemprop="dateModified" content="2026-08-01T17:47:56+02:00">
-  <meta itemprop="wordCount" content="1425">
+  <meta itemprop="description" content="RF Swift ConfigurationRF Swift reads a small INI file for persistent preferences, YAML profiles for container presets, environment variables for one-off overrides, and command-line flags that win over everything.
+The configuration file Location LinuxWindowsmacOS ~/.config/rfswift/config.ini C:\Users\username\AppData\Roaming\rfswift\config.ini ~/.config/rfswift/config.ini On first run RF Swift asks whether to create the file with the shipped defaults; when there is no terminal to answer (the Workbench, a script) it is created silently.">
+  <meta itemprop="dateModified" content="2026-09-08T15:02:43+02:00">
+  <meta itemprop="wordCount" content="1097">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Configurations">
-  <meta name="twitter:description" content="RF Swift ConfigurationRF Swift provides flexible configuration options to customize your environment. You can configure settings through a profile configuration file for persistent preferences or via command-line arguments for one-time adjustments.
-Profile Configuration Configuration File Location RF Swift looks for a profile configuration file in a platform-specific location:
-LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\AppData\Roaming\rfswift\config.ini /Users/username/.config/rfswift/config.ini If this file doesn’t exist when you first run RF Swift, you’ll be prompted to create one with default settings.">
+  <meta name="twitter:description" content="RF Swift ConfigurationRF Swift reads a small INI file for persistent preferences, YAML profiles for container presets, environment variables for one-off overrides, and command-line flags that win over everything.
+The configuration file Location LinuxWindowsmacOS ~/.config/rfswift/config.ini C:\Users\username\AppData\Roaming\rfswift\config.ini ~/.config/rfswift/config.ini On first run RF Swift asks whether to create the file with the shipped defaults; when there is no terminal to answer (the Workbench, a script) it is created silently.">
 
     <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
     <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
@@ -260,6 +256,14 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/release-notes-v4/"
+    
+  >🆕 What&#39;s new in v4.0 &#34;Nucleus&#34;
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/comparisons/"
     
   >Comparisons with dedicated distributions
@@ -322,6 +326,14 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   >Included Tools
     </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/nix-engine/"
+    
+  >Nix engine (native environments)
+    </a>
+              
             </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
@@ -332,48 +344,62 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   
     <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
               <a
-                href="#profile-configuration"
+                href="#the-configuration-file"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Profile Configuration</a>
+              >The configuration file</a>
             </li>
           <li>
               <a
                 href="#container-profiles"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Container Profiles</a>
+              >Container profiles</a>
             </li>
           <li>
               <a
-                href="#command-line-configuration"
+                href="#environment-variables"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Command-Line Configuration</a>
+              >Environment variables</a>
             </li>
           <li>
               <a
-                href="#dynamic-container-modification-with-bindings"
+                href="#command-line-overrides"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Dynamic Container Modification with Bindings</a>
+              >Command-line overrides</a>
             </li>
           <li>
               <a
-                href="#quiet-mode--disconnected-mode"
+                href="#changing-a-container-afterwards"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Quiet Mode / Disconnected Mode</a>
+              >Changing a container afterwards</a>
+            </li>
+          <li>
+              <a
+                href="#disconnected-mode"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Disconnected mode</a>
             </li>
           <li>
               <a
                 href="#best-practices"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Best Practices</a>
+              >Best practices</a>
             </li>
           <li>
               <a
-                href="#common-configuration-scenarios"
+                href="#common-scenarios"
                 class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Common Configuration Scenarios</a>
+              >Common scenarios</a>
             </li>
           </ul>
   
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/installing-software/"
+    
+  >📦 Installing software
+    </a>
               
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -402,6 +428,14 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/caches/"
+    
+  >⚡ Caches and fast delivery
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/guide/podman/"
     
   >Using Podman
@@ -413,6 +447,46 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
     href="/docs/guide/qubes-os/"
     
   >QubesOS
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/windows/"
+    
+  >Windows
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/workbench/"
+    
+  >RF Swift Workbench (GUI)
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/ai-assistant/"
+    
+  >AI assistant (MCP)
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/remote-agent/"
+    
+  >Remote agent
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/limitations/"
+    
+  >Known limits
     </a>
               
             </li></ul>
@@ -469,6 +543,30 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   >Security guidelines
     </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/audit/"
+    
+  >Audits and hardened deployment
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/remote-agent/"
+    
+  >Remote agent hardening
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/mcp/"
+    
+  >AI bridge (MCP) best practices
+    </a>
+              
             </li></ul>
       </div>
             </li><li class="hx:flex hx:flex-col "><a
@@ -516,6 +614,14 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
     </a>
               <div class="hx:ltr:pr-0 hx:overflow-hidden">
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/container/"
+    
+  >container
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/run/"
@@ -593,6 +699,14 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
     href="/docs/commands/download/"
     
   >download
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/image/"
+    
+  >image
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -694,9 +808,25 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/env/"
+    
+  >env
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/last/"
     
   >last
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/config/"
+    
+  >config
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -782,6 +912,38 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/usb/"
+    
+  >usb
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/audit/"
+    
+  >audit
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/agent/"
+    
+  >agent
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/system/"
+    
+  >system
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/doctor/"
     
   >doctor
@@ -805,6 +967,25 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   >📵 Air-Gapped Installation
     </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/archive/"
+    
+  >📜 Archive
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
+    </a>
+              <div class="hx:ltr:pr-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/archive/release-notes-v3/"
+    
+  >What&#39;s new in v3.0.0 &#34;Resonance&#34;
+    </a>
+              
+            </li></ul>
+      </div>
             </li></ul>
       </div></li>
     </ul>
@@ -824,6 +1005,13 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
     href="/docs/release-notes-v3/"
     
   >🆕 What&#39;s new in v3.0.0 &#34;Resonance&#34;
+    </a></li>
+          <li class=""><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/release-notes-v4/"
+    
+  >🆕 What&#39;s new in v4.0 &#34;Nucleus&#34;
     </a></li>
           <li class=""><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
@@ -886,12 +1074,28 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   >Included Tools
     </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/nix-engine/"
+    
+  >Nix engine (native environments)
+    </a>
+              
             </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
     href="/docs/guide/configurations/"
     
   >Configurations
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/installing-software/"
+    
+  >📦 Installing software
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -921,6 +1125,14 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/caches/"
+    
+  >⚡ Caches and fast delivery
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/guide/podman/"
     
   >Using Podman
@@ -932,6 +1144,46 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
     href="/docs/guide/qubes-os/"
     
   >QubesOS
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/windows/"
+    
+  >Windows
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/workbench/"
+    
+  >RF Swift Workbench (GUI)
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/ai-assistant/"
+    
+  >AI assistant (MCP)
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/remote-agent/"
+    
+  >Remote agent
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/guide/limitations/"
+    
+  >Known limits
     </a>
               
             </li></ul>
@@ -986,6 +1238,30 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   >Security guidelines
     </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/audit/"
+    
+  >Audits and hardened deployment
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/remote-agent/"
+    
+  >Remote agent hardening
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/security/mcp/"
+    
+  >AI bridge (MCP) best practices
+    </a>
+              
             </li></ul>
       </div></li>
           <li class=""><a
@@ -1031,6 +1307,14 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
         <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
     </a><div class="hx:ltr:pr-0 hx:overflow-hidden">
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/container/"
+    
+  >container
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/run/"
@@ -1108,6 +1392,14 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
     href="/docs/commands/download/"
     
   >download
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/image/"
+    
+  >image
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1209,9 +1501,25 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/env/"
+    
+  >env
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/last/"
     
   >last
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/config/"
+    
+  >config
     </a>
               
             </li><li class="hx:flex hx:flex-col "><a
@@ -1297,6 +1605,38 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/usb/"
+    
+  >usb
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/audit/"
+    
+  >audit
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/agent/"
+    
+  >agent
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/commands/system/"
+    
+  >system
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/docs/commands/doctor/"
     
   >doctor
@@ -1319,6 +1659,24 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
     
   >📵 Air-Gapped Installation
     </a></li>
+          <li class=""><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/archive/"
+    
+  >📜 Archive
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
+    </a><div class="hx:ltr:pr-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/docs/archive/release-notes-v3/"
+    
+  >What&#39;s new in v3.0.0 &#34;Resonance&#34;
+    </a>
+              
+            </li></ul>
+      </div></li>
         
       </ul>
     </div>
@@ -1376,111 +1734,55 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
 <nav class="hextra-toc hx:order-last hx:hidden hx:w-64 hx:shrink-0 hx:xl:block hx:print:hidden hx:px-4" aria-label="table of contents">
     <div class="hextra-scrollbar hx:sticky hx:top-16 hx:overflow-y-auto hx:pr-4 hx:pt-6 hx:text-sm [hyphens:auto] hx:max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] hx:ltr:-mr-4 hx:rtl:-ml-4"><p class="hx:mb-4 hx:font-semibold hx:tracking-tight">On this page</p><ul>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#profile-configuration">Profile Configuration
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#the-configuration-file">The configuration file
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#configuration-file-location">Configuration File Location
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#location">Location
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#configuration-file-structure">Configuration File Structure
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#structure">Structure
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#configuration-sections-explained">Configuration Sections Explained
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#sections">Sections
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-8 hx:rtl:pr-8 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#general-section">General Section
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#changing-the-repository">Changing the repository
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-8 hx:rtl:pr-8 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#container-section">Container Section
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#container-profiles">Container profiles
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-8 hx:rtl:pr-8 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#audio-section">Audio Section
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#environment-variables">Environment variables
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-8 hx:rtl:pr-8 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#desktop-section">Desktop Section
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#command-line-overrides">Command-line overrides
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-8 hx:rtl:pr-8 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#changing-repository">Changing repository
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#changing-a-container-afterwards">Changing a container afterwards
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#container-profiles">Container Profiles
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#docker-api-version">Docker API version
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#profile-storage">Profile Storage
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#disconnected-mode">Disconnected mode
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#command-line-configuration">Command-Line Configuration
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#best-practices">Best practices
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#available-flags">Available Flags
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#examples">Examples
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#dynamic-container-modification-with-bindings">Dynamic Container Modification with Bindings
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#bindings-command-overview">Bindings Command Overview
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#adding-bindings-to-existing-containers">Adding Bindings to Existing Containers
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#removing-bindings-from-containers">Removing Bindings from Containers
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#docker-api-version-compatibility">Docker API Version Compatibility
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#quiet-mode--disconnected-mode">Quiet Mode / Disconnected Mode
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#when-to-use-quiet-mode">When to Use Quiet Mode
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#examples-1">Examples
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#best-practices">Best Practices
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#common-configuration-scenarios">Common Configuration Scenarios
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#sdr-development-environment">SDR Development Environment
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#wi-fi-security-testing">Wi-Fi Security Testing
-        </a>
-      </li>
-      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#offline-device-analysis">Offline Device Analysis
+        <a class="hx:font-medium hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#common-scenarios">Common scenarios
         </a>
       </li></ul>
       <div class="hx:mt-8 hx:border-t hx:bg-white hx:pt-8 hx:shadow-[0_-12px_16px_white] hx:dark:bg-dark hx:dark:shadow-[0_-12px_16px_#111] hx:sticky hx:bottom-0 hx:flex hx:flex-col hx:items-start hx:gap-2 hx:pb-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-t hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:border-neutral-400">
@@ -1508,11 +1810,10 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
 
         <div class="content">
           <h1>Configurations</h1>
-          <h1>RF Swift Configuration</h1><p>RF Swift provides flexible configuration options to customize your environment. You can configure settings through a profile configuration file for persistent preferences or via command-line arguments for one-time adjustments.</p>
-<h2>Profile Configuration<span class="hx:absolute hx:-mt-20" id="profile-configuration"></span>
-    <a href="#profile-configuration" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Configuration File Location<span class="hx:absolute hx:-mt-20" id="configuration-file-location"></span>
-    <a href="#configuration-file-location" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>RF Swift looks for a profile configuration file in a platform-specific location:</p>
-<div class="hextra-scrollbar hx:overflow-x-auto hx:overflow-y-hidden hx:overscroll-x-contain">
+          <h1>RF Swift Configuration</h1><p>RF Swift reads a small INI file for persistent preferences, YAML <strong>profiles</strong> for container presets, environment variables for one-off overrides, and command-line flags that win over everything.</p>
+<h2>The configuration file<span class="hx:absolute hx:-mt-20" id="the-configuration-file"></span>
+    <a href="#the-configuration-file" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Location<span class="hx:absolute hx:-mt-20" id="location"></span>
+    <a href="#location" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-scrollbar hx:overflow-x-auto hx:overflow-y-hidden hx:overscroll-x-contain">
   <div class="hx:mt-4 hx:flex hx:w-max hx:min-w-full hx:border-b hx:border-gray-200 hx:pb-px hx:dark:border-neutral-800"><button
         class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
         role="tab"
@@ -1533,7 +1834,7 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   id="tabs-panel-0"
   role="tabpanel" tabindex="0"  data-state="selected" ><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><pre><code>/home/username/.config/rfswift/config.ini</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><pre><code>~/.config/rfswift/config.ini</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1565,7 +1866,7 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   id="tabs-panel-2"
   role="tabpanel"><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><pre><code>/Users/username/.config/rfswift/config.ini</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><pre><code>~/.config/rfswift/config.ini</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1577,14 +1878,14 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
 </div>
 </div>
 </div>
-<p>If this file doesn&rsquo;t exist when you first run RF Swift, you&rsquo;ll be prompted to create one with default settings.</p>
-<h3>Configuration File Structure<span class="hx:absolute hx:-mt-20" id="configuration-file-structure"></span>
-    <a href="#configuration-file-structure" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>The <code>config.ini</code> file is organized into sections for different aspects of RF Swift&rsquo;s behavior:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+<p>On first run RF Swift asks whether to create the file with the shipped defaults; when there is no terminal to answer (the Workbench, a script) it is created silently.</p>
+<h3>Structure<span class="hx:absolute hx:-mt-20" id="structure"></span>
+    <a href="#structure" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[general]</span>
 </span></span><span class="line"><span class="cl"><span class="na">imagename</span> <span class="o">=</span> <span class="s">myrfswift:latest</span>
 </span></span><span class="line"><span class="cl"><span class="na">repotag</span> <span class="o">=</span> <span class="s">penthertz/rfswift_resolute</span>
+</span></span><span class="line"><span class="cl"><span class="na">engine</span> <span class="o">=</span> <span class="s">auto</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">[container]</span>
 </span></span><span class="line"><span class="cl"><span class="na">shell</span> <span class="o">=</span> <span class="s">/bin/zsh</span>
@@ -1610,7 +1911,10 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
 </span></span><span class="line"><span class="cl"><span class="na">host</span> <span class="o">=</span> <span class="s">127.0.0.1</span>
 </span></span><span class="line"><span class="cl"><span class="na">port</span> <span class="o">=</span> <span class="s">6080</span>
 </span></span><span class="line"><span class="cl"><span class="na">password</span> <span class="o">=</span>
-</span></span><span class="line"><span class="cl"><span class="na">ssl</span> <span class="o">=</span> <span class="s">false</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+</span></span><span class="line"><span class="cl"><span class="na">ssl</span> <span class="o">=</span> <span class="s">false</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[nix]</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsl_distro</span> <span class="o">=</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1620,12 +1924,13 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   </button>
 </div>
 </div>
-<h3>Configuration Sections Explained<span class="hx:absolute hx:-mt-20" id="configuration-sections-explained"></span>
-    <a href="#configuration-sections-explained" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><h4>General Section<span class="hx:absolute hx:-mt-20" id="general-section"></span>
-    <a href="#general-section" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><table>
+<p>The device defaults depend on the operating system the file was created on.</p>
+<h3>Sections<span class="hx:absolute hx:-mt-20" id="sections"></span>
+    <a href="#sections" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><strong><code>[general]</code></strong></p>
+<table>
   <thead>
       <tr>
-          <th>Parameter</th>
+          <th>Key</th>
           <th>Description</th>
           <th>Example</th>
       </tr>
@@ -1633,13 +1938,18 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   <tbody>
       <tr>
           <td><code>imagename</code></td>
-          <td>Default image used when running containers without <code>-i</code></td>
+          <td>Image used when <code>container create</code> has no <code>-i</code></td>
           <td><code>myrfswift:latest</code></td>
       </tr>
       <tr>
           <td><code>repotag</code></td>
-          <td>Default repository for RF Swift images</td>
+          <td>Repository prepended to short image names</td>
           <td><code>penthertz/rfswift_resolute</code></td>
+      </tr>
+      <tr>
+          <td><code>engine</code></td>
+          <td>Default engine when neither <code>--engine</code> nor <code>RFSWIFT_ENGINE</code> is set: <code>auto</code>, <code>docker</code>, <code>podman</code>, <code>lima</code>, <code>nix</code></td>
+          <td><code>nix</code></td>
       </tr>
   </tbody>
 </table>
@@ -1647,15 +1957,15 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
 
   <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0">Since v3.0.0 &ldquo;Resonance&rdquo;, official RF Swift images are built on <strong>Ubuntu 26.04 &ldquo;Resolute&rdquo;</strong> and published under <code>penthertz/rfswift_resolute</code>, which is the default <code>repotag</code>. The previous Ubuntu 24.04 &ldquo;Noble&rdquo; images are still available. Set <code>repotag = penthertz/rfswift_noble</code> if you need to fall back to them.</div>
+    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0">Official images are built on Ubuntu 26.04 &ldquo;Resolute&rdquo; and published under <code>penthertz/rfswift_resolute</code>. Set <code>repotag = penthertz/rfswift_noble</code> to fall back to the Ubuntu 24.04 images, or point it at a mirror or your own registry.</div>
   </div>
 </div>
 
-<h4>Container Section<span class="hx:absolute hx:-mt-20" id="container-section"></span>
-    <a href="#container-section" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><table>
+<p><strong><code>[container]</code></strong></p>
+<table>
   <thead>
       <tr>
-          <th>Parameter</th>
+          <th>Key</th>
           <th>Description</th>
           <th>Example</th>
       </tr>
@@ -1663,170 +1973,78 @@ LinuxWindowsmacOS /home/username/.config/rfswift/config.ini C:\Users\username\Ap
   <tbody>
       <tr>
           <td><code>shell</code></td>
-          <td>Default shell inside containers</td>
+          <td>Shell opened in containers (Bash fallback when missing)</td>
           <td><code>/bin/zsh</code></td>
       </tr>
       <tr>
           <td><code>bindings</code></td>
-          <td>Host directories to share with containers</td>
+          <td>Extra bind mounts for every container</td>
           <td><code>/home/user/data:/data</code></td>
       </tr>
       <tr>
           <td><code>network</code></td>
-          <td>Network mode for containers</td>
-          <td><code>host</code>, <code>bridge</code>, <code>none</code></td>
+          <td>Default network mode</td>
+          <td><code>host</code>, <code>nat</code>, <code>bridge</code>, <code>none</code></td>
       </tr>
       <tr>
-          <td><code>exposedports</code></td>
-          <td>Ports exposed from the container</td>
-          <td><code>8080</code>, <code>443</code></td>
-      </tr>
-      <tr>
-          <td><code>portbindings</code></td>
-          <td>Host-to-container port mappings</td>
-          <td><code>8080:80/tcp</code></td>
+          <td><code>exposedports</code>, <code>portbindings</code></td>
+          <td>Default exposed and published ports</td>
+          <td><code>8080/tcp</code>, <code>8080:80/tcp</code></td>
       </tr>
       <tr>
           <td><code>x11forward</code></td>
-          <td>X11 binding for GUI applications</td>
+          <td>X11 socket binding</td>
           <td><code>/tmp/.X11-unix:/tmp/.X11-unix</code></td>
       </tr>
       <tr>
           <td><code>xdisplay</code></td>
-          <td>X11 display environment variable</td>
+          <td>Display variable</td>
           <td><code>&quot;DISPLAY=:0&quot;</code></td>
       </tr>
       <tr>
           <td><code>extrahost</code></td>
-          <td>Custom host-to-IP mappings</td>
+          <td>Extra <code>/etc/hosts</code> entries</td>
           <td><code>pluto.local:192.168.2.1</code></td>
       </tr>
       <tr>
           <td><code>extraenv</code></td>
-          <td>Additional environment variables</td>
+          <td>Extra environment variables</td>
           <td><code>VAR1=value1,VAR2=value2</code></td>
       </tr>
       <tr>
           <td><code>devices</code></td>
-          <td>Device mappings for hardware access</td>
+          <td>Default device mappings. Devices the engine cannot map on this host are listed before creation and dropped after you confirm</td>
           <td><code>/dev/bus/usb:/dev/bus/usb</code></td>
       </tr>
       <tr>
           <td><code>privileged</code></td>
-          <td>Run containers in privileged mode</td>
+          <td>Privileged mode</td>
           <td><code>false</code></td>
       </tr>
       <tr>
           <td><code>caps</code></td>
-          <td>Linux capabilities to add</td>
+          <td>Capabilities added to every container</td>
           <td><code>NET_ADMIN,SYS_PTRACE</code></td>
       </tr>
       <tr>
           <td><code>seccomp</code></td>
-          <td>Seccomp profile for syscall filtering</td>
+          <td>Seccomp profile</td>
           <td><code>/path/to/profile.json</code></td>
       </tr>
       <tr>
           <td><code>cgroups</code></td>
-          <td>Control group rules for device access</td>
+          <td>Device cgroup rules</td>
           <td><code>c 189:* rwm,c 166:* rwm</code></td>
       </tr>
   </tbody>
 </table>
-<h4>Audio Section<span class="hx:absolute hx:-mt-20" id="audio-section"></span>
-    <a href="#audio-section" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><table>
-  <thead>
-      <tr>
-          <th>Parameter</th>
-          <th>Description</th>
-          <th>Example</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>pulse_server</code></td>
-          <td>PulseAudio/PipeWire server address</td>
-          <td><code>tcp:localhost:34567</code></td>
-      </tr>
-  </tbody>
-</table>
-<h4>Desktop Section<span class="hx:absolute hx:-mt-20" id="desktop-section"></span>
-    <a href="#desktop-section" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><table>
-  <thead>
-      <tr>
-          <th>Parameter</th>
-          <th>Description</th>
-          <th>Example</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>proto</code></td>
-          <td>Desktop protocol</td>
-          <td><code>vnc</code>, <code>noVNC</code></td>
-      </tr>
-      <tr>
-          <td><code>host</code></td>
-          <td>Host address for desktop connections</td>
-          <td><code>127.0.0.1</code></td>
-      </tr>
-      <tr>
-          <td><code>port</code></td>
-          <td>Port for desktop connections</td>
-          <td><code>6080</code></td>
-      </tr>
-      <tr>
-          <td><code>password</code></td>
-          <td>VNC password (optional)</td>
-          <td><code>mysecretpass</code></td>
-      </tr>
-      <tr>
-          <td><code>ssl</code></td>
-          <td>Enable SSL encryption for VNC</td>
-          <td><code>true</code>, <code>false</code></td>
-      </tr>
-  </tbody>
-</table>
-<p>Example:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[desktop]</span>
-</span></span><span class="line"><span class="cl"><span class="na">proto</span> <span class="o">=</span> <span class="s">vnc</span>
-</span></span><span class="line"><span class="cl"><span class="na">host</span> <span class="o">=</span> <span class="s">127.0.0.1</span>
-</span></span><span class="line"><span class="cl"><span class="na">port</span> <span class="o">=</span> <span class="s">6080</span>
-</span></span><span class="line"><span class="cl"><span class="na">password</span> <span class="o">=</span>
-</span></span><span class="line"><span class="cl"><span class="na">ssl</span> <span class="o">=</span> <span class="s">false</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h4>Changing repository<span class="hx:absolute hx:-mt-20" id="changing-repository"></span>
-    <a href="#changing-repository" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>The <code>repotag</code> value is the repository RF Swift prepends to short image tags, so <code>rfswift run -i sdr_full</code> resolves to <code>penthertz/rfswift_resolute:sdr_full</code> by default. You can point it at something else, such as the legacy Noble images, a mirror, or your own registry, by editing your <code>config.ini</code>:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><pre><code>[general]
-imagename = myrfswift:latest
-repotag = penthertz/rfswift_noble
-
-...</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h2>Container Profiles<span class="hx:absolute hx:-mt-20" id="container-profiles"></span>
-    <a href="#container-profiles" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>In addition to the global <code>config.ini</code>, RF Swift supports <strong>profiles</strong>: YAML presets that bundle image, network mode, features, device mappings, capabilities, cgroup rules, and port bindings into a single named preset.</p>
-<h3>Profile Storage<span class="hx:absolute hx:-mt-20" id="profile-storage"></span>
-    <a href="#profile-storage" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Profiles are stored as individual <code>.yaml</code> files in a platform-specific directory:</p>
+<p><strong><code>[audio]</code></strong>: <code>pulse_server</code> is the host audio server address containers get in <code>PULSE_SERVER</code> and the port <code>rfswift host audio enable</code> opens (<code>tcp:localhost:PORT</code> yields a local-only ACL). Windows ignores it and uses WSLg.</p>
+<p><strong><code>[desktop]</code></strong>: <code>proto</code> (<code>vnc</code> or <code>http</code> for noVNC), <code>host</code>, <code>port</code>, <code>password</code>, <code>ssl</code> are the defaults of <code>--desktop</code>.</p>
+<p><strong><code>[nix]</code></strong>: <code>wsl_distro</code> names the WSL 2 distribution that hosts the Nix engine on Windows (<code>rfswift env wsl use</code> writes it).</p>
+<h3>Changing the repository<span class="hx:absolute hx:-mt-20" id="changing-the-repository"></span>
+    <a href="#changing-the-repository" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><code>repotag</code> is what RF Swift prepends to short tags, so <code>rfswift container create -i sdr_full</code> resolves to <code>penthertz/rfswift_resolute:sdr_full</code> by default. Edit the <code>[general]</code> section to use another repository.</p>
+<h2>Container profiles<span class="hx:absolute hx:-mt-20" id="container-profiles"></span>
+    <a href="#container-profiles" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Profiles are YAML presets bundling image, network mode, features, devices, mounts, ports, capabilities, cgroup rules, GPU and VPN into one name. They live in:</p>
 <div class="hextra-scrollbar hx:overflow-x-auto hx:overflow-y-hidden hx:overscroll-x-contain">
   <div class="hx:mt-4 hx:flex hx:w-max hx:min-w-full hx:border-b hx:border-gray-200 hx:pb-px hx:dark:border-neutral-800"><button
         class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
@@ -1892,14 +2110,12 @@ repotag = penthertz/rfswift_noble
 </div>
 </div>
 </div>
-<p>Generate default profiles with <code>rfswift profile init</code>, then use them:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a container from a profile</span>
-</span></span><span class="line"><span class="cl">rfswift run --profile sdr-full -n my_sdr
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># CLI flags override profile values</span>
-</span></span><span class="line"><span class="cl">rfswift run --profile wifi -n my_wifi -i penthertz/rfswift_resolute:sdr_full</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift profile init                                   <span class="c1"># write the built-in presets</span>
+</span></span><span class="line"><span class="cl">rfswift profile list
+</span></span><span class="line"><span class="cl">rfswift container create --profile sdr-full -n my_sdr
+</span></span><span class="line"><span class="cl">rfswift container create --profile wifi -n my_wifi -i penthertz/rfswift_resolute:sdr_full   <span class="c1"># flags override the profile</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1909,13 +2125,88 @@ repotag = penthertz/rfswift_noble
   </button>
 </div>
 </div>
-<p>See the <a href="/docs/commands/profile/"><code>profile</code> command reference</a> for full details on creating, listing, and managing profiles.</p>
-<hr>
-<h2>Command-Line Configuration<span class="hx:absolute hx:-mt-20" id="command-line-configuration"></span>
-    <a href="#command-line-configuration" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>You can override any configuration setting when running a container using command-line flags with the <code>run</code> command:</p>
+<p>Built-in profiles: <code>yolo</code>, <code>network-host</code>, <code>network-nat</code>, <code>sdr-full</code>, <code>sdr-light</code>, <code>wifi</code>, <code>bluetooth</code>, <code>telecom</code>, <code>telecom-5g</code>, <code>rfid</code>, <code>automotive</code>, <code>hardware</code>, <code>reversing</code>, <code>headless</code>. A built-in profile you never edited is refreshed automatically when RF Swift improves it (a fingerprint records what RF Swift wrote); an edited copy is kept. The Workbench create dialog offers the same presets. See <a href="/docs/commands/profile/">profile</a>.</p>
+<h2>Environment variables<span class="hx:absolute hx:-mt-20" id="environment-variables"></span>
+    <a href="#environment-variables" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><table>
+  <thead>
+      <tr>
+          <th>Variable</th>
+          <th>Effect</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>RFSWIFT_ENGINE</code></td>
+          <td>Engine (<code>docker</code>, <code>podman</code>, <code>lima</code>, <code>nix</code>); overrides the config file, <code>--engine</code> wins</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_LIMA_INSTANCE</code></td>
+          <td>Lima instance name (default <code>rfswift</code>; <code>--gpu</code> uses <code>rfswift-gpu</code>)</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_NO_BANNER</code></td>
+          <td>Skip the ASCII banner (it is already skipped when stdout is not a terminal)</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_NIX_FLAKE</code></td>
+          <td>Flake reference or local path of RF-Swift-nix</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_NIX_HOME</code></td>
+          <td>State directory of the Nix engine (default <code>~/.rfswift/nix</code>)</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_NIX_CATALOG</code></td>
+          <td>Alternate environment catalog</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_NIX_GL</code></td>
+          <td>OpenGL runtime for Nix environments: <code>mesa</code> forces Mesa, <code>off</code> disables it</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_NIX_WAYLAND</code></td>
+          <td><code>1</code> keeps GUI tools on Wayland under WSLg (X11 is the default there)</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_WSL_DISTRO</code></td>
+          <td>WSL 2 distribution hosting the Nix engine (Windows)</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_WSLG_AUTORESET</code></td>
+          <td><code>0</code> disables the automatic WSLg display-client restart (Windows)</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_GL_PLATFORM</code></td>
+          <td><code>egl</code> is set for containers on macOS so GUI tools create OpenGL contexts through EGL</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_WORKSPACE</code></td>
+          <td>Exported inside Nix environment shells: the workspace path the shell sees</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_NIX_GL_RUNTIME</code></td>
+          <td>Exported inside Nix environment shells when the OpenGL runtime was applied</td>
+      </tr>
+      <tr>
+          <td><code>RFSWIFT_RECORDING</code></td>
+          <td>Set to <code>1</code> inside a recorded session</td>
+      </tr>
+      <tr>
+          <td><code>DOCKER_API_VERSION</code></td>
+          <td>Pin the Docker API version when the daemon is older than the client</td>
+      </tr>
+  </tbody>
+</table>
+<p>Installer variables (<code>get_rfswift.sh</code>) are listed in <a href="/docs/getting-started/#installation">Getting Started</a>.</p>
+<h2>Command-line overrides<span class="hx:absolute hx:-mt-20" id="command-line-overrides"></span>
+    <a href="#command-line-overrides" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Every setting can be overridden per container on <code>rfswift container create</code> (<code>-b</code>, <code>-s</code>, <code>-a</code>, <code>-g</code>, <code>-t</code>, <code>-u</code>, <code>-e</code>, <code>-d</code>, <code>-p</code>, <code>-w</code>, <code>-z</code>, <code>-x</code>, <code>-m</code>, <code>--workspace</code>, <code>--realtime</code>, <code>--desktop*</code>, <code>--vpn</code>, &hellip;). The full list with examples is on the <a href="/docs/commands/run/">container create</a> page; the security-related flags are summarised in <a href="/docs/guide/running-rf-swift/#security-related-flags-of-container-create">Running RF Swift</a>.</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run <span class="o">[</span>flags<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n my_sdr_container
+</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n captures -b /home/user/captures:/data/captures
+</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:wifi -n wifi -a NET_ADMIN
+</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n web -t bridge -w 8080:80/tcp
+</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n bash_only -e /bin/bash</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -1925,101 +2216,13 @@ repotag = penthertz/rfswift_noble
   </button>
 </div>
 </div>
-<h3>Available Flags<span class="hx:absolute hx:-mt-20" id="available-flags"></span>
-    <a href="#available-flags" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><pre><code>Flags:
-  -b, --bind string           Extra bindings (separate with commas)
-  -w, --bindedports string    Ports to bind between host and container
-      --profile string        Use a named profile preset
-  -a, --capabilities string   Extra capabilities (separate with commas)
-  -g, --cgroups string        Extra cgroup rules (separate with commas)
-  -e, --command string        Command to execute (default: &#39;/bin/bash&#39;)
-      --desktop               Enable desktop mode (VNC/noVNC)
-      --desktop-config string Desktop config as proto:host:port (e.g., vnc:127.0.0.1:6080)
-      --desktop-pass string   VNC password for desktop mode
-      --desktop-ssl           Enable SSL for desktop connection
-  -s, --devices string        Extra device mappings (separate with commas)
-  -d, --display string        Set X Display (default: &#34;DISPLAY=:0&#34;)
-  -z, --exposedports string   Ports to expose
-  -x, --extrahosts string     Set extra hosts (default: &#39;pluto.local:192.168.1.2&#39;)
-  -h, --help                  Help for run command
-  -i, --image string          Image to use (default: &#39;myrfswift:latest&#39;)
-  -n, --name string           Container name
-  -t, --network string        Network mode (default: &#39;host&#39;)
-      --no-x11                Disable X11 forwarding
-  -u, --privileged int        Set privilege level (1: privileged, 0: unprivileged)
-  -p, --pulseserver string    PulseAudio server address (default: &#34;tcp:127.0.0.1:34567&#34;)
-      --realtime              Enable realtime mode for SDR performance
-      --record                Record terminal session (asciinema format)
-      --record-output string  Output path for recording file
-  -m, --seccomp string        Set Seccomp profile (default: &#39;default&#39;)
-      --ulimits string        Additional ulimits (e.g., rtprio=95)
-      --vpn string            VPN type[:argument] (wireguard:file, openvpn:file, tailscale[:key], netbird[:key])
-
-Global Flags:
-  -q, --disconnect            Don&#39;t query updates (disconnected mode)
-      --engine string         Container engine to use (docker, podman, auto)</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Examples<span class="hx:absolute hx:-mt-20" id="examples"></span>
-    <a href="#examples" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Run with custom image and name</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_resolute:sdr_full -n my_sdr_container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Share a host directory with the container</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_resolute:sdr_full -b /home/user/captures:/data/captures
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add network capabilities for Wi-Fi tools</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_resolute:wifi -a NET_ADMIN
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use bridge network with port mapping</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_resolute:sdr_full -t bridge -w 8080:80/tcp
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Specify a custom shell</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_resolute:sdr_full -e /bin/bash</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h2>Dynamic Container Modification with Bindings<span class="hx:absolute hx:-mt-20" id="dynamic-container-modification-with-bindings"></span>
-    <a href="#dynamic-container-modification-with-bindings" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>RF Swift offers a unique feature that Docker doesn&rsquo;t provide natively: the ability to modify bindings for existing containers. This eliminates the need to recreate containers when you need to add or remove bindings.</p>
-<h3>Bindings Command Overview<span class="hx:absolute hx:-mt-20" id="bindings-command-overview"></span>
-    <a href="#bindings-command-overview" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>This command has two subcommands:</p>
-<ul>
-<li><code>add</code>: Add a binding to an existing container</li>
-<li><code>rm</code>: Remove a binding from an existing container</li>
-</ul>
-<h3>Adding Bindings to Existing Containers<span class="hx:absolute hx:-mt-20" id="adding-bindings-to-existing-containers"></span>
-    <a href="#adding-bindings-to-existing-containers" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>To add a new binding to a running or stopped container:</p>
+<h2>Changing a container afterwards<span class="hx:absolute hx:-mt-20" id="changing-a-container-afterwards"></span>
+    <a href="#changing-a-container-afterwards" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Bind mounts, devices, capabilities, cgroup rules, GPUs, ports and ulimits of an existing container are managed with <code>rfswift config ...</code> (<a href="/docs/guide/container-management/">Dynamic container management</a>):</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings add -c &lt;container_name&gt; -t &lt;target_path&gt; <span class="o">[</span>-s &lt;source_path&gt;<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -c my_sdr_container -s /home/user/data -t /data
+</span></span><span class="line"><span class="cl">rfswift config bindings add -c my_container -d -t /dev/ttyUSB0
+</span></span><span class="line"><span class="cl">rfswift config bindings rm  -c my_container -t /data</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -2029,23 +2232,12 @@ Global Flags:
   </button>
 </div>
 </div>
-<p>Parameters:</p>
-<ul>
-<li><code>-c, --container</code>: Container name or ID (required)</li>
-<li><code>-t, --target</code>: Path inside the container (required)</li>
-<li><code>-s, --source</code>: Path on the host (optional, defaults to same as target)</li>
-</ul>
-<p>Examples:</p>
+<h3>Docker API version<span class="hx:absolute hx:-mt-20" id="docker-api-version"></span>
+    <a href="#docker-api-version" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>If the daemon is older than the client library you may see <code>client version 1.47 is too new. Maximum supported API version is 1.45</code>. Pin the version:</p>
 <div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add a simple directory binding</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -c my_sdr_container -s /home/user/data -t /data
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add a device binding</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -c my_bt_container -s /dev/bluetooth -t /dev/bluetooth
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># When source and target are identical</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -c my_container -t /dev/ttyUSB0</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">DOCKER_API_VERSION</span><span class="o">=</span>1.45 rfswift config bindings add -c my_container -s /tmp -t /root/myshare
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">DOCKER_API_VERSION</span><span class="o">=</span>1.45     <span class="c1"># in ~/.bashrc or ~/.zshrc for good</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -2055,11 +2247,12 @@ Global Flags:
   </button>
 </div>
 </div>
-<h3>Removing Bindings from Containers<span class="hx:absolute hx:-mt-20" id="removing-bindings-from-containers"></span>
-    <a href="#removing-bindings-from-containers" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>To remove an existing binding:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+<h2>Disconnected mode<span class="hx:absolute hx:-mt-20" id="disconnected-mode"></span>
+    <a href="#disconnected-mode" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings rm -c &lt;container_name&gt; -t &lt;target_path&gt; <span class="o">[</span>-s &lt;source_path&gt;<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift -q container create -i sdr_full -n quick_analysis
+</span></span><span class="line"><span class="cl">rfswift --disconnect image <span class="nb">local</span>
+</span></span><span class="line"><span class="cl">rfswift -q container shell -c my_container</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -2069,160 +2262,29 @@ Global Flags:
   </button>
 </div>
 </div>
-<p>Example:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove a binding</span>
-</span></span><span class="line"><span class="cl">rfswift bindings rm -c my_container -t /data</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Docker API Version Compatibility<span class="hx:absolute hx:-mt-20" id="docker-api-version-compatibility"></span>
-    <a href="#docker-api-version-compatibility" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>If you encounter a Docker API version mismatch error:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><pre><code>Error response from daemon: client version 1.47 is too new. Maximum supported API version is 1.45</code></pre></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>You can set the API version to match your Docker engine:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo <span class="nv">DOCKER_API_VERSION</span><span class="o">=</span>1.45 rfswift bindings add -c my_container -s /tmp -t /root/myshare</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>For persistent configuration, add this to your shell profile:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add to ~/.bashrc, ~/.zshrc, etc.</span>
-</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">DOCKER_API_VERSION</span><span class="o">=</span>1.45</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h2>Quiet Mode / Disconnected Mode<span class="hx:absolute hx:-mt-20" id="quiet-mode--disconnected-mode"></span>
-    <a href="#quiet-mode--disconnected-mode" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>RF Swift includes a global flag that allows you to run in &ldquo;disconnected mode,&rdquo; which prevents the tool from checking for updates or requiring internet connectivity:</p>
-<div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift -q <span class="o">[</span>command<span class="o">]</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># or</span>
-</span></span><span class="line"><span class="cl">rfswift --disconnect <span class="o">[</span>command<span class="o">]</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>When to Use Quiet Mode<span class="hx:absolute hx:-mt-20" id="when-to-use-quiet-mode"></span>
-    <a href="#when-to-use-quiet-mode" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>This mode is particularly useful in several scenarios:</p>
-<ol>
-<li><strong>Air-gapped Environments</strong>: When working in secure environments without internet access</li>
-<li><strong>Bandwidth-limited Situations</strong>: When working with limited connectivity (field operations, remote locations)</li>
-<li><strong>Automated Scripts</strong>: When running RF Swift as part of automated workflows where update checks are not desired</li>
-<li><strong>Rapid Execution</strong>: When you need immediate tool execution without the delay of update checking</li>
-</ol>
-<h3>Examples<span class="hx:absolute hx:-mt-20" id="examples-1"></span>
-    <a href="#examples-1" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Run a container without checking for updates</span>
-</span></span><span class="line"><span class="cl">rfswift -q run -i sdr_full -n quick_analysis
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># List local images in disconnected mode</span>
-</span></span><span class="line"><span class="cl">rfswift --disconnect images <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Execute a command in a container without update checks</span>
-</span></span><span class="line"><span class="cl">rfswift -q <span class="nb">exec</span> -c my_container</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>The quiet/disconnected mode can be combined with any RF Swift command and its respective options.</p>
-<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
-  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-
-  <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0">Using quiet mode doesn&rsquo;t affect RF Swift&rsquo;s functionality. It only disables the automatic update checks. Consider periodically checking for updates manually with <code>rfswift update</code> to ensure you have the latest features and security improvements.</div>
-  </div>
-</div>
-
-<h2>Best Practices<span class="hx:absolute hx:-mt-20" id="best-practices"></span>
+<p><code>-q</code> / <code>--disconnect</code> skips the release check and every network query. Use it in air-gapped labs, in scripts, and on slow links; everything else works the same. <code>rfswift --version</code> never touches the network either.</p>
+<h2>Best practices<span class="hx:absolute hx:-mt-20" id="best-practices"></span>
     <a href="#best-practices" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ol>
-<li><strong>Base Configuration</strong>: Set your common preferences in the <code>config.ini</code> file</li>
-<li><strong>Special Cases</strong>: Use command-line flags for one-time or specialized settings</li>
-<li><strong>Security First</strong>: Keep the <code>privileged = false</code> setting when possible and only add specific capabilities as needed</li>
-<li><strong>Dynamic Adjustments</strong>: Use the <code>bindings</code> feature for on-the-fly modifications</li>
-<li><strong>Device Access</strong>: Be selective about device mappings; only share what is needed</li>
+<li>Put your common preferences in <code>config.ini</code> and the default engine in <code>[general] engine</code>.</li>
+<li>Use profiles for recurring setups and flags for one-off changes.</li>
+<li>Keep <code>privileged = false</code>; add capabilities per container and remove them afterwards.</li>
+<li>Be selective with <code>devices</code>: the USB tree plus the serial hot-plug covers most hardware.</li>
+<li>Use <code>rfswift config ...</code> for changes instead of re-creating containers.</li>
 </ol>
-<h2>Common Configuration Scenarios<span class="hx:absolute hx:-mt-20" id="common-configuration-scenarios"></span>
-    <a href="#common-configuration-scenarios" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>SDR Development Environment<span class="hx:absolute hx:-mt-20" id="sdr-development-environment"></span>
-    <a href="#sdr-development-environment" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+<h2>Common scenarios<span class="hx:absolute hx:-mt-20" id="common-scenarios"></span>
+    <a href="#common-scenarios" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_dev <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/sdr_projects:/projects <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/ttyUSB0:/dev/ttyUSB0</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Wi-Fi Security Testing<span class="hx:absolute hx:-mt-20" id="wi-fi-security-testing"></span>
-    <a href="#wi-fi-security-testing" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_resolute:wifi -n wifi_testing <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -a NET_ADMIN,NET_RAW <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/wifi_captures:/captures</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<h3>Offline Device Analysis<span class="hx:absolute hx:-mt-20" id="offline-device-analysis"></span>
-    <a href="#offline-device-analysis" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a container with no network</span>
-</span></span><span class="line"><span class="cl">rfswift run -i penthertz/rfswift_resolute:reversing -n firmware_analysis <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t none <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/firmware:/firmware</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># SDR development environment</span>
+</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdr_dev -b ~/sdr_projects:/projects -s /dev/ttyUSB0:/dev/ttyUSB0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Wi-Fi security testing</span>
+</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:wifi -n wifi_testing -a NET_ADMIN,NET_RAW -b ~/wifi_captures:/captures
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Offline firmware analysis</span>
+</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:reversing -n firmware_analysis -t none -b ~/firmware:/firmware
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Native, no container engine</span>
+</span></span><span class="line"><span class="cl">rfswift container create --engine nix -i sdr_light -n radio</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
   <button
     class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
     title="Copy code"
@@ -2235,7 +2297,7 @@ Global Flags:
 
         </div>
         
-    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-08-01T17:47:56.000Z">August 1, 2026</time></div>
+    <div class="hx:mt-12 hx:mb-8 hx:block hx:text-xs hx:text-gray-500 hx:ltr:text-right hx:rtl:text-left hx:dark:text-gray-400">Last updated on <time datetime="2026-09-08T15:02:43.000Z">September 8, 2026</time></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
         href="/docs/guide/list-of-tools/"
         title="Included Tools"

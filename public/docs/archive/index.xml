@@ -1,0 +1,254 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RF Swift – 📜 Archive</title>
+    <link>https://rfswift.io/docs/archive/</link>
+    <description>Recent content in 📜 Archive on RF Swift</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="https://rfswift.io/docs/archive/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>What&#39;s new in v3.0.0 &#34;Resonance&#34;</title>
+      <link>https://rfswift.io/docs/archive/release-notes-v3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://rfswift.io/docs/archive/release-notes-v3/</guid>
+      <description>
+        
+        
+        &lt;h1&gt;RF Swift v3.0.0 &amp;ldquo;Resonance&amp;rdquo;&lt;/h1&gt;&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;Archived.&lt;/strong&gt; v3.0.0 has been superseded by v4.0 &amp;ldquo;Nucleus&amp;rdquo; (current release v4.0.2). The images described here are still the ones RF Swift ships; the commands use the v3 spellings, which v4 keeps as legacy aliases. See &lt;a href=&#34;https://rfswift.io/docs/release-notes-v4/&#34;&gt;What&amp;rsquo;s new in v4.0&lt;/a&gt;.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;RF Swift v3.0.0 rebases the whole image collection on &lt;strong&gt;Ubuntu 26.04 &amp;ldquo;Resolute&amp;rdquo;&lt;/strong&gt;, rebuilds the CLI on the new &lt;strong&gt;Moby SDK&lt;/strong&gt;, and adds a set of images that take RF Swift beyond the radio layer and into full engagement territory.&lt;/p&gt;
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-green-200 hx:bg-green-100 hx:text-green-900 hx:dark:border-green-200/30 hx:dark:bg-green-900/30 hx:dark:text-green-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;div class=&#34;hx:select-none hx:text-xl&#34; style=&#34;font-family: &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;;&#34;&gt;⚡&lt;/div&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;&lt;strong&gt;In one line:&lt;/strong&gt; a hardware and RF security lab in seconds, from a ham shack on a Sunday afternoon to a full engagement on Monday morning.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;📦 New base: Ubuntu Noble -&amp;gt; Resolute (26.04)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-new-base-ubuntu-noble---resolute-2604&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-new-base-ubuntu-noble---resolute-2604&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Every official image now builds on &lt;code&gt;ubuntu:26.04&lt;/code&gt;. The published repository moved accordingly:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;/th&gt;
+          &lt;th&gt;Repository&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Before (v2.x)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;penthertz/rfswift_noble&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Now (v3.0.0)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;penthertz/rfswift_resolute&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_full&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The CLI defaults to the new repository, and warns you when a container is still running an image from the legacy &lt;code&gt;noble&lt;/code&gt; repository.&lt;/p&gt;
+&lt;h3&gt;Why this was real work&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;why-this-was-real-work&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#why-this-was-real-work&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Resolute is not a cosmetic bump. The toolchain moved under everything at once:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;GCC 15&lt;/strong&gt; promotes K&amp;amp;R-style C to hard errors, so a lot of RF software from the 2000s simply stopped compiling&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CMake 4&lt;/strong&gt; dropped compatibility with &lt;code&gt;cmake_minimum_required(VERSION &amp;lt; 3.5)&lt;/code&gt;, which most GNU Radio out-of-tree modules still declare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Boost 1.90&lt;/strong&gt; removed the deprecated &lt;code&gt;io_context&lt;/code&gt; APIs several SDR projects still call&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Python 3.14&lt;/strong&gt; and &lt;strong&gt;Java 25&lt;/strong&gt; became the defaults, breaking pinned toolchains and native extensions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Rather than freezing on an old base, we patched what was broken and maintain the forks publicly:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;gr-osmosdr_resolute&lt;/code&gt;, &lt;code&gt;gr-gsm_resolute&lt;/code&gt;, &lt;code&gt;gr-fosphor_resolute&lt;/code&gt;, &lt;code&gt;gr-dvbs2_resolute&lt;/code&gt;, &lt;code&gt;gr-nordic_resolute&lt;/code&gt;, &lt;code&gt;gr-grnet_resolute&lt;/code&gt;, &lt;code&gt;gr-pdu_utils_resolute&lt;/code&gt;, &lt;code&gt;gr-sandia_utils_resolute&lt;/code&gt;, &lt;code&gt;gr-fhss_utils_resolute&lt;/code&gt;, &lt;code&gt;gr-timing_utils_resolute&lt;/code&gt;, &lt;code&gt;srsRAN_4G_resolute&lt;/code&gt;, &lt;code&gt;yate_resolute&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;OpenBTS&lt;/strong&gt; and &lt;strong&gt;OpenBTS-UMTS&lt;/strong&gt; are legacy C++ that GCC 15 rejects outright; both are maintained on the &lt;code&gt;resolute&lt;/code&gt; branches of the &lt;a href=&#34;https://github.com/PentHertz/OpenBTS&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PentHertz/OpenBTS&lt;/a&gt; and &lt;a href=&#34;https://github.com/PentHertz/OpenBTS-UMTS&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PentHertz/OpenBTS-UMTS&lt;/a&gt; forks, with porting still in progress.&lt;/p&gt;
+&lt;p&gt;The result: 50+ GNU Radio out-of-tree modules still build on 26.04.&lt;/p&gt;
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;Images no longer abort when a single tool fails to build. Failures are recorded in &lt;code&gt;/var/lib/db/rfswift_build_report.tsv&lt;/code&gt; inside each image, so you can see exactly what landed in your build and reinstall anything missing with &lt;code&gt;rfswift install&lt;/code&gt;.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;⚙️ Rebuilt CLI&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-rebuilt-cli&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-rebuilt-cli&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;rfswift&lt;/code&gt; now drives containers through the &lt;strong&gt;new Moby SDK&lt;/strong&gt; (&lt;code&gt;github.com/moby/moby/api&lt;/code&gt; + &lt;code&gt;github.com/moby/moby/client&lt;/code&gt;) instead of the legacy Docker Go client, and every Go dependency is current.&lt;/p&gt;
+&lt;p&gt;Engine choice is still yours and is auto-detected at startup, or forced with &lt;code&gt;--engine&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Docker&lt;/strong&gt;: the default on Linux and Windows&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Podman&lt;/strong&gt;: rootless and daemonless (&lt;a href=&#34;https://rfswift.io/docs/guide/podman/&#34;&gt;guide&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lima&lt;/strong&gt;: how RF Swift gets real USB passthrough for SDR dongles on macOS, plus an optional GPU VM (&lt;a href=&#34;https://rfswift.io/docs/commands/engine/&#34;&gt;&lt;code&gt;rfswift engine lima&lt;/code&gt;&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;📡 Telecom: 5G SA now runs on OCUDU&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-telecom-5g-sa-now-runs-on-ocudu&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-telecom-5g-sa-now-runs-on-ocudu&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The 5G SA CU/DU stack installed in the &lt;code&gt;telecom_5G&lt;/code&gt; images is now &lt;a href=&#34;https://gitlab.com/ocudu/ocudu&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;OCUDU&lt;/strong&gt;&lt;/a&gt; instead of srsRAN Project. It still provides the &lt;code&gt;gnb&lt;/code&gt; binary and builds into &lt;code&gt;/telecom/5G/ocudu&lt;/code&gt;, so existing configurations carry over, and &lt;code&gt;srsran5GSA_soft_install&lt;/code&gt; is kept as an alias.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;srsRAN 4G&lt;/strong&gt; is unaffected and remains the 4G / 5G-NSA stack, from the &lt;code&gt;srsRAN_4G_resolute&lt;/code&gt; fork.&lt;/p&gt;
+&lt;p&gt;2G to 5G, still one pull. See &lt;a href=&#34;https://rfswift.io/docs/guide/list-of-tools/#telecommunications&#34;&gt;Telecommunications&lt;/a&gt; for the full inventory.&lt;/p&gt;
+&lt;h2&gt;⚡ GNU Radio 4, testable in seconds&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-gnu-radio-4-testable-in-seconds&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-gnu-radio-4-testable-in-seconds&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Curious about GNU Radio 4 but not willing to wreck the GNU Radio 3.10 environment you actually work in? There is now a dedicated image:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift run -i penthertz/rfswift_resolute:sdr_gnuradio4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;GR4 (4.0.0-RC2) is built from source into &lt;code&gt;/opt/gnuradio4&lt;/code&gt; with its own Python 3.12 virtual environment for the embedded interpreter, in parallel with the apt GNU Radio 3.10 that stays the image default. No building from source yourself, no VM, no disturbing your existing flowgraphs.&lt;/p&gt;
+&lt;div class=&#34;hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-amber-200 hx:bg-amber-100 hx:text-amber-900 hx:dark:border-amber-200/30 hx:dark:bg-amber-900/30 hx:dark:text-amber-200&#34;&gt;
+  &lt;div class=&#34;hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2&#34;&gt;&lt;svg height=1.2em class=&#34;hx:inline-block hx:align-middle&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z&#34;/&gt;&lt;/svg&gt;&lt;/div&gt;
+
+  &lt;div class=&#34;hx:w-full hx:min-w-0 hx:leading-7&#34;&gt;
+    &lt;div class=&#34;hx:mt-6 hx:leading-7 hx:first:mt-0&#34;&gt;GNU Radio 4 is a &lt;strong&gt;release candidate&lt;/strong&gt;. Expect API churn. This image is for evaluating GR4, not for production work. Not yet available on RISC-V64.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;🧰 New images for full engagements&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-new-images-for-full-engagements&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-new-images-for-full-engagements&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Radio work rarely stops at the radio. Three new images cover what comes after:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Image&lt;/th&gt;
+          &lt;th&gt;What it&amp;rsquo;s for&lt;/th&gt;
+          &lt;th&gt;Highlights&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;&lt;code&gt;ad&lt;/code&gt;&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Active Directory engagements&lt;/td&gt;
+          &lt;td&gt;Impacket, NetExec, Responder, BloodHound.py, Certipy, bloodyAD, certsync, mitm6, kerbrute, lsassy, ldapdomaindump, sprayhound, DonPAPI, SharpLAPS, pyGoldenGMSA, skewrun&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;&lt;code&gt;android&lt;/code&gt;&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Mobile assessment&lt;/td&gt;
+          &lt;td&gt;adb/fastboot, apktool, smali, apksigner, scrcpy, dex2jar, Frida, objection, androguard, drozer, MobSF&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;&lt;code&gt;osint&lt;/code&gt;&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Recon and open-source intelligence&lt;/td&gt;
+          &lt;td&gt;theHarvester, Sherlock, maigret, holehe, GHunt, toutatis, instaloader, Sublist3r, h8mail, censys, subfinder, SpiderFoot, recon-ng, FinalRecon&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;All three build on all supported architectures. See &lt;a href=&#34;https://rfswift.io/docs/guide/list-of-tools/&#34;&gt;Included Tools&lt;/a&gt; for the complete per-image tables.&lt;/p&gt;
+&lt;h2&gt;🔧 New tools in existing images&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-new-tools-in-existing-images&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-new-tools-in-existing-images&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Reversing&lt;/strong&gt; gained a proper SAST/DAST set. &lt;strong&gt;Trivy&lt;/strong&gt; (vulnerabilities, misconfigurations, secrets, SBOM) and &lt;strong&gt;Sighthound&lt;/strong&gt; (tree-sitter taint-flow scanner with SARIF output) join Semgrep, Joern, cppcheck, honggfuzz, AFL and the Clang static analyzer&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bluetooth&lt;/strong&gt; gained &lt;strong&gt;Caeruleus&lt;/strong&gt; (single-binary BLE assessment workflow with JSON output) and &lt;strong&gt;BlueSploit&lt;/strong&gt;, alongside the &lt;strong&gt;WhisperPair&lt;/strong&gt; exploit for CVE-2025-36911&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SDR&lt;/strong&gt; gained &lt;strong&gt;FISSURE&lt;/strong&gt; in an isolated venv that reuses the image&amp;rsquo;s existing GNU Radio/SoapySDR stack, plus HydraSDR support (&lt;code&gt;gr-hydrasdr&lt;/code&gt;, &lt;code&gt;hydrasdr_433&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Network&lt;/strong&gt; gained Sniffnet, NetWatch, Hetty, HExHTTP, SSRFmap, GraphQLmap, betterleaks, SecLists and more&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hardware&lt;/strong&gt; gained the Sipeed SLogic PulseView build, plus &lt;code&gt;findus&lt;/code&gt; (PicoGlitcher) and &lt;code&gt;rd6006&lt;/code&gt; support&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;🏗️ Multi-architecture&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-multi-architecture&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-multi-architecture&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Everything above ships on &lt;strong&gt;x86_64&lt;/strong&gt;, &lt;strong&gt;ARM64&lt;/strong&gt; and &lt;strong&gt;RISC-V64&lt;/strong&gt;, with the exception of &lt;code&gt;sdr_gnuradio4&lt;/code&gt; (amd64 and arm64 for now) and the GPU-accelerated SDR variants (amd64 only).&lt;/p&gt;
+&lt;h2&gt;Upgrading from v2.x&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;upgrading-from-v2x&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#upgrading-from-v2x&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Update the CLI:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift update&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;or reinstall with the one-liner from &lt;a href=&#34;https://rfswift.io/docs/getting-started/&#34;&gt;Getting Started&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Pull the new images.&lt;/strong&gt; Your &lt;code&gt;noble&lt;/code&gt; containers keep working, but new pulls should target &lt;code&gt;penthertz/rfswift_resolute&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift images pull -i sdr_full&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Recreate long-lived containers&lt;/strong&gt; rather than upgrading in place if you rely on tools that were rebuilt against the new toolchain:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rfswift upgrade -c my_container -i penthertz/rfswift_resolute:sdr_full &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -r /root/captures,/root/scripts&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;-r&lt;/code&gt; flag preserves the directories you list. See &lt;a href=&#34;https://rfswift.io/docs/commands/upgrade/&#34;&gt;&lt;code&gt;rfswift upgrade&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Check the build report&lt;/strong&gt; in the new image if a tool you depend on seems absent:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat /var/lib/db/rfswift_build_report.tsv&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Next Steps&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div class=&#34;hextra-cards hx:mt-4 hx:gap-4 hx:grid not-prose&#34; style=&#34;--hextra-cards-grid-cols: 3;&#34;&gt;
+  &lt;a
+    class=&#34;hextra-card hx:group hx:flex hx:flex-col hx:justify-start hx:overflow-hidden hx:rounded-lg hx:border hx:border-gray-200 hx:text-current hx:no-underline hx:dark:shadow-none hx:hover:shadow-gray-100 hx:dark:hover:shadow-none hx:shadow-gray-100 hx:active:shadow-sm hx:active:shadow-gray-200 hx:transition-all hx:duration-200 hx:hover:border-gray-300 hx:bg-transparent hx:shadow-xs hx:dark:border-neutral-800 hx:hover:bg-slate-50 hx:hover:shadow-md hx:dark:hover:border-neutral-700 hx:dark:hover:bg-neutral-900&#34;href=&#34;https://rfswift.io/docs/guide/list-of-images&#34;
+      &gt;&lt;span class=&#34;hextra-card-icon hx:flex hx:font-semibold hx:items-start hx:gap-2 hx:pt-4 hx:px-4 hx:text-gray-700 hx:hover:text-gray-900 hx:dark:text-neutral-200 hx:dark:hover:text-neutral-50&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z&#34;/&gt;&lt;/svg&gt;Container Images&lt;/span&gt;&lt;div class=&#34;hextra-card-subtitle hx:line-clamp-3 hx:text-sm hx:font-normal hx:text-gray-500 hx:dark:text-gray-400 hx:px-4 hx:mb-4 hx:mt-2&#34;&gt;The full image catalogue, including the new ad, android, osint and sdr_gnuradio4 images.&lt;/div&gt;&lt;/a&gt;
+  &lt;a
+    class=&#34;hextra-card hx:group hx:flex hx:flex-col hx:justify-start hx:overflow-hidden hx:rounded-lg hx:border hx:border-gray-200 hx:text-current hx:no-underline hx:dark:shadow-none hx:hover:shadow-gray-100 hx:dark:hover:shadow-none hx:shadow-gray-100 hx:active:shadow-sm hx:active:shadow-gray-200 hx:transition-all hx:duration-200 hx:hover:border-gray-300 hx:bg-transparent hx:shadow-xs hx:dark:border-neutral-800 hx:hover:bg-slate-50 hx:hover:shadow-md hx:dark:hover:border-neutral-700 hx:dark:hover:bg-neutral-900&#34;href=&#34;https://rfswift.io/docs/guide/list-of-tools&#34;
+      &gt;&lt;span class=&#34;hextra-card-icon hx:flex hx:font-semibold hx:items-start hx:gap-2 hx:pt-4 hx:px-4 hx:text-gray-700 hx:hover:text-gray-900 hx:dark:text-neutral-200 hx:dark:hover:text-neutral-50&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z&#34;/&gt;&lt;/svg&gt;Included Tools&lt;/span&gt;&lt;div class=&#34;hextra-card-subtitle hx:line-clamp-3 hx:text-sm hx:font-normal hx:text-gray-500 hx:dark:text-gray-400 hx:px-4 hx:mb-4 hx:mt-2&#34;&gt;Per-image tool inventories with architecture support.&lt;/div&gt;&lt;/a&gt;
+  &lt;a
+    class=&#34;hextra-card hx:group hx:flex hx:flex-col hx:justify-start hx:overflow-hidden hx:rounded-lg hx:border hx:border-gray-200 hx:text-current hx:no-underline hx:dark:shadow-none hx:hover:shadow-gray-100 hx:dark:hover:shadow-none hx:shadow-gray-100 hx:active:shadow-sm hx:active:shadow-gray-200 hx:transition-all hx:duration-200 hx:hover:border-gray-300 hx:bg-transparent hx:shadow-xs hx:dark:border-neutral-800 hx:hover:bg-slate-50 hx:hover:shadow-md hx:dark:hover:border-neutral-700 hx:dark:hover:bg-neutral-900&#34;href=&#34;https://rfswift.io/docs/getting-started&#34;
+      &gt;&lt;span class=&#34;hextra-card-icon hx:flex hx:font-semibold hx:items-start hx:gap-2 hx:pt-4 hx:px-4 hx:text-gray-700 hx:hover:text-gray-900 hx:dark:text-neutral-200 hx:dark:hover:text-neutral-50&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; fill=&#34;none&#34; viewBox=&#34;0 0 24 24&#34; stroke-width=&#34;2&#34; stroke=&#34;currentColor&#34; aria-hidden=&#34;true&#34;&gt;&lt;path stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; d=&#34;M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z&#34;/&gt;&lt;/svg&gt;Getting Started&lt;/span&gt;&lt;div class=&#34;hextra-card-subtitle hx:line-clamp-3 hx:text-sm hx:font-normal hx:text-gray-500 hx:dark:text-gray-400 hx:px-4 hx:mb-4 hx:mt-2&#34;&gt;Install or update RF Swift.&lt;/div&gt;&lt;/a&gt;
+&lt;/div&gt;
+
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
