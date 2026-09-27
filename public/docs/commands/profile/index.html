@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift profile · RF Swift</title>
   <meta name="description" content="Manage profiles: YAML presets for quick container creation.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="http://localhost:1313/docs/commands/profile/">
+  <link rel="canonical" href="https://rfswift.io/docs/commands/profile/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift profile · RF Swift">
   <meta property="og:description" content="Manage profiles: YAML presets for quick container creation.">
-  <meta property="og:url" content="http://localhost:1313/docs/commands/profile/">
-  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
+  <meta property="og:url" content="https://rfswift.io/docs/commands/profile/">
+  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -22,6 +22,20 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
   <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-X1KH5KRN5B');
+        }
+      </script>
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -231,27 +245,52 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift profile</h1><p class="doc-lead">Manage profiles: YAML presets for quick container creation.</p><p class="doc-meta">Reference · 5 min read · Updated September 8, 2026</p>
+      <h1>rfswift profile</h1><p class="doc-lead">Manage profiles: YAML presets for quick container creation.</p><p class="doc-meta">Reference · 5 min read · Updated September 27, 2026</p>
     </header>
     <div class="prose">
       <p>A profile is a named preset for creating containers: image, network mode, features (desktop, realtime, privileged), device mappings, capabilities, cgroup rules and port bindings in one YAML file. <code>rfswift profile</code> lists, shows, creates and deletes them. Use profiles so you don&rsquo;t have to type long <code>rfswift container create</code> commands again and again.</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift profile init                                   <span class="c1"># gen<div class="admonition admonition-info" role="note"><p><strong>Quick Start</strong>: Run <code>rfswift profile init</code> to generate default profiles, then use them with <code>rfswift container create --profile sdr-full -n my_container</code>.</p>
-</div>ption |</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span>------------<span class="p">|</span>-------------<span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="sb">`</span>list<span class="sb">`</span> <span class="p">|</span> List all available profiles <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="sb">`</span>show <span class="o">[</span>name<span class="o">]</span><span class="sb">`</span> <span class="p">|</span> Show detailed configuration <span class="k">for</span> a profile <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="sb">`</span>create<span class="sb">`</span> <span class="p">|</span> Create a new profile interactively <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="sb">`</span>init<span class="sb">`</span> <span class="p">|</span> Generate default profile YAML files <span class="p">|</span>
-</span></span><span class="line"><span class="cl"><span class="p">|</span> <span class="sb">`</span>delete <span class="o">[</span>name<span class="o">]</span><span class="sb">`</span> <span class="p">|</span> Delete a profile <span class="p">|</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">## Profile storage</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Each profile is a YAML file in this folder:
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="o">{{</span>&lt; tabs <span class="nv">items</span><span class="o">=</span><span class="s2">&#34;Linux,macOS,Windows&#34;</span> &gt;<span class="o">}}</span>
-</span></span><span class="line"><span class="cl">  <span class="o">{{</span>&lt; tab &gt;<span class="o">}}</span></span></span></code></pre></div></div>
-<p>~/.config/rfswi<div class="doc-tabs" data-tabs>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift profile init                                   <span class="c1"># generate the built-in profiles</span>
+</span></span><span class="line"><span class="cl">rfswift container create --profile sdr-full -n my_sdr  <span class="c1"># use one</span></span></span></code></pre></div></div>
+<h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift profile <span class="o">[</span>subcommand<span class="o">]</span> <span class="o">[</span>options<span class="o">]</span></span></span></code></pre></div></div>
+<h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Subcommand</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>list</code></td>
+      <td>List all available profiles</td>
+    </tr>
+    <tr>
+      <td><code>show [name]</code></td>
+      <td>Show detailed configuration for a profile</td>
+    </tr>
+    <tr>
+      <td><code>create</code></td>
+      <td>Create a new profile interactively</td>
+    </tr>
+    <tr>
+      <td><code>init</code></td>
+      <td>Generate default profile YAML files</td>
+    </tr>
+    <tr>
+      <td><code>delete [name]</code></td>
+      <td>Delete a profile</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h2 id="profile-storage">Profile storage<a class="anchor" href="#profile-storage" aria-label="Link to this section"></a></h2>
+<p>Each profile is a YAML file in this folder:</p>
+<div class="doc-tabs" data-tabs>
   <div class="tabs" role="tablist">
       <button type="button" role="tab" data-tab="0" data-label="linux" data-os="linux" aria-selected="true">Linux</button>
       <button type="button" role="tab" data-tab="1" data-label="macos" data-os="mac" aria-selected="false">macOS</button>
@@ -266,7 +305,9 @@
   <div class="doc-tab-panel" role="tabpanel" data-panel="2" hidden><div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>%APPDATA%\rfswift\profiles\</code></pre></div>
 </div>
-</div> format</p>
+</div>
+<p>You can edit, copy or share these files like any other file.</p>
+<h2 id="profile-format">Profile format<a class="anchor" href="#profile-format" aria-label="Link to this section"></a></h2>
 <p>A profile YAML file contains:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">sdr-full</span><span class="w">
@@ -575,10 +616,8 @@
 <li><a href="/docs/guide/configurations/">Configuration</a>: the global configuration file</li>
 <li><a href="/docs/guide/running-rf-swift/">Running RF Swift</a>: everyday workflows</li>
 </ul>
-<p>{{&lt; callout &gt;}}
-<strong>Tip</strong>: create a profile for each setup you use often (SDR capture, hardware debugging, network testing&hellip;) and use <code>--profile</code> instead of repeating the same flags. Edi<div class="admonition admonition-tip" role="note"><p><strong>Tip</strong>: Create profiles for your most common setups (pentesting, SDR capture, hardware debug) and use <code>--profile</code> to skip repetitive configuration. Edit the YAML files directly for fine-tuning.</p>
-</div>��<div class="admonition admonition-info" role="note"><p><strong>Exegol-style Presets</strong>: RF Swift profiles are inspired by <a href="https://github.com/ThePorgs/Exegol" target="_blank" rel="noopener">Exegol&rsquo;s</a> profile system. If you&rsquo;re coming from Exegol, you&rsquo;ll find the concept familiar: profiles bundle all container settings into a reusable preset.</p>
-</div>�</p>
+<div class="admonition admonition-tip" role="note"><p><strong>Tip</strong>: create a profile for each setup you use often (SDR capture, hardware debugging, network testing&hellip;) and use <code>--profile</code> instead of repeating the same flags. Edit the YAML files directly for fine-tuning.</p>
+</div>
 
     </div>
     <footer class="doc-foot">
@@ -599,7 +638,10 @@
   <p class="toc-title">On this page</p>
   <nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#synopsis">Synopsis</a></li>
+    <li><a href="#subcommands">Subcommands</a></li>
+    <li><a href="#profile-storage">Profile storage</a></li>
+    <li><a href="#profile-format">Profile format</a>
       <ul>
         <li><a href="#profile-fields">Profile fields</a></li>
       </ul>
