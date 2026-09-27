@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift realtime · RF Swift</title>
   <meta name="description" content="Enable or disable realtime mode for better SDR performance.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/realtime/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/realtime/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift realtime · RF Swift">
   <meta property="og:description" content="Enable or disable realtime mode for better SDR performance.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/realtime/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/realtime/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,19 +231,19 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift realtime</h1><p class="doc-lead">Enable or disable realtime mode for better SDR performance.</p><p class="doc-meta">Reference · 5 min read · Updated September 27, 2026</p>
+      <h1>rfswift realtime</h1><p class="doc-lead">Enable or disable realtime mode for better SDR performance.</p><p class="doc-meta">Reference · 5 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Enable or disable realtime mode for optimal SDR performance.</p>
+      <p>Realtime mode sets up a container for low-latency radio work in one command. It adds the capability and the resource limits that SDR tools need to run with real-time priority, which helps avoid buffer underruns (dropped samples).</p>
+<p>Use it when a capture drops samples, or before time-critical work. For a new lab, pass <code>--realtime</code> to <code>rfswift container create</code> instead.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span> -c my_sdr</span></span></code></pre></div></div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span> -c CONTAINER
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span>  -c CONTAINER
 </span></span><span class="line"><span class="cl">rfswift realtime disable -c CONTAINER
-</span></span><span class="line"><span class="cl">rfswift realtime status -c CONTAINER</span></span></code></pre></div></div>
-<p>The <code>realtime</code> command provides a one-command solution to configure containers for low-latency RF/SDR operations. It automatically sets up the necessary capabilities and ulimits to eliminate buffer underruns and enable real-time scheduling.</p>
-<hr>
-<h2 id="what-realtime-mode-configures">What realtime mode configures<a class="anchor" href="#what-realtime-mode-configures" aria-label="Link to this section"></a></h2>
-<p>When you enable realtime mode, RF Swift automatically configures:</p>
+</span></span><span class="line"><span class="cl">rfswift realtime status  -c CONTAINER</span></span></code></pre></div></div>
+<h2 id="what-realtime-mode-sets">What realtime mode sets<a class="anchor" href="#what-realtime-mode-sets" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
@@ -271,17 +257,17 @@
     <tr>
       <td><strong>SYS_NICE capability</strong></td>
       <td>Added</td>
-      <td>Allows setting process priorities and real-time scheduling</td>
+      <td>Allows changing process priorities and real-time scheduling</td>
     </tr>
     <tr>
       <td><strong>rtprio ulimit</strong></td>
       <td>95</td>
-      <td>Enables real-time scheduling up to priority 95</td>
+      <td>Real-time scheduling up to priority 95</td>
     </tr>
     <tr>
       <td><strong>memlock ulimit</strong></td>
       <td>unlimited</td>
-      <td>Prevents sample buffers from being swapped to disk</td>
+      <td>Keeps sample buffers in RAM instead of swap</td>
     </tr>
     <tr>
       <td><strong>nice ulimit</strong></td>
@@ -291,99 +277,64 @@
   </tbody>
 </table>
 </div>
-<hr>
+<div class="admonition admonition-warning" role="note"><p>Enabling or disabling realtime mode re-creates the container. Commit important changes first with <code>rfswift container commit</code>.</p>
+</div>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Description</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>enable</code></td>
-      <td>Enable realtime mode on a container</td>
+      <td>Turns realtime mode on for a container</td>
     </tr>
     <tr>
       <td><code>disable</code></td>
-      <td>Disable realtime mode on a container</td>
+      <td>Turns realtime mode off</td>
     </tr>
     <tr>
       <td><code>status</code></td>
-      <td>Check realtime mode status and current ulimits</td>
+      <td>Shows whether realtime mode is on, and the current limits</td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
-<h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
-<h3 id="realtime-enable--disable--status">realtime enable / disable / status<a class="anchor" href="#realtime-enable--disable--status" aria-label="Link to this section"></a></h3>
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Flag</th>
-      <th>Description</th>
-      <th>Required</th>
-      <th>Example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>-c, --container STRING</code></td>
-      <td>Container ID or name</td>
-      <td>Yes</td>
-      <td><code>-c my_container</code></td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<hr>
+<p>All three take <code>-c, --container STRING</code> (container ID or name, required), for example <code>-c my_container</code>.</p>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Enable realtime mode:</strong></p>
+<h3 id="basic-use">Basic use<a class="anchor" href="#basic-use" aria-label="Link to this section"></a></h3>
+<p>Turn realtime mode on, check it, and turn it off:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span> -c sdr_work</span></span></code></pre></div></div>
-<p><strong>Check realtime status:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span>  -c sdr_work
+</span></span><span class="line"><span class="cl">rfswift realtime status  -c sdr_work
+</span></span><span class="line"><span class="cl">rfswift realtime disable -c sdr_work</span></span></code></pre></div></div>
+<h3 id="fix-sdr-buffer-underruns">Fix SDR buffer underruns<a class="anchor" href="#fix-sdr-buffer-underruns" aria-label="Link to this section"></a></h3>
+<p>If a HackRF, BladeRF or RTL-SDR capture drops samples, enable realtime mode, check that <code>rtprio</code> is now 95, then run the capture with real-time priority:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift realtime status -c sdr_work</span></span></code></pre></div></div>
-<p><strong>Disable realtime mode:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift realtime disable -c sdr_work</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Fix SDR buffer underruns:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Experiencing underruns with HackRF/BladeRF/RTL-SDR?</span>
-</span></span><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span> -c sdr_container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify it&#39;s working</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span> -c sdr_container
 </span></span><span class="line"><span class="cl">rfswift container shell -c sdr_container -e <span class="s2">&#34;ulimit -r&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Output: 95</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Now run your SDR application with real-time priority</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c sdr_container
 </span></span><span class="line"><span class="cl">chrt -f <span class="m">50</span> hackrf_transfer -r samples.bin -f <span class="m">433920000</span> -s <span class="m">8000000</span></span></span></code></pre></div></div>
-<p><strong>Create new container with realtime mode:</strong></p>
+<h3 id="create-a-lab-with-realtime-mode-already-on">Create a lab with realtime mode already on<a class="anchor" href="#create-a-lab-with-realtime-mode-already-on" aria-label="Link to this section"></a></h3>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use --realtime flag during creation</span>
-</span></span><span class="line"><span class="cl">rfswift container create -n sdr_realtime -i penthertz/rfswift_resolute:sdr_full --realtime
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Container is ready for low-latency SDR work</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -n sdr_realtime -i penthertz/rfswift_resolute:sdr_full --realtime
 </span></span><span class="line"><span class="cl">rfswift container shell -c sdr_realtime</span></span></code></pre></div></div>
-<p><strong>Professional RF testing setup:</strong></p>
+<h3 id="time-critical-rfid-captures">Time-critical RFID captures<a class="anchor" href="#time-critical-rfid-captures" aria-label="Link to this section"></a></h3>
+<p>Create an <code>rfid</code> lab with realtime mode, check it, and run the Proxmark3 client with real-time priority:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create optimized container</span>
-</span></span><span class="line"><span class="cl">rfswift container create -n rf_pentest -i penthertz/rfswift_resolute:rfid --realtime
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify configuration</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -n rf_pentest -i penthertz/rfswift_resolute:rfid --realtime
 </span></span><span class="line"><span class="cl">rfswift realtime status -c rf_pentest
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Run time-critical captures</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c rf_pentest
 </span></span><span class="line"><span class="cl">chrt -f <span class="m">70</span> proxmark3 /dev/ttyACM0</span></span></code></pre></div></div>
-<p><strong>Using real-time scheduling inside container:</strong></p>
+<h3 id="real-time-scheduling-inside-a-lab">Real-time scheduling inside a lab<a class="anchor" href="#real-time-scheduling-inside-a-lab" aria-label="Link to this section"></a></h3>
+<p>Inside the lab, <code>chrt</code> starts a program with real-time scheduling, and <code>nice</code> raises its priority:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c sdr_container
 </span></span><span class="line"><span class="cl">
@@ -398,27 +349,24 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Check current process scheduling</span>
 </span></span><span class="line"><span class="cl">chrt -p <span class="nv">$$</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="when-to-use-realtime-mode">When to use realtime mode<a class="anchor" href="#when-to-use-realtime-mode" aria-label="Link to this section"></a></h2>
-<h3 id="enable-realtime-mode-for">Enable realtime mode for:<a class="anchor" href="#enable-realtime-mode-for" aria-label="Link to this section"></a></h3>
+<h3 id="useful-for">Useful for<a class="anchor" href="#useful-for" aria-label="Link to this section"></a></h3>
 <ul>
-<li><strong>High sample rate captures</strong> - Prevents dropped samples at high bandwidths</li>
-<li><strong>Real-time signal processing</strong> - GNU Radio flowgraphs, SDR++, GQRX</li>
-<li><strong>Multiple SDR tools</strong> - Running several applications simultaneously</li>
-<li><strong>Time-critical protocols</strong> - RFID, NFC, automotive keyfobs</li>
-<li><strong>Professional pentesting</strong> - When reliability is critical</li>
-<li><strong>Live demonstrations</strong> - Avoid embarrassing buffer underruns</li>
+<li><strong>High sample rates</strong>: avoids dropped samples at high bandwidths.</li>
+<li><strong>Live signal processing</strong>: GNU Radio flowgraphs, SDR++, GQRX.</li>
+<li><strong>Several SDR tools at once.</strong></li>
+<li><strong>Time-critical protocols</strong>: RFID, NFC, car key fobs.</li>
+<li><strong>Professional assessments</strong>, where reliability matters.</li>
+<li><strong>Live demonstrations</strong>, to avoid dropped samples in front of an audience.</li>
 </ul>
-<h3 id="not-necessary-for">Not necessary for:<a class="anchor" href="#not-necessary-for" aria-label="Link to this section"></a></h3>
+<h3 id="not-needed-for">Not needed for<a class="anchor" href="#not-needed-for" aria-label="Link to this section"></a></h3>
 <ul>
-<li><strong>Offline analysis</strong> - Inspectrum, signal analysis of recorded files</li>
-<li><strong>Low sample rates</strong> - Simple FM reception, slow protocols</li>
-<li><strong>Non-SDR work</strong> - General container usage, development</li>
+<li><strong>Offline analysis</strong>: Inspectrum, or analysing recorded files.</li>
+<li><strong>Low sample rates</strong>: simple FM reception, slow protocols.</li>
+<li><strong>Non-SDR work</strong>: general use, development.</li>
 </ul>
-<hr>
-<h2 id="alternative-host-level-configuration">Alternative: Host-Level configuration<a class="anchor" href="#alternative-host-level-configuration" aria-label="Link to this section"></a></h2>
-<p>Instead of per-container settings, you can configure Docker daemon defaults:</p>
-<p><strong>Edit <code>/etc/docker/daemon.json</code>:</strong></p>
+<h2 id="set-it-for-every-container-on-the-host">Set it for every container on the host<a class="anchor" href="#set-it-for-every-container-on-the-host" aria-label="Link to this section"></a></h2>
+<p>Instead of setting it per container, you can configure default limits for the Docker service. Edit <code>/etc/docker/daemon.json</code>:</p>
 <div class="code">
   <div class="code-bar"><span>json</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;default-ulimits&#34;</span><span class="p">:</span> <span class="p">{</span>
@@ -427,71 +375,49 @@
 </span></span><span class="line"><span class="cl">    <span class="nt">&#34;nice&#34;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&#34;Name&#34;</span><span class="p">:</span> <span class="s2">&#34;nice&#34;</span><span class="p">,</span> <span class="nt">&#34;Hard&#34;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="nt">&#34;Soft&#34;</span><span class="p">:</span> <span class="mi">40</span> <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div>
-<p><strong>Restart Docker:</strong></p>
+<p>Then restart Docker. Every container on the host now gets these limits:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl restart docker</span></span></code></pre></div></div>
-<p>This applies realtime ulimits to <strong>all</strong> containers on the host automatically.</p>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="realtime-mode-not-working">Realtime mode not working<a class="anchor" href="#realtime-mode-not-working" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Still experiencing buffer underruns after enabling realtime mode</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="captures-still-drop-samples-after-enabling-realtime-mode">Captures still drop samples after enabling realtime mode<a class="anchor" href="#captures-still-drop-samples-after-enabling-realtime-mode" aria-label="Link to this section"></a></h3>
+<p>Check that realtime mode is on and that the limits reached the lab (you should see 95 and unlimited). Real-time priority only applies to programs you start with <code>chrt</code>. Also check the host kernel: <code>-virtual</code> and <code>-cloud</code> kernels are not suited to real-time work.</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Verify realtime mode is enabled</span>
-</span></span><span class="line"><span class="cl">rfswift realtime status -c container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check ulimits inside container</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift realtime status -c container
 </span></span><span class="line"><span class="cl">rfswift container shell -c container -e <span class="s2">&#34;ulimit -r &amp;&amp; ulimit -l&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Should show: 95 and unlimited</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Ensure you&#39;re actually using real-time scheduling</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c container
 </span></span><span class="line"><span class="cl">chrt -f <span class="m">50</span> your_sdr_command  <span class="c1"># Must use chrt!</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check if host kernel supports real-time</span>
 </span></span><span class="line"><span class="cl">uname -a  <span class="c1"># Should not be a -virtual or -cloud kernel</span></span></span></code></pre></div></div>
-<h3 id="permission-denied">Permission denied<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>Operation not permitted</code> when using <code>chrt</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="operation-not-permitted-when-using-chrt"><code>Operation not permitted</code> when using <code>chrt</code><a class="anchor" href="#operation-not-permitted-when-using-chrt" aria-label="Link to this section"></a></h3>
+<p>Enable realtime mode again (this re-creates the container) and check that the <code>SYS_NICE</code> capability is present:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Re-enable realtime mode (recreates container)</span>
-</span></span><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span> -c container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify SYS_NICE capability</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c container -e <span class="s2">&#34;grep Cap /proc/self/status&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If using rootless Docker, also set host ulimits</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Edit /etc/security/limits.conf:</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># your_user - rtprio  95</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># your_user - memlock unlimited</span></span></span></code></pre></div></div>
-<h3 id="container-wont-start-after-enable">Container won&rsquo;t start after enable<a class="anchor" href="#container-wont-start-after-enable" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Container fails to start after enabling realtime mode</p>
-<p><strong>Solutions:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span> -c container
+</span></span><span class="line"><span class="cl">rfswift container shell -c container -e <span class="s2">&#34;grep Cap /proc/self/status&#34;</span></span></span></code></pre></div></div>
+<p>With rootless Docker, also raise the limits on the host, in <code>/etc/security/limits.conf</code>:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check Docker logs</span>
-</span></span><span class="line"><span class="cl">docker logs container_name
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Try disabling and re-enabling</span>
+  <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>your_user - rtprio  95
+your_user - memlock unlimited</code></pre></div>
+<h3 id="the-container-doesnt-start-after-enabling-realtime-mode">The container doesn&rsquo;t start after enabling realtime mode<a class="anchor" href="#the-container-doesnt-start-after-enabling-realtime-mode" aria-label="Link to this section"></a></h3>
+<p>Look at the engine&rsquo;s logs, try disabling and enabling again, and if it still fails, create a new lab with <code>--realtime</code>:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker logs container_name
 </span></span><span class="line"><span class="cl">rfswift realtime disable -c container
 </span></span><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span> -c container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If persists, recreate container</span>
 </span></span><span class="line"><span class="cl">rfswift container create -n new_container -i image_name --realtime</span></span></code></pre></div></div>
-<hr>
-<h2 id="technical-details">Technical details<a class="anchor" href="#technical-details" aria-label="Link to this section"></a></h2>
-<h3 id="how-it-works">How it works<a class="anchor" href="#how-it-works" aria-label="Link to this section"></a></h3>
+<h2 id="how-it-works">How it works<a class="anchor" href="#how-it-works" aria-label="Link to this section"></a></h2>
 <ol>
-<li><strong>Container inspection</strong> - RF Swift reads current container configuration</li>
-<li><strong>Configuration update</strong> - Adds SYS_NICE capability and ulimits</li>
-<li><strong>Container recreation</strong> - Stops, removes, and recreates container with new settings</li>
-<li><strong>Verification</strong> - Container starts with realtime configuration</li>
+<li><strong>Inspect</strong>: RF Swift reads the container&rsquo;s current configuration.</li>
+<li><strong>Update</strong>: it adds the <code>SYS_NICE</code> capability and the limits.</li>
+<li><strong>Re-create</strong>: it stops, removes and re-creates the container with the new settings.</li>
+<li><strong>Start</strong>: the container starts with realtime settings.</li>
 </ol>
-<h3 id="ulimit-values-explained">Ulimit values explained<a class="anchor" href="#ulimit-values-explained" aria-label="Link to this section"></a></h3>
+<h3 id="what-the-values-mean">What the values mean<a class="anchor" href="#what-the-values-mean" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
-      <th>Ulimit</th>
+      <th>Limit</th>
       <th>Value</th>
       <th>Meaning</th>
     </tr>
@@ -499,18 +425,18 @@
   <tbody>
     <tr>
       <td>rtprio=95</td>
-      <td>Max RT priority</td>
-      <td>Can use <code>chrt -f 1</code> through <code>chrt -f 95</code></td>
+      <td>Maximum real-time priority</td>
+      <td>You can use <code>chrt -f 1</code> through <code>chrt -f 95</code></td>
     </tr>
     <tr>
       <td>memlock=-1</td>
       <td>Unlimited</td>
-      <td>No limit on locked memory (prevents swapping)</td>
+      <td>No limit on locked memory, so nothing is swapped out</td>
     </tr>
     <tr>
       <td>nice=40</td>
-      <td>Range adjustment</td>
-      <td>Allows nice -20 to +19 (40-20=20 range)</td>
+      <td>Range</td>
+      <td>Allows nice -20 to +19 (40 - 20 = 20)</td>
     </tr>
   </tbody>
 </table>
@@ -518,25 +444,17 @@
 <h3 id="kernel-requirements">Kernel requirements<a class="anchor" href="#kernel-requirements" aria-label="Link to this section"></a></h3>
 <p>Real-time scheduling works best with:</p>
 <ul>
-<li><strong>Standard kernels</strong> (not -virtual or -cloud variants)</li>
-<li><strong>PREEMPT_RT patches</strong> (optional, for hard real-time)</li>
-<li><strong>Sufficient CPU resources</strong> (avoid overcommitting)</li>
+<li>a <strong>standard kernel</strong> (not a <code>-virtual</code> or <code>-cloud</code> variant);</li>
+<li>the <strong>PREEMPT_RT patches</strong>, optionally, for hard real-time;</li>
+<li><strong>enough CPU</strong>: avoid overcommitting the machine.</li>
 </ul>
-<hr>
-<h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
+<h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/ulimits"><code>ulimits</code></a> - Fine-grained ulimit control</li>
-<li><a href="/docs/commands/capabilities"><code>capabilities</code></a> - Manage container capabilities</li>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create container with <code>--realtime</code> flag</li>
-<li><a href="/docs/commands/exec"><code>exec</code></a> - Access container to use real-time scheduling</li>
+<li><a href="/docs/commands/ulimits">config ulimits</a>: set individual limits</li>
+<li><a href="/docs/commands/capabilities">config capabilities</a></li>
+<li><a href="/docs/commands/run">container create</a>: the <code>--realtime</code> flag</li>
+<li><a href="/docs/commands/exec">container shell</a></li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>One Command Setup</strong>: <code>rfswift realtime enable -c container</code> configures everything needed for optimal SDR performance. No need to understand ulimits or capabilities!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Container Recreation</strong>: Enabling/disabling realtime mode recreates the container. Commit important changes first with <code>rfswift container commit</code>!</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>New Containers</strong>: Use <code>rfswift container create -n name -i image --realtime</code> to create containers with realtime mode already enabled!</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -558,41 +476,38 @@
   <nav id="TableOfContents">
   <ul>
     <li><a href="#synopsis">Synopsis</a></li>
-    <li><a href="#what-realtime-mode-configures">What realtime mode configures</a></li>
+    <li><a href="#what-realtime-mode-sets">What realtime mode sets</a></li>
     <li><a href="#subcommands">Subcommands</a></li>
-    <li><a href="#options">Options</a>
-      <ul>
-        <li><a href="#realtime-enable--disable--status">realtime enable / disable / status</a></li>
-      </ul>
-    </li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#basic-use">Basic use</a></li>
+        <li><a href="#fix-sdr-buffer-underruns">Fix SDR buffer underruns</a></li>
+        <li><a href="#create-a-lab-with-realtime-mode-already-on">Create a lab with realtime mode already on</a></li>
+        <li><a href="#time-critical-rfid-captures">Time-critical RFID captures</a></li>
+        <li><a href="#real-time-scheduling-inside-a-lab">Real-time scheduling inside a lab</a></li>
       </ul>
     </li>
     <li><a href="#when-to-use-realtime-mode">When to use realtime mode</a>
       <ul>
-        <li><a href="#enable-realtime-mode-for">Enable realtime mode for:</a></li>
-        <li><a href="#not-necessary-for">Not necessary for:</a></li>
+        <li><a href="#useful-for">Useful for</a></li>
+        <li><a href="#not-needed-for">Not needed for</a></li>
       </ul>
     </li>
-    <li><a href="#alternative-host-level-configuration">Alternative: Host-Level configuration</a></li>
+    <li><a href="#set-it-for-every-container-on-the-host">Set it for every container on the host</a></li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#realtime-mode-not-working">Realtime mode not working</a></li>
-        <li><a href="#permission-denied">Permission denied</a></li>
-        <li><a href="#container-wont-start-after-enable">Container won&rsquo;t start after enable</a></li>
+        <li><a href="#captures-still-drop-samples-after-enabling-realtime-mode">Captures still drop samples after enabling realtime mode</a></li>
+        <li><a href="#operation-not-permitted-when-using-chrt"><code>Operation not permitted</code> when using <code>chrt</code></a></li>
+        <li><a href="#the-container-doesnt-start-after-enabling-realtime-mode">The container doesn&rsquo;t start after enabling realtime mode</a></li>
       </ul>
     </li>
-    <li><a href="#technical-details">Technical details</a>
+    <li><a href="#how-it-works">How it works</a>
       <ul>
-        <li><a href="#how-it-works">How it works</a></li>
-        <li><a href="#ulimit-values-explained">Ulimit values explained</a></li>
+        <li><a href="#what-the-values-mean">What the values mean</a></li>
         <li><a href="#kernel-requirements">Kernel requirements</a></li>
       </ul>
     </li>
-    <li><a href="#related-commands">Related commands</a></li>
+    <li><a href="#related">Related</a></li>
   </ul>
 </nav>
   <a class="toc-top" href="#content">Back to top ↑</a>

@@ -7,10 +7,14 @@ description: "Enter an existing container with a shell, or run a single command 
 weight: 3
 ---
 
-Enter an existing container with an interactive shell, or run a single command in it. Stopped containers are started first.
+`rfswift container shell` takes you back into a lab you created earlier, or runs a single command in it. If the container is stopped, it is started first. Use it every time you come back to your work.
+
+```bash
+rfswift container shell -c my_sdr
+```
 
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift container shell`. The legacy form `rfswift exec` and the aliases `rfswift shell` and `rfswift enter` still work and print a notice. With `--engine nix` the same command enters a native Nix environment (`rfswift env shell NAME` is the dedicated form).
+**Other spellings**: the legacy form `rfswift exec` and the aliases `rfswift shell` and `rfswift enter` still work and print a notice. With `--engine nix`, the same command enters a native Nix environment (the dedicated form is `rfswift env shell NAME`).
 {{< /callout >}}
 
 ## Synopsis
@@ -21,13 +25,11 @@ rfswift exec [-c CONTAINER] [-w WORKDIR] [options]                  # legacy spe
 rfswift container shell -c CONTAINER -e "rtl_test -t"               # one command, no shell
 ```
 
-Without `-c`, an interactive picker lists your containers (the most recent one is marked); in a script the most recent container is used. Entering prints the container summary (image version and freshness, size, shell, display, privileges, mounts, devices, seccomp, ulimits, GPUs, network, ports) and syncs the hot-pluggable serial ports.
+Without `-c`, a picker lists your containers in an interactive terminal; in a script, the most recent container is used. When you enter, RF Swift prints the container summary (image version and freshness, size, shell, display, privileges, mounts, devices, seccomp, ulimits, GPUs, network, ports) and syncs the hot-pluggable serial ports.
 
 {{< callout type="info" >}}
-**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable container picker listing all containers with their name, ID, image, and state. The most recent container is marked with `<- latest`.
+**Container picker**: the picker shows every container with its name, ID, image and state. The most recent one is marked `<- latest`.
 {{< /callout >}}
-
----
 
 ## Options
 
@@ -38,7 +40,7 @@ Without `-c`, an interactive picker lists your containers (the most recent one i
 | `-c, --container STRING` | Container name or ID | Most recent | `-c my_container` |
 | `-w, --workdir STRING` | Working directory inside container | `/root` | `-w /root/projects` |
 | `-e, --command STRING` | Shell or command to run | `/bin/zsh` (Bash when missing) | `-e /bin/bash`, `-e "hackrf_info"` |
-| `-i, --install STRING` | Run an install function from the image's scripts before the shell | | `-i sdrpp_soft_install` |
+| `-i, --install STRING` | Run an install function from the image's scripts before the shell | | `-i gqrx_soft_install` |
 
 ### Display options
 
@@ -56,10 +58,10 @@ Without `-c`, an interactive picker lists your containers (the most recent one i
 |------|-------------|---------|
 | `--vpn STRING` | Start VPN inside the container | `--vpn tailscale` |
 
-**Format:** `--vpn TYPE[:ARGUMENT]`, the same syntax as [`run --vpn`](/docs/commands/run#vpn-options).
+**Format:** `--vpn TYPE[:ARGUMENT]`, the same syntax as [`container create --vpn`](/docs/commands/run/#vpn-options).
 
 {{< callout type="info" >}}
-When using `--vpn` with `exec`, the VPN client starts inside the already-running container. For WireGuard/OpenVPN, the container must have been created with privileged mode (`-u 1`). See [VPN Inside Containers](/docs/guide/vpn) for details.
+With `--vpn`, the VPN client starts inside the running container. WireGuard and OpenVPN need a container created in privileged mode (`-u 1`). See [VPN inside containers](/docs/guide/vpn/).
 {{< /callout >}}
 
 ### Recording options
@@ -69,50 +71,48 @@ When using `--vpn` with `exec`, the VPN client starts inside the already-running
 | `--record` | Enable session recording | `--record` |
 | `--record-output STRING` | Custom recording filename | `--record-output debug.cast` |
 
----
-
 ## Examples
 
 ### Basic usage
 
-**Enter most recent container:**
+#### Enter most recent container
 ```bash
 rfswift container shell
 ```
 
-**Enter specific container by name:**
+#### Enter specific container by name
 ```bash
 rfswift container shell -c my_sdr_container
 ```
 
-**Enter with specific working directory:**
+#### Enter with specific working directory
 ```bash
 rfswift container shell -c my_container -w /root/projects
 ```
 
-**Enter by container ID:**
+#### Enter by container ID
 ```bash
 rfswift container shell -c a1b2c3d4e5f6
 ```
 
-**Short container ID:**
+#### Short container ID
 ```bash
 rfswift container shell -c a1b2c3
 ```
 
 ### With session recording
 
-**Record with auto-generated filename:**
+#### Record with auto-generated filename
 ```bash
 rfswift container shell -c assessment --record
 ```
 
-**Record with custom filename:**
+#### Record with custom filename
 ```bash
 rfswift container shell -c pentest --record --record-output debug-session.cast
 ```
 
-**Record in specific directory with working dir:**
+#### Record in specific directory with working dir
 ```bash
 rfswift container shell -c analysis \
   -w /root/data \
@@ -122,28 +122,28 @@ rfswift container shell -c analysis \
 
 ### With remote desktop
 
-The `--desktop` flag can be used with `exec` to start a remote desktop session on-the-fly, even if the container was originally created without desktop mode.
+`--desktop` starts a remote desktop when you enter, even if the container was created without one.
 
-**Start desktop when entering a container:**
+#### Start desktop when entering a container
 ```bash
 rfswift container shell -c my_container --desktop
 ```
 Then open `http://127.0.0.1:6080` in your browser.
 
-**Expose on all interfaces with password:**
+#### Expose on all interfaces with password
 ```bash
 rfswift container shell -c my_container \
   --desktop --desktop-config "http:0.0.0.0:6080" \
   --desktop-pass "mysecretpass"
 ```
 
-**Use VNC client instead of browser:**
+#### Use VNC client instead of browser
 ```bash
 rfswift container shell -c my_container \
   --desktop --desktop-config "vnc::5900"
 ```
 
-**With SSL/TLS encryption:**
+#### With SSL/TLS encryption
 ```bash
 rfswift container shell -c my_container \
   --desktop --desktop-config "http:0.0.0.0:6080" \
@@ -152,58 +152,58 @@ rfswift container shell -c my_container \
 
 ### With VPN
 
-**Start Tailscale when entering a container:**
+#### Start Tailscale when entering a container
 ```bash
 rfswift container shell -c my_sdr --vpn tailscale
 ```
 
-**WireGuard on a privileged container:**
+#### WireGuard on a privileged container
 ```bash
 rfswift container shell -c my_sdr --vpn wireguard:./wg0.conf
 ```
 
-**Netbird with setup key:**
+#### Netbird with setup key
 ```bash
 rfswift container shell -c my_sdr --vpn netbird:nb-setup-xxxxxxxxxxxx
 ```
 
 ### Working directory examples
 
-**Start in projects directory:**
+#### Start in projects directory
 ```bash
 rfswift container shell -c dev_container -w /root/projects
 ```
 
-**Start in captures directory:**
+#### Start in captures directory
 ```bash
 rfswift container shell -c sdr_work -w /root/captures
 ```
 
-**Start in mounted volume:**
+#### Start in mounted volume
 ```bash
 rfswift container shell -c analysis -w /mnt/data
 ```
 
-### Real-World workflows
+### Everyday workflows
 
-**Resume assessment work:**
+#### Resume assessment work
 ```bash
 # Yesterday's work
-rfswift container create -i pentest -n client_assessment \
+rfswift container create -i network -n client_assessment \
   -b ~/client-work:/root/work
 
 # Today - resume where you left off
 rfswift container shell -c client_assessment -w /root/work
 ```
 
-**Debug with recording:**
+#### Debug with recording
 ```bash
 rfswift container shell -c problematic_container \
   --record \
   --record-output troubleshooting-$(date +%Y%m%d-%H%M).cast
 ```
 
-**Quick check on running container:**
+#### Quick check on running container
 ```bash
 # Check what's running
 rfswift container last
@@ -215,7 +215,7 @@ rfswift container shell
 rfswift container shell -c sdr_capture
 ```
 
-**Multiple sessions in same container:**
+#### Multiple sessions in same container
 ```bash
 # Terminal 1
 rfswift container shell -c sdr_analysis -w /root/captures
@@ -224,18 +224,16 @@ rfswift container shell -c sdr_analysis -w /root/captures
 rfswift container shell -c sdr_analysis -w /root/tools
 ```
 
----
-
 ## Detailed explanations
 
 ### Container selection (`-c, --container`)
 
-Specifies which container to enter. Accepts:
-- **Container name**: Full name as specified during creation
-- **Container ID**: Full or partial Docker container ID
-- **Auto-selection**: If omitted, uses most recently created container
+Which container to enter. You can give:
+- **the container name** you chose at creation;
+- **the container ID**, in full or its first characters;
+- **nothing**: the most recently created container is used.
 
-**How auto-selection works:**
+#### How auto-selection works
 ```bash
 # These containers were created in this order:
 # 1. sdr_container
@@ -249,7 +247,7 @@ rfswift container shell -c sdr_container
 # Enters: sdr_container (explicit)
 ```
 
-**Finding container names:**
+#### Finding container names
 ```bash
 # List recent containers
 rfswift container last
@@ -261,7 +259,7 @@ docker ps -a
 docker ps
 ```
 
-**Partial container ID matching:**
+#### Partial container ID matching
 ```bash
 # Full ID
 rfswift container shell -c a1b2c3d4e5f6g7h8
@@ -275,17 +273,12 @@ rfswift container shell -c a1b2
 
 ### Working directory (`-w, --workdir`)
 
-Sets the initial directory when entering the container. Useful for:
-- Starting in project directories
-- Continuing work in specific locations
-- Accessing mounted volumes directly
+The folder you start in. Handy to land directly in a project folder or a mounted volume.
 
-**Default behavior:**
-- If not specified: `/root` (container default)
-- Directory must exist in container
-- Can be any valid path
+- Default: `/root`.
+- The folder must exist inside the container.
 
-**Common working directories:**
+#### Common working directories
 ```bash
 # User home
 -w /root
@@ -306,36 +299,29 @@ Sets the initial directory when entering the container. Useful for:
 -w /tmp/analysis
 ```
 
-**Non-existent directory:**
+#### Non-existent directory
 ```bash
 # This will fail if directory doesn't exist
 rfswift container shell -c container -w /root/nonexistent
 
-# Solution: Create in container first or bind from host
+# Fix: create it in the container first, or bind it from the host
 rfswift config bindings add -c container -s /pathto/projects -t /root/projects
 rfswift container shell -c container -w /root/projects
 ```
 
 ### Session recording
 
-Records the entire terminal session for documentation, debugging, or training.
+Records the whole terminal session, for documentation, debugging or training. The recording captures what you type, what the tools print, and the timing, so it plays back exactly as it happened.
 
-**What gets recorded:**
-- All terminal input (commands typed)
-- All terminal output (command results)
-- Timing information for accurate playback
-- Tool outputs and error messages
-
-**Auto-generated filenames:**
-Format: `rfswift-exec-{container}-{YYYYMMDD-HHMMSS}.cast`
+Without `--record-output`, the file is named `rfswift-exec-{container}-{YYYYMMDD-HHMMSS}.cast`:
 ```bash
 rfswift container shell -c my_container --record
 # Creates: rfswift-exec-my_container-20240112-143022.cast
 ```
 
-**Recording indicator:** During recording, the terminal title changes to `⏺ REC | RF Swift` as a visual reminder. The environment variable `RFSWIFT_RECORDING=1` is also set, which can be used by scripts to detect recording mode.
+**Recording indicator:** while recording, the terminal title reads `⏺ REC | RF Swift`, and `RFSWIFT_RECORDING=1` is set so scripts can detect it.
 
-**Custom filenames:**
+#### Custom filenames
 ```bash
 # Simple name
 --record-output session.cast
@@ -350,29 +336,25 @@ rfswift container shell -c my_container --record
 --record-output ~/assessments/client-$(date +%Y%m%d)/session.cast
 ```
 
-**Recording location:**
-- Auto-generated: Current working directory on host
-- Custom: As specified in `--record-output` path
+Where the file goes:
+- with an automatic name: the current folder on your computer;
+- with `--record-output`: the path you give.
 
-**During recording:**
-- No visible indication inside container
-- `exit` of the sessions ends recording
+Nothing changes inside the shell itself (only the terminal title). Typing `exit` ends the recording.
 
-**Playback:**
+#### Playback
 ```bash
 rfswift log replay -i session.cast
 rfswift log replay -i session.cast -s 2.0  # 2x speed
 ```
 
----
-
 ## Container states
 
-The `exec` command works with containers in different states:
+`container shell` works whatever state the container is in.
 
 ### Running containers
 
-**Most common use case:**
+#### Most common use case
 ```bash
 # Container is already running
 docker ps | grep my_container
@@ -384,7 +366,7 @@ rfswift container shell -c my_container
 
 ### Stopped containers
 
-**Container was previously stopped:**
+#### Container was previously stopped
 ```bash
 # Container exists but is stopped
 docker ps -a | grep my_container
@@ -394,36 +376,30 @@ rfswift container shell -c my_container
 # RF Swift automatically starts the container, then enters it
 ```
 
-**What happens:**
-1. RF Swift detects container is stopped
-2. Starts the container with `docker start`
-3. Waits for container to be ready
-4. Enters with interactive shell
+What happens:
+1. RF Swift sees that the container is stopped.
+2. It starts the container (`docker start`).
+3. It waits until the container is ready.
+4. It opens the interactive shell.
 
 ### Non-Existent containers
 
-**Error handling:**
+#### Error handling
 ```bash
 rfswift container shell -c nonexistent_container
 # Error: No such container: nonexistent_container
 
-# Solution: Create container first
+# Fix: create the container first
 rfswift container create -i image -n nonexistent_container
 ```
-
----
 
 ## Shell behavior
 
 ### Default shell
 
-RF Swift containers use `zsh` as the default shell with:
-- Oh My Zsh configuration
-- Syntax highlighting
-- Auto-completion
-- Custom prompt showing container name
+RF Swift containers use `zsh` by default, with Oh My Zsh, syntax highlighting, auto-completion and a prompt that shows the container name.
 
-**Terminal prompt example:**
+#### Terminal prompt example
 ```bash
 ┌─[root@container_name] - [/root/projects] - [Thu Jan 12, 14:30]
 └─[$]>
@@ -431,7 +407,7 @@ RF Swift containers use `zsh` as the default shell with:
 
 ### Multiple sessions
 
-You can have multiple `exec` sessions in the same container:
+You can open several shells in the same container at once:
 
 ```bash
 # Terminal 1
@@ -444,12 +420,7 @@ rfswift container shell -c my_container
 # Changes in one are visible in the other
 ```
 
-**Use cases:**
-- Monitor logs in one terminal while working in another
-- Run long-running process in one, interact in another
-- Separate recording sessions for different tasks
-
----
+This is useful to watch logs in one terminal while you work in another, to keep a long capture running while you use other tools, or to record different tasks separately.
 
 ## Common workflows
 
@@ -457,7 +428,7 @@ rfswift container shell -c my_container
 
 ```bash
 # Morning: Start fresh
-rfswift container create -i pentest -n daily_work -b ~/work:/root/work
+rfswift container create -i network -n daily_work -b ~/work:/root/work
 
 # Throughout day: Enter as needed
 rfswift container shell -c daily_work
@@ -530,11 +501,9 @@ exit
 rfswift log replay -i training-lesson-01.cast -s 1.5
 ```
 
----
+## Create vs shell
 
-## Comparison: run vs exec
-
-| Aspect | `run` | `exec` |
+| Aspect | `container create` | `container shell` |
 |--------|-------|--------|
 | **Purpose** | Create new container | Enter existing container |
 | **Container state** | Creates new | Uses existing |
@@ -543,29 +512,27 @@ rfswift log replay -i training-lesson-01.cast -s 1.5
 | **Use when** | Starting new work | Continuing existing work |
 | **Typical frequency** | Once per project | Multiple times per day |
 
-**Typical flow:**
+#### Typical flow
 ```bash
-# Day 1: Create with run
+# Day 1: create it
 rfswift container create -i sdr_full -n project -b ~/work:/root/work
 
-# Day 1-N: Enter with exec
+# Every day after: enter it
 rfswift container shell -c project
 # ... work ...
 exit
 
-# Repeat exec as needed
+# Come back as often as you need
 rfswift container shell -c project
 ```
-
----
 
 ## Troubleshooting
 
 ### Container not found
 
-**Error:** `Error: No such container: container_name`
+The error message is: `Error: No such container: container_name`
 
-**Solutions:**
+To fix it:
 ```bash
 # List all containers to find correct name
 rfswift container last
@@ -576,9 +543,9 @@ rfswift container create -i image -n container_name
 
 ### Container won't start
 
-**Error:** Container fails to start when entering stopped container
+The container fails to start when you enter it.
 
-**Solutions:**
+To fix it:
 ```bash
 # Check container status
 docker ps -a | grep container_name
@@ -596,9 +563,9 @@ rfswift container create -i image -n container_name
 
 ### Working directory doesn't exist
 
-**Error:** `cannot change directory to '/root/nonexistent'`
+The error message is: `cannot change directory to '/root/nonexistent'`
 
-**Solutions:**
+To fix it:
 ```bash
 # Use default directory
 rfswift container shell -c container
@@ -615,9 +582,9 @@ rfswift container shell -c container -w /root/nonexistent
 
 ### Recording fails
 
-**Problem:** `--record` flag doesn't work
+`--record` doesn't work.
 
-**Solutions:**
+To fix it:
 ```bash
 # Check if asciinema is installed on host
 which asciinema
@@ -636,9 +603,9 @@ asciinema play test.cast
 
 ### Permission issues inside container
 
-**Problem:** Can't access files or directories
+You can't open some files or folders.
 
-**Solutions:**
+To fix it:
 ```bash
 # Check file permissions inside container
 rfswift container shell -c container
@@ -656,9 +623,9 @@ rfswift container shell -c container
 
 ### Terminal display issues
 
-**Problem:** Terminal formatting looks wrong
+Terminal formatting looks wrong.
 
-**Solutions:**
+To fix it:
 ```bash
 # Reset terminal
 rfswift container shell -c container
@@ -673,9 +640,9 @@ export TERM=xterm-256color
 
 ### Multiple containers with similar names
 
-**Problem:** Partial name matches multiple containers
+A partial name matches more than one container.
 
-**Solutions:**
+To fix it:
 ```bash
 # Use full container name
 rfswift container shell -c full_container_name
@@ -688,13 +655,11 @@ rfswift container shell -c a1b2c3d4e5f6
 rfswift container last
 ```
 
----
-
 ## Advanced usage
 
-### Execute single command (Non-Interactive)
+### Run one command without a shell
 
-Pass the command with `-e`; the container is started if needed and the command runs with the container's environment (display, audio, workspace):
+Pass the command with `-e`. The container is started if needed, and the command runs with the container's environment (display, audio, workspace):
 
 ```bash
 rfswift container shell -c container_name -e "rtl_test -t"
@@ -703,12 +668,12 @@ rfswift container shell -c container_name -e "ulimit -r"
 
 ### Enter as different user
 
-RF Swift containers run as root by default. To change user:
+RF Swift containers run as root. To switch to another user inside the container:
 
 ```bash
 # Inside container
 rfswift container shell -c container
-su - username # solution for now
+su - username
 ```
 
 ### Custom shell environment
@@ -725,25 +690,21 @@ echo 'alias scan="rtl_test -t"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
----
-
 ## Related commands
 
-- [`run`](/docs/commands/run) - Create new containers
-- [`stop`](/docs/commands/stop) - Stop running containers
-- [`last`](/docs/commands/last) - List recent containers
-- [`remove`](/docs/commands/remove) - Delete containers
-- [`log`](/docs/commands/log) - Replay recorded sessions
-- [`bindings`](/docs/commands/bindings) - Add devices/volumes to running containers
-- [VPN Inside Containers](/docs/guide/vpn) - Detailed VPN setup guide
-- [Using Podman](/docs/guide/podman) - Podman-specific guidance
-
----
+- [`container create`](/docs/commands/run/): create a new container
+- [`container stop`](/docs/commands/stop/): stop a running container
+- [`container last`](/docs/commands/last/): list recent containers
+- [`container rm`](/docs/commands/remove/): delete a container
+- [`log`](/docs/commands/log/): replay recorded sessions
+- [`config bindings`](/docs/commands/bindings/): add devices and folders to a container
+- [VPN inside containers](/docs/guide/vpn/): the VPN setup guide
+- [Using Podman](/docs/guide/podman/): Podman specifics
 
 {{< callout >}}
-**Quick Tip**: Create a shell alias for faster access: `alias rfe='rfswift exec'` then just type `rfe` to enter your most recent container!
+**Tip**: add a shell alias such as `alias rfe='rfswift container shell'`, then type `rfe` to enter your most recent container.
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**Recording Reminder**: When recording sessions with `--record`, remember that your terminal title will show "🔴 RECORDING" as a visual reminder. Everything you type and see will be captured!
+**While recording**: the terminal title shows `⏺ REC | RF Swift`. Everything you type and see is captured, so avoid typing secrets.
 {{< /callout >}}

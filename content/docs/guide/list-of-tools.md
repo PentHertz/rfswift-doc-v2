@@ -96,7 +96,7 @@ Most SDR tools are installed in standard system paths (`/usr/bin`, `/usr/local/b
 
 ### SDR full
 
-The `sdr_full` image builds on `sdr_light` to provide a comprehensive SDR development and analysis environment, including GNU Radio and specialized plugins.
+The `sdr_full` image builds on `sdr_light` to provide a complete SDR development and analysis environment, including GNU Radio and specialized plugins.
 
 #### GNU Radio out-of-tree modules
 
@@ -457,7 +457,7 @@ The same categories exist as native environments for the [Nix engine](/docs/guid
 | `telecom_5g_bladerf` | Telecom | 26 | 5G SA on a bladeRF: srsRAN Project bladeRF fork with its SoapyBladeRF variant, Open5GS core, and the telecom utility set (telecom_5G_bladerf image). |
 | `wifi` | WiFi | 45 | Wi-Fi audit suite: aircrack-ng, hcxtools, WPS/WPA3 attacks and rogue-AP frameworks, on top of the network toolkit. |
 
-Packages are nixpkgs attribute names (`python3Packages.impacket`, `gnuradioPackages.gr-osmosdr`), which is also what `rfswift env install` and `rfswift env search --nixpkgs` accept, so a tool the catalog does not carry is one `env install` away. The catalog records the packages that do not build on an architecture, and the environment simply ships without them there. See [Installing software](/docs/guide/installing-software) for how this compares with the images.
+Packages are nixpkgs attribute names (`python3Packages.impacket`, `gnuradioPackages.gr-osmosdr`), which is also what `rfswift env install` and `rfswift env search --nixpkgs` accept, so a tool the catalog does not carry is one `env install` away. The catalog records the packages that do not build on an architecture, and the environment ships without them there. See [Installing software](/docs/guide/installing-software) for how this compares with the images.
 
 ## Tips for using the tools
 

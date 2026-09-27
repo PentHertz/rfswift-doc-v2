@@ -7,38 +7,30 @@ description: "List the containers RF Swift created, most recent first."
 weight: 4
 ---
 
-{{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift container last`. The legacy form `rfswift last` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
-{{< /callout >}}
-
-List all RF Swift containers with their status and information.
-
-## Synopsis
+`rfswift container last` lists your RF Swift containers, running and stopped, with their name, status, image and creation time. Use it whenever you want to see which labs you have.
 
 ```bash
 rfswift container last
 ```
 
-The `last` command provides a quick overview of all RF Swift containers on the system, showing their names, status, images, creation time, and other details. This is your go-to command for checking what containers exist.
-
----
+{{< callout type="info" >}}
+**Other spellings**: the legacy form `rfswift last` still works and prints a notice. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
 
 ## Options
 
-The `last` command takes no options and displays all containers.
-
----
+The command takes no options: it always lists every container.
 
 ## Examples
 
 ### Basic usage
 
-**List all containers:**
+#### List all containers
 ```bash
 rfswift container last
 ```
 
-**Example output:**
+#### Example output
 ```
 CONTAINER ID   NAME           IMAGE                        STATUS      CREATED        PORTS
 a1b2c3d4e5f6   sdr_work       penthertz/rfswift_resolute:sdr_full   Up 2 hours  3 hours ago    0.0.0.0:8080->80/tcp
@@ -48,22 +40,22 @@ c3d4e5f6g7h8   analysis       penthertz/rfswift_resolute:sdr_full   Exited      
 
 ### Understanding output
 
-**Output columns:**
-- **CONTAINER ID**: Short container ID
-- **NAME**: Container name
-- **IMAGE**: Docker image used
-- **STATUS**: Running state (Up/Exited)
-- **CREATED**: When container was created
-- **PORTS**: Port bindings (if any)
+| Column | Meaning |
+|---|---|
+| **CONTAINER ID** | Short container ID |
+| **NAME** | Container name |
+| **IMAGE** | Image the container was created from |
+| **STATUS** | Running state (Up or Exited) |
+| **CREATED** | When the container was created |
+| **PORTS** | Port bindings, if any |
 
-**Status values:**
-- `Up X minutes/hours/days`: Container is running
-- `Exited (0)`: Container stopped normally
-- `Exited (137)`: Container was killed
-- `Created`: Container created but never started
-- `Restarting`: Container is restarting
-
----
+| Status | Meaning |
+|---|---|
+| `Up X minutes/hours/days` | The container is running |
+| `Exited (0)` | The container stopped normally |
+| `Exited (137)` | The container was killed |
+| `Created` | The container was created but never started |
+| `Restarting` | The container is restarting |
 
 ## Use cases
 
@@ -93,26 +85,14 @@ rfswift container last | grep "Exited"
 rfswift container rm -c old_container
 ```
 
----
-
 ## Related commands
 
-- [`run`](/docs/commands/run) - Create new containers
-- [`remove`](/docs/commands/remove) - Remove containers
-- [`stop`](/docs/commands/stop) - Stop running containers
-- [`exec`](/docs/commands/exec) - Access containers
-- [`cleanup`](/docs/commands/cleanup) - Automated cleanup
-
----
-
-{{< callout >}}
-**Quick Overview**: `rfswift container last` is your first stop for seeing what containers exist. It shows all containers (running and stopped) with their essential information at a glance.
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**No Filtering Options**: Unlike `docker ps`, the `last` command shows all containers without filtering options. Use `grep`, `awk`, or pipe to `docker ps` for advanced filtering.
-{{< /callout >}}
+- [`container create`](/docs/commands/run/): create a new container
+- [`container rm`](/docs/commands/remove/): remove a container
+- [`container stop`](/docs/commands/stop/): stop a running container
+- [`container shell`](/docs/commands/exec/): enter a container
+- [`system cleanup`](/docs/commands/cleanup/): remove old containers and images by age
 
 {{< callout type="info" >}}
-**All Containers Shown**: `rfswift container last` shows both running AND stopped containers (equivalent to `docker ps -a`). Use `grep "Up"` to see only running ones, or `grep "Exited"` for stopped ones.
+**Filtering**: the list always includes running and stopped containers (like `docker ps -a`), with no filter options. Pipe it through `grep` instead: `grep "Up"` for running containers, `grep "Exited"` for stopped ones, or use `docker ps` for more advanced filters.
 {{< /callout >}}

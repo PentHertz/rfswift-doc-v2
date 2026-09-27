@@ -5,7 +5,14 @@ description: "The Nix engine, the Workbench, the remote agent, a resource-first 
 weight: 3
 ---
 
-RF Swift v4.0 (current release: **v4.0.2**) is the biggest change since the project started. It adds a native **Nix engine** that runs the tool sets without containers, a desktop **Workbench** for assessments, a secure **remote agent** to drive a lab machine from your laptop, a resource-first CLI, built-in security audits, native packages and installers for the three operating systems, and a long list of hardware fixes.
+RF Swift v4.0 (current release: **v4.0.2**) is the biggest change since the project started. It adds:
+
+- a native **Nix engine** that runs the tool sets without containers;
+- a desktop **Workbench** for assessments;
+- a secure **remote agent** to drive a lab machine from your laptop;
+- a resource-first CLI and built-in security audits;
+- native packages and installers for the three operating systems;
+- a long list of hardware fixes.
 
 {{< callout type="info" title="In one line" >}}
 The same RF and hardware lab, now as containers **or** native environments, on your machine **or** on a remote one, from the terminal **or** from a GUI.
@@ -76,7 +83,7 @@ Guide: [Remote agent](/docs/guide/remote-agent). Reference: [agent](/docs/comman
 ## Security built in
 
 - `rfswift audit <target>` auto-detects a Nix environment (vulnix, syft, grype, osv-scanner, integrity, provenance, hygiene), a container image (trivy, grype) or a container (attack surface: privileges, host namespaces, sensitive mounts, capabilities, seccomp/AppArmor, devices, exposed ports, CVEs, attack-enabling binaries), with `json`, `html` and `pdf` reports and a `--fail-on` gate.
-- The installer verifies every file's SHA-256 against the release manifest, rejects unsafe archive members, and offers Sigstore build-provenance verification; releases carry attestations, the macOS image is Developer ID signed and notarized, Windows artifacts are Authenticode-signed when the secrets are configured.
+- The installer verifies every file's SHA-256 against the release manifest, rejects unsafe archive members, and offers Sigstore build-provenance verification. Releases carry attestations, the macOS image is Developer ID signed and notarized, Windows artifacts are Authenticode-signed when the secrets are configured.
 - A dated security ground truth and hardened deployment baseline: [Security](/docs/security).
 
 ## Linux packages and host setup

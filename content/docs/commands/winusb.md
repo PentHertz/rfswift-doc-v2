@@ -7,10 +7,14 @@ description: "Windows USB passthrough through usbipd-win, now reached through rf
 weight: 63
 ---
 
-USB passthrough on Windows: forward host USB devices (SDR dongles, HackRF, Proxmark, serial adapters) into the WSL 2 virtual machine where Docker Desktop, Podman and the Nix engine run. Built on [usbipd-win](https://github.com/dorssel/usbipd-win) with the least privilege the tool allows.
+On Windows, Docker Desktop, Podman and the Nix engine all run inside the WSL 2 virtual machine, which cannot see your USB ports. This page explains how RF Swift forwards a USB device (an SDR dongle, a HackRF, a Proxmark, a serial adapter) into WSL 2. It is built on [usbipd-win](https://github.com/dorssel/usbipd-win) and asks for as few privileges as the tool allows.
+
+```powershell
+rfswift usb attach      # pick a device, share it once, attach it to WSL 2
+```
 
 {{< callout type="info" >}}
-**RF Swift v4**: the cross-platform front door is `rfswift usb ...`, which runs these commands on Windows. `rfswift winusb ...` remains available. See [usb](/docs/commands/usb).
+**RF Swift v4**: use `rfswift usb ...`, which runs these commands on Windows. `rfswift winusb ...` still works. See [usb](/docs/commands/usb).
 {{< /callout >}}
 
 ## Synopsis
@@ -33,11 +37,16 @@ rfswift usb vm-devices                 # devices as seen inside WSL 2
 
 ## How it works
 
-Containers on Windows run inside the WSL 2 VM, which cannot see the host USB bus. usbipd-win **shares** a device (registers it for forwarding) and **attaches** it to WSL 2, where it appears under `/dev/bus/usb` for every distribution, Docker Desktop's included, because they share one kernel.
+Forwarding a device takes two steps:
 
-- **Sharing a device the first time needs administrator rights.** RF Swift requests them through a single UAC prompt for `usbipd.exe` itself, never a shell, once per device. `--yes` allows the prompt without asking, for scripts.
-- **Attaching and detaching never need elevation.**
-- A device stays shared after a reboot; `unbind` forgets it (administrator approval again; `--guid` addresses a shared device that is currently unplugged).
+1. **Share** it: usbipd-win registers the device for forwarding.
+2. **Attach** it: the device appears in WSL 2 under `/dev/bus/usb`. Every WSL 2 distribution sees it, Docker Desktop's included, because they all share one kernel.
+
+About privileges:
+
+- **Sharing a device the first time needs administrator rights.** RF Swift asks once per device, with a single UAC prompt for `usbipd.exe` itself (never for a shell). In scripts, `--yes` allows the prompt without asking.
+- **Attaching and detaching never need administrator rights.**
+- A device stays shared after a reboot. `unbind` stops sharing it (this needs administrator approval again). Use `--guid` to address a shared device that is currently unplugged.
 
 ## Subcommands
 
@@ -51,9 +60,11 @@ Containers on Windows run inside the WSL 2 VM, which cannot see the host USB bus
 | `status` | usbipd-win version, connected, shared and attached counts, the default WSL 2 distribution |
 | `vm-devices` | `/dev/bus/usb` and `lsusb` as seen inside WSL 2 |
 
-`attach`, `detach`, `bind` and `unbind` take `-i, --busid` (the bus ID from `list`, for example `2-3`); `attach`, `bind` and `unbind` take `-y, --yes`.
+`attach`, `detach`, `bind` and `unbind` take `-i, --busid` (the bus ID shown by `list`, for example `2-3`). `attach`, `bind` and `unbind` also take `-y, --yes`.
 
 ## Workflow
+
+List your devices, attach one, create a lab, check that the lab sees it, then give the device back to Windows:
 
 ```powershell
 rfswift usb list
@@ -63,9 +74,11 @@ rfswift container shell -c sdr_work -e "lsusb"
 rfswift usb detach --busid 2-3
 ```
 
-`rfswift container create`, `container shell` and `env shell` offer the same picker themselves when they detect shared or known RF hardware; plain keyboards and webcams never trigger the question. In the Workbench the dialog is **USB passthrough...** on Docker, Podman and Nix missions, with one-click share and attach, detach, unshare and a view of what WSL 2 currently sees.
+You often don't need to attach by hand: `rfswift container create`, `container shell` and `env shell` open the same picker when they detect shared or known RF hardware. Ordinary keyboards and webcams never trigger it.
 
-Inside the container `/dev/bus/usb` must be mapped **and** major 189 allowed (`c 189:* rwm`), both part of RF Swift's defaults; a bind mount alone lists the devices but cannot open them, and privileged mode is not required. `rfswift container create` and the Workbench check this before creating a container.
+In the Workbench, the **USB passthrough...** dialog (on Docker, Podman and Nix missions) shares and attaches in one click, and also detaches, stops sharing and shows what WSL 2 currently sees.
+
+Inside the container, a device can be opened only when `/dev/bus/usb` is mapped **and** major 189 is allowed (`c 189:* rwm`). Both are part of RF Swift's defaults, and privileged mode is not required. A bind mount alone lists the devices but cannot open them. `rfswift container create` and the Workbench check this before creating a container.
 
 ## Troubleshooting
 

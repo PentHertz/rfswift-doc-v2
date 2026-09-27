@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift config bindings · RF Swift</title>
   <meta name="description" content="Add or remove devices and bind mounts on an existing container.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/bindings/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/bindings/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift config bindings · RF Swift">
   <meta property="og:description" content="Add or remove devices and bind mounts on an existing container.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/bindings/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/bindings/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,37 +231,36 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift config bindings</h1><p class="doc-lead">Add or remove devices and bind mounts on an existing container.</p><p class="doc-meta">Reference · 8 min read · Updated September 27, 2026</p>
+      <h1>rfswift config bindings</h1><p class="doc-lead">Add or remove devices and bind mounts on an existing container.</p><p class="doc-meta">Reference · 8 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4</strong>: this group lives under the <code>config</code> parent as <code>rfswift config bindings</code> and remains available as <code>rfswift bindings</code>; both spellings are current. On Linux Docker the change is applied in place after one <code>sudo</code> prompt; on Podman the container is committed and re-created. Add <code>--recreate</code> to force the commit-and-recreate path. Either way the container restarts. See <a href="/docs/commands/config">config</a>.</p>
+      <p><code>rfswift config bindings</code> adds or removes a folder or a device on a container you already created. Use it when you forgot a folder at creation, or when you plug in new hardware.</p>
+<p>The most common use shares a folder from your computer with the container:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -c my_container -s ~/captures -t /root/captures</span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">What happens when you apply a change</p><p>The container restarts, so save your work first. On Linux with Docker, the change is applied in place after one <code>sudo</code> prompt. On Podman, the container is committed and created again; add <code>--recreate</code> to use that method on Docker too. The shorter spelling <code>rfswift bindings</code> also works. See <a href="/docs/commands/config">config</a>.</p>
 </div>
-<p>Dynamically add or remove volume mounts and device bindings to running containers.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
+<p>Add a folder (volume):</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add volume binding</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -c CONTAINER -s SOURCE -t TARGET
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add device binding  </span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -d -c CONTAINER -s SOURCE -t TARGET
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove volume binding</span>
-</span></span><span class="line"><span class="cl">rfswift bindings rm -c CONTAINER -s SOURCE -t TARGET
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove device binding</span>
-</span></span><span class="line"><span class="cl">rfswift bindings rm -d -c CONTAINER -s SOURCE -t TARGET</span></span></code></pre></div></div>
-<p>The <code>bindings</code> command allows you to add or remove volume mounts and device mappings to containers without restarting them. This is part of RF Swift&rsquo;s dynamic container management features and works identically with both Docker and Podman.</p>
-<hr>
-<h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
-<h3 id="bindings-add">bindings add<a class="anchor" href="#bindings-add" aria-label="Link to this section"></a></h3>
-<p>Add a new volume mount or device binding to a container.</p>
-<p><strong>Options:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -c CONTAINER -s SOURCE -t TARGET</span></span></code></pre></div></div>
+<p>Add a device:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -d -c CONTAINER -s SOURCE -t TARGET</span></span></code></pre></div></div>
+<p>Remove a folder:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings rm -c CONTAINER -s SOURCE -t TARGET</span></span></code></pre></div></div>
+<p>Remove a device:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings rm -d -c CONTAINER -s SOURCE -t TARGET</span></span></code></pre></div></div>
+<h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
+<p><code>add</code> and <code>rm</code> take the same options:</p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -283,177 +268,127 @@
   <tbody>
     <tr>
       <td><code>-c, --container STRING</code></td>
-      <td>Container ID or name</td>
+      <td>The container, by name or ID</td>
       <td>Yes</td>
       <td><code>-c my_container</code></td>
     </tr>
     <tr>
       <td><code>-s, --source STRING</code></td>
-      <td>Source path/device</td>
-      <td>Optional*</td>
+      <td>The folder or device on your computer</td>
+      <td>No*</td>
       <td><code>-s ~/captures</code></td>
     </tr>
     <tr>
       <td><code>-t, --target STRING</code></td>
-      <td>Target path in container</td>
+      <td>Where it appears inside the container</td>
       <td>Yes</td>
       <td><code>-t /root/captures</code></td>
     </tr>
     <tr>
       <td><code>-d, --devices</code></td>
-      <td>Manage device (not volume)</td>
+      <td>Treat it as a device rather than a folder</td>
       <td>No</td>
       <td><code>-d</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-warning" role="note"><p>If source is omitted, source equals target.</p>
-</div>
-<h3 id="bindings-rm">bindings rm<a class="anchor" href="#bindings-rm" aria-label="Link to this section"></a></h3>
-<p>Remove an existing volume mount or device binding from a container.</p>
-<p><strong>Options:</strong></p>
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Flag</th>
-      <th>Description</th>
-      <th>Required</th>
-      <th>Example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>-c, --container STRING</code></td>
-      <td>Container ID or name</td>
-      <td>Yes</td>
-      <td><code>-c my_container</code></td>
-    </tr>
-    <tr>
-      <td><code>-s, --source STRING</code></td>
-      <td>Source path/device</td>
-      <td>Optional*</td>
-      <td><code>-s ~/captures</code></td>
-    </tr>
-    <tr>
-      <td><code>-t, --target STRING</code></td>
-      <td>Target path in container</td>
-      <td>Yes</td>
-      <td><code>-t /root/captures</code></td>
-    </tr>
-    <tr>
-      <td><code>-d, --devices</code></td>
-      <td>Manage device (not volume)</td>
-      <td>No</td>
-      <td><code>-d</code></td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<div class="admonition admonition-warning" role="note"><p>If source is omitted, source equals target.</p>
-</div>
-<hr>
+<p><em>* If you leave out <code>-s</code>, the source is the same path as the target.</em></p>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="volume-bindings">Volume bindings<a class="anchor" href="#volume-bindings" aria-label="Link to this section"></a></h3>
-<p><strong>Add volume mount:</strong></p>
+<h3 id="folders">Folders<a class="anchor" href="#folders" aria-label="Link to this section"></a></h3>
+<p>Share a folder with the container:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings add -c my_container <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -c my_container <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s ~/captures <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t /root/captures</span></span></code></pre></div></div>
-<p><strong>Add multiple volumes:</strong></p>
+<p>Share several folders, one command each:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings add -c sdr_work -s ~/data -t /root/data
-</span></span><span class="line"><span class="cl">rfswift bindings add -c sdr_work -s ~/scripts -t /root/scripts
-</span></span><span class="line"><span class="cl">rfswift bindings add -c sdr_work -s ~/configs -t /root/.config</span></span></code></pre></div></div>
-<p><strong>Add read-only volume:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -c sdr_work -s ~/data -t /root/data
+</span></span><span class="line"><span class="cl">rfswift config bindings add -c sdr_work -s ~/scripts -t /root/scripts
+</span></span><span class="line"><span class="cl">rfswift config bindings add -c sdr_work -s ~/configs -t /root/.config</span></span></code></pre></div></div>
+<p>Share a folder read-only, by adding <code>:ro</code> to the target:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings add -c container <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -c container <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s ~/reference-data <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t /root/reference:ro</span></span></code></pre></div></div>
-<p><strong>Remove volume mount:</strong></p>
+<p>Stop sharing a folder:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings rm -c my_container <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings rm -c my_container <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s ~/captures <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t /root/captures</span></span></code></pre></div></div>
-<h3 id="device-bindings">Device bindings<a class="anchor" href="#device-bindings" aria-label="Link to this section"></a></h3>
-<p><strong>Add USB device:</strong></p>
+<h3 id="devices">Devices<a class="anchor" href="#devices" aria-label="Link to this section"></a></h3>
+<p>Give the container the USB bus:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings add -d -c sdr_work <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -d -c sdr_work <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/bus/usb <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t /dev/bus/usb</span></span></code></pre></div></div>
-<p>or more simply if the target and source are the same:</p>
+<p>When the source and target are the same, <code>-t</code> alone is enough:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings add -d -c sdr_work <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span> -t /dev/bus/usb</span></span></code></pre></div></div>
-<div class="admonition admonition-info" role="note"><p>If you know you will plug and unplug devices, just use the volume by turning off the <code>-d</code> switch.</p>
-</div>
-<p><strong>Add USB serial device:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -d -c sdr_work <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t /dev/bus/usb</span></span></code></pre></div></div>
+<p>Add a USB serial adapter:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings add -d -c analysis <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -d -c analysis <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/ttyUSB0 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t /dev/ttyUSB0</span></span></code></pre></div></div>
-<hr>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">Devices you plug and unplug</p><p>A serial port added with <code>-d</code> is attached when needed, so you can plug it in later (see <a href="/docs/commands/config/#config-serial-hotplug">config serial-hotplug</a>). For other devices you plug and unplug often, share their <code>/dev</code> folder as a volume, without <code>-d</code>.</p>
+</div>
 <h2 id="how-bindings-work">How bindings work<a class="anchor" href="#how-bindings-work" aria-label="Link to this section"></a></h2>
-<h3 id="dynamic-mounting">Dynamic mounting<a class="anchor" href="#dynamic-mounting" aria-label="Link to this section"></a></h3>
-<p>When you add a binding to a running container:</p>
+<p>When you add a binding:</p>
 <ol>
-<li><strong>Container configuration updated</strong> by the active engine (Docker or Podman)</li>
-<li><strong>Namespace modified</strong> to include new mount/device</li>
-<li><strong>Immediate access</strong>, with no restart needed</li>
-<li><strong>Persists</strong> until removed or container deleted</li>
+<li>The active engine (Docker or Podman) updates the container&rsquo;s configuration.</li>
+<li>The container restarts with the new folder or device.</li>
+<li>The binding stays until you remove it or delete the container.</li>
 </ol>
 <div class="mermaid-wrap"><pre class="mermaid">graph LR
     A[Host Directory/Device] --&gt;|Bind Mount| B[Container Namespace]
     B --&gt;|Access| C[Container Process]
-    C --&gt;|Read/Write| A</pre></div><h3 id="volume-vs-device-bindings">Volume vs device bindings<a class="anchor" href="#volume-vs-device-bindings" aria-label="Link to this section"></a></h3>
-<p><strong>Volume Bindings (without <code>-d</code>):</strong></p>
+    C --&gt;|Read/Write| A</pre></div><h3 id="folder-or-device">Folder or device?<a class="anchor" href="#folder-or-device" aria-label="Link to this section"></a></h3>
+<p><strong>Folders (without <code>-d</code>)</strong></p>
 <ul>
-<li>Mount host directories into container</li>
-<li>Share files between host and container</li>
-<li>Two-way sync (changes visible on both sides)</li>
-<li>Use for: data, configs, scripts</li>
-<li>Can be used to share devices and resists hot-(un)plug</li>
+<li>Share a folder from your computer with the container.</li>
+<li>Changes are visible on both sides straight away.</li>
+<li>Use them for data, configuration and scripts.</li>
+<li>They can also share a <code>/dev</code> folder, which copes with devices being plugged and unplugged.</li>
 </ul>
-<p><strong>Device Bindings (with <code>-d</code>):</strong></p>
+<p><strong>Devices (with <code>-d</code>)</strong></p>
 <ul>
-<li>Expose hardware devices to container</li>
-<li>Direct device access</li>
-<li>Requires proper permissions (cgroups)</li>
-<li>Use for: SDR, serial, USB devices</li>
-<li>Not hot-(un)plug resistant</li>
+<li>Give the container direct access to hardware.</li>
+<li>Need the right permissions (cgroup rules).</li>
+<li>Use them for SDRs, serial adapters and USB devices.</li>
+<li>Serial ports are attached when needed; other devices must be present when the binding is applied.</li>
 </ul>
+<p>How each engine handles bindings:</p>
 <div class="doc-tabs" data-tabs>
   <div class="tabs" role="tablist">
       <button type="button" role="tab" data-tab="0" data-label="docker behavior" aria-selected="true">Docker behavior</button>
       <button type="button" role="tab" data-tab="1" data-label="podman behavior" aria-selected="false">Podman behavior</button>
   </div>
-  <div class="doc-tab-panel" role="tabpanel" data-panel="0"><p>Docker processes bindings through the Docker daemon. The daemon handles namespace modifications and device cgroup rules on behalf of the container.</p>
+  <div class="doc-tab-panel" role="tabpanel" data-panel="0"><p>The Docker daemon applies the binding and the device cgroup rules for the container.</p>
 <ul>
-<li>Device bindings require the Docker daemon to have access to the host device</li>
-<li>Cgroup rules are applied via the daemon&rsquo;s cgroup driver</li>
-<li>No additional user-level configuration needed beyond group membership (<code>docker</code> group)</li>
+<li>The daemon needs access to the host device.</li>
+<li>Cgroup rules are applied through the daemon&rsquo;s cgroup driver.</li>
+<li>Your user only needs to be able to talk to Docker (the <code>docker</code> group, or <code>rfswift host docker-access</code>).</li>
 </ul>
 </div>
-  <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><p>Podman processes bindings directly in user space (no daemon involved). In rootless mode, there are a few differences to be aware of:</p>
+  <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><p>Podman applies bindings directly, without a daemon. In rootless mode, a few things differ:</p>
 <ul>
-<li><strong>Volume ownership</strong>: Files created inside the container may appear owned by your UID on the host (mapped through the user namespace). Use <code>podman unshare chown</code> if you need to fix permissions.</li>
-<li><strong>Device access</strong>: Some <code>/dev</code> devices require the host user to have read/write permissions. Check with <code>ls -l /dev/your_device</code> and add your user to the appropriate group (e.g., <code>dialout</code>, <code>plugdev</code>).</li>
-<li><strong>USB passthrough</strong>: Binding <code>/dev/bus/usb</code> as a volume (without <code>-d</code>) is often the most reliable approach in rootless mode.</li>
-<li><strong>Cgroup v2</strong>: RF Swift auto-detects cgroup version and applies device access rules accordingly.</li>
+<li><strong>File ownership</strong>: files created inside the container may appear owned by your user on the host, because of user namespace mapping. Use <code>podman unshare chown</code> to fix permissions if needed.</li>
+<li><strong>Device access</strong>: your user must be able to read and write the device on the host. Check with <code>ls -l /dev/your_device</code> and add your user to the right group (for example <code>dialout</code> or <code>plugdev</code>).</li>
+<li><strong>USB</strong>: sharing <code>/dev/bus/usb</code> as a folder (without <code>-d</code>) is often the most reliable approach in rootless mode.</li>
+<li><strong>Cgroup v2</strong>: RF Swift detects the cgroup version and applies device rules accordingly.</li>
 </ul>
 </div>
 </div>
-<hr>
-<h2 id="bindings-vs-initial-mount">Bindings vs initial mount<a class="anchor" href="#bindings-vs-initial-mount" aria-label="Link to this section"></a></h2>
-<h3 id="comparison">Comparison<a class="anchor" href="#comparison" aria-label="Link to this section"></a></h3>
+<h2 id="add-now-or-at-creation">Add now or at creation?<a class="anchor" href="#add-now-or-at-creation" aria-label="Link to this section"></a></h2>
+<p>You can share folders when you create the container (<code>container create -b</code>) or later with <code>config bindings</code>:</p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
-      <th>Feature</th>
-      <th>Runtime Bindings</th>
-      <th>Initial Mount (<code>run -b</code>)</th>
+      <th></th>
+      <th><code>config bindings</code> (later)</th>
+      <th><code>container create -b</code> (at creation)</th>
     </tr>
   </thead>
   <tbody>
@@ -463,14 +398,14 @@
       <td>At creation</td>
     </tr>
     <tr>
-      <td><strong>Restart needed</strong></td>
-      <td>No</td>
-      <td>N/A (during creation)</td>
+      <td><strong>Restart</strong></td>
+      <td>The container restarts</td>
+      <td>Not applicable</td>
     </tr>
     <tr>
-      <td><strong>Modification</strong></td>
-      <td>Can add/remove</td>
-      <td>Fixed</td>
+      <td><strong>Change later</strong></td>
+      <td>Add and remove at any time</td>
+      <td>Fixed, unless you use <code>config bindings</code></td>
     </tr>
     <tr>
       <td><strong>Performance</strong></td>
@@ -478,239 +413,162 @@
       <td>Same</td>
     </tr>
     <tr>
-      <td><strong>Use case</strong></td>
-      <td>Dynamic needs</td>
-      <td>Known requirements</td>
-    </tr>
-    <tr>
-      <td><strong>Engine support</strong></td>
-      <td>Docker  Podman</td>
-      <td>Docker  Podman</td>
+      <td><strong>Engines</strong></td>
+      <td>Docker, Podman</td>
+      <td>Docker, Podman</td>
     </tr>
   </tbody>
 </table>
 </div>
-<h3 id="when-to-use-each">When to use each<a class="anchor" href="#when-to-use-each" aria-label="Link to this section"></a></h3>
-<p><strong>Use runtime <code>bindings</code> when:</strong></p>
-<ul>
-<li>Requirements change during work</li>
-<li>Hot-plugging devices</li>
-<li>Temporary data access</li>
-<li>Testing different configurations</li>
-<li>Adding forgotten mounts</li>
-</ul>
-<p><strong>Use initial <code>-b</code> flag when:</strong></p>
-<ul>
-<li>Requirements known upfront</li>
-<li>Permanent mounts needed</li>
-<li>Creating container fresh</li>
-<li>Documenting standard setup</li>
-</ul>
-<p><strong>Example:</strong></p>
+<p>Use <code>config bindings</code> when needs change during your work: a device you just plugged in, a folder you forgot, temporary access to some data, or trying out a configuration.</p>
+<p>Use <code>-b</code> at creation when you know what you need up front, for permanent folders and a documented, repeatable setup.</p>
+<p>For example, create a container with a scripts folder, add a captures folder later, and add the USB bus once the radio is plugged in:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Initial mount at creation</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i sdr_full -n work <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n work <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b /pathto/scripts:/root/scripts
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Later add more dynamically</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -c work -s /pathto/captures -t /root/captures
+</span></span><span class="line"><span class="cl">rfswift config bindings add -c work -s /pathto/captures -t /root/captures
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add device when plugged in</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -d -c work -s /dev/bus/usb -t /dev/bus/usb</span></span></code></pre></div></div>
-<hr>
+</span></span><span class="line"><span class="cl">rfswift config bindings add -d -c work -s /dev/bus/usb -t /dev/bus/usb</span></span></code></pre></div></div>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="binding-not-visible-in-container">Binding not visible in container<a class="anchor" href="#binding-not-visible-in-container" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Added binding but can&rsquo;t see it in container</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="the-binding-does-not-appear-in-the-container">The binding does not appear in the container<a class="anchor" href="#the-binding-does-not-appear-in-the-container" aria-label="Link to this section"></a></h3>
+<p>Check that the binding was added, look for it inside the container, and if needed remove it and add it again with the right paths:</p>
 <div class="doc-tabs" data-tabs>
   <div class="tabs" role="tablist">
       <button type="button" role="tab" data-tab="0" data-label="docker" aria-selected="true">Docker</button>
       <button type="button" role="tab" data-tab="1" data-label="podman" aria-selected="false">Podman</button>
   </div>
   <div class="doc-tab-panel" role="tabpanel" data-panel="0"><div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if binding was actually added</span>
-</span></span><span class="line"><span class="cl">docker inspect container <span class="p">|</span> grep -A5 Binds
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker inspect container <span class="p">|</span> grep -A5 Binds
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Try accessing directly</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c container
 </span></span><span class="line"><span class="cl">ls -la /path/to/binding
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove and re-add with correct paths</span>
-</span></span><span class="line"><span class="cl">rfswift bindings rm -c container -s <span class="nb">source</span> -t target
-</span></span><span class="line"><span class="cl">rfswift bindings add -c container -s <span class="nb">source</span> -t target</span></span></code></pre></div></div>
+</span></span><span class="line"><span class="cl">rfswift config bindings rm -c container -s <span class="nb">source</span> -t target
+</span></span><span class="line"><span class="cl">rfswift config bindings add -c container -s <span class="nb">source</span> -t target</span></span></code></pre></div></div>
 </div>
   <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if binding was actually added</span>
-</span></span><span class="line"><span class="cl">podman inspect container <span class="p">|</span> grep -A5 Binds
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">podman inspect container <span class="p">|</span> grep -A5 Binds
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Try accessing directly</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c container
 </span></span><span class="line"><span class="cl">ls -la /path/to/binding
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove and re-add with correct paths</span>
-</span></span><span class="line"><span class="cl">rfswift bindings rm -c container -s <span class="nb">source</span> -t target
-</span></span><span class="line"><span class="cl">rfswift bindings add -c container -s <span class="nb">source</span> -t target</span></span></code></pre></div></div>
+</span></span><span class="line"><span class="cl">rfswift config bindings rm -c container -s <span class="nb">source</span> -t target
+</span></span><span class="line"><span class="cl">rfswift config bindings add -c container -s <span class="nb">source</span> -t target</span></span></code></pre></div></div>
 </div>
 </div>
-<h3 id="device-access-denied">Device access denied<a class="anchor" href="#device-access-denied" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Device binding added but access denied in container</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="access-to-the-device-is-denied">Access to the device is denied<a class="anchor" href="#access-to-the-device-is-denied" aria-label="Link to this section"></a></h3>
+<p>A device usually also needs a cgroup rule for its device type. Check the device&rsquo;s major number (the first number, <code>189</code> here), then add the matching rule:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add device binding</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -d -c container -s /dev/device -t /dev/device
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add cgroup rule for device access</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check device major:minor numbers</span>
-</span></span><span class="line"><span class="cl">ls -l /dev/device
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l /dev/device
 </span></span><span class="line"><span class="cl"><span class="c1"># Example: crw-rw---- 1 root dialout 189, 0</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add rule for correct major number</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
+</span></span><span class="line"><span class="cl">rfswift config bindings add -d -c container -s /dev/device -t /dev/device
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
+<p>Then check your user&rsquo;s permissions:</p>
 <div class="doc-tabs" data-tabs>
   <div class="tabs" role="tablist">
       <button type="button" role="tab" data-tab="0" data-label="docker-specific" aria-selected="true">Docker-specific</button>
       <button type="button" role="tab" data-tab="1" data-label="podman-specific" aria-selected="false">Podman-specific</button>
   </div>
-  <div class="doc-tab-panel" role="tabpanel" data-panel="0"><div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Ensure your user is in the docker group</span>
-</span></span><span class="line"><span class="cl">groups <span class="nv">$USER</span> <span class="p">|</span> grep docker
+  <div class="doc-tab-panel" role="tabpanel" data-panel="0"><p>Make sure your user can talk to Docker. If it is not in the <code>docker</code> group, add it (or run <code>rfswift host docker-access</code>):</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">groups <span class="nv">$USER</span> <span class="p">|</span> grep docker
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If not, add and re-login</span>
 </span></span><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
 </span></span><span class="line"><span class="cl">newgrp docker</span></span></code></pre></div></div>
 </div>
-  <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check host-level device permissions</span>
-</span></span><span class="line"><span class="cl">ls -l /dev/ttyUSB0
+  <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><p>Check the device&rsquo;s permissions on the host and add your user to its group:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l /dev/ttyUSB0
 </span></span><span class="line"><span class="cl"><span class="c1"># crw-rw---- 1 root dialout 188, 0 ...</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add your user to the device group</span>
 </span></span><span class="line"><span class="cl">sudo usermod -aG dialout <span class="nv">$USER</span>
-</span></span><span class="line"><span class="cl">newgrp dialout
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># For broad USB access in rootless mode, bind as volume instead</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -c container <span class="se">\
+</span></span><span class="line"><span class="cl">newgrp dialout</span></span></code></pre></div></div>
+<p>For broad USB access in rootless mode, share the USB bus as a folder instead:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -c container <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>-s /dev/bus/usb <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>-t /dev/bus/usb
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If using cgroup v2, RF Swift handles device rules automatically</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># but you can verify:</span>
-</span></span><span class="line"><span class="cl">cat /sys/fs/cgroup/user.slice/user-<span class="k">$(</span>id -u<span class="k">)</span>.slice/user@<span class="k">$(</span>id -u<span class="k">)</span>.service/cgroup.controllers</span></span></code></pre></div></div>
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-t /dev/bus/usb</span></span></code></pre></div></div>
+<p>With cgroup v2, RF Swift handles device rules automatically. You can check which controllers are available:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat /sys/fs/cgroup/user.slice/user-<span class="k">$(</span>id -u<span class="k">)</span>.slice/user@<span class="k">$(</span>id -u<span class="k">)</span>.service/cgroup.controllers</span></span></code></pre></div></div>
 </div>
 </div>
-<h3 id="permission-denied-on-volume">Permission denied on volume<a class="anchor" href="#permission-denied-on-volume" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Can&rsquo;t write to mounted volume</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="you-cannot-write-to-a-shared-folder">You cannot write to a shared folder<a class="anchor" href="#you-cannot-write-to-a-shared-folder" aria-label="Link to this section"></a></h3>
+<p>Check the folder&rsquo;s permissions on your computer and fix them:</p>
 <div class="doc-tabs" data-tabs>
   <div class="tabs" role="tablist">
       <button type="button" role="tab" data-tab="0" data-label="docker" aria-selected="true">Docker</button>
       <button type="button" role="tab" data-tab="1" data-label="podman" aria-selected="false">Podman</button>
   </div>
   <div class="doc-tab-panel" role="tabpanel" data-panel="0"><div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check host directory permissions</span>
-</span></span><span class="line"><span class="cl">ls -ld ~/data
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Fix permissions</span>
-</span></span><span class="line"><span class="cl">chmod <span class="m">755</span> ~/data
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or use capabilities</span>
-</span></span><span class="line"><span class="cl">rfswift capabilities add -c container -p DAC_OVERRIDE</span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -ld ~/data
+</span></span><span class="line"><span class="cl">chmod <span class="m">755</span> ~/data</span></span></code></pre></div></div>
+<p>You can also give the container the <code>DAC_OVERRIDE</code> capability:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config capabilities add -c container -p DAC_OVERRIDE</span></span></code></pre></div></div>
 </div>
   <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check host directory permissions</span>
-</span></span><span class="line"><span class="cl">ls -ld ~/data
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Fix permissions</span>
-</span></span><span class="line"><span class="cl">chmod <span class="m">755</span> ~/data
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Podman rootless: files may be mapped to a different UID</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Use podman unshare to fix ownership</span>
-</span></span><span class="line"><span class="cl">podman unshare chown -R 0:0 ~/data
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or use the :Z/:z SELinux label options if on Fedora/RHEL</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -c container <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -ld ~/data
+</span></span><span class="line"><span class="cl">chmod <span class="m">755</span> ~/data</span></span></code></pre></div></div>
+<p>In rootless Podman, files may be mapped to a different user. Fix the ownership with <code>podman unshare</code>:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">podman unshare chown -R 0:0 ~/data</span></span></code></pre></div></div>
+<p>On Fedora or RHEL with SELinux, add the <code>:z</code> (or <code>:Z</code>) label to the target:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -c container <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>-s ~/data <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>-t /root/data:z</span></span></code></pre></div></div>
 </div>
 </div>
-<h3 id="source-path-not-found">Source path not found<a class="anchor" href="#source-path-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>source path does not exist</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="source-path-does-not-exist">“source path does not exist”<a class="anchor" href="#source-path-does-not-exist" aria-label="Link to this section"></a></h3>
+<p>The folder or device you gave as the source does not exist. Check it, create the folder if needed, and use a full path:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check source path exists</span>
-</span></span><span class="line"><span class="cl">ls -la /path/to/source
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Create directory if needed</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -la /path/to/source
 </span></span><span class="line"><span class="cl">mkdir -p ~/data
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use absolute path</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -c container <span class="se">\
+</span></span><span class="line"><span class="cl">rfswift config bindings add -c container <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /home/user/data <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t /root/data</span></span></code></pre></div></div>
-<h3 id="cannot-remove-binding">Cannot remove binding<a class="anchor" href="#cannot-remove-binding" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>rm</code> command fails</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="removing-a-binding-fails">Removing a binding fails<a class="anchor" href="#removing-a-binding-fails" aria-label="Link to this section"></a></h3>
+<p>Use exactly the same source and target as when you added it. Check them first:</p>
 <div class="doc-tabs" data-tabs>
   <div class="tabs" role="tablist">
       <button type="button" role="tab" data-tab="0" data-label="docker" aria-selected="true">Docker</button>
       <button type="button" role="tab" data-tab="1" data-label="podman" aria-selected="false">Podman</button>
   </div>
   <div class="doc-tab-panel" role="tabpanel" data-panel="0"><div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check exact paths used</span>
-</span></span><span class="line"><span class="cl">docker inspect container <span class="p">|</span> grep -A10 Binds
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker inspect container <span class="p">|</span> grep -A10 Binds
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use same source and target as when added</span>
-</span></span><span class="line"><span class="cl">rfswift bindings rm -c container <span class="se">\
+</span></span><span class="line"><span class="cl">rfswift config bindings rm -c container <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>-s /exact/source/path <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>-t /exact/target/path
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If still fails, recreate container (last resort)</span></span></span></code></pre></div></div>
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-t /exact/target/path</span></span></code></pre></div></div>
 </div>
   <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check exact paths used</span>
-</span></span><span class="line"><span class="cl">podman inspect container <span class="p">|</span> grep -A10 Binds
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">podman inspect container <span class="p">|</span> grep -A10 Binds
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use same source and target as when added</span>
-</span></span><span class="line"><span class="cl">rfswift bindings rm -c container <span class="se">\
+</span></span><span class="line"><span class="cl">rfswift config bindings rm -c container <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>-s /exact/source/path <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>-t /exact/target/path
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If still fails, recreate container (last resort)</span></span></span></code></pre></div></div>
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>-t /exact/target/path</span></span></code></pre></div></div>
 </div>
 </div>
-<h3 id="device-not-found">Device not found<a class="anchor" href="#device-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Device doesn&rsquo;t exist at specified path</p>
-<p><strong>Solutions:</strong></p>
+<p>As a last resort, create the container again.</p>
+<h3 id="the-device-is-not-found">The device is not found<a class="anchor" href="#the-device-is-not-found" aria-label="Link to this section"></a></h3>
+<p>The device may not be at the path you expect. Check it exists, look for it by name, and read the kernel messages (udev rules can rename devices):</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check device exists</span>
-</span></span><span class="line"><span class="cl">ls -l /dev/bus/usb
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check device name pattern</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l /dev/bus/usb
 </span></span><span class="line"><span class="cl">ls -l /dev <span class="p">|</span> grep rtl
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># On some systems, udev rules may rename devices</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Check dmesg for the actual device path</span>
 </span></span><span class="line"><span class="cl">dmesg <span class="p">|</span> tail -20</span></span></code></pre></div></div>
-<hr>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create containers with initial bindings</li>
-<li><a href="/docs/commands/engine"><code>engine</code></a> - Select container engine (Docker/Podman)</li>
-<li><a href="/docs/commands/cgroups"><code>cgroups</code></a> - Manage device permissions</li>
-<li><a href="/docs/commands/capabilities"><code>capabilities</code></a> - Manage container capabilities</li>
-<li><a href="/docs/commands/exec"><code>exec</code></a> - Access container after adding bindings</li>
+<li><a href="/docs/commands/run"><code>run</code></a>: create containers with folders and devices from the start</li>
+<li><a href="/docs/commands/engine"><code>engine</code></a>: choose Docker or Podman</li>
+<li><a href="/docs/commands/cgroups"><code>cgroups</code></a>: device permissions</li>
+<li><a href="/docs/commands/capabilities"><code>capabilities</code></a>: container capabilities</li>
+<li><a href="/docs/commands/exec"><code>exec</code></a>: open a shell after adding a binding</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Hot-Plugging</strong>: The <code>bindings</code> command enables hot-plugging devices and volumes without container restart. Perfect for SDR work where devices are frequently connected/disconnected!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Device Permissions</strong>: Adding device bindings (<code>-d</code> flag) usually requires corresponding cgroup rules. Use <code>rfswift cgroups add</code> to grant device access after adding the binding.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Volumes vs Devices</strong>: Use <code>bindings add</code> without <code>-d</code> for directories/files (volumes), and with <code>-d</code> for hardware devices like SDRs, USB devices, serial ports, etc. Both modes work identically with Docker and Podman.</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -732,38 +590,27 @@
   <nav id="TableOfContents">
   <ul>
     <li><a href="#synopsis">Synopsis</a></li>
-    <li><a href="#subcommands">Subcommands</a>
-      <ul>
-        <li><a href="#bindings-add">bindings add</a></li>
-        <li><a href="#bindings-rm">bindings rm</a></li>
-      </ul>
-    </li>
+    <li><a href="#options">Options</a></li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#volume-bindings">Volume bindings</a></li>
-        <li><a href="#device-bindings">Device bindings</a></li>
+        <li><a href="#folders">Folders</a></li>
+        <li><a href="#devices">Devices</a></li>
       </ul>
     </li>
     <li><a href="#how-bindings-work">How bindings work</a>
       <ul>
-        <li><a href="#dynamic-mounting">Dynamic mounting</a></li>
-        <li><a href="#volume-vs-device-bindings">Volume vs device bindings</a></li>
+        <li><a href="#folder-or-device">Folder or device?</a></li>
       </ul>
     </li>
-    <li><a href="#bindings-vs-initial-mount">Bindings vs initial mount</a>
-      <ul>
-        <li><a href="#comparison">Comparison</a></li>
-        <li><a href="#when-to-use-each">When to use each</a></li>
-      </ul>
-    </li>
+    <li><a href="#add-now-or-at-creation">Add now or at creation?</a></li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#binding-not-visible-in-container">Binding not visible in container</a></li>
-        <li><a href="#device-access-denied">Device access denied</a></li>
-        <li><a href="#permission-denied-on-volume">Permission denied on volume</a></li>
-        <li><a href="#source-path-not-found">Source path not found</a></li>
-        <li><a href="#cannot-remove-binding">Cannot remove binding</a></li>
-        <li><a href="#device-not-found">Device not found</a></li>
+        <li><a href="#the-binding-does-not-appear-in-the-container">The binding does not appear in the container</a></li>
+        <li><a href="#access-to-the-device-is-denied">Access to the device is denied</a></li>
+        <li><a href="#you-cannot-write-to-a-shared-folder">You cannot write to a shared folder</a></li>
+        <li><a href="#source-path-does-not-exist">“source path does not exist”</a></li>
+        <li><a href="#removing-a-binding-fails">Removing a binding fails</a></li>
+        <li><a href="#the-device-is-not-found">The device is not found</a></li>
       </ul>
     </li>
     <li><a href="#related-commands">Related commands</a></li>

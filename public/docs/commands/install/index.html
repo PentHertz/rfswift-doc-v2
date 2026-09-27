@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift container install · RF Swift</title>
   <meta name="description" content="Install extra tools in a container with its install functions, or in a Nix environment.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/install/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/install/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift container install · RF Swift">
   <meta property="og:description" content="Install extra tools in a container with its install functions, or in a Nix environment.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/install/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/install/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,19 +231,28 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift container install</h1><p class="doc-lead">Install extra tools in a container with its install functions, or in a Nix environment.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
+      <h1>rfswift container install</h1><p class="doc-lead">Install extra tools in a container with its install functions, or in a Nix environment.</p><p class="doc-meta">Reference · 4 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Install extra tools in a container with the install functions its image ships, or in a Nix environment with the guided package installer.</p>
-<div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift container install</code>. The legacy <code>rfswift install</code> still works and prints a notice.</p>
+      <p><code>rfswift container install</code> adds a tool that isn&rsquo;t preinstalled in your container, using the install functions the image ships. With the Nix engine, it opens the guided package installer instead. Use it when a toolbox is missing one tool you need.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container install -c my_container</span></span></code></pre></div></div>
+<p>Without <code>-i</code>, you pick the function from a searchable list of everything the image offers, so you never have to know its name.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Other spellings</strong>: the legacy <code>rfswift install</code> still works and prints a notice.</p>
 </div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container install -c CONTAINER                 <span class="c1"># pick a function from a searchable list</span>
 </span></span><span class="line"><span class="cl">rfswift container install -c CONTAINER -i FUNCTION     <span class="c1"># run one by name</span>
 </span></span><span class="line"><span class="cl">rfswift --engine nix container install                 <span class="c1"># the Nix package wizard (same as: rfswift env install)</span></span></span></code></pre></div></div>
-<p>Every RF Swift image carries <code>/root/scripts</code> with install functions for tools that are not preinstalled (<code>sdrpp_soft_install</code>, <code>gnuradio_modules_install</code>, &hellip;). Without <code>-i</code>, RF Swift lists the functions found inside the container in a filterable picker, so you never have to look up a function name. The function&rsquo;s exit status is checked: a failed build is reported with the tail of its output instead of being called installed; apt housekeeping errors are only warnings. The Workbench offers the same picker as <strong>Install tools&hellip;</strong> on a mission.</p>
-<hr>
+<p>How it works:</p>
+<ul>
+<li>Every RF Swift image carries <code>/root/scripts</code> with install functions for tools that are not preinstalled. The <a href="/docs/guide/list-of-tools/">Included tools</a> tables list each tool&rsquo;s function in the <strong>Installation function</strong> column.</li>
+<li>Each function takes care of the tool&rsquo;s dependencies, compilation and configuration.</li>
+<li>Without <code>-i</code>, RF Swift lists the functions found inside the container in a filterable picker.</li>
+<li>The function&rsquo;s exit status is checked: a failed build is reported with the end of its output instead of being marked as installed. Errors from apt housekeeping are only warnings.</li>
+<li>The Workbench offers the same picker as <strong>Install tools&hellip;</strong> on a mission.</li>
+</ul>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
@@ -278,84 +273,82 @@
     </tr>
     <tr>
       <td><code>-i, --install STRING</code></td>
-      <td>Function name to execute (searchable list if omitted)</td>
+      <td>Function name to run (searchable list if omitted)</td>
       <td>No</td>
-      <td><code>-i sdrpp_soft_install</code></td>
+      <td><code>-i gqrx_soft_install</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Interactive Picker</strong>: When run without <code>-c</code> in an interactive terminal, RF Swift displays a scrollable container picker to select the installation target.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Container picker</strong>: without <code>-c</code> in an interactive terminal, RF Swift shows a picker so you can choose the container to install into.</p>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
 <h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Install SDR++ software:</strong></p>
+<h4 id="install-sdr">Install SDR++<a class="anchor" href="#install-sdr" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container install -c work -i sdrpp_soft_install</span></span></code></pre></div></div>
-<p><strong>Install GNU Radio modules:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container install -c work -i sdrpp_soft_fromsource_install</span></span></code></pre></div></div>
+<h4 id="install-a-gnu-radio-module-gr-dab">Install a GNU Radio module (gr-dab)<a class="anchor" href="#install-a-gnu-radio-module-gr-dab" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container install -c sdr_work -i gnuradio_modules_install</span></span></code></pre></div></div>
-<p><strong>Install wireless tools:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container install -c sdr_work -i grdab_grmod_install</span></span></code></pre></div></div>
+<h4 id="install-aircrack-ng">Install Aircrack-ng<a class="anchor" href="#install-aircrack-ng" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container install -c wifi_analysis -i wireless_tools_install</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Setup new SDR container:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container install -c wifi_analysis -i aircrack_soft_install</span></span></code></pre></div></div>
+<h3 id="everyday-cases">Everyday cases<a class="anchor" href="#everyday-cases" aria-label="Link to this section"></a></h3>
+<h4 id="setup-new-sdr-container">Setup new SDR container<a class="anchor" href="#setup-new-sdr-container" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create container</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_light -n sdr_custom
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Install additional tools</span>
-</span></span><span class="line"><span class="cl">rfswift container install -c sdr_custom -i sdrpp_soft_install
-</span></span><span class="line"><span class="cl">rfswift container install -c sdr_custom -i hackrf_tools_install
-</span></span><span class="line"><span class="cl">rfswift container install -c sdr_custom -i rtlsdr_tools_install
+</span></span><span class="line"><span class="cl">rfswift container install -c sdr_custom -i sdrpp_soft_fromsource_install
+</span></span><span class="line"><span class="cl">rfswift container install -c sdr_custom -i hackrf_devices_install
+</span></span><span class="line"><span class="cl">rfswift container install -c sdr_custom -i rtlsdr_devices_install
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Container now has custom toolset</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c sdr_custom</span></span></code></pre></div></div>
-<p><strong>Add missing tool:</strong></p>
+<h4 id="add-missing-tool">Add missing tool<a class="anchor" href="#add-missing-tool" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Working in container, need additional tool</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># You are working in the container and need another tool</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c analysis
-</span></span><span class="line"><span class="cl"><span class="c1"># Realize you need inspectrum</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ... you realise you need Inspectrum</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Install from host</span>
-</span></span><span class="line"><span class="cl">rfswift container install -c analysis -i inspectrum_install
+</span></span><span class="line"><span class="cl"><span class="c1"># Install it from your computer</span>
+</span></span><span class="line"><span class="cl">rfswift container install -c analysis -i inspectrum_soft_install
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Tool now available</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c analysis
 </span></span><span class="line"><span class="cl">inspectrum</span></span></code></pre></div></div>
-<p><strong>Batch installation:</strong></p>
+<h4 id="batch-installation">Batch installation<a class="anchor" href="#batch-installation" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install multiple tools</span>
 </span></span><span class="line"><span class="cl"><span class="nv">TOOLS</span><span class="o">=(</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;sdrpp_soft_install&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;gqrx_install&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;urh_install&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;inspectrum_install&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;sdrpp_soft_fromsource_install&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;gqrx_soft_install&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;urh_soft_install&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;inspectrum_soft_install&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="o">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">for</span> tool in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TOOLS</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Installing: </span><span class="nv">$tool</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">    rfswift container install -c sdr_full -i <span class="s2">&#34;</span><span class="nv">$tool</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div></div>
-<p><strong>Custom toolchain setup:</strong></p>
+<h4 id="custom-toolchain-setup">Custom toolchain setup<a class="anchor" href="#custom-toolchain-setup" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create specialized container</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:base -n custom_rf
+</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:corebuild -n custom_rf
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Install specific tools</span>
-</span></span><span class="line"><span class="cl">rfswift container install -c custom_rf -i gnuradio_install
-</span></span><span class="line"><span class="cl">rfswift container install -c custom_rf -i hackrf_tools_install
-</span></span><span class="line"><span class="cl">rfswift container install -c custom_rf -i limesuite_install
+</span></span><span class="line"><span class="cl">rfswift container install -c custom_rf -i gnuradio_soft_install
+</span></span><span class="line"><span class="cl">rfswift container install -c custom_rf -i hackrf_devices_install
+</span></span><span class="line"><span class="cl">rfswift container install -c custom_rf -i limesdr_devices_install
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Commit as custom image</span>
 </span></span><span class="line"><span class="cl">rfswift container commit -c custom_rf -i my_custom_toolchain:v1</span></span></code></pre></div></div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
 <h3 id="installation-failed">Installation failed<a class="anchor" href="#installation-failed" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Installation function fails</p>
-<p><strong>Solutions:</strong></p>
+<p>An install function fails.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check container is running</span>
 </span></span><span class="line"><span class="cl">rfswift container last <span class="p">|</span> grep container_name
@@ -366,9 +359,8 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Check disk space</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c container -e <span class="s2">&#34;df -h&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Try with more verbose output</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># See the full output by running the function yourself inside the container</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c container
-</span></span><span class="line"><span class="cl"><span class="c1"># Run installation command manually to see errors</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Update package lists first</span>
@@ -377,28 +369,25 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Then retry install</span>
 </span></span><span class="line"><span class="cl">rfswift container install -c container -i function_name</span></span></code></pre></div></div>
 <h3 id="function-not-found">Function not found<a class="anchor" href="#function-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Installation function doesn&rsquo;t exist</p>
-<p><strong>Solutions:</strong></p>
+<p>The function name you gave doesn&rsquo;t exist in this image.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Let RF Swift list the functions found inside the container</span>
 </span></span><span class="line"><span class="cl">rfswift container install -c container
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Refresh the scripts inside the container (update_rfscripts), then retry</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c container -e <span class="s2">&#34;update_rfscripts&#34;</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/exec"><code>exec</code></a> - Execute commands after installation</li>
-<li><a href="/docs/commands/commit"><code>commit</code></a> - Save container after installations</li>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create container for installations</li>
-<li><a href="/docs/commands/upgrade"><code>upgrade</code></a> - Upgrade container with new tools</li>
+<li><a href="/docs/commands/exec/"><code>container shell</code></a>: use the tools you installed</li>
+<li><a href="/docs/commands/commit/"><code>container commit</code></a>: save the container once the tools are installed</li>
+<li><a href="/docs/commands/run/"><code>container create</code></a>: create a container</li>
+<li><a href="/docs/commands/upgrade/"><code>container upgrade</code></a>: move a container to a newer image</li>
+<li><a href="/docs/guide/installing-software/">Add more software</a>: all the ways to get more tools</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Automated Setup</strong>: The <code>install</code> command uses predefined functions that handle dependencies, compilation, and configuration automatically. No need to manually compile or configure!</p>
+<div class="admonition admonition-warning" role="note"><p><strong>Needs internet access</strong>: install functions download source code and packages, so the container needs network access while they run.</p>
 </div>
-<div class="admonition admonition-warning" role="note"><p><strong>Internet Required</strong>: Installation functions download source code and packages from the internet. Ensure your container has network access during installation!</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Commit After Installing</strong>: After installing tools, commit your container with <code>rfswift container commit</code> to preserve your work. Otherwise, changes are lost if the container is removed!</p>
+<div class="admonition admonition-info" role="note"><p><strong>Keep what you installed</strong>: tools you add live in this container only. Commit it with <code>rfswift container commit</code> if you want to keep them after the container is removed.</p>
 </div>
 
     </div>
@@ -425,7 +414,7 @@
     <li><a href="#examples">Examples</a>
       <ul>
         <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#everyday-cases">Everyday cases</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>

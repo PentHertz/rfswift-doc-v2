@@ -7,21 +7,21 @@ description: "Rename a container."
 weight: 8
 ---
 
-{{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift container rename`. The legacy form `rfswift rename` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
-{{< /callout >}}
+`rfswift container rename` gives a container a new name. Its data, settings and state don't change, and a running container keeps running. Use it to fix a typo or to name containers more clearly.
 
-Change a container's name to a new identifier.
+```bash
+rfswift container rename -n old_container -d new_container
+```
+
+{{< callout type="info" >}}
+**Other spellings**: the legacy form `rfswift rename` still works and prints a notice. The flags are the same. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
 
 ## Synopsis
 
 ```bash
 rfswift container rename -n OLD_NAME -d NEW_NAME
 ```
-
-The `rename` command changes a container's name without affecting its data, configuration, or state. This is useful for organizing containers, fixing naming mistakes, or adapting to new naming conventions.
-
----
 
 ## Options
 
@@ -31,43 +31,41 @@ The `rename` command changes a container's name without affecting its data, conf
 | `-d, --destination STRING` | New container name | Yes | `-d new_container` |
 
 {{< callout type="info" >}}
-**Interactive Picker**: When run without `-n` in an interactive terminal, RF Swift displays a scrollable container picker to select the container to rename.
+**Container picker**: without `-n` in an interactive terminal, RF Swift shows a picker so you can choose the container to rename.
 {{< /callout >}}
-
----
 
 ## Examples
 
 ### Basic usage
 
-**Simple rename:**
+#### Simple rename
 ```bash
 rfswift container rename -n old_container -d new_container
 ```
 
-**Fix a typo:**
+#### Fix a typo
 ```bash
 rfswift container rename -n sdr_containr -d sdr_container
 ```
 
-**More descriptive name:**
+#### More descriptive name
 ```bash
 rfswift container rename -n test -d sdr_spectrum_analysis_2024_01
 ```
 
-### Real-World scenarios
+### Everyday cases
 
-**Add date to container name:**
+#### Add date to container name
 ```bash
 rfswift container rename -n client_assessment -d client_assessment_2024_01_12
 ```
 
-**Organize by project:**
+#### Organize by project
 ```bash
 rfswift container rename -n wifi_tools -d project_alpha_wifi_scanner
 ```
 
-**Change naming convention:**
+#### Change naming convention
 ```bash
 # Old convention: type_number
 rfswift container rename -n sdr_1 -d rtlsdr_spectrum_analyzer
@@ -76,12 +74,12 @@ rfswift container rename -n sdr_1 -d rtlsdr_spectrum_analyzer
 rfswift container rename -n test_container -d frequency_scan_2024_jan
 ```
 
-**Clarify purpose:**
+#### Clarify purpose
 ```bash
 rfswift container rename -n container1 -d bluetooth_le_scanner_building_a
 ```
 
-**Stage-based naming:**
+#### Stage-based naming
 ```bash
 # Development to production
 rfswift container rename -n api_server_dev -d api_server_prod
@@ -90,31 +88,17 @@ rfswift container rename -n api_server_dev -d api_server_prod
 rfswift container rename -n web_test -d web_staging
 ```
 
----
-
 ## What happens during rename
 
 ### What changes
 
-When you rename a container:
-- Container name changes
-- Container appears with new name in `rfswift container last` and `docker ps`
-- Docker internal references update
+Only the name changes: the container appears under its new name in `rfswift container last` and `docker ps`, and the engine's internal references are updated.
 
 ### What stays the same
 
-Everything else remains unchanged:
-- Container ID (unchanged)
-- All data inside container
-- Mounted volumes and bindings
-- Network configuration
-- Port mappings
-- Capabilities and cgroups
-- Container state (running/stopped)
-- Running processes (if container is running)
-- Creation date and history
+Everything else stays as it was: the container ID, the data inside it, mounted folders and bindings, network settings and port mappings, capabilities and cgroup rules, its state (running or stopped), the processes running in it, and its creation date and history.
 
-**Example:**
+#### Example
 ```bash
 # Before rename
 docker ps
@@ -132,11 +116,9 @@ docker ps
 
 ### Container state during rename
 
-The rename operation works on both:
-- **Running containers**: Continue running without interruption
-- **Stopped containers**: Remain stopped after rename
+You can rename a container whether it is running or stopped. A running container keeps running without interruption; a stopped one stays stopped.
 
-**No downtime:**
+#### No downtime
 ```bash
 # Container is running
 docker ps | grep web_server
@@ -149,15 +131,13 @@ docker ps | grep api_backend
 # Processes inside container are unaffected
 ```
 
----
-
 ## Troubleshooting
 
 ### New name already exists
 
-**Error:** `Error: Conflict. The container name "..." is already in use`
+The error message is: `Error: Conflict. The container name "..." is already in use`
 
-**Solutions:**
+To fix it:
 ```bash
 # Check existing containers
 docker ps -a | grep new_name
@@ -176,9 +156,9 @@ rfswift container rename -n old_name -d new_name
 
 ### Source container not found
 
-**Error:** `Error: No such container: old_name`
+The error message is: `Error: No such container: old_name`
 
-**Solutions:**
+To fix it:
 ```bash
 # List all containers
 rfswift container last
@@ -186,15 +166,11 @@ rfswift container last
 
 ### Invalid container name
 
-**Error:** `Invalid container name`
+The error message is: `Invalid container name`
 
-**Common causes:**
-- Spaces in name
-- Special characters (!@#$%^&*)
-- Starting with hyphen
-- Uppercase and symbols mixed
+Common causes: a space in the name, special characters such as `!@#$%^&*`, or a name that starts with a hyphen.
 
-**Solutions:**
+To fix it:
 ```bash
 # Remove spaces
 rfswift container rename -n old -d my_new_container  # Not "my new container"
@@ -211,41 +187,33 @@ rfswift container rename -n old -d my_sdr_container_2024
 
 ### Permission denied
 
-**Error:** `Permission denied` or `Cannot connect to Docker daemon`
+The error message is: `Permission denied` or `Cannot connect to Docker daemon`
 
-**Solutions:**
+On Linux, your user can't talk to Docker yet. Give it access once (no logout needed), then try again:
 ```bash
-# Use sudo on Linux
-sudo rfswift container rename -n old_name -d new_name
-
-# Or add user to docker group
-sudo usermod -aG docker $USER
-newgrp docker
-
-# Then try again
+rfswift host docker-access
 rfswift container rename -n old_name -d new_name
 ```
 
----
+Or, by hand:
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
+rfswift container rename -n old_name -d new_name
+```
 
 ## Related commands
 
-- [`run`](/docs/commands/run) - Create containers with proper names from the start
-- [`last`](/docs/commands/last) - View container names
-- [`exec`](/docs/commands/exec) - Access containers by name
-- [`remove`](/docs/commands/remove) - Remove containers
-- [`commit`](/docs/commands/commit) - Save container state
-
----
+- [`container create`](/docs/commands/run/): create containers with clear names from the start
+- [`container last`](/docs/commands/last/): see container names
+- [`container shell`](/docs/commands/exec/): enter a container by name
+- [`container rm`](/docs/commands/remove/): remove a container
+- [`container commit`](/docs/commands/commit/): save a container's state
 
 {{< callout >}}
-**Naming Tip**: Use a consistent naming convention from the start. Format like `{purpose}_{project}_{date}` makes containers easy to identify and organize: `sdr_analysis_alpha_2024_01`
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**No Downtime**: Renaming a running container doesn't interrupt it. Processes continue running, and all configuration remains intact. Only the name changes!
+**Naming tip**: pick one naming pattern and stick to it, for example `{purpose}_{project}_{date}`: `sdr_analysis_alpha_2024_01`.
 {{< /callout >}}
 
 {{< callout type="warning" >}}
-**Update Dependencies**: If scripts, monitoring systems, or other containers reference the old name, update them before or immediately after renaming to avoid broken integrations.
+**Update anything that uses the old name**: scripts, monitoring or other containers that refer to the container by name need the new name too.
 {{< /callout >}}

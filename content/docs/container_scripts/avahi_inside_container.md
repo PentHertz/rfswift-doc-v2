@@ -6,43 +6,31 @@ description: "Start Avahi inside a container for mDNS service discovery, for exa
 weight: 6
 ---
 
-## Overview
+`avahicontainer_start` starts the Avahi service inside an RF Swift container. Avahi provides zeroconf (mDNS) service discovery, which some devices rely on to be found on the network, the PlutoSDR in particular.
 
-The `avahicontainer_start` script is a utility included in RF Swift containers to enable service discovery through Avahi. This script is particularly useful when working with PlutoSDR and other devices that rely on zeroconf/mDNS discovery.
+Run it when:
 
-## Script details
-
-The `avahicontainer_start` script in `/usr/sbin` initializes the D-Bus daemon and Avahi service within a container:
-
-### What this script does
-
-1. **Create D-Bus Directory**: Creates the `/var/run/dbus` directory if it doesn't exist
-2. **Start D-Bus Daemon**: Launches the D-Bus system daemon in the background
-3. **Wait Period**: Pauses for 2 seconds to ensure D-Bus is fully initialized
-4. **Start Avahi Daemon**: Launches the Avahi daemon in daemon mode (`-D`)
-
-## When to use this script
-
-Use the `avahicontainer_start` script when:
-
-- Working with PlutoSDR or similar devices that use network service discovery
-- Running tools that require mDNS (multicast DNS) or service discovery
-- Encountering "Avahi daemon not running" or similar errors
-
-## Using the script
-
-### Manual execution
-
-To manually start Avahi in a running container:
+- you work with a PlutoSDR or another device found through network service discovery;
+- a tool needs mDNS (multicast DNS) or service discovery;
+- you see "Avahi daemon not running" or a similar error.
 
 ```bash
 # Inside your RF Swift container
 avahicontainer_start
 ```
 
-### Verifying it's working
+## What the script does
 
-After running the script, you can verify that Avahi is properly running:
+The script lives in `/usr/sbin`. It:
+
+1. creates the `/var/run/dbus` directory if it does not exist;
+2. starts the D-Bus system daemon in the background;
+3. waits 2 seconds so D-Bus is fully up;
+4. starts the Avahi daemon in daemon mode (`-D`).
+
+## Check that it works
+
+Look for the Avahi process, then list the services it sees:
 
 ```bash
 # Check if Avahi is running
@@ -52,9 +40,9 @@ ps aux | grep avahi
 avahi-browse -a
 ```
 
-### PlutoSDR example
+## Example: finding a PlutoSDR
 
-When working with PlutoSDR, you can use this script to enable automatic discovery:
+Start Avahi, give the services a moment to register, then look for IIO devices:
 
 ```bash
 # Start Avahi service
@@ -73,41 +61,37 @@ iio_info -s
 
 ## Troubleshooting
 
-### Common issues
+### The device is still not found
 
-If the script doesn't solve your service discovery issues:
+**Check the network mode.** The container must use the host network, which is RF Swift's default. The summary printed by `rfswift container shell -c <name>` shows the network mode.
 
-1. **Network Configuration**: Ensure your container is using the host network (the default for RF Swift)
-   ```bash
-   # Check network mode of your container
-   rfswift container list
-   ```
+**Check the firewall.** Multicast DNS uses UDP port 5353; make sure it is not blocked:
 
-2. **Firewall Settings**: Multicast DNS uses UDP port 5353 - ensure it's not blocked
-   ```bash
-   # Check if multicast traffic is allowed
-   sudo iptables -L | grep 5353
-   ```
+```bash
+# Check if multicast traffic is allowed
+sudo iptables -L | grep 5353
+```
 
-3. **Multiple Avahi Instances**: Sometimes conflicts occur if the host is also running Avahi
-   ```bash
-   # On your host system, temporarily stop Avahi if needed
-   sudo systemctl stop avahi-daemon
-   ```
+**Check for a second Avahi.** Conflicts can happen when the host also runs Avahi. Stop the host's Avahi for a moment to test:
+
+```bash
+# On your host system, temporarily stop Avahi if needed
+sudo systemctl stop avahi-daemon
+```
 
 ## Advanced usage
 
-### Auto-Starting Avahi
+### Start Avahi with the container
 
-To automatically start Avahi when running a container:
+Run the script as the container's command, followed by a shell:
 
 ```bash
 rfswift container create -i sdr_full -n pluto_container -e "avahicontainer_start && /bin/bash"
 ```
 
-### Custom service files
+### Advertise your own services
 
-You can add custom Avahi service files to advertise specific services:
+Add a service file to advertise a service of your own, then restart Avahi:
 
 ```bash
 # Create a custom service file

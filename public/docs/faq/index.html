@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FAQ &amp; troubleshooting · RF Swift</title>
   <meta name="description" content="Answers to the questions newcomers ask most, and fixes for the problems people hit most, grouped by symptom.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/faq/">
+  <link rel="canonical" href="http://localhost:1313/docs/faq/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="FAQ &amp; troubleshooting · RF Swift">
   <meta property="og:description" content="Answers to the questions newcomers ask most, and fixes for the problems people hit most, grouped by symptom.">
-  <meta property="og:url" content="https://rfswift.io/docs/faq/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/faq/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -244,7 +230,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>FAQ &amp; troubleshooting</h1><p class="doc-lead">Answers to the questions newcomers ask most, and fixes for the problems people hit most, grouped by symptom.</p><p class="doc-meta">Beginner · 10 min read · Updated September 27, 2026</p>
+      <h1>FAQ &amp; troubleshooting</h1><p class="doc-lead">Answers to the questions newcomers ask most, and fixes for the problems people hit most, grouped by symptom.</p><p class="doc-meta">Beginner · 10 min read</p>
     </header>
     <div class="prose">
       <p>The first half of this page answers common questions. The second half is a troubleshooting guide: find your symptom, apply the fix. If your problem isn&rsquo;t here, the end of the page says where to ask.</p>
@@ -261,7 +247,13 @@
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create --engine nix -i sdr_light -n radio --lazy</span></span></code></pre></div></div>
 <p>To try a single tool without creating anything: <code>rfswift env run sdr_light sdrpp</code>. See <a href="/docs/guide/nix-engine/">Nix engine</a>.</p>
 <h3 id="does-it-work-on-windows-and-macos">Does it work on Windows and macOS?<a class="anchor" href="#does-it-work-on-windows-and-macos" aria-label="Link to this section"></a></h3>
-<p>Yes. On Windows, one installer sets up WSL 2, USB passthrough and the engine. On macOS, use Homebrew or the signed disk image, then pick your engine: Docker Desktop or Podman for containers, <strong>Lima</strong> when containers need your USB radio, or <strong>Nix</strong> to run the tools natively (the lightest option, with direct USB access). Some hardware features differ per system: see <a href="/docs/supports/">Will it run on my computer?</a> and <a href="/docs/guide/limitations/">Known limits</a>.</p>
+<p>Yes. On Windows, one installer sets up WSL 2, USB passthrough and the engine. On macOS, install with Homebrew or the signed disk image, then pick your engine:</p>
+<ul>
+<li><strong>Docker Desktop</strong> or <strong>Podman</strong> for containers;</li>
+<li><strong>Lima</strong> when containers need your USB radio;</li>
+<li><strong>Nix</strong> to run the tools natively: the lightest option, with direct USB access.</li>
+</ul>
+<p>Some hardware features differ per system: see <a href="/docs/supports/">Will it run on my computer?</a> and <a href="/docs/guide/limitations/">Known limits</a>.</p>
 <h3 id="does-it-run-on-a-raspberry-pi-or-other-small-boards">Does it run on a Raspberry Pi or other small boards?<a class="anchor" href="#does-it-run-on-a-raspberry-pi-or-other-small-boards" aria-label="Link to this section"></a></h3>
 <p>Yes. Images are published for x86_64, ARM64 and RISC-V64, and boards such as the Raspberry Pi 5, Milk-V Jupiter, Orange Pi RV2 and Radxa ROCK 5B+ are tested. On boards with little memory, <strong>Podman</strong> avoids a background daemon and the <strong>Nix engine</strong> avoids image layers altogether. The full list is in <a href="/docs/supports/">Will it run on my computer?</a></p>
 <h3 id="how-is-it-different-from-kali-parrot-or-dragonos-can-i-keep-my-distribution">How is it different from Kali, Parrot or DragonOS? Can I keep my distribution?<a class="anchor" href="#how-is-it-different-from-kali-parrot-or-dragonos-can-i-keep-my-distribution" aria-label="Link to this section"></a></h3>

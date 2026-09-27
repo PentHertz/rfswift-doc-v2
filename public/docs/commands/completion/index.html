@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift completion · RF Swift</title>
   <meta name="description" content="Generate and install shell completion for bash, zsh and fish.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/completion/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/completion/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift completion · RF Swift">
   <meta property="og:description" content="Generate and install shell completion for bash, zsh and fish.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/completion/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/completion/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,257 +231,161 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift completion</h1><p class="doc-lead">Generate and install shell completion for bash, zsh and fish.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
+      <h1>rfswift completion</h1><p class="doc-lead">Generate and install shell completion for bash, zsh and fish.</p><p class="doc-meta">Reference · 3 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><code>rfswift completion bash|zsh|fish --install</code> writes the script into the platform&rsquo;s completion directory for you; the Linux packages install bash, zsh and fish completions already. Completions cover the whole v4 tree, including <code>rfswift env install</code> package names.</p>
-</div>
-<p>Generate and install shell completion scripts for tab-completion.</p>
+      <p>Shell completion lets you press <kbd>Tab</kbd> to complete <code>rfswift</code> commands, flags, container names and image names. <code>rfswift completion</code> installs it for your shell. It covers the whole v4 command tree, including the package names of <code>rfswift env install</code>.</p>
+<p>If you installed RF Swift from a Linux package (deb, rpm, pacman), bash, zsh and fish completion is already installed.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift completion        <span class="c1"># detects your shell and installs completion</span></span></span></code></pre></div></div>
+<p>After installing, reload your shell (<code>source ~/.bashrc</code>, or open a new terminal) before <kbd>Tab</kbd> works.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Auto-detect shell and install</span>
-</span></span><span class="line"><span class="cl">rfswift completion
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Install for specific shell</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift completion              <span class="c1"># detect the shell and install</span>
 </span></span><span class="line"><span class="cl">rfswift completion bash
 </span></span><span class="line"><span class="cl">rfswift completion zsh
 </span></span><span class="line"><span class="cl">rfswift completion fish
 </span></span><span class="line"><span class="cl">rfswift completion powershell</span></span></code></pre></div></div>
-<p>The <code>completion</code> command generates and installs tab-completion scripts for your shell, enabling command, flag, and argument completion when you press Tab.</p>
-<hr>
+<p><code>rfswift completion bash|zsh|fish --install</code> writes the script into your platform&rsquo;s completion folder for you.</p>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Auto-detect and install:</strong></p>
+<p>Without an argument, RF Swift detects your shell and installs the script:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift completion
 </span></span><span class="line"><span class="cl"><span class="c1"># Detected shell: bash</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Installing completion script to /etc/bash_completion.d/rfswift</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># ✓ Completion script installed successfully</span></span></span></code></pre></div></div>
-<p><strong>Install for specific shell:</strong></p>
+<p>Or name the shell yourself:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Bash</span>
-</span></span><span class="line"><span class="cl">rfswift completion bash
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Zsh</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift completion bash
 </span></span><span class="line"><span class="cl">rfswift completion zsh
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Fish</span>
 </span></span><span class="line"><span class="cl">rfswift completion fish
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># PowerShell</span>
 </span></span><span class="line"><span class="cl">rfswift completion powershell</span></span></code></pre></div></div>
-<hr>
-<h2 id="installation-locations">Installation locations<a class="anchor" href="#installation-locations" aria-label="Link to this section"></a></h2>
+<h2 id="where-the-scripts-go">Where the scripts go<a class="anchor" href="#where-the-scripts-go" aria-label="Link to this section"></a></h2>
 <h3 id="bash">Bash<a class="anchor" href="#bash" aria-label="Link to this section"></a></h3>
-<p><strong>System-wide (requires sudo):</strong></p>
+<p>System-wide (needs sudo): <code>/etc/bash_completion.d/rfswift</code>. For your user only: <code>~/.bash_completion.d/rfswift</code> or <code>~/.bash_completion</code>.</p>
+<p>Make sure your <code>~/.bashrc</code> loads it:</p>
 <div class="code">
-  <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>/etc/bash_completion.d/rfswift</code></pre></div>
-<p><strong>User-specific:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>~/.bash_completion.d/rfswift
-~/.bash_completion</code></pre></div>
-<p><strong>Enable in ~/.bashrc:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add if not already present</span>
-</span></span><span class="line"><span class="cl"><span class="o">[[</span> -f ~/.bash_completion <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> ~/.bash_completion</span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[[</span> -f ~/.bash_completion <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> ~/.bash_completion</span></span></code></pre></div></div>
 <h3 id="zsh">Zsh<a class="anchor" href="#zsh" aria-label="Link to this section"></a></h3>
-<p><strong>Common locations:</strong></p>
+<p>Usual locations:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>~/.zsh/completion/_rfswift
 ~/.oh-my-zsh/completions/_rfswift
 /usr/local/share/zsh/site-functions/_rfswift
 ${fpath[1]}/_rfswift</code></pre></div>
-<p><strong>Enable in ~/.zshrc:</strong></p>
+<p>Make sure your <code>~/.zshrc</code> adds the folder and starts the completion system:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add completion directory to fpath</span>
-</span></span><span class="line"><span class="cl"><span class="nv">fpath</span><span class="o">=(</span>~/.zsh/completion <span class="nv">$fpath</span><span class="o">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Initialize completion system</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">fpath</span><span class="o">=(</span>~/.zsh/completion <span class="nv">$fpath</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl">autoload -Uz compinit
 </span></span><span class="line"><span class="cl">compinit</span></span></code></pre></div></div>
 <h3 id="fish">Fish<a class="anchor" href="#fish" aria-label="Link to this section"></a></h3>
-<p><strong>Location:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>~/.config/fish/completions/rfswift.fish</code></pre></div>
-<p><strong>No additional configuration needed</strong> - Fish loads completions automatically.</p>
+<p><code>~/.config/fish/completions/rfswift.fish</code>. Fish loads it automatically; nothing else to set up.</p>
 <h3 id="powershell">PowerShell<a class="anchor" href="#powershell" aria-label="Link to this section"></a></h3>
-<p><strong>Profile location:</strong></p>
+<p>Find your profile, then load the completion script from it:</p>
 <div class="code">
   <div class="code-bar"><span>powershell</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Check profile path</span>
 </span></span><span class="line"><span class="cl"><span class="nb">echo </span><span class="nv">$PROFILE</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c"># Typical locations:</span>
-</span></span><span class="line"><span class="cl"><span class="c"># Windows PowerShell: </span>
+</span></span><span class="line"><span class="cl"><span class="c"># Windows PowerShell:</span>
 </span></span><span class="line"><span class="cl"><span class="c">#   ~\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1</span>
 </span></span><span class="line"><span class="cl"><span class="c"># PowerShell Core:</span>
 </span></span><span class="line"><span class="cl"><span class="c">#   ~\Documents\PowerShell\Microsoft.PowerShell_profile.ps1</span></span></span></code></pre></div></div>
-<p><strong>Enable in profile:</strong></p>
 <div class="code">
-  <div class="code-bar"><span>powershell</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Add to profile</span>
-</span></span><span class="line"><span class="cl"><span class="p">.</span> <span class="s2">&#34;C:\Path\To\CompletionScripts\rfswift.ps1&#34;</span></span></span></code></pre></div></div>
-<hr>
-<h2 id="how-completion-works">How completion works<a class="anchor" href="#how-completion-works" aria-label="Link to this section"></a></h2>
-<h3 id="what-gets-completed">What gets completed<a class="anchor" href="#what-gets-completed" aria-label="Link to this section"></a></h3>
-<p><strong>Commands:</strong></p>
+  <div class="code-bar"><span>powershell</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="p">.</span> <span class="s2">&#34;C:\Path\To\CompletionScripts\rfswift.ps1&#34;</span></span></span></code></pre></div></div>
+<h2 id="what-completes">What completes<a class="anchor" href="#what-completes" aria-label="Link to this section"></a></h2>
+<p>Commands and command groups:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift &lt;Tab&gt;
-</span></span><span class="line"><span class="cl"><span class="c1"># Shows: run, exec, stop, remove, images, last, etc.</span></span></span></code></pre></div></div>
-<p><strong>Subcommands:</strong></p>
+</span></span><span class="line"><span class="cl"><span class="c1"># Shows: container, image, env, config, host, usb, audit, ...</span></span></span></code></pre></div></div>
+<p>Subcommands:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image &lt;Tab&gt;
 </span></span><span class="line"><span class="cl"><span class="c1"># Shows: local, remote, pull</span></span></span></code></pre></div></div>
-<p><strong>Flags:</strong></p>
+<p>Flags:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -&lt;Tab&gt;
 </span></span><span class="line"><span class="cl"><span class="c1"># Shows: -i, -n, -b, -p, -d, etc.</span></span></span></code></pre></div></div>
-<p><strong>Container names:</strong></p>
+<p>Container names:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c &lt;Tab&gt;
 </span></span><span class="line"><span class="cl"><span class="c1"># Shows: container1, container2, container3, etc.</span></span></span></code></pre></div></div>
-<p><strong>Image names:</strong></p>
+<p>Image names:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i &lt;Tab&gt;
 </span></span><span class="line"><span class="cl"><span class="c1"># Shows: penthertz/rfswift_resolute:sdr_full, penthertz/rfswift_resolute:wifi, etc.</span></span></span></code></pre></div></div>
-<h3 id="completion-features">Completion features<a class="anchor" href="#completion-features" aria-label="Link to this section"></a></h3>
-<p><strong>Smart completion:</strong></p>
-<ul>
-<li>Only shows relevant options for current context</li>
-<li>Completes container names from running containers</li>
-<li>Completes image names from local images</li>
-<li>Suggests common values for flags</li>
-</ul>
-<hr>
+<p>Completion only offers what makes sense at that point: container names from your containers, image names from your local images, and common values for flags.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="completion-not-working">Completion not working<a class="anchor" href="#completion-not-working" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Tab completion doesn&rsquo;t work</p>
-<p><strong>Solutions:</strong></p>
-<p><strong>For Bash:</strong></p>
+<h3 id="tab-does-nothing"><kbd>Tab</kbd> does nothing<a class="anchor" href="#tab-does-nothing" aria-label="Link to this section"></a></h3>
+<p>Check that the completion file exists and that your shell loads it, then reload your shell.</p>
+<p>Bash:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if completion file exists</span>
-</span></span><span class="line"><span class="cl">ls -la ~/.bash_completion.d/rfswift
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -la ~/.bash_completion.d/rfswift
 </span></span><span class="line"><span class="cl">ls -la ~/.bash_completion
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check if sourced in .bashrc</span>
 </span></span><span class="line"><span class="cl">grep bash_completion ~/.bashrc
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add if missing</span>
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;[[ -f ~/.bash_completion ]] &amp;&amp; source ~/.bash_completion&#39;</span> &gt;&gt; ~/.bashrc
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reload</span>
 </span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/.bashrc</span></span></code></pre></div></div>
-<p><strong>For Zsh:</strong></p>
+<p>Zsh:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if completion file exists</span>
-</span></span><span class="line"><span class="cl">ls -la ~/.zsh/completion/_rfswift
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check fpath</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -la ~/.zsh/completion/_rfswift
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$fpath</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add completion directory to .zshrc</span>
 </span></span><span class="line"><span class="cl">cat &gt;&gt; ~/.zshrc <span class="s">&lt;&lt; &#39;EOF&#39;
 </span></span></span><span class="line"><span class="cl"><span class="s">fpath=(~/.zsh/completion $fpath)
 </span></span></span><span class="line"><span class="cl"><span class="s">autoload -Uz compinit
 </span></span></span><span class="line"><span class="cl"><span class="s">compinit
 </span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reload</span>
 </span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/.zshrc</span></span></code></pre></div></div>
-<p><strong>For Fish:</strong></p>
+<p>Fish:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if completion file exists</span>
-</span></span><span class="line"><span class="cl">ls -la ~/.config/fish/completions/rfswift.fish
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reload completions</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -la ~/.config/fish/completions/rfswift.fish
 </span></span><span class="line"><span class="cl">fish_update_completions
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Restart fish</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exec</span> fish</span></span></code></pre></div></div>
-<h3 id="permission-denied">Permission denied<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Cannot write completion file</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="permission-denied-when-installing">&ldquo;Permission denied&rdquo; when installing<a class="anchor" href="#permission-denied-when-installing" aria-label="Link to this section"></a></h3>
+<p>The system-wide folder needs root. Check it, then either install for your user only or use <code>sudo</code>:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check permissions</span>
-</span></span><span class="line"><span class="cl">ls -ld /etc/bash_completion.d
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Install to user directory instead</span>
-</span></span><span class="line"><span class="cl">rfswift completion bash
-</span></span><span class="line"><span class="cl"><span class="c1"># Will install to ~/.bash_completion.d/</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or use sudo for system-wide</span>
-</span></span><span class="line"><span class="cl">sudo rfswift completion bash</span></span></code></pre></div></div>
-<h3 id="old-completions-cached">Old completions cached<a class="anchor" href="#old-completions-cached" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Completions show old commands</p>
-<p><strong>Solutions:</strong></p>
-<p><strong>Bash:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -ld /etc/bash_completion.d
+</span></span><span class="line"><span class="cl">rfswift completion bash          <span class="c1"># installs to ~/.bash_completion.d/</span>
+</span></span><span class="line"><span class="cl">sudo rfswift completion bash     <span class="c1"># system-wide</span></span></span></code></pre></div></div>
+<h3 id="completion-still-shows-old-commands">Completion still shows old commands<a class="anchor" href="#completion-still-shows-old-commands" aria-label="Link to this section"></a></h3>
+<p>Clear the cached completion, install it again and reload.</p>
+<p>Bash:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Clear completion cache</span>
-</span></span><span class="line"><span class="cl"><span class="nb">complete</span> -r rfswift
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reinstall</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">complete</span> -r rfswift
 </span></span><span class="line"><span class="cl">rfswift completion bash
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reload</span>
 </span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/.bashrc</span></span></code></pre></div></div>
-<p><strong>Zsh:</strong></p>
+<p>Zsh:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove compiled completion files</span>
-</span></span><span class="line"><span class="cl">rm -f ~/.zcompdump*
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reinstall</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rm -f ~/.zcompdump*
 </span></span><span class="line"><span class="cl">rfswift completion zsh
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Rebuild cache</span>
 </span></span><span class="line"><span class="cl">autoload -Uz compinit
 </span></span><span class="line"><span class="cl">compinit
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reload</span>
 </span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/.zshrc</span></span></code></pre></div></div>
-<p><strong>Fish:</strong></p>
+<p>Fish:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Clear fish cache</span>
-</span></span><span class="line"><span class="cl">rm -rf ~/.cache/fish/
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reinstall</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rm -rf ~/.cache/fish/
 </span></span><span class="line"><span class="cl">rfswift completion fish
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Restart</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exec</span> fish</span></span></code></pre></div></div>
-<h3 id="completions-conflict">Completions conflict<a class="anchor" href="#completions-conflict" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Completions conflict with other tools</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="another-tools-completion-gets-in-the-way">Another tool&rsquo;s completion gets in the way<a class="anchor" href="#another-tools-completion-gets-in-the-way" aria-label="Link to this section"></a></h3>
+<p>Find which completion is active and whether several <code>rfswift</code> binaries are installed, remove the conflicting one, and install again:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check what provides rfswift completion</span>
-</span></span><span class="line"><span class="cl"><span class="nb">complete</span> -p rfswift  <span class="c1"># Bash</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">complete</span> -p rfswift  <span class="c1"># Bash</span>
 </span></span><span class="line"><span class="cl">which -a rfswift     <span class="c1"># Check multiple installations</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove conflicting completion</span>
 </span></span><span class="line"><span class="cl">rm /path/to/conflicting/completion
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reinstall correct one</span>
 </span></span><span class="line"><span class="cl">rfswift completion</span></span></code></pre></div></div>
-<h3 id="shell-not-detected">Shell not detected<a class="anchor" href="#shell-not-detected" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Auto-detection fails</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="your-shell-isnt-detected">Your shell isn&rsquo;t detected<a class="anchor" href="#your-shell-isnt-detected" aria-label="Link to this section"></a></h3>
+<p>Name the shell yourself, or set <code>SHELL</code>:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Specify shell explicitly</span>
-</span></span><span class="line"><span class="cl">rfswift completion bash
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift completion bash
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or set SHELL variable</span>
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">SHELL</span><span class="o">=</span>/bin/bash
 </span></span><span class="line"><span class="cl">rfswift completion</span></span></code></pre></div></div>
-<hr>
-<h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
+<h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/update"><code>update</code></a> - Update RF Swift (refresh completions after)</li>
-<li><a href="/docs/commands/install"><code>install</code></a> - Install function scripts</li>
+<li><a href="/docs/commands/update">update</a>: refresh completion after an update</li>
+<li><a href="/docs/commands/install">container install</a></li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Productivity Boost</strong>: Tab-completion dramatically improves workflow efficiency. Press Tab to complete commands, flags, container names, and image names automatically!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Reload Required</strong>: After installing completions, you must reload your shell configuration (<code>source ~/.bashrc</code> or restart terminal) before tab-completion will work.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Auto-Detection</strong>: Running <code>rfswift completion</code> without arguments automatically detects your shell and installs the appropriate completion script. You can also specify the shell explicitly!</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -517,12 +407,8 @@ ${fpath[1]}/_rfswift</code></pre></div>
   <nav id="TableOfContents">
   <ul>
     <li><a href="#synopsis">Synopsis</a></li>
-    <li><a href="#examples">Examples</a>
-      <ul>
-        <li><a href="#basic-usage">Basic usage</a></li>
-      </ul>
-    </li>
-    <li><a href="#installation-locations">Installation locations</a>
+    <li><a href="#examples">Examples</a></li>
+    <li><a href="#where-the-scripts-go">Where the scripts go</a>
       <ul>
         <li><a href="#bash">Bash</a></li>
         <li><a href="#zsh">Zsh</a></li>
@@ -530,22 +416,17 @@ ${fpath[1]}/_rfswift</code></pre></div>
         <li><a href="#powershell">PowerShell</a></li>
       </ul>
     </li>
-    <li><a href="#how-completion-works">How completion works</a>
-      <ul>
-        <li><a href="#what-gets-completed">What gets completed</a></li>
-        <li><a href="#completion-features">Completion features</a></li>
-      </ul>
-    </li>
+    <li><a href="#what-completes">What completes</a></li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#completion-not-working">Completion not working</a></li>
-        <li><a href="#permission-denied">Permission denied</a></li>
-        <li><a href="#old-completions-cached">Old completions cached</a></li>
-        <li><a href="#completions-conflict">Completions conflict</a></li>
-        <li><a href="#shell-not-detected">Shell not detected</a></li>
+        <li><a href="#tab-does-nothing"><kbd>Tab</kbd> does nothing</a></li>
+        <li><a href="#permission-denied-when-installing">&ldquo;Permission denied&rdquo; when installing</a></li>
+        <li><a href="#completion-still-shows-old-commands">Completion still shows old commands</a></li>
+        <li><a href="#another-tools-completion-gets-in-the-way">Another tool&rsquo;s completion gets in the way</a></li>
+        <li><a href="#your-shell-isnt-detected">Your shell isn&rsquo;t detected</a></li>
       </ul>
     </li>
-    <li><a href="#related-commands">Related commands</a></li>
+    <li><a href="#related">Related</a></li>
   </ul>
 </nav>
   <a class="toc-top" href="#content">Back to top ↑</a>

@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RF scripts update utility · RF Swift</title>
-  <meta name="description" content="Keep the RF Swift scripts inside a container in sync with the latest versions.">
+  <meta name="description" content="Keep the RF Swift installation scripts in sync with the latest versions from the official repository.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/container_scripts/rfswift_install/">
+  <link rel="canonical" href="http://localhost:1313/docs/container_scripts/rfswift_install/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="RF scripts update utility · RF Swift">
-  <meta property="og:description" content="Keep the RF Swift scripts inside a container in sync with the latest versions.">
-  <meta property="og:url" content="https://rfswift.io/docs/container_scripts/rfswift_install/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:description" content="Keep the RF Swift installation scripts in sync with the latest versions from the official repository.">
+  <meta property="og:url" content="http://localhost:1313/docs/container_scripts/rfswift_install/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,42 +231,58 @@
 </nav>
 
     <header class="doc-head">
-      <h1>RF scripts update utility</h1><p class="doc-lead">Keep the RF Swift scripts inside a container in sync with the latest versions.</p><p class="doc-meta">Advanced · 3 min read · Updated September 27, 2026</p>
+      <h1>RF scripts update utility</h1><p class="doc-lead">Keep the RF Swift installation scripts in sync with the latest versions from the official repository.</p><p class="doc-meta">Advanced · 3 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <h2 id="overview">Overview<a class="anchor" href="#overview" aria-label="Link to this section"></a></h2>
-<p>The <code>update_rfscripts</code> utility is a tool that keeps your local RF Swift scripts synchronized with the latest versions from the official repository. This ensures you always have access to the most recent tools, fixes, and improvements without manually downloading and managing script files.</p>
-<h2 id="what-this-utility-does">What this utility does<a class="anchor" href="#what-this-utility-does" aria-label="Link to this section"></a></h2>
-<p>The utility performs several operations to update your local scripts directory:</p>
-<ol>
-<li><strong>Creates a scripts directory</strong> in your home folder if it doesn&rsquo;t exist</li>
-<li><strong>Downloads the latest scripts</strong> from the RF-Swift-images GitHub repository</li>
-<li><strong>Synchronizes the files</strong> to your local directory, adding new files and updating existing ones</li>
-<li><strong>Sets proper permissions</strong> on the scripts to make them executable</li>
-<li><strong>Cleans up</strong> any temporary files used during the update process</li>
-</ol>
-<h2 id="when-to-use-this-utility">When to use this utility<a class="anchor" href="#when-to-use-this-utility" aria-label="Link to this section"></a></h2>
-<p>Use the <code>update_rfscripts</code> utility:</p>
+      <p><code>update_rfscripts</code> downloads the latest RF Swift installation scripts from the official repository and syncs them into a local <code>scripts</code> folder. You get new tools and fixes without downloading and managing script files by hand.</p>
+<p>Run it:</p>
 <ul>
-<li>After a new RF Swift release to get the latest scripts</li>
-<li>When you need access to newly added tools</li>
-<li>If you suspect your scripts might be outdated</li>
-<li>Before starting a new RF assessment to ensure you have the latest capabilities</li>
+<li>after a new RF Swift release;</li>
+<li>when you need a tool that was added recently;</li>
+<li>when you think your scripts are out of date;</li>
+<li>before starting a new assessment.</li>
 </ul>
-<h2 id="using-the-utility">Using the utility<a class="anchor" href="#using-the-utility" aria-label="Link to this section"></a></h2>
-<h3 id="running-the-utility">Running the utility<a class="anchor" href="#running-the-utility" aria-label="Link to this section"></a></h3>
-<p>To update your RF scripts, simply run:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">update_rfscripts</span></span></code></pre></div></div>
-<p>No root privileges are required, as the scripts are installed to your user&rsquo;s home directory.</p>
-<h3 id="what-to-expect">What to expect<a class="anchor" href="#what-to-expect" aria-label="Link to this section"></a></h3>
-<p>When you run the utility, you&rsquo;ll see a series of colored messages indicating the progress:</p>
+<p>It needs no root privileges: run it from your home folder and the scripts land in <code>~/scripts</code>.</p>
+<h2 id="what-it-does">What it does<a class="anchor" href="#what-it-does" aria-label="Link to this section"></a></h2>
 <ol>
-<li><strong>Yellow text</strong>: Indicates the creation of new directories (if needed)</li>
-<li><strong>Blue text</strong>: Shows progress information as files are downloaded and copied</li>
-<li><strong>Red text</strong>: Alerts you to any errors (hopefully you won&rsquo;t see these)</li>
-<li><strong>Green text</strong>: Confirms successful completion of the update</li>
+<li>Creates the <code>scripts</code> folder if it does not exist.</li>
+<li>Downloads the latest scripts from the <a href="https://github.com/PentHertz/RF-Swift-images" target="_blank" rel="noopener">RF-Swift-images</a> repository.</li>
+<li>Syncs them into the folder: new files are added, existing ones updated.</li>
+<li>Makes the scripts executable.</li>
+<li>Removes its temporary files.</li>
 </ol>
+<h2 id="what-you-will-see">What you will see<a class="anchor" href="#what-you-will-see" aria-label="Link to this section"></a></h2>
+<p>The messages are coloured by type:</p>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Colour</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Yellow</td>
+      <td>A directory is being created</td>
+    </tr>
+    <tr>
+      <td>Blue</td>
+      <td>Progress: files being downloaded and copied</td>
+    </tr>
+    <tr>
+      <td>Red</td>
+      <td>An error</td>
+    </tr>
+    <tr>
+      <td>Green</td>
+      <td>The update finished successfully</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <p>Example output:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>Fetching file list from https://github.com/PentHertz/RF-Swift-images
@@ -298,13 +300,8 @@ reverse_software.sh
 ...
 Cleaning up temporary files
 Update completed successfully.</code></pre></div>
-<h2 id="script-location-and-usage">Script location and usage<a class="anchor" href="#script-location-and-usage" aria-label="Link to this section"></a></h2>
-<h3 id="where-scripts-are-installed">Where scripts are installed<a class="anchor" href="#where-scripts-are-installed" aria-label="Link to this section"></a></h3>
-<p>The utility installs all scripts to the <code>scripts</code> directory in your home folder:</p>
-<div class="code">
-  <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>~/scripts/</code></pre></div>
-<h3 id="using-the-updated-scripts">Using the updated scripts<a class="anchor" href="#using-the-updated-scripts" aria-label="Link to this section"></a></h3>
-<p>After updating, you can use the scripts directly from your home directory. For example:</p>
+<h2 id="use-the-updated-scripts">Use the updated scripts<a class="anchor" href="#use-the-updated-scripts" aria-label="Link to this section"></a></h2>
+<p>The scripts are in <code>~/scripts/</code>. Run one directly, or add the folder to your <code>PATH</code>:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Run a specific script</span>
 </span></span><span class="line"><span class="cl">~/scripts/entrypoint.sh tool_name_install
@@ -312,38 +309,31 @@ Update completed successfully.</code></pre></div>
 </span></span><span class="line"><span class="cl"><span class="c1"># Or add to your PATH for easier access</span>
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;export PATH=&#34;$HOME/scripts:$PATH&#34;&#39;</span> &gt;&gt; ~/.bashrc
 </span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/.bashrc</span></span></code></pre></div></div>
-<h2 id="technical-details">Technical details<a class="anchor" href="#technical-details" aria-label="Link to this section"></a></h2>
-<h3 id="repository-source">Repository source<a class="anchor" href="#repository-source" aria-label="Link to this section"></a></h3>
-<p>The scripts are downloaded from the official RF Swift images repository:</p>
-<div class="code">
-  <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>https://github.com/PentHertz/RF-Swift-images</code></pre></div>
-<h3 id="update-process">Update process<a class="anchor" href="#update-process" aria-label="Link to this section"></a></h3>
-<p>The utility uses a four-step process:</p>
+<h2 id="how-the-update-works">How the update works<a class="anchor" href="#how-the-update-works" aria-label="Link to this section"></a></h2>
+<p>It runs in four steps:</p>
 <ol>
-<li><strong>Preparation</strong>: Creates necessary directories and sets up a temporary workspace</li>
-<li><strong>Download</strong>: Uses <code>curl</code> and <code>tar</code> to fetch only the scripts folder from the repository</li>
-<li><strong>Synchronization</strong>: Uses <code>rsync</code> with the <code>--delete</code> option to ensure your local directory exactly matches the repository</li>
-<li><strong>Finalization</strong>: Sets executable permissions and cleans up temporary files</li>
+<li><strong>Preparation</strong>: creates the directories and a temporary workspace.</li>
+<li><strong>Download</strong>: uses <code>curl</code> and <code>tar</code> to fetch only the scripts folder of the repository.</li>
+<li><strong>Synchronisation</strong>: uses <code>rsync</code> with <code>--delete</code>, so the local folder exactly matches the repository.</li>
+<li><strong>Finalisation</strong>: makes the scripts executable and removes the temporary files.</li>
 </ol>
-<h3 id="file-handling">File handling<a class="anchor" href="#file-handling" aria-label="Link to this section"></a></h3>
-<p>The utility uses <code>rsync</code> with the following options:</p>
+<p>The <code>rsync</code> options are:</p>
 <ul>
-<li><code>-a</code>: Archive mode (preserves permissions, timestamps, etc.)</li>
-<li><code>-v</code>: Verbose output so you can see which files are updated</li>
-<li><code>--delete</code>: Removes local files that no longer exist in the repository</li>
+<li><code>-a</code>: archive mode (keeps permissions, timestamps and so on);</li>
+<li><code>-v</code>: verbose, so you see which files change;</li>
+<li><code>--delete</code>: removes local files that no longer exist in the repository.</li>
 </ul>
-<h2 id="customization">Customization<a class="anchor" href="#customization" aria-label="Link to this section"></a></h2>
-<p>If you need to modify the default behavior of the script updater:</p>
-<h3 id="changing-the-target-directory">Changing the target directory<a class="anchor" href="#changing-the-target-directory" aria-label="Link to this section"></a></h3>
-<p>Edit the <code>update_rfscripts</code> file to change the <code>TARGET_DIR</code> variable:</p>
+<h2 id="customisation">Customisation<a class="anchor" href="#customisation" aria-label="Link to this section"></a></h2>
+<h3 id="change-the-target-folder">Change the target folder<a class="anchor" href="#change-the-target-folder" aria-label="Link to this section"></a></h3>
+<p>Edit the <code>TARGET_DIR</code> variable in the <code>update_rfscripts</code> file:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Original</span>
 </span></span><span class="line"><span class="cl"><span class="nv">TARGET_DIR</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/scripts&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Modified example (specific directory)</span>
 </span></span><span class="line"><span class="cl"><span class="nv">TARGET_DIR</span><span class="o">=</span><span class="s2">&#34;/opt/rfswift/scripts&#34;</span></span></span></code></pre></div></div>
-<h3 id="preserving-local-modifications">Preserving local modifications<a class="anchor" href="#preserving-local-modifications" aria-label="Link to this section"></a></h3>
-<p>If you&rsquo;ve made local changes to scripts that you want to keep, remove the <code>--delete</code> option from the rsync command:</p>
+<h3 id="keep-your-local-changes">Keep your local changes<a class="anchor" href="#keep-your-local-changes" aria-label="Link to this section"></a></h3>
+<p><code>--delete</code> removes files that are not in the repository. To keep local changes, remove that option from the <code>rsync</code> command:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Change from</span>
 </span></span><span class="line"><span class="cl">rsync -av --delete <span class="s2">&#34;</span><span class="nv">$TEMP_DIR</span><span class="s2">/&#34;</span> <span class="s2">&#34;</span><span class="nv">$TARGET_DIR</span><span class="s2">/&#34;</span>
@@ -351,35 +341,23 @@ Update completed successfully.</code></pre></div>
 </span></span><span class="line"><span class="cl"><span class="c1"># To</span>
 </span></span><span class="line"><span class="cl">rsync -av <span class="s2">&#34;</span><span class="nv">$TEMP_DIR</span><span class="s2">/&#34;</span> <span class="s2">&#34;</span><span class="nv">$TARGET_DIR</span><span class="s2">/&#34;</span></span></span></code></pre></div></div>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="common-issues">Common issues<a class="anchor" href="#common-issues" aria-label="Link to this section"></a></h3>
-<p><strong>Network Connection Errors</strong></p>
-<ul>
-<li>Ensure you have a working internet connection</li>
-<li>Check if GitHub is accessible from your network</li>
-</ul>
-<p><strong>Permission Errors</strong></p>
-<ul>
-<li>If you see permission errors, check the ownership of your scripts directory:
+<h3 id="network-errors">Network errors<a class="anchor" href="#network-errors" aria-label="Link to this section"></a></h3>
+<p>Check your internet connection, and that GitHub is reachable from your network.</p>
+<h3 id="permission-errors">Permission errors<a class="anchor" href="#permission-errors" aria-label="Link to this section"></a></h3>
+<p>Check who owns the scripts folder, then give yourself write access:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -la ~/scripts</span></span></code></pre></div></div>
-</li>
-<li>Ensure you have write permissions to the directory:
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod u+w ~/scripts</span></span></code></pre></div></div>
-</li>
-</ul>
-<p><strong>Execution Fails After Update</strong></p>
-<ul>
-<li>If scripts won&rsquo;t execute after updating, check the permissions:
+<h3 id="scripts-do-not-run-after-the-update">Scripts do not run after the update<a class="anchor" href="#scripts-do-not-run-after-the-update" aria-label="Link to this section"></a></h3>
+<p>Make them executable again:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod +x ~/scripts/*.sh</span></span></code></pre></div></div>
-</li>
-</ul>
 <h2 id="related-documentation">Related documentation<a class="anchor" href="#related-documentation" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/container_scripts">RF Swift Utilities</a></li>
-<li><a href="/docs/development/yaml-recipe-guide">Custom Script Development</a></li>
-<li><a href="/docs/faq/">Troubleshooting</a></li>
+<li><a href="/docs/container_scripts/">Container scripts</a></li>
+<li><a href="/docs/development/yaml-recipe-guide/">Build your own images (YAML recipes)</a></li>
+<li><a href="/docs/faq/">FAQ and troubleshooting</a></li>
 </ul>
 
     </div>
@@ -401,37 +379,21 @@ Update completed successfully.</code></pre></div>
   <p class="toc-title">On this page</p>
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#overview">Overview</a></li>
-    <li><a href="#what-this-utility-does">What this utility does</a></li>
-    <li><a href="#when-to-use-this-utility">When to use this utility</a></li>
-    <li><a href="#using-the-utility">Using the utility</a>
+    <li><a href="#what-it-does">What it does</a></li>
+    <li><a href="#what-you-will-see">What you will see</a></li>
+    <li><a href="#use-the-updated-scripts">Use the updated scripts</a></li>
+    <li><a href="#how-the-update-works">How the update works</a></li>
+    <li><a href="#customisation">Customisation</a>
       <ul>
-        <li><a href="#running-the-utility">Running the utility</a></li>
-        <li><a href="#what-to-expect">What to expect</a></li>
-      </ul>
-    </li>
-    <li><a href="#script-location-and-usage">Script location and usage</a>
-      <ul>
-        <li><a href="#where-scripts-are-installed">Where scripts are installed</a></li>
-        <li><a href="#using-the-updated-scripts">Using the updated scripts</a></li>
-      </ul>
-    </li>
-    <li><a href="#technical-details">Technical details</a>
-      <ul>
-        <li><a href="#repository-source">Repository source</a></li>
-        <li><a href="#update-process">Update process</a></li>
-        <li><a href="#file-handling">File handling</a></li>
-      </ul>
-    </li>
-    <li><a href="#customization">Customization</a>
-      <ul>
-        <li><a href="#changing-the-target-directory">Changing the target directory</a></li>
-        <li><a href="#preserving-local-modifications">Preserving local modifications</a></li>
+        <li><a href="#change-the-target-folder">Change the target folder</a></li>
+        <li><a href="#keep-your-local-changes">Keep your local changes</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#common-issues">Common issues</a></li>
+        <li><a href="#network-errors">Network errors</a></li>
+        <li><a href="#permission-errors">Permission errors</a></li>
+        <li><a href="#scripts-do-not-run-after-the-update">Scripts do not run after the update</a></li>
       </ul>
     </li>
     <li><a href="#related-documentation">Related documentation</a></li>

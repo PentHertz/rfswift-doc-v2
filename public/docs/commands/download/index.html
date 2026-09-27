@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift image download · RF Swift</title>
   <meta name="description" content="Save an image to a compressed archive, for example to move it to an offline machine.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/download/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/download/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift image download · RF Swift">
   <meta property="og:description" content="Save an image to a compressed archive, for example to move it to an offline machine.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/download/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/download/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,24 +231,27 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift image download</h1><p class="doc-lead">Save an image to a compressed archive, for example to move it to an offline machine.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
+      <h1>rfswift image download</h1><p class="doc-lead">Save an image to a compressed archive, for example to move it to an offline machine.</p><p class="doc-meta">Reference · 4 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift image download</code>. The legacy form <code>rfswift download</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+      <p><code>rfswift image download</code> saves an image as a compressed <code>tar.gz</code> file. Use it to carry images to an offline or air-gapped machine, to share them, or to keep an archive of a version you rely on.</p>
+<p>The most common use fetches the latest image and saves it in one step:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full -o sdr_full.tar.gz --pull</span></span></code></pre></div></div>
+<p>On the destination machine, bring it back with <a href="/docs/commands/import"><code>rfswift image import image</code></a>.</p>
+<div class="admonition admonition-info" role="note"><p><code>rfswift image download</code> is the v4 spelling. The older <code>rfswift download</code> still works, takes the same flags and prints a notice with the new name. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
-<p>Download Docker images from registries and save them as compressed archives for offline use.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image download -i IMAGE_NAME -o OUTPUT_FILE.tar.gz <span class="o">[</span>--pull<span class="o">]</span></span></span></code></pre></div></div>
-<p>The <code>download</code> command pulls Docker images from registries (Docker Hub, private registries) and saves them locally as compressed tar.gz files. This enables offline distribution, air-gapped installations, and image archival.</p>
-<hr>
+<p>The image can come from Docker Hub or a private registry.</p>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -270,48 +259,47 @@
   <tbody>
     <tr>
       <td><code>-i, --image STRING</code></td>
-      <td>Image name to download</td>
+      <td>The image to save</td>
       <td>Yes</td>
       <td><code>-i penthertz/rfswift_resolute:sdr_full</code></td>
     </tr>
     <tr>
       <td><code>-o, --output STRING</code></td>
-      <td>Output file path</td>
+      <td>Where to write the archive</td>
       <td>No</td>
       <td><code>-o rfswift-sdr.tar.gz</code></td>
     </tr>
     <tr>
       <td><code>--pull</code></td>
-      <td>Pull image first if not present locally</td>
+      <td>Pull the image first if it is not on this computer</td>
       <td>No</td>
       <td><code>--pull</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Interactive Picker</strong>: When run without <code>-i</code> in an interactive terminal, RF Swift displays a scrollable image picker to select the image to download. If <code>-o</code> is omitted, the output filename is auto-generated as <code>{image_name}_converted.tar.gz</code> (with <code>/</code> and <code>:</code> replaced by <code>_</code>).</p>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">Defaults</p><p>Without <code>-i</code>, a terminal shows a scrollable list of images to choose from. Without <code>-o</code>, the file is named <code>{image_name}_converted.tar.gz</code>, with <code>/</code> and <code>:</code> replaced by <code>_</code>.</p>
 </div>
-<hr>
+<div class="admonition admonition-tip" role="note"><p class="admonition-title">Use --pull to get the latest version</p><p>Without <code>--pull</code>, RF Swift saves the copy already on this computer, which may be out of date.</p>
+</div>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Download RF Swift image:</strong></p>
+<p>Save an image to a file:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full -o rfswift-sdr-full.tar.gz</span></span></code></pre></div></div>
-<p><strong>Download with automatic pull:</strong></p>
+<p>Pull the latest version first, then save it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full -o sdr_full.tar.gz --pull</span></span></code></pre></div></div>
-<p><strong>Download specific version:</strong></p>
+<p>Choose a descriptive file name:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:bluetooth -o bluetooth-tools-v2025.tar.gz</span></span></code></pre></div></div>
-<p><strong>Download to specific directory:</strong></p>
+<p>Save into a specific folder, with today&rsquo;s date in the name:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:wifi <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o ~/offline-images/wifi-tools-<span class="k">$(</span>date +%Y%m%d<span class="k">)</span>.tar.gz</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Prepare offline installation media:</strong></p>
+<h3 id="prepare-a-usb-drive-for-offline-installs">Prepare a USB drive for offline installs<a class="anchor" href="#prepare-a-usb-drive-for-offline-installs" aria-label="Link to this section"></a></h3>
+<p>Save the images you need onto the drive, and add a short README for whoever uses it:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Download all required RF Swift images</span>
-</span></span><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o /media/usb/rfswift-sdr-full.tar.gz --pull
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:bluetooth <span class="se">\
@@ -320,7 +308,6 @@
 </span></span><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:wifi <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o /media/usb/rfswift-wifi.tar.gz --pull
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Create README for offline users</span>
 </span></span><span class="line"><span class="cl">cat &gt; /media/usb/README.txt <span class="s">&lt;&lt; &#39;EOF&#39;
 </span></span></span><span class="line"><span class="cl"><span class="s">RF Swift Offline Installation
 </span></span></span><span class="line"><span class="cl"><span class="s">
@@ -328,137 +315,91 @@
 </span></span></span><span class="line"><span class="cl"><span class="s">1. Import images: rfswift image import image -i rfswift-*.tar.gz
 </span></span></span><span class="line"><span class="cl"><span class="s">2. Run container: rfswift container create -i penthertz/rfswift_resolute:sdr_full -n workspace
 </span></span></span><span class="line"><span class="cl"><span class="s">EOF</span></span></span></code></pre></div></div>
-<p><strong>Air-gapped system preparation:</strong></p>
+<h3 id="prepare-an-air-gapped-system">Prepare an air-gapped system<a class="anchor" href="#prepare-an-air-gapped-system" aria-label="Link to this section"></a></h3>
+<p>On a connected machine, save the latest images into one folder and create a checksum file. Then copy the whole folder to the air-gapped system:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># On internet-connected system</span>
-</span></span><span class="line"><span class="cl"><span class="nv">OFFLINE_DIR</span><span class="o">=</span>~/offline-bundle
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">OFFLINE_DIR</span><span class="o">=</span>~/offline-bundle
 </span></span><span class="line"><span class="cl">mkdir -p <span class="s2">&#34;</span><span class="nv">$OFFLINE_DIR</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Download latest images</span>
 </span></span><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o <span class="s2">&#34;</span><span class="nv">$OFFLINE_DIR</span><span class="s2">/sdr_full_</span><span class="k">$(</span>date +%Y%m%d<span class="k">)</span><span class="s2">.tar.gz&#34;</span> --pull
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:hardware <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o <span class="s2">&#34;</span><span class="nv">$OFFLINE_DIR</span><span class="s2">/hardware_</span><span class="k">$(</span>date +%Y%m%d<span class="k">)</span><span class="s2">.tar.gz&#34;</span> --pull
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Create checksum file</span>
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$OFFLINE_DIR</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">sha256sum *.tar.gz &gt; checksums.sha256
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Transfer entire directory to air-gapped system</span></span></span></code></pre></div></div>
-<p><strong>Version archival:</strong></p>
+</span></span><span class="line"><span class="cl">sha256sum *.tar.gz &gt; checksums.sha256</span></span></code></pre></div></div>
+<p>The full procedure is in <a href="/docs/air-gapped-installation/">Air-gapped installation</a>.</p>
+<h3 id="archive-a-version-before-upgrading">Archive a version before upgrading<a class="anchor" href="#archive-a-version-before-upgrading" aria-label="Link to this section"></a></h3>
+<p>Save the current image before you upgrade, with a note describing it:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Archive specific version before upgrade</span>
-</span></span><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o archives/rfswift-sdr-full-v0.6.5.tar.gz
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Document version</span>
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;RF Swift SDR Full v0.6.5 - Archived </span><span class="k">$(</span>date<span class="k">)</span><span class="s2">&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  &gt; archives/rfswift-sdr-full-v0.6.5.txt</span></span></code></pre></div></div>
-<hr>
+<div class="admonition admonition-warning" role="note"><p class="admonition-title">Disk space</p><p>Saving and compressing an image needs about twice the size of the final file in free space. For example, a 1.5 GB file needs about 3 GB free.</p>
+</div>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="image-not-found-in-registry">Image not found in registry<a class="anchor" href="#image-not-found-in-registry" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: image not found: penthertz/rfswift_resolute:unknown_tag</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="image-not-found">“image not found”<a class="anchor" href="#image-not-found" aria-label="Link to this section"></a></h3>
+<p>The full error looks like <code>Error: image not found: penthertz/rfswift_resolute:unknown_tag</code>. Check the list of published images and the spelling:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List available images</span>
-</span></span><span class="line"><span class="cl">rfswift image remote
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify spelling</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image remote
 </span></span><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz</span></span></code></pre></div></div>
-<h3 id="network-connection-failed">Network connection failed<a class="anchor" href="#network-connection-failed" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: connection timeout</code> or <code>network unreachable</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="connection-timeout-or-network-unreachable">Connection timeout or “network unreachable”<a class="anchor" href="#connection-timeout-or-network-unreachable" aria-label="Link to this section"></a></h3>
+<p>Check the connection to Docker Hub and that Docker is running:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check network connectivity</span>
-</span></span><span class="line"><span class="cl">ping registry.hub.docker.com
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check Docker daemon</span>
-</span></span><span class="line"><span class="cl">docker info
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use proxy if behind firewall</span>
-</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">HTTP_PROXY</span><span class="o">=</span>http://proxy:port
-</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">HTTPS_PROXY</span><span class="o">=</span>http://proxy:port
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Retry with longer timeout</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># (May need Docker daemon configuration)</span></span></span></code></pre></div></div>
-<h3 id="permission-denied">Permission denied<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>permission denied</code> writing output file</p>
-<p><strong>Solutions:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ping registry.hub.docker.com
+</span></span><span class="line"><span class="cl">docker info</span></span></code></pre></div></div>
+<p>Behind a firewall, set your proxy before retrying. A longer timeout may need a change to Docker&rsquo;s daemon configuration.</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check directory permissions</span>
-</span></span><span class="line"><span class="cl">ls -ld <span class="k">$(</span>dirname output.tar.gz<span class="k">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Create directory with proper permissions</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">HTTP_PROXY</span><span class="o">=</span>http://proxy:port
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">HTTPS_PROXY</span><span class="o">=</span>http://proxy:port</span></span></code></pre></div></div>
+<h3 id="permission-denied-when-writing-the-file">“permission denied” when writing the file<a class="anchor" href="#permission-denied-when-writing-the-file" aria-label="Link to this section"></a></h3>
+<p>You cannot write to the output folder. Check its permissions, or write into a folder you own:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -ld <span class="k">$(</span>dirname output.tar.gz<span class="k">)</span>
 </span></span><span class="line"><span class="cl">mkdir -p ~/downloads
 </span></span><span class="line"><span class="cl">chmod <span class="m">755</span> ~/downloads
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use absolute path</span>
-</span></span><span class="line"><span class="cl">rfswift image download -i image -o ~/downloads/image.tar.gz
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or use sudo</span>
-</span></span><span class="line"><span class="cl">sudo rfswift image download -i image -o /opt/images/image.tar.gz</span></span></code></pre></div></div>
-<h3 id="download-interrupted">Download interrupted<a class="anchor" href="#download-interrupted" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Download stopped mid-way</p>
-<p><strong>Solutions:</strong></p>
+</span></span><span class="line"><span class="cl">rfswift image download -i image -o ~/downloads/image.tar.gz</span></span></code></pre></div></div>
+<p>To write to a system folder, use <code>sudo</code>:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if partial file exists</span>
-</span></span><span class="line"><span class="cl">ls -lh output.tar.gz
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove partial file</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo rfswift image download -i image -o /opt/images/image.tar.gz</span></span></code></pre></div></div>
+<h3 id="the-download-stopped-halfway">The download stopped halfway<a class="anchor" href="#the-download-stopped-halfway" aria-label="Link to this section"></a></h3>
+<p>Delete the partial file and start again:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -lh output.tar.gz
 </span></span><span class="line"><span class="cl">rm output.tar.gz
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Retry download</span>
-</span></span><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz --pull
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># For unstable connections, use screen/tmux</span>
-</span></span><span class="line"><span class="cl">screen -S download
-</span></span><span class="line"><span class="cl">rfswift image download -i image -o output.tar.gz --pull
-</span></span><span class="line"><span class="cl"><span class="c1"># Ctrl+A, D to detach</span></span></span></code></pre></div></div>
-<h3 id="authentication-required">Authentication required<a class="anchor" href="#authentication-required" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>authentication required</code> for private registry</p>
-<p><strong>Solutions:</strong></p>
+</span></span><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz --pull</span></span></code></pre></div></div>
+<p>On an unstable connection, run it inside <code>screen</code> or <code>tmux</code> so it survives a dropped session. Press Ctrl+A then D to detach from <code>screen</code>:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Login to registry first</span>
-</span></span><span class="line"><span class="cl">docker login registry.example.com
-</span></span><span class="line"><span class="cl"><span class="c1"># Enter username and password</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then download</span>
-</span></span><span class="line"><span class="cl">rfswift image download -i registry.example.com/image:tag -o output.tar.gz
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># For Docker Hub private repos</span>
-</span></span><span class="line"><span class="cl">docker login
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">screen -S download
+</span></span><span class="line"><span class="cl">rfswift image download -i image -o output.tar.gz --pull</span></span></code></pre></div></div>
+<h3 id="authentication-required">“authentication required”<a class="anchor" href="#authentication-required" aria-label="Link to this section"></a></h3>
+<p>The image is in a private registry. Log in with the engine first, then download. For a private registry:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker login registry.example.com
+</span></span><span class="line"><span class="cl">rfswift image download -i registry.example.com/image:tag -o output.tar.gz</span></span></code></pre></div></div>
+<p>For private repositories on Docker Hub:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker login
 </span></span><span class="line"><span class="cl">rfswift image download -i myuser/private-image:tag -o output.tar.gz</span></span></code></pre></div></div>
-<h3 id="pull-flag-not-working">Pull flag not working<a class="anchor" href="#pull-flag-not-working" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>--pull</code> doesn&rsquo;t seem to work</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="--pull-does-not-seem-to-work"><code>--pull</code> does not seem to work<a class="anchor" href="#--pull-does-not-seem-to-work" aria-label="Link to this section"></a></h3>
+<p>Write the flag on its own, without <code>=true</code>:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Verify flag syntax (no equals sign)</span>
-</span></span><span class="line"><span class="cl">rfswift image download -i image -o output.tar.gz --pull
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Not: --pull=true</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Manually pull first if needed</span>
-</span></span><span class="line"><span class="cl">docker pull penthertz/rfswift_resolute:sdr_full
-</span></span><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check image exists after pull</span>
-</span></span><span class="line"><span class="cl">docker images <span class="p">|</span> grep rfswift</span></span></code></pre></div></div>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image download -i image -o output.tar.gz --pull</span></span></code></pre></div></div>
+<p>If it still fails, pull the image with Docker first, check it is there, then download:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker pull penthertz/rfswift_resolute:sdr_full
+</span></span><span class="line"><span class="cl">docker images <span class="p">|</span> grep rfswift
+</span></span><span class="line"><span class="cl">rfswift image download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz</span></span></code></pre></div></div>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/export"><code>export</code></a> - Export local images/containers to tar.gz</li>
-<li><a href="/docs/commands/import"><code>import</code></a> - Import downloaded archives</li>
-<li><a href="/docs/commands/images"><code>images</code></a> - Manage images (pull, list)</li>
-<li><a href="/docs/commands/run"><code>run</code></a> - Run containers from downloaded images</li>
+<li><a href="/docs/commands/export"><code>export</code></a>: export local images or containers to <code>tar.gz</code></li>
+<li><a href="/docs/commands/import"><code>import</code></a>: import the archives you saved</li>
+<li><a href="/docs/commands/images"><code>images</code></a>: pull and list images</li>
+<li><a href="/docs/commands/run"><code>run</code></a>: create containers from imported images</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Always Use &ndash;pull</strong>: For downloading latest versions, always include the <code>--pull</code> flag. Without it, RF Swift uses the locally cached image which may be outdated.</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Space Requirements</strong>: Downloading and compressing images requires approximately 2x the final file size in available disk space. A 1.5 GB download needs ~3 GB free space.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Offline Distribution</strong>: The <code>download</code> command is specifically designed for creating offline installation packages. Combine with <code>import image</code> on the destination system to complete the workflow.</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -483,18 +424,19 @@
     <li><a href="#options">Options</a></li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#prepare-a-usb-drive-for-offline-installs">Prepare a USB drive for offline installs</a></li>
+        <li><a href="#prepare-an-air-gapped-system">Prepare an air-gapped system</a></li>
+        <li><a href="#archive-a-version-before-upgrading">Archive a version before upgrading</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#image-not-found-in-registry">Image not found in registry</a></li>
-        <li><a href="#network-connection-failed">Network connection failed</a></li>
-        <li><a href="#permission-denied">Permission denied</a></li>
-        <li><a href="#download-interrupted">Download interrupted</a></li>
-        <li><a href="#authentication-required">Authentication required</a></li>
-        <li><a href="#pull-flag-not-working">Pull flag not working</a></li>
+        <li><a href="#image-not-found">“image not found”</a></li>
+        <li><a href="#connection-timeout-or-network-unreachable">Connection timeout or “network unreachable”</a></li>
+        <li><a href="#permission-denied-when-writing-the-file">“permission denied” when writing the file</a></li>
+        <li><a href="#the-download-stopped-halfway">The download stopped halfway</a></li>
+        <li><a href="#authentication-required">“authentication required”</a></li>
+        <li><a href="#--pull-does-not-seem-to-work"><code>--pull</code> does not seem to work</a></li>
       </ul>
     </li>
     <li><a href="#related-commands">Related commands</a></li>

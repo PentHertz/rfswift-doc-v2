@@ -7,65 +7,71 @@ description: "Give an existing container access to GPUs."
 weight: 44
 ---
 
-{{< callout type="info" >}}
-**RF Swift v4**: this group lives under the `config` parent as `rfswift config gpus` and remains available as `rfswift gpus`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
+GPU access lets tools inside a container use your graphics card: CUDA or OpenCL computing, GPU-based signal processing, machine-learning inference, and faster rendering. You can request it when you create a container (`--gpus`), or add it later with `rfswift config gpus`.
+
+The most common use creates a container with every GPU available:
+
+```bash
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n my_gpu --gpus all
+```
+
+RF Swift detects whether your GPU is NVIDIA, AMD or Intel and sets up the container for it. GPU passthrough needs a Linux host.
+
+{{< callout type="info" title="What happens when you apply a change" >}}
+Adding or removing a GPU on an existing container restarts it, so save your work first. On Linux with Docker, the change is applied in place after one `sudo` prompt. On Podman, the container is committed and created again; add `--recreate` to use that method on Docker too. The shorter spelling `rfswift gpus` also works. See [config](/docs/commands/config).
 {{< /callout >}}
-
-Enable GPU access in containers for hardware-accelerated workloads: CUDA/OpenCL computing, GPU-based signal processing, machine learning inference, and GUI rendering.
-
-{{< callout >}}
-**Auto-detection**: RF Swift automatically detects your GPU vendor (NVIDIA, AMD, or Intel) and configures the container accordingly. Just use `--gpus all` and RF Swift handles the rest.
-{{< /callout >}}
-
-## How it works
-
-When you use `--gpus all` or select "GPU passthrough" in the wizard, RF Swift:
-
-1. **Scans** `/sys/class/drm/card*/device/vendor` and vendor-specific device nodes
-2. **Detects** the GPU vendor(s) present on the host
-3. **Configures** the container automatically:
-
-| Detected GPU | What RF Swift does |
-|---|---|
-| **NVIDIA** (vendor 0x10de) | Adds Docker DeviceRequests with `nvidia` driver (requires nvidia-container-toolkit) |
-| **AMD** (vendor 0x1002) | Adds `/dev/kfd` + `/dev/dri` device bindings and cgroup rule `c 226:* rwm` |
-| **Intel** (vendor 0x8086) | Adds `/dev/dri` device binding and cgroup rule `c 226:* rwm` |
-| **Multiple GPUs** | Configures all detected vendors |
-
----
 
 ## Synopsis
 
+Create a container with a GPU (the vendor is detected):
+
 ```bash
-# Create container with GPU (auto-detects vendor)
 rfswift container create -i IMAGE -n NAME --gpus all
-
-# Add GPU to existing container
-rfswift gpus add -c CONTAINER [-g SPECIFIER]
-
-# Remove GPU from existing container
-rfswift gpus rm -c CONTAINER
 ```
 
-The interactive wizard also offers "GPU passthrough" as a feature toggle.
+Add a GPU to an existing container, or remove it:
 
----
+```bash
+rfswift config gpus add -c CONTAINER [-g SPECIFIER]
+rfswift config gpus rm  -c CONTAINER
+```
 
-## Prerequisites
+The interactive wizard also has a "GPU passthrough" switch.
 
-You need the GPU drivers and runtime installed on the **host**, not inside the container.
+## How it works
 
-### NVIDIA GPUs
+When you use `--gpus all`, or turn on "GPU passthrough" in the wizard, RF Swift:
 
-1. **Install NVIDIA drivers** on the host:
+1. Reads `/sys/class/drm/card*/device/vendor` and the vendor-specific device files.
+2. Works out which GPU vendors are present.
+3. Sets up the container for each of them:
+
+| Detected GPU | What RF Swift does |
+|---|---|
+| **NVIDIA** (vendor 0x10de) | Adds a Docker DeviceRequest with the `nvidia` driver (needs nvidia-container-toolkit) |
+| **AMD** (vendor 0x1002) | Adds the `/dev/kfd` and `/dev/dri` devices and the cgroup rule `c 226:* rwm` |
+| **Intel** (vendor 0x8086) | Adds the `/dev/dri` device and the cgroup rule `c 226:* rwm` |
+| **Several GPUs** | Sets up every vendor it found |
+
+## Before you start
+
+The GPU drivers and runtime go on the **host**, not inside the container.
+
+## NVIDIA GPUs
+
+### Prerequisites
+
+1. Check that the NVIDIA drivers are installed on the host:
+
    ```bash
-   # Check if already installed
    nvidia-smi
    ```
 
-2. **Install NVIDIA Container Toolkit:**
+2. Install the NVIDIA Container Toolkit.
+
+   On Ubuntu or Debian:
+
    ```bash
-   # Ubuntu/Debian
    curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | \
      sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
    curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
@@ -73,111 +79,126 @@ You need the GPU drivers and runtime installed on the **host**, not inside the c
      sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
    sudo apt-get update
    sudo apt-get install -y nvidia-container-toolkit
+   ```
 
-   # Fedora/RHEL
+   On Fedora or RHEL:
+
+   ```bash
    curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo | \
      sudo tee /etc/yum.repos.d/nvidia-container-toolkit.repo
    sudo dnf install -y nvidia-container-toolkit
    ```
 
-3. **Configure the runtime:**
+3. Configure the runtime.
+
+   For Docker:
+
    ```bash
-   # For Docker
    sudo nvidia-ctk runtime configure --runtime=docker
    sudo systemctl restart docker
+   ```
 
-   # For Podman
+   For Podman:
+
+   ```bash
    sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
    nvidia-ctk cdi list  # verify
    ```
 
-4. **Verify:**
+4. Check that a container can see the GPU:
+
    ```bash
    docker run --rm --gpus all nvidia/cuda:12.0-base nvidia-smi
    ```
 
-### NVIDIA examples
+### Examples
+
+Check the GPU from inside a container:
 
 ```bash
-# Verify inside container
 rfswift container shell -c gpu_sdr -e "nvidia-smi"
+```
 
-# Specific GPU in multi-GPU system (NVIDIA only)
+On a machine with several NVIDIA GPUs, give each container a specific one:
+
+```bash
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdr_gpu --gpus 0
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n ml_gpu --gpus 1
+```
 
-# CUDA / PyTorch verification
+Check that CUDA works from PyTorch:
+
+```bash
 rfswift container shell -c gpu_sdr
 python3 -c "import torch; print(f'CUDA: {torch.cuda.is_available()}, Device: {torch.cuda.get_device_name(0)}')"
 ```
 
----
-
 ## AMD GPUs (ROCm)
 
-When RF Swift detects an AMD GPU (vendor `0x1002` or `/dev/kfd`), `--gpus all` automatically adds `/dev/kfd`, `/dev/dri`, and the cgroup rule `c 226:* rwm`.
+When RF Swift detects an AMD GPU (vendor `0x1002`, or `/dev/kfd` is present), `--gpus all` adds `/dev/kfd`, `/dev/dri` and the cgroup rule `c 226:* rwm`.
 
 ### Prerequisites
 
-1. **Install ROCm on the host:**
+1. Install ROCm on the host (Ubuntu 22.04 or 24.04), then check it:
+
    ```bash
-   # Ubuntu 22.04/24.04
    sudo apt-get update
    wget https://repo.radeon.com/amdgpu-install/latest/ubuntu/jammy/amdgpu-install_6.0.60000-1_all.deb
    sudo apt-get install ./amdgpu-install_6.0.60000-1_all.deb
    sudo amdgpu-install --usecase=rocm
 
-   # Verify
    rocm-smi
    ```
 
-2. **Add your user to the `render` and `video` groups:**
+2. Add your user to the `render` and `video` groups, then log out and back in:
+
    ```bash
    sudo usermod -aG render,video $USER
-   # Log out and back in
    ```
 
-3. **Verify device nodes exist:**
+3. Check that the device files exist. `/dev/kfd` is the compute interface; each `/dev/dri/renderD*` is one GPU:
+
    ```bash
    ls -l /dev/kfd /dev/dri/render*
-   # /dev/kfd - Kernel Fusion Driver (compute)
-   # /dev/dri/renderD* - DRM render nodes (per-GPU)
    ```
 
 ### Usage
 
-With auto-detection, just use `--gpus all` and RF Swift handles the rest:
+Create a container with the GPU, or add it to an existing one:
 
 ```bash
-# Create container (auto-detects AMD and adds /dev/kfd + /dev/dri + cgroup)
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n rocm_sdr --gpus all
+rfswift config gpus add -c sdr_work
+```
 
-# Add GPU to existing container
-rfswift gpus add -c sdr_work
+Check the GPU from inside the container:
 
-# Verify inside container
+```bash
 rfswift container shell -c rocm_sdr
 rocm-smi                          # List GPUs
 rocminfo                          # Detailed GPU info
 clinfo                            # OpenCL info
 ```
 
-RF Swift adds the following automatically:
+RF Swift adds these for you:
 
 | What | Value | Purpose |
 |------|-------|---------|
 | Device | `/dev/kfd` | Kernel Fusion Driver, the ROCm compute interface |
 | Device | `/dev/dri` | Direct Rendering Infrastructure, the GPU render nodes |
-| Cgroup rule | `c 226:* rwm` | Allow access to DRI device nodes |
+| Cgroup rule | `c 226:* rwm` | Access to the DRI device files |
 
-You can also configure manually if needed:
+You can also add them by hand:
+
 ```bash
-rfswift bindings add -d -c sdr_work -s /dev/kfd -t /dev/kfd
-rfswift bindings add -d -c sdr_work -s /dev/dri -t /dev/dri
-rfswift cgroups add -c sdr_work -r "c 226:* rwm"
+rfswift config bindings add -d -c sdr_work -s /dev/kfd -t /dev/kfd
+rfswift config bindings add -d -c sdr_work -s /dev/dri -t /dev/dri
+rfswift config cgroups add -c sdr_work -r "c 226:* rwm"
 ```
 
 ### ROCm with PyTorch
+
+Install the ROCm build of PyTorch inside the container, then check the GPU:
 
 ```bash
 rfswift container shell -c rocm_sdr
@@ -185,28 +206,26 @@ pip3 install torch torchvision torchaudio --index-url https://download.pytorch.o
 python3 -c "import torch; print(f'HIP available: {torch.cuda.is_available()}, Device: {torch.cuda.get_device_name(0)}')"
 ```
 
-### Specific GPU selection
+### Choosing specific GPUs
 
-On multi-GPU AMD systems, control which GPUs are visible:
+On a machine with several AMD GPUs, choose which ones tools see with `HIP_VISIBLE_DEVICES` inside the container:
 
 ```bash
-# Inside the container, use HIP_VISIBLE_DEVICES
 rfswift container shell -c rocm_sdr
 export HIP_VISIBLE_DEVICES=0       # First GPU only
 export HIP_VISIBLE_DEVICES=0,1     # First two GPUs
 rocm-smi                           # Shows only selected GPUs
 ```
 
-Or expose only specific render nodes:
+Or give the container only one GPU's render node:
 
 ```bash
-# Only first GPU
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n rocm_gpu0 \
   -s /dev/kfd:/dev/kfd,/dev/dri/renderD128:/dev/dri/renderD128 \
   -g "c 226:* rwm"
 ```
 
-### Profile for ROCm
+### A profile for ROCm
 
 ```yaml
 name: rocm-sdr
@@ -215,30 +234,33 @@ image: penthertz/rfswift_resolute:sdr_full
 gpus: all
 ```
 
----
-
 ## Intel GPUs
 
-When RF Swift detects an Intel GPU (vendor `0x8086`), `--gpus all` automatically adds `/dev/dri` and the cgroup rule `c 226:* rwm`. Supports integrated (UHD, Iris) and discrete (Arc) GPUs for OpenCL and oneAPI workloads.
+When RF Swift detects an Intel GPU (vendor `0x8086`), `--gpus all` adds `/dev/dri` and the cgroup rule `c 226:* rwm`. This covers integrated GPUs (UHD, Iris) and discrete ones (Arc), for OpenCL and oneAPI.
 
 ### Prerequisites
 
-1. **Install Intel compute drivers:**
+1. Install the Intel compute drivers on the host (Ubuntu):
+
    ```bash
-   # Ubuntu
    sudo apt-get install -y intel-opencl-icd intel-level-zero-gpu level-zero \
      intel-media-va-driver-non-free libmfx1 libvpl2
+   ```
 
-   # For Intel Arc (discrete GPU), also install:
+   For an Intel Arc card, also install:
+
+   ```bash
    sudo apt-get install -y intel-gpu-tools
    ```
 
-2. **Add your user to the `render` group:**
+2. Add your user to the `render` group:
+
    ```bash
    sudo usermod -aG render $USER
    ```
 
-3. **Verify:**
+3. Check the GPU:
+
    ```bash
    ls -l /dev/dri/render*
    clinfo | grep "Device Name"
@@ -246,24 +268,27 @@ When RF Swift detects an Intel GPU (vendor `0x8086`), `--gpus all` automatically
 
 ### Usage
 
+Create a container with the GPU, or add it to an existing one:
+
 ```bash
-# Create container (auto-detects Intel and adds /dev/dri + cgroup)
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n intel_sdr --gpus all
+rfswift config gpus add -c sdr_work
+```
 
-# Add GPU to existing container
-rfswift gpus add -c sdr_work
+Check the GPU from inside the container:
 
-# Verify inside container
+```bash
 rfswift container shell -c intel_sdr
 clinfo | grep "Device Name"       # OpenCL devices
 vainfo                             # Video acceleration info
 intel_gpu_top                      # GPU utilization (if intel-gpu-tools installed)
 ```
 
-Manual setup if needed:
+To add it by hand:
+
 ```bash
-rfswift bindings add -d -c sdr_work -s /dev/dri -t /dev/dri
-rfswift cgroups add -c sdr_work -r "c 226:* rwm"
+rfswift config bindings add -d -c sdr_work -s /dev/dri -t /dev/dri
+rfswift config cgroups add -c sdr_work -r "c 226:* rwm"
 ```
 
 ### Intel with oneAPI
@@ -274,7 +299,7 @@ pip3 install intel-extension-for-pytorch
 python3 -c "import intel_extension_for_pytorch as ipex; print('Intel GPU available')"
 ```
 
-### Profile for Intel GPU
+### A profile for Intel GPUs
 
 ```yaml
 name: intel-sdr
@@ -283,11 +308,13 @@ image: penthertz/rfswift_resolute:sdr_full
 gpus: all
 ```
 
----
+{{< callout type="info" title="Profiles work with any GPU" >}}
+`gpus: all` in a profile works for every vendor, because detection runs when the container is created.
+{{< /callout >}}
 
-## Quick comparison
+## Comparison
 
-All three vendors use the same `--gpus all` flag, and RF Swift auto-detects and configures accordingly:
+All three vendors use the same `--gpus all` flag:
 
 | | NVIDIA | AMD (ROCm) | Intel |
 |--|--------|-----------|-------|
@@ -296,9 +323,7 @@ All three vendors use the same `--gpus all` flag, and RF Swift auto-detects and 
 | **Host requirement** | nvidia-container-toolkit | ROCm drivers | Intel compute drivers |
 | **Compute API** | CUDA, OpenCL | ROCm HIP, OpenCL | oneAPI, OpenCL |
 | **ML framework** | PyTorch, TensorFlow | PyTorch (ROCm) | PyTorch (IPEX) |
-| **Specific GPU select** | `--gpus 0,1` | `HIP_VISIBLE_DEVICES=0,1` (env var) | Expose specific renderD* |
-
----
+| **Choosing a GPU** | `--gpus 0,1` | `HIP_VISIBLE_DEVICES=0,1` (environment variable) | Give specific `renderD*` nodes |
 
 ## Engine compatibility
 
@@ -309,11 +334,15 @@ All three vendors use the same `--gpus all` flag, and RF Swift auto-detects and 
 | **macOS (any engine)** | Not supported | Not supported |
 | **Windows (WSL2)** | Not supported | Not supported |
 
-GPU passthrough requires a **Linux host** with direct access to the GPU hardware. On macOS and Windows, all container engines run inside a VM without GPU access.
+`--gpus` passthrough needs a **Linux host** with direct access to the GPU. On macOS and Windows, container engines run inside a virtual machine without GPU access.
+
+{{< callout type="info" title="On a Mac with Apple Silicon" >}}
+`--gpus` does not apply, but the global `--gpu` flag starts a separate Lima VM (krunkit, macOS 14 or later) that gives containers Vulkan compute. That VM has no USB passthrough. See [engine](/docs/commands/engine/) and [Known limits](/docs/guide/limitations/).
+{{< /callout >}}
 
 ### Podman with NVIDIA
 
-RF Swift automatically translates `--gpus all` to Podman's CDI syntax (`--device nvidia.com/gpu=all`). Setup:
+RF Swift translates `--gpus all` into Podman's CDI syntax (`--device nvidia.com/gpu=all`). Set it up once:
 
 ```bash
 sudo apt-get install nvidia-container-toolkit
@@ -321,9 +350,9 @@ sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
 nvidia-ctk cdi list  # verify
 ```
 
-### Podman with AMD/Intel
+### Podman with AMD or Intel
 
-Works the same as Docker, since device bindings and cgroup rules are standard Linux features:
+This works as with Docker, because device bindings and cgroup rules are standard Linux features:
 
 ```bash
 rfswift --engine podman container create -i penthertz/rfswift_resolute:sdr_full -n rocm_sdr \
@@ -331,106 +360,75 @@ rfswift --engine podman container create -i penthertz/rfswift_resolute:sdr_full 
   -g "c 226:* rwm"
 ```
 
----
-
 ## Troubleshooting
 
-### NVIDIA: "could not select device driver"
+### NVIDIA: “could not select device driver”
 
-**Problem:** `Error: could not select device driver "nvidia" with capabilities: [[gpu]]`
+The full error is `Error: could not select device driver "nvidia" with capabilities: [[gpu]]`. The NVIDIA Container Toolkit is missing or not configured. Install and configure it, then check:
 
-**Solution:** NVIDIA Container Toolkit is not installed or not configured:
 ```bash
 sudo apt-get install nvidia-container-toolkit
 sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
 
-# Verify
 docker run --rm --gpus all nvidia/cuda:12.0-base nvidia-smi
 ```
 
-### AMD: "permission denied" on /dev/kfd
+### AMD: “permission denied” on /dev/kfd
 
-**Problem:** ROCm commands fail with permission errors
+ROCm commands fail with permission errors. Check the device permissions, make sure the cgroup rule is set, and check your groups on the host (they should include `render` and `video`):
 
-**Solution:**
 ```bash
-# Check device permissions
 ls -l /dev/kfd /dev/dri/render*
-
-# Ensure cgroup rule is set
-rfswift cgroups add -c container -r "c 226:* rwm"
-
-# Check user groups on host
-groups  # should include render, video
-
-# May need to run container as root or match GIDs
+rfswift config cgroups add -c container -r "c 226:* rwm"
+groups
 ```
 
-### AMD: "no GPU agent found"
+If it still fails, you may need to run the container as root or match the group IDs.
 
-**Problem:** `rocminfo` shows no GPU agents
+### AMD: “no GPU agent found”
 
-**Solution:**
+`rocminfo` shows no GPU. Check that the devices are in the container, add them if they are missing, and make sure ROCm works on the host first:
+
 ```bash
-# Verify devices are bound into container
 rfswift container shell -c container -e "ls -l /dev/kfd /dev/dri/"
 
-# If missing, add bindings
-rfswift bindings add -d -c container -s /dev/kfd -t /dev/kfd
-rfswift bindings add -d -c container -s /dev/dri -t /dev/dri
+rfswift config bindings add -d -c container -s /dev/kfd -t /dev/kfd
+rfswift config bindings add -d -c container -s /dev/dri -t /dev/dri
 
-# Verify ROCm works on host first
 rocm-smi
 ```
 
-### Intel: "no OpenCL devices found"
+### Intel: “no OpenCL devices found”
 
-**Problem:** `clinfo` shows no devices
+`clinfo` shows no device. Check that `/dev/dri` is in the container, and add it with its rule if missing:
 
-**Solution:**
 ```bash
-# Check DRI is bound
 rfswift container shell -c container -e "ls -l /dev/dri/"
 
-# If missing
-rfswift bindings add -d -c container -s /dev/dri -t /dev/dri
-rfswift cgroups add -c container -r "c 226:* rwm"
+rfswift config bindings add -d -c container -s /dev/dri -t /dev/dri
+rfswift config cgroups add -c container -r "c 226:* rwm"
+```
 
-# Install OpenCL ICD inside container if needed
+If needed, install the OpenCL driver inside the container:
+
+```bash
 apt-get install -y intel-opencl-icd
 ```
 
-### GPU works in Docker but not RF Swift
+### The GPU works with Docker but not in an RF Swift container
+
+Check the GPU request Docker recorded for the container, then add the GPU with RF Swift (the vendor is detected):
 
 ```bash
-# Check the GPU request the engine recorded
-docker inspect container --format \'{{json .HostConfig.DeviceRequests}}\'
-
-# Add GPU (auto-detects vendor)
-rfswift gpus add -c container
+docker inspect container --format '{{json .HostConfig.DeviceRequests}}'
+rfswift config gpus add -c container
 ```
-
----
 
 ## Related commands
 
-- [`cgroups`](/docs/commands/cgroups) - Device access rules
-- [`bindings`](/docs/commands/bindings) - Device bindings
-- [`capabilities`](/docs/commands/capabilities) - Linux capabilities
-- [`run`](/docs/commands/run) - Create containers with `--gpus` flag
-- [`realtime`](/docs/commands/realtime) - Realtime mode for SDR performance
-
----
-
-{{< callout >}}
-**Quick Start (any GPU)**: `rfswift container create -n my_gpu -i penthertz/rfswift_resolute:sdr_full --gpus all`. RF Swift auto-detects NVIDIA, AMD, or Intel and configures the container accordingly.
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Linux Only**: GPU passthrough requires a Linux host with direct hardware access. macOS and Windows container engines run inside VMs without GPU support.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Profiles**: `gpus: all` in a profile YAML works for any GPU vendor, because the auto-detection runs at container creation time.
-{{< /callout >}}
+- [`cgroups`](/docs/commands/cgroups): device access rules
+- [`bindings`](/docs/commands/bindings): devices and folders
+- [`capabilities`](/docs/commands/capabilities): Linux capabilities
+- [`run`](/docs/commands/run): create containers with `--gpus`
+- [`realtime`](/docs/commands/realtime): realtime mode for SDR performance

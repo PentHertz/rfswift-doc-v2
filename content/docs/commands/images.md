@@ -7,10 +7,16 @@ description: "List local images, browse the official registry, pull images and t
 weight: 21
 ---
 
-List local images, browse the official registry, pull images and track their versions.
+These four subcommands answer everyday questions about images: what do I have, what can I download, how do I get it, and which version is it?
+
+The most common use is downloading a toolbox:
+
+```bash
+rfswift image pull -i sdr_full
+```
 
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift image ...`. The legacy `rfswift images ...` tree still works and prints a notice. The whole group, including `build`, `rm`, `tag`, `download`, `export`, `import` and `audit`, is described on the [image](/docs/commands/image) page.
+`rfswift image ...` is the v4 spelling. The older `rfswift images ...` still works and prints a notice. The whole group, including `build`, `rm`, `tag`, `download`, `export`, `import` and `audit`, is described on the [image](/docs/commands/image) page.
 {{< /callout >}}
 
 ## Synopsis
@@ -23,97 +29,78 @@ rfswift image versions [-f FILTER]                # every published version of e
 rfswift image audit IMAGE [--format ...]          # CVE scan, see the audit page
 ```
 
----
-
 ## Subcommands
 
 ### images local
 
-List all RF Swift images present on the local system.
+Lists the RF Swift images on this computer.
 
-**Usage:**
 ```bash
 rfswift image local [-v] [-f FILTER]
 ```
 
-**Options:**
+| Flag | What it does | Example |
+|------|--------------|---------|
+| `-v, --show-versions` | Also show version information | `-v` |
+| `-f, --filter STRING` | Only show images whose name matches | `-f sdr_full` |
 
-| Flag | Description | Example |
-|------|-------------|---------|
-| `-v, --show-versions` | Show version information for images | `-v` |
-| `-f, --filter STRING` | Filter images by name | `-f sdr_full` |
-
-**Output includes:**
-- Image repository and tag
-- Image ID
-- Creation date
-- Image size
-- **Version information** (v0.7.0+)
+For each image you see the repository and tag, the image ID, the creation date, the size and, since v0.7.0, the version.
 
 ### images remote
 
-List available RF Swift images from the official Penthertz registry.
+Lists the RF Swift images published in the official Penthertz registry.
 
-**Usage:**
 ```bash
 rfswift image remote [-v] [-f FILTER]
 ```
 
-**Options:**
+| Flag | What it does | Example |
+|------|--------------|---------|
+| `-v, --show-versions` | Also show the version history | `-v` |
+| `-f, --filter STRING` | Only show images whose name matches | `-f wifi` |
 
-| Flag | Description | Example |
-|------|-------------|---------|
-| `-v, --show-versions` | Show version information for images | `-v` |
-| `-f, --filter STRING` | Filter images by name | `-f wifi` |
-
-**Output includes:**
-- Available image names
-- Image descriptions
-- Available tags/versions
-- **Version history** (with `-v` flag)
+For each image you see its name, description and available tags. With `-v` you also get the version history.
 
 ### images pull
 
-Pull images from Docker registries to local system.
+Downloads an image from a registry to this computer.
 
-**Usage:**
 ```bash
 rfswift image pull -i IMAGE_NAME [-t TAG] [-V version]
 ```
 
-**Options:**
-
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-i, --image STRING` | Image reference to pull | Yes | `-i penthertz/rfswift_resolute:sdr_full` |
-| `-t, --tag STRING` | Rename to target tag locally | No | `-t my_sdr:v1` |
-| `-V, --version STRING` | Rename to wanted version | No | `-V 0.1.1` |
+| Flag | What it does | Required | Example |
+|------|--------------|----------|---------|
+| `-i, --image STRING` | The image to pull | Yes | `-i penthertz/rfswift_resolute:sdr_full` |
+| `-t, --tag STRING` | Local tag to give the pulled image | No | `-t my_sdr:v1` |
+| `-V, --version STRING` | Pull a specific published version | No | `-V 0.1.1` |
 
 ### images versions
 
-List all available versions for RF Swift images.
+Lists every published version of each RF Swift image.
 
-**Usage:**
 ```bash
 rfswift image versions [-f FILTER]
 ```
 
-**Options:**
+| Flag | What it does | Example |
+|------|--------------|---------|
+| `-f, --filter STRING` | Only show images whose name matches | `-f sdr_full` |
 
-| Flag | Description | Example |
-|------|-------------|---------|
-| `-f, --filter STRING` | Filter by image name | `-f sdr_full` |
+List the versions of all images:
 
-**Example:**
 ```bash
-# List versions for all images
 rfswift image versions
+```
 
-# List versions for a specific image
+List the versions of one image:
+
+```bash
 rfswift image versions -f wifi
 ```
 
-**Example output:**
+Example output:
+
 ```
 ┌──────────────────────────────────────┬────────────────────┬──────────────┐
 │ Image                                │ Version            │ Status       │
@@ -126,20 +113,20 @@ rfswift image versions -f wifi
 └──────────────────────────────────────┴────────────────────┴──────────────┘
 ```
 
----
-
 ## Version management (v0.7.0+)
 
-Starting with RF Swift v0.7.0, images now support **proper versioning** to help you track and manage different image releases.
+Since RF Swift v0.7.0, images carry version numbers. This lets you pin a known release and see when a newer one is published.
 
-### Viewing available versions
+### See which versions exist
+
+List the published images together with their versions:
 
 ```bash
-# List remote images with all available versions
 rfswift image remote -v
 ```
 
-**Example output:**
+Example output:
+
 ```
 ┌──────────────────────┬────────────────────┬─────────────────────────────────────┬──────────────┬──────────────────────────────────────────────────────────────┐
 │ Tag                  │ Pushed Date        │ Image                               │ Size         │ Versions                                                     │
@@ -150,17 +137,23 @@ rfswift image remote -v
 ├──────────────────────┼────────────────────┼─────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
 ```
 
-### Pulling specific versions
+### Pull a specific version
+
+Pull the latest version (the default):
 
 ```bash
-# Pull latest version (default)
 rfswift image pull -i sdr_full
+```
 
-# Pull specific version
+Pull a specific version:
+
+```bash
 rfswift image pull -i sdr_full -V 0.1.1
 ```
 
-### Version comparison
+### Compare local versions
+
+The Version column shows which release each local image is:
 
 ```bash
   📦 RF Swift Images                                                                                                            
@@ -171,115 +164,86 @@ rfswift image pull -i sdr_full -V 0.1.1
 ...
 ```
 
----
+{{< callout type="warning" title="Check your disk space first" >}}
+Images are large: several gigabytes each (about 8 GB for `wifi` and 14 GB for `sdr_full` in the listing above). Check free space with `df -h` before pulling several images or versions. On a small disk, start with `sdr_light`.
+{{< /callout >}}
 
 ## Troubleshooting
 
-### No images listed locally
+### No images are listed locally
 
-**Problem:** `images local` shows no RF Swift images
+`rfswift image local` shows nothing when you have not pulled an image yet, or when the engine is not running.
 
-**Solutions:**
+Pull your first image:
+
 ```bash
-# Pull your first image
 rfswift image pull -i sdr_full
+```
 
-# Check all Docker images (not just RF Swift)
+List every image the engine knows (not only RF Swift ones), and check that Docker is running:
+
+```bash
 docker images
-
-# Verify Docker is running
 docker ps
 ```
 
-### Remote registry not accessible
+### The remote list is empty or fails
 
-**Problem:** `images remote` fails or shows no images
+`rfswift image remote` needs to reach Docker Hub. Check the network, Docker Hub itself, and whether a proxy or firewall blocks the connection:
 
-**Solutions:**
 ```bash
-# Check network connectivity
 ping registry.hub.docker.com
-
-# Check Docker Hub status
 curl -I https://hub.docker.com
-
-# Try direct docker search
 docker search penthertz/rfswift_resolute
-
-# Check if behind proxy/firewall
 ```
 
-### Pull fails
+### Pull fails with “invalid username/password”
 
-**Error:** `unable to retrieve auth token: invalid username/password`
+The full error is `unable to retrieve auth token: invalid username/password`. The engine is presenting an old `docker login` or `podman login` for Docker Hub that is no longer valid. RF Swift sends no credentials of its own. The error message names the credential file and the `logout` command that clears it.
 
-The engine presents a stored `docker login` or `podman login` for Docker Hub that is no longer valid; RF Swift sends no credentials. The message names the credential file and the `logout` command that clears it.
+### Pull fails with “Error pulling image”
 
-**Error:** `Error pulling image`
+Check the exact image name and version, then try pulling with Docker directly. Also check free disk space and the network:
 
-**Solutions:**
 ```bash
-# Check image name spelling
-rfswift image remote -v  # Verify exact name and version
-
-# Try with docker directly
+rfswift image remote -v
 docker pull penthertz/rfswift_resolute:sdr_full
-
-# Check disk space
 df -h
-
-# Check network
 ping registry.hub.docker.com
 ```
 
-### Version not found
+### “Version not found” or “Tag not found”
 
-**Error:** `Version not found` or `Tag not found`
+The version you asked for is not published. List the available versions and copy the version string exactly as shown:
 
-**Solutions:**
 ```bash
-# List all available versions
 rfswift image remote -v
-
-# Verify the version exists
-# Use the exact version string shown in the list
-
-# Pull with correct version format
-rfswift image pull -i wifi v0.1.0
+rfswift image pull -i wifi -V 0.1.1
 ```
 
-### Authentication required
+### A private registry asks for a login
 
-**Problem:** Private registry requires login
+Log in with the engine first, then pull as usual. For a private registry:
 
-**Solutions:**
 ```bash
-# Login to registry
 docker login registry.example.com
-
-# Then pull
 rfswift image pull -i registry.example.com/image:tag
+```
 
-# For Docker Hub private images
+For private images on Docker Hub:
+
+```bash
 docker login
 rfswift image pull -i myuser/private-image:tag
 ```
 
----
-
 ## Related commands
 
-- [`build`](/docs/commands/build) - Build custom images
-- [`download`](/docs/commands/download) - Download images to files
-- [`export`](/docs/commands/export) - Export images to archives
-- [`import`](/docs/commands/import) - Import images from archives
-- [`delete`](/docs/commands/delete) - Remove images
-- [`retag`](/docs/commands/retag) - Retag images locally
-- [`run`](/docs/commands/run) - Run containers from images
-- [`upgrade`](/docs/commands/upgrade) - Upgrade container to new image version
-
----
-
-{{< callout type="warning" >}}
-**Disk Space**: RF Swift images can be large (1.5-4GB). Always check available disk space with `df -h` before pulling multiple images or versions. Use `sdr_light` for space-constrained systems.
-{{< /callout >}}
+- [`build`](/docs/commands/build): build your own images
+- [`download`](/docs/commands/download): save images to files
+- [`export`](/docs/commands/export): export images to archives
+- [`import`](/docs/commands/import): import images from archives
+- [`delete`](/docs/commands/delete): remove images
+- [`retag`](/docs/commands/retag): give images a new local tag
+- [`run`](/docs/commands/run): create containers from images
+- [`upgrade`](/docs/commands/upgrade): move a container to a newer image

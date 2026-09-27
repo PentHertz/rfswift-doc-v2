@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Container scripts · RF Swift</title>
-  <meta name="description" content="Helper scripts shipped inside RF Swift containers.">
+  <meta name="description" content="Small helper scripts that ship inside every RF Swift container, and when to use each one.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/container_scripts/">
+  <link rel="canonical" href="http://localhost:1313/docs/container_scripts/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Container scripts · RF Swift">
-  <meta property="og:description" content="Helper scripts shipped inside RF Swift containers.">
-  <meta property="og:url" content="https://rfswift.io/docs/container_scripts/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:description" content="Small helper scripts that ship inside every RF Swift container, and when to use each one.">
+  <meta property="og:url" content="http://localhost:1313/docs/container_scripts/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -244,33 +230,11 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Container scripts</h1><p class="doc-lead">Helper scripts shipped inside RF Swift containers.</p><p class="doc-meta">Advanced · 2 min read · Updated September 27, 2026</p>
+      <h1>Container scripts</h1><p class="doc-lead">Small helper scripts that ship inside every RF Swift container, and when to use each one.</p><p class="doc-meta">Advanced · 1 min read · Updated January 14, 2026</p>
     </header>
     <div class="prose">
-      <h2 id="overview">Overview<a class="anchor" href="#overview" aria-label="Link to this section"></a></h2>
-<p>RF Swift provides several utility scripts that simplify common tasks inside containers. These scripts enable advanced functionality, streamline configuration, and help you get the most out of your RF and hardware tools.</p>
-<h2 id="available-scripts">Available scripts<a class="anchor" href="#available-scripts" aria-label="Link to this section"></a></h2>
-<div class="doc-cards">
-  <a class="doc-card" href="avahi_inside_container">
-    <span class="doc-card-title">Avahi Container Script</span><span class="doc-card-sub">Enable service discovery for PlutoSDR and network devices</span>
-  </a>
-  <a class="doc-card" href="libresdr_swap_firmware">
-    <span class="doc-card-title">LibreSDR Firmware Swap</span><span class="doc-card-sub">Upgrade USRP B210/B220 with enhanced FPGA firmware</span>
-  </a>
-  <a class="doc-card" href="rfswift_install">
-    <span class="doc-card-title">RF Scripts Updater</span><span class="doc-card-sub">Keep your RF Swift scripts updated with the latest versions</span>
-  </a>
-</div>
-<h2 id="why-container-scripts">Why container scripts?<a class="anchor" href="#why-container-scripts" aria-label="Link to this section"></a></h2>
-<p>Container scripts extend RF Swift&rsquo;s capabilities by:</p>
-<ol>
-<li><strong>Simplifying Complex Tasks</strong>: Turn multi-step processes into single commands</li>
-<li><strong>Enhancing Device Compatibility</strong>: Improve functionality with specialized hardware</li>
-<li><strong>Maintaining Updates</strong>: Keep tools and utilities current with minimal effort</li>
-<li><strong>Enabling Advanced Features</strong>: Access capabilities not available in standard configurations</li>
-</ol>
-<h2 id="using-container-scripts">Using container scripts<a class="anchor" href="#using-container-scripts" aria-label="Link to this section"></a></h2>
-<p>All container scripts are automatically installed in RF Swift containers and available in the system PATH. You can execute them directly from any directory inside the container:</p>
+      <p>Every RF Swift container ships a few helper scripts. Each one turns a multi-step task into a single command: starting a service, swapping a firmware, or updating the scripts themselves.</p>
+<p>The scripts are installed in every container and are on the <code>PATH</code>, so you can run them from any directory inside a lab:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Example: Start Avahi service discovery</span>
 </span></span><span class="line"><span class="cl">avahicontainer_start
@@ -280,32 +244,53 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Example: Swap USRP firmware</span>
 </span></span><span class="line"><span class="cl">libresdr_swapfpga</span></span></code></pre></div></div>
-<h2 id="script-categories">Script categories<a class="anchor" href="#script-categories" aria-label="Link to this section"></a></h2>
-<h3 id="service-enablement">Service enablement<a class="anchor" href="#service-enablement" aria-label="Link to this section"></a></h3>
-<p>Scripts that activate or configure services inside containers:</p>
+<h2 id="available-scripts">Available scripts<a class="anchor" href="#available-scripts" aria-label="Link to this section"></a></h2>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Script</th>
+      <th>Command</th>
+      <th>Use it to</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="/docs/container_scripts/avahi_inside_container/">Avahi start script</a></td>
+      <td><code>avahicontainer_start</code></td>
+      <td>Start mDNS service discovery, for example to find a PlutoSDR on the network</td>
+    </tr>
+    <tr>
+      <td><a href="/docs/container_scripts/libresdr_swap_firmware/">LibreSDR FPGA swap</a></td>
+      <td><code>libresdr_swapfpga</code></td>
+      <td>Switch a USRP B210/B220 to the LibreSDR FPGA firmware, and back</td>
+    </tr>
+    <tr>
+      <td><a href="/docs/container_scripts/rfswift_install/">RF scripts update</a></td>
+      <td><code>update_rfscripts</code></td>
+      <td>Update the installation scripts inside a container to their latest versions</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="doc-cards">
+  <a class="doc-card" href="/docs/container_scripts/avahi_inside_container/">
+    <span class="doc-card-title">Avahi start script</span><span class="doc-card-sub">Service discovery for PlutoSDR and other network devices</span>
+  </a>
+  <a class="doc-card" href="/docs/container_scripts/libresdr_swap_firmware/">
+    <span class="doc-card-title">LibreSDR FPGA swap</span><span class="doc-card-sub">LibreSDR firmware for USRP B210/B220, with backup and restore</span>
+  </a>
+  <a class="doc-card" href="/docs/container_scripts/rfswift_install/">
+    <span class="doc-card-title">RF scripts update</span><span class="doc-card-sub">Keep the scripts in a container up to date</span>
+  </a>
+</div>
+<h2 id="if-a-script-does-not-work">If a script does not work<a class="anchor" href="#if-a-script-does-not-work" aria-label="Link to this section"></a></h2>
 <ul>
-<li><strong><a href="avahi_inside_container">Avahi Container Script</a></strong>: Enables mDNS service discovery</li>
+<li>Check that the script is executable: <code>chmod +x scriptname</code>.</li>
+<li>Check that the dependencies it needs are installed in the container.</li>
+<li>Check that you have the permissions the operation needs.</li>
+<li>See the troubleshooting section of the script&rsquo;s own page.</li>
 </ul>
-<h3 id="hardware-enhancement">Hardware enhancement<a class="anchor" href="#hardware-enhancement" aria-label="Link to this section"></a></h3>
-<p>Scripts that modify or optimize hardware functionality:</p>
-<ul>
-<li><strong><a href="libresdr_swap_firmware">LibreSDR Firmware Swap</a></strong>: Enhances USRP devices with improved firmware</li>
-</ul>
-<h3 id="maintenance">Maintenance<a class="anchor" href="#maintenance" aria-label="Link to this section"></a></h3>
-<p>Scripts that help keep your environment updated and optimized:</p>
-<ul>
-<li><strong><a href="rfswift_install">RF Scripts Updater</a></strong>: Synchronizes local scripts with the latest versions</li>
-</ul>
-<h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<p>If you encounter issues with container scripts:</p>
-<ul>
-<li>Ensure the script has execute permissions (<code>chmod +x scriptname</code>)</li>
-<li>Check that required dependencies are installed in the container</li>
-<li>Verify you have the necessary permissions for the operation</li>
-<li>Consult the specific script documentation for troubleshooting guidance</li>
-</ul>
-<h2 id="next-steps">Next steps<a class="anchor" href="#next-steps" aria-label="Link to this section"></a></h2>
-<p>Explore each script&rsquo;s dedicated documentation for detailed usage instructions, examples, and technical details.</p>
 
     </div>
     <footer class="doc-foot">
@@ -326,19 +311,8 @@
   <p class="toc-title">On this page</p>
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#overview">Overview</a></li>
     <li><a href="#available-scripts">Available scripts</a></li>
-    <li><a href="#why-container-scripts">Why container scripts?</a></li>
-    <li><a href="#using-container-scripts">Using container scripts</a></li>
-    <li><a href="#script-categories">Script categories</a>
-      <ul>
-        <li><a href="#service-enablement">Service enablement</a></li>
-        <li><a href="#hardware-enhancement">Hardware enhancement</a></li>
-        <li><a href="#maintenance">Maintenance</a></li>
-      </ul>
-    </li>
-    <li><a href="#troubleshooting">Troubleshooting</a></li>
-    <li><a href="#next-steps">Next steps</a></li>
+    <li><a href="#if-a-script-does-not-work">If a script does not work</a></li>
   </ul>
 </nav>
   <a class="toc-top" href="#content">Back to top ↑</a>

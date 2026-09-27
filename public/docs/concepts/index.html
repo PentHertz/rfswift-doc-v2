@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Key ideas in 5 minutes · RF Swift</title>
   <meta name="description" content="Toolbox, lab, engine, workspace. The handful of words you need to use RF Swift, explained without jargon.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/concepts/">
+  <link rel="canonical" href="http://localhost:1313/docs/concepts/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Key ideas in 5 minutes · RF Swift">
   <meta property="og:description" content="Toolbox, lab, engine, workspace. The handful of words you need to use RF Swift, explained without jargon.">
-  <meta property="og:url" content="https://rfswift.io/docs/concepts/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/concepts/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -244,7 +230,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Key ideas in 5 minutes</h1><p class="doc-lead">Toolbox, lab, engine, workspace. The handful of words you need to use RF Swift, explained without jargon.</p><p class="doc-meta">Beginner · 7 min read · Updated September 27, 2026</p>
+      <h1>Key ideas in 5 minutes</h1><p class="doc-lead">Toolbox, lab, engine, workspace. The handful of words you need to use RF Swift, explained without jargon.</p><p class="doc-meta">Beginner · 7 min read</p>
     </header>
     <div class="prose">
       <p>You don&rsquo;t need to know containers, Linux or radio to use RF Swift. You only need the handful of ideas on this page. Each one comes with an everyday comparison and the command that goes with it.</p>
@@ -306,7 +292,7 @@
 <p><strong>Think of it as</strong> the building the workshop rooms live in. RF Swift handles the plumbing (USB, display, sound) the same way whichever building you use. What each engine is best at: <a href="/docs/engines/">Choose your engine</a>.</p>
 <h2 id="nix-environment-the-native-alternative">Nix environment (the native alternative)<a class="anchor" href="#nix-environment-the-native-alternative" aria-label="Link to this section"></a></h2>
 <p><strong>What it is:</strong> instead of a container, the <strong>Nix engine</strong> installs a toolbox&rsquo;s tools straight onto your computer, as your user, pinned to exact versions so they never clash with your system. It&rsquo;s handy on a laptop without Docker, or when you want tools as close to the hardware as possible.</p>
-<p><strong>Lazy mode keeps it light.</strong> Add <code>--lazy</code> (or tick <strong>Lazy tools</strong> in the Workbench) and nothing is installed up front: each tool is fetched the first time you type its name, then kept pinned. Use <code>sdrpp</code> and only SDR++ lands on your disk.</p>
+<p><strong>Lazy mode keeps it light.</strong> Add <code>--lazy</code> (or tick <strong>Lazy tools</strong> in the Workbench) and nothing is installed up front. Each tool is fetched the first time you type its name, then kept pinned. Use <code>sdrpp</code> and only SDR++ lands on your disk.</p>
 <p><strong>Think of it as</strong> a tool rack that fills itself: you reach for a tool, and it appears.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift --engine nix container create -i sdr_light -n radio --lazy   <span class="c1"># native, nothing installed yet</span>
@@ -365,7 +351,7 @@
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift --help
 </span></span><span class="line"><span class="cl">rfswift container create --help</span></span></code></pre></div></div>
-<p>Most commands open an interactive picker when you leave out a required option, so you can&rsquo;t really get lost. <code>rfswift</code> is a single self-contained program (no Python or other runtime to install), and it also contains the <strong>remote agent</strong>, which lets the Workbench on your laptop drive a lab machine or a small board somewhere else. Full list: <a href="/docs/commands/">Command reference</a>.</p>
+<p>Most commands open an interactive picker when you leave out a required option, so you can&rsquo;t really get lost. <code>rfswift</code> is a single self-contained program, with no Python or other runtime to install. It also contains the <strong>remote agent</strong>, which lets the Workbench on your laptop drive a lab machine or a small board somewhere else. Full list: <a href="/docs/commands/">Command reference</a>.</p>
 <h2 id="cheat-sheet">Cheat sheet<a class="anchor" href="#cheat-sheet" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>

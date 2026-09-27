@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift winusb · RF Swift</title>
   <meta name="description" content="Windows USB passthrough through usbipd-win, now reached through rfswift usb.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/winusb/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/winusb/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift winusb · RF Swift">
   <meta property="og:description" content="Windows USB passthrough through usbipd-win, now reached through rfswift usb.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/winusb/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/winusb/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,11 +231,13 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift winusb</h1><p class="doc-lead">Windows USB passthrough through usbipd-win, now reached through rfswift usb.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
+      <h1>rfswift winusb</h1><p class="doc-lead">Windows USB passthrough through usbipd-win, now reached through rfswift usb.</p><p class="doc-meta">Reference · 4 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>USB passthrough on Windows: forward host USB devices (SDR dongles, HackRF, Proxmark, serial adapters) into the WSL 2 virtual machine where Docker Desktop, Podman and the Nix engine run. Built on <a href="https://github.com/dorssel/usbipd-win" target="_blank" rel="noopener">usbipd-win</a> with the least privilege the tool allows.</p>
-<div class="admonition admonition-info" role="note"><p><strong>RF Swift v4</strong>: the cross-platform front door is <code>rfswift usb ...</code>, which runs these commands on Windows. <code>rfswift winusb ...</code> remains available. See <a href="/docs/commands/usb">usb</a>.</p>
+      <p>On Windows, Docker Desktop, Podman and the Nix engine all run inside the WSL 2 virtual machine, which cannot see your USB ports. This page explains how RF Swift forwards a USB device (an SDR dongle, a HackRF, a Proxmark, a serial adapter) into WSL 2. It is built on <a href="https://github.com/dorssel/usbipd-win" target="_blank" rel="noopener">usbipd-win</a> and asks for as few privileges as the tool allows.</p>
+<div class="code">
+  <div class="code-bar"><span>powershell</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">rfswift</span> <span class="n">usb</span> <span class="n">attach</span>      <span class="c"># pick a device, share it once, attach it to WSL 2</span></span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p><strong>RF Swift v4</strong>: use <code>rfswift usb ...</code>, which runs these commands on Windows. <code>rfswift winusb ...</code> still works. See <a href="/docs/commands/usb">usb</a>.</p>
 </div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
@@ -267,11 +255,16 @@
 <li>Docker Desktop or Podman Desktop in WSL 2 mode, or the Nix engine in a WSL 2 distribution.</li>
 </ul>
 <h2 id="how-it-works">How it works<a class="anchor" href="#how-it-works" aria-label="Link to this section"></a></h2>
-<p>Containers on Windows run inside the WSL 2 VM, which cannot see the host USB bus. usbipd-win <strong>shares</strong> a device (registers it for forwarding) and <strong>attaches</strong> it to WSL 2, where it appears under <code>/dev/bus/usb</code> for every distribution, Docker Desktop&rsquo;s included, because they share one kernel.</p>
+<p>Forwarding a device takes two steps:</p>
+<ol>
+<li><strong>Share</strong> it: usbipd-win registers the device for forwarding.</li>
+<li><strong>Attach</strong> it: the device appears in WSL 2 under <code>/dev/bus/usb</code>. Every WSL 2 distribution sees it, Docker Desktop&rsquo;s included, because they all share one kernel.</li>
+</ol>
+<p>About privileges:</p>
 <ul>
-<li><strong>Sharing a device the first time needs administrator rights.</strong> RF Swift requests them through a single UAC prompt for <code>usbipd.exe</code> itself, never a shell, once per device. <code>--yes</code> allows the prompt without asking, for scripts.</li>
-<li><strong>Attaching and detaching never need elevation.</strong></li>
-<li>A device stays shared after a reboot; <code>unbind</code> forgets it (administrator approval again; <code>--guid</code> addresses a shared device that is currently unplugged).</li>
+<li><strong>Sharing a device the first time needs administrator rights.</strong> RF Swift asks once per device, with a single UAC prompt for <code>usbipd.exe</code> itself (never for a shell). In scripts, <code>--yes</code> allows the prompt without asking.</li>
+<li><strong>Attaching and detaching never need administrator rights.</strong></li>
+<li>A device stays shared after a reboot. <code>unbind</code> stops sharing it (this needs administrator approval again). Use <code>--guid</code> to address a shared device that is currently unplugged.</li>
 </ul>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
@@ -314,16 +307,18 @@
   </tbody>
 </table>
 </div>
-<p><code>attach</code>, <code>detach</code>, <code>bind</code> and <code>unbind</code> take <code>-i, --busid</code> (the bus ID from <code>list</code>, for example <code>2-3</code>); <code>attach</code>, <code>bind</code> and <code>unbind</code> take <code>-y, --yes</code>.</p>
+<p><code>attach</code>, <code>detach</code>, <code>bind</code> and <code>unbind</code> take <code>-i, --busid</code> (the bus ID shown by <code>list</code>, for example <code>2-3</code>). <code>attach</code>, <code>bind</code> and <code>unbind</code> also take <code>-y, --yes</code>.</p>
 <h2 id="workflow">Workflow<a class="anchor" href="#workflow" aria-label="Link to this section"></a></h2>
+<p>List your devices, attach one, create a lab, check that the lab sees it, then give the device back to Windows:</p>
 <div class="code">
   <div class="code-bar"><span>powershell</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">rfswift</span> <span class="n">usb</span> <span class="n">list</span>
 </span></span><span class="line"><span class="cl"><span class="n">rfswift</span> <span class="n">usb</span> <span class="n">attach</span> <span class="p">-</span><span class="n">-busid</span> <span class="mf">2</span><span class="p">-</span><span class="mf">3</span>            <span class="c"># or just: rfswift usb attach  (picker)</span>
 </span></span><span class="line"><span class="cl"><span class="n">rfswift</span> <span class="n">container</span> <span class="n">create</span> <span class="n">-i</span> <span class="n">sdr_light</span> <span class="n">-n</span> <span class="n">sdr_work</span>
 </span></span><span class="line"><span class="cl"><span class="n">rfswift</span> <span class="n">container</span> <span class="n">shell</span> <span class="n">-c</span> <span class="n">sdr_work</span> <span class="n">-e</span> <span class="s2">&#34;lsusb&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="n">rfswift</span> <span class="n">usb</span> <span class="n">detach</span> <span class="p">-</span><span class="n">-busid</span> <span class="mf">2</span><span class="p">-</span><span class="mf">3</span></span></span></code></pre></div></div>
-<p><code>rfswift container create</code>, <code>container shell</code> and <code>env shell</code> offer the same picker themselves when they detect shared or known RF hardware; plain keyboards and webcams never trigger the question. In the Workbench the dialog is <strong>USB passthrough&hellip;</strong> on Docker, Podman and Nix missions, with one-click share and attach, detach, unshare and a view of what WSL 2 currently sees.</p>
-<p>Inside the container <code>/dev/bus/usb</code> must be mapped <strong>and</strong> major 189 allowed (<code>c 189:* rwm</code>), both part of RF Swift&rsquo;s defaults; a bind mount alone lists the devices but cannot open them, and privileged mode is not required. <code>rfswift container create</code> and the Workbench check this before creating a container.</p>
+<p>You often don&rsquo;t need to attach by hand: <code>rfswift container create</code>, <code>container shell</code> and <code>env shell</code> open the same picker when they detect shared or known RF hardware. Ordinary keyboards and webcams never trigger it.</p>
+<p>In the Workbench, the <strong>USB passthrough&hellip;</strong> dialog (on Docker, Podman and Nix missions) shares and attaches in one click, and also detaches, stops sharing and shows what WSL 2 currently sees.</p>
+<p>Inside the container, a device can be opened only when <code>/dev/bus/usb</code> is mapped <strong>and</strong> major 189 is allowed (<code>c 189:* rwm</code>). Both are part of RF Swift&rsquo;s defaults, and privileged mode is not required. A bind mount alone lists the devices but cannot open them. <code>rfswift container create</code> and the Workbench check this before creating a container.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>

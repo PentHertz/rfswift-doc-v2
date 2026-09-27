@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift doctor · RF Swift</title>
   <meta name="description" content="Diagnose the host: engines, Nix, USB, display, audio, udev rules and the jail.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/doctor/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/doctor/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift doctor · RF Swift">
   <meta property="og:description" content="Diagnose the host: engines, Nix, USB, display, audio, udev rules and the jail.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/doctor/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/doctor/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,11 +231,12 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift doctor</h1><p class="doc-lead">Diagnose the host: engines, Nix, USB, display, audio, udev rules and the jail.</p><p class="doc-meta">Reference · 3 min read · Updated September 27, 2026</p>
+      <h1>rfswift doctor</h1><p class="doc-lead">Diagnose the host: engines, Nix, USB, display, audio, udev rules and the jail.</p><p class="doc-meta">Reference · 4 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Diagnose the host for RF Swift. <code>rfswift doctor</code> (also <code>rfswift system doctor</code>) checks every engine, the display, audio, devices, the Nix engine and the host prerequisites, and tells you which command fixes what is wrong.</p>
-<h2 id="syntax">Syntax<a class="anchor" href="#syntax" aria-label="Link to this section"></a></h2>
+      <p><code>rfswift doctor</code> checks that your computer is ready for RF Swift. It looks at every engine, the display, sound, devices, the Nix engine and the other host prerequisites. For anything that is wrong, it tells you which command fixes it.</p>
+<p>Run it after installing RF Swift, and whenever something doesn&rsquo;t work. It is also available as <code>rfswift system doctor</code>.</p>
+<h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift doctor
 </span></span><span class="line"><span class="cl">rfswift system doctor</span></span></code></pre></div></div>
@@ -342,20 +329,21 @@
     </tr>
     <tr>
       <td><code>!</code> (yellow)</td>
-      <td>Warning, works but could be better</td>
+      <td>Warning: works, but could be better</td>
     </tr>
     <tr>
       <td><code>✗</code> (red)</td>
-      <td>Failed, needs a fix</td>
+      <td>Failed: needs a fix</td>
     </tr>
     <tr>
       <td><code>-</code> (gray)</td>
-      <td>Skipped, not applicable on this platform</td>
+      <td>Skipped: not applicable on this platform</td>
     </tr>
   </tbody>
 </table>
 </div>
 <h2 id="example-output">Example output<a class="anchor" href="#example-output" aria-label="Link to this section"></a></h2>
+<p>On a Linux desktop where everything but the audio server is ready, the report looks like this:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>🩺 RF Swift Doctor
 ══════════════════════════════════════════════════════════
@@ -379,6 +367,7 @@
 ──────────────────────────────────────────────────────────
   14 passed  1 warnings</code></pre></div>
 <h2 id="common-issues-and-fixes">Common issues and fixes<a class="anchor" href="#common-issues-and-fixes" aria-label="Link to this section"></a></h2>
+<p>Each line fixes one common problem. <code>rfswift host setup</code> walks through all of them, asking before each step:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host setup                  <span class="c1"># everything below, asked step by step</span>
 </span></span><span class="line"><span class="cl">rfswift host docker-access          <span class="c1"># Docker socket &#34;permission denied&#34;</span>
@@ -388,12 +377,12 @@
 </span></span><span class="line"><span class="cl">rfswift image pull -i sdr_full      <span class="c1"># no RF Swift images</span>
 </span></span><span class="line"><span class="cl">rfswift env wsl setup               <span class="c1"># Windows: Nix backend not provisioned</span>
 </span></span><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.config/rfswift/config.ini</span></span></code></pre></div></div>
-<p>Headless or over SSH without X forwarding: use <code>--desktop</code> for a browser desktop, or <code>ssh -X</code>.</p>
+<p>No display, for example on a headless machine or over SSH without X forwarding? Create the lab with <code>--desktop</code> to get a desktop in your browser, or connect with <code>ssh -X</code>.</p>
 <h2 id="platform-notes">Platform notes<a class="anchor" href="#platform-notes" aria-label="Link to this section"></a></h2>
 <ul>
 <li><strong>Linux</strong>: all checks run.</li>
-<li><strong>macOS</strong>: the Lima VM check replaces Docker permissions and kernel modules; audio expects PulseAudio from Homebrew.</li>
-<li><strong>Windows</strong>: WSLg display and audio, usbipd-win, the default WSL 2 distribution and the Nix WSL backend are reported; if the WSLg sockets are missing run <code>wsl --update</code> then <code>wsl --shutdown</code>.</li>
+<li><strong>macOS</strong>: the Lima VM check replaces the Docker permissions and kernel modules checks. Audio expects PulseAudio from Homebrew.</li>
+<li><strong>Windows</strong>: the report covers WSLg display and audio, usbipd-win, the default WSL 2 distribution and the Nix WSL backend. If the WSLg sockets are missing, run <code>wsl --update</code>, then <code>wsl --shutdown</code>.</li>
 </ul>
 <p>The Workbench&rsquo;s <strong>Engine doctor</strong> shows the same checks with buttons that apply the fixes.</p>
 
@@ -416,7 +405,7 @@
   <p class="toc-title">On this page</p>
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#syntax">Syntax</a></li>
+    <li><a href="#synopsis">Synopsis</a></li>
     <li><a href="#what-it-checks">What it checks</a></li>
     <li><a href="#status-icons">Status icons</a></li>
     <li><a href="#example-output">Example output</a></li>

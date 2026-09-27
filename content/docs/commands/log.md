@@ -7,87 +7,71 @@ description: "Record and replay terminal sessions."
 weight: 94
 ---
 
+`rfswift log` records your terminal sessions and plays them back. Use it to keep evidence of what you did during an assessment, to write tutorials, or to show a colleague how to reproduce a problem. Recordings use `asciinema` (or the `script` command as a fallback), and assessment reports list them automatically.
+
+```bash
+rfswift log start
+```
+
 {{< callout type="info" >}}
 **RF Swift v4 canonical spelling**: `rfswift system log`. The legacy form `rfswift log` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
-Record and replay terminal sessions for documentation and training.
+{{< callout type="warning" >}}
+A recording captures everything shown in the terminal, including passwords and API keys if they appear on screen. Review a recording before you share it.
+{{< /callout >}}
 
 ## Synopsis
 
 ```bash
-# Start recording a session
-rfswift log start [-o OUTPUT_FILE] [--use-script]
-
-# Stop recording
-rfswift log stop
-
-# Replay a recorded session
-rfswift log replay -i INPUT_FILE [-s SPEED]
-
-# List recorded sessions
-rfswift log list [--dir DIRECTORY]
+rfswift log start [-o OUTPUT_FILE] [--use-script]   # start recording
+rfswift log stop                                    # stop recording
+rfswift log replay -i INPUT_FILE [-s SPEED]         # play a recording
+rfswift log list [--dir DIRECTORY]                  # list recordings
 ```
 
-The `log` command records RF Swift terminal sessions using `asciinema` (or the `script` command as fallback). This is perfect for creating tutorials, documenting workflows, or sharing demonstrations.
-
----
+You can also record a lab session directly: add `--record` to `rfswift container create` or `rfswift container shell`.
 
 ## Subcommands
 
 ### log start
 
-Start recording a terminal session.
-
-**Options:**
+Starts recording the terminal.
 
 | Flag | Description | Default | Example |
 |------|-------------|---------|---------|
-| `-o, --output STRING` | Output file path | Auto-generated | `-o my-session.cast` |
-| `--use-script` | Force use of `script` command | false | `--use-script` |
+| `-o, --output STRING` | Output file | Auto-generated | `-o my-session.cast` |
+| `--use-script` | Use the `script` command instead of asciinema | false | `--use-script` |
 
 ### log stop
 
-Stop the currently active recording session. The terminal title is restored to its default.
-
-**No options required.**
+Stops the current recording and restores the terminal title. It takes no options.
 
 ### log replay
 
-Replay a previously recorded session.
+Plays a recording back. Give the file with `-i`, or directly as an argument:
 
 ```bash
 rfswift log replay [-i INPUT_FILE] [-s SPEED]
-rfswift log replay [FILE]
-```
-
-**Positional argument**: The file path can be passed as a positional argument instead of `-i`:
-```bash
 rfswift log replay session.cast
 ```
 
-**Options:**
-
 | Flag | Description | Default | Example |
 |------|-------------|---------|---------|
-| `-i, --input STRING` | Input file to replay | None | `-i session.cast` |
+| `-i, --input STRING` | File to replay | None | `-i session.cast` |
 | `-s, --speed FLOAT` | Playback speed multiplier | 1.0 | `-s 2.0` |
 
-{{< callout type="info" >}}
-**Interactive Picker**: When run without `-i` and without a positional argument in an interactive terminal, RF Swift scans for recording files and displays a scrollable picker showing the file path, recording tool (`asciinema` or `script`), file size in KB, and modification date.
-{{< /callout >}}
+In an interactive terminal, running it without a file shows a list of your recordings to pick from, with each file's path, recording tool (`asciinema` or `script`), size in KB and date.
 
 ### log list
 
-List all recorded session files in a directory.
-
-**Options:**
+Lists the recordings in a folder.
 
 | Flag | Description | Default | Example |
 |------|-------------|---------|---------|
-| `--dir STRING` | Directory to search | Current directory | `--dir ~/recordings` |
+| `--dir STRING` | Folder to search | Current folder | `--dir ~/recordings` |
 
-The output is displayed as a styled TUI table:
+The list is shown as a table:
 
 ```
 Session Recordings
@@ -100,153 +84,122 @@ Session Recordings
 └───┴──────────────────────────────────────────┴───────────┴─────────┴──────────────────┘
 ```
 
----
+## While a recording runs
+
+- The terminal title changes to `⏺ REC | RF Swift`, as a reminder.
+- The environment variable `RFSWIFT_RECORDING=1` is set, so scripts can tell that the session is being recorded.
+
+Without `-o`, the file name depends on how the recording started:
+
+| Started with | File name |
+|--------------|-----------|
+| `log start` | `rfswift-session-{YYYYMMDD-HHMMSS}.cast` |
+| `container create --record` | `rfswift-run-{container_name}-{YYYYMMDD-HHMMSS}.cast` |
+| `container shell --record` | `rfswift-exec-{container_name}-{YYYYMMDD-HHMMSS}.cast` |
 
 ## Examples
 
-### Basic usage
+### Basic use
 
-**Start recording:**
+Start a recording (RF Swift prints the file name):
+
 ```bash
 rfswift log start
 # Recording started: rfswift-session-20250112-143015.cast
 # Terminal title changes to: ⏺ REC | RF Swift
 ```
 
-**Auto-generated filenames:** When `-o` is omitted, the filename follows these patterns depending on context:
-- `log start`: `rfswift-session-{YYYYMMDD-HHMMSS}.cast`
-- `run --record`: `rfswift-run-{container_name}-{YYYYMMDD-HHMMSS}.cast`
-- `exec --record`: `rfswift-exec-{container_name}-{YYYYMMDD-HHMMSS}.cast`
+Record to a file name you choose, then stop:
 
-**Recording indicator:** During recording, the terminal title is set to `⏺ REC | RF Swift` as a visual reminder. The environment variable `RFSWIFT_RECORDING=1` is also set, allowing scripts to detect when a session is being recorded.
-
-**Start recording with custom filename:**
 ```bash
 rfswift log start -o tutorial-wifi-analysis.cast
-```
-
-**Stop recording:**
-```bash
 rfswift log stop
 ```
 
-**Replay a session:**
+Replay it at normal speed, then twice as fast:
+
 ```bash
 rfswift log replay -i tutorial-wifi-analysis.cast
-```
-
-**Replay at 2x speed:**
-```bash
 rfswift log replay -i tutorial-wifi-analysis.cast -s 2.0
 ```
 
-**List all recordings:**
+List the recordings here, or in another folder:
+
 ```bash
 rfswift log list
-```
-
-**List recordings in specific directory:**
-```bash
 rfswift log list --dir ~/rfswift-tutorials
 ```
 
-### Real-World scenarios
+### Record a tutorial
 
-**Create a tutorial:**
+Start recording, go through the steps in a lab, stop, and replay to check:
+
 ```bash
-# Start recording
 rfswift log start -o sdr-tutorial-basics.cast
 
-# Perform tutorial steps
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n tutorial
 rfswift container shell -c tutorial
 rtl_test -t
 # ... demonstrate features ...
 exit
 
-# Stop recording
 rfswift log stop
-
-# Replay to verify
 rfswift log replay -i sdr-tutorial-basics.cast
 ```
 
-**Document a bug:**
+### Record a bug
+
+Record yourself reproducing the problem, then share the `.cast` file with your team:
+
 ```bash
-# Record the problem
 rfswift log start -o bug-report-issue-123.cast
 
-# Reproduce the issue
 rfswift container shell -c production
 # ... reproduce bug ...
 exit
 
-# Stop recording
 rfswift log stop
-
-# Share bug-report-issue-123.cast with team
 ```
 
----
+## Recording formats
 
-## Recording format
+### asciinema (.cast), the default
 
-### Asciinema format (.cast)
+An asciinema recording keeps the terminal output with its timing, the timing of each keystroke, the terminal size and some environment details. The files are small, replay with exact timing, can be embedded in web pages, and their timing can be edited.
 
-By default, RF Swift uses asciinema format, which records:
-- Terminal output with timing information
-- Exact keystroke timing
-- Terminal dimensions
-- Environment metadata
+A `.cast` file looks like this:
 
-**Advantages:**
-- Compact file size
-- Precise timing reproduction
-- Web-embeddable
-- Editable timing
-
-**Example .cast file:**
 ```json
 {"version": 2, "width": 120, "height": 30, "timestamp": 1704981234}
 [0.123456, "o", "$ rfswift container create -i sdr_full -n demo\r\n"]
 [1.234567, "o", "Container started: demo\r\n"]
 ```
 
-### Script format (fallback)
+### script, the fallback
 
-When asciinema is not available, RF Swift falls back to the `script` command:
+When asciinema isn't available, RF Swift uses the `script` command instead. To use it on purpose:
 
-**Use `--use-script` flag to force:**
 ```bash
 rfswift log start --use-script -o session.txt
 ```
 
----
+## Playback
 
-## Playback control
+### Speed
 
-### Speed control
+`-s` sets the speed: above 1 is faster, below 1 is slower.
 
 ```bash
-# Normal speed (1.0x)
-rfswift log replay -i session.cast
-
-# Fast playback (2x)
-rfswift log replay -i session.cast -s 2.0
-
-# Very fast (3x)
-rfswift log replay -i session.cast -s 3.0
-
-# Slow playback (0.5x)
-rfswift log replay -i session.cast -s 0.5
-
-# Very slow (0.25x)
-rfswift log replay -i session.cast -s 0.25
+rfswift log replay -i session.cast            # normal speed
+rfswift log replay -i session.cast -s 2.0     # 2x
+rfswift log replay -i session.cast -s 3.0     # 3x
+rfswift log replay -i session.cast -s 0.5     # half speed
+rfswift log replay -i session.cast -s 0.25    # quarter speed
 ```
 
-### Interactive playback
+### Pause and step with asciinema
 
-If using asciinema format, you can use asciinema player for interactive control:
+With the asciinema player you can pause and step through a recording:
 
 ```bash
 # Install asciinema
@@ -261,11 +214,11 @@ asciinema play session.cast
 # Ctrl+C - Exit
 ```
 
----
-
 ## Sharing recordings
 
-### Web embedding (asciinema)
+### On asciinema.org
+
+Upload a recording, then embed it in your documentation with the script tag it gives you:
 
 ```bash
 # Upload to asciinema.org
@@ -277,7 +230,7 @@ asciinema upload session.cast
 # <script src="https://asciinema.org/a/abc123.js" id="asciicast-abc123" async></script>
 ```
 
-### Self-Hosting
+### On your own web server
 
 ```bash
 # Copy recordings to web server
@@ -287,7 +240,9 @@ scp *.cast webserver:/var/www/tutorials/
 # https://tutorials.example.com/wifi-setup.cast
 ```
 
-### Distribution
+### As a training package
+
+Put the recordings in a folder with a README, and pack it as one archive:
 
 ````bash
 # Create distribution package
@@ -316,86 +271,47 @@ tar czf rfswift-training.tar.gz rfswift-training-package/
 # Share rfswift-training.tar.gz with team
 ````
 
----
-
 ## Troubleshooting
 
-### Recording not starting
+### `rfswift log start` fails
 
-**Problem:** `rfswift log start` fails
+Check that asciinema is installed, install it if needed, or record with `script` instead:
 
-**Solutions:**
 ```bash
-# Check if asciinema is installed
 which asciinema
 
-# Install asciinema
 pip install asciinema
 # or
 apt-get install asciinema  # Ubuntu/Debian
 brew install asciinema      # macOS
 
-# Use script command as fallback
 rfswift log start --use-script
 ```
 
-### Recording file not found
+### You can't find a recording
 
-**Problem:** Cannot find recorded file
+Look in the current folder, list recordings here and in your home folder, or search for recent `.cast` files:
 
-**Solutions:**
 ```bash
-# Check current directory
 ls -la *.cast
-
-# List all recordings
 rfswift log list
-
-# Check in home directory
 rfswift log list --dir ~
-
-# Find by date
 find ~ -name "*.cast" -mtime -1  # Last 24 hours
 ```
 
-### Replay not working
+### A recording doesn't replay
 
-**Problem:** Cannot replay session
+Check that the file exists and isn't damaged, and try playing it with asciinema directly. If recordings keep failing, record with `script` instead:
 
-**Solutions:**
 ```bash
-# Check file exists
 ls -l session.cast
-
-# Verify file is not corrupted
 file session.cast
-
-# Try with asciinema directly
 asciinema play session.cast
-
-# Use script format instead
 rfswift log start --use-script
 ```
 
----
+## Related
 
-## Related commands
-
-- [`report`](/docs/commands/report) - Generate assessment reports (includes recordings automatically)
-- [`exec`](/docs/commands/exec) - Execute commands that can be recorded
-- [`run`](/docs/commands/run) - Run containers to record
-- [`last`](/docs/commands/last) - Show containers for recording sessions
-
----
-
-{{< callout >}}
-**Perfect for Training**: The `log` command is ideal for creating training materials. Record once, share with your entire team. Students can replay at their own pace with speed control!
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Sensitive Information**: Recordings capture everything displayed in the terminal, including passwords and API keys if shown. Review recordings before sharing publicly!
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Asciinema vs Script**: RF Swift prefers asciinema format (.cast) for its precise timing and web-embeddable features. The script command is available as a fallback with `--use-script`.
-{{< /callout >}}
+- [report](/docs/commands/report): reports list your recordings automatically
+- [container shell](/docs/commands/exec) and [container create](/docs/commands/run): `--record`
+- [container last](/docs/commands/last)

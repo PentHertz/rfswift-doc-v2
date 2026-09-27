@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift container upgrade · RF Swift</title>
   <meta name="description" content="Re-create a container from a newer (or another) image while keeping the directories you list.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/upgrade/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/upgrade/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift container upgrade · RF Swift">
   <meta property="og:description" content="Re-create a container from a newer (or another) image while keeping the directories you list.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/upgrade/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/upgrade/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,17 +231,18 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift container upgrade</h1><p class="doc-lead">Re-create a container from a newer (or another) image while keeping the directories you list.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
+      <h1>rfswift container upgrade</h1><p class="doc-lead">Re-create a container from a newer (or another) image while keeping the directories you list.</p><p class="doc-meta">Reference · 5 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift container upgrade</code>. The legacy form <code>rfswift upgrade</code> and the short alias <code>rfswift system upgrade</code> still work and print a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+      <p><code>rfswift container upgrade</code> moves a container to a newer (or another) image and copies over the folders you choose. Use it when a new version of your toolbox is published and you want its tools without starting from scratch.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container upgrade -c my_container -r /root/captures,/opt/tools</span></span></code></pre></div></div>
+<p>In short: it pulls the new image, creates a new container from it, copies the folders you listed, and gives the new container the original name. Your container&rsquo;s settings (mounts, devices, network, ports, capabilities&hellip;) are carried over.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Other spellings</strong>: the legacy form <code>rfswift upgrade</code> and the short alias <code>rfswift system upgrade</code> still work and print a notice. The flags are the same. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
-<p>Upgrade containers to newer image versions while preserving selected data directories.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container upgrade -c CONTAINER_NAME <span class="o">[</span>-i IMAGE_NAME<span class="o">]</span> <span class="o">[</span>-r REPOSITORIES<span class="o">]</span></span></span></code></pre></div></div>
-<p>The <code>upgrade</code> command follows this pattern: pull new image -&gt; create new container -&gt; copy preserved directories -&gt; inherit original container name. This enables seamless version upgrades while maintaining important data.</p>
-<hr>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
@@ -289,36 +276,34 @@
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
 <h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Upgrade to latest version:</strong></p>
+<h4 id="upgrade-to-latest-version">Upgrade to latest version<a class="anchor" href="#upgrade-to-latest-version" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container upgrade -c my_container</span></span></code></pre></div></div>
-<p><strong>Upgrade to specific version:</strong></p>
+<h4 id="upgrade-to-specific-version">Upgrade to specific version<a class="anchor" href="#upgrade-to-specific-version" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container upgrade -c sdr_work -i penthertz/rfswift_resolute:sdr_full</span></span></code></pre></div></div>
-<p><strong>Upgrade with preserved directories:</strong></p>
+<h4 id="upgrade-with-preserved-directories">Upgrade with preserved directories<a class="anchor" href="#upgrade-with-preserved-directories" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container upgrade -c analysis_work <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -i penthertz/rfswift_resolute:sdr_full <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -r /root/scripts,/root/captures,/opt/tools</span></span></code></pre></div></div>
-<p><strong>Downgrade to previous version:</strong></p>
+<h4 id="downgrade-to-previous-version">Downgrade to previous version<a class="anchor" href="#downgrade-to-previous-version" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container upgrade -c production -i penthertz/rfswift_resolute:sdr_full_0.0.7</span></span></code></pre></div></div>
-<hr>
 <h2 id="how-upgrade-works">How upgrade works<a class="anchor" href="#how-upgrade-works" aria-label="Link to this section"></a></h2>
 <h3 id="upgrade-process">Upgrade process<a class="anchor" href="#upgrade-process" aria-label="Link to this section"></a></h3>
-<p>The upgrade command follows this sequence:</p>
+<p>The steps, in order:</p>
 <ol>
-<li><strong>Validate</strong>: Check source container exists</li>
-<li><strong>Pull</strong>: Download target image (if not present locally)</li>
-<li><strong>Create</strong>: Start new container from target image</li>
-<li><strong>Copy</strong>: Transfer preserved directories from old to new container</li>
-<li><strong>Stop</strong>: Stop old container</li>
-<li><strong>Rename</strong>: Rename old container (adds <code>_old</code> suffix)</li>
-<li><strong>Inherit</strong>: New container inherits original name</li>
-<li><strong>Cleanup</strong>: Old container remains stopped for verification</li>
+<li><strong>Check</strong>: the source container exists.</li>
+<li><strong>Pull</strong>: download the target image, if it is not already on your computer.</li>
+<li><strong>Create</strong>: start a new container from the target image.</li>
+<li><strong>Copy</strong>: copy the folders listed with <code>-r</code> from the old container to the new one.</li>
+<li><strong>Stop</strong>: stop the old container.</li>
+<li><strong>Rename</strong>: rename the old container with an <code>_old</code> suffix.</li>
+<li><strong>Inherit</strong>: the new container takes the original name.</li>
+<li><strong>Keep</strong>: the old container stays stopped so you can check the result.</li>
 </ol>
 <div class="mermaid-wrap"><pre class="mermaid">graph LR
     A[Old Container] --&gt;|Pull Image| B[New Image]
@@ -404,23 +389,22 @@
   </tbody>
 </table>
 </div>
-<p>The upgrade command now <strong>automatically preserves</strong> all host bindings, network settings, device mappings, capabilities, cgroup rules, and port bindings from the original container. A timestamped backup image is created before the old container is removed.</p>
+<p>All host bindings, network settings, device mappings, capabilities, cgroup rules and port bindings are <strong>carried over automatically</strong>. A timestamped backup image is created before the old container is removed.</p>
 <h3 id="what-doesnt-get-preserved">What doesn&rsquo;t get preserved<a class="anchor" href="#what-doesnt-get-preserved" aria-label="Link to this section"></a></h3>
 <ul>
-<li>Files outside of <code>-r</code> directories (new image defaults apply)</li>
-<li>Running processes (container is restarted fresh)</li>
+<li>Files outside the <code>-r</code> folders: the new image&rsquo;s versions are used.</li>
+<li>Running processes: the new container starts fresh.</li>
 </ul>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
 <h3 id="container-not-found">Container not found<a class="anchor" href="#container-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: No such container: container_name</code></p>
-<p><strong>Solutions:</strong></p>
+<p>The error message is: <code>Error: No such container: container_name</code></p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List containers</span>
 </span></span><span class="line"><span class="cl">rfswift container last</span></span></code></pre></div></div>
 <h3 id="image-pull-failed">Image pull failed<a class="anchor" href="#image-pull-failed" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error pulling image</code></p>
-<p><strong>Solutions:</strong></p>
+<p>The error message is: <code>Error pulling image</code></p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check network connectivity</span>
 </span></span><span class="line"><span class="cl">ping registry.hub.docker.com
@@ -431,8 +415,8 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Retry upgrade</span>
 </span></span><span class="line"><span class="cl">rfswift container upgrade -c container -i penthertz/rfswift_resolute:sdr_full</span></span></code></pre></div></div>
 <h3 id="preserved-directory-not-found">Preserved directory not found<a class="anchor" href="#preserved-directory-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Directory /root/nonexistent not found in source container</code></p>
-<p><strong>Solutions:</strong></p>
+<p>The error message is: <code>Directory /root/nonexistent not found in source container</code></p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check what directories exist</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c old_container
@@ -442,8 +426,8 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Adjust -r flag to existing directories only</span>
 </span></span><span class="line"><span class="cl">rfswift container upgrade -c container -r /root/existing,/opt/tools</span></span></code></pre></div></div>
 <h3 id="old-container-still-running">Old container still running<a class="anchor" href="#old-container-still-running" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Upgrade completes but old container still active</p>
-<p><strong>Solution:</strong></p>
+<p>The upgrade finished, but the old container is still running.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Stop old container manually</span>
 </span></span><span class="line"><span class="cl">rfswift container stop -c container_old
@@ -454,21 +438,21 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Remove old container when satisfied</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c container_old</span></span></code></pre></div></div>
 <h3 id="configuration-lost-after-upgrade">Configuration lost after upgrade<a class="anchor" href="#configuration-lost-after-upgrade" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Network/volume/device settings missing after upgrade</p>
-<p><strong>Note:</strong> This should no longer occur. RF Swift now automatically preserves all container settings (bindings, devices, network, capabilities, cgroups, ports) during upgrade. If you experience this issue, ensure you&rsquo;re running the latest version of RF Swift.</p>
-<p><strong>Workaround (for older versions):</strong></p>
+<p>Network, folder or device settings are missing after the upgrade.</p>
+<p>This should not happen anymore: RF Swift carries all container settings (bindings, devices, network, capabilities, cgroups, ports) over during an upgrade. If you still see it, update RF Swift to the latest version.</p>
+<h4 id="workaround-for-older-versions">Workaround (for older versions)<a class="anchor" href="#workaround-for-older-versions" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Document current configuration before upgrade</span>
 </span></span><span class="line"><span class="cl">docker inspect old_container &gt; old_container_config.json
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># After upgrade, reconfigure manually</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -c container -s ~/data -t /root/data
-</span></span><span class="line"><span class="cl">rfswift capabilities add -c container -p NET_ADMIN
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c container -b <span class="s2">&#34;8080:8080/tcp&#34;</span></span></span></code></pre></div></div>
+</span></span><span class="line"><span class="cl"><span class="c1"># After the upgrade, set them again by hand</span>
+</span></span><span class="line"><span class="cl">rfswift config bindings add -c container -s ~/data -t /root/data
+</span></span><span class="line"><span class="cl">rfswift config capabilities add -c container -p NET_ADMIN
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c container -b <span class="s2">&#34;8080:8080/tcp&#34;</span></span></span></code></pre></div></div>
 <h3 id="rollback-failed">Rollback failed<a class="anchor" href="#rollback-failed" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Can&rsquo;t restore old container after bad upgrade</p>
-<p><strong>Solution:</strong></p>
+<p>You can&rsquo;t get the old container back after a bad upgrade.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># If you have backup</span>
 </span></span><span class="line"><span class="cl">rfswift image import container -i backup.tar.gz -n container_restored
@@ -478,21 +462,17 @@
 </span></span><span class="line"><span class="cl">rfswift container rm -c container  <span class="c1"># Remove bad new container</span>
 </span></span><span class="line"><span class="cl">rfswift container rename -n container_old -d container
 </span></span><span class="line"><span class="cl">rfswift container shell -c container</span></span></code></pre></div></div>
-<hr>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create new containers</li>
-<li><a href="/docs/commands/commit"><code>commit</code></a> - Save container state before upgrade</li>
-<li><a href="/docs/commands/export"><code>export</code></a> - Backup before upgrade</li>
-<li><a href="/docs/commands/import"><code>import</code></a> - Restore from backup if upgrade fails</li>
-<li><a href="/docs/commands/images"><code>images</code></a> - Check available images for upgrade</li>
+<li><a href="/docs/commands/run/"><code>container create</code></a>: create a new container</li>
+<li><a href="/docs/commands/commit/"><code>container commit</code></a>: save a container&rsquo;s state before upgrading</li>
+<li><a href="/docs/commands/export/"><code>image export</code></a>: back up to a file before upgrading</li>
+<li><a href="/docs/commands/import/"><code>image import</code></a>: restore from that file if the upgrade fails</li>
+<li><a href="/docs/commands/images/"><code>image versions</code></a>: see which image versions are available</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Always Backup First</strong>: Before upgrading, create a backup with <code>export container</code>. This allows easy rollback if the upgrade has issues. The old container is kept as <code>container_old</code> for verification.</p>
+<div class="admonition admonition-tip" role="note"><p><strong>Back up first</strong>: before upgrading, export the container with <code>rfswift image export container</code>, so you can roll back if something goes wrong. The old container is also kept as <code>container_old</code> until you check the result.</p>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Settings Preserved</strong>: RF Swift now automatically inherits all container settings (bindings, devices, network mode, capabilities, cgroup rules, ports, environment variables) from the original container during upgrade. No manual reconfiguration needed.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Selective Preservation</strong>: Use the <code>-r</code> flag to preserve only necessary directories. Preserving too much may carry over conflicts, while preserving too little requires more post-upgrade setup. Balance based on your needs!</p>
+<div class="admonition admonition-info" role="note"><p><strong>Choose the <code>-r</code> folders carefully</strong>: keep only the folders you need. Copying too much can bring old conflicts along; copying too little means more setup afterwards.</p>
 </div>
 
     </div>

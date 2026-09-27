@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift system · RF Swift</title>
   <meta name="description" content="Housekeeping for RF Swift: doctor, cleanup, update, upgrade, log and report.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/system/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/system/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift system · RF Swift">
   <meta property="og:description" content="Housekeeping for RF Swift: doctor, cleanup, update, upgrade, log and report.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/system/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/system/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,10 +231,12 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift system</h1><p class="doc-lead">Housekeeping for RF Swift: doctor, cleanup, update, upgrade, log and report.</p><p class="doc-meta">Reference · 2 min read · Updated September 27, 2026</p>
+      <h1>rfswift system</h1><p class="doc-lead">Housekeeping for RF Swift: doctor, cleanup, update, upgrade, log and report.</p><p class="doc-meta">Reference · 2 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Housekeeping for RF Swift itself. Every subcommand is also available at the top level (<code>rfswift doctor</code>, <code>rfswift cleanup</code>, &hellip;). Alias: <code>rfswift admin</code>.</p>
+      <p><code>rfswift system</code> groups the housekeeping commands for RF Swift itself: checking your computer, cleaning up, updating, recording sessions and writing reports. Every subcommand also works at the top level (<code>rfswift doctor</code>, <code>rfswift cleanup</code>, &hellip;). The alias <code>rfswift admin</code> works too.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift system doctor</span></span></code></pre></div></div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift system doctor
@@ -257,55 +245,63 @@
 </span></span><span class="line"><span class="cl">rfswift system upgrade -c NAME <span class="o">[</span>-i IMAGE<span class="o">]</span> <span class="o">[</span>-r DIRS<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift system log start<span class="p">|</span>stop<span class="p">|</span>list<span class="p">|</span>replay <span class="o">[</span>...<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift system report generate -c NAME <span class="o">[</span>-f markdown<span class="p">|</span>html<span class="p">|</span>pdf<span class="o">]</span> <span class="o">[</span>-o FILE<span class="o">]</span> <span class="o">[</span>-t TITLE<span class="o">]</span></span></span></code></pre></div></div>
+<h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Purpose</th>
+      <th>What it does</th>
       <th>Page</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>doctor</code></td>
-      <td>Check the host: engines and their services, Docker access, host udev rules, Nix engine and its WSL 2 backend on Windows, the Nix jail, Lima VM, images, X11 and xhost, audio system and server, USB, config file, kernel modules, usbipd on Windows</td>
+      <td>Checks your computer: the engines and their services, Docker access, host udev rules, the Nix engine (and its WSL 2 backend on Windows), the Nix jail, the Lima VM, images, X11 and xhost, the audio system and server, USB, the config file, kernel modules, and usbipd on Windows</td>
       <td><a href="/docs/commands/doctor">doctor</a></td>
     </tr>
     <tr>
       <td><code>cleanup</code></td>
-      <td>Remove old or unused containers and images by age, with a dry run</td>
+      <td>Removes old or unused containers and images by age. A dry run shows what would go first</td>
       <td><a href="/docs/commands/cleanup">cleanup</a></td>
     </tr>
     <tr>
       <td><code>update</code></td>
-      <td>Update the RF Swift binary from the official releases. On a deb, rpm, pacman or Homebrew install it explains how to upgrade through the package instead of overwriting the packaged binary</td>
+      <td>Updates the RF Swift binary from the official releases. On a deb, rpm, pacman or Homebrew install, it tells you how to upgrade through your package manager instead of overwriting the packaged binary</td>
       <td><a href="/docs/commands/update">update</a></td>
     </tr>
     <tr>
       <td><code>upgrade</code></td>
-      <td>Re-create a container from a newer image, preserving listed directories (same as <code>container upgrade</code>)</td>
+      <td>Re-creates a container from a newer image and keeps the directories you list (same as <code>container upgrade</code>)</td>
       <td><a href="/docs/commands/upgrade">upgrade</a></td>
     </tr>
     <tr>
       <td><code>log</code></td>
-      <td>Record and replay terminal sessions (asciinema, or <code>script</code> with <code>--use-script</code>)</td>
+      <td>Records and replays terminal sessions (asciinema, or <code>script</code> with <code>--use-script</code>)</td>
       <td><a href="/docs/commands/log">log</a></td>
     </tr>
     <tr>
       <td><code>report</code></td>
-      <td>Assessment report from a container and its workspace</td>
+      <td>Builds an assessment report from a container and its workspace</td>
       <td><a href="/docs/commands/report">report</a></td>
     </tr>
   </tbody>
 </table>
 </div>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
+<p>Check that your computer is ready:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift system doctor
-</span></span><span class="line"><span class="cl">rfswift system cleanup containers --stopped --older-than 30d --dry-run
-</span></span><span class="line"><span class="cl">rfswift system log replay -i session.cast -s 2.0
-</span></span><span class="line"><span class="cl">rfswift system report generate -c pentest_wifi -f html</span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift system doctor</span></span></code></pre></div></div>
+<p>Preview which stopped containers older than 30 days would be removed:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift system cleanup containers --stopped --older-than 30d --dry-run</span></span></code></pre></div></div>
+<p>Replay a recorded session at twice the speed:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift system log replay -i session.cast -s 2.0</span></span></code></pre></div></div>
+<p>Write an HTML report for a container:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift system report generate -c pentest_wifi -f html</span></span></code></pre></div></div>
 
     </div>
     <footer class="doc-foot">
@@ -327,6 +323,7 @@
   <nav id="TableOfContents">
   <ul>
     <li><a href="#synopsis">Synopsis</a></li>
+    <li><a href="#subcommands">Subcommands</a></li>
     <li><a href="#examples">Examples</a></li>
   </ul>
 </nav>

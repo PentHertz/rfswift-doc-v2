@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift usb · RF Swift</title>
   <meta name="description" content="Attach and detach USB devices on macOS (Lima) and Windows (usbipd-win).">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/usb/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/usb/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift usb · RF Swift">
   <meta property="og:description" content="Attach and detach USB devices on macOS (Lima) and Windows (usbipd-win).">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/usb/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/usb/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,10 +231,17 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift usb</h1><p class="doc-lead">Attach and detach USB devices on macOS (Lima) and Windows (usbipd-win).</p><p class="doc-meta">Reference · 3 min read · Updated September 27, 2026</p>
+      <h1>rfswift usb</h1><p class="doc-lead">Attach and detach USB devices on macOS (Lima) and Windows (usbipd-win).</p><p class="doc-meta">Reference · 3 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Attach and detach USB devices for RF Swift containers and Nix environments on the two platforms whose containers run inside a VM. <code>rfswift usb</code> is the cross-platform front door: on macOS it drives the Lima VM&rsquo;s USB hot-plug, on Windows it drives usbipd-win into WSL 2. On Linux there is no attach step; devices are mapped when the container is created.</p>
+      <p>On macOS and Windows, containers run inside a virtual machine that cannot see your USB ports on its own. <code>rfswift usb</code> forwards a device (an SDR, a Proxmark3, a serial adapter) into that machine so your containers and Nix environments can use it.</p>
+<ul>
+<li><strong>macOS</strong>: it drives USB hot-plug in the Lima VM.</li>
+<li><strong>Windows</strong>: it drives usbipd-win into WSL 2.</li>
+<li><strong>Linux</strong>: there is no attach step. Devices are mapped when the container is created.</li>
+</ul>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift usb attach      <span class="c1"># shows a picker of your USB devices</span></span></span></code></pre></div></div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="doc-tabs" data-tabs>
   <div class="tabs" role="tablist">
@@ -262,7 +255,9 @@
 </span></span><span class="line"><span class="cl">rfswift usb detach --vid 0x1d50 --pid 0x604b      <span class="c1"># or --devid usb-1d50-604b</span>
 </span></span><span class="line"><span class="cl">rfswift usb vm-devices                            <span class="c1"># what the VM currently sees</span>
 </span></span><span class="line"><span class="cl">rfswift usb status                                <span class="c1"># Lima VM readiness for passthrough</span></span></span></code></pre></div></div>
-<p>Requires <code>brew install qemu lima</code>. The VM is created and started on first use of <code>--engine lima</code>; a device must be attached to the VM <strong>and</strong> the container must run with <code>--engine lima</code>. Docker Desktop and Podman machine cannot receive USB devices. Details: <a href="/docs/commands/macusb">macusb</a>, <a href="/docs/commands/engine">engine lima</a>.</p>
+<p>Install Lima once with <code>brew install qemu lima</code>. The VM is created and started the first time you use <code>--engine lima</code>.</p>
+<p>For a device to work, two things are needed: the device must be attached to the VM, <strong>and</strong> the container must run with <code>--engine lima</code>. Docker Desktop and Podman machine cannot receive USB devices.</p>
+<p>Details: <a href="/docs/commands/macusb">macusb</a>, <a href="/docs/commands/engine">engine lima</a>.</p>
 </div>
   <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift usb status                    <span class="c1"># usbipd-win version, WSL 2 distribution, shared devices</span>
@@ -273,15 +268,31 @@
 </span></span><span class="line"><span class="cl">rfswift usb <span class="nb">bind</span>   --busid 2-3        <span class="c1"># share only (administrator approval)</span>
 </span></span><span class="line"><span class="cl">rfswift usb unbind --busid 2-3        <span class="c1"># stop sharing (--guid for a device that is unplugged)</span>
 </span></span><span class="line"><span class="cl">rfswift usb vm-devices                <span class="c1"># devices as seen inside WSL 2</span></span></span></code></pre></div></div>
-<p>Requires <a href="https://github.com/dorssel/usbipd-win" target="_blank" rel="noopener">usbipd-win</a> (<code>winget install usbipd</code>, or the installer bundle). Only <strong>sharing</strong> a device the first time needs administrator rights; RF Swift raises one UAC prompt for <code>usbipd.exe</code> itself, never a shell. Attach and detach stay unprivileged. The picker warns before forwarding keyboard- or mouse-like devices and shows friendly names for common RF hardware (RTL-SDR, HackRF, bladeRF, Proxmark, LimeSDR, USRP, &hellip;). A forwarded device is visible to every WSL 2 distribution, including Docker Desktop&rsquo;s and the one hosting the Nix engine, because they share one kernel. Details: <a href="/docs/commands/winusb">winusb</a>.</p>
+<p>This needs <a href="https://github.com/dorssel/usbipd-win" target="_blank" rel="noopener">usbipd-win</a> (<code>winget install usbipd</code>, or the installer bundle).</p>
+<ul>
+<li>Only <strong>sharing</strong> a device the first time needs administrator rights. RF Swift raises one UAC prompt for <code>usbipd.exe</code> itself, never for a shell. Attaching and detaching need no special rights.</li>
+<li>The picker warns you before forwarding something that looks like a keyboard or a mouse, and shows friendly names for common RF hardware (RTL-SDR, HackRF, bladeRF, Proxmark, LimeSDR, USRP, &hellip;).</li>
+<li>A forwarded device is visible to every WSL 2 distribution, including Docker Desktop&rsquo;s and the one that hosts the Nix engine, because they all share one kernel.</li>
+</ul>
+<p>Details: <a href="/docs/commands/winusb">winusb</a>.</p>
 </div>
-  <div class="doc-tab-panel" role="tabpanel" data-panel="2" hidden><p><code>rfswift usb</code> only prints a reminder. Pass devices at creation (<code>-s /dev/ttyUSB0</code>, the USB tree is mapped by default) or add them later with <code>rfswift config bindings add -c NAME -d -t /dev/ttyACM0</code>. Serial ports are hot-pluggable on Docker and rootful Podman (<a href="/docs/commands/config">config serial-hotplug</a>). Rootless Podman and Nix environments run tools as your user and need the host udev rules: <code>rfswift host udev</code>.</p>
+  <div class="doc-tab-panel" role="tabpanel" data-panel="2" hidden><p>On Linux, <code>rfswift usb</code> only prints a reminder. Instead:</p>
+<ul>
+<li>pass devices when you create the container (<code>-s /dev/ttyUSB0</code>); the USB tree is mapped by default;</li>
+<li>or add them later with <code>rfswift config bindings add -c NAME -d -t /dev/ttyACM0</code>.</li>
+</ul>
+<p>Serial ports are hot-pluggable on Docker and rootful Podman (see <a href="/docs/commands/config">config serial-hotplug</a>). Rootless Podman and Nix environments run tools as your user, so they need the host udev rules: <code>rfswift host udev</code>.</p>
 </div>
 </div>
-<hr>
 <h2 id="inside-the-container">Inside the container<a class="anchor" href="#inside-the-container" aria-label="Link to this section"></a></h2>
-<p>A forwarded device is reachable only when <code>/dev/bus/usb</code> is mapped <strong>and</strong> USB device major 189 is allowed (<code>c 189:* rwm</code>). Both are part of the RF Swift defaults. A bare bind mount lists the nodes but <code>open()</code> fails with &ldquo;Permission denied&rdquo;, and <strong>privileged mode is not required</strong>. <code>rfswift container create</code> and the Workbench mission form check this before creating the container and say what is missing; the Workbench offers &ldquo;Apply USB hotplug defaults&rdquo; in one click.</p>
-<p><code>rfswift container create</code>, <code>container shell</code> and <code>env shell</code> on Windows offer the usbipd picker themselves when they detect shared or known RF hardware; plain keyboards and webcams never trigger it. The Workbench exposes the same as <strong>USB passthrough&hellip;</strong> on Docker, Podman and Nix missions.</p>
+<p>A forwarded device can be opened only when both of these are true:</p>
+<ul>
+<li><code>/dev/bus/usb</code> is mapped into the container;</li>
+<li>USB device major 189 is allowed (<code>c 189:* rwm</code>).</li>
+</ul>
+<p>Both are part of the RF Swift defaults, and <strong>privileged mode is not required</strong>. A bare bind mount is not enough: it lists the device nodes, but opening them fails with &ldquo;Permission denied&rdquo;.</p>
+<p><code>rfswift container create</code> and the Workbench mission form check this before creating the container and tell you what is missing. The Workbench offers <strong>Apply USB hotplug defaults</strong> to fix it in one click.</p>
+<p>On Windows, <code>rfswift container create</code>, <code>container shell</code> and <code>env shell</code> open the usbipd picker themselves when they detect shared or known RF hardware; ordinary keyboards and webcams never trigger it. The Workbench offers the same as <strong>USB passthrough&hellip;</strong> on Docker, Podman and Nix missions.</p>
 <h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <ul>
 <li><a href="/docs/commands/macusb">macusb</a>, <a href="/docs/commands/winusb">winusb</a></li>

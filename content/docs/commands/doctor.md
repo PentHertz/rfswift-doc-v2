@@ -7,9 +7,11 @@ description: "Diagnose the host: engines, Nix, USB, display, audio, udev rules a
 weight: 91
 ---
 
-Diagnose the host for RF Swift. `rfswift doctor` (also `rfswift system doctor`) checks every engine, the display, audio, devices, the Nix engine and the host prerequisites, and tells you which command fixes what is wrong.
+`rfswift doctor` checks that your computer is ready for RF Swift. It looks at every engine, the display, sound, devices, the Nix engine and the other host prerequisites. For anything that is wrong, it tells you which command fixes it.
 
-## Syntax
+Run it after installing RF Swift, and whenever something doesn't work. It is also available as `rfswift system doctor`.
+
+## Synopsis
 
 ```bash
 rfswift doctor
@@ -41,11 +43,13 @@ rfswift system doctor
 | Icon | Meaning |
 |------|---------|
 | `✓` (green) | Passed |
-| `!` (yellow) | Warning, works but could be better |
-| `✗` (red) | Failed, needs a fix |
-| `-` (gray) | Skipped, not applicable on this platform |
+| `!` (yellow) | Warning: works, but could be better |
+| `✗` (red) | Failed: needs a fix |
+| `-` (gray) | Skipped: not applicable on this platform |
 
 ## Example output
+
+On a Linux desktop where everything but the audio server is ready, the report looks like this:
 
 ```
 🩺 RF Swift Doctor
@@ -73,6 +77,8 @@ rfswift system doctor
 
 ## Common issues and fixes
 
+Each line fixes one common problem. `rfswift host setup` walks through all of them, asking before each step:
+
 ```bash
 rfswift host setup                  # everything below, asked step by step
 rfswift host docker-access          # Docker socket "permission denied"
@@ -84,12 +90,12 @@ rfswift env wsl setup               # Windows: Nix backend not provisioned
 chmod 600 ~/.config/rfswift/config.ini
 ```
 
-Headless or over SSH without X forwarding: use `--desktop` for a browser desktop, or `ssh -X`.
+No display, for example on a headless machine or over SSH without X forwarding? Create the lab with `--desktop` to get a desktop in your browser, or connect with `ssh -X`.
 
 ## Platform notes
 
 - **Linux**: all checks run.
-- **macOS**: the Lima VM check replaces Docker permissions and kernel modules; audio expects PulseAudio from Homebrew.
-- **Windows**: WSLg display and audio, usbipd-win, the default WSL 2 distribution and the Nix WSL backend are reported; if the WSLg sockets are missing run `wsl --update` then `wsl --shutdown`.
+- **macOS**: the Lima VM check replaces the Docker permissions and kernel modules checks. Audio expects PulseAudio from Homebrew.
+- **Windows**: the report covers WSLg display and audio, usbipd-win, the default WSL 2 distribution and the Nix WSL backend. If the WSLg sockets are missing, run `wsl --update`, then `wsl --shutdown`.
 
 The Workbench's **Engine doctor** shows the same checks with buttons that apply the fixes.

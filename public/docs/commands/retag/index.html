@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift image tag · RF Swift</title>
   <meta name="description" content="Rename an image tag.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/retag/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/retag/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift image tag · RF Swift">
   <meta property="og:description" content="Rename an image tag.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/retag/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/retag/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,24 +231,25 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift image tag</h1><p class="doc-lead">Rename an image tag.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
+      <h1>rfswift image tag</h1><p class="doc-lead">Rename an image tag.</p><p class="doc-meta">Reference · 5 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift image tag</code>. The legacy form <code>rfswift retag</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+      <p><code>rfswift image tag</code> gives an existing image an extra name (a tag). Use it to organise images, create short aliases, mark versions such as <code>stable</code> or <code>v1.2.0</code>, or prepare an image for sharing.</p>
+<p>The most common use gives an official image a shorter local name:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1</span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p><code>rfswift image tag</code> is the v4 spelling. The older <code>rfswift retag</code> still works, takes the same flags and prints a notice with the new name. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
-<p>Create new tags for existing Docker images or rename image tags.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image tag -i IMAGE_REFERENCE -t NEW_TAG</span></span></code></pre></div></div>
-<p>The <code>retag</code> command creates a new tag for an existing Docker image. This is useful for organizing images, creating aliases, marking versions, or preparing images for distribution.</p>
-<hr>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -270,70 +257,59 @@
   <tbody>
     <tr>
       <td><code>-i, --image STRING</code></td>
-      <td>Source image reference</td>
+      <td>The image to tag</td>
       <td>Yes</td>
       <td><code>-i penthertz/rfswift_resolute:sdr_full</code></td>
     </tr>
     <tr>
       <td><code>-t, --tag STRING</code></td>
-      <td>New tag name</td>
+      <td>The new tag</td>
       <td>Yes</td>
       <td><code>-t my_sdr:production</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Interactive Picker</strong>: When run without <code>-i</code> in an interactive terminal, RF Swift displays a scrollable image picker listing all local images with their tags.</p>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">Pick from a list</p><p>Run it without <code>-i</code> in a terminal and RF Swift shows a scrollable list of your local images and their tags.</p>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Create new tag for existing image:</strong></p>
+<p>Give an image a new tag:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1</span></span></code></pre></div></div>
-<p><strong>Create alias for convenience:</strong></p>
+<p>Create a short alias:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr:latest</span></span></code></pre></div></div>
-<p><strong>Mark as production:</strong></p>
+<p>Mark a tested image as production:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image tag -i my_custom_image:test -t my_custom_image:production</span></span></code></pre></div></div>
-<p><strong>Version tagging:</strong></p>
+<p>Give an image a version number:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image tag -i my_image:latest -t my_image:v1.0.0</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Environment-based tagging:</strong></p>
+<h3 id="one-image-one-tag-per-environment">One image, one tag per environment<a class="anchor" href="#one-image-one-tag-per-environment" aria-label="Link to this section"></a></h3>
+<p>Pull the image once, then give it a tag for each environment:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull image</span>
-</span></span><span class="line"><span class="cl">rfswift image pull -i penthertz/rfswift_resolute:sdr_full
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Create environment-specific tags</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image pull -i penthertz/rfswift_resolute:sdr_full
 </span></span><span class="line"><span class="cl">rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:development
 </span></span><span class="line"><span class="cl">rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:staging
 </span></span><span class="line"><span class="cl">rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:production</span></span></code></pre></div></div>
-<p><strong>Version management:</strong></p>
+<h3 id="version-tags">Version tags<a class="anchor" href="#version-tags" aria-label="Link to this section"></a></h3>
+<p>Tag the current build with its version, keep <code>latest</code> pointing at it, and mark it stable:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Tag current version</span>
-</span></span><span class="line"><span class="cl">rfswift image tag -i my_custom_sdr:latest -t my_custom_sdr:v1.2.0
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Keep latest tag updated</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image tag -i my_custom_sdr:latest -t my_custom_sdr:v1.2.0
 </span></span><span class="line"><span class="cl">rfswift image tag -i my_custom_sdr:v1.2.0 -t my_custom_sdr:latest
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Create stable release tag</span>
 </span></span><span class="line"><span class="cl">rfswift image tag -i my_custom_sdr:v1.2.0 -t my_custom_sdr:stable</span></span></code></pre></div></div>
-<hr>
-<h2 id="how-retag-works">How retag works<a class="anchor" href="#how-retag-works" aria-label="Link to this section"></a></h2>
-<h3 id="tag-creation-process">Tag creation process<a class="anchor" href="#tag-creation-process" aria-label="Link to this section"></a></h3>
-<p>When you retag an image:</p>
+<h2 id="how-tagging-works">How tagging works<a class="anchor" href="#how-tagging-works" aria-label="Link to this section"></a></h2>
+<p>A tag is only a name that points to an image. When you add one:</p>
 <ol>
-<li><strong>No duplication</strong>: New tag points to same image layers</li>
-<li><strong>No disk space used</strong>: Both tags reference same underlying data</li>
-<li><strong>Multiple tags allowed</strong>: One image can have many tags</li>
-<li><strong>Original tag remains</strong>: Source tag is NOT removed</li>
+<li><strong>Nothing is copied.</strong> The new tag points to the same image layers.</li>
+<li><strong>No disk space is used.</strong> Both tags share the same data.</li>
+<li><strong>You can have many tags.</strong> One image can carry as many tags as you like.</li>
+<li><strong>The original tag stays.</strong> The source tag is not removed.</li>
 </ol>
 <div class="mermaid-wrap"><pre class="mermaid">graph LR
     A[Image Layers] --&gt; B[Tag: original:v1]
     A --&gt; C[Tag: original:latest]
-    A --&gt; D[Tag: my_version:prod]</pre></div><p><strong>Example:</strong></p>
+    A --&gt; D[Tag: my_version:prod]</pre></div><p>After tagging, both names show the same image ID, and no extra space is used:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Original image</span>
 </span></span><span class="line"><span class="cl">docker images
@@ -347,65 +323,59 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># penthertz/rfswift_resolute:sdr_full  a1b2c3d4e5f6  2.5GB</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># my_sdr:work                 a1b2c3d4e5f6  2.5GB</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Same image ID, no extra disk space</span></span></span></code></pre></div></div>
-<hr>
-<h2 id="retag-vs-rename">Retag vs rename<a class="anchor" href="#retag-vs-rename" aria-label="Link to this section"></a></h2>
-<h3 id="key-differences">Key differences<a class="anchor" href="#key-differences" aria-label="Link to this section"></a></h3>
+<div class="admonition admonition-warning" role="note"><p class="admonition-title">The old tag is kept</p><p>Unlike renaming a container, tagging an image does not remove the original name: both tags exist afterwards. Use <code>rfswift image rm</code> to remove a tag you no longer want.</p>
+</div>
+<h2 id="tagging-an-image-or-renaming-a-container">Tagging an image or renaming a container?<a class="anchor" href="#tagging-an-image-or-renaming-a-container" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
-      <th>Feature</th>
-      <th><code>retag</code></th>
-      <th><code>rename</code></th>
+      <th></th>
+      <th><code>rfswift image tag</code> (legacy <code>retag</code>)</th>
+      <th><code>rfswift container rename</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>Target</strong></td>
+      <td><strong>Works on</strong></td>
       <td>Images</td>
       <td>Containers</td>
     </tr>
     <tr>
-      <td><strong>Operation</strong></td>
-      <td>Creates new tag</td>
-      <td>Changes container name</td>
+      <td><strong>What it does</strong></td>
+      <td>Adds a tag</td>
+      <td>Changes the container&rsquo;s name</td>
     </tr>
     <tr>
-      <td><strong>Original</strong></td>
-      <td>Remains unchanged</td>
-      <td>Changed</td>
+      <td><strong>Original name</strong></td>
+      <td>Kept</td>
+      <td>Replaced</td>
     </tr>
     <tr>
-      <td><strong>Multiple names</strong></td>
-      <td>Yes (many tags)</td>
-      <td>No (one name)</td>
+      <td><strong>Several names</strong></td>
+      <td>Yes, many tags</td>
+      <td>No, one name</td>
     </tr>
     <tr>
-      <td><strong>Disk usage</strong></td>
+      <td><strong>Disk space</strong></td>
       <td>None</td>
       <td>None</td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
-<h2 id="tag-naming-conventions">Tag naming conventions<a class="anchor" href="#tag-naming-conventions" aria-label="Link to this section"></a></h2>
-<h3 id="recommended-patterns">Recommended patterns<a class="anchor" href="#recommended-patterns" aria-label="Link to this section"></a></h3>
-<p><strong>Version-based:</strong></p>
+<h2 id="choosing-tag-names">Choosing tag names<a class="anchor" href="#choosing-tag-names" aria-label="Link to this section"></a></h2>
+<p>Tags are easiest to use when they say what the image is. Common patterns:</p>
+<p>Versions, dates or Git references:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Semantic versioning</span>
-</span></span><span class="line"><span class="cl">my_image:v1.2.3
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">my_image:v1.2.3
 </span></span><span class="line"><span class="cl">my_image:v1.2
 </span></span><span class="line"><span class="cl">my_image:v1
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Date-based</span>
 </span></span><span class="line"><span class="cl">my_image:2025.01.12
 </span></span><span class="line"><span class="cl">my_image:2026_q1
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Git-based</span>
 </span></span><span class="line"><span class="cl">my_image:commit_a1b2c3d
 </span></span><span class="line"><span class="cl">my_image:branch_develop</span></span></code></pre></div></div>
-<p><strong>Environment-based:</strong></p>
+<p>Environments:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">my_image:development
 </span></span><span class="line"><span class="cl">my_image:dev
@@ -415,130 +385,87 @@
 </span></span><span class="line"><span class="cl">my_image:stage
 </span></span><span class="line"><span class="cl">my_image:production
 </span></span><span class="line"><span class="cl">my_image:prod</span></span></code></pre></div></div>
-<p><strong>Purpose-based:</strong></p>
+<p>Purpose:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">my_image:latest
 </span></span><span class="line"><span class="cl">my_image:stable
 </span></span><span class="line"><span class="cl">my_image:experimental
 </span></span><span class="line"><span class="cl">my_image:beta
 </span></span><span class="line"><span class="cl">my_image:release</span></span></code></pre></div></div>
-<p><strong>Combined:</strong></p>
+<p>A combination of these:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">my_image:v1.2.3_production
 </span></span><span class="line"><span class="cl">my_image:v1.2_stable
 </span></span><span class="line"><span class="cl">my_image:2026.01_dev
 </span></span><span class="line"><span class="cl">my_image:v1_experimental</span></span></code></pre></div></div>
-<h3 id="tag-best-practices">Tag best practices<a class="anchor" href="#tag-best-practices" aria-label="Link to this section"></a></h3>
-<p><strong>Good tag names:</strong></p>
+<p>Clear, descriptive tags work well:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Clear and descriptive</span>
-</span></span><span class="line"><span class="cl">sdr_analysis:v2.1.0_production
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sdr_analysis:v2.1.0_production
 </span></span><span class="line"><span class="cl">sdr_analysis:stable
 </span></span><span class="line"><span class="cl">sdr_analysis:2026_q1_release
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Environment markers</span>
 </span></span><span class="line"><span class="cl">app:prod_v1.2
 </span></span><span class="line"><span class="cl">app:dev_latest
 </span></span><span class="line"><span class="cl">app:staging_candidate</span></span></code></pre></div></div>
-<p><strong>Avoid:</strong></p>
+<p>Avoid tags that are ambiguous or too generic:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Ambiguous</span>
-</span></span><span class="line"><span class="cl">image:1
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">image:1
 </span></span><span class="line"><span class="cl">image:a
 </span></span><span class="line"><span class="cl">image:test1
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Too generic</span>
 </span></span><span class="line"><span class="cl">my_tag
 </span></span><span class="line"><span class="cl">temp
 </span></span><span class="line"><span class="cl">old
 </span></span><span class="line"><span class="cl">new</span></span></code></pre></div></div>
-<hr>
+<p>Version tags such as <code>v1.2.3</code>, a major-version tag such as <code>v1</code>, and special tags such as <code>latest</code> or <code>stable</code> make it easy to go back to an earlier version.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="source-image-not-found">Source image not found<a class="anchor" href="#source-image-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: No such image: source:tag</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="no-such-image">“No such image”<a class="anchor" href="#no-such-image" aria-label="Link to this section"></a></h3>
+<p>The full error is <code>Error: No such image: source:tag</code>. The image you want to tag is not on this computer, or its name is slightly different. List your images, pull the image if needed, then tag it:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List available images</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check exact image name</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">local</span>
 </span></span><span class="line"><span class="cl">docker images <span class="p">|</span> grep image_name
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Pull if needed</span>
 </span></span><span class="line"><span class="cl">rfswift image pull -i penthertz/rfswift_resolute:sdr_full
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then retag</span>
 </span></span><span class="line"><span class="cl">rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1</span></span></code></pre></div></div>
-<h3 id="invalid-tag-format">Invalid tag format<a class="anchor" href="#invalid-tag-format" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>invalid reference format</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="invalid-reference-format">“invalid reference format”<a class="anchor" href="#invalid-reference-format" aria-label="Link to this section"></a></h3>
+<p>The new tag contains characters that are not allowed, such as spaces. Use underscores or hyphens instead.</p>
+<p>This works:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check tag format (no spaces, special chars)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Good</span>
-</span></span><span class="line"><span class="cl">rfswift image tag -i image:old -t image:new
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Bad</span>
-</span></span><span class="line"><span class="cl">rfswift image tag -i image:old -t <span class="s2">&#34;image with spaces:new&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift image tag -i image:old -t <span class="s2">&#34;image:new tag&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use underscores or hyphens</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image tag -i image:old -t image:new
 </span></span><span class="line"><span class="cl">rfswift image tag -i image:old -t image_new:v1
 </span></span><span class="line"><span class="cl">rfswift image tag -i image:old -t image-new:v1</span></span></code></pre></div></div>
-<h3 id="tag-already-exists">Tag already exists<a class="anchor" href="#tag-already-exists" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Tag already points to different image</p>
-<p><strong>Solution:</strong></p>
+<p>This fails:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check existing tag</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove old tag first</span>
-</span></span><span class="line"><span class="cl">rfswift image rm old_image:new_tag
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then create new tag</span>
-</span></span><span class="line"><span class="cl">rfswift image tag -i source:tag -t new_tag:version
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or: Tag overwrites automatically with same ID</span>
-</span></span><span class="line"><span class="cl">rfswift image tag -i source:tag -t existing:tag</span></span></code></pre></div></div>
-<h3 id="permission-denied">Permission denied<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Permission denied</code></p>
-<p><strong>Solutions:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image tag -i image:old -t <span class="s2">&#34;image with spaces:new&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift image tag -i image:old -t <span class="s2">&#34;image:new tag&#34;</span></span></span></code></pre></div></div>
+<h3 id="the-tag-already-points-to-another-image">The tag already points to another image<a class="anchor" href="#the-tag-already-points-to-another-image" aria-label="Link to this section"></a></h3>
+<p>Check your images, remove the old tag, then create the new one:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use sudo</span>
-</span></span><span class="line"><span class="cl">sudo rfswift image tag -i source:tag -t new:tag
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or add user to docker group</span>
-</span></span><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">local</span>
+</span></span><span class="line"><span class="cl">rfswift image rm -i old_image:new_tag
+</span></span><span class="line"><span class="cl">rfswift image tag -i source:tag -t new_tag:version</span></span></code></pre></div></div>
+<p>You can also tag over it directly: the tag then moves to the new image.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image tag -i source:tag -t existing:tag</span></span></code></pre></div></div>
+<h3 id="permission-denied">“Permission denied”<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
+<p>Your user cannot talk to Docker. On Linux, <code>rfswift host docker-access</code> grants access without logging out. You can also add your user to the <code>docker</code> group by hand, or run the command with <code>sudo</code>:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host docker-access</span></span></code></pre></div></div>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
 </span></span><span class="line"><span class="cl">newgrp docker
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then retry</span>
 </span></span><span class="line"><span class="cl">rfswift image tag -i source:tag -t new:tag</span></span></code></pre></div></div>
-<h3 id="cannot-retag-while-container-running">Cannot retag while container running<a class="anchor" href="#cannot-retag-while-container-running" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Want to retag image being used by container</p>
-<p><strong>Solution:</strong></p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># This is actually OK - containers are unaffected</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Tags can be changed while containers are running</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Container continues using the image it was started with</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># New tag just provides another reference to same image</span>
-</span></span><span class="line"><span class="cl">rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
-</span></span><span class="line"><span class="cl"><span class="c1"># Running containers using penthertz/rfswift_resolute:sdr_full are unaffected</span></span></span></code></pre></div></div>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo rfswift image tag -i source:tag -t new:tag</span></span></code></pre></div></div>
+<h3 id="tagging-an-image-that-a-running-container-uses">Tagging an image that a running container uses<a class="anchor" href="#tagging-an-image-that-a-running-container-uses" aria-label="Link to this section"></a></h3>
+<p>This is fine. Running containers keep using the image they started from, and the new tag is only one more name for the same image:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1</span></span></code></pre></div></div>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/images"><code>images</code></a> - List and manage images</li>
-<li><a href="/docs/commands/rename"><code>rename</code></a> - Rename containers</li>
-<li><a href="/docs/commands/build"><code>build</code></a> - Build images to tag</li>
-<li><a href="/docs/commands/delete"><code>delete</code></a> - Remove old tags</li>
-<li><a href="/docs/commands/export"><code>export</code></a> - Export tagged images</li>
+<li><a href="/docs/commands/images"><code>images</code></a>: list and manage images</li>
+<li><a href="/docs/commands/rename"><code>rename</code></a>: rename containers</li>
+<li><a href="/docs/commands/build"><code>build</code></a>: build images to tag</li>
+<li><a href="/docs/commands/delete"><code>delete</code></a>: remove old tags</li>
+<li><a href="/docs/commands/export"><code>export</code></a>: export tagged images</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>No Disk Space Used</strong>: Retagging creates a new reference to the same image data. Multiple tags for one image don&rsquo;t use extra disk space - they all point to the same layers!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Original Tag Remains</strong>: Unlike <code>rename</code> for containers, <code>retag</code> doesn&rsquo;t remove the original tag. Both the old and new tags will exist. Use <code>delete</code> to remove unwanted tags.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Version Management</strong>: Use <code>retag</code> to create semantic version tags (v1.2.3), major version tags (v1), and special tags (latest, stable). This makes version management and rollback much easier!</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -563,33 +490,20 @@
     <li><a href="#options">Options</a></li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#one-image-one-tag-per-environment">One image, one tag per environment</a></li>
+        <li><a href="#version-tags">Version tags</a></li>
       </ul>
     </li>
-    <li><a href="#how-retag-works">How retag works</a>
-      <ul>
-        <li><a href="#tag-creation-process">Tag creation process</a></li>
-      </ul>
-    </li>
-    <li><a href="#retag-vs-rename">Retag vs rename</a>
-      <ul>
-        <li><a href="#key-differences">Key differences</a></li>
-      </ul>
-    </li>
-    <li><a href="#tag-naming-conventions">Tag naming conventions</a>
-      <ul>
-        <li><a href="#recommended-patterns">Recommended patterns</a></li>
-        <li><a href="#tag-best-practices">Tag best practices</a></li>
-      </ul>
-    </li>
+    <li><a href="#how-tagging-works">How tagging works</a></li>
+    <li><a href="#tagging-an-image-or-renaming-a-container">Tagging an image or renaming a container?</a></li>
+    <li><a href="#choosing-tag-names">Choosing tag names</a></li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#source-image-not-found">Source image not found</a></li>
-        <li><a href="#invalid-tag-format">Invalid tag format</a></li>
-        <li><a href="#tag-already-exists">Tag already exists</a></li>
-        <li><a href="#permission-denied">Permission denied</a></li>
-        <li><a href="#cannot-retag-while-container-running">Cannot retag while container running</a></li>
+        <li><a href="#no-such-image">“No such image”</a></li>
+        <li><a href="#invalid-reference-format">“invalid reference format”</a></li>
+        <li><a href="#the-tag-already-points-to-another-image">The tag already points to another image</a></li>
+        <li><a href="#permission-denied">“Permission denied”</a></li>
+        <li><a href="#tagging-an-image-that-a-running-container-uses">Tagging an image that a running container uses</a></li>
       </ul>
     </li>
     <li><a href="#related-commands">Related commands</a></li>

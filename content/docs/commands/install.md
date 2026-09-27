@@ -7,10 +7,16 @@ description: "Install extra tools in a container with its install functions, or 
 weight: 5
 ---
 
-Install extra tools in a container with the install functions its image ships, or in a Nix environment with the guided package installer.
+`rfswift container install` adds a tool that isn't preinstalled in your container, using the install functions the image ships. With the Nix engine, it opens the guided package installer instead. Use it when a toolbox is missing one tool you need.
+
+```bash
+rfswift container install -c my_container
+```
+
+Without `-i`, you pick the function from a searchable list of everything the image offers, so you never have to know its name.
 
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift container install`. The legacy `rfswift install` still works and prints a notice.
+**Other spellings**: the legacy `rfswift install` still works and prints a notice.
 {{< /callout >}}
 
 ## Synopsis
@@ -21,81 +27,83 @@ rfswift container install -c CONTAINER -i FUNCTION     # run one by name
 rfswift --engine nix container install                 # the Nix package wizard (same as: rfswift env install)
 ```
 
-Every RF Swift image carries `/root/scripts` with install functions for tools that are not preinstalled (`sdrpp_soft_install`, `gnuradio_modules_install`, ...). Without `-i`, RF Swift lists the functions found inside the container in a filterable picker, so you never have to look up a function name. The function's exit status is checked: a failed build is reported with the tail of its output instead of being called installed; apt housekeeping errors are only warnings. The Workbench offers the same picker as **Install tools...** on a mission.
+How it works:
 
----
+- Every RF Swift image carries `/root/scripts` with install functions for tools that are not preinstalled. The [Included tools](/docs/guide/list-of-tools/) tables list each tool's function in the **Installation function** column.
+- Each function takes care of the tool's dependencies, compilation and configuration.
+- Without `-i`, RF Swift lists the functions found inside the container in a filterable picker.
+- The function's exit status is checked: a failed build is reported with the end of its output instead of being marked as installed. Errors from apt housekeeping are only warnings.
+- The Workbench offers the same picker as **Install tools...** on a mission.
 
 ## Options
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
 | `-c, --container STRING` | Container ID or name (interactive picker if omitted) | No | `-c my_container` |
-| `-i, --install STRING` | Function name to execute (searchable list if omitted) | No | `-i sdrpp_soft_install` |
+| `-i, --install STRING` | Function name to run (searchable list if omitted) | No | `-i gqrx_soft_install` |
 
 {{< callout type="info" >}}
-**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable container picker to select the installation target.
+**Container picker**: without `-c` in an interactive terminal, RF Swift shows a picker so you can choose the container to install into.
 {{< /callout >}}
-
----
 
 ## Examples
 
 ### Basic usage
 
-**Install SDR++ software:**
+#### Install SDR++
 ```bash
-rfswift container install -c work -i sdrpp_soft_install
+rfswift container install -c work -i sdrpp_soft_fromsource_install
 ```
 
-**Install GNU Radio modules:**
+#### Install a GNU Radio module (gr-dab)
 ```bash
-rfswift container install -c sdr_work -i gnuradio_modules_install
+rfswift container install -c sdr_work -i grdab_grmod_install
 ```
 
-**Install wireless tools:**
+#### Install Aircrack-ng
 ```bash
-rfswift container install -c wifi_analysis -i wireless_tools_install
+rfswift container install -c wifi_analysis -i aircrack_soft_install
 ```
 
-### Real-World scenarios
+### Everyday cases
 
-**Setup new SDR container:**
+#### Setup new SDR container
 ```bash
 # Create container
 rfswift container create -i penthertz/rfswift_resolute:sdr_light -n sdr_custom
 
 # Install additional tools
-rfswift container install -c sdr_custom -i sdrpp_soft_install
-rfswift container install -c sdr_custom -i hackrf_tools_install
-rfswift container install -c sdr_custom -i rtlsdr_tools_install
+rfswift container install -c sdr_custom -i sdrpp_soft_fromsource_install
+rfswift container install -c sdr_custom -i hackrf_devices_install
+rfswift container install -c sdr_custom -i rtlsdr_devices_install
 
 # Container now has custom toolset
 rfswift container shell -c sdr_custom
 ```
 
-**Add missing tool:**
+#### Add missing tool
 ```bash
-# Working in container, need additional tool
+# You are working in the container and need another tool
 rfswift container shell -c analysis
-# Realize you need inspectrum
+# ... you realise you need Inspectrum
 exit
 
-# Install from host
-rfswift container install -c analysis -i inspectrum_install
+# Install it from your computer
+rfswift container install -c analysis -i inspectrum_soft_install
 
 # Tool now available
 rfswift container shell -c analysis
 inspectrum
 ```
 
-**Batch installation:**
+#### Batch installation
 ```bash
 # Install multiple tools
 TOOLS=(
-    "sdrpp_soft_install"
-    "gqrx_install"
-    "urh_install"
-    "inspectrum_install"
+    "sdrpp_soft_fromsource_install"
+    "gqrx_soft_install"
+    "urh_soft_install"
+    "inspectrum_soft_install"
 )
 
 for tool in "${TOOLS[@]}"; do
@@ -104,29 +112,27 @@ for tool in "${TOOLS[@]}"; do
 done
 ```
 
-**Custom toolchain setup:**
+#### Custom toolchain setup
 ```bash
 # Create specialized container
-rfswift container create -i penthertz/rfswift_resolute:base -n custom_rf
+rfswift container create -i penthertz/rfswift_resolute:corebuild -n custom_rf
 
 # Install specific tools
-rfswift container install -c custom_rf -i gnuradio_install
-rfswift container install -c custom_rf -i hackrf_tools_install
-rfswift container install -c custom_rf -i limesuite_install
+rfswift container install -c custom_rf -i gnuradio_soft_install
+rfswift container install -c custom_rf -i hackrf_devices_install
+rfswift container install -c custom_rf -i limesdr_devices_install
 
 # Commit as custom image
 rfswift container commit -c custom_rf -i my_custom_toolchain:v1
 ```
 
----
-
 ## Troubleshooting
 
 ### Installation failed
 
-**Problem:** Installation function fails
+An install function fails.
 
-**Solutions:**
+To fix it:
 ```bash
 # Check container is running
 rfswift container last | grep container_name
@@ -137,9 +143,8 @@ rfswift container shell -c container -e "ping -c 3 google.com"
 # Check disk space
 rfswift container shell -c container -e "df -h"
 
-# Try with more verbose output
+# See the full output by running the function yourself inside the container
 rfswift container shell -c container
-# Run installation command manually to see errors
 exit
 
 # Update package lists first
@@ -151,9 +156,9 @@ rfswift container install -c container -i function_name
 
 ### Function not found
 
-**Problem:** Installation function doesn't exist
+The function name you gave doesn't exist in this image.
 
-**Solutions:**
+To fix it:
 ```bash
 # Let RF Swift list the functions found inside the container
 rfswift container install -c container
@@ -162,25 +167,18 @@ rfswift container install -c container
 rfswift container shell -c container -e "update_rfscripts"
 ```
 
----
-
 ## Related commands
 
-- [`exec`](/docs/commands/exec) - Execute commands after installation
-- [`commit`](/docs/commands/commit) - Save container after installations
-- [`run`](/docs/commands/run) - Create container for installations
-- [`upgrade`](/docs/commands/upgrade) - Upgrade container with new tools
-
----
-
-{{< callout >}}
-**Automated Setup**: The `install` command uses predefined functions that handle dependencies, compilation, and configuration automatically. No need to manually compile or configure!
-{{< /callout >}}
+- [`container shell`](/docs/commands/exec/): use the tools you installed
+- [`container commit`](/docs/commands/commit/): save the container once the tools are installed
+- [`container create`](/docs/commands/run/): create a container
+- [`container upgrade`](/docs/commands/upgrade/): move a container to a newer image
+- [Add more software](/docs/guide/installing-software/): all the ways to get more tools
 
 {{< callout type="warning" >}}
-**Internet Required**: Installation functions download source code and packages from the internet. Ensure your container has network access during installation!
+**Needs internet access**: install functions download source code and packages, so the container needs network access while they run.
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**Commit After Installing**: After installing tools, commit your container with `rfswift container commit` to preserve your work. Otherwise, changes are lost if the container is removed!
+**Keep what you installed**: tools you add live in this container only. Commit it with `rfswift container commit` if you want to keep them after the container is removed.
 {{< /callout >}}

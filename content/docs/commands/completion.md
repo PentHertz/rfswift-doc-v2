@@ -7,34 +7,32 @@ description: "Generate and install shell completion for bash, zsh and fish."
 weight: 95
 ---
 
-{{< callout type="info" >}}
-`rfswift completion bash|zsh|fish --install` writes the script into the platform's completion directory for you; the Linux packages install bash, zsh and fish completions already. Completions cover the whole v4 tree, including `rfswift env install` package names.
-{{< /callout >}}
+Shell completion lets you press <kbd>Tab</kbd> to complete `rfswift` commands, flags, container names and image names. `rfswift completion` installs it for your shell. It covers the whole v4 command tree, including the package names of `rfswift env install`.
 
-Generate and install shell completion scripts for tab-completion.
+If you installed RF Swift from a Linux package (deb, rpm, pacman), bash, zsh and fish completion is already installed.
+
+```bash
+rfswift completion        # detects your shell and installs completion
+```
+
+After installing, reload your shell (`source ~/.bashrc`, or open a new terminal) before <kbd>Tab</kbd> works.
 
 ## Synopsis
 
 ```bash
-# Auto-detect shell and install
-rfswift completion
-
-# Install for specific shell
+rfswift completion              # detect the shell and install
 rfswift completion bash
 rfswift completion zsh
 rfswift completion fish
 rfswift completion powershell
 ```
 
-The `completion` command generates and installs tab-completion scripts for your shell, enabling command, flag, and argument completion when you press Tab.
-
----
+`rfswift completion bash|zsh|fish --install` writes the script into your platform's completion folder for you.
 
 ## Examples
 
-### Basic usage
+Without an argument, RF Swift detects your shell and installs the script:
 
-**Auto-detect and install:**
 ```bash
 rfswift completion
 # Detected shell: bash
@@ -42,47 +40,31 @@ rfswift completion
 # ✓ Completion script installed successfully
 ```
 
-**Install for specific shell:**
+Or name the shell yourself:
+
 ```bash
-# Bash
 rfswift completion bash
-
-# Zsh
 rfswift completion zsh
-
-# Fish
 rfswift completion fish
-
-# PowerShell
 rfswift completion powershell
 ```
 
----
-
-## Installation locations
+## Where the scripts go
 
 ### Bash
 
-**System-wide (requires sudo):**
-```
-/etc/bash_completion.d/rfswift
-```
+System-wide (needs sudo): `/etc/bash_completion.d/rfswift`. For your user only: `~/.bash_completion.d/rfswift` or `~/.bash_completion`.
 
-**User-specific:**
-```
-~/.bash_completion.d/rfswift
-~/.bash_completion
-```
+Make sure your `~/.bashrc` loads it:
 
-**Enable in ~/.bashrc:**
 ```bash
-# Add if not already present
 [[ -f ~/.bash_completion ]] && source ~/.bash_completion
 ```
 
 ### Zsh
 
-**Common locations:**
+Usual locations:
+
 ```
 ~/.zsh/completion/_rfswift
 ~/.oh-my-zsh/completions/_rfswift
@@ -90,257 +72,178 @@ rfswift completion powershell
 ${fpath[1]}/_rfswift
 ```
 
-**Enable in ~/.zshrc:**
-```bash
-# Add completion directory to fpath
-fpath=(~/.zsh/completion $fpath)
+Make sure your `~/.zshrc` adds the folder and starts the completion system:
 
-# Initialize completion system
+```bash
+fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit
 compinit
 ```
 
 ### Fish
 
-**Location:**
-```
-~/.config/fish/completions/rfswift.fish
-```
-
-**No additional configuration needed** - Fish loads completions automatically.
+`~/.config/fish/completions/rfswift.fish`. Fish loads it automatically; nothing else to set up.
 
 ### PowerShell
 
-**Profile location:**
+Find your profile, then load the completion script from it:
+
 ```powershell
 # Check profile path
 echo $PROFILE
 
 # Typical locations:
-# Windows PowerShell: 
+# Windows PowerShell:
 #   ~\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
 # PowerShell Core:
 #   ~\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
 ```
 
-**Enable in profile:**
 ```powershell
-# Add to profile
 . "C:\Path\To\CompletionScripts\rfswift.ps1"
 ```
 
----
+## What completes
 
-## How completion works
+Commands and command groups:
 
-### What gets completed
-
-**Commands:**
 ```bash
 rfswift <Tab>
-# Shows: run, exec, stop, remove, images, last, etc.
+# Shows: container, image, env, config, host, usb, audit, ...
 ```
 
-**Subcommands:**
+Subcommands:
+
 ```bash
 rfswift image <Tab>
 # Shows: local, remote, pull
 ```
 
-**Flags:**
+Flags:
+
 ```bash
 rfswift container create -<Tab>
 # Shows: -i, -n, -b, -p, -d, etc.
 ```
 
-**Container names:**
+Container names:
+
 ```bash
 rfswift container shell -c <Tab>
 # Shows: container1, container2, container3, etc.
 ```
 
-**Image names:**
+Image names:
+
 ```bash
 rfswift container create -i <Tab>
 # Shows: penthertz/rfswift_resolute:sdr_full, penthertz/rfswift_resolute:wifi, etc.
 ```
 
-### Completion features
-
-**Smart completion:**
-- Only shows relevant options for current context
-- Completes container names from running containers
-- Completes image names from local images
-- Suggests common values for flags
-
----
+Completion only offers what makes sense at that point: container names from your containers, image names from your local images, and common values for flags.
 
 ## Troubleshooting
 
-### Completion not working
+### <kbd>Tab</kbd> does nothing
 
-**Problem:** Tab completion doesn't work
+Check that the completion file exists and that your shell loads it, then reload your shell.
 
-**Solutions:**
+Bash:
 
-**For Bash:**
 ```bash
-# Check if completion file exists
 ls -la ~/.bash_completion.d/rfswift
 ls -la ~/.bash_completion
-
-# Check if sourced in .bashrc
 grep bash_completion ~/.bashrc
-
-# Add if missing
 echo '[[ -f ~/.bash_completion ]] && source ~/.bash_completion' >> ~/.bashrc
-
-# Reload
 source ~/.bashrc
 ```
 
-**For Zsh:**
-```bash
-# Check if completion file exists
-ls -la ~/.zsh/completion/_rfswift
+Zsh:
 
-# Check fpath
+```bash
+ls -la ~/.zsh/completion/_rfswift
 echo $fpath
 
-# Add completion directory to .zshrc
 cat >> ~/.zshrc << 'EOF'
 fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit
 compinit
 EOF
 
-# Reload
 source ~/.zshrc
 ```
 
-**For Fish:**
+Fish:
+
 ```bash
-# Check if completion file exists
 ls -la ~/.config/fish/completions/rfswift.fish
-
-# Reload completions
 fish_update_completions
-
-# Restart fish
 exec fish
 ```
 
-### Permission denied
+### "Permission denied" when installing
 
-**Problem:** Cannot write completion file
+The system-wide folder needs root. Check it, then either install for your user only or use `sudo`:
 
-**Solutions:**
 ```bash
-# Check permissions
 ls -ld /etc/bash_completion.d
-
-# Install to user directory instead
-rfswift completion bash
-# Will install to ~/.bash_completion.d/
-
-# Or use sudo for system-wide
-sudo rfswift completion bash
+rfswift completion bash          # installs to ~/.bash_completion.d/
+sudo rfswift completion bash     # system-wide
 ```
 
-### Old completions cached
+### Completion still shows old commands
 
-**Problem:** Completions show old commands
+Clear the cached completion, install it again and reload.
 
-**Solutions:**
+Bash:
 
-**Bash:**
 ```bash
-# Clear completion cache
 complete -r rfswift
-
-# Reinstall
 rfswift completion bash
-
-# Reload
 source ~/.bashrc
 ```
 
-**Zsh:**
+Zsh:
+
 ```bash
-# Remove compiled completion files
 rm -f ~/.zcompdump*
-
-# Reinstall
 rfswift completion zsh
-
-# Rebuild cache
 autoload -Uz compinit
 compinit
-
-# Reload
 source ~/.zshrc
 ```
 
-**Fish:**
+Fish:
+
 ```bash
-# Clear fish cache
 rm -rf ~/.cache/fish/
-
-# Reinstall
 rfswift completion fish
-
-# Restart
 exec fish
 ```
 
-### Completions conflict
+### Another tool's completion gets in the way
 
-**Problem:** Completions conflict with other tools
+Find which completion is active and whether several `rfswift` binaries are installed, remove the conflicting one, and install again:
 
-**Solutions:**
 ```bash
-# Check what provides rfswift completion
 complete -p rfswift  # Bash
 which -a rfswift     # Check multiple installations
-
-# Remove conflicting completion
 rm /path/to/conflicting/completion
-
-# Reinstall correct one
 rfswift completion
 ```
 
-### Shell not detected
+### Your shell isn't detected
 
-**Problem:** Auto-detection fails
+Name the shell yourself, or set `SHELL`:
 
-**Solutions:**
 ```bash
-# Specify shell explicitly
 rfswift completion bash
 
-# Or set SHELL variable
 export SHELL=/bin/bash
 rfswift completion
 ```
 
----
+## Related
 
-## Related commands
-
-- [`update`](/docs/commands/update) - Update RF Swift (refresh completions after)
-- [`install`](/docs/commands/install) - Install function scripts
-
----
-
-{{< callout emoji="⌨️" >}}
-**Productivity Boost**: Tab-completion dramatically improves workflow efficiency. Press Tab to complete commands, flags, container names, and image names automatically!
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Reload Required**: After installing completions, you must reload your shell configuration (`source ~/.bashrc` or restart terminal) before tab-completion will work.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Auto-Detection**: Running `rfswift completion` without arguments automatically detects your shell and installs the appropriate completion script. You can also specify the shell explicitly!
-{{< /callout >}}
+- [update](/docs/commands/update): refresh completion after an update
+- [container install](/docs/commands/install)

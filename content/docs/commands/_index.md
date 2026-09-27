@@ -6,7 +6,7 @@ description: "Every rfswift command with its syntax, options and examples, group
 weight: 11
 ---
 
-Every `rfswift` command has its own page with syntax, options and examples. You don't need to read this reference to get started: the [Quick start](/docs/quick-start/) covers the handful of commands most people use every day.
+Every `rfswift` command has its own page, with its syntax, options and examples. You don't need to read this reference to get started: the [Quick start](/docs/quick-start/) covers the few commands most people use every day. Come here when you need a specific option.
 
 {{< callout type="beginner" title="New to the command line?" >}}
 You never have to remember flags. Most commands open an interactive picker when something is missing: `rfswift container create` with no options starts a guided wizard, and `rfswift container shell` with no name lets you pick a container from a list. Prefer windows and buttons? The [Workbench](/docs/guide/workbench/) does the same things without typing.
@@ -37,11 +37,11 @@ man rfswift-env-update              # Linux packages ship man pages
 rfswift completion zsh --install    # tab completion
 ```
 
-Most commands open a TUI picker when a required flag is missing in a terminal: `rfswift container create` without `-i` and `-n` launches the guided wizard, `rfswift container shell` without `-c` shows a container picker, and `rfswift env update` without a name opens the update wizard. Everything falls back to plain flags when scripting or piping.
+`rfswift env update` without a name also opens a guided wizard. In scripts and pipes, every command works with plain flags and never waits for input.
 
 ## The v4 command tree
 
-RF Swift v4.0 "Nucleus" reorganised the CLI around **resources**. The old flat commands (`rfswift run`, `rfswift exec`, `rfswift images pull`, `rfswift nix install`, ...) all still work and print a notice pointing at the new spelling, so existing scripts and muscle memory are safe.
+Since v4.0 "Nucleus", commands are grouped by what they act on: containers, images, Nix environments, configuration, the host, and so on. The older flat commands (`rfswift run`, `rfswift exec`, `rfswift images pull`, `rfswift nix install`, ...) still work and print a notice with the new name, so existing scripts keep working.
 
 ```
 rfswift
@@ -104,98 +104,98 @@ rfswift --engine nix container create -i sdr_light -n radio
 export RFSWIFT_ENGINE=podman
 ```
 
-The ASCII banner is printed on interactive terminals only. It is skipped when stdout is a pipe (scripts, `--json` consumers) and when `RFSWIFT_NO_BANNER` is set.
+The ASCII banner only appears in an interactive terminal. It is skipped when the output goes to a pipe (scripts, `--json` consumers) and when `RFSWIFT_NO_BANNER` is set.
 
 ## Command groups
 
 ### Containers
 
 {{< cards >}}
-  {{< card link="container" title="container" icon="cube" subtitle="Create, enter, stop, remove, rename, commit and upgrade containers" >}}
-  {{< card link="run" title="container create (run)" icon="play" subtitle="Create and start a new container, all options" >}}
-  {{< card link="exec" title="container shell (exec)" icon="terminal" subtitle="Enter a container or run a command in it" >}}
-  {{< card link="install" title="container install" icon="puzzle" subtitle="Guided tool installation in a container or Nix environment" >}}
-  {{< card link="profile" title="profile" icon="collection" subtitle="YAML presets for quick container creation" >}}
-  {{< card link="stop" title="container stop" icon="pause" subtitle="Stop a running container" >}}
-  {{< card link="remove" title="container rm" icon="trash" subtitle="Remove a container" >}}
-  {{< card link="rename" title="container rename" icon="pencil" subtitle="Rename a container" >}}
-  {{< card link="commit" title="container commit" icon="save" subtitle="Save a container as a new image" >}}
-  {{< card link="last" title="container last" icon="clock" subtitle="List recently used containers" >}}
-  {{< card link="upgrade" title="container upgrade" icon="arrow-up" subtitle="Move a container to a new image" >}}
+  {{< card link="container" title="container" subtitle="Create, enter, stop, remove, rename, commit and upgrade containers" >}}
+  {{< card link="run" title="container create (run)" subtitle="Create and start a new container, all options" >}}
+  {{< card link="exec" title="container shell (exec)" subtitle="Enter a container or run a command in it" >}}
+  {{< card link="install" title="container install" subtitle="Guided tool installation in a container or Nix environment" >}}
+  {{< card link="profile" title="profile" subtitle="YAML presets for quick container creation" >}}
+  {{< card link="stop" title="container stop" subtitle="Stop a running container" >}}
+  {{< card link="remove" title="container rm" subtitle="Remove a container" >}}
+  {{< card link="rename" title="container rename" subtitle="Rename a container" >}}
+  {{< card link="commit" title="container commit" subtitle="Save a container as a new image" >}}
+  {{< card link="last" title="container last" subtitle="List recently used containers" >}}
+  {{< card link="upgrade" title="container upgrade" subtitle="Move a container to a new image" >}}
 {{< /cards >}}
 
 ### Images and portability
 
 {{< cards >}}
-  {{< card link="image" title="image" icon="photograph" subtitle="List, pull, audit, build, tag, export and import images" >}}
-  {{< card link="images" title="image local / remote / pull / versions" icon="cloud-download" subtitle="Registry browsing, pulling and version tracking" >}}
-  {{< card link="build" title="image build" icon="beaker" subtitle="Build an image from a YAML recipe" >}}
-  {{< card link="delete" title="image rm" icon="x" subtitle="Delete an image" >}}
-  {{< card link="retag" title="image tag" icon="tag" subtitle="Rename an image tag" >}}
-  {{< card link="download" title="image download" icon="download" subtitle="Save an image to tar.gz" >}}
-  {{< card link="export" title="image export" icon="share" subtitle="Export containers or images" >}}
-  {{< card link="import" title="image import" icon="upload" subtitle="Import containers or images" >}}
+  {{< card link="image" title="image" subtitle="List, pull, audit, build, tag, export and import images" >}}
+  {{< card link="images" title="image local / remote / pull / versions" subtitle="Registry browsing, pulling and version tracking" >}}
+  {{< card link="build" title="image build" subtitle="Build an image from a YAML recipe" >}}
+  {{< card link="delete" title="image rm" subtitle="Delete an image" >}}
+  {{< card link="retag" title="image tag" subtitle="Rename an image tag" >}}
+  {{< card link="download" title="image download" subtitle="Save an image to tar.gz" >}}
+  {{< card link="export" title="image export" subtitle="Export containers or images" >}}
+  {{< card link="import" title="image import" subtitle="Import containers or images" >}}
 {{< /cards >}}
 
 ### Native Nix environments
 
 {{< cards >}}
-  {{< card link="env" title="env" icon="sparkles" subtitle="Create, enter, update, roll back, audit and export native Nix environments" >}}
-  {{< card link="/docs/guide/nix-engine" title="Nix engine guide" icon="book-open" subtitle="How the native engine works, isolation, GPU, udev, Windows" >}}
+  {{< card link="env" title="env" subtitle="Create, enter, update, roll back, audit and export native Nix environments" >}}
+  {{< card link="/docs/guide/nix-engine" title="Nix engine guide" subtitle="How the native engine works, isolation, GPU, udev, Windows" >}}
 {{< /cards >}}
 
 ### Runtime configuration
 
 {{< cards >}}
-  {{< card link="config" title="config" icon="adjustments" subtitle="Change devices, mounts, capabilities, cgroups, GPUs, ports and ulimits of an existing container" >}}
-  {{< card link="bindings" title="config bindings" icon="link" subtitle="Device and volume bindings" >}}
-  {{< card link="capabilities" title="config capabilities" icon="shield-check" subtitle="Linux capabilities" >}}
-  {{< card link="cgroups" title="config cgroups" icon="adjustments" subtitle="cgroup device rules" >}}
-  {{< card link="gpu" title="config gpus" icon="chip" subtitle="GPU passthrough" >}}
-  {{< card link="ports" title="config ports" icon="server" subtitle="Exposed and published ports" >}}
-  {{< card link="ulimits" title="config ulimits" icon="adjustments" subtitle="Resource limits" >}}
-  {{< card link="realtime" title="realtime" icon="lightning-bolt" subtitle="One-command realtime mode for SDR work" >}}
+  {{< card link="config" title="config" subtitle="Change devices, mounts, capabilities, cgroups, GPUs, ports and ulimits of an existing container" >}}
+  {{< card link="bindings" title="config bindings" subtitle="Device and volume bindings" >}}
+  {{< card link="capabilities" title="config capabilities" subtitle="Linux capabilities" >}}
+  {{< card link="cgroups" title="config cgroups" subtitle="cgroup device rules" >}}
+  {{< card link="gpu" title="config gpus" subtitle="GPU passthrough" >}}
+  {{< card link="ports" title="config ports" subtitle="Exposed and published ports" >}}
+  {{< card link="ulimits" title="config ulimits" subtitle="Resource limits" >}}
+  {{< card link="realtime" title="realtime" subtitle="One-command realtime mode for SDR work" >}}
 {{< /cards >}}
 
 ### Networking
 
 {{< cards >}}
-  {{< card link="network" title="network" icon="globe-alt" subtitle="Managed NAT networks for container isolation" >}}
+  {{< card link="network" title="network" subtitle="Managed NAT networks for container isolation" >}}
 {{< /cards >}}
 
 ### Devices and host
 
 {{< cards >}}
-  {{< card link="host" title="host" icon="desktop-computer" subtitle="Host setup: udev rules, Docker access, Nix jail, audio server" >}}
-  {{< card link="usb" title="usb" icon="device-mobile" subtitle="USB passthrough on macOS (Lima) and Windows (usbipd)" >}}
-  {{< card link="macusb" title="macusb" icon="device-mobile" subtitle="macOS USB backend details" >}}
-  {{< card link="winusb" title="winusb" icon="device-mobile" subtitle="Windows USB backend details" >}}
-  {{< card link="engine" title="engine" icon="cog" subtitle="Engine selection, Lima VM management" >}}
+  {{< card link="host" title="host" subtitle="Host setup: udev rules, Docker access, Nix jail, audio server" >}}
+  {{< card link="usb" title="usb" subtitle="USB passthrough on macOS (Lima) and Windows (usbipd)" >}}
+  {{< card link="macusb" title="macusb" subtitle="macOS USB backend details" >}}
+  {{< card link="winusb" title="winusb" subtitle="Windows USB backend details" >}}
+  {{< card link="engine" title="engine" subtitle="Engine selection, Lima VM management" >}}
 {{< /cards >}}
 
 ### Security
 
 {{< cards >}}
-  {{< card link="audit" title="audit" icon="shield-check" subtitle="Vulnerability and attack-surface audit of environments, images and containers" >}}
-  {{< card link="report" title="report" icon="document-report" subtitle="Assessment reports from a container and its workspace" >}}
+  {{< card link="audit" title="audit" subtitle="Vulnerability and attack-surface audit of environments, images and containers" >}}
+  {{< card link="report" title="report" subtitle="Assessment reports from a container and its workspace" >}}
 {{< /cards >}}
 
 ### Remote access
 
 {{< cards >}}
-  {{< card link="agent" title="agent" icon="wifi" subtitle="Serve the engines of a lab machine to authenticated remote clients (mTLS)" >}}
-  {{< card link="/docs/guide/remote-agent" title="Remote agent guide" icon="book-open" subtitle="Setup, credential files, Workbench connection, limits" >}}
+  {{< card link="agent" title="agent" subtitle="Serve the engines of a lab machine to authenticated remote clients (mTLS)" >}}
+  {{< card link="/docs/guide/remote-agent" title="Remote agent guide" subtitle="Setup, credential files, Workbench connection, limits" >}}
 {{< /cards >}}
 
 ### System and maintenance
 
 {{< cards >}}
-  {{< card link="system" title="system" icon="cog" subtitle="doctor, cleanup, update, upgrade, log and report under one parent" >}}
-  {{< card link="doctor" title="doctor" icon="shield-check" subtitle="Diagnose the host: engines, Nix, USB, display, audio, udev rules, jail" >}}
-  {{< card link="cleanup" title="cleanup" icon="trash" subtitle="Remove old containers and images" >}}
-  {{< card link="update" title="update" icon="refresh" subtitle="Update the RF Swift binary" >}}
-  {{< card link="log" title="log" icon="film" subtitle="Record and replay terminal sessions" >}}
-  {{< card link="completion" title="completion" icon="code" subtitle="Shell completion scripts" >}}
+  {{< card link="system" title="system" subtitle="doctor, cleanup, update, upgrade, log and report under one parent" >}}
+  {{< card link="doctor" title="doctor" subtitle="Diagnose the host: engines, Nix, USB, display, audio, udev rules, jail" >}}
+  {{< card link="cleanup" title="cleanup" subtitle="Remove old containers and images" >}}
+  {{< card link="update" title="update" subtitle="Update the RF Swift binary" >}}
+  {{< card link="log" title="log" subtitle="Record and replay terminal sessions" >}}
+  {{< card link="completion" title="completion" subtitle="Shell completion scripts" >}}
 {{< /cards >}}
 
 ## Quick reference

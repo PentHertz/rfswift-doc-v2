@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift config gpus · RF Swift</title>
   <meta name="description" content="Give an existing container access to GPUs.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/gpu/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/gpu/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift config gpus · RF Swift">
   <meta property="og:description" content="Give an existing container access to GPUs.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/gpu/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/gpu/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,20 +231,31 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift config gpus</h1><p class="doc-lead">Give an existing container access to GPUs.</p><p class="doc-meta">Reference · 8 min read · Updated September 27, 2026</p>
+      <h1>rfswift config gpus</h1><p class="doc-lead">Give an existing container access to GPUs.</p><p class="doc-meta">Reference · 8 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4</strong>: this group lives under the <code>config</code> parent as <code>rfswift config gpus</code> and remains available as <code>rfswift gpus</code>; both spellings are current. On Linux Docker the change is applied in place after one <code>sudo</code> prompt; on Podman the container is committed and re-created. Add <code>--recreate</code> to force the commit-and-recreate path. Either way the container restarts. See <a href="/docs/commands/config">config</a>.</p>
+      <p>GPU access lets tools inside a container use your graphics card: CUDA or OpenCL computing, GPU-based signal processing, machine-learning inference, and faster rendering. You can request it when you create a container (<code>--gpus</code>), or add it later with <code>rfswift config gpus</code>.</p>
+<p>The most common use creates a container with every GPU available:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n my_gpu --gpus all</span></span></code></pre></div></div>
+<p>RF Swift detects whether your GPU is NVIDIA, AMD or Intel and sets up the container for it. GPU passthrough needs a Linux host.</p>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">What happens when you apply a change</p><p>Adding or removing a GPU on an existing container restarts it, so save your work first. On Linux with Docker, the change is applied in place after one <code>sudo</code> prompt. On Podman, the container is committed and created again; add <code>--recreate</code> to use that method on Docker too. The shorter spelling <code>rfswift gpus</code> also works. See <a href="/docs/commands/config">config</a>.</p>
 </div>
-<p>Enable GPU access in containers for hardware-accelerated workloads: CUDA/OpenCL computing, GPU-based signal processing, machine learning inference, and GUI rendering.</p>
-<div class="admonition admonition-tip" role="note"><p><strong>Auto-detection</strong>: RF Swift automatically detects your GPU vendor (NVIDIA, AMD, or Intel) and configures the container accordingly. Just use <code>--gpus all</code> and RF Swift handles the rest.</p>
-</div>
+<h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
+<p>Create a container with a GPU (the vendor is detected):</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i IMAGE -n NAME --gpus all</span></span></code></pre></div></div>
+<p>Add a GPU to an existing container, or remove it:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config gpus add -c CONTAINER <span class="o">[</span>-g SPECIFIER<span class="o">]</span>
+</span></span><span class="line"><span class="cl">rfswift config gpus rm  -c CONTAINER</span></span></code></pre></div></div>
+<p>The interactive wizard also has a &ldquo;GPU passthrough&rdquo; switch.</p>
 <h2 id="how-it-works">How it works<a class="anchor" href="#how-it-works" aria-label="Link to this section"></a></h2>
-<p>When you use <code>--gpus all</code> or select &ldquo;GPU passthrough&rdquo; in the wizard, RF Swift:</p>
+<p>When you use <code>--gpus all</code>, or turn on &ldquo;GPU passthrough&rdquo; in the wizard, RF Swift:</p>
 <ol>
-<li><strong>Scans</strong> <code>/sys/class/drm/card*/device/vendor</code> and vendor-specific device nodes</li>
-<li><strong>Detects</strong> the GPU vendor(s) present on the host</li>
-<li><strong>Configures</strong> the container automatically:</li>
+<li>Reads <code>/sys/class/drm/card*/device/vendor</code> and the vendor-specific device files.</li>
+<li>Works out which GPU vendors are present.</li>
+<li>Sets up the container for each of them:</li>
 </ol>
 <div class="table-wrap">
 <table>
@@ -271,138 +268,116 @@
   <tbody>
     <tr>
       <td><strong>NVIDIA</strong> (vendor 0x10de)</td>
-      <td>Adds Docker DeviceRequests with <code>nvidia</code> driver (requires nvidia-container-toolkit)</td>
+      <td>Adds a Docker DeviceRequest with the <code>nvidia</code> driver (needs nvidia-container-toolkit)</td>
     </tr>
     <tr>
       <td><strong>AMD</strong> (vendor 0x1002)</td>
-      <td>Adds <code>/dev/kfd</code> + <code>/dev/dri</code> device bindings and cgroup rule <code>c 226:* rwm</code></td>
+      <td>Adds the <code>/dev/kfd</code> and <code>/dev/dri</code> devices and the cgroup rule <code>c 226:* rwm</code></td>
     </tr>
     <tr>
       <td><strong>Intel</strong> (vendor 0x8086)</td>
-      <td>Adds <code>/dev/dri</code> device binding and cgroup rule <code>c 226:* rwm</code></td>
+      <td>Adds the <code>/dev/dri</code> device and the cgroup rule <code>c 226:* rwm</code></td>
     </tr>
     <tr>
-      <td><strong>Multiple GPUs</strong></td>
-      <td>Configures all detected vendors</td>
+      <td><strong>Several GPUs</strong></td>
+      <td>Sets up every vendor it found</td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
-<h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create container with GPU (auto-detects vendor)</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i IMAGE -n NAME --gpus all
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add GPU to existing container</span>
-</span></span><span class="line"><span class="cl">rfswift gpus add -c CONTAINER <span class="o">[</span>-g SPECIFIER<span class="o">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove GPU from existing container</span>
-</span></span><span class="line"><span class="cl">rfswift gpus rm -c CONTAINER</span></span></code></pre></div></div>
-<p>The interactive wizard also offers &ldquo;GPU passthrough&rdquo; as a feature toggle.</p>
-<hr>
-<h2 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-label="Link to this section"></a></h2>
-<p>You need the GPU drivers and runtime installed on the <strong>host</strong>, not inside the container.</p>
-<h3 id="nvidia-gpus">NVIDIA GPUs<a class="anchor" href="#nvidia-gpus" aria-label="Link to this section"></a></h3>
+<h2 id="before-you-start">Before you start<a class="anchor" href="#before-you-start" aria-label="Link to this section"></a></h2>
+<p>The GPU drivers and runtime go on the <strong>host</strong>, not inside the container.</p>
+<h2 id="nvidia-gpus">NVIDIA GPUs<a class="anchor" href="#nvidia-gpus" aria-label="Link to this section"></a></h2>
+<h3 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-label="Link to this section"></a></h3>
 <ol>
 <li>
-<p><strong>Install NVIDIA drivers</strong> on the host:</p>
+<p>Check that the NVIDIA drivers are installed on the host:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if already installed</span>
-</span></span><span class="line"><span class="cl">nvidia-smi</span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nvidia-smi</span></span></code></pre></div></div>
 </li>
 <li>
-<p><strong>Install NVIDIA Container Toolkit:</strong></p>
+<p>Install the NVIDIA Container Toolkit.</p>
+<p>On Ubuntu or Debian:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Ubuntu/Debian</span>
-</span></span><span class="line"><span class="cl">curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey <span class="p">|</span> <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey <span class="p">|</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
 </span></span><span class="line"><span class="cl">curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list <span class="p">|</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  sed <span class="s1">&#39;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g&#39;</span> <span class="p">|</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
 </span></span><span class="line"><span class="cl">sudo apt-get update
-</span></span><span class="line"><span class="cl">sudo apt-get install -y nvidia-container-toolkit
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Fedora/RHEL</span>
-</span></span><span class="line"><span class="cl">curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo <span class="p">|</span> <span class="se">\
+</span></span><span class="line"><span class="cl">sudo apt-get install -y nvidia-container-toolkit</span></span></code></pre></div></div>
+<p>On Fedora or RHEL:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo <span class="p">|</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  sudo tee /etc/yum.repos.d/nvidia-container-toolkit.repo
 </span></span><span class="line"><span class="cl">sudo dnf install -y nvidia-container-toolkit</span></span></code></pre></div></div>
 </li>
 <li>
-<p><strong>Configure the runtime:</strong></p>
+<p>Configure the runtime.</p>
+<p>For Docker:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># For Docker</span>
-</span></span><span class="line"><span class="cl">sudo nvidia-ctk runtime configure --runtime<span class="o">=</span>docker
-</span></span><span class="line"><span class="cl">sudo systemctl restart docker
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># For Podman</span>
-</span></span><span class="line"><span class="cl">sudo nvidia-ctk cdi generate --output<span class="o">=</span>/etc/cdi/nvidia.yaml
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nvidia-ctk runtime configure --runtime<span class="o">=</span>docker
+</span></span><span class="line"><span class="cl">sudo systemctl restart docker</span></span></code></pre></div></div>
+<p>For Podman:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nvidia-ctk cdi generate --output<span class="o">=</span>/etc/cdi/nvidia.yaml
 </span></span><span class="line"><span class="cl">nvidia-ctk cdi list  <span class="c1"># verify</span></span></span></code></pre></div></div>
 </li>
 <li>
-<p><strong>Verify:</strong></p>
+<p>Check that a container can see the GPU:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker run --rm --gpus all nvidia/cuda:12.0-base nvidia-smi</span></span></code></pre></div></div>
 </li>
 </ol>
-<h3 id="nvidia-examples">NVIDIA examples<a class="anchor" href="#nvidia-examples" aria-label="Link to this section"></a></h3>
+<h3 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h3>
+<p>Check the GPU from inside a container:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Verify inside container</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c gpu_sdr -e <span class="s2">&#34;nvidia-smi&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Specific GPU in multi-GPU system (NVIDIA only)</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdr_gpu --gpus <span class="m">0</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n ml_gpu --gpus <span class="m">1</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># CUDA / PyTorch verification</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c gpu_sdr
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c gpu_sdr -e <span class="s2">&#34;nvidia-smi&#34;</span></span></span></code></pre></div></div>
+<p>On a machine with several NVIDIA GPUs, give each container a specific one:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdr_gpu --gpus <span class="m">0</span>
+</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n ml_gpu --gpus <span class="m">1</span></span></span></code></pre></div></div>
+<p>Check that CUDA works from PyTorch:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c gpu_sdr
 </span></span><span class="line"><span class="cl">python3 -c <span class="s2">&#34;import torch; print(f&#39;CUDA: {torch.cuda.is_available()}, Device: {torch.cuda.get_device_name(0)}&#39;)&#34;</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="amd-gpus-rocm">AMD GPUs (ROCm)<a class="anchor" href="#amd-gpus-rocm" aria-label="Link to this section"></a></h2>
-<p>When RF Swift detects an AMD GPU (vendor <code>0x1002</code> or <code>/dev/kfd</code>), <code>--gpus all</code> automatically adds <code>/dev/kfd</code>, <code>/dev/dri</code>, and the cgroup rule <code>c 226:* rwm</code>.</p>
+<p>When RF Swift detects an AMD GPU (vendor <code>0x1002</code>, or <code>/dev/kfd</code> is present), <code>--gpus all</code> adds <code>/dev/kfd</code>, <code>/dev/dri</code> and the cgroup rule <code>c 226:* rwm</code>.</p>
 <h3 id="prerequisites-1">Prerequisites<a class="anchor" href="#prerequisites-1" aria-label="Link to this section"></a></h3>
 <ol>
 <li>
-<p><strong>Install ROCm on the host:</strong></p>
+<p>Install ROCm on the host (Ubuntu 22.04 or 24.04), then check it:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Ubuntu 22.04/24.04</span>
-</span></span><span class="line"><span class="cl">sudo apt-get update
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get update
 </span></span><span class="line"><span class="cl">wget https://repo.radeon.com/amdgpu-install/latest/ubuntu/jammy/amdgpu-install_6.0.60000-1_all.deb
 </span></span><span class="line"><span class="cl">sudo apt-get install ./amdgpu-install_6.0.60000-1_all.deb
 </span></span><span class="line"><span class="cl">sudo amdgpu-install --usecase<span class="o">=</span>rocm
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify</span>
 </span></span><span class="line"><span class="cl">rocm-smi</span></span></code></pre></div></div>
 </li>
 <li>
-<p><strong>Add your user to the <code>render</code> and <code>video</code> groups:</strong></p>
+<p>Add your user to the <code>render</code> and <code>video</code> groups, then log out and back in:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG render,video <span class="nv">$USER</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Log out and back in</span></span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG render,video <span class="nv">$USER</span></span></span></code></pre></div></div>
 </li>
 <li>
-<p><strong>Verify device nodes exist:</strong></p>
+<p>Check that the device files exist. <code>/dev/kfd</code> is the compute interface; each <code>/dev/dri/renderD*</code> is one GPU:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l /dev/kfd /dev/dri/render*
-</span></span><span class="line"><span class="cl"><span class="c1"># /dev/kfd - Kernel Fusion Driver (compute)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># /dev/dri/renderD* - DRM render nodes (per-GPU)</span></span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l /dev/kfd /dev/dri/render*</span></span></code></pre></div></div>
 </li>
 </ol>
 <h3 id="usage">Usage<a class="anchor" href="#usage" aria-label="Link to this section"></a></h3>
-<p>With auto-detection, just use <code>--gpus all</code> and RF Swift handles the rest:</p>
+<p>Create a container with the GPU, or add it to an existing one:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create container (auto-detects AMD and adds /dev/kfd + /dev/dri + cgroup)</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n rocm_sdr --gpus all
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add GPU to existing container</span>
-</span></span><span class="line"><span class="cl">rfswift gpus add -c sdr_work
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify inside container</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c rocm_sdr
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n rocm_sdr --gpus all
+</span></span><span class="line"><span class="cl">rfswift config gpus add -c sdr_work</span></span></code></pre></div></div>
+<p>Check the GPU from inside the container:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c rocm_sdr
 </span></span><span class="line"><span class="cl">rocm-smi                          <span class="c1"># List GPUs</span>
 </span></span><span class="line"><span class="cl">rocminfo                          <span class="c1"># Detailed GPU info</span>
 </span></span><span class="line"><span class="cl">clinfo                            <span class="c1"># OpenCL info</span></span></span></code></pre></div></div>
-<p>RF Swift adds the following automatically:</p>
+<p>RF Swift adds these for you:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -426,99 +401,95 @@
     <tr>
       <td>Cgroup rule</td>
       <td><code>c 226:* rwm</code></td>
-      <td>Allow access to DRI device nodes</td>
+      <td>Access to the DRI device files</td>
     </tr>
   </tbody>
 </table>
 </div>
-<p>You can also configure manually if needed:</p>
+<p>You can also add them by hand:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings add -d -c sdr_work -s /dev/kfd -t /dev/kfd
-</span></span><span class="line"><span class="cl">rfswift bindings add -d -c sdr_work -s /dev/dri -t /dev/dri
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c sdr_work -r <span class="s2">&#34;c 226:* rwm&#34;</span></span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -d -c sdr_work -s /dev/kfd -t /dev/kfd
+</span></span><span class="line"><span class="cl">rfswift config bindings add -d -c sdr_work -s /dev/dri -t /dev/dri
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c sdr_work -r <span class="s2">&#34;c 226:* rwm&#34;</span></span></span></code></pre></div></div>
 <h3 id="rocm-with-pytorch">ROCm with PyTorch<a class="anchor" href="#rocm-with-pytorch" aria-label="Link to this section"></a></h3>
+<p>Install the ROCm build of PyTorch inside the container, then check the GPU:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c rocm_sdr
 </span></span><span class="line"><span class="cl">pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0
 </span></span><span class="line"><span class="cl">python3 -c <span class="s2">&#34;import torch; print(f&#39;HIP available: {torch.cuda.is_available()}, Device: {torch.cuda.get_device_name(0)}&#39;)&#34;</span></span></span></code></pre></div></div>
-<h3 id="specific-gpu-selection">Specific GPU selection<a class="anchor" href="#specific-gpu-selection" aria-label="Link to this section"></a></h3>
-<p>On multi-GPU AMD systems, control which GPUs are visible:</p>
+<h3 id="choosing-specific-gpus">Choosing specific GPUs<a class="anchor" href="#choosing-specific-gpus" aria-label="Link to this section"></a></h3>
+<p>On a machine with several AMD GPUs, choose which ones tools see with <code>HIP_VISIBLE_DEVICES</code> inside the container:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Inside the container, use HIP_VISIBLE_DEVICES</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c rocm_sdr
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c rocm_sdr
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">HIP_VISIBLE_DEVICES</span><span class="o">=</span><span class="m">0</span>       <span class="c1"># First GPU only</span>
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">HIP_VISIBLE_DEVICES</span><span class="o">=</span>0,1     <span class="c1"># First two GPUs</span>
 </span></span><span class="line"><span class="cl">rocm-smi                           <span class="c1"># Shows only selected GPUs</span></span></span></code></pre></div></div>
-<p>Or expose only specific render nodes:</p>
+<p>Or give the container only one GPU&rsquo;s render node:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Only first GPU</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n rocm_gpu0 <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n rocm_gpu0 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/kfd:/dev/kfd,/dev/dri/renderD128:/dev/dri/renderD128 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 226:* rwm&#34;</span></span></span></code></pre></div></div>
-<h3 id="profile-for-rocm">Profile for ROCm<a class="anchor" href="#profile-for-rocm" aria-label="Link to this section"></a></h3>
+<h3 id="a-profile-for-rocm">A profile for ROCm<a class="anchor" href="#a-profile-for-rocm" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">rocm-sdr</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">SDR with AMD GPU (ROCm)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">penthertz/rfswift_resolute:sdr_full</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">gpus</span><span class="p">:</span><span class="w"> </span><span class="l">all</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="intel-gpus">Intel GPUs<a class="anchor" href="#intel-gpus" aria-label="Link to this section"></a></h2>
-<p>When RF Swift detects an Intel GPU (vendor <code>0x8086</code>), <code>--gpus all</code> automatically adds <code>/dev/dri</code> and the cgroup rule <code>c 226:* rwm</code>. Supports integrated (UHD, Iris) and discrete (Arc) GPUs for OpenCL and oneAPI workloads.</p>
+<p>When RF Swift detects an Intel GPU (vendor <code>0x8086</code>), <code>--gpus all</code> adds <code>/dev/dri</code> and the cgroup rule <code>c 226:* rwm</code>. This covers integrated GPUs (UHD, Iris) and discrete ones (Arc), for OpenCL and oneAPI.</p>
 <h3 id="prerequisites-2">Prerequisites<a class="anchor" href="#prerequisites-2" aria-label="Link to this section"></a></h3>
 <ol>
 <li>
-<p><strong>Install Intel compute drivers:</strong></p>
+<p>Install the Intel compute drivers on the host (Ubuntu):</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Ubuntu</span>
-</span></span><span class="line"><span class="cl">sudo apt-get install -y intel-opencl-icd intel-level-zero-gpu level-zero <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  intel-media-va-driver-non-free libmfx1 libvpl2
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># For Intel Arc (discrete GPU), also install:</span>
-</span></span><span class="line"><span class="cl">sudo apt-get install -y intel-gpu-tools</span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install -y intel-opencl-icd intel-level-zero-gpu level-zero <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  intel-media-va-driver-non-free libmfx1 libvpl2</span></span></code></pre></div></div>
+<p>For an Intel Arc card, also install:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install -y intel-gpu-tools</span></span></code></pre></div></div>
 </li>
 <li>
-<p><strong>Add your user to the <code>render</code> group:</strong></p>
+<p>Add your user to the <code>render</code> group:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG render <span class="nv">$USER</span></span></span></code></pre></div></div>
 </li>
 <li>
-<p><strong>Verify:</strong></p>
+<p>Check the GPU:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l /dev/dri/render*
 </span></span><span class="line"><span class="cl">clinfo <span class="p">|</span> grep <span class="s2">&#34;Device Name&#34;</span></span></span></code></pre></div></div>
 </li>
 </ol>
 <h3 id="usage-1">Usage<a class="anchor" href="#usage-1" aria-label="Link to this section"></a></h3>
+<p>Create a container with the GPU, or add it to an existing one:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create container (auto-detects Intel and adds /dev/dri + cgroup)</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n intel_sdr --gpus all
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add GPU to existing container</span>
-</span></span><span class="line"><span class="cl">rfswift gpus add -c sdr_work
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify inside container</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c intel_sdr
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n intel_sdr --gpus all
+</span></span><span class="line"><span class="cl">rfswift config gpus add -c sdr_work</span></span></code></pre></div></div>
+<p>Check the GPU from inside the container:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c intel_sdr
 </span></span><span class="line"><span class="cl">clinfo <span class="p">|</span> grep <span class="s2">&#34;Device Name&#34;</span>       <span class="c1"># OpenCL devices</span>
 </span></span><span class="line"><span class="cl">vainfo                             <span class="c1"># Video acceleration info</span>
 </span></span><span class="line"><span class="cl">intel_gpu_top                      <span class="c1"># GPU utilization (if intel-gpu-tools installed)</span></span></span></code></pre></div></div>
-<p>Manual setup if needed:</p>
+<p>To add it by hand:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift bindings add -d -c sdr_work -s /dev/dri -t /dev/dri
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c sdr_work -r <span class="s2">&#34;c 226:* rwm&#34;</span></span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -d -c sdr_work -s /dev/dri -t /dev/dri
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c sdr_work -r <span class="s2">&#34;c 226:* rwm&#34;</span></span></span></code></pre></div></div>
 <h3 id="intel-with-oneapi">Intel with oneAPI<a class="anchor" href="#intel-with-oneapi" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c intel_sdr
 </span></span><span class="line"><span class="cl">pip3 install intel-extension-for-pytorch
 </span></span><span class="line"><span class="cl">python3 -c <span class="s2">&#34;import intel_extension_for_pytorch as ipex; print(&#39;Intel GPU available&#39;)&#34;</span></span></span></code></pre></div></div>
-<h3 id="profile-for-intel-gpu">Profile for Intel GPU<a class="anchor" href="#profile-for-intel-gpu" aria-label="Link to this section"></a></h3>
+<h3 id="a-profile-for-intel-gpus">A profile for Intel GPUs<a class="anchor" href="#a-profile-for-intel-gpus" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">intel-sdr</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">SDR with Intel GPU</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">penthertz/rfswift_resolute:sdr_full</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">gpus</span><span class="p">:</span><span class="w"> </span><span class="l">all</span></span></span></code></pre></div></div>
-<hr>
-<h2 id="quick-comparison">Quick comparison<a class="anchor" href="#quick-comparison" aria-label="Link to this section"></a></h2>
-<p>All three vendors use the same <code>--gpus all</code> flag, and RF Swift auto-detects and configures accordingly:</p>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">Profiles work with any GPU</p><p><code>gpus: all</code> in a profile works for every vendor, because detection runs when the container is created.</p>
+</div>
+<h2 id="comparison">Comparison<a class="anchor" href="#comparison" aria-label="Link to this section"></a></h2>
+<p>All three vendors use the same <code>--gpus all</code> flag:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -561,15 +532,14 @@
       <td>PyTorch (IPEX)</td>
     </tr>
     <tr>
-      <td><strong>Specific GPU select</strong></td>
+      <td><strong>Choosing a GPU</strong></td>
       <td><code>--gpus 0,1</code></td>
-      <td><code>HIP_VISIBLE_DEVICES=0,1</code> (env var)</td>
-      <td>Expose specific renderD*</td>
+      <td><code>HIP_VISIBLE_DEVICES=0,1</code> (environment variable)</td>
+      <td>Give specific <code>renderD*</code> nodes</td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="engine-compatibility">Engine compatibility<a class="anchor" href="#engine-compatibility" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
@@ -604,94 +574,69 @@
   </tbody>
 </table>
 </div>
-<p>GPU passthrough requires a <strong>Linux host</strong> with direct access to the GPU hardware. On macOS and Windows, all container engines run inside a VM without GPU access.</p>
+<p><code>--gpus</code> passthrough needs a <strong>Linux host</strong> with direct access to the GPU. On macOS and Windows, container engines run inside a virtual machine without GPU access.</p>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">On a Mac with Apple Silicon</p><p><code>--gpus</code> does not apply, but the global <code>--gpu</code> flag starts a separate Lima VM (krunkit, macOS 14 or later) that gives containers Vulkan compute. That VM has no USB passthrough. See <a href="/docs/commands/engine/">engine</a> and <a href="/docs/guide/limitations/">Known limits</a>.</p>
+</div>
 <h3 id="podman-with-nvidia">Podman with NVIDIA<a class="anchor" href="#podman-with-nvidia" aria-label="Link to this section"></a></h3>
-<p>RF Swift automatically translates <code>--gpus all</code> to Podman&rsquo;s CDI syntax (<code>--device nvidia.com/gpu=all</code>). Setup:</p>
+<p>RF Swift translates <code>--gpus all</code> into Podman&rsquo;s CDI syntax (<code>--device nvidia.com/gpu=all</code>). Set it up once:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install nvidia-container-toolkit
 </span></span><span class="line"><span class="cl">sudo nvidia-ctk cdi generate --output<span class="o">=</span>/etc/cdi/nvidia.yaml
 </span></span><span class="line"><span class="cl">nvidia-ctk cdi list  <span class="c1"># verify</span></span></span></code></pre></div></div>
-<h3 id="podman-with-amdintel">Podman with AMD/Intel<a class="anchor" href="#podman-with-amdintel" aria-label="Link to this section"></a></h3>
-<p>Works the same as Docker, since device bindings and cgroup rules are standard Linux features:</p>
+<h3 id="podman-with-amd-or-intel">Podman with AMD or Intel<a class="anchor" href="#podman-with-amd-or-intel" aria-label="Link to this section"></a></h3>
+<p>This works as with Docker, because device bindings and cgroup rules are standard Linux features:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift --engine podman container create -i penthertz/rfswift_resolute:sdr_full -n rocm_sdr <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/kfd:/dev/kfd,/dev/dri:/dev/dri <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 226:* rwm&#34;</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="nvidia-could-not-select-device-driver">NVIDIA: &ldquo;could not select device driver&rdquo;<a class="anchor" href="#nvidia-could-not-select-device-driver" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>Error: could not select device driver &quot;nvidia&quot; with capabilities: [[gpu]]</code></p>
-<p><strong>Solution:</strong> NVIDIA Container Toolkit is not installed or not configured:</p>
+<h3 id="nvidia-could-not-select-device-driver">NVIDIA: “could not select device driver”<a class="anchor" href="#nvidia-could-not-select-device-driver" aria-label="Link to this section"></a></h3>
+<p>The full error is <code>Error: could not select device driver &quot;nvidia&quot; with capabilities: [[gpu]]</code>. The NVIDIA Container Toolkit is missing or not configured. Install and configure it, then check:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install nvidia-container-toolkit
 </span></span><span class="line"><span class="cl">sudo nvidia-ctk runtime configure --runtime<span class="o">=</span>docker
 </span></span><span class="line"><span class="cl">sudo systemctl restart docker
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify</span>
 </span></span><span class="line"><span class="cl">docker run --rm --gpus all nvidia/cuda:12.0-base nvidia-smi</span></span></code></pre></div></div>
-<h3 id="amd-permission-denied-on-devkfd">AMD: &ldquo;permission denied&rdquo; on /dev/kfd<a class="anchor" href="#amd-permission-denied-on-devkfd" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> ROCm commands fail with permission errors</p>
-<p><strong>Solution:</strong></p>
+<h3 id="amd-permission-denied-on-devkfd">AMD: “permission denied” on /dev/kfd<a class="anchor" href="#amd-permission-denied-on-devkfd" aria-label="Link to this section"></a></h3>
+<p>ROCm commands fail with permission errors. Check the device permissions, make sure the cgroup rule is set, and check your groups on the host (they should include <code>render</code> and <code>video</code>):</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check device permissions</span>
-</span></span><span class="line"><span class="cl">ls -l /dev/kfd /dev/dri/render*
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Ensure cgroup rule is set</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 226:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check user groups on host</span>
-</span></span><span class="line"><span class="cl">groups  <span class="c1"># should include render, video</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># May need to run container as root or match GIDs</span></span></span></code></pre></div></div>
-<h3 id="amd-no-gpu-agent-found">AMD: &ldquo;no GPU agent found&rdquo;<a class="anchor" href="#amd-no-gpu-agent-found" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>rocminfo</code> shows no GPU agents</p>
-<p><strong>Solution:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l /dev/kfd /dev/dri/render*
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 226:* rwm&#34;</span>
+</span></span><span class="line"><span class="cl">groups</span></span></code></pre></div></div>
+<p>If it still fails, you may need to run the container as root or match the group IDs.</p>
+<h3 id="amd-no-gpu-agent-found">AMD: “no GPU agent found”<a class="anchor" href="#amd-no-gpu-agent-found" aria-label="Link to this section"></a></h3>
+<p><code>rocminfo</code> shows no GPU. Check that the devices are in the container, add them if they are missing, and make sure ROCm works on the host first:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Verify devices are bound into container</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c container -e <span class="s2">&#34;ls -l /dev/kfd /dev/dri/&#34;</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c container -e <span class="s2">&#34;ls -l /dev/kfd /dev/dri/&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If missing, add bindings</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -d -c container -s /dev/kfd -t /dev/kfd
-</span></span><span class="line"><span class="cl">rfswift bindings add -d -c container -s /dev/dri -t /dev/dri
+</span></span><span class="line"><span class="cl">rfswift config bindings add -d -c container -s /dev/kfd -t /dev/kfd
+</span></span><span class="line"><span class="cl">rfswift config bindings add -d -c container -s /dev/dri -t /dev/dri
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify ROCm works on host first</span>
 </span></span><span class="line"><span class="cl">rocm-smi</span></span></code></pre></div></div>
-<h3 id="intel-no-opencl-devices-found">Intel: &ldquo;no OpenCL devices found&rdquo;<a class="anchor" href="#intel-no-opencl-devices-found" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>clinfo</code> shows no devices</p>
-<p><strong>Solution:</strong></p>
+<h3 id="intel-no-opencl-devices-found">Intel: “no OpenCL devices found”<a class="anchor" href="#intel-no-opencl-devices-found" aria-label="Link to this section"></a></h3>
+<p><code>clinfo</code> shows no device. Check that <code>/dev/dri</code> is in the container, and add it with its rule if missing:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check DRI is bound</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c container -e <span class="s2">&#34;ls -l /dev/dri/&#34;</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c container -e <span class="s2">&#34;ls -l /dev/dri/&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If missing</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -d -c container -s /dev/dri -t /dev/dri
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 226:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Install OpenCL ICD inside container if needed</span>
-</span></span><span class="line"><span class="cl">apt-get install -y intel-opencl-icd</span></span></code></pre></div></div>
-<h3 id="gpu-works-in-docker-but-not-rf-swift">GPU works in Docker but not RF Swift<a class="anchor" href="#gpu-works-in-docker-but-not-rf-swift" aria-label="Link to this section"></a></h3>
+</span></span><span class="line"><span class="cl">rfswift config bindings add -d -c container -s /dev/dri -t /dev/dri
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 226:* rwm&#34;</span></span></span></code></pre></div></div>
+<p>If needed, install the OpenCL driver inside the container:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check the GPU request the engine recorded</span>
-</span></span><span class="line"><span class="cl">docker inspect container --format <span class="se">\&#39;</span><span class="o">{{</span>json .HostConfig.DeviceRequests<span class="o">}}</span><span class="se">\&#39;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add GPU (auto-detects vendor)</span>
-</span></span><span class="line"><span class="cl">rfswift gpus add -c container</span></span></code></pre></div></div>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt-get install -y intel-opencl-icd</span></span></code></pre></div></div>
+<h3 id="the-gpu-works-with-docker-but-not-in-an-rf-swift-container">The GPU works with Docker but not in an RF Swift container<a class="anchor" href="#the-gpu-works-with-docker-but-not-in-an-rf-swift-container" aria-label="Link to this section"></a></h3>
+<p>Check the GPU request Docker recorded for the container, then add the GPU with RF Swift (the vendor is detected):</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker inspect container --format <span class="s1">&#39;{{json .HostConfig.DeviceRequests}}&#39;</span>
+</span></span><span class="line"><span class="cl">rfswift config gpus add -c container</span></span></code></pre></div></div>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/cgroups"><code>cgroups</code></a> - Device access rules</li>
-<li><a href="/docs/commands/bindings"><code>bindings</code></a> - Device bindings</li>
-<li><a href="/docs/commands/capabilities"><code>capabilities</code></a> - Linux capabilities</li>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create containers with <code>--gpus</code> flag</li>
-<li><a href="/docs/commands/realtime"><code>realtime</code></a> - Realtime mode for SDR performance</li>
+<li><a href="/docs/commands/cgroups"><code>cgroups</code></a>: device access rules</li>
+<li><a href="/docs/commands/bindings"><code>bindings</code></a>: devices and folders</li>
+<li><a href="/docs/commands/capabilities"><code>capabilities</code></a>: Linux capabilities</li>
+<li><a href="/docs/commands/run"><code>run</code></a>: create containers with <code>--gpus</code></li>
+<li><a href="/docs/commands/realtime"><code>realtime</code></a>: realtime mode for SDR performance</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Quick Start (any GPU)</strong>: <code>rfswift container create -n my_gpu -i penthertz/rfswift_resolute:sdr_full --gpus all</code>. RF Swift auto-detects NVIDIA, AMD, or Intel and configures the container accordingly.</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Linux Only</strong>: GPU passthrough requires a Linux host with direct hardware access. macOS and Windows container engines run inside VMs without GPU support.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Profiles</strong>: <code>gpus: all</code> in a profile YAML works for any GPU vendor, because the auto-detection runs at container creation time.</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -712,12 +657,13 @@
   <p class="toc-title">On this page</p>
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#how-it-works">How it works</a></li>
     <li><a href="#synopsis">Synopsis</a></li>
-    <li><a href="#prerequisites">Prerequisites</a>
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#before-you-start">Before you start</a></li>
+    <li><a href="#nvidia-gpus">NVIDIA GPUs</a>
       <ul>
-        <li><a href="#nvidia-gpus">NVIDIA GPUs</a></li>
-        <li><a href="#nvidia-examples">NVIDIA examples</a></li>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#examples">Examples</a></li>
       </ul>
     </li>
     <li><a href="#amd-gpus-rocm">AMD GPUs (ROCm)</a>
@@ -725,8 +671,8 @@
         <li><a href="#prerequisites-1">Prerequisites</a></li>
         <li><a href="#usage">Usage</a></li>
         <li><a href="#rocm-with-pytorch">ROCm with PyTorch</a></li>
-        <li><a href="#specific-gpu-selection">Specific GPU selection</a></li>
-        <li><a href="#profile-for-rocm">Profile for ROCm</a></li>
+        <li><a href="#choosing-specific-gpus">Choosing specific GPUs</a></li>
+        <li><a href="#a-profile-for-rocm">A profile for ROCm</a></li>
       </ul>
     </li>
     <li><a href="#intel-gpus">Intel GPUs</a>
@@ -734,23 +680,23 @@
         <li><a href="#prerequisites-2">Prerequisites</a></li>
         <li><a href="#usage-1">Usage</a></li>
         <li><a href="#intel-with-oneapi">Intel with oneAPI</a></li>
-        <li><a href="#profile-for-intel-gpu">Profile for Intel GPU</a></li>
+        <li><a href="#a-profile-for-intel-gpus">A profile for Intel GPUs</a></li>
       </ul>
     </li>
-    <li><a href="#quick-comparison">Quick comparison</a></li>
+    <li><a href="#comparison">Comparison</a></li>
     <li><a href="#engine-compatibility">Engine compatibility</a>
       <ul>
         <li><a href="#podman-with-nvidia">Podman with NVIDIA</a></li>
-        <li><a href="#podman-with-amdintel">Podman with AMD/Intel</a></li>
+        <li><a href="#podman-with-amd-or-intel">Podman with AMD or Intel</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#nvidia-could-not-select-device-driver">NVIDIA: &ldquo;could not select device driver&rdquo;</a></li>
-        <li><a href="#amd-permission-denied-on-devkfd">AMD: &ldquo;permission denied&rdquo; on /dev/kfd</a></li>
-        <li><a href="#amd-no-gpu-agent-found">AMD: &ldquo;no GPU agent found&rdquo;</a></li>
-        <li><a href="#intel-no-opencl-devices-found">Intel: &ldquo;no OpenCL devices found&rdquo;</a></li>
-        <li><a href="#gpu-works-in-docker-but-not-rf-swift">GPU works in Docker but not RF Swift</a></li>
+        <li><a href="#nvidia-could-not-select-device-driver">NVIDIA: “could not select device driver”</a></li>
+        <li><a href="#amd-permission-denied-on-devkfd">AMD: “permission denied” on /dev/kfd</a></li>
+        <li><a href="#amd-no-gpu-agent-found">AMD: “no GPU agent found”</a></li>
+        <li><a href="#intel-no-opencl-devices-found">Intel: “no OpenCL devices found”</a></li>
+        <li><a href="#the-gpu-works-with-docker-but-not-in-an-rf-swift-container">The GPU works with Docker but not in an RF Swift container</a></li>
       </ul>
     </li>
     <li><a href="#related-commands">Related commands</a></li>

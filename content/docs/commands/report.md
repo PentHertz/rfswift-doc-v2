@@ -11,7 +11,13 @@ weight: 71
 **RF Swift v4 canonical spelling**: `rfswift system report`. The legacy form `rfswift report` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
-Generate structured assessment reports from container sessions.
+`rfswift report` turns a lab into a written report. It gathers the container's details, its session recordings, the commands you ran and the files in its workspace, and writes them as Markdown, HTML or PDF.
+
+It is useful for assessment deliverables, for documenting research experiments, and for lab write-ups in a course.
+
+```bash
+rfswift report generate -c my_sdr --format html
+```
 
 ## Synopsis
 
@@ -29,19 +35,11 @@ rfswift report generate -c CONTAINER --format pdf
 rfswift report generate -c CONTAINER --title "Assessment Report" -o report.html -f html
 ```
 
-The `report` command collects data from a container and its workspace, then generates a structured document combining container metadata, session recordings, shell history, and workspace artifacts.
-
-This is designed for **professional pentesters** writing client deliverables, **researchers** documenting experiments, and **educators** creating lab reports.
-
----
-
 ## Subcommands
 
 ### report generate
 
-Collect data from a container and generate a report.
-
-**Options:**
+Collects the data from a container and writes the report.
 
 | Flag | Description | Default | Example |
 |------|-------------|---------|---------|
@@ -50,13 +48,13 @@ Collect data from a container and generate a report.
 | `-o, --output STRING` | Output file path | Auto-generated | `-o report.html` |
 | `-t, --title STRING` | Report title | Auto-generated | `-t "HackRF Assessment"` |
 
-When `-c` is omitted in an interactive terminal, a container picker is shown.
+In an interactive terminal, leaving out `-c` shows a list of containers to pick from.
 
 ---
 
 ## Report contents
 
-Each generated report contains the following sections:
+Every report has these sections:
 
 ### 1. Container summary
 
@@ -70,19 +68,19 @@ Each generated report contains the following sections:
 
 ### 2. Environment configuration
 
-Full container configuration: network mode, privileged mode, device mappings, Linux capabilities, cgroup rules, ulimits, and volume bindings.
+The container's full configuration: network mode, privileged mode, device mappings, Linux capabilities, cgroup rules, ulimits and volume bindings.
 
 ### 3. Session recordings
 
-Inventories all `.cast` (asciinema) and `rfswift-*.log` (script) files found in the workspace directory and current working directory. Includes file size and date.
+Lists every `.cast` (asciinema) and `rfswift-*.log` (script) file found in the workspace and in the current directory, with its size and date.
 
 ### 4. Shell history
 
-Extracted from the container's `/root/.bash_history` or `/root/.zsh_history`. Shows all commands run inside the container during the assessment.
+Every command run inside the container during the assessment, taken from `/root/.bash_history` or `/root/.zsh_history`.
 
 ### 5. Workspace artifacts
 
-Full file inventory of the workspace directory with smart categorization:
+Every file in the workspace, sorted into categories by extension:
 
 | Category | File Extensions |
 |----------|----------------|
@@ -94,7 +92,7 @@ Full file inventory of the workspace directory with smart categorization:
 
 ### 6. Notes section
 
-An editable section for assessor findings, observations, and conclusions.
+A section to fill in with your findings, observations and conclusions.
 
 ---
 
@@ -109,26 +107,17 @@ rfswift report generate -c my_sdr
 # -> rfswift-report-my_sdr-20260317-143022.md
 ```
 
-The Markdown output can be:
-- Edited in any text editor
-- Converted to other formats with pandoc
-- Rendered on GitHub, GitLab, or any Markdown viewer
-- Included in Git repositories alongside your code
+You can edit it in any text editor, convert it with pandoc, read it on GitHub, GitLab or any Markdown viewer, and keep it in a Git repository next to your code.
   {{< /tab >}}
   {{< tab >}}
-**HTML** is styled and print-ready, with zero dependencies.
+**HTML** is styled and ready to print, with no dependencies.
 
 ```bash
 rfswift report generate -c my_sdr --format html
 # -> rfswift-report-my_sdr-20260317-143022.html
 ```
 
-The HTML output features:
-- Professional styling with responsive tables
-- Color-coded category badges for artifacts
-- Dark-themed code blocks for shell history
-- Print-friendly CSS (`Ctrl+P` or `Cmd+P` to print/save as PDF from browser)
-- No external dependencies (all CSS inline)
+It has readable tables, colour-coded categories for the artifacts, dark code blocks for the shell history, and print-friendly styles: press `Ctrl+P` (or `Cmd+P`) in the browser to print it or save it as PDF. All styles are inline, so the file stands alone.
   {{< /tab >}}
   {{< tab >}}
 **PDF** requires `pandoc` or `wkhtmltopdf`.
@@ -137,7 +126,8 @@ The HTML output features:
 rfswift report generate -c my_sdr --format pdf -o assessment.pdf
 ```
 
-PDF generation uses external tools:
+It uses one of these external tools:
+
 ```bash
 # Install pandoc (recommended)
 sudo apt install pandoc      # Debian/Ubuntu
@@ -148,7 +138,7 @@ sudo dnf install pandoc       # Fedora
 sudo apt install wkhtmltopdf
 ```
 
-If neither tool is installed, RF Swift generates an HTML file instead and shows an installation message.
+If neither is installed, RF Swift writes an HTML file instead and tells you what to install.
   {{< /tab >}}
 {{< /tabs >}}
 
@@ -156,7 +146,9 @@ If neither tool is installed, RF Swift generates an HTML file instead and shows 
 
 ## Examples
 
-### Basic assessment report
+### A basic assessment report
+
+Create a lab with session recording, do your work, then generate an HTML report:
 
 ```bash
 # Run an SDR assessment
@@ -171,7 +163,7 @@ rfswift container create -i penthertz/rfswift_resolute:sdr_full -n hackrf_assess
 rfswift report generate -c hackrf_assessment --format html -o hackrf-report.html
 ```
 
-### Report with custom title
+### A report with your own title
 
 ```bash
 rfswift report generate -c client_pentest \
@@ -180,14 +172,18 @@ rfswift report generate -c client_pentest \
   -o client-x-wireless-assessment.pdf
 ```
 
-### Interactive mode
+### Pick the container from a list
+
+Without flags, RF Swift asks which container to use and writes Markdown:
 
 ```bash
 # No flags: picks container from a list, generates Markdown
 rfswift report generate
 ```
 
-### Typical professional workflow
+### A typical engagement
+
+Create a lab that records the session, save your captures to `/workspace`, then generate the report:
 
 ```bash
 # 1. Create container with workspace and recording
@@ -235,29 +231,25 @@ graph TD
     J -->|pdf| M[pandoc/wkhtmltopdf -> .pdf]
 ```
 
-The report generator:
-1. **Inspects the container** via Docker/Podman API for metadata and configuration
-2. **Finds the workspace** by looking for the `/workspace` mount in the container's volume bindings
-3. **Scans for recordings** (`.cast` files) in the workspace and current directory
-4. **Extracts shell history** from the container's `~/.bash_history` or `~/.zsh_history` via `docker cp`
-5. **Inventories workspace files** with smart categorization based on file extensions
-6. **Renders the report** using Go templates (Markdown or HTML), optionally converting to PDF
+Step by step, the report generator:
+
+1. **inspects the container** through the Docker or Podman API for its details and configuration;
+2. **finds the workspace** from the `/workspace` mount in the container's volume bindings;
+3. **looks for recordings** (`.cast` files) in the workspace and the current directory;
+4. **copies the shell history** out of the container (`~/.bash_history` or `~/.zsh_history`, with `docker cp`);
+5. **lists the workspace files**, sorted into categories by extension;
+6. **writes the report** from Go templates (Markdown or HTML), and converts it to PDF if asked.
 
 ---
 
-## Related commands
+## Good to know
 
-- [`run`](/docs/commands/run) - Create containers (use `--record` to capture sessions)
-- [`log`](/docs/commands/log) - Record and replay terminal sessions
-- [`bindings`](/docs/commands/bindings) - Manage volume and device bindings
-- [`exec`](/docs/commands/exec) - Enter containers (use `--record` to capture sessions)
+- Add `--record` to `rfswift container create` and `rfswift container shell` so your sessions are recorded and appear in the report.
+- Reports find the container's workspace (`~/rfswift-workspace/<name>/`) on their own. Everything you save to `/workspace` inside the lab (captures, configs, logs) is listed.
 
----
+## Related
 
-{{< callout >}}
-**Tip**: Use `--record` with `rfswift container create` and `rfswift container shell` to automatically capture session recordings that will appear in the report.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Workspace integration**: Reports automatically find and inventory files in the container's workspace directory (`~/rfswift-workspace/<name>/`). All captures, configs, and logs saved to `/workspace` inside the container are included in the report.
-{{< /callout >}}
+- [container create](/docs/commands/run): use `--record` to record sessions
+- [log](/docs/commands/log): record and replay terminal sessions
+- [config bindings](/docs/commands/bindings): volume and device bindings
+- [container shell](/docs/commands/exec): use `--record` to record sessions

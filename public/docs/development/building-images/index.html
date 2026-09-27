@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Helper functions reference · RF Swift</title>
-  <meta name="description" content="The Bash helper functions used by the RF Swift image build system.">
+  <meta name="description" content="The Bash helpers you can call when building RF Swift images: logging, package installs with retries, Git clones and CMake builds.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/development/building-images/">
+  <link rel="canonical" href="http://localhost:1313/docs/development/building-images/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Helper functions reference · RF Swift">
-  <meta property="og:description" content="The Bash helper functions used by the RF Swift image build system.">
-  <meta property="og:url" content="https://rfswift.io/docs/development/building-images/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:description" content="The Bash helpers you can call when building RF Swift images: logging, package installs with retries, Git clones and CMake builds.">
+  <meta property="og:url" content="http://localhost:1313/docs/development/building-images/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,92 +231,149 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Helper functions reference</h1><p class="doc-lead">The Bash helper functions used by the RF Swift image build system.</p><p class="doc-meta">Advanced · 13 min read · Updated September 27, 2026</p>
+      <h1>Helper functions reference</h1><p class="doc-lead">The Bash helpers you can call when building RF Swift images: logging, package installs with retries, Git clones and CMake builds.</p><p class="doc-meta">Advanced · 14 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>This page documents the Bash helper functions used in the RF Swift container build system. These utilities simplify logging, dependency management, source code builds, and network operations.</p>
-<p>Most helpers implement retry logic and consistent logging to ensure resilience and ease of use when building custom images or tools.</p>
-<div class="admonition admonition-info" role="note"><p><strong>New!</strong> These helper functions can now be used in both <strong>YAML recipe files</strong> and traditional <strong>Dockerfiles</strong>, making custom image creation easier than ever!</p>
+      <p>RF Swift images are built with a small library of Bash helper functions. They print consistent log messages, retry network steps, install packages and build projects from source in one call.</p>
+<p>You need this page when you write the <code>run_commands</code> of a <a href="/docs/development/yaml-recipe-guide/">YAML recipe</a> or your own Dockerfile. The helpers work in both.</p>
+<p><strong>Where to start:</strong> the table below shows every helper at a glance. For most recipes you only need <code>colorecho</code>, <code>installfromnet</code> and <code>cmake_clone_and_build</code>. All helpers are defined in <code>images/scripts/common.sh</code> in the RF Swift repository.</p>
+<h2 id="all-helpers-at-a-glance">All helpers at a glance<a class="anchor" href="#all-helpers-at-a-glance" aria-label="Link to this section"></a></h2>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Function</th>
+      <th>Retries</th>
+      <th>Logging</th>
+      <th>Stops the build on error</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Output</td>
+      <td><code>colorecho</code></td>
+      <td>No</td>
+      <td>Console</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Output</td>
+      <td><code>goodecho</code></td>
+      <td>No</td>
+      <td>Console</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Output</td>
+      <td><code>criticalecho</code></td>
+      <td>No</td>
+      <td>Console</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Output</td>
+      <td><code>criticalecho-noexit</code></td>
+      <td>No</td>
+      <td>Console</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Install</td>
+      <td><code>installfromnet</code></td>
+      <td>Yes (5 times)</td>
+      <td>Console</td>
+      <td>Yes, after the last attempt</td>
+    </tr>
+    <tr>
+      <td>Install</td>
+      <td><code>install_dependencies</code></td>
+      <td>Yes (implicit)</td>
+      <td>apt logs</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Install</td>
+      <td><code>check_and_install_lib</code></td>
+      <td>Yes (implicit)</td>
+      <td>Console and apt</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Python</td>
+      <td><code>pip3install</code></td>
+      <td>Yes (5 times)</td>
+      <td>pip logs</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Git</td>
+      <td><code>gitinstall</code></td>
+      <td>No</td>
+      <td>Console and database</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Build</td>
+      <td><code>cmake_clone_and_build</code></td>
+      <td>No</td>
+      <td>Console and database</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Build</td>
+      <td><code>grclone_and_build</code></td>
+      <td>No</td>
+      <td>Console and database</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
 </div>
-<hr>
-<h2 id="output--logging-functions">Output &amp; logging functions<a class="anchor" href="#output--logging-functions" aria-label="Link to this section"></a></h2>
-<p>These functions provide consistent, colored output for different message types during container builds.</p>
+<h2 id="output-and-logging">Output and logging<a class="anchor" href="#output-and-logging" aria-label="Link to this section"></a></h2>
+<p>These helpers print coloured, prefixed messages, so a long build log stays readable.</p>
 <h3 id="colorecho-message"><code>colorecho &lt;message&gt;</code><a class="anchor" href="#colorecho-message" aria-label="Link to this section"></a></h3>
-<p>Prints a blue-colored informational message to stdout.</p>
-<p><strong>Usage:</strong></p>
+<p>Prints a blue informational message to stdout. Use it for progress updates and step markers.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">colorecho <span class="s2">&#34;Starting installation process...&#34;</span>
 </span></span><span class="line"><span class="cl">colorecho <span class="s2">&#34;Configuration phase complete&#34;</span></span></span></code></pre></div></div>
-<p><strong>Output:</strong></p>
+<p>Output:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>[INFO] Starting installation process...</code></pre></div>
-<p><strong>When to use:</strong></p>
-<ul>
-<li>Progress updates during long operations</li>
-<li>Neutral informational messages</li>
-<li>Step indicators in complex builds</li>
-</ul>
-<hr>
 <h3 id="goodecho-message"><code>goodecho &lt;message&gt;</code><a class="anchor" href="#goodecho-message" aria-label="Link to this section"></a></h3>
-<p>Prints a green-colored success message to stdout.</p>
-<p><strong>Usage:</strong></p>
+<p>Prints a green success message to stdout. Use it to confirm that a step finished.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">goodecho <span class="s2">&#34;Installation completed successfully!&#34;</span>
 </span></span><span class="line"><span class="cl">goodecho <span class="s2">&#34;All tests passed&#34;</span></span></span></code></pre></div></div>
-<p><strong>Output:</strong></p>
+<p>Output:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>[SUCCESS] Installation completed successfully!</code></pre></div>
-<p><strong>When to use:</strong></p>
-<ul>
-<li>Confirmation of successful operations</li>
-<li>Completion messages</li>
-<li>Positive status updates</li>
-</ul>
-<hr>
 <h3 id="criticalecho-message"><code>criticalecho &lt;message&gt;</code><a class="anchor" href="#criticalecho-message" aria-label="Link to this section"></a></h3>
-<p>Prints a red-colored error message to stderr and exits with code 1.</p>
-<p><strong>Usage:</strong></p>
+<p>Prints a red error message to stderr and <strong>exits with code 1</strong>, which stops the build. Use it for errors that make the rest of the build pointless: a missing critical dependency or a failed check.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> ! -f <span class="s2">&#34;required_file.txt&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">    criticalecho <span class="s2">&#34;Required file not found!&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span></span></span></code></pre></div></div>
-<p><strong>Output:</strong></p>
+<p>Output:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>[ERROR] Required file not found!</code></pre></div>
-<p><strong>When to use:</strong></p>
-<ul>
-<li>Unrecoverable errors that should stop the build</li>
-<li>Missing critical dependencies</li>
-<li>Failed validation checks</li>
-</ul>
-<div class="admonition admonition-warning" role="note"><p><strong>Important:</strong> <code>criticalecho</code> will terminate the build process. Use <code>criticalecho-noexit</code> if you need to log errors without stopping execution.</p>
+<div class="admonition admonition-warning" role="note"><p><code>criticalecho</code> ends the build. To log an error and keep going, use <code>criticalecho-noexit</code>.</p>
 </div>
-<hr>
 <h3 id="criticalecho-noexit-message"><code>criticalecho-noexit &lt;message&gt;</code><a class="anchor" href="#criticalecho-noexit-message" aria-label="Link to this section"></a></h3>
-<p>Prints a red-colored error message to stderr without exiting.</p>
-<p><strong>Usage:</strong></p>
+<p>Prints a red error message to stderr <strong>without exiting</strong>. Use it for optional features that failed, or before trying a fallback.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">if</span> ! some_optional_operation<span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">    criticalecho-noexit <span class="s2">&#34;Optional feature installation failed, continuing...&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span></span></span></code></pre></div></div>
-<p><strong>Output:</strong></p>
+<p>Output:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>[ERROR] Optional feature installation failed, continuing...</code></pre></div>
-<p><strong>When to use:</strong></p>
-<ul>
-<li>Non-critical errors that allow continued execution</li>
-<li>Warning about missing optional features</li>
-<li>Logging errors while attempting fallback solutions</li>
-</ul>
-<hr>
-<h2 id="package-installation-helpers">Package installation helpers<a class="anchor" href="#package-installation-helpers" aria-label="Link to this section"></a></h2>
+<h2 id="installing-packages">Installing packages<a class="anchor" href="#installing-packages" aria-label="Link to this section"></a></h2>
 <h3 id="installfromnet-command"><code>installfromnet &lt;command&gt;</code><a class="anchor" href="#installfromnet-command" aria-label="Link to this section"></a></h3>
-<p>Executes a shell command up to 5 times with 15-second intervals between attempts. Essential for handling network instability during builds.</p>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>command</code>: Any shell command (wrapped in quotes if it contains spaces)</li>
-</ul>
-<p><strong>Usage:</strong></p>
+<p>Runs a shell command up to 5 times, waiting 15 seconds between attempts. Wrap every network step in it (wget, curl, git clone), so a flaky mirror does not break the build.</p>
+<p><strong>Parameter:</strong> <code>command</code>, any shell command, in quotes if it contains spaces.</p>
+<p><strong>Behaviour:</strong> the first attempt runs immediately; attempts 2 to 5 each wait 15 seconds first. On success the build continues; if all five attempts fail, the build stops with an error.</p>
+<p>In a shell script:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Simple download</span>
 </span></span><span class="line"><span class="cl">installfromnet <span class="s2">&#34;wget http://example.com/tool.tar.gz&#34;</span>
@@ -340,7 +383,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Complex command with pipes</span>
 </span></span><span class="line"><span class="cl">installfromnet <span class="s2">&#34;curl -L https://example.com/install.sh | bash&#34;</span></span></span></code></pre></div></div>
-<p><strong>In YAML recipes:</strong></p>
+<p>In a YAML recipe:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;my-custom-image:latest&#34;</span><span class="w">
@@ -348,19 +391,12 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">run_commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;installfromnet &#39;wget http://example.com/tool.tar.gz&#39;&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;installfromnet &#39;git clone https://github.com/user/repo.git&#39;&#34;</span></span></span></code></pre></div></div>
-<p><strong>In Dockerfiles:</strong></p>
+<p>In a Dockerfile, load the helpers first:</p>
 <div class="code">
   <div class="code-bar"><span>Dockerfile</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="line"><span class="cl"><span class="k">RUN</span> . /tmp/common.sh <span class="o">&amp;&amp;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    installfromnet <span class="s2">&#34;wget http://example.com/tool.tar.gz&#34;</span> <span class="o">&amp;&amp;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    tar xzf tool.tar.gz</span></span></code></pre></div></div>
-<p><strong>Behavior:</strong></p>
-<ul>
-<li>Attempt 1: Executes immediately</li>
-<li>Attempts 2-5: Wait 15 seconds between each retry</li>
-<li>Success: Continues to next command</li>
-<li>All attempts fail: Build fails with error message</li>
-</ul>
-<p><strong>Real-world example:</strong></p>
+<p>For a whole download-build-install cycle, <code>cmake_clone_and_build</code> already includes the retries:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Building RTL-SDR using the cmake_clone_and_build helper</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># This automatically handles download retries, build, and installation</span>
@@ -374,21 +410,17 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DDETACH_KERNEL_DRIVER<span class="o">=</span>ON
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Much simpler than manual download/build/install!</span></span></span></code></pre></div></div>
-<p><strong>When to use:</strong></p>
-<ul>
-<li>Any network operation (wget, curl, git clone)</li>
-<li>Downloading from mirrors that might be temporarily unavailable</li>
-<li>Building from source that requires fetching remote dependencies</li>
-</ul>
-<hr>
 <h3 id="install_dependencies-packages"><code>install_dependencies &quot;&lt;packages&gt;&quot;</code><a class="anchor" href="#install_dependencies-packages" aria-label="Link to this section"></a></h3>
-<p>Installs Debian/Ubuntu packages using <code>apt-fast</code> (a parallel apt wrapper) with automatic retry logic.</p>
-<p><strong>Parameters:</strong></p>
+<p>Installs Debian or Ubuntu packages with <code>apt-fast</code> (a parallel apt wrapper), with automatic retries. Use it for system libraries, build tools and runtime dependencies.</p>
+<p><strong>Parameter:</strong> <code>packages</code>, a space-separated list of package names, in quotes.</p>
+<p><strong>What it does for you:</strong></p>
 <ul>
-<li><code>packages</code>: Space-separated list of package names (must be quoted)</li>
+<li>runs <code>apt-get update</code> when needed;</li>
+<li>downloads in parallel with <code>apt-fast</code>;</li>
+<li>retries on network failures;</li>
+<li>logs the installed packages.</li>
 </ul>
-<p><strong>Usage:</strong></p>
-<p><strong>In YAML recipes (recommended):</strong></p>
+<p>In a YAML recipe, list the packages under <code>packages</code> instead; the recipe installs them for you:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;gnuradio-image:latest&#34;</span><span class="w">
@@ -401,7 +433,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">libusb-1.0-0-dev</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">libfftw3-dev</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">libboost-all-dev</span></span></span></code></pre></div></div>
-<p><strong>In Bash/Dockerfiles:</strong></p>
+<p>In a shell script or Dockerfile:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Single package</span>
 </span></span><span class="line"><span class="cl">install_dependencies <span class="s2">&#34;python3-numpy&#34;</span>
@@ -411,15 +443,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Development libraries</span>
 </span></span><span class="line"><span class="cl">install_dependencies <span class="s2">&#34;libusb-1.0-0-dev libfftw3-dev libboost-all-dev&#34;</span></span></span></code></pre></div></div>
-<p><strong>Features:</strong></p>
-<ul>
-<li>Automatically runs <code>apt-get update</code> if needed</li>
-<li>Uses <code>apt-fast</code> for parallel downloads (faster than standard apt)</li>
-<li>Retries on network failures</li>
-<li>Logs installed packages for tracking</li>
-</ul>
-<p><strong>Real-world example:</strong></p>
-<p><strong>YAML Recipe - Complete GNU Radio Environment:</strong></p>
+<p>A complete GNU Radio build environment as a recipe:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;gnuradio:latest&#34;</span><span class="w">
@@ -456,7 +480,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">run_commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;echo &#39;GNU Radio dependencies installed&#39;&#34;</span></span></span></code></pre></div></div>
-<p><strong>Bash - Installing dependencies for GNU Radio:</strong></p>
+<p>The same dependencies in a shell script:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Installing dependencies for GNU Radio</span>
 </span></span><span class="line"><span class="cl">install_dependencies <span class="s2">&#34;git cmake g++ libboost-all-dev libgmp-dev \
@@ -466,22 +490,13 @@
 </span></span></span><span class="line"><span class="cl"><span class="s2">    python3-yaml python3-click python3-click-plugins python3-zmq \
 </span></span></span><span class="line"><span class="cl"><span class="s2">    python3-scipy python3-gi python3-gi-cairo gobject-introspection \
 </span></span></span><span class="line"><span class="cl"><span class="s2">    gir1.2-gtk-3.0&#34;</span></span></span></code></pre></div></div>
-<p><strong>When to use:</strong></p>
-<ul>
-<li>Installing system libraries</li>
-<li>Setting up build environments</li>
-<li>Adding runtime dependencies</li>
-<li>Installing development tools</li>
-</ul>
-<hr>
 <h3 id="check_and_install_lib-lib-name-pkg-config-name"><code>check_and_install_lib &lt;lib-name&gt; &lt;pkg-config-name&gt;</code><a class="anchor" href="#check_and_install_lib-lib-name-pkg-config-name" aria-label="Link to this section"></a></h3>
-<p>Checks if a library is installed using <code>pkg-config</code>. If not found, installs it via <code>apt-fast</code>.</p>
+<p>Checks with <code>pkg-config</code> whether a library is present, and installs it with <code>apt-fast</code> only if it is missing. Use it before building from source, to validate prerequisites without reinstalling what is already there.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>lib-name</code>: Debian package name</li>
-<li><code>pkg-config-name</code>: Name used by pkg-config (usually without -dev suffix)</li>
+<li><code>lib-name</code>: the Debian package name;</li>
+<li><code>pkg-config-name</code>: the name pkg-config knows (usually without the <code>-dev</code> suffix).</li>
 </ul>
-<p><strong>Usage:</strong></p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check for libusb</span>
 </span></span><span class="line"><span class="cl">check_and_install_lib <span class="s2">&#34;libusb-1.0-0-dev&#34;</span> <span class="s2">&#34;libusb-1.0&#34;</span>
@@ -491,7 +506,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Check for OpenSSL</span>
 </span></span><span class="line"><span class="cl">check_and_install_lib <span class="s2">&#34;libssl-dev&#34;</span> <span class="s2">&#34;openssl&#34;</span></span></span></code></pre></div></div>
-<p><strong>Behavior:</strong></p>
+<p>What it prints:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># If library is found:</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>INFO<span class="o">]</span> libusb-1.0 is already installed
@@ -499,7 +514,7 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># If library is not found:</span>
 </span></span><span class="line"><span class="cl"><span class="o">[</span>INFO<span class="o">]</span> libusb-1.0 not found, installing libusb-1.0-0-dev...
 </span></span><span class="line"><span class="cl"><span class="o">[</span>SUCCESS<span class="o">]</span> libusb-1.0-0-dev installed successfully</span></span></code></pre></div></div>
-<p><strong>Real-world example:</strong></p>
+<p>Checking several libraries before a manual build:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Checking multiple libraries before building from source</span>
 </span></span><span class="line"><span class="cl">check_and_install_lib <span class="s2">&#34;libusb-1.0-0-dev&#34;</span> <span class="s2">&#34;libusb-1.0&#34;</span>
@@ -511,23 +526,11 @@
 </span></span><span class="line"><span class="cl">mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
 </span></span><span class="line"><span class="cl">cmake ..
 </span></span><span class="line"><span class="cl">make -j<span class="k">$(</span>nproc<span class="k">)</span></span></span></code></pre></div></div>
-<p><strong>When to use:</strong></p>
-<ul>
-<li>Before building software from source</li>
-<li>Creating conditional builds based on available libraries</li>
-<li>Avoiding redundant package installations</li>
-<li>Validating build prerequisites</li>
-</ul>
-<hr>
-<h2 id="python-package-management">Python package management<a class="anchor" href="#python-package-management" aria-label="Link to this section"></a></h2>
+<h2 id="installing-python-packages">Installing Python packages<a class="anchor" href="#installing-python-packages" aria-label="Link to this section"></a></h2>
 <h3 id="pip3install-args"><code>pip3install &lt;args&gt;</code><a class="anchor" href="#pip3install-args" aria-label="Link to this section"></a></h3>
-<p>Installs Python packages using <code>pip3</code> with automatic retry logic and proper error handling.</p>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>args</code>: Any valid pip install arguments</li>
-</ul>
-<p><strong>Usage:</strong></p>
-<p><strong>In YAML recipes (recommended):</strong></p>
+<p>Installs Python packages with <code>pip3</code>, retrying up to 5 times on network failures. It passes <code>--break-system-packages</code> (appropriate in a container), logs what it installs and handles timeouts.</p>
+<p><strong>Parameter:</strong> <code>args</code>, any valid <code>pip install</code> arguments.</p>
+<p>In a YAML recipe, list the packages under <code>python_packages</code> instead:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;sdr-tools:latest&#34;</span><span class="w">
@@ -538,7 +541,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">matplotlib</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">pyrtlsdr</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;gnuradio==3.10.5.0&#34;</span><span class="w">  </span><span class="c"># Specific version</span></span></span></code></pre></div></div>
-<p><strong>In Bash/Dockerfiles:</strong></p>
+<p>In a shell script or Dockerfile:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Single package</span>
 </span></span><span class="line"><span class="cl">pip3install numpy
@@ -557,28 +560,20 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Editable install</span>
 </span></span><span class="line"><span class="cl">pip3install -e .</span></span></code></pre></div></div>
-<p><strong>Features:</strong></p>
-<ul>
-<li>Retries on network failures (up to 5 attempts)</li>
-<li>Uses <code>--break-system-packages</code> flag for container environments</li>
-<li>Logs installed packages</li>
-<li>Handles timeout errors gracefully</li>
-</ul>
-<p><strong>Real-world examples:</strong></p>
-<p><strong>Example 1: Data Science Stack</strong></p>
+<p>A data science stack, one package per call:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip3install numpy
 </span></span><span class="line"><span class="cl">pip3install scipy
 </span></span><span class="line"><span class="cl">pip3install matplotlib
 </span></span><span class="line"><span class="cl">pip3install pandas
 </span></span><span class="line"><span class="cl">pip3install scikit-learn</span></span></code></pre></div></div>
-<p><strong>Example 2: RF Signal Processing</strong></p>
+<p>RF signal processing libraries:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip3install numpy scipy
 </span></span><span class="line"><span class="cl">pip3install gnuradio
 </span></span><span class="line"><span class="cl">pip3install pyrtlsdr
 </span></span><span class="line"><span class="cl">pip3install pySoapySDR</span></span></code></pre></div></div>
-<p><strong>Example 3: Requirements File</strong></p>
+<p>Everything from a requirements file:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create requirements.txt</span>
 </span></span><span class="line"><span class="cl">cat &gt; requirements.txt <span class="s">&lt;&lt; EOF
@@ -590,35 +585,33 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Install all at once</span>
 </span></span><span class="line"><span class="cl">pip3install -r requirements.txt</span></span></code></pre></div></div>
-<p><strong>Example 4: Installing from GitHub</strong></p>
+<p>Straight from GitHub, at a branch or a commit:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install latest development version</span>
 </span></span><span class="line"><span class="cl">pip3install git+https://github.com/mossmann/hackrf.git@master#subdirectory<span class="o">=</span>host/libhackrf/python
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Install specific commit</span>
 </span></span><span class="line"><span class="cl">pip3install git+https://github.com/osmocom/pyosmo-sdr@a1b2c3d</span></span></code></pre></div></div>
-<p><strong>When to use:</strong></p>
-<ul>
-<li>Installing Python dependencies for tools</li>
-<li>Setting up Python-based SDR software</li>
-<li>Installing signal processing libraries</li>
-<li>Adding scripting capabilities to containers</li>
-</ul>
-<div class="admonition admonition-info" role="note"><p><strong>Best Practice:</strong> For reproducible builds, always specify package versions in production images:</p>
+<div class="admonition admonition-tip" role="note"><p class="admonition-title">Pin versions in production images</p><p>For reproducible builds, give every package an exact version:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip3install <span class="s2">&#34;numpy==1.24.0&#34;</span> <span class="s2">&#34;scipy==1.10.0&#34;</span></span></span></code></pre></div></div>
 </div>
-<hr>
-<h2 id="git-and-source-management">Git and source management<a class="anchor" href="#git-and-source-management" aria-label="Link to this section"></a></h2>
+<h2 id="cloning-and-building-from-source">Cloning and building from source<a class="anchor" href="#cloning-and-building-from-source" aria-label="Link to this section"></a></h2>
 <h3 id="gitinstall-repo-url-method-branch"><code>gitinstall &lt;repo-url&gt; &lt;method&gt; &lt;branch&gt;</code><a class="anchor" href="#gitinstall-repo-url-method-branch" aria-label="Link to this section"></a></h3>
-<p>Clones or updates a Git repository with automatic tracking and metadata logging.</p>
+<p>Clones a Git repository, or pulls it if it is already there, and records where it came from. Use it when you clone source code to compile, so the image keeps a list of what it contains.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>repo-url</code>: Full HTTPS or SSH URL to Git repository</li>
-<li><code>method</code>: Installation method name (used for logging/tracking)</li>
-<li><code>branch</code>: Git branch, tag, or commit to checkout (optional, defaults to default branch)</li>
+<li><code>repo-url</code>: HTTPS or SSH URL of the repository;</li>
+<li><code>method</code>: a name for this installation, used in the logs;</li>
+<li><code>branch</code>: branch, tag or commit to check out (optional; the default branch otherwise).</li>
 </ul>
-<p><strong>Usage:</strong></p>
+<p><strong>What it does for you:</strong></p>
+<ul>
+<li>initialises and updates submodules;</li>
+<li>pulls instead of cloning again when the repository already exists;</li>
+<li>handles shallow and full clones;</li>
+<li>records the method name, URL, commit hash, branch and date in <code>/var/lib/db/rfswift_github.lst</code>.</li>
+</ul>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Clone default branch</span>
 </span></span><span class="line"><span class="cl">gitinstall <span class="s2">&#34;https://github.com/osmocom/rtl-sdr.git&#34;</span> <span class="s2">&#34;rtlsdr_install&#34;</span>
@@ -628,20 +621,10 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Clone specific tag</span>
 </span></span><span class="line"><span class="cl">gitinstall <span class="s2">&#34;https://github.com/gnuradio/gnuradio.git&#34;</span> <span class="s2">&#34;gnuradio_install&#34;</span> <span class="s2">&#34;v3.10.5.0&#34;</span></span></span></code></pre></div></div>
-<p><strong>Features:</strong></p>
-<ul>
-<li>Automatically initializes and updates submodules</li>
-<li>Logs repository metadata to <code>/var/lib/db/rfswift_github.lst</code></li>
-<li>Records: method name, repository URL, commit hash, branch, clone date</li>
-<li>If repository exists, pulls latest changes instead of re-cloning</li>
-<li>Handles shallow clones and full clones appropriately</li>
-</ul>
-<p><strong>Metadata Logging:</strong>
-The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p>
+<p>A line in <code>/var/lib/db/rfswift_github.lst</code> looks like this:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>rtlsdr_install|https://github.com/osmocom/rtl-sdr.git|a1b2c3d4e5f6|master|2024-01-12</code></pre></div>
-<p><strong>Real-world examples:</strong></p>
-<p><strong>Example 1: Installing RTL-SDR</strong></p>
+<p>Cloning RTL-SDR, then building it by hand:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gitinstall <span class="s2">&#34;https://github.com/osmocom/rtl-sdr.git&#34;</span> <span class="s2">&#34;rtlsdr_install&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> rtl-sdr
@@ -650,7 +633,7 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span><span class="line"><span class="cl">make -j<span class="k">$(</span>nproc<span class="k">)</span>
 </span></span><span class="line"><span class="cl">make install
 </span></span><span class="line"><span class="cl">ldconfig</span></span></code></pre></div></div>
-<p><strong>Example 2: GNU Radio OOT Module</strong></p>
+<p>A GNU Radio out-of-tree module:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gitinstall <span class="s2">&#34;https://github.com/osmocom/gr-osmosdr.git&#34;</span> <span class="s2">&#34;gr_osmosdr_install&#34;</span> <span class="s2">&#34;master&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> gr-osmosdr
@@ -659,7 +642,7 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span><span class="line"><span class="cl">make -j<span class="k">$(</span>nproc<span class="k">)</span>
 </span></span><span class="line"><span class="cl">make install
 </span></span><span class="line"><span class="cl">ldconfig</span></span></code></pre></div></div>
-<p><strong>Example 3: Multiple Related Repositories</strong></p>
+<p>Several related repositories, built in a loop:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install entire SDR suite</span>
 </span></span><span class="line"><span class="cl">gitinstall <span class="s2">&#34;https://github.com/osmocom/rtl-sdr.git&#34;</span> <span class="s2">&#34;rtlsdr_install&#34;</span>
@@ -676,26 +659,30 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span><span class="line"><span class="cl">    <span class="nb">cd</span> ../..
 </span></span><span class="line"><span class="cl"><span class="k">done</span>
 </span></span><span class="line"><span class="cl">ldconfig</span></span></code></pre></div></div>
-<p><strong>When to use:</strong></p>
-<ul>
-<li>Cloning source code for compilation</li>
-<li>Tracking which repositories are in the container</li>
-<li>Keeping source code for future reference</li>
-<li>Enabling reproducible builds</li>
-</ul>
-<hr>
 <h3 id="cmake_clone_and_build-repo-url-build-dir-branch-reset-commit-method-cmake-args"><code>cmake_clone_and_build &lt;repo-url&gt; &lt;build-dir&gt; &lt;branch&gt; &lt;reset-commit&gt; &lt;method&gt; [cmake-args...]</code><a class="anchor" href="#cmake_clone_and_build-repo-url-build-dir-branch-reset-commit-method-cmake-args" aria-label="Link to this section"></a></h3>
-<p>All-in-one function that clones a repository and builds it using CMake in a single command.</p>
-<p><strong>Parameters:</strong></p>
+<p>Clones a repository and builds and installs it with CMake, in one call. This is the helper most recipes use, and the easiest way to build a pinned version reproducibly.</p>
+<p><strong>Parameters, in order:</strong></p>
 <ol>
-<li><code>repo-url</code>: Git repository URL</li>
-<li><code>build-dir</code>: Build directory path relative to repository root</li>
-<li><code>branch</code>: Branch/tag to checkout (use &quot;&quot; for default)</li>
-<li><code>reset-commit</code>: Specific commit/tag to reset to (use &quot;&quot; to skip)</li>
-<li><code>method</code>: Installation method name for logging</li>
-<li><code>[cmake-args...]</code>: Additional CMake arguments</li>
+<li><code>repo-url</code>: Git repository URL;</li>
+<li><code>build-dir</code>: build directory, relative to the repository root;</li>
+<li><code>branch</code>: branch or tag to check out (<code>&quot;&quot;</code> for the default);</li>
+<li><code>reset-commit</code>: commit or tag to reset to (<code>&quot;&quot;</code> to skip);</li>
+<li><code>method</code>: a name for this installation, used in the logs;</li>
+<li><code>[cmake-args...]</code>: extra CMake arguments.</li>
 </ol>
-<p><strong>Usage:</strong></p>
+<p><strong>What it does, step by step:</strong></p>
+<ol>
+<li>clones the repository (or pulls it if it exists);</li>
+<li>checks out the branch;</li>
+<li>resets to the given commit, if any;</li>
+<li>initialises submodules;</li>
+<li>creates the build directory;</li>
+<li>runs CMake with your arguments;</li>
+<li>compiles with <code>make -j$(nproc)</code>;</li>
+<li>installs with <code>make install</code>;</li>
+<li>runs <code>ldconfig</code>;</li>
+<li>records the build in the metadata database.</li>
+</ol>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Simple build with default settings</span>
 </span></span><span class="line"><span class="cl">cmake_clone_and_build <span class="se">\
@@ -724,21 +711,7 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="s2">&#34;&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="s2">&#34;hackrf_install&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/opt/hackrf</span></span></code></pre></div></div>
-<p><strong>Process Flow:</strong></p>
-<ol>
-<li>Clones repository (or pulls if exists)</li>
-<li>Checkouts specified branch</li>
-<li>Resets to specific commit if specified</li>
-<li>Initializes submodules</li>
-<li>Creates build directory</li>
-<li>Runs CMake with provided arguments</li>
-<li>Compiles with <code>make -j$(nproc)</code></li>
-<li>Installs with <code>make install</code></li>
-<li>Runs <code>ldconfig</code></li>
-<li>Logs to metadata database</li>
-</ol>
-<p><strong>Real-world examples:</strong></p>
-<p><strong>YAML Recipe - Simple SDR Library:</strong></p>
+<p>In a YAML recipe, on one line:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;rtlsdr:latest&#34;</span><span class="w">
@@ -750,7 +723,7 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">run_commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;cmake_clone_and_build &#39;https://github.com/osmocom/rtl-sdr.git&#39; &#39;build&#39; &#39;master&#39; &#39;&#39; &#39;rtlsdr_install&#39; -DINSTALL_UDEV_RULES=ON -DDETACH_KERNEL_DRIVER=ON&#34;</span></span></span></code></pre></div></div>
-<p><strong>YAML Recipe - Complex Build with Multiple Options:</strong></p>
+<p>In a YAML recipe, with many options, using the pipe syntax:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;gnuradio:3.10&#34;</span><span class="w">
@@ -775,7 +748,7 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="sd">      -DENABLE_GR_UHD=ON \
 </span></span></span><span class="line"><span class="cl"><span class="sd">      -DENABLE_PYTHON=ON \
 </span></span></span><span class="line"><span class="cl"><span class="sd">      -DPYTHON_EXECUTABLE=/usr/bin/python3</span></span></span></code></pre></div></div>
-<p><strong>Bash - Example 1: Simple SDR Library</strong></p>
+<p>A simple SDR library in a shell script:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cmake_clone_and_build <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="s2">&#34;https://github.com/osmocom/rtl-sdr.git&#34;</span> <span class="se">\
@@ -785,7 +758,7 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="s2">&#34;rtlsdr_install&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DINSTALL_UDEV_RULES<span class="o">=</span>ON <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DDETACH_KERNEL_DRIVER<span class="o">=</span>ON</span></span></code></pre></div></div>
-<p><strong>Bash - Example 2: Complex Build with Multiple Options</strong></p>
+<p>A large build with many CMake options:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cmake_clone_and_build <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="s2">&#34;https://github.com/gnuradio/gnuradio.git&#34;</span> <span class="se">\
@@ -804,7 +777,7 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DPYTHON_EXECUTABLE<span class="o">=</span>/usr/bin/python3 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DENABLE_DOXYGEN<span class="o">=</span>OFF <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DENABLE_SPHINX<span class="o">=</span>OFF</span></span></code></pre></div></div>
-<p><strong>Bash - Example 3: Building Specific Tagged Release</strong></p>
+<p>An exact tagged release (here SDR++ 1.1.0):</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Build exactly SDR++ version 1.1.0</span>
 </span></span><span class="line"><span class="cl">cmake_clone_and_build <span class="se">\
@@ -817,25 +790,16 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DOPT_BUILD_AIRSPYHF_SOURCE<span class="o">=</span>ON <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DOPT_BUILD_HACKRF_SOURCE<span class="o">=</span>ON <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DOPT_BUILD_RTL_SDR_SOURCE<span class="o">=</span>ON</span></span></code></pre></div></div>
-<p><strong>When to use:</strong></p>
-<ul>
-<li>Building from source in a single command</li>
-<li>Reproducible builds with specific versions</li>
-<li>Complex CMake configurations</li>
-<li>Automated container image creation</li>
-</ul>
-<hr>
 <h3 id="grclone_and_build-repo-url-subdir-method--b-branch-cmake-args"><code>grclone_and_build &lt;repo-url&gt; &lt;subdir&gt; &lt;method&gt; [-b branch] [cmake-args...]</code><a class="anchor" href="#grclone_and_build-repo-url-subdir-method--b-branch-cmake-args" aria-label="Link to this section"></a></h3>
-<p>Simplified wrapper optimized for GNU Radio Out-of-Tree (OOT) modules.</p>
+<p>A shorter wrapper made for GNU Radio out-of-tree (OOT) modules. Use it to add GNU Radio blocks to an image.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>repo-url</code>: Git repository URL</li>
-<li><code>subdir</code>: Subdirectory containing the source (usually same as repo name)</li>
-<li><code>method</code>: Installation method name for logging</li>
-<li><code>-b branch</code>: Optional branch flag (if omitted, uses default branch)</li>
-<li><code>[cmake-args...]</code>: Additional CMake arguments</li>
+<li><code>repo-url</code>: Git repository URL;</li>
+<li><code>subdir</code>: directory holding the source (usually the repository name);</li>
+<li><code>method</code>: a name for this installation, used in the logs;</li>
+<li><code>-b branch</code>: optional branch (the default branch otherwise);</li>
+<li><code>[cmake-args...]</code>: extra CMake arguments.</li>
 </ul>
-<p><strong>Usage:</strong></p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Simple GNU Radio module</span>
 </span></span><span class="line"><span class="cl">grclone_and_build <span class="se">\
@@ -857,8 +821,7 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="s2">&#34;gr_bluetooth_install&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DENABLE_DOXYGEN<span class="o">=</span>OFF <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DENABLE_TESTING<span class="o">=</span>OFF</span></span></code></pre></div></div>
-<p><strong>Real-world examples:</strong></p>
-<p><strong>Example 1: Building Multiple GNU Radio Modules</strong></p>
+<p>Several common modules in a row:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Build common GNU Radio OOT modules</span>
 </span></span><span class="line"><span class="cl">grclone_and_build <span class="se">\
@@ -875,7 +838,7 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="s2">&#34;https://github.com/ptrkrysik/gr-lte.git&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="s2">&#34;gr-lte&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="s2">&#34;gr_lte_install&#34;</span></span></span></code></pre></div></div>
-<p><strong>Example 2: Building with Dependencies Check</strong></p>
+<p>Checking that GNU Radio is present before building modules:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Ensure GNU Radio is installed first</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> ! pkg-config --exists gnuradio-runtime<span class="p">;</span> <span class="k">then</span>
@@ -894,110 +857,9 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="s2">&#34;gr_fosphor_install&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DENABLE_GLFW<span class="o">=</span>ON <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DENABLE_QT<span class="o">=</span>ON</span></span></code></pre></div></div>
-<p><strong>When to use:</strong></p>
-<ul>
-<li>Installing GNU Radio OOT modules</li>
-<li>Building SDR-related GNU Radio blocks</li>
-<li>Creating RF signal processing containers</li>
-<li>Extending GNU Radio capabilities</li>
-</ul>
-<hr>
-<h2 id="complete-function-reference-table">Complete function reference table<a class="anchor" href="#complete-function-reference-table" aria-label="Link to this section"></a></h2>
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Category</th>
-      <th>Function</th>
-      <th>Retry Logic</th>
-      <th>Logging</th>
-      <th>Exit on Error</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Output</strong></td>
-      <td><code>colorecho</code></td>
-      <td>No</td>
-      <td>Console</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td><strong>Output</strong></td>
-      <td><code>goodecho</code></td>
-      <td>No</td>
-      <td>Console</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td><strong>Output</strong></td>
-      <td><code>criticalecho</code></td>
-      <td>No</td>
-      <td>Console</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td><strong>Output</strong></td>
-      <td><code>criticalecho-noexit</code></td>
-      <td>No</td>
-      <td>Console</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td><strong>Install</strong></td>
-      <td><code>installfromnet</code></td>
-      <td>Yes (5x)</td>
-      <td>Console</td>
-      <td>Yes (on failure)</td>
-    </tr>
-    <tr>
-      <td><strong>Install</strong></td>
-      <td><code>install_dependencies</code></td>
-      <td>Yes (implicit)</td>
-      <td>apt logs</td>
-      <td>Yes (on failure)</td>
-    </tr>
-    <tr>
-      <td><strong>Install</strong></td>
-      <td><code>check_and_install_lib</code></td>
-      <td>Yes (implicit)</td>
-      <td>Console + apt</td>
-      <td>Yes (on failure)</td>
-    </tr>
-    <tr>
-      <td><strong>Python</strong></td>
-      <td><code>pip3install</code></td>
-      <td>Yes (5x)</td>
-      <td>pip logs</td>
-      <td>Yes (on failure)</td>
-    </tr>
-    <tr>
-      <td><strong>Git</strong></td>
-      <td><code>gitinstall</code></td>
-      <td>No</td>
-      <td>Console + DB</td>
-      <td>Yes (on failure)</td>
-    </tr>
-    <tr>
-      <td><strong>Build</strong></td>
-      <td><code>cmake_clone_and_build</code></td>
-      <td>No</td>
-      <td>Console + DB</td>
-      <td>Yes (on failure)</td>
-    </tr>
-    <tr>
-      <td><strong>Build</strong></td>
-      <td><code>grclone_and_build</code></td>
-      <td>No</td>
-      <td>Console + DB</td>
-      <td>Yes (on failure)</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<hr>
-<h2 id="best-practices">Best practices<a class="anchor" href="#best-practices" aria-label="Link to this section"></a></h2>
-<h3 id="complete-build-workflow---yaml-recipe">Complete build workflow - YAML recipe<a class="anchor" href="#complete-build-workflow---yaml-recipe" aria-label="Link to this section"></a></h3>
+<h2 id="putting-it-together">Putting it together<a class="anchor" href="#putting-it-together" aria-label="Link to this section"></a></h2>
+<h3 id="a-complete-recipe">A complete recipe<a class="anchor" href="#a-complete-recipe" aria-label="Link to this section"></a></h3>
+<p>HackRF support built from source, with logging:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># hackrf-tools.yaml - Complete HackRF installation</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
@@ -1021,10 +883,10 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;colorecho &#39;Installing HackRF support...&#39;&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;cmake_clone_and_build &#39;https://github.com/mossmann/hackrf.git&#39; &#39;host/build&#39; &#39;master&#39; &#39;&#39; &#39;hackrf_install&#39; -DINSTALL_UDEV_RULES=ON&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;goodecho &#39;HackRF installation complete!&#39;&#34;</span></span></span></code></pre></div></div>
-<p>Build it with:</p>
+<p>Build it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build -r hackrf-tools.yaml</span></span></code></pre></div></div>
-<h3 id="complete-build-workflow---bash-script">Complete build workflow - Bash script<a class="anchor" href="#complete-build-workflow---bash-script" aria-label="Link to this section"></a></h3>
+<h3 id="the-same-workflow-as-a-shell-script">The same workflow as a shell script<a class="anchor" href="#the-same-workflow-as-a-shell-script" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Complete installation workflow</span>
 </span></span><span class="line"><span class="cl">colorecho <span class="s2">&#34;Installing HackRF support...&#34;</span>
@@ -1045,7 +907,8 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -DINSTALL_UDEV_RULES<span class="o">=</span>ON
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">goodecho <span class="s2">&#34;HackRF installation complete!&#34;</span></span></span></code></pre></div></div>
-<h3 id="error-handling">Error handling<a class="anchor" href="#error-handling" aria-label="Link to this section"></a></h3>
+<h3 id="handling-errors">Handling errors<a class="anchor" href="#handling-errors" aria-label="Link to this section"></a></h3>
+<p>Stop on a missing prerequisite; log and continue when an optional package fails:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check prerequisites before proceeding</span>
 </span></span><span class="line"><span class="cl">check_and_install_lib <span class="s2">&#34;libusb-1.0-0-dev&#34;</span> <span class="s2">&#34;libusb-1.0&#34;</span> <span class="o">||</span> <span class="o">{</span>
@@ -1056,8 +919,8 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span><span class="line"><span class="cl"><span class="k">if</span> ! pip3install optional-package 2&gt;/dev/null<span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">    criticalecho-noexit <span class="s2">&#34;Optional package not available&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span></span></span></code></pre></div></div>
-<h3 id="yaml-recipe-integration-recommended">YAML recipe integration (recommended)<a class="anchor" href="#yaml-recipe-integration-recommended" aria-label="Link to this section"></a></h3>
-<p>The easiest way to use helper functions is through YAML recipes:</p>
+<h3 id="using-the-helpers-in-a-yaml-recipe-recommended">Using the helpers in a YAML recipe (recommended)<a class="anchor" href="#using-the-helpers-in-a-yaml-recipe-recommended" aria-label="Link to this section"></a></h3>
+<p>A recipe is the easiest way to use the helpers: they are always available in <code>run_commands</code>.</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;rtlsdr:latest&#34;</span><span class="w">
@@ -1070,11 +933,11 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">run_commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;install_dependencies &#39;libusb-1.0-0-dev&#39;&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;cmake_clone_and_build &#39;https://github.com/osmocom/rtl-sdr.git&#39; &#39;build&#39; &#39;master&#39; &#39;&#39; &#39;rtlsdr_install&#39; -DINSTALL_UDEV_RULES=ON&#34;</span></span></span></code></pre></div></div>
-<p>Build with:</p>
+<p>Build it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build -r my-image.yaml</span></span></code></pre></div></div>
-<h3 id="dockerfile-integration-traditional">Dockerfile integration (traditional)<a class="anchor" href="#dockerfile-integration-traditional" aria-label="Link to this section"></a></h3>
-<p>For advanced users who prefer Dockerfiles:</p>
+<h3 id="using-the-helpers-in-a-dockerfile">Using the helpers in a Dockerfile<a class="anchor" href="#using-the-helpers-in-a-dockerfile" aria-label="Link to this section"></a></h3>
+<p>Copy <code>common.sh</code> into the build and source it in the <code>RUN</code> step:</p>
 <div class="code">
   <div class="code-bar"><span>Dockerfile</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="line"><span class="cl"><span class="k">FROM</span><span class="s"> ubuntu:24.04</span><span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err">
@@ -1091,8 +954,8 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>        <span class="s2">&#34;rtlsdr_install&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>        -DINSTALL_UDEV_RULES<span class="o">=</span>ON <span class="o">&amp;&amp;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    rm -rf /tmp/*</span></span></code></pre></div></div>
-<h3 id="layer-optimization">Layer optimization<a class="anchor" href="#layer-optimization" aria-label="Link to this section"></a></h3>
-<p><strong>YAML (Automatic Optimization):</strong></p>
+<h3 id="keeping-layers-small">Keeping layers small<a class="anchor" href="#keeping-layers-small" aria-label="Link to this section"></a></h3>
+<p>A YAML recipe arranges the layers for you:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># YAML recipes automatically optimize layers</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
@@ -1110,7 +973,7 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">run_commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;cmake_clone_and_build [...]&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Cleanup is handled automatically</span></span></span></code></pre></div></div>
-<p><strong>Dockerfile (Manual Optimization):</strong></p>
+<p>In a Dockerfile, group the steps in one <code>RUN</code> command and clean up at the end:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Good: Single RUN command with multiple operations</span>
 </span></span><span class="line"><span class="cl">RUN . /tmp/common.sh <span class="o">&amp;&amp;</span> <span class="se">\
@@ -1123,18 +986,45 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span><span class="line"><span class="cl">RUN install_dependencies <span class="s2">&#34;pkg1&#34;</span>
 </span></span><span class="line"><span class="cl">RUN pip3install package1
 </span></span><span class="line"><span class="cl">RUN cmake_clone_and_build <span class="o">[</span>...<span class="o">]</span></span></span></code></pre></div></div>
-<hr>
-<h2 id="yaml-vs-dockerfile-when-to-use-each">YAML vs Dockerfile: when to use each<a class="anchor" href="#yaml-vs-dockerfile-when-to-use-each" aria-label="Link to this section"></a></h2>
-<h3 id="use-yaml-recipes-when">Use YAML recipes when:<a class="anchor" href="#use-yaml-recipes-when" aria-label="Link to this section"></a></h3>
-<ul>
-<li>You want simple, readable configurations</li>
-<li>You&rsquo;re building standard SDR/RF tool containers</li>
-<li>You need quick prototyping</li>
-<li>You want automatic layer optimization</li>
-<li>You&rsquo;re sharing configurations with the community</li>
-<li>You need cross-platform builds automatically configured</li>
-</ul>
-<p><strong>Example:</strong></p>
+<h2 id="yaml-recipe-or-dockerfile">YAML recipe or Dockerfile?<a class="anchor" href="#yaml-recipe-or-dockerfile" aria-label="Link to this section"></a></h2>
+<p>Start with a YAML recipe. Switch to a Dockerfile only when you need a feature recipes do not offer.</p>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Use a YAML recipe when you&hellip;</th>
+      <th>Use a Dockerfile when you&hellip;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>want a short, readable configuration</td>
+      <td>need fine-grained control over the build</td>
+    </tr>
+    <tr>
+      <td>build a standard SDR or RF tool image</td>
+      <td>need multi-stage builds</td>
+    </tr>
+    <tr>
+      <td>prototype quickly</td>
+      <td>need a custom base image setup</td>
+    </tr>
+    <tr>
+      <td>want layers arranged for you</td>
+      <td>integrate with existing Docker workflows</td>
+    </tr>
+    <tr>
+      <td>share configurations with others</td>
+      <td>need Docker features such as HEALTHCHECK or STOPSIGNAL</td>
+    </tr>
+    <tr>
+      <td>want cross-platform builds configured for you</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>A recipe:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;my-sdr:latest&#34;</span><span class="w">
@@ -1146,26 +1036,16 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">scipy</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">run_commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;echo &#39;Build complete!&#39;&#34;</span></span></span></code></pre></div></div>
-<h3 id="use-dockerfiles-when">Use Dockerfiles when:<a class="anchor" href="#use-dockerfiles-when" aria-label="Link to this section"></a></h3>
-<ul>
-<li>You need fine-grained control over build process</li>
-<li>You&rsquo;re implementing complex multi-stage builds</li>
-<li>You need custom base image configurations</li>
-<li>You&rsquo;re integrating with existing Docker workflows</li>
-<li>You need advanced Docker features (HEALTHCHECK, STOPSIGNAL, etc.)</li>
-</ul>
-<p><strong>Example:</strong></p>
+<p>A multi-stage Dockerfile:</p>
 <div class="code">
   <div class="code-bar"><span>Dockerfile</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="line"><span class="cl"><span class="k">FROM</span><span class="s"> ubuntu:24.04 AS builder</span><span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> . /tmp/common.sh <span class="o">&amp;&amp;</span> build_tools...<span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">FROM</span><span class="s"> ubuntu:24.04</span><span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">COPY</span> --from<span class="o">=</span>builder /usr/local /usr/local</span></span></code></pre></div></div>
-<div class="admonition admonition-info" role="note"><p><strong>Recommendation:</strong> Start with YAML recipes for most use cases. Switch to Dockerfiles only when you need advanced features not supported by YAML.</p>
-</div>
-<hr>
 <h2 id="advanced-usage">Advanced usage<a class="anchor" href="#advanced-usage" aria-label="Link to this section"></a></h2>
-<h3 id="custom-retry-logic">Custom retry logic<a class="anchor" href="#custom-retry-logic" aria-label="Link to this section"></a></h3>
+<h3 id="your-own-retry-logic">Your own retry logic<a class="anchor" href="#your-own-retry-logic" aria-label="Link to this section"></a></h3>
+<p>When you need more attempts or a different delay than <code>installfromnet</code>, write a small wrapper with the logging helpers:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Wrap any command with custom retry logic</span>
 </span></span><span class="line"><span class="cl">retry_custom<span class="o">()</span> <span class="o">{</span>
@@ -1186,7 +1066,8 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Usage</span>
 </span></span><span class="line"><span class="cl">retry_custom <span class="s2">&#34;wget https://unstable-mirror.example.com/file.tar.gz&#34;</span></span></span></code></pre></div></div>
-<h3 id="conditional-builds">Conditional builds<a class="anchor" href="#conditional-builds" aria-label="Link to this section"></a></h3>
+<h3 id="different-builds-per-architecture">Different builds per architecture<a class="anchor" href="#different-builds-per-architecture" aria-label="Link to this section"></a></h3>
+<p>Test <code>uname -m</code> and pass architecture-specific options:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Build different components based on architecture</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>uname -m<span class="k">)</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;aarch64&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
@@ -1208,7 +1089,8 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>        <span class="s2">&#34;x86_build&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>        -DAVX2<span class="o">=</span>ON
 </span></span><span class="line"><span class="cl"><span class="k">fi</span></span></span></code></pre></div></div>
-<h3 id="metadata-queries">Metadata queries<a class="anchor" href="#metadata-queries" aria-label="Link to this section"></a></h3>
+<h3 id="finding-out-what-an-image-was-built-from">Finding out what an image was built from<a class="anchor" href="#finding-out-what-an-image-was-built-from" aria-label="Link to this section"></a></h3>
+<p>Every <code>gitinstall</code>, <code>cmake_clone_and_build</code> and <code>grclone_and_build</code> call is recorded in <code>/var/lib/db/rfswift_github.lst</code>:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List all installed GitHub repositories</span>
 </span></span><span class="line"><span class="cl">cat /var/lib/db/rfswift_github.lst
@@ -1218,30 +1100,17 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Extract commit hash</span>
 </span></span><span class="line"><span class="cl">awk -F<span class="s1">&#39;|&#39;</span> <span class="s1">&#39;/rtlsdr_install/ {print $3}&#39;</span> /var/lib/db/rfswift_github.lst</span></span></code></pre></div></div>
-<hr>
-<h2 id="related-documentation">Related documentation<a class="anchor" href="#related-documentation" aria-label="Link to this section"></a></h2>
-<div class="doc-cards">
-  <a class="doc-card" href="/docs/development/building-images">
-    <span class="doc-card-title">Build Custom Images</span><span class="doc-card-sub">Use these helpers in your YAML recipes and Dockerfiles</span>
-  </a>
-  <a class="doc-card" href="/docs/guide/configurations">
-    <span class="doc-card-title">System Configuration</span><span class="doc-card-sub">Configure RF Swift for your hardware</span>
-  </a>
-  <a class="doc-card" href="https://github.com/PentHertz/RF-Swift" target="_blank" rel="noopener">
-    <span class="doc-card-title">Contribute on GitHub</span><span class="doc-card-sub">Improve or extend these helper functions</span>
-  </a>
-</div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="common-issues">Common issues<a class="anchor" href="#common-issues" aria-label="Link to this section"></a></h3>
-<p><strong>Issue: &ldquo;Command failed after 5 attempts&rdquo;</strong></p>
+<h3 id="command-failed-after-5-attempts">&ldquo;Command failed after 5 attempts&rdquo;<a class="anchor" href="#command-failed-after-5-attempts" aria-label="Link to this section"></a></h3>
+<p><code>installfromnet</code> could not reach the source. Check the network, or use a mirror:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Solution: Check network connectivity</span>
 </span></span><span class="line"><span class="cl">ping -c <span class="m">3</span> github.com
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Or use a mirror</span>
 </span></span><span class="line"><span class="cl">installfromnet <span class="s2">&#34;git clone https://mirror.example.com/repo.git&#34;</span></span></span></code></pre></div></div>
-<p><strong>Issue: &ldquo;Library not found by pkg-config&rdquo;</strong></p>
+<h3 id="library-not-found-by-pkg-config">&ldquo;Library not found by pkg-config&rdquo;<a class="anchor" href="#library-not-found-by-pkg-config" aria-label="Link to this section"></a></h3>
+<p>The library is installed where pkg-config does not look. Add the path, refresh the linker cache and try again:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Solution: Update pkg-config path</span>
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/lib/pkgconfig:<span class="nv">$PKG_CONFIG_PATH</span>
@@ -1249,7 +1118,8 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Then retry</span>
 </span></span><span class="line"><span class="cl">check_and_install_lib <span class="s2">&#34;mylib-dev&#34;</span> <span class="s2">&#34;mylib&#34;</span></span></span></code></pre></div></div>
-<p><strong>Issue: &ldquo;CMake configuration failed&rdquo;</strong></p>
+<h3 id="cmake-configuration-failed">&ldquo;CMake configuration failed&rdquo;<a class="anchor" href="#cmake-configuration-failed" aria-label="Link to this section"></a></h3>
+<p>A build dependency is usually missing, or CMake is too old (3.16 or later is expected). Install the dependencies first:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Solution: Install missing dependencies first</span>
 </span></span><span class="line"><span class="cl">install_dependencies <span class="s2">&#34;cmake g++ libboost-all-dev&#34;</span>
@@ -1259,8 +1129,19 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Then retry build</span>
 </span></span><span class="line"><span class="cl">cmake_clone_and_build <span class="o">[</span>...<span class="o">]</span></span></span></code></pre></div></div>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Pro Tip</strong>: All helper functions are defined in <code>images/scripts/common.sh</code>. You can extend them or create new ones for your specific needs!</p>
+<div class="admonition admonition-tip" role="note"><p>All helpers live in <code>images/scripts/common.sh</code>. You can extend them or add your own for your images.</p>
+</div>
+<h2 id="related-documentation">Related documentation<a class="anchor" href="#related-documentation" aria-label="Link to this section"></a></h2>
+<div class="doc-cards">
+  <a class="doc-card" href="/docs/development/yaml-recipe-guide/">
+    <span class="doc-card-title">YAML recipe guide</span><span class="doc-card-sub">Use these helpers in a recipe</span>
+  </a>
+  <a class="doc-card" href="/docs/guide/configurations/">
+    <span class="doc-card-title">Configuration</span><span class="doc-card-sub">Configure RF Swift for your hardware</span>
+  </a>
+  <a class="doc-card" href="https://github.com/PentHertz/RF-Swift" target="_blank" rel="noopener">
+    <span class="doc-card-title">Contribute on GitHub</span><span class="doc-card-sub">Improve or extend these helper functions</span>
+  </a>
 </div>
 
     </div>
@@ -1282,7 +1163,8 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
   <p class="toc-title">On this page</p>
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#output--logging-functions">Output &amp; logging functions</a>
+    <li><a href="#all-helpers-at-a-glance">All helpers at a glance</a></li>
+    <li><a href="#output-and-logging">Output and logging</a>
       <ul>
         <li><a href="#colorecho-message"><code>colorecho &lt;message&gt;</code></a></li>
         <li><a href="#goodecho-message"><code>goodecho &lt;message&gt;</code></a></li>
@@ -1290,55 +1172,51 @@ The function creates an entry in <code>/var/lib/db/rfswift_github.lst</code>:</p
         <li><a href="#criticalecho-noexit-message"><code>criticalecho-noexit &lt;message&gt;</code></a></li>
       </ul>
     </li>
-    <li><a href="#package-installation-helpers">Package installation helpers</a>
+    <li><a href="#installing-packages">Installing packages</a>
       <ul>
         <li><a href="#installfromnet-command"><code>installfromnet &lt;command&gt;</code></a></li>
         <li><a href="#install_dependencies-packages"><code>install_dependencies &quot;&lt;packages&gt;&quot;</code></a></li>
         <li><a href="#check_and_install_lib-lib-name-pkg-config-name"><code>check_and_install_lib &lt;lib-name&gt; &lt;pkg-config-name&gt;</code></a></li>
       </ul>
     </li>
-    <li><a href="#python-package-management">Python package management</a>
+    <li><a href="#installing-python-packages">Installing Python packages</a>
       <ul>
         <li><a href="#pip3install-args"><code>pip3install &lt;args&gt;</code></a></li>
       </ul>
     </li>
-    <li><a href="#git-and-source-management">Git and source management</a>
+    <li><a href="#cloning-and-building-from-source">Cloning and building from source</a>
       <ul>
         <li><a href="#gitinstall-repo-url-method-branch"><code>gitinstall &lt;repo-url&gt; &lt;method&gt; &lt;branch&gt;</code></a></li>
         <li><a href="#cmake_clone_and_build-repo-url-build-dir-branch-reset-commit-method-cmake-args"><code>cmake_clone_and_build &lt;repo-url&gt; &lt;build-dir&gt; &lt;branch&gt; &lt;reset-commit&gt; &lt;method&gt; [cmake-args...]</code></a></li>
         <li><a href="#grclone_and_build-repo-url-subdir-method--b-branch-cmake-args"><code>grclone_and_build &lt;repo-url&gt; &lt;subdir&gt; &lt;method&gt; [-b branch] [cmake-args...]</code></a></li>
       </ul>
     </li>
-    <li><a href="#complete-function-reference-table">Complete function reference table</a></li>
-    <li><a href="#best-practices">Best practices</a>
+    <li><a href="#putting-it-together">Putting it together</a>
       <ul>
-        <li><a href="#complete-build-workflow---yaml-recipe">Complete build workflow - YAML recipe</a></li>
-        <li><a href="#complete-build-workflow---bash-script">Complete build workflow - Bash script</a></li>
-        <li><a href="#error-handling">Error handling</a></li>
-        <li><a href="#yaml-recipe-integration-recommended">YAML recipe integration (recommended)</a></li>
-        <li><a href="#dockerfile-integration-traditional">Dockerfile integration (traditional)</a></li>
-        <li><a href="#layer-optimization">Layer optimization</a></li>
+        <li><a href="#a-complete-recipe">A complete recipe</a></li>
+        <li><a href="#the-same-workflow-as-a-shell-script">The same workflow as a shell script</a></li>
+        <li><a href="#handling-errors">Handling errors</a></li>
+        <li><a href="#using-the-helpers-in-a-yaml-recipe-recommended">Using the helpers in a YAML recipe (recommended)</a></li>
+        <li><a href="#using-the-helpers-in-a-dockerfile">Using the helpers in a Dockerfile</a></li>
+        <li><a href="#keeping-layers-small">Keeping layers small</a></li>
       </ul>
     </li>
-    <li><a href="#yaml-vs-dockerfile-when-to-use-each">YAML vs Dockerfile: when to use each</a>
-      <ul>
-        <li><a href="#use-yaml-recipes-when">Use YAML recipes when:</a></li>
-        <li><a href="#use-dockerfiles-when">Use Dockerfiles when:</a></li>
-      </ul>
-    </li>
+    <li><a href="#yaml-recipe-or-dockerfile">YAML recipe or Dockerfile?</a></li>
     <li><a href="#advanced-usage">Advanced usage</a>
       <ul>
-        <li><a href="#custom-retry-logic">Custom retry logic</a></li>
-        <li><a href="#conditional-builds">Conditional builds</a></li>
-        <li><a href="#metadata-queries">Metadata queries</a></li>
+        <li><a href="#your-own-retry-logic">Your own retry logic</a></li>
+        <li><a href="#different-builds-per-architecture">Different builds per architecture</a></li>
+        <li><a href="#finding-out-what-an-image-was-built-from">Finding out what an image was built from</a></li>
+      </ul>
+    </li>
+    <li><a href="#troubleshooting">Troubleshooting</a>
+      <ul>
+        <li><a href="#command-failed-after-5-attempts">&ldquo;Command failed after 5 attempts&rdquo;</a></li>
+        <li><a href="#library-not-found-by-pkg-config">&ldquo;Library not found by pkg-config&rdquo;</a></li>
+        <li><a href="#cmake-configuration-failed">&ldquo;CMake configuration failed&rdquo;</a></li>
       </ul>
     </li>
     <li><a href="#related-documentation">Related documentation</a></li>
-    <li><a href="#troubleshooting">Troubleshooting</a>
-      <ul>
-        <li><a href="#common-issues">Common issues</a></li>
-      </ul>
-    </li>
   </ul>
 </nav>
   <a class="toc-top" href="#content">Back to top ↑</a>

@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift report · RF Swift</title>
   <meta name="description" content="Generate assessment reports from a container and its workspace.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/report/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/report/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift report · RF Swift">
   <meta property="og:description" content="Generate assessment reports from a container and its workspace.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/report/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/report/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,12 +231,15 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift report</h1><p class="doc-lead">Generate assessment reports from a container and its workspace.</p><p class="doc-meta">Reference · 5 min read · Updated September 27, 2026</p>
+      <h1>rfswift report</h1><p class="doc-lead">Generate assessment reports from a container and its workspace.</p><p class="doc-meta">Reference · 5 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
       <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift system report</code>. The legacy form <code>rfswift report</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
-<p>Generate structured assessment reports from container sessions.</p>
+<p><code>rfswift report</code> turns a lab into a written report. It gathers the container&rsquo;s details, its session recordings, the commands you ran and the files in its workspace, and writes them as Markdown, HTML or PDF.</p>
+<p>It is useful for assessment deliverables, for documenting research experiments, and for lab write-ups in a course.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift report generate -c my_sdr --format html</span></span></code></pre></div></div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Generate a Markdown report (default)</span>
@@ -264,13 +253,9 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Custom title and output path</span>
 </span></span><span class="line"><span class="cl">rfswift report generate -c CONTAINER --title <span class="s2">&#34;Assessment Report&#34;</span> -o report.html -f html</span></span></code></pre></div></div>
-<p>The <code>report</code> command collects data from a container and its workspace, then generates a structured document combining container metadata, session recordings, shell history, and workspace artifacts.</p>
-<p>This is designed for <strong>professional pentesters</strong> writing client deliverables, <strong>researchers</strong> documenting experiments, and <strong>educators</strong> creating lab reports.</p>
-<hr>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <h3 id="report-generate">report generate<a class="anchor" href="#report-generate" aria-label="Link to this section"></a></h3>
-<p>Collect data from a container and generate a report.</p>
-<p><strong>Options:</strong></p>
+<p>Collects the data from a container and writes the report.</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -309,10 +294,10 @@
   </tbody>
 </table>
 </div>
-<p>When <code>-c</code> is omitted in an interactive terminal, a container picker is shown.</p>
+<p>In an interactive terminal, leaving out <code>-c</code> shows a list of containers to pick from.</p>
 <hr>
 <h2 id="report-contents">Report contents<a class="anchor" href="#report-contents" aria-label="Link to this section"></a></h2>
-<p>Each generated report contains the following sections:</p>
+<p>Every report has these sections:</p>
 <h3 id="1-container-summary">1. Container summary<a class="anchor" href="#1-container-summary" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
 <table>
@@ -347,13 +332,13 @@
 </table>
 </div>
 <h3 id="2-environment-configuration">2. Environment configuration<a class="anchor" href="#2-environment-configuration" aria-label="Link to this section"></a></h3>
-<p>Full container configuration: network mode, privileged mode, device mappings, Linux capabilities, cgroup rules, ulimits, and volume bindings.</p>
+<p>The container&rsquo;s full configuration: network mode, privileged mode, device mappings, Linux capabilities, cgroup rules, ulimits and volume bindings.</p>
 <h3 id="3-session-recordings">3. Session recordings<a class="anchor" href="#3-session-recordings" aria-label="Link to this section"></a></h3>
-<p>Inventories all <code>.cast</code> (asciinema) and <code>rfswift-*.log</code> (script) files found in the workspace directory and current working directory. Includes file size and date.</p>
+<p>Lists every <code>.cast</code> (asciinema) and <code>rfswift-*.log</code> (script) file found in the workspace and in the current directory, with its size and date.</p>
 <h3 id="4-shell-history">4. Shell history<a class="anchor" href="#4-shell-history" aria-label="Link to this section"></a></h3>
-<p>Extracted from the container&rsquo;s <code>/root/.bash_history</code> or <code>/root/.zsh_history</code>. Shows all commands run inside the container during the assessment.</p>
+<p>Every command run inside the container during the assessment, taken from <code>/root/.bash_history</code> or <code>/root/.zsh_history</code>.</p>
 <h3 id="5-workspace-artifacts">5. Workspace artifacts<a class="anchor" href="#5-workspace-artifacts" aria-label="Link to this section"></a></h3>
-<p>Full file inventory of the workspace directory with smart categorization:</p>
+<p>Every file in the workspace, sorted into categories by extension:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -387,7 +372,7 @@
 </table>
 </div>
 <h3 id="6-notes-section">6. Notes section<a class="anchor" href="#6-notes-section" aria-label="Link to this section"></a></h3>
-<p>An editable section for assessor findings, observations, and conclusions.</p>
+<p>A section to fill in with your findings, observations and conclusions.</p>
 <hr>
 <h2 id="output-formats">Output formats<a class="anchor" href="#output-formats" aria-label="Link to this section"></a></h2>
 <div class="doc-tabs" data-tabs>
@@ -400,31 +385,18 @@
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift report generate -c my_sdr
 </span></span><span class="line"><span class="cl"><span class="c1"># -&gt; rfswift-report-my_sdr-20260317-143022.md</span></span></span></code></pre></div></div>
-<p>The Markdown output can be:</p>
-<ul>
-<li>Edited in any text editor</li>
-<li>Converted to other formats with pandoc</li>
-<li>Rendered on GitHub, GitLab, or any Markdown viewer</li>
-<li>Included in Git repositories alongside your code</li>
-</ul>
+<p>You can edit it in any text editor, convert it with pandoc, read it on GitHub, GitLab or any Markdown viewer, and keep it in a Git repository next to your code.</p>
 </div>
-  <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><p><strong>HTML</strong> is styled and print-ready, with zero dependencies.</p>
+  <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><p><strong>HTML</strong> is styled and ready to print, with no dependencies.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift report generate -c my_sdr --format html
 </span></span><span class="line"><span class="cl"><span class="c1"># -&gt; rfswift-report-my_sdr-20260317-143022.html</span></span></span></code></pre></div></div>
-<p>The HTML output features:</p>
-<ul>
-<li>Professional styling with responsive tables</li>
-<li>Color-coded category badges for artifacts</li>
-<li>Dark-themed code blocks for shell history</li>
-<li>Print-friendly CSS (<code>Ctrl+P</code> or <code>Cmd+P</code> to print/save as PDF from browser)</li>
-<li>No external dependencies (all CSS inline)</li>
-</ul>
+<p>It has readable tables, colour-coded categories for the artifacts, dark code blocks for the shell history, and print-friendly styles: press <code>Ctrl+P</code> (or <code>Cmd+P</code>) in the browser to print it or save it as PDF. All styles are inline, so the file stands alone.</p>
 </div>
   <div class="doc-tab-panel" role="tabpanel" data-panel="2" hidden><p><strong>PDF</strong> requires <code>pandoc</code> or <code>wkhtmltopdf</code>.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift report generate -c my_sdr --format pdf -o assessment.pdf</span></span></code></pre></div></div>
-<p>PDF generation uses external tools:</p>
+<p>It uses one of these external tools:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install pandoc (recommended)</span>
 </span></span><span class="line"><span class="cl">sudo apt install pandoc      <span class="c1"># Debian/Ubuntu</span>
@@ -433,12 +405,13 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Alternative: wkhtmltopdf</span>
 </span></span><span class="line"><span class="cl">sudo apt install wkhtmltopdf</span></span></code></pre></div></div>
-<p>If neither tool is installed, RF Swift generates an HTML file instead and shows an installation message.</p>
+<p>If neither is installed, RF Swift writes an HTML file instead and tells you what to install.</p>
 </div>
 </div>
 <hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-assessment-report">Basic assessment report<a class="anchor" href="#basic-assessment-report" aria-label="Link to this section"></a></h3>
+<h3 id="a-basic-assessment-report">A basic assessment report<a class="anchor" href="#a-basic-assessment-report" aria-label="Link to this section"></a></h3>
+<p>Create a lab with session recording, do your work, then generate an HTML report:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Run an SDR assessment</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n hackrf_assessment --record
@@ -450,17 +423,19 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Generate the report</span>
 </span></span><span class="line"><span class="cl">rfswift report generate -c hackrf_assessment --format html -o hackrf-report.html</span></span></code></pre></div></div>
-<h3 id="report-with-custom-title">Report with custom title<a class="anchor" href="#report-with-custom-title" aria-label="Link to this section"></a></h3>
+<h3 id="a-report-with-your-own-title">A report with your own title<a class="anchor" href="#a-report-with-your-own-title" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift report generate -c client_pentest <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --title <span class="s2">&#34;Wireless Security Assessment - Client X - March 2026&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --format pdf <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o client-x-wireless-assessment.pdf</span></span></code></pre></div></div>
-<h3 id="interactive-mode">Interactive mode<a class="anchor" href="#interactive-mode" aria-label="Link to this section"></a></h3>
+<h3 id="pick-the-container-from-a-list">Pick the container from a list<a class="anchor" href="#pick-the-container-from-a-list" aria-label="Link to this section"></a></h3>
+<p>Without flags, RF Swift asks which container to use and writes Markdown:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># No flags: picks container from a list, generates Markdown</span>
 </span></span><span class="line"><span class="cl">rfswift report generate</span></span></code></pre></div></div>
-<h3 id="typical-professional-workflow">Typical professional workflow<a class="anchor" href="#typical-professional-workflow" aria-label="Link to this section"></a></h3>
+<h3 id="a-typical-engagement">A typical engagement<a class="anchor" href="#a-typical-engagement" aria-label="Link to this section"></a></h3>
+<p>Create a lab that records the session, save your captures to <code>/workspace</code>, then generate the report:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1. Create container with workspace and recording</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n pentest_wifi --record
@@ -499,28 +474,28 @@
     I --&gt; J{Format?}
     J --&gt;|markdown| K[.md file]
     J --&gt;|html| L[.html file]
-    J --&gt;|pdf| M[pandoc/wkhtmltopdf -&gt; .pdf]</pre></div><p>The report generator:</p>
+    J --&gt;|pdf| M[pandoc/wkhtmltopdf -&gt; .pdf]</pre></div><p>Step by step, the report generator:</p>
 <ol>
-<li><strong>Inspects the container</strong> via Docker/Podman API for metadata and configuration</li>
-<li><strong>Finds the workspace</strong> by looking for the <code>/workspace</code> mount in the container&rsquo;s volume bindings</li>
-<li><strong>Scans for recordings</strong> (<code>.cast</code> files) in the workspace and current directory</li>
-<li><strong>Extracts shell history</strong> from the container&rsquo;s <code>~/.bash_history</code> or <code>~/.zsh_history</code> via <code>docker cp</code></li>
-<li><strong>Inventories workspace files</strong> with smart categorization based on file extensions</li>
-<li><strong>Renders the report</strong> using Go templates (Markdown or HTML), optionally converting to PDF</li>
+<li><strong>inspects the container</strong> through the Docker or Podman API for its details and configuration;</li>
+<li><strong>finds the workspace</strong> from the <code>/workspace</code> mount in the container&rsquo;s volume bindings;</li>
+<li><strong>looks for recordings</strong> (<code>.cast</code> files) in the workspace and the current directory;</li>
+<li><strong>copies the shell history</strong> out of the container (<code>~/.bash_history</code> or <code>~/.zsh_history</code>, with <code>docker cp</code>);</li>
+<li><strong>lists the workspace files</strong>, sorted into categories by extension;</li>
+<li><strong>writes the report</strong> from Go templates (Markdown or HTML), and converts it to PDF if asked.</li>
 </ol>
 <hr>
-<h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
+<h2 id="good-to-know">Good to know<a class="anchor" href="#good-to-know" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create containers (use <code>--record</code> to capture sessions)</li>
-<li><a href="/docs/commands/log"><code>log</code></a> - Record and replay terminal sessions</li>
-<li><a href="/docs/commands/bindings"><code>bindings</code></a> - Manage volume and device bindings</li>
-<li><a href="/docs/commands/exec"><code>exec</code></a> - Enter containers (use <code>--record</code> to capture sessions)</li>
+<li>Add <code>--record</code> to <code>rfswift container create</code> and <code>rfswift container shell</code> so your sessions are recorded and appear in the report.</li>
+<li>Reports find the container&rsquo;s workspace (<code>~/rfswift-workspace/&lt;name&gt;/</code>) on their own. Everything you save to <code>/workspace</code> inside the lab (captures, configs, logs) is listed.</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Tip</strong>: Use <code>--record</code> with <code>rfswift container create</code> and <code>rfswift container shell</code> to automatically capture session recordings that will appear in the report.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Workspace integration</strong>: Reports automatically find and inventory files in the container&rsquo;s workspace directory (<code>~/rfswift-workspace/&lt;name&gt;/</code>). All captures, configs, and logs saved to <code>/workspace</code> inside the container are included in the report.</p>
-</div>
+<h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
+<ul>
+<li><a href="/docs/commands/run">container create</a>: use <code>--record</code> to record sessions</li>
+<li><a href="/docs/commands/log">log</a>: record and replay terminal sessions</li>
+<li><a href="/docs/commands/bindings">config bindings</a>: volume and device bindings</li>
+<li><a href="/docs/commands/exec">container shell</a>: use <code>--record</code> to record sessions</li>
+</ul>
 
     </div>
     <footer class="doc-foot">
@@ -560,14 +535,15 @@
     <li><a href="#output-formats">Output formats</a></li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#basic-assessment-report">Basic assessment report</a></li>
-        <li><a href="#report-with-custom-title">Report with custom title</a></li>
-        <li><a href="#interactive-mode">Interactive mode</a></li>
-        <li><a href="#typical-professional-workflow">Typical professional workflow</a></li>
+        <li><a href="#a-basic-assessment-report">A basic assessment report</a></li>
+        <li><a href="#a-report-with-your-own-title">A report with your own title</a></li>
+        <li><a href="#pick-the-container-from-a-list">Pick the container from a list</a></li>
+        <li><a href="#a-typical-engagement">A typical engagement</a></li>
       </ul>
     </li>
     <li><a href="#how-it-works">How it works</a></li>
-    <li><a href="#related-commands">Related commands</a></li>
+    <li><a href="#good-to-know">Good to know</a></li>
+    <li><a href="#related">Related</a></li>
   </ul>
 </nav>
   <a class="toc-top" href="#content">Back to top ↑</a>

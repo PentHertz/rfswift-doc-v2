@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LibreSDR FPGA swap utility · RF Swift</title>
   <meta name="description" content="Back up, replace and restore the FPGA firmware of USRP B210/B220 boards for LibreSDR.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/container_scripts/libresdr_swap_firmware/">
+  <link rel="canonical" href="http://localhost:1313/docs/container_scripts/libresdr_swap_firmware/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="LibreSDR FPGA swap utility · RF Swift">
   <meta property="og:description" content="Back up, replace and restore the FPGA firmware of USRP B210/B220 boards for LibreSDR.">
-  <meta property="og:url" content="https://rfswift.io/docs/container_scripts/libresdr_swap_firmware/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/container_scripts/libresdr_swap_firmware/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,107 +231,99 @@
 </nav>
 
     <header class="doc-head">
-      <h1>LibreSDR FPGA swap utility</h1><p class="doc-lead">Back up, replace and restore the FPGA firmware of USRP B210/B220 boards for LibreSDR.</p><p class="doc-meta">Advanced · 3 min read · Updated September 27, 2026</p>
+      <h1>LibreSDR FPGA swap utility</h1><p class="doc-lead">Back up, replace and restore the FPGA firmware of USRP B210/B220 boards for LibreSDR.</p><p class="doc-meta">Advanced · 2 min read · Updated April 21, 2025</p>
     </header>
     <div class="prose">
-      <h2 id="overview">Overview<a class="anchor" href="#overview" aria-label="Link to this section"></a></h2>
-<p>The <code>libresdr_swapfpga</code> utility allows you to easily switch between different FPGA firmware binaries for USRP B210/B220 devices when using them with LibreSDR. This tool provides a simple interface to backup, replace, and restore FPGA firmware files, enabling enhanced functionality with LibreSDR modifications.</p>
-<h2 id="what-this-utility-does">What this utility does<a class="anchor" href="#what-this-utility-does" aria-label="Link to this section"></a></h2>
-<p>This utility manages the FPGA firmware files that control the behavior of USRP B210/B220 software-defined radio devices. It allows you to:</p>
-<ol>
-<li><strong>Backup</strong> the original USRP FPGA firmware</li>
-<li><strong>Replace</strong> the firmware with LibreSDR-enhanced versions</li>
-<li><strong>Restore</strong> the original firmware when needed</li>
-</ol>
-<h2 id="when-to-use-this-utility">When to use this utility<a class="anchor" href="#when-to-use-this-utility" aria-label="Link to this section"></a></h2>
-<p>Use the <code>libresdr_swapfpga</code> utility when:</p>
+      <p><code>libresdr_swapfpga</code> switches the FPGA firmware of a USRP B210 or B220 between the original UHD image and the LibreSDR versions. A short menu lets you back up the original, replace it, and restore it later.</p>
+<p>Use it when:</p>
 <ul>
-<li>You want to enhance your USRP B210/B220 with LibreSDR capabilities</li>
-<li>You need to switch between different FPGA firmware versions for testing</li>
-<li>You want to restore the original firmware for standard UHD operation</li>
+<li>you want to add LibreSDR capabilities to a USRP B210/B220;</li>
+<li>you switch between FPGA firmware versions for testing;</li>
+<li>you want the original firmware back for standard UHD operation.</li>
 </ul>
-<h2 id="using-the-utility">Using the utility<a class="anchor" href="#using-the-utility" aria-label="Link to this section"></a></h2>
-<h3 id="running-the-utility">Running the utility<a class="anchor" href="#running-the-utility" aria-label="Link to this section"></a></h3>
-<p>The utility must be run with root privileges:</p>
+<h2 id="run-it">Run it<a class="anchor" href="#run-it" aria-label="Link to this section"></a></h2>
+<p>The utility needs root privileges, because it writes to <code>/usr/share/uhd/images/</code>:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo libresdr_swapfpga</span></span></code></pre></div></div>
-<h3 id="main-menu-options">Main menu options<a class="anchor" href="#main-menu-options" aria-label="Link to this section"></a></h3>
-<p>The utility presents a menu with four options:</p>
+<p>It shows a menu with four choices:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>What would you like to do?
 1) Backup the original binary
 2) Replace the original binary
 3) Restore the backup binary
 4) Exit</code></pre></div>
-<h4 id="1-backup-the-original-binary">1. Backup the original binary<a class="anchor" href="#1-backup-the-original-binary" aria-label="Link to this section"></a></h4>
-<p>Before making any changes, it&rsquo;s recommended to back up the original FPGA firmware:</p>
+<h3 id="1-back-up-the-original-firmware">1. Back up the original firmware<a class="anchor" href="#1-back-up-the-original-firmware" aria-label="Link to this section"></a></h3>
+<p>Do this first, before any change:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Enter your choice <span class="o">[</span>1-4<span class="o">]</span>: <span class="m">1</span></span></span></code></pre></div></div>
-<p>This creates a backup at: <code>/usr/share/uhd/images/usrp_b210_fpga_backup.bin</code></p>
-<p>If a backup already exists, this operation will be skipped to prevent overwriting your existing backup.</p>
-<h4 id="2-replace-the-original-binary">2. Replace the original binary<a class="anchor" href="#2-replace-the-original-binary" aria-label="Link to this section"></a></h4>
-<p>To replace the original firmware with a LibreSDR version:</p>
+<p>The backup is written to <code>/usr/share/uhd/images/usrp_b210_fpga_backup.bin</code>. If a backup already exists, this step is skipped, so your first backup is never overwritten.</p>
+<h3 id="2-replace-the-firmware">2. Replace the firmware<a class="anchor" href="#2-replace-the-firmware" aria-label="Link to this section"></a></h3>
+<p>Install a LibreSDR firmware in place of the original:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Enter your choice <span class="o">[</span>1-4<span class="o">]</span>: <span class="m">2</span></span></span></code></pre></div></div>
-<p>You&rsquo;ll be presented with two replacement options:</p>
+<p>Then pick the image for your board:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>Select the binary to replace the original:
 1) libresdr_b210.bin
 2) libresdr_b220.bin
 3) Cancel</code></pre></div>
 <ul>
-<li><code>libresdr_b210.bin</code>: Enhanced firmware for USRP B210 devices</li>
-<li><code>libresdr_b220.bin</code>: Enhanced firmware for USRP B220 devices</li>
+<li><code>libresdr_b210.bin</code>: LibreSDR firmware for USRP B210 devices.</li>
+<li><code>libresdr_b220.bin</code>: LibreSDR firmware for USRP B220 devices.</li>
 </ul>
-<h4 id="3-restore-the-backup-binary">3. Restore the backup binary<a class="anchor" href="#3-restore-the-backup-binary" aria-label="Link to this section"></a></h4>
-<p>If you need to revert to the original firmware:</p>
+<h3 id="3-restore-the-original-firmware">3. Restore the original firmware<a class="anchor" href="#3-restore-the-original-firmware" aria-label="Link to this section"></a></h3>
+<p>Put the backed-up firmware back:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Enter your choice <span class="o">[</span>1-4<span class="o">]</span>: <span class="m">3</span></span></span></code></pre></div></div>
-<p>This will restore the previously backed-up firmware file.</p>
-<h4 id="4-exit">4. Exit<a class="anchor" href="#4-exit" aria-label="Link to this section"></a></h4>
-<p>To exit the utility:</p>
+<h3 id="4-exit">4. Exit<a class="anchor" href="#4-exit" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Enter your choice <span class="o">[</span>1-4<span class="o">]</span>: <span class="m">4</span></span></span></code></pre></div></div>
-<h2 id="technical-details">Technical details<a class="anchor" href="#technical-details" aria-label="Link to this section"></a></h2>
-<h3 id="file-locations">File locations<a class="anchor" href="#file-locations" aria-label="Link to this section"></a></h3>
-<p>The utility manages the following files:</p>
+<h2 id="good-to-know">Good to know<a class="anchor" href="#good-to-know" aria-label="Link to this section"></a></h2>
 <ul>
-<li>Original firmware: <code>/usr/share/uhd/images/usrp_b210_fpga.bin</code></li>
-<li>Backup location: <code>/usr/share/uhd/images/usrp_b210_fpga_backup.bin</code></li>
-<li>LibreSDR B210: <code>/rftools/sdr/libresdr/libresdr_b210.bin</code></li>
-<li>LibreSDR B220: <code>/rftools/sdr/libresdr/libresdr_b220.bin</code></li>
+<li><strong>Back up the original firmware</strong> before any change.</li>
+<li>Restart any application that uses the USRP after changing the firmware.</li>
+<li>Some LibreSDR features need matching software support.</li>
+<li>The LibreSDR firmware may draw more power or run hotter.</li>
 </ul>
-<h3 id="system-requirements">System requirements<a class="anchor" href="#system-requirements" aria-label="Link to this section"></a></h3>
-<ul>
-<li>Root privileges (required to modify files in <code>/usr/share/uhd/images/</code>)</li>
-<li>UHD (USRP Hardware Driver) installed</li>
-<li>LibreSDR firmware files</li>
-</ul>
-<h2 id="important-notes">Important notes<a class="anchor" href="#important-notes" aria-label="Link to this section"></a></h2>
-<ul>
-<li><strong>Always backup your original firmware</strong> before making any changes</li>
-<li>After changing firmware, you may need to restart any applications using the USRP device</li>
-<li>Some LibreSDR features may require specific software support</li>
-<li>The enhanced firmware may consume more power or generate more heat during operation</li>
-</ul>
+<h2 id="files-it-manages">Files it manages<a class="anchor" href="#files-it-manages" aria-label="Link to this section"></a></h2>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Original firmware</td>
+      <td><code>/usr/share/uhd/images/usrp_b210_fpga.bin</code></td>
+    </tr>
+    <tr>
+      <td>Backup</td>
+      <td><code>/usr/share/uhd/images/usrp_b210_fpga_backup.bin</code></td>
+    </tr>
+    <tr>
+      <td>LibreSDR B210</td>
+      <td><code>/rftools/sdr/libresdr/libresdr_b210.bin</code></td>
+    </tr>
+    <tr>
+      <td>LibreSDR B220</td>
+      <td><code>/rftools/sdr/libresdr/libresdr_b220.bin</code></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>Requirements: root privileges, UHD (the USRP Hardware Driver), and the LibreSDR firmware files above.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="common-issues">Common issues<a class="anchor" href="#common-issues" aria-label="Link to this section"></a></h3>
-<p><strong>Device not recognized after firmware swap:</strong></p>
-<ul>
-<li>Disconnect and reconnect the device</li>
-<li>Restart the UHD service: <code>sudo systemctl restart uhd</code></li>
-</ul>
-<p><strong>Errors during firmware replacement:</strong></p>
-<ul>
-<li>Ensure you have sufficient disk space</li>
-<li>Verify that the LibreSDR firmware files exist in the correct location</li>
-</ul>
-<p><strong>Permission issues:</strong></p>
-<ul>
-<li>The utility must be run with sudo or as root</li>
-</ul>
-<h3 id="restoring-from-command-line">Restoring from command line<a class="anchor" href="#restoring-from-command-line" aria-label="Link to this section"></a></h3>
-<p>If you need to restore the original firmware without the utility:</p>
+<h3 id="the-device-is-not-recognised-after-the-swap">The device is not recognised after the swap<a class="anchor" href="#the-device-is-not-recognised-after-the-swap" aria-label="Link to this section"></a></h3>
+<p>Unplug the device and plug it back in, then restart the UHD service: <code>sudo systemctl restart uhd</code>.</p>
+<h3 id="the-replacement-fails">The replacement fails<a class="anchor" href="#the-replacement-fails" aria-label="Link to this section"></a></h3>
+<p>Check that there is enough free disk space, and that the LibreSDR firmware files are at the paths listed above.</p>
+<h3 id="permission-errors">Permission errors<a class="anchor" href="#permission-errors" aria-label="Link to this section"></a></h3>
+<p>Run the utility with <code>sudo</code> or as root.</p>
+<h3 id="restore-without-the-utility">Restore without the utility<a class="anchor" href="#restore-without-the-utility" aria-label="Link to this section"></a></h3>
+<p>Copy the backup over the original by hand:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo cp /usr/share/uhd/images/usrp_b210_fpga_backup.bin /usr/share/uhd/images/usrp_b210_fpga.bin</span></span></code></pre></div></div>
 
@@ -368,26 +346,22 @@
   <p class="toc-title">On this page</p>
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#overview">Overview</a></li>
-    <li><a href="#what-this-utility-does">What this utility does</a></li>
-    <li><a href="#when-to-use-this-utility">When to use this utility</a></li>
-    <li><a href="#using-the-utility">Using the utility</a>
+    <li><a href="#run-it">Run it</a>
       <ul>
-        <li><a href="#running-the-utility">Running the utility</a></li>
-        <li><a href="#main-menu-options">Main menu options</a></li>
+        <li><a href="#1-back-up-the-original-firmware">1. Back up the original firmware</a></li>
+        <li><a href="#2-replace-the-firmware">2. Replace the firmware</a></li>
+        <li><a href="#3-restore-the-original-firmware">3. Restore the original firmware</a></li>
+        <li><a href="#4-exit">4. Exit</a></li>
       </ul>
     </li>
-    <li><a href="#technical-details">Technical details</a>
-      <ul>
-        <li><a href="#file-locations">File locations</a></li>
-        <li><a href="#system-requirements">System requirements</a></li>
-      </ul>
-    </li>
-    <li><a href="#important-notes">Important notes</a></li>
+    <li><a href="#good-to-know">Good to know</a></li>
+    <li><a href="#files-it-manages">Files it manages</a></li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#common-issues">Common issues</a></li>
-        <li><a href="#restoring-from-command-line">Restoring from command line</a></li>
+        <li><a href="#the-device-is-not-recognised-after-the-swap">The device is not recognised after the swap</a></li>
+        <li><a href="#the-replacement-fails">The replacement fails</a></li>
+        <li><a href="#permission-errors">Permission errors</a></li>
+        <li><a href="#restore-without-the-utility">Restore without the utility</a></li>
       </ul>
     </li>
   </ul>

@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Command reference · RF Swift</title>
   <meta name="description" content="Every rfswift command with its syntax, options and examples, grouped by what it manages.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Command reference · RF Swift">
   <meta property="og:description" content="Every rfswift command with its syntax, options and examples, grouped by what it manages.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -244,10 +230,10 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Command reference</h1><p class="doc-lead">Every rfswift command with its syntax, options and examples, grouped by what it manages.</p><p class="doc-meta">Reference · 8 min read · Updated September 27, 2026</p>
+      <h1>Command reference</h1><p class="doc-lead">Every rfswift command with its syntax, options and examples, grouped by what it manages.</p><p class="doc-meta">Reference · 8 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Every <code>rfswift</code> command has its own page with syntax, options and examples. You don&rsquo;t need to read this reference to get started: the <a href="/docs/quick-start/">Quick start</a> covers the handful of commands most people use every day.</p>
+      <p>Every <code>rfswift</code> command has its own page, with its syntax, options and examples. You don&rsquo;t need to read this reference to get started: the <a href="/docs/quick-start/">Quick start</a> covers the few commands most people use every day. Come here when you need a specific option.</p>
 <div class="admonition admonition-beginner" role="note"><p class="admonition-title">New to the command line?</p><p>You never have to remember flags. Most commands open an interactive picker when something is missing: <code>rfswift container create</code> with no options starts a guided wizard, and <code>rfswift container shell</code> with no name lets you pick a container from a list. Prefer windows and buttons? The <a href="/docs/guide/workbench/">Workbench</a> does the same things without typing.</p>
 </div>
 <h2 id="the-10-commands-youll-use-most">The 10 commands you&rsquo;ll use most<a class="anchor" href="#the-10-commands-youll-use-most" aria-label="Link to this section"></a></h2>
@@ -310,9 +296,9 @@
 </span></span><span class="line"><span class="cl">rfswift config bindings add --help  <span class="c1"># a subcommand</span>
 </span></span><span class="line"><span class="cl">man rfswift-env-update              <span class="c1"># Linux packages ship man pages</span>
 </span></span><span class="line"><span class="cl">rfswift completion zsh --install    <span class="c1"># tab completion</span></span></span></code></pre></div></div>
-<p>Most commands open a TUI picker when a required flag is missing in a terminal: <code>rfswift container create</code> without <code>-i</code> and <code>-n</code> launches the guided wizard, <code>rfswift container shell</code> without <code>-c</code> shows a container picker, and <code>rfswift env update</code> without a name opens the update wizard. Everything falls back to plain flags when scripting or piping.</p>
+<p><code>rfswift env update</code> without a name also opens a guided wizard. In scripts and pipes, every command works with plain flags and never waits for input.</p>
 <h2 id="the-v4-command-tree">The v4 command tree<a class="anchor" href="#the-v4-command-tree" aria-label="Link to this section"></a></h2>
-<p>RF Swift v4.0 &ldquo;Nucleus&rdquo; reorganised the CLI around <strong>resources</strong>. The old flat commands (<code>rfswift run</code>, <code>rfswift exec</code>, <code>rfswift images pull</code>, <code>rfswift nix install</code>, &hellip;) all still work and print a notice pointing at the new spelling, so existing scripts and muscle memory are safe.</p>
+<p>Since v4.0 &ldquo;Nucleus&rdquo;, commands are grouped by what they act on: containers, images, Nix environments, configuration, the host, and so on. The older flat commands (<code>rfswift run</code>, <code>rfswift exec</code>, <code>rfswift images pull</code>, <code>rfswift nix install</code>, &hellip;) still work and print a notice with the new name, so existing scripts keep working.</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>rfswift
 ├── container   create | shell | last | install | stop | rm | rename | commit | upgrade
@@ -456,7 +442,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Set an engine once for the shell session</span>
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">RFSWIFT_ENGINE</span><span class="o">=</span>podman</span></span></code></pre></div></div>
-<p>The ASCII banner is printed on interactive terminals only. It is skipped when stdout is a pipe (scripts, <code>--json</code> consumers) and when <code>RFSWIFT_NO_BANNER</code> is set.</p>
+<p>The ASCII banner only appears in an interactive terminal. It is skipped when the output goes to a pipe (scripts, <code>--json</code> consumers) and when <code>RFSWIFT_NO_BANNER</code> is set.</p>
 <h2 id="command-groups">Command groups<a class="anchor" href="#command-groups" aria-label="Link to this section"></a></h2>
 <h3 id="containers">Containers<a class="anchor" href="#containers" aria-label="Link to this section"></a></h3>
 <div class="doc-cards">

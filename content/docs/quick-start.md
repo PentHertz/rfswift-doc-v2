@@ -247,7 +247,7 @@ repotag = penthertz/rfswift_resolute
 | `--workspace`, `--cwd`, `--no-workspace` | Where the workspace is, or no workspace |
 | `--lazy`, `--pure`, `--isolate`, `--flake` | Nix engine only |
 
-Before creating anything, RF Swift lists the default devices this engine cannot map on your host (a device absent from the Lima VM, a root-only node on rootless Podman, USB on Docker Desktop for macOS) and asks once before dropping them. You can also edit the `devices` list in `config.ini`.
+Before creating anything, RF Swift lists the default devices this engine cannot map on your host, and asks once before dropping them. Examples: a device absent from the Lima VM, a root-only node on rootless Podman, or USB on Docker Desktop for macOS. You can also edit the `devices` list in `config.ini`.
 
 ### Sharing folders and devices
 

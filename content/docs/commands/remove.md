@@ -7,25 +7,27 @@ description: "Remove a container. Its workspace folder on the host is kept."
 weight: 7
 ---
 
-{{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift container rm`. The legacy form `rfswift remove` and the short alias `rfswift rm` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+`rfswift container rm` deletes a container for good and frees its disk space. Use it when a piece of work is finished, or before re-creating a container with different settings.
+
+```bash
+rfswift container rm -c my_old_container
+```
+
+Your workspace folder (`~/rfswift-workspace/<name>/`) and any folder you mounted from your computer are kept. Everything else stored inside the container is lost.
+
+{{< callout type="warning" >}}
+**This cannot be undone.** Files you saved inside the container, outside the workspace and mounted folders, are deleted with it. To keep the container's state, [commit it to an image](/docs/commands/commit/) first.
 {{< /callout >}}
 
-Permanently delete a container and free associated disk space.
+{{< callout type="info" >}}
+**Other spellings**: the legacy form `rfswift remove` and the short alias `rfswift rm` still work and print a notice. The flags are the same. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
 
 ## Synopsis
 
 ```bash
 rfswift container rm -c CONTAINER_NAME
 ```
-
-The `remove` command permanently deletes a container from your system. This operation cannot be undone - all data stored within the container's filesystem will be lost.
-
-{{< callout type="warning" >}}
-**Destructive Operation**: This command permanently deletes the container. Data in mounted volumes is preserved, but any data stored inside the container filesystem is lost forever.
-{{< /callout >}}
-
----
 
 ## Options
 
@@ -34,39 +36,37 @@ The `remove` command permanently deletes a container from your system. This oper
 | `-c, --container STRING` | Container name or ID to remove | Yes | `-c my_container` |
 
 {{< callout type="info" >}}
-**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable container picker listing all containers with their name, ID, image, and state. A confirmation prompt is shown before deletion.
+**Container picker**: without `-c` in an interactive terminal, RF Swift shows a picker with every container's name, ID, image and state, then asks you to confirm before deleting.
 {{< /callout >}}
-
----
 
 ## Examples
 
 ### Basic usage
 
-**Remove a stopped container:**
+#### Remove a stopped container
 ```bash
 rfswift container rm -c my_old_container
 ```
 
-**Remove by container ID:**
+#### Remove by container ID
 ```bash
 rfswift container rm -c a1b2c3d4e5f6
 ```
 
-**Remove with short container ID:**
+#### Remove with short container ID
 ```bash
 rfswift container rm -c a1b2c3
 ```
 
-### Real-World scenarios
+### Everyday cases
 
-**Clean up completed project:**
+#### Clean up completed project
 ```bash
 # Project complete, remove container
 rfswift container rm -c client_assessment_2024_01
 ```
 
-**Free disk space:**
+#### Free disk space
 ```bash
 # Remove old test containers
 rfswift container rm -c test_container_1
@@ -74,28 +74,25 @@ rfswift container rm -c test_container_2
 rfswift container rm -c experiment_old
 ```
 
-**Remove failed containers:**
+#### Remove failed containers
 ```bash
 # Clean up containers that didn't work
 rfswift container rm -c broken_config
 rfswift container rm -c failed_setup
 ```
 
-**Weekly cleanup:**
+#### Weekly cleanup
 ```bash
-# Remove all containers older than 7 days
-# (See cleanup command for automated version)
+# One container at a time; for age-based cleanup see rfswift system cleanup
 rfswift container rm -c week_old_container
 ```
 
-**Before recreating container:**
+#### Before recreating container
 ```bash
 # Need to recreate with different config
 rfswift container rm -c sdr_container
 rfswift container create -i sdr_full -n sdr_container -s /dev/bus/usb:/dev/bus/usb
 ```
-
----
 
 ## What gets deleted
 
@@ -103,15 +100,16 @@ rfswift container create -i sdr_full -n sdr_container -s /dev/bus/usb:/dev/bus/u
 
 When you remove a container:
 
-| Data Location | Preserved? | Example |
+| Data location | Kept? | Example |
 |--------------|------------|---------|
-| Container filesystem | **DELETED** | `/root/captures/data.bin` (inside container) |
-| Mounted volumes | **PRESERVED** | `~/captures:/root/captures` (host directory) |
-| Container configuration | **DELETED** | Network settings, capabilities, cgroups |
-| Container metadata | **DELETED** | Creation date, history, logs |
-| Docker images | **PRESERVED** | Source images remain available |
+| Container filesystem | **Deleted** | `/root/captures/data.bin` (inside the container) |
+| Workspace folder | **Kept** | `~/rfswift-workspace/my_container/` on your computer |
+| Mounted volumes | **Kept** | `~/captures:/root/captures` (a folder on your computer) |
+| Container configuration | **Deleted** | Network settings, capabilities, cgroups |
+| Container metadata | **Deleted** | Creation date, history, logs |
+| Images | **Kept** | The image you created it from stays available |
 
-**Important distinction:**
+#### Important distinction
 ```bash
 # Create container with volume
 rfswift container create -i sdr_full -n my_container \
@@ -129,14 +127,9 @@ rfswift container rm -c my_container
 
 ### Configuration loss
 
-Removed containers lose:
-- Port bindings and network configuration
-- Device bindings and cgroups
-- Capabilities and security settings
-- Environment variables
-- Startup commands
+The container's settings go with it: port and network settings, device bindings and cgroup rules, capabilities and security settings, environment variables and startup commands.
 
-**To preserve configuration:**
+#### To preserve configuration
 ```bash
 # Option 1: Commit to image before removing
 rfswift container commit -c my_container -i my_container_backup
@@ -147,8 +140,6 @@ docker inspect my_container > container_config.json
 rfswift container rm -c my_container
 # Recreate later from documentation
 ```
-
----
 
 ## Safe removal practices
 
@@ -174,15 +165,13 @@ rfswift image export container -c container_name -o container_backup.tar.gz
 rfswift container rm -c container_name
 ```
 
----
-
 ## Common workflows
 
 ### Project lifecycle
 
 ```bash
 # Week 1: Create project container
-rfswift container create -i pentest -n project_alpha \
+rfswift container create -i network -n project_alpha \
   -b ~/projects/alpha:/root/work
 
 # Weeks 1-4: Use for project
@@ -217,15 +206,13 @@ rfswift container rm -c test_new_config
 rfswift container create -i sdr_full -n production # Use tested config
 ```
 
----
-
 ## Troubleshooting
 
 ### Container not found
 
-**Error:** `Error: No such container: container_name`
+The error message is: `Error: No such container: container_name`
 
-**Solutions:**
+To fix it:
 ```bash
 # List all containers
 rfswift container last
@@ -240,11 +227,9 @@ docker ps -a | grep partial_name
 
 ### Container still running
 
-**Warning:** `Container is running, stopping first...`
+RF Swift prints `Container is running, stopping first...`. This is normal: it stops a running container before removing it.
 
-**This is normal:** RF Swift automatically stops running containers before removal.
-
-**To avoid the warning:**
+#### To avoid the warning
 ```bash
 # Stop first
 rfswift container stop -c my_container
@@ -253,26 +238,28 @@ rfswift container rm -c my_container
 
 ### Permission denied
 
-**Error:** `Permission denied` or `Cannot connect to Docker daemon`
+The error message is: `Permission denied` or `Cannot connect to Docker daemon`
 
-**Solutions:**
+On Linux, your user can't talk to Docker yet. Give it access once (no logout needed), then try again:
+
 ```bash
-# Use sudo on Linux
-sudo rfswift container rm -c my_container
+rfswift host docker-access
+rfswift container rm -c my_container
+```
 
-# Or add user to docker group
+Or, by hand:
+
+```bash
 sudo usermod -aG docker $USER
 newgrp docker
-
-# Then try again
 rfswift container rm -c my_container
 ```
 
 ### Container has dependent containers
 
-**Error:** `Error: cannot remove container: container has dependent containers`
+The error message is: `Error: cannot remove container: container has dependent containers`
 
-**Solutions:**
+To fix it:
 ```bash
 # Find dependent containers
 docker ps -a --filter "ancestor=container_name"
@@ -289,14 +276,9 @@ docker rm -f $(docker ps -aq --filter "ancestor=container_name")
 
 ### Disk space not freed
 
-**Problem:** Removed container but disk space unchanged
+You removed a container, but your free disk space barely changed. That is expected: the image (which takes most of the space), the volumes and the build cache are still there.
 
-**Explanation:** Container removed, but:
-- Image still exists (most disk space)
-- Volumes still exist
-- Build cache remains
-
-**Solutions:**
+To fix it:
 ```bash
 # Remove unused images
 docker image prune -a
@@ -315,11 +297,9 @@ docker volume rm volume_name
 
 ### Accidental removal
 
-**Problem:** Removed wrong container
+You removed the wrong container.
 
-**Recovery options:**
-
-**If you have backups:**
+#### If you have backups
 ```bash
 # From committed image
 rfswift container create -i backup_image -n restored_container
@@ -328,23 +308,17 @@ rfswift container create -i backup_image -n restored_container
 rfswift image import container -i backup.tar.gz
 ```
 
-**If no backups:**
-- Container cannot be recovered
-- Data inside container is lost
-- Mounted volumes still exist
-- Can recreate container from original image
+Without a backup, the container and the data inside it cannot be recovered. Your workspace and mounted folders are still there, and you can create a new container from the original image.
 
-**Prevention:**
+#### Prevention
 ```bash
-# Always verify before removing
+# Check before removing
 docker ps -a | grep container_name
 # Read the output carefully before confirming
 
 # Use tab completion to avoid typos
 rfswift container rm -c my_cont<TAB>
 ```
-
----
 
 ## Best practices
 
@@ -443,8 +417,6 @@ Add to crontab:
 0 2 * * 0 /path/to/cleanup_old_containers.sh
 ```
 
----
-
 ## Advanced usage
 
 ### Conditional removal
@@ -532,8 +504,6 @@ else
 fi
 ```
 
----
-
 ## Disk space management
 
 ### Understanding disk usage
@@ -552,17 +522,18 @@ docker system df
 
 ### Freeing disk space
 
-**Conservative approach (remove only stopped containers):**
+#### Conservative approach (remove only stopped containers)
 ```bash
 # Remove specific stopped containers
 rfswift container rm -c old_container_1
 rfswift container rm -c old_container_2
 
-# Remove all stopped containers
-docker cleanup [other options] # check that command before ;)
+# Remove all stopped containers (preview first with --dry-run)
+rfswift system cleanup containers --stopped --dry-run
+rfswift system cleanup containers --stopped
 ```
 
-**Moderate approach (remove old data):**
+#### Moderate approach (remove old data)
 ```bash
 # Remove containers unused for 7 days
 docker container prune --filter "until=168h"
@@ -571,7 +542,7 @@ docker container prune --filter "until=168h"
 docker image prune -a --filter "until=168h"
 ```
 
-**Aggressive approach (full cleanup):**
+#### Aggressive approach (full cleanup)
 ```bash
 # WARNING: This removes ALL unused Docker data!
 docker system prune -a --volumes
@@ -584,7 +555,7 @@ docker system prune -a --volumes
 # - Build cache
 ```
 
-**Space recovery comparison:**
+#### Space recovery comparison
 ```bash
 # Before cleanup
 docker system df
@@ -601,28 +572,19 @@ docker system df
 # Freed: 3GB
 ```
 
----
-
 ## Related commands
 
-- [`run`](/docs/commands/run) - Create new containers
-- [`stop`](/docs/commands/stop) - Stop containers before removing
-- [`commit`](/docs/commands/commit) - Save container state before removing
-- [`export`](/docs/commands/export) - Export container before removing
-- [`cleanup`](/docs/commands/cleanup) - Automated container cleanup
-- [`last`](/docs/commands/last) - List containers to identify removal candidates
-
-
----
-
-{{< callout type="warning" >}}
-**Cannot Be Undone**: Container removal is permanent. All data inside the container filesystem is lost forever. Only mounted volumes are preserved. Always verify you're removing the correct container!
-{{< /callout >}}
+- [`container create`](/docs/commands/run/): create a new container
+- [`container stop`](/docs/commands/stop/): stop a container before removing it
+- [`container commit`](/docs/commands/commit/): save a container's state as an image first
+- [`image export`](/docs/commands/export/): export a container to an archive first
+- [`system cleanup`](/docs/commands/cleanup/): remove old containers and images by age
+- [`container last`](/docs/commands/last/): list containers to find the ones to remove
 
 {{< callout >}}
-**Before Removing Important Containers**: Always commit to an image first: `rfswift container commit -c container -i backup` then `rfswift container rm -c container`. This gives you a safety net!
+**A safety net for important containers**: commit first with `rfswift container commit -c container -i backup`, then run `rfswift container rm -c container`. You can re-create the container from `backup` at any time.
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**Disk Space Tip**: Removing containers frees some space, but most disk usage is from images. Use `docker image prune` to free significant disk space after removing containers.
+**Disk space**: removing containers frees some space, but images take most of it. `docker image prune` frees much more after you remove containers.
 {{< /callout >}}

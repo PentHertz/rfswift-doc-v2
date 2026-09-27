@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Compiling RF Swift from source · RF Swift</title>
-  <meta name="description" content="Build the rfswift CLI and the Workbench from source.">
+  <meta name="description" content="Build the rfswift CLI and the Workbench from source, for your machine or another architecture.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/development/compiling-rfswift/">
+  <link rel="canonical" href="http://localhost:1313/docs/development/compiling-rfswift/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Compiling RF Swift from source · RF Swift">
-  <meta property="og:description" content="Build the rfswift CLI and the Workbench from source.">
-  <meta property="og:url" content="https://rfswift.io/docs/development/compiling-rfswift/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:description" content="Build the rfswift CLI and the Workbench from source, for your machine or another architecture.">
+  <meta property="og:url" content="http://localhost:1313/docs/development/compiling-rfswift/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,16 +231,21 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Compiling RF Swift from source</h1><p class="doc-lead">Build the rfswift CLI and the Workbench from source.</p><p class="doc-meta">Advanced · 3 min read · Updated September 27, 2026</p>
+      <h1>Compiling RF Swift from source</h1><p class="doc-lead">Build the rfswift CLI and the Workbench from source, for your machine or another architecture.</p><p class="doc-meta">Advanced · 4 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>RF Swift is two Go programs in one repository: the lean <code>rfswift</code> CLI/TUI (which also contains the remote agent) and the <code>rfswift-workbench</code> desktop GUI. This guide builds both, for your machine or for another architecture.</p>
+      <p>RF Swift is two Go programs in one repository:</p>
+<ul>
+<li>the lean <code>rfswift</code> CLI/TUI, which also contains the remote agent;</li>
+<li>the <code>rfswift-workbench</code> desktop GUI.</li>
+</ul>
+<p>This guide builds both, for your machine or for another architecture. You need it to test changes, contribute, or target a platform that has no release build.</p>
 <h2 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-label="Link to this section"></a></h2>
 <ul>
-<li><strong>Go 1.27 or later</strong> (the modules declare <code>go 1.27.1</code> and the Go toolchain downloads it on its own when yours is older; distribution packages are often older, take the archive from <a href="https://go.dev/dl/" target="_blank" rel="noopener">go.dev/dl</a>)</li>
-<li>Git</li>
-<li>A container engine (Docker or Podman) or Nix to run what you build</li>
-<li>For the Workbench on Linux: the GTK 3 and WebKitGTK 4.1 development packages (<code>make deps</code> installs them on apt, dnf, pacman, zypper and apk). macOS and Windows need nothing extra, the webview ships with the OS</li>
+<li><strong>Go 1.27 or later.</strong> The modules declare <code>go 1.27.1</code>, and the Go toolchain downloads it by itself when yours is older. Distribution packages are often older; take the archive from <a href="https://go.dev/dl/" target="_blank" rel="noopener">go.dev/dl</a>.</li>
+<li><strong>Git.</strong></li>
+<li><strong>A container engine</strong> (Docker or Podman) <strong>or Nix</strong>, to run what you build.</li>
+<li><strong>For the Workbench on Linux:</strong> the GTK 3 and WebKitGTK 4.1 development packages. <code>make deps</code> installs them on apt, dnf, pacman, zypper and apk. macOS and Windows need nothing extra: the webview ships with the OS.</li>
 </ul>
 <div class="step-list">
 <h3 id="clone-the-repository">Clone the repository<a class="anchor" href="#clone-the-repository" aria-label="Link to this section"></a></h3>
@@ -262,11 +253,13 @@
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/PentHertz/RF-Swift.git
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> RF-Swift</span></span></code></pre></div></div>
 <h3 id="build-the-cli">Build the CLI<a class="anchor" href="#build-the-cli" aria-label="Link to this section"></a></h3>
+<p>Build a static binary and check that it runs:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> go/rfswift
 </span></span><span class="line"><span class="cl"><span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span> go build -tags netgo -o rfswift .
 </span></span><span class="line"><span class="cl">./rfswift --version</span></span></code></pre></div></div>
-<p><code>CGO_ENABLED=0</code> with <code>netgo</code> gives the static binary the releases ship (it runs on a headless Raspberry Pi as well as on a laptop). Cross-compile by setting the target:</p>
+<p><code>CGO_ENABLED=0</code> with the <code>netgo</code> tag gives the same static binary the releases ship. It runs on a headless Raspberry Pi as well as on a laptop.</p>
+<p>To cross-compile, set the target system and architecture:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span> <span class="nv">GOOS</span><span class="o">=</span>linux   <span class="nv">GOARCH</span><span class="o">=</span>arm64   go build -tags netgo -o rfswift_arm64 .
 </span></span><span class="line"><span class="cl"><span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span> <span class="nv">GOOS</span><span class="o">=</span>linux   <span class="nv">GOARCH</span><span class="o">=</span>riscv64 go build -tags netgo -o rfswift_riscv64 .
@@ -274,14 +267,15 @@
 </span></span><span class="line"><span class="cl"><span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span> <span class="nv">GOOS</span><span class="o">=</span>darwin  <span class="nv">GOARCH</span><span class="o">=</span>arm64   go build -tags netgo -o rfswift_macos .</span></span></code></pre></div></div>
 <p><code>scripts/build_project.sh</code> runs the same build for the host, and <code>scripts/build-windows.bat</code> does it on Windows.</p>
 <h3 id="build-the-workbench">Build the Workbench<a class="anchor" href="#build-the-workbench" aria-label="Link to this section"></a></h3>
-<p>The Workbench is a separate module under <code>go/rfswift-workbench</code> (it links the CLI&rsquo;s packages through a module replacement, never shells out to the CLI). It needs cgo and the platform webview, so it cannot be a static binary on Linux.</p>
+<p>The Workbench is a separate module under <code>go/rfswift-workbench</code>. It links the CLI&rsquo;s packages through a module replacement and never shells out to the CLI. It needs cgo and the platform webview, so on Linux it cannot be a static binary.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> go/rfswift-workbench
 </span></span><span class="line"><span class="cl">make deps          <span class="c1"># Linux only: GTK 3 + WebKitGTK 4.1 headers</span>
 </span></span><span class="line"><span class="cl">make build         <span class="c1"># runs the Wails CLI through `go run`, no separate install needed</span>
 </span></span><span class="line"><span class="cl">ls build/bin/</span></span></code></pre></div></div>
-<p>Build it against your own system&rsquo;s WebKit: a binary linked to another WebKit (one built inside Nix, for example) can fail to initialise OpenGL and show a blank window. The <code>Makefile</code> and <code>.github/workflows/workbench.yml</code> hold the release matrix (native Linux and AppImage, universal macOS <code>.app</code>, Windows <code>.exe</code>).</p>
+<p>Build it against your own system&rsquo;s WebKit. A binary linked to another WebKit (one built inside Nix, for example) can fail to initialise OpenGL and show a blank window. The <code>Makefile</code> and <code>.github/workflows/workbench.yml</code> hold the release matrix: native Linux and AppImage, universal macOS <code>.app</code>, Windows <code>.exe</code>.</p>
 <h3 id="test">Test<a class="anchor" href="#test" aria-label="Link to this section"></a></h3>
+<p>Run the unit tests and checks of both modules:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> go/rfswift
 </span></span><span class="line"><span class="cl">go <span class="nb">test</span> ./...
@@ -289,37 +283,41 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> ../rfswift-workbench
 </span></span><span class="line"><span class="cl">make security-test         <span class="c1"># go test, go vet, frontend sink guards, short fuzz campaigns</span></span></span></code></pre></div></div>
-<p><code>scripts/test-remote.sh unit|fuzz|all</code> exercises the remote agent&rsquo;s security core, and <code>scripts/test-installer.sh</code> the shell installer.</p>
+<p>Two more scripts test specific parts: <code>scripts/test-remote.sh unit|fuzz|all</code> exercises the remote agent&rsquo;s security core, and <code>scripts/test-installer.sh</code> tests the shell installer.</p>
 <h3 id="install">Install<a class="anchor" href="#install" aria-label="Link to this section"></a></h3>
+<p>Copy the binary onto your <code>PATH</code>:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo install -m <span class="m">0755</span> go/rfswift/rfswift /usr/local/bin/rfswift</span></span></code></pre></div></div>
-<p>Man pages for the Linux packages are generated from the command tree with <code>go run ./tools/genman &lt;dir&gt;</code> (from <code>go/rfswift</code>), and <code>scripts/generate-packaging-assets.sh</code> prepares everything the deb, rpm and pacman packages contain.</p>
+<p>For packaging: <code>go run ./tools/genman &lt;dir&gt;</code> (from <code>go/rfswift</code>) generates the man pages from the command tree, and <code>scripts/generate-packaging-assets.sh</code> prepares everything the deb, rpm and pacman packages contain.</p>
 </div>
 <h2 id="running-what-you-built">Running what you built<a class="anchor" href="#running-what-you-built" aria-label="Link to this section"></a></h2>
+<p>Check the host, then create and enter a lab:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift doctor
 </span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n my_sdr_container
 </span></span><span class="line"><span class="cl">rfswift container shell -c my_sdr_container</span></span></code></pre></div></div>
-<p>On Linux Docker, grant your user socket access once with <code>rfswift host docker-access</code> instead of running the binary with <code>sudo</code>.</p>
+<p>On Linux with Docker, give your user access to the Docker socket once with <code>rfswift host docker-access</code>, instead of running the binary with <code>sudo</code>.</p>
 <h2 id="developing-the-nix-engine">Developing the Nix engine<a class="anchor" href="#developing-the-nix-engine" aria-label="Link to this section"></a></h2>
-<p>The environments live in the companion <a href="https://github.com/PentHertz/RF-Swift-nix" target="_blank" rel="noopener">RF-Swift-nix</a> flake. Clone it next to <code>RF-Swift</code> and RF Swift uses your local checkout automatically (or set <code>RFSWIFT_NIX_FLAKE=/path/to/RF-Swift-nix</code>); <code>rfswift env update --input nixpkgs &lt;name&gt;</code> and <code>rfswift env rebuild &lt;name&gt;</code> work against that writable checkout.</p>
+<p>The Nix environments live in the companion <a href="https://github.com/PentHertz/RF-Swift-nix" target="_blank" rel="noopener">RF-Swift-nix</a> flake. Clone it next to <code>RF-Swift</code> and RF Swift uses your local checkout automatically, or point to it with <code>RFSWIFT_NIX_FLAKE=/path/to/RF-Swift-nix</code>. With that writable checkout, <code>rfswift env update --input nixpkgs &lt;name&gt;</code> and <code>rfswift env rebuild &lt;name&gt;</code> work against your changes.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<ul>
-<li><strong>Go module issues</strong>: <code>go clean -modcache</code>, then build again.</li>
-<li><strong>Wrong Go version</strong>: <code>go version</code> must print 1.27 or later; distribution packages lag behind.</li>
-<li><strong>Workbench blank window on Linux</strong>: rebuild against the system WebKit (<code>make deps</code> then <code>make build</code>), or use the AppImage.</li>
-<li><strong>Docker permissions</strong>: <code>rfswift host docker-access</code>.</li>
-</ul>
+<h3 id="go-module-errors">Go module errors<a class="anchor" href="#go-module-errors" aria-label="Link to this section"></a></h3>
+<p>Clear the module cache, then build again: <code>go clean -modcache</code>.</p>
+<h3 id="wrong-go-version">Wrong Go version<a class="anchor" href="#wrong-go-version" aria-label="Link to this section"></a></h3>
+<p><code>go version</code> must print 1.27 or later. Distribution packages often lag behind; use the archive from go.dev.</p>
+<h3 id="the-workbench-shows-a-blank-window-on-linux">The Workbench shows a blank window on Linux<a class="anchor" href="#the-workbench-shows-a-blank-window-on-linux" aria-label="Link to this section"></a></h3>
+<p>Rebuild it against the system WebKit (<code>make deps</code>, then <code>make build</code>), or use the AppImage.</p>
+<h3 id="permission-denied-on-the-docker-socket">&ldquo;Permission denied&rdquo; on the Docker socket<a class="anchor" href="#permission-denied-on-the-docker-socket" aria-label="Link to this section"></a></h3>
+<p>Run <code>rfswift host docker-access</code> once.</p>
 <h2 id="next-steps">Next steps<a class="anchor" href="#next-steps" aria-label="Link to this section"></a></h2>
 <div class="doc-cards">
-  <a class="doc-card" href="/docs/development/building-images">
-    <span class="doc-card-title">Build Custom Images</span><span class="doc-card-sub">Create your own specialized container images</span>
+  <a class="doc-card" href="/docs/development/yaml-recipe-guide/">
+    <span class="doc-card-title">YAML recipe guide</span><span class="doc-card-sub">Build your own images from a short recipe</span>
   </a>
-  <a class="doc-card" href="/docs/development/yaml-recipe-guide">
-    <span class="doc-card-title">YAML Recipe Guide</span><span class="doc-card-sub">Images from simple recipes</span>
+  <a class="doc-card" href="/docs/development/building-images/">
+    <span class="doc-card-title">Helper functions</span><span class="doc-card-sub">The build helpers you can use in recipes and Dockerfiles</span>
   </a>
-  <a class="doc-card" href="/docs/guide">
-    <span class="doc-card-title">User Guide</span><span class="doc-card-sub">Explore the complete documentation</span>
+  <a class="doc-card" href="/docs/guide/">
+    <span class="doc-card-title">User guide</span><span class="doc-card-sub">Explore the complete documentation</span>
   </a>
 </div>
 
@@ -353,7 +351,14 @@
     </li>
     <li><a href="#running-what-you-built">Running what you built</a></li>
     <li><a href="#developing-the-nix-engine">Developing the Nix engine</a></li>
-    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a>
+      <ul>
+        <li><a href="#go-module-errors">Go module errors</a></li>
+        <li><a href="#wrong-go-version">Wrong Go version</a></li>
+        <li><a href="#the-workbench-shows-a-blank-window-on-linux">The Workbench shows a blank window on Linux</a></li>
+        <li><a href="#permission-denied-on-the-docker-socket">&ldquo;Permission denied&rdquo; on the Docker socket</a></li>
+      </ul>
+    </li>
     <li><a href="#next-steps">Next steps</a></li>
   </ul>
 </nav>

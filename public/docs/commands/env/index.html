@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift env · RF Swift</title>
   <meta name="description" content="Create, enter, update, roll back, audit and export native Nix environments.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/env/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/env/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift env · RF Swift">
   <meta property="og:description" content="Create, enter, update, roll back, audit and export native Nix environments.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/env/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/env/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,11 +231,15 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift env</h1><p class="doc-lead">Create, enter, update, roll back, audit and export native Nix environments.</p><p class="doc-meta">Reference · 8 min read · Updated September 27, 2026</p>
+      <h1>rfswift env</h1><p class="doc-lead">Create, enter, update, roll back, audit and export native Nix environments.</p><p class="doc-meta">Reference · 9 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Create and manage <strong>native Nix environments</strong>: the same RF Swift tool sets as the container images (<code>sdr_light</code>, <code>rfid</code>, <code>wifi</code>, &hellip;), installed on the host as reproducible, pinned Nix closures, without a daemon or a container boundary. <code>rfswift nix ...</code> is the legacy spelling and still works.</p>
-<div class="admonition admonition-info" role="note"><p>Read the <a href="/docs/guide/nix-engine">Nix engine guide</a> first: it explains eager and on-demand builds, the <code>--isolate</code> jail, OpenGL on non-NixOS hosts, udev rules, and how the engine runs inside WSL 2 on Windows.</p>
+      <p><code>rfswift env</code> manages <strong>native Nix environments</strong>: the same RF Swift tool sets as the container images (<code>sdr_light</code>, <code>rfid</code>, <code>wifi</code>, &hellip;), installed directly on your computer as pinned, reproducible Nix packages. There is no daemon and no container in between.</p>
+<p>The most common use runs one tool without setting anything up:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift env run sdr_light sdrpp</span></span></code></pre></div></div>
+<p><code>rfswift nix ...</code> is the legacy spelling and still works.</p>
+<div class="admonition admonition-info" role="note"><p>New to the Nix engine? Read the <a href="/docs/guide/nix-engine">Nix engine guide</a> first. It explains eager and on-demand (lazy) builds, the <code>--isolate</code> jail, OpenGL on hosts that are not NixOS, udev rules, and how the engine runs inside WSL 2 on Windows.</p>
 </div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
@@ -284,55 +274,55 @@
 </span></span><span class="line"><span class="cl">rfswift env gl <span class="o">[</span>NAME<span class="o">]</span> <span class="o">[</span>--check<span class="o">]</span> <span class="o">[</span>--json<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift env udev NAME <span class="o">[</span>--list<span class="o">]</span> <span class="o">[</span>--remove<span class="o">]</span> <span class="o">[</span>--no-groups<span class="o">]</span> <span class="o">[</span>--json<span class="o">]</span> <span class="o">[</span>-y<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift env wsl status<span class="p">|</span>setup<span class="p">|</span>use<span class="p">|</span>shell<span class="p">|</span>display-reset       <span class="c1"># Windows only</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="creating-and-entering">Creating and entering<a class="anchor" href="#creating-and-entering" aria-label="Link to this section"></a></h2>
-<p>Creation is <code>rfswift container create</code> (or the legacy <code>rfswift run</code>) with <code>--engine nix</code>. Without <code>-i</code> and <code>-n</code> the wizard opens with a searchable catalog, a build-mode choice (eager or on-demand) and the isolation toggle.</p>
+<p>You create an environment with <code>rfswift container create</code> (or the legacy <code>rfswift run</code>) and <code>--engine nix</code>. Without <code>-i</code> and <code>-n</code>, a wizard opens: it offers a searchable catalog, the choice between eager and on-demand builds, and the isolation switch.</p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Meaning</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>--lazy</code></td>
-      <td>On-demand: nothing is prebuilt, each tool is a shim that builds on first call and is then pinned under <code>&lt;env&gt;/tools/&lt;attribute&gt;</code></td>
+      <td>On-demand mode. Nothing is built up front: each tool is a small launcher (shim) that builds the tool the first time you call it, then keeps it pinned under <code>&lt;env&gt;/tools/&lt;attribute&gt;</code></td>
     </tr>
     <tr>
       <td><code>--pure</code></td>
-      <td>Enter a pure shell (<code>nix develop --ignore-environment</code>), not inheriting the host environment</td>
+      <td>Enter a pure shell (<code>nix develop --ignore-environment</code>) that does not inherit your host environment</td>
     </tr>
     <tr>
       <td><code>--isolate</code></td>
-      <td>Enter inside a jail: bubblewrap on Linux, Seatbelt (<code>sandbox-exec</code>) on macOS. Hides <code>$HOME</code> and the host filesystem, keeps USB/serial devices, the display and the network. Stored on the environment, so later entries re-enter the same jail</td>
+      <td>Enter inside a jail: bubblewrap on Linux, Seatbelt (<code>sandbox-exec</code>) on macOS. It hides <code>$HOME</code> and the host filesystem, and keeps USB and serial devices, the display and the network. The setting is saved, so later entries use the same jail</td>
     </tr>
     <tr>
       <td><code>--flake REF</code></td>
-      <td>Flake reference instead of the default (<code>RFSWIFT_NIX_FLAKE</code>, a local <code>RF-Swift-nix</code> checkout, else <code>github:PentHertz/RF-Swift-nix</code>)</td>
+      <td>Use this flake instead of the default. The default is <code>RFSWIFT_NIX_FLAKE</code>, then a local <code>RF-Swift-nix</code> checkout, then <code>github:PentHertz/RF-Swift-nix</code></td>
     </tr>
     <tr>
       <td><code>--rebuild</code></td>
-      <td>Force re-realisation during creation (eager mode)</td>
+      <td>Force a rebuild during creation (eager mode)</td>
     </tr>
     <tr>
       <td><code>--create-only</code></td>
-      <td>Create and realise without entering (scripts, the Workbench)</td>
+      <td>Create and build without entering the shell (for scripts and the Workbench)</td>
     </tr>
     <tr>
       <td><code>--workspace</code>, <code>--cwd</code>, <code>--no-workspace</code></td>
-      <td>Same workspace options as containers; inside a Linux jail the workspace is mounted at <code>/workspace</code></td>
+      <td>The same workspace options as containers. Inside a Linux jail the workspace is mounted at <code>/workspace</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<p>Entering prints a container-style summary (workspace, flake and pin, build mode, tool count, native-user execution) and warns when a visible serial device cannot be opened by your session. The shell (bash or zsh) shows a <code>(rfswift:&lt;name&gt;)</code> prompt, has the tools on <code>PATH</code>, and provides <code>rfsudo &lt;tool&gt;</code> to run one tool as root while keeping the display and the OpenGL runtime.</p>
+<p>When you enter an environment, RF Swift prints a summary: workspace, flake and pin, build mode, number of tools, and the fact that tools run as your own user. It warns you when a serial device is visible but your session cannot open it.</p>
+<p>The shell (bash or zsh) shows a <code>(rfswift:&lt;name&gt;)</code> prompt and has the tools on its <code>PATH</code>. To run one tool as root while keeping the display and the OpenGL runtime, use <code>rfsudo &lt;tool&gt;</code>.</p>
+<p>Create an isolated RFID environment, enter it, or run a single command in it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift --engine nix container create -i rfid -n badge --isolate
 </span></span><span class="line"><span class="cl">rfswift env shell badge
 </span></span><span class="line"><span class="cl">rfswift --engine nix container shell -c badge -e <span class="s2">&#34;proxmark3 -h&#34;</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <h3 id="discovery">Discovery<a class="anchor" href="#discovery" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
@@ -340,33 +330,33 @@
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Notes</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>catalog</code></td>
-      <td>Environments defined by RF-Swift-nix (name, category, description, tools). The wizard filters this list by name or tool</td>
+      <td>Lists the environments defined by RF-Swift-nix, with their category, description and tools. The wizard lets you filter this list by name or tool</td>
     </tr>
     <tr>
       <td><code>list</code></td>
-      <td>Created environments with their mode and pin</td>
+      <td>Lists the environments you created, with their mode and pin</td>
     </tr>
     <tr>
       <td><code>info NAME</code></td>
-      <td>Flake, pinned revision and the reference it came from, packages, workspace, isolation, and the <strong>Security posture</strong> line from the last audit</td>
+      <td>Shows the flake, the pinned revision and where it came from, the packages, the workspace, the isolation setting, and the <strong>Security posture</strong> line from the last audit</td>
     </tr>
     <tr>
       <td><code>tools NAME</code></td>
-      <td>Per-tool state: on-demand shims (built or not, store path) and packages installed with <code>env install --env NAME</code>. <code>--installed</code> keeps only the latter</td>
+      <td>Shows each tool&rsquo;s state: on-demand shims (built or not, and their store path) and packages added with <code>env install --env NAME</code>. <code>--installed</code> shows only the added packages</td>
     </tr>
     <tr>
       <td><code>search TERM</code></td>
-      <td>Curated RF Swift tool set, telling which environments bundle each hit. <code>--nixpkgs</code> searches the whole pinned nixpkgs (slower, exhaustive), <code>--env</code> uses that environment&rsquo;s pinned flake</td>
+      <td>Searches the curated RF Swift tool set and tells you which environments include each result. <code>--nixpkgs</code> searches the whole pinned nixpkgs (slower, but complete). <code>--env</code> uses that environment&rsquo;s pinned flake</td>
     </tr>
     <tr>
       <td><code>versions</code></td>
-      <td>Latest published tag, nightly default-branch commit and older tags, for <code>--flake</code> at creation</td>
+      <td>Lists the latest published tag, the nightly commit of the default branch and older tags, to pass to <code>--flake</code> when you create an environment</td>
     </tr>
   </tbody>
 </table>
@@ -377,17 +367,17 @@
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Notes</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>run ENV|IMAGE TOOL [-- args]</code></td>
-      <td>Builds only that tool&rsquo;s closure and runs it. For a catalog image the command name maps to the package that provides it (<code>sdr_light sdrpp</code> runs the HydraSDR fork of SDR++); for an existing environment the tool runs exactly as from its shell (its pin, GC-safe, with the OpenGL runtime). <code>--flake</code> runs a tool from an explicit flake</td>
+      <td>Builds only that tool and runs it. With a catalog name, the command maps to the package that provides it (<code>sdr_light sdrpp</code> runs the HydraSDR fork of SDR++). With an existing environment, the tool runs exactly as it would from that environment&rsquo;s shell: same pin, protected from garbage collection, with the OpenGL runtime. <code>--flake</code> runs a tool from a specific flake</td>
     </tr>
     <tr>
       <td><code>install [PACKAGE...]</code></td>
-      <td>Adds nixpkgs packages to a persistent profile: the <strong>shared</strong> profile (on <code>PATH</code> in every environment) or one environment with <code>--env</code>. Without a package the guided installer opens (curated set or all of nixpkgs, shared or scoped). Installing a device library offers to install its udev rules right away. Shell completion suggests package names</td>
+      <td>Adds nixpkgs packages to a persistent profile: the <strong>shared</strong> profile (on <code>PATH</code> in every environment), or one environment with <code>--env</code>. Without a package name, a guided installer opens (curated set or all of nixpkgs, shared or one environment). When you install a device library, it offers to install its udev rules right away. Shell completion suggests package names</td>
     </tr>
   </tbody>
 </table>
@@ -398,55 +388,57 @@
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Notes</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>update [NAME]</code></td>
-      <td>Without a name: a wizard (environment picker, check-only / all inputs / one input, recap with rollback points, confirmation). <code>--check</code> previews lock changes without writing or building. <code>--input nixpkgs</code> updates one input (needs a writable local flake checkout). <code>--tool TOOL</code> refreshes one on-demand shim or installed extra. <code>-y</code> for CI</td>
+      <td>Without a name, a wizard opens: pick an environment, choose check-only, all inputs or one input, review a recap with the rollback points, then confirm. <code>--check</code> previews lock changes without writing or building anything. <code>--input nixpkgs</code> updates one input (this needs a writable local flake checkout). <code>--tool TOOL</code> refreshes one on-demand shim or added package. <code>-y</code> skips questions, for CI</td>
     </tr>
     <tr>
       <td><code>rebuild NAME</code></td>
-      <td>Rebuild with the lock that is already pinned</td>
+      <td>Rebuilds with the lock that is already pinned</td>
     </tr>
     <tr>
       <td><code>generations NAME</code></td>
-      <td>Rollback points kept under <code>~/.rfswift/nix/environments/&lt;name&gt;/generations/</code>, registered as GC roots</td>
+      <td>Lists the rollback points, kept under <code>~/.rfswift/nix/environments/&lt;name&gt;/generations/</code> and protected from garbage collection</td>
     </tr>
     <tr>
       <td><code>rollback NAME [GENERATION]</code></td>
-      <td>Restore the newest, or a listed, previous generation</td>
+      <td>Restores the newest previous generation, or the one you name</td>
     </tr>
   </tbody>
 </table>
 </div>
-<p>Updates are transactional for eager environments: a candidate closure is built before the active profile changes, a failed build leaves the current environment active, and a failed local update restores <code>flake.lock</code>. Lazy environments are pinned to a flake revision instead: <code>update --check</code> tells whether the reference moved on, <code>update</code> moves the pin and rebuilds the tools already built. Lazy environments have no rollback generations. Updating invalidates the environment&rsquo;s security audit (the old report is kept as stale); run <code>env audit</code> again.</p>
-<h3 id="portability-and-disk">Portability and disk<a class="anchor" href="#portability-and-disk" aria-label="Link to this section"></a></h3>
+<p><strong>How updates work for eager environments.</strong> Updates are transactional: the new version is built before anything changes, a failed build leaves your current environment active, and a failed local update restores <code>flake.lock</code>.</p>
+<p><strong>How updates work for lazy environments.</strong> They are pinned to a flake revision instead. <code>update --check</code> tells you whether that revision moved on, and <code>update</code> moves the pin and rebuilds the tools you already built. Lazy environments have no rollback generations.</p>
+<p>After any update, the environment&rsquo;s security audit is marked out of date (the old report is kept). Run <code>env audit</code> again.</p>
+<h3 id="portability-and-disk-space">Portability and disk space<a class="anchor" href="#portability-and-disk-space" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Notes</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>export NAME [-o FILE.rfenv]</code></td>
-      <td>Realises the environment and packs its whole Nix closure plus its workspace into one compressed <code>.rfenv</code> archive</td>
+      <td>Builds the environment, then packs all its Nix packages and its workspace into one compressed <code>.rfenv</code> archive</td>
     </tr>
     <tr>
       <td><code>import FILE.rfenv</code></td>
-      <td>Adds the closure to the local store, restores the workspace and registers the environment. <code>--name</code> and <code>--workspace</code> override the archived values. Extraction refuses traversal, device entries, escaping links and malformed store paths, but an <code>.rfenv</code> is <strong>executable code</strong>: import only archives you trust</td>
+      <td>Adds the packages to the local store, restores the workspace and registers the environment. <code>--name</code> and <code>--workspace</code> override the archived values. Extraction rejects unsafe paths, device entries, links that point outside and malformed store paths. Still, an <code>.rfenv</code> is <strong>executable code</strong>: import only archives you trust</td>
     </tr>
     <tr>
       <td><code>remove NAME [--workspace]</code></td>
-      <td>Deletes the environment (frees its GC roots). The workspace is kept unless <code>--workspace</code> is given; home directories, filesystem roots and symlinked workspaces are refused</td>
+      <td>Deletes the environment and frees what only it used. The workspace is kept unless you add <code>--workspace</code>. Home folders, filesystem roots and symlinked workspaces are refused</td>
     </tr>
     <tr>
       <td><code>gc [--dry-run] [--max-free 5G]</code></td>
-      <td>Collects unreferenced store paths. Environments, their built on-demand tools, generations and the OpenGL runtime are rooted and survive</td>
+      <td>Frees disk space by removing store paths nothing uses. Environments, their built on-demand tools, generations and the OpenGL runtime are protected and kept</td>
     </tr>
   </tbody>
 </table>
@@ -457,13 +449,13 @@
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Notes</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>audit [NAME]</code></td>
-      <td>vulnix (closure CVEs), syft SBOM, grype, osv-scanner, store integrity, signature provenance and flake hygiene, through the flake&rsquo;s <code>audit</code> app. <code>--format stdout,txt,json,html,pdf</code> (default <code>stdout,txt,json</code>), <code>--fail-on</code>, <code>--out</code>. See <a href="/docs/commands/audit">audit</a></td>
+      <td>Runs vulnix (known vulnerabilities in the packages), a syft software bill of materials, grype, osv-scanner, a store integrity check, signature provenance and flake hygiene, through the flake&rsquo;s <code>audit</code> app. <code>--format stdout,txt,json,html,pdf</code> (default <code>stdout,txt,json</code>), <code>--fail-on</code>, <code>--out</code>. See <a href="/docs/commands/audit">audit</a></td>
     </tr>
   </tbody>
 </table>
@@ -474,53 +466,52 @@
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Notes</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>gl [NAME] [--check]</code></td>
-      <td>Shows the OpenGL runtime GUI tools get on this host (Mesa from the environment&rsquo;s nixpkgs, or the matching proprietary NVIDIA libraries), the GPUs the kernel exposes and their drivers, and with <code>--check</code> creates a context and prints the driver that answered. Run it first when SDR++ or gqrx will not open a window</td>
+      <td>Shows the OpenGL runtime that graphical tools get on this computer (Mesa from the environment&rsquo;s nixpkgs, or the matching NVIDIA libraries), the GPUs the kernel sees and their drivers. With <code>--check</code>, it creates an OpenGL context and prints which driver answered. Run it first when SDR++ or gqrx does not open a window</td>
     </tr>
     <tr>
       <td><code>udev NAME</code></td>
-      <td>Installs the udev rules shipped by the environment&rsquo;s packages (HackRF, RTL-SDR, bladeRF, Airspy, LimeSDR, USRP, Proxmark, &hellip;) into <code>/etc/udev/rules.d</code>, creates the groups they rely on and adds you to them, in one <code>sudo</code>. <code>--list</code> shows the state, <code>--remove</code> takes them out, <code>--no-groups</code> installs the rules only. Log out and in (or <code>newgrp plugdev</code>), then re-plug the device</td>
+      <td>Installs the udev rules that come with the environment&rsquo;s packages (HackRF, RTL-SDR, bladeRF, Airspy, LimeSDR, USRP, Proxmark, &hellip;) into <code>/etc/udev/rules.d</code>, creates the groups they need and adds you to them, with one <code>sudo</code>. <code>--list</code> shows what is installed, <code>--remove</code> takes the rules out, <code>--no-groups</code> installs only the rules. Afterwards, log out and in (or run <code>newgrp plugdev</code>), then plug the device in again</td>
     </tr>
     <tr>
       <td><code>wsl ...</code></td>
-      <td><strong>Windows only.</strong> <code>status</code> shows the WSL 2 distribution serving the engine and what it offers (nix, rfswift, WSLg sockets, forwarded USB). <code>setup</code> provisions it: systemd, Nix with flakes, the Linux <code>rfswift</code> at the Windows version (<code>--yes</code>, <code>--distro</code>, <code>--install-distro Ubuntu</code>, <code>--update</code>, <code>--version TAG</code>, <code>--binary FILE</code>, <code>--no-nix</code>, <code>--no-rfswift</code>). <code>use DISTRO</code> picks the distribution (saved in <code>config.ini</code>). <code>shell</code> opens a login shell in it. <code>display-reset</code> restarts WSLg&rsquo;s display client when a GUI tool shows only a taskbar icon</td>
+      <td><strong>Windows only.</strong> <code>status</code> shows the WSL 2 distribution that runs the engine and what it provides (Nix, rfswift, WSLg sockets, forwarded USB). <code>setup</code> prepares it: systemd, Nix with flakes, and the Linux <code>rfswift</code> at the same version as on Windows (<code>--yes</code>, <code>--distro</code>, <code>--install-distro Ubuntu</code>, <code>--update</code>, <code>--version TAG</code>, <code>--binary FILE</code>, <code>--no-nix</code>, <code>--no-rfswift</code>). <code>use DISTRO</code> picks the distribution and saves it in <code>config.ini</code>. <code>shell</code> opens a login shell in it. <code>display-reset</code> restarts WSLg&rsquo;s display client when a graphical tool shows only a taskbar icon</td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
+<p>Browse the catalog, then create an eager environment and enter it:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Browse, then create an eager environment and enter it</span>
-</span></span><span class="line"><span class="cl">rfswift env catalog
-</span></span><span class="line"><span class="cl">rfswift --engine nix container create -i sdr_light -n mysdr
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Run one tool without creating anything</span>
-</span></span><span class="line"><span class="cl">rfswift env run sdr_light gqrx
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add a Soapy module to that environment only, then check what is installed</span>
-</span></span><span class="line"><span class="cl">rfswift env install soapyrtlsdr --env mysdr
-</span></span><span class="line"><span class="cl">rfswift env tools mysdr --installed
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Safe update: preview, apply, roll back if needed</span>
-</span></span><span class="line"><span class="cl">rfswift env update --check mysdr
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift env catalog
+</span></span><span class="line"><span class="cl">rfswift --engine nix container create -i sdr_light -n mysdr</span></span></code></pre></div></div>
+<p>Run one tool without creating anything:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift env run sdr_light gqrx</span></span></code></pre></div></div>
+<p>Add a Soapy module to one environment only, then check what you added:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift env install soapyrtlsdr --env mysdr
+</span></span><span class="line"><span class="cl">rfswift env tools mysdr --installed</span></span></code></pre></div></div>
+<p>Update safely: preview the changes, apply them, and roll back if something breaks:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift env update --check mysdr
 </span></span><span class="line"><span class="cl">rfswift env update mysdr
-</span></span><span class="line"><span class="cl">rfswift env rollback mysdr
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Hardware access without root</span>
-</span></span><span class="line"><span class="cl">rfswift env udev mysdr
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Take the environment to another machine</span>
-</span></span><span class="line"><span class="cl">rfswift env <span class="nb">export</span> mysdr -o mysdr.rfenv
-</span></span><span class="line"><span class="cl">rfswift env import mysdr.rfenv --name mysdr2
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Windows: provision the WSL 2 side once</span>
-</span></span><span class="line"><span class="cl">rfswift env wsl setup
+</span></span><span class="line"><span class="cl">rfswift env rollback mysdr</span></span></code></pre></div></div>
+<p>Let your user open the radio hardware without root:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift env udev mysdr</span></span></code></pre></div></div>
+<p>Move the environment to another machine:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift env <span class="nb">export</span> mysdr -o mysdr.rfenv
+</span></span><span class="line"><span class="cl">rfswift env import mysdr.rfenv --name mysdr2</span></span></code></pre></div></div>
+<p>On Windows, prepare the WSL 2 side once, then check it:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift env wsl setup
 </span></span><span class="line"><span class="cl">rfswift env wsl status</span></span></code></pre></div></div>
 <h2 id="files">Files<a class="anchor" href="#files" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
@@ -528,17 +519,17 @@
   <thead>
     <tr>
       <th>Path</th>
-      <th>Content</th>
+      <th>What it holds</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>~/.rfswift/nix/environments/&lt;name&gt;/</code></td>
-      <td>Profile link (GC root), <code>tools/</code> shims, <code>generations/</code>, audit reports, <code>build.log</code> of the last Workbench-driven build</td>
+      <td>The profile link (protected from garbage collection), <code>tools/</code> shims, <code>generations/</code>, audit reports, and the <code>build.log</code> of the last build started from the Workbench</td>
     </tr>
     <tr>
       <td><code>~/rfswift-workspace/&lt;name&gt;/</code></td>
-      <td>Default workspace</td>
+      <td>The default workspace</td>
     </tr>
     <tr>
       <td><code>~/.rfswift/nix/gl/</code></td>
@@ -547,12 +538,12 @@
   </tbody>
 </table>
 </div>
-<p>On Windows these live inside the WSL 2 distribution, reachable from Explorer at <code>\\wsl.localhost\&lt;distro&gt;\home\&lt;user&gt;\...</code>.</p>
+<p>On Windows these are inside the WSL 2 distribution. You can reach them from Explorer at <code>\\wsl.localhost\&lt;distro&gt;\home\&lt;user&gt;\...</code>.</p>
 <h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <ul>
 <li><a href="/docs/guide/nix-engine">Nix engine guide</a></li>
 <li><a href="/docs/commands/audit">audit</a></li>
-<li><a href="/docs/commands/host">host isolate</a> when <code>--isolate</code> fails on Ubuntu 24.04+</li>
+<li><a href="/docs/commands/host">host isolate</a>: when <code>--isolate</code> fails on Ubuntu 24.04 and later</li>
 <li><a href="/docs/guide/limitations">Known limits</a></li>
 </ul>
 
@@ -582,7 +573,7 @@
         <li><a href="#discovery">Discovery</a></li>
         <li><a href="#running-and-installing-tools">Running and installing tools</a></li>
         <li><a href="#updating-rebuilding-rolling-back">Updating, rebuilding, rolling back</a></li>
-        <li><a href="#portability-and-disk">Portability and disk</a></li>
+        <li><a href="#portability-and-disk-space">Portability and disk space</a></li>
         <li><a href="#security">Security</a></li>
         <li><a href="#host-integration">Host integration</a></li>
       </ul>

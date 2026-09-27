@@ -7,99 +7,80 @@ description: "Manage the cgroup device rules of an existing container."
 weight: 43
 ---
 
-{{< callout type="info" >}}
-**RF Swift v4**: this group lives under the `config` parent as `rfswift config cgroups` and remains available as `rfswift cgroups`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
-{{< /callout >}}
+`rfswift config cgroups` gives a container permission to use a type of hardware device, through a cgroup device rule. Use it when a device is visible inside the container but tools cannot open it.
 
-Dynamically add or remove cgroup device access rules to running containers.
+The most common use allows USB devices, which covers most SDRs:
+
+```bash
+rfswift config cgroups add -c sdr_work -r "c 189:* rwm"
+```
+
+{{< callout type="info" title="What happens when you apply a change" >}}
+The container restarts, so save your work first. On Linux with Docker, the change is applied in place after one `sudo` prompt. On Podman, the container is committed and created again; add `--recreate` to use that method on Docker too. Rootless Podman does not allow cgroup device rules at all. The shorter spelling `rfswift cgroups` also works. See [config](/docs/commands/config).
+{{< /callout >}}
 
 ## Synopsis
 
 ```bash
-# Add cgroup rule
-rfswift cgroups add -c CONTAINER -r "RULE"
-
-# Remove cgroup rule
-rfswift cgroups rm -c CONTAINER -r "RULE"
+rfswift config cgroups add -c CONTAINER -r "RULE"
+rfswift config cgroups rm  -c CONTAINER -r "RULE"
 ```
 
-The `cgroups` command allows you to add or remove Linux cgroup device rules to containers without restarting them. This grants containers permission to access specific hardware devices.
+## Options
 
----
+`add` and `rm` take the same options:
 
-## Subcommands
+| Flag | What it does | Required | Example |
+|------|--------------|----------|---------|
+| `-c, --container STRING` | The container, by name or ID | Yes | `-c my_container` |
+| `-r, --rule STRING` | The cgroup device rule | Yes | `-r "c 189:* rwm"` |
 
-### cgroups add
-
-Add a cgroup device rule to a container.
-
-**Options:**
-
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
-| `-r, --rule STRING` | Cgroup device rule | Yes | `-r "c 189:* rwm"` |
-
-### cgroups rm
-
-Remove a cgroup device rule from a container.
-
-**Options:**
-
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
-| `-r, --rule STRING` | Cgroup device rule | Yes | `-r "c 189:* rwm"` |
-
----
-
-## Understanding cgroup rules
+## How cgroup rules work
 
 ### Rule format
 
-Cgroup device rules follow this format:
+A rule has three parts:
 
 ```
 <type> <major>:<minor> <permissions>
 ```
 
-**Components:**
-- **type**: `c` (character device) or `b` (block device)
-- **major**: Device major number or `*` for all
-- **minor**: Device minor number or `*` for all  
-- **permissions**: `r` (read), `w` (write), `m` (mknod)
+- **type**: `c` for a character device, `b` for a block device
+- **major**: the device's major number, or `*` for all
+- **minor**: the device's minor number, or `*` for all
+- **permissions**: `r` (read), `w` (write), `m` (create the device file)
 
-### Common device major numbers
+### Common major numbers
 
-| Device Type | Major Number | Examples |
+| Device type | Major number | Examples |
 |-------------|--------------|----------|
-| **USB Serial** | 188, 189 | RTL-SDR, HackRF, USB devices |
-| **USB ACM** | 166 | ACM devices, modems |
-| **USB Character** | 180 | USB raw character devices |
-| **TTY Serial** | 4 | /dev/tty devices |
-| **Video** | 81 | /dev/video* (cameras) |
-| **Sound** | 116 | /dev/snd/* (audio) |
-| **Input** | 13 | /dev/input/* (keyboards, mice) |
+| **USB devices** (`/dev/bus/usb`) | 189 | RTL-SDR, HackRF and most SDRs |
+| **USB serial** (`/dev/ttyUSB*`) | 188 | USB serial adapters |
+| **USB ACM** (`/dev/ttyACM*`) | 166 | ACM devices such as a Proxmark3, modems |
+| **USB character** | 180 | Raw USB character devices |
+| **TTY serial** | 4 | `/dev/tty` devices |
+| **Video** | 81 | `/dev/video*` (cameras) |
+| **Sound** | 116 | `/dev/snd/*` (audio) |
+| **Input** | 13 | `/dev/input/*` (keyboards, mice) |
 
 ### Rule examples
 
-**USB devices (most SDRs):**
+USB devices (most SDRs), and USB serial adapters:
+
 ```bash
-"c 189:* rwm"    # USB serial devices (major 189)
-"c 188:* rwm"    # USB serial devices (major 188)
+"c 189:* rwm"    # USB devices (major 189)
+"c 188:* rwm"    # USB serial adapters (major 188)
 ```
 
-**ACM devices:**
+ACM devices, and TTY serial ports:
+
 ```bash
 "c 166:* rwm"    # ACM devices (modems, etc.)
-```
-
-**TTY/Serial ports:**
-```bash
 "c 4:* rwm"      # TTY devices
 ```
 
-**All USB devices:**
+All the USB types together:
+
 ```bash
 "c 189:* rwm"
 "c 188:* rwm"
@@ -107,87 +88,78 @@ Cgroup device rules follow this format:
 "c 166:* rwm"
 ```
 
-**Video devices:**
+Video devices:
+
 ```bash
 "c 81:* rwm"     # Video4Linux devices
 ```
 
-**Specific device:**
+One specific device only:
+
 ```bash
 "c 189:0 rwm"    # Specific USB device (major 189, minor 0)
 ```
 
----
-
 ## Examples
 
-### Basic usage
+Allow USB devices:
 
-**Add USB device access:**
 ```bash
-rfswift cgroups add -c sdr_work -r "c 189:* rwm"
+rfswift config cgroups add -c sdr_work -r "c 189:* rwm"
 ```
 
-**Add multiple device types:**
+Allow several device types:
+
 ```bash
-rfswift cgroups add -c analysis -r "c 189:* rwm"
-rfswift cgroups add -c analysis -r "c 166:* rwm"
-rfswift cgroups add -c analysis -r "c 180:* rwm"
+rfswift config cgroups add -c analysis -r "c 189:* rwm"
+rfswift config cgroups add -c analysis -r "c 166:* rwm"
+rfswift config cgroups add -c analysis -r "c 180:* rwm"
 ```
 
-**Remove cgroup rule:**
+Remove a rule:
+
 ```bash
-rfswift cgroups rm -c container -r "c 189:* rwm"
+rfswift config cgroups rm -c container -r "c 189:* rwm"
 ```
 
-### Real-World scenarios
+### A USB SDR
 
-**USB based SDRs setup:**
+Create the container, give it the USB bus and the USB rule, then test the radio (here an RTL-SDR):
+
 ```bash
-# Create container
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdrtest
+rfswift config bindings add -d -c sdrtest -s /dev/bus/usb -t /dev/bus/usb
+rfswift config cgroups add -c sdrtest -r "c 189:* rwm"
 
-# Add device binding
-rfswift bindings add -d -c sdrtest -s /dev/bus/usb -t /dev/bus/usb
-
-# Add cgroup rule for USB access
-rfswift cgroups add -c sdrtest -r "c 189:* rwm"
-
-# Test access (e.g with RTL-SDR)
 rfswift container shell -c sdrtest
 rtl_test -t
 exit
 ```
 
-**USB serial device:**
+### A USB serial device
+
+Add the serial device and the matching rules, then open it with `screen`:
+
 ```bash
-# Container for serial work
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n serial_work
+rfswift config bindings add -d -c serial_work -s /dev/ttyUSB0 -t /dev/ttyUSB0
+rfswift config cgroups add -c serial_work -r "c 188:* rwm"
+rfswift config cgroups add -c serial_work -r "c 4:* rwm"
 
-# Add serial device
-rfswift bindings add -d -c serial_work -s /dev/ttyUSB0 -t /dev/ttyUSB0
-
-# Add cgroup rules
-rfswift cgroups add -c serial_work -r "c 188:* rwm"
-rfswift cgroups add -c serial_work -r "c 4:* rwm"
-
-# Access serial
 rfswift container shell -c serial_work
 screen /dev/ttyUSB0 115200
 exit
 ```
 
----
+## What a device needs
 
-## Device access workflow
+To use a hardware device from a container, you need:
 
-### Complete device access setup
+1. **The device itself**, added with `rfswift config bindings add -d`.
+2. **Permission** to use it, with a cgroup rule (this page).
+3. **Sometimes a capability**, with `rfswift config capabilities add` (for example `NET_ADMIN` for network devices).
 
-To access a hardware device from a container, you need three things:
-
-1. **Device binding** (rfswift bindings)
-2. **Cgroup rule** (rfswift cgroups)
-3. **Capabilities** (rfswift capabilities) - sometimes
+Add the device first: the container must see it before a rule can grant access.
 
 ```mermaid
 graph TD
@@ -198,169 +170,135 @@ graph TD
     D -->|Regular device| F[Ready to Use]
     E --> F
 ```
----
 
-## Finding device major numbers
+## Finding a device's major number
 
-### Using ls -l
+### With ls -l
+
+`ls -l` shows the major and minor numbers in decimal, before the date:
 
 ```bash
-# Check device major:minor numbers
 ls -l /dev/device
 # Output: crw-rw-rw- 1 root root 189, 0 Jan 12 10:00 /dev/device
 #                                 ^^^  ^
 #                                 major minor
 
-# Multiple devices
 ls -l /dev/device* /dev/otherpatterns
 ```
 
-### Using stat
+### With stat
+
+`stat` prints the numbers in hexadecimal: `bd` is 189.
 
 ```bash
-# Get device numbers with stat
 stat -c "%t:%T" /dev/device
 # Output: bd:0  (189 in hex, 0 in decimal)
-
-# Decimal format
-stat -c "%a %n" /dev/device
 ```
 
-### Using /sys filesystem
+### With /sys
 
 ```bash
-# Find all USB devices
 grep -r "189" /sys/class/*
 
-# Check specific device
 cat /sys/class/tty/ttyUSB0/dev
 # Output: 188:0
 ```
 
----
-
 ## Troubleshooting
 
-### Permission denied after adding rule
+### Still “permission denied” after adding a rule
 
-**Problem:** Device still shows permission denied
+Check the rule was added, and that the device is visible inside the container:
 
-**Solutions:**
 ```bash
-# Check rule was added
 docker inspect container | grep -A10 Devices
 
-# Verify device binding exists
 rfswift container shell -c container
 ls -l /dev/device
 exit
+```
 
-# If not visible, add binding first
-rfswift bindings add -d -c container -s /dev/device -t /dev/device
+If the device is not visible, add it first, then the rule:
 
-# Then add cgroup rule
-rfswift cgroups add -c container -r "c 189:* rwm"
+```bash
+rfswift config bindings add -d -c container -s /dev/device -t /dev/device
+rfswift config cgroups add -c container -r "c 189:* rwm"
+```
 
-# Check device major number is correct
+Check the major number is the right one, and add rules for other types if the device needs them:
+
+```bash
 ls -l /dev/bus/usb
 # crw-rw-rw- 1 root root 189, 0 ...
 #                        ^^^ use this number
 
-# May need multiple rules for some devices
-rfswift cgroups add -c container -r "c 188:* rwm"
-rfswift cgroups add -c container -r "c 180:* rwm"
+rfswift config cgroups add -c container -r "c 188:* rwm"
+rfswift config cgroups add -c container -r "c 180:* rwm"
 ```
 
 ### Wrong major number
 
-**Problem:** Rule added but device still not accessible
+Read the device's real major number, then add the rule with that number:
 
-**Solutions:**
 ```bash
-# Get actual device major number
 ls -l /dev/device_name
 # crw-rw-rw- 1 root root 189, 0 ...
 #                        ^^^
 
-# Or use stat
 stat -c "%t:%T" /dev/device_name
 
-# Add rule with correct major number
-rfswift cgroups add -c container -r "c 189:* rwm"
+rfswift config cgroups add -c container -r "c 189:* rwm"
 ```
 
-### Device not visible in container
+### The device is not visible in the container
 
-**Problem:** Cgroup rule added but device doesn't exist in container
+This is a binding problem, not a cgroup one. Add the device first, then the rule:
 
-**Solution:**
 ```bash
-# This is a binding issue, not cgroups
-# Add device binding first
-rfswift bindings add -d -c container \
+rfswift config bindings add -d -c container \
   -s /dev/device \
   -t /dev/device
 
-# Then add cgroup rule
-rfswift cgroups add -c container -r "c 189:* rwm"
+rfswift config cgroups add -c container -r "c 189:* rwm"
 ```
 
-### Wildcard not working
+### A wildcard rule does not cover your device
 
-**Problem:** `c 189:*` doesn't grant access to all devices
+Your device may use another major number. Add rules for the likely types, or a rule for that exact device:
 
-**Solutions:**
 ```bash
-# Try specific major numbers
-rfswift cgroups add -c container -r "c 189:* rwm"
-rfswift cgroups add -c container -r "c 188:* rwm"
+rfswift config cgroups add -c container -r "c 189:* rwm"
+rfswift config cgroups add -c container -r "c 188:* rwm"
+```
 
-# Or try specific device
+```bash
 ls -l /dev/device
 # crw-rw-rw- 1 root root 189, 5 ...
 #                        ^^^ ^^^
 #                        maj min
 
-rfswift cgroups add -c container -r "c 189:5 rwm"
+rfswift config cgroups add -c container -r "c 189:5 rwm"
 ```
 
-### Cannot remove rule
+### Removing a rule fails, or the rule stays
 
-**Problem:** Remove command fails or rule persists
+Use exactly the same rule string as when you added it, and check the current rules:
 
-**Solutions:**
 ```bash
-# Use exact rule string
-rfswift cgroups rm -c container -r "c 189:* rwm"
-
-# Check current rules
+rfswift config cgroups rm -c container -r "c 189:* rwm"
 docker inspect container | grep -A10 Devices
+```
 
-# May need to restart container for removal
-# (as last resort)
+As a last resort, stop the container and open it again:
+
+```bash
 rfswift container stop -c container
 rfswift container shell -c container
 ```
 
----
-
 ## Related commands
 
-- [`bindings`](/docs/commands/bindings) - Add device bindings (required first)
-- [`capabilities`](/docs/commands/capabilities) - Add capabilities (sometimes needed)
-- [`run`](/docs/commands/run) - Create containers with initial device access
-- [`exec`](/docs/commands/exec) - Access container after adding rules
-
----
-
-{{< callout >}}
-**Device Access Trinity**: For hardware device access, you need three things: (1) `bindings add -d` to expose the device, (2) `cgroups add` to grant permission, and (3) sometimes `capabilities add` for system privileges!
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Binding First**: Always add the device binding BEFORE adding cgroup rules. The container needs to see the device before you can grant permission to access it!
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**USB Devices**: Most SDRs use USB serial (major 189). Use `ls -l /dev/device` to find the major number, then add rule `c 189:* rwm` for full access to all USB serial devices.
-{{< /callout >}}
+- [`bindings`](/docs/commands/bindings): add the device first
+- [`capabilities`](/docs/commands/capabilities): add a capability when needed
+- [`run`](/docs/commands/run): create containers with device access from the start
+- [`exec`](/docs/commands/exec): open a shell after adding a rule

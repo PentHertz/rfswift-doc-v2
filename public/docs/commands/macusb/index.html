@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift macusb · RF Swift</title>
   <meta name="description" content="macOS USB passthrough through the Lima VM, now reached through rfswift usb.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/macusb/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/macusb/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift macusb · RF Swift">
   <meta property="og:description" content="macOS USB passthrough through the Lima VM, now reached through rfswift usb.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/macusb/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/macusb/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,37 +231,29 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift macusb</h1><p class="doc-lead">macOS USB passthrough through the Lima VM, now reached through rfswift usb.</p><p class="doc-meta">Reference · 10 min read · Updated September 27, 2026</p>
+      <h1>rfswift macusb</h1><p class="doc-lead">macOS USB passthrough through the Lima VM, now reached through rfswift usb.</p><p class="doc-meta">Reference · 10 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4</strong>: the cross-platform front door is <code>rfswift usb</code> (<code>rfswift usb list|attach|detach|status|vm-devices</code>), which dispatches to this backend. <code>rfswift macusb</code> remains available. See <a href="/docs/commands/usb">usb</a>.</p>
+      <p>On macOS, Docker Desktop and Podman run their containers in a Linux VM that <strong>cannot receive USB devices</strong>. <code>rfswift macusb</code> solves this with Lima: a QEMU virtual machine into which USB devices can be hot-plugged (through the QMP protocol). You attach your SDR to the Lima VM, then create your lab with <code>--engine lima</code>.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift macusb attach                  <span class="c1"># pick a device to forward into the Lima VM</span>
+</span></span><span class="line"><span class="cl">rfswift --engine lima container create -i sdr_light -n sdr_work</span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p><strong>RF Swift v4</strong>: <code>rfswift usb</code> (<code>list</code>, <code>attach</code>, <code>detach</code>, <code>status</code>, <code>vm-devices</code>) runs these same commands on macOS. <code>rfswift macusb</code> still works. See <a href="/docs/commands/usb">usb</a>.</p>
 </div>
-<p>Manage USB device passthrough on macOS via Lima QEMU VM.</p>
+<div class="admonition admonition-warning" role="note"><p><strong>macOS only.</strong> On Linux, devices are mapped directly (see <a href="/docs/commands/bindings">config bindings</a>). On Windows, see <a href="/docs/commands/winusb">winusb</a>.</p>
+</div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List USB devices on macOS host</span>
-</span></span><span class="line"><span class="cl">rfswift macusb list
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Attach a USB device to the Lima VM</span>
-</span></span><span class="line"><span class="cl">rfswift macusb attach --vid VENDOR_ID --pid PRODUCT_ID
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Detach a USB device from the Lima VM</span>
-</span></span><span class="line"><span class="cl">rfswift macusb detach --vid VENDOR_ID --pid PRODUCT_ID
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># List USB devices currently attached to the Lima VM</span>
-</span></span><span class="line"><span class="cl">rfswift macusb vm-devices
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check Lima VM status for USB passthrough</span>
-</span></span><span class="line"><span class="cl">rfswift macusb status</span></span></code></pre></div></div>
-<p>The <code>macusb</code> command manages USB device passthrough on macOS. Docker Desktop and Podman on macOS run their own Linux VMs that <strong>cannot forward USB devices</strong> into containers. Lima solves this by running a QEMU VM where USB devices can be hot-plugged via the QMP protocol.</p>
-<div class="admonition admonition-warning" role="note"><p>This command is <strong>macOS only</strong>. On Linux, USB devices are directly accessible via <a href="/docs/commands/bindings"><code>bindings</code></a>. On Windows, use <a href="/docs/commands/winusb"><code>winusb</code></a>.</p>
-</div>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift macusb list                                    <span class="c1"># USB devices on the macOS host</span>
+</span></span><span class="line"><span class="cl">rfswift macusb attach --vid VENDOR_ID --pid PRODUCT_ID <span class="c1"># forward a device into the Lima VM</span>
+</span></span><span class="line"><span class="cl">rfswift macusb detach --vid VENDOR_ID --pid PRODUCT_ID <span class="c1"># give it back to macOS</span>
+</span></span><span class="line"><span class="cl">rfswift macusb vm-devices                              <span class="c1"># devices currently in the Lima VM</span>
+</span></span><span class="line"><span class="cl">rfswift macusb status                                  <span class="c1"># is the Lima VM ready for USB passthrough?</span></span></span></code></pre></div></div>
 <h2 id="how-it-works">How it works<a class="anchor" href="#how-it-works" aria-label="Link to this section"></a></h2>
 <div class="mermaid-wrap"><pre class="mermaid">graph LR
     A[macOS USB Device] --&gt;|QMP hot-plug| B[Lima QEMU VM]
     B --&gt;|/dev/bus/usb| C[Docker inside Lima]
-    C --&gt;|container| D[RF Swift Container]</pre></div><p>On macOS, there are <strong>two container engine modes</strong>:</p>
+    C --&gt;|container| D[RF Swift Container]</pre></div><p>On macOS you have two container engines to choose from:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -283,7 +261,7 @@
       <th>Mode</th>
       <th>Engine flag</th>
       <th>USB access</th>
-      <th>Use case</th>
+      <th>Use it for</th>
     </tr>
   </thead>
   <tbody>
@@ -291,7 +269,7 @@
       <td><strong>Docker Desktop</strong></td>
       <td><code>--engine docker</code> (default)</td>
       <td>No USB</td>
-      <td>General work, no RF hardware needed</td>
+      <td>General work without RF hardware</td>
     </tr>
     <tr>
       <td><strong>Lima VM</strong></td>
@@ -302,52 +280,48 @@
   </tbody>
 </table>
 </div>
-<p>When you need USB devices in your containers, you must:</p>
+<p>To use a USB device in a lab, you need both steps:</p>
 <ol>
-<li>Attach the device to the Lima VM with <code>macusb attach</code></li>
-<li>Run your container with <code>--engine lima</code> so it runs inside Lima&rsquo;s Docker (where the USB device is visible)</li>
+<li>attach the device to the Lima VM with <code>macusb attach</code>;</li>
+<li>create or run the lab with <code>--engine lima</code>, so it runs inside Lima&rsquo;s Docker, where the device is visible.</li>
 </ol>
-<hr>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Description</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>macusb list</code></td>
-      <td>List all USB devices connected to the macOS host</td>
+      <td>Lists every USB device connected to the Mac</td>
     </tr>
     <tr>
       <td><code>macusb attach</code></td>
-      <td>Hot-plug a USB device into the Lima VM</td>
+      <td>Hot-plugs a USB device into the Lima VM</td>
     </tr>
     <tr>
       <td><code>macusb detach</code></td>
-      <td>Hot-unplug a USB device from the Lima VM</td>
+      <td>Hot-unplugs a USB device from the Lima VM</td>
     </tr>
     <tr>
       <td><code>macusb vm-devices</code></td>
-      <td>List USB devices currently forwarded into the VM</td>
+      <td>Lists the USB devices currently forwarded into the VM</td>
     </tr>
     <tr>
       <td><code>macusb status</code></td>
-      <td>Check Lima installation, VM status, and QMP availability</td>
+      <td>Checks the Lima installation, the VM status and whether QMP is available</td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
 <h3 id="macusb-list">macusb list<a class="anchor" href="#macusb-list" aria-label="Link to this section"></a></h3>
-<p>List all USB devices connected to the macOS host using <code>system_profiler</code>. Shows device name, vendor ID, product ID, and serial number.</p>
-<p><strong>No additional options.</strong></p>
+<p>Lists every USB device connected to the Mac, using <code>system_profiler</code>: device name, vendor ID, product ID and serial number. It takes no options.</p>
 <h3 id="macusb-attach">macusb attach<a class="anchor" href="#macusb-attach" aria-label="Link to this section"></a></h3>
-<p>Hot-plug a USB device from the macOS host into the Lima QEMU VM.</p>
-<p><strong>Options:</strong></p>
+<p>Hot-plugs a USB device from the Mac into the Lima QEMU VM.</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -361,23 +335,22 @@
   <tbody>
     <tr>
       <td><code>--vid STRING</code></td>
-      <td>USB Vendor ID (hex)</td>
+      <td>USB vendor ID (hex)</td>
       <td>No*</td>
       <td><code>--vid 0x1d50</code></td>
     </tr>
     <tr>
       <td><code>--pid STRING</code></td>
-      <td>USB Product ID (hex)</td>
+      <td>USB product ID (hex)</td>
       <td>No*</td>
       <td><code>--pid 0x604b</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<p>*When run <strong>without</strong> <code>--vid</code>/<code>--pid</code> in an interactive terminal, a TUI multi-select picker is shown where you can select one or more devices by name. Both flags are required in non-interactive mode.</p>
+<p>* In an interactive terminal, running it <strong>without</strong> <code>--vid</code> and <code>--pid</code> opens a picker where you select one or more devices by name. In scripts (non-interactive), both flags are required.</p>
 <h3 id="macusb-detach">macusb detach<a class="anchor" href="#macusb-detach" aria-label="Link to this section"></a></h3>
-<p>Hot-unplug a USB device from the Lima QEMU VM.</p>
-<p><strong>Options:</strong></p>
+<p>Hot-unplugs a USB device from the Lima QEMU VM.</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -391,13 +364,13 @@
   <tbody>
     <tr>
       <td><code>--vid STRING</code></td>
-      <td>USB Vendor ID (hex)</td>
+      <td>USB vendor ID (hex)</td>
       <td>No*</td>
       <td><code>--vid 0x1d50</code></td>
     </tr>
     <tr>
       <td><code>--pid STRING</code></td>
-      <td>USB Product ID (hex)</td>
+      <td>USB product ID (hex)</td>
       <td>No*</td>
       <td><code>--pid 0x604b</code></td>
     </tr>
@@ -410,22 +383,12 @@
   </tbody>
 </table>
 </div>
-<p>*When run <strong>without</strong> any flags in an interactive terminal, shows a device picker. In non-interactive mode, provide either <code>--devid</code> or both <code>--vid</code> and <code>--pid</code>.</p>
-<p>You can detach by vendor/product ID pair or by the QMP device ID shown in <code>vm-devices</code>.</p>
+<p>* In an interactive terminal, running it without any flag opens a picker. In scripts, give either <code>--devid</code> or both <code>--vid</code> and <code>--pid</code>. The QMP device ID is the one shown by <code>vm-devices</code>.</p>
 <h3 id="macusb-vm-devices">macusb vm-devices<a class="anchor" href="#macusb-vm-devices" aria-label="Link to this section"></a></h3>
-<p>List USB devices currently forwarded into the Lima VM via QMP <code>info usb</code>.</p>
-<p><strong>No additional options.</strong></p>
+<p>Lists the USB devices currently forwarded into the Lima VM (through QMP <code>info usb</code>). It takes no options.</p>
 <h3 id="macusb-status">macusb status<a class="anchor" href="#macusb-status" aria-label="Link to this section"></a></h3>
-<p>Check the full USB passthrough setup:</p>
-<ul>
-<li>Lima installation</li>
-<li>rfswift VM instance status</li>
-<li>QMP socket availability</li>
-<li>Currently attached USB devices</li>
-</ul>
-<p><strong>No additional options.</strong></p>
-<hr>
-<h3 id="global-options">Global options<a class="anchor" href="#global-options" aria-label="Link to this section"></a></h3>
+<p>Checks the whole USB passthrough setup: the Lima installation, the state of the <code>rfswift</code> VM, whether the QMP socket is available, and which USB devices are attached. It takes no options.</p>
+<h3 id="option-for-every-subcommand">Option for every subcommand<a class="anchor" href="#option-for-every-subcommand" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
 <table>
   <thead>
@@ -446,9 +409,9 @@
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="complete-sdr-workflow-on-macos">Complete SDR workflow on macOS<a class="anchor" href="#complete-sdr-workflow-on-macos" aria-label="Link to this section"></a></h3>
+<h3 id="a-complete-sdr-session-on-macos">A complete SDR session on macOS<a class="anchor" href="#a-complete-sdr-session-on-macos" aria-label="Link to this section"></a></h3>
+<p>Check that Lima is ready, find your SDR, attach it, create a lab, use the device, then detach it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1. Check that Lima is ready</span>
 </span></span><span class="line"><span class="cl">rfswift macusb status
@@ -474,63 +437,60 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 7. When done, detach the device</span>
 </span></span><span class="line"><span class="cl">rfswift macusb detach --vid 0x1d50 --pid 0x604b</span></span></code></pre></div></div>
-<h3 id="attaching-multiple-devices">Attaching multiple devices<a class="anchor" href="#attaching-multiple-devices" aria-label="Link to this section"></a></h3>
+<h3 id="several-devices-at-once">Several devices at once<a class="anchor" href="#several-devices-at-once" aria-label="Link to this section"></a></h3>
+<p>Attach an RTL-SDR and a HackRF, then create one lab that sees both:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Attach RTL-SDR and HackRF</span>
-</span></span><span class="line"><span class="cl">rfswift macusb attach --vid 0x0bda --pid 0x2838
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift macusb attach --vid 0x0bda --pid 0x2838
 </span></span><span class="line"><span class="cl">rfswift macusb attach --vid 0x1d50 --pid 0x604b
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Run container with both devices available</span>
 </span></span><span class="line"><span class="cl">rfswift --engine lima container create -i penthertz/rfswift_resolute:sdr_full -n multi_sdr</span></span></code></pre></div></div>
-<h3 id="using-a-custom-lima-instance">Using a custom Lima instance<a class="anchor" href="#using-a-custom-lima-instance" aria-label="Link to this section"></a></h3>
+<h3 id="a-custom-lima-instance">A custom Lima instance<a class="anchor" href="#a-custom-lima-instance" aria-label="Link to this section"></a></h3>
+<p>Every <code>macusb</code> command accepts <code>--instance</code> to target a VM other than the default:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># All macusb commands support --instance for non-default VMs</span>
-</span></span><span class="line"><span class="cl">rfswift macusb list --instance my_custom_vm
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift macusb list --instance my_custom_vm
 </span></span><span class="line"><span class="cl">rfswift macusb attach --vid 0x1d50 --pid 0x604b --instance my_custom_vm
 </span></span><span class="line"><span class="cl">rfswift --engine lima container create -i sdr_light -n my_work</span></span></code></pre></div></div>
-<hr>
 <h2 id="setup">Setup<a class="anchor" href="#setup" aria-label="Link to this section"></a></h2>
-<h3 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-label="Link to this section"></a></h3>
+<h3 id="what-you-need">What you need<a class="anchor" href="#what-you-need" aria-label="Link to this section"></a></h3>
 <ol>
 <li>
-<p><strong>Lima</strong> and <strong>QEMU</strong> must be installed:</p>
+<p><strong>Lima</strong> and <strong>QEMU</strong>:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install lima qemu</span></span></code></pre></div></div>
 </li>
 <li>
-<p>The Lima VM must use <strong><code>vmType: qemu</code></strong> (not <code>vz</code>) for USB passthrough support.</p>
+<p>A Lima VM of type <strong><code>vmType: qemu</code></strong> (not <code>vz</code>). Only QEMU supports USB passthrough.</p>
 </li>
 </ol>
-<div class="admonition admonition-info" role="note"><p>QEMU is the virtualization backend that Lima uses to run the Linux VM. Lima manages the VM lifecycle, QEMU provides the actual emulation with USB hot-plug support via QMP.</p>
+<div class="admonition admonition-info" role="note"><p>Lima manages the VM&rsquo;s life cycle; QEMU is the virtualisation software underneath, and it provides USB hot-plug through QMP.</p>
 </div>
-<h3 id="first-time-setup">First-Time setup<a class="anchor" href="#first-time-setup" aria-label="Link to this section"></a></h3>
-<p>RF Swift <strong>automatically manages the Lima VM</strong>, so there is no manual setup to do. On first use, RF Swift creates, provisions, and starts the VM transparently:</p>
+<h3 id="first-run">First run<a class="anchor" href="#first-run" aria-label="Link to this section"></a></h3>
+<p>RF Swift manages the Lima VM for you, so there is nothing to set up by hand. The first time you use <code>--engine lima</code>, RF Swift creates, prepares and starts the VM:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Just run it, RF Swift handles everything automatically</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Run it: RF Swift sets up the VM automatically</span>
 </span></span><span class="line"><span class="cl">rfswift --engine lima container create -i penthertz/rfswift_resolute:sdr_light -n my_sdr
 </span></span><span class="line"><span class="cl"><span class="c1"># -&gt; &#34;Lima instance &#39;rfswift&#39; not found. Creating it...&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># -&gt; Creates VM, installs Docker + USB tools + udev rules</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># -&gt; Starts VM and waits for Docker to be ready</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># -&gt; &#34;Lima instance &#39;rfswift&#39; created and started&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># -&gt; Container runs normally</span></span></span></code></pre></div></div>
-<p>On subsequent runs, RF Swift automatically detects the VM state:</p>
+<p>On later runs, RF Swift checks the VM first:</p>
 <ul>
-<li><strong>VM exists and running</strong>: proceeds immediately</li>
-<li><strong>VM exists but stopped</strong>: starts it automatically</li>
-<li><strong>VM doesn&rsquo;t exist</strong>: creates and provisions it from scratch</li>
+<li><strong>the VM exists and is running</strong>: it continues right away;</li>
+<li><strong>the VM exists but is stopped</strong>: it starts it;</li>
+<li><strong>the VM doesn&rsquo;t exist</strong>: it creates and prepares it from scratch.</li>
 </ul>
-<div class="admonition admonition-info" role="note"><p>You can still create the VM manually if you prefer: <code>limactl create --name rfswift lima/rfswift.yaml &amp;&amp; limactl start rfswift</code></p>
+<div class="admonition admonition-info" role="note"><p>You can still create the VM by hand if you prefer: <code>limactl create --name rfswift lima/rfswift.yaml &amp;&amp; limactl start rfswift</code></p>
 </div>
-<p>The auto-created VM is fully provisioned with:</p>
+<p>The VM comes with:</p>
 <ul>
-<li>Docker engine inside the VM</li>
-<li>USB libraries (<code>libusb</code>, <code>libhidapi</code>, <code>libftdi</code>)</li>
-<li>Kernel modules for USB serial devices (<code>cp210x</code>, <code>ftdi_sio</code>, <code>ch341</code>)</li>
-<li>Bluetooth stack (<code>bluez</code>, <code>btusb</code>, <code>rfcomm</code>, <code>vhci-hcd</code>)</li>
-<li>Udev rules for all common SDR/RF devices (HackRF, RTL-SDR, USRP, BladeRF, Airspy, PlutoSDR, LimeSDR, etc.)</li>
+<li>Docker;</li>
+<li>USB libraries (<code>libusb</code>, <code>libhidapi</code>, <code>libftdi</code>);</li>
+<li>kernel modules for USB serial devices (<code>cp210x</code>, <code>ftdi_sio</code>, <code>ch341</code>);</li>
+<li>a Bluetooth stack (<code>bluez</code>, <code>btusb</code>, <code>rfcomm</code>, <code>vhci-hcd</code>);</li>
+<li>udev rules for all common SDR and RF devices (HackRF, RTL-SDR, USRP, BladeRF, Airspy, PlutoSDR, LimeSDR, and more).</li>
 </ul>
 <h3 id="supported-rf-devices">Supported RF devices<a class="anchor" href="#supported-rf-devices" aria-label="Link to this section"></a></h3>
-<p>The Lima VM comes pre-configured with udev rules for:</p>
+<p>The Lima VM ships with udev rules for:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -583,10 +543,10 @@
   </tbody>
 </table>
 </div>
-<hr>
-<h2 id="customizing-the-lima-vm">Customizing the Lima VM<a class="anchor" href="#customizing-the-lima-vm" aria-label="Link to this section"></a></h2>
-<p>The Lima VM is configured via a YAML file. RF Swift ships a default template at <code>lima/rfswift.yaml</code>, and once created, the instance config lives at <code>~/.lima/rfswift/lima.yaml</code>.</p>
+<h2 id="customising-the-lima-vm">Customising the Lima VM<a class="anchor" href="#customising-the-lima-vm" aria-label="Link to this section"></a></h2>
+<p>The VM is described by a YAML file. RF Swift ships a default template at <code>lima/rfswift.yaml</code>. Once the VM exists, its configuration lives in <code>~/.lima/rfswift/lima.yaml</code>.</p>
 <h3 id="editing-the-configuration">Editing the configuration<a class="anchor" href="#editing-the-configuration" aria-label="Link to this section"></a></h3>
+<p>Edit the template before the VM is created, or the live configuration afterwards (then restart the VM):</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Before creating the VM, edit the template</span>
 </span></span><span class="line"><span class="cl">vim lima/rfswift.yaml
@@ -595,66 +555,66 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># After creating, edit the live config (requires VM restart)</span>
 </span></span><span class="line"><span class="cl">vim ~/.lima/rfswift/lima.yaml
 </span></span><span class="line"><span class="cl">limactl stop rfswift <span class="o">&amp;&amp;</span> limactl start rfswift</span></span></code></pre></div></div>
-<div class="admonition admonition-warning" role="note"><p>After editing <code>~/.lima/rfswift/lima.yaml</code>, you must stop and start the VM for changes to take effect. Changes to <code>provision</code> scripts only run on first creation, so use <code>limactl shell rfswift</code> to run commands in an existing VM.</p>
+<div class="admonition admonition-warning" role="note"><p>After editing <code>~/.lima/rfswift/lima.yaml</code>, stop and start the VM for the changes to apply. <code>provision</code> scripts only run when the VM is first created; to run a command in an existing VM, use <code>limactl shell rfswift</code>.</p>
 </div>
-<h3 id="configuration-reference">Configuration reference<a class="anchor" href="#configuration-reference" aria-label="Link to this section"></a></h3>
-<p>Here are the key settings you can tune:</p>
+<h3 id="settings-you-can-change">Settings you can change<a class="anchor" href="#settings-you-can-change" aria-label="Link to this section"></a></h3>
 <h4 id="vm-resources">VM resources<a class="anchor" href="#vm-resources" aria-label="Link to this section"></a></h4>
-<p>Increase CPUs, memory, or disk for heavier workloads (e.g., srsRAN 5G, large IQ captures):</p>
+<p>Give the VM more CPUs, memory or disk for heavy work (for example srsRAN 5G or large IQ captures):</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">cpus: 8          # default</span><span class="p">:</span><span class="w"> </span><span class="m">4</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;16GiB&#34;</span><span class="w">  </span><span class="c"># default: 8GiB</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">disk</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;200GiB&#34;</span><span class="w">   </span><span class="c"># default: 100GiB</span></span></span></code></pre></div></div>
+<p><code>rfswift engine lima set</code> changes these without editing the file (see <a href="/docs/commands/engine">engine</a>).</p>
 <h4 id="vm-backend">VM backend<a class="anchor" href="#vm-backend" aria-label="Link to this section"></a></h4>
-<p><strong>Must be <code>qemu</code></strong> for USB passthrough. Do not change to <code>vz</code>:</p>
+<p>It <strong>must stay <code>qemu</code></strong> for USB passthrough. Don&rsquo;t change it to <code>vz</code>:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">vmType</span><span class="p">:</span><span class="w"> </span><span class="l">qemu    </span><span class="w"> </span><span class="c"># required, Apple Virtualization (vz) has no USB support</span></span></span></code></pre></div></div>
-<h4 id="host-directory-mounts">Host directory mounts<a class="anchor" href="#host-directory-mounts" aria-label="Link to this section"></a></h4>
-<p>Add extra host directories accessible inside the VM:</p>
+<h4 id="host-folders-inside-the-vm">Host folders inside the VM<a class="anchor" href="#host-folders-inside-the-vm" aria-label="Link to this section"></a></h4>
+<p>Add folders from your Mac that the VM can use:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">mounts</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;~&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;~&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">writable</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/tmp/lima&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/tmp/lima&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">writable</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Add your own:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/Volumes/ExternalSSD/captures&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/Volumes/ExternalSSD/captures&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">writable</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">mountPoint</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/captures&#34;</span></span></span></code></pre></div></div>
 <h4 id="port-forwarding">Port forwarding<a class="anchor" href="#port-forwarding" aria-label="Link to this section"></a></h4>
-<p>Forward additional ports from the VM to the macOS host:</p>
+<p>Forward more ports from the VM to your Mac:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">portForwards</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Docker socket (required, do not remove)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">guestSocket</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/run/docker.sock&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">guestSocket</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/run/docker.sock&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">hostSocket</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;{{.Dir}}/sock/docker.sock&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># noVNC desktop</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">guestPort</span><span class="p">:</span><span class="w"> </span><span class="m">6080</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">guestPort</span><span class="p">:</span><span class="w"> </span><span class="m">6080</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">hostPort</span><span class="p">:</span><span class="w"> </span><span class="m">6080</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># PulseAudio</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">guestPort</span><span class="p">:</span><span class="w"> </span><span class="m">34567</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">guestPort</span><span class="p">:</span><span class="w"> </span><span class="m">34567</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">hostPort</span><span class="p">:</span><span class="w"> </span><span class="m">34567</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Add your own, e.g. the srsRAN web UI</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">guestPort</span><span class="p">:</span><span class="w"> </span><span class="m">7681</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">guestPort</span><span class="p">:</span><span class="w"> </span><span class="m">7681</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">hostPort</span><span class="p">:</span><span class="w"> </span><span class="m">7681</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Jupyter notebook</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">guestPort</span><span class="p">:</span><span class="w"> </span><span class="m">8888</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">guestPort</span><span class="p">:</span><span class="w"> </span><span class="m">8888</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">hostPort</span><span class="p">:</span><span class="w"> </span><span class="m">8888</span></span></span></code></pre></div></div>
-<h4 id="guest-os-image">Guest OS image<a class="anchor" href="#guest-os-image" aria-label="Link to this section"></a></h4>
-<p>Change the base Linux image (default is Ubuntu 24.04):</p>
+<h4 id="guest-operating-system">Guest operating system<a class="anchor" href="#guest-operating-system" aria-label="Link to this section"></a></h4>
+<p>Change the base Linux image (Ubuntu 24.04 by default):</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">images</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-amd64.img&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-amd64.img&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">arch</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;x86_64&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-arm64.img&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-arm64.img&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">arch</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;aarch64&#34;</span></span></span></code></pre></div></div>
 <h4 id="dns">DNS<a class="anchor" href="#dns" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">dns</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="m">8.8.8.8</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="m">8.8.4.4</span></span></span></code></pre></div></div>
-<h3 id="adding-custom-udev-rules">Adding custom udev rules<a class="anchor" href="#adding-custom-udev-rules" aria-label="Link to this section"></a></h3>
-<p>If you have RF hardware not covered by the defaults, add udev rules in the <code>provision</code> section or directly inside the running VM:</p>
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="m">8.8.8.8</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="m">8.8.4.4</span></span></span></code></pre></div></div>
+<h3 id="adding-udev-rules-for-other-hardware">Adding udev rules for other hardware<a class="anchor" href="#adding-udev-rules-for-other-hardware" aria-label="Link to this section"></a></h3>
+<p>If your RF hardware isn&rsquo;t covered by the default rules, add a rule either in the template&rsquo;s <code>provision</code> section (before the VM is created) or directly in the running VM:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Option 1: Add to the YAML template before creation</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># In the provision -&gt; system script section, add:</span>
@@ -669,9 +629,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="s1">    &gt; /etc/udev/rules.d/99-custom.rules
 </span></span></span><span class="line"><span class="cl"><span class="s1">  udevadm control --reload-rules &amp;&amp; udevadm trigger
 </span></span></span><span class="line"><span class="cl"><span class="s1">&#39;</span></span></span></code></pre></div></div>
-<p>Replace <code>xxxx</code> and <code>yyyy</code> with your device&rsquo;s vendor and product IDs (find them with <code>rfswift macusb list</code>).</p>
-<h3 id="adding-custom-kernel-modules">Adding custom kernel modules<a class="anchor" href="#adding-custom-kernel-modules" aria-label="Link to this section"></a></h3>
-<p>The default template loads common USB serial modules. To add more:</p>
+<p>Replace <code>xxxx</code> and <code>yyyy</code> with your device&rsquo;s vendor and product IDs (<code>rfswift macusb list</code> shows them).</p>
+<h3 id="adding-kernel-modules">Adding kernel modules<a class="anchor" href="#adding-kernel-modules" aria-label="Link to this section"></a></h3>
+<p>The default template loads the common USB serial modules. To load another one now, and at every boot:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Load a module in the running VM</span>
 </span></span><span class="line"><span class="cl">limactl shell rfswift -- sudo modprobe &lt;module_name&gt;
@@ -679,19 +639,16 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Make it persistent</span>
 </span></span><span class="line"><span class="cl">limactl shell rfswift -- sudo bash -c <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  <span class="s1">&#39;echo &#34;&lt;module_name&gt;&#34; &gt;&gt; /etc/modules-load.d/rfswift.conf&#39;</span></span></span></code></pre></div></div>
-<h3 id="installing-additional-packages">Installing additional packages<a class="anchor" href="#installing-additional-packages" aria-label="Link to this section"></a></h3>
-<p>Need extra tools inside the VM (outside of containers)?</p>
+<h3 id="installing-packages-in-the-vm">Installing packages in the VM<a class="anchor" href="#installing-packages-in-the-vm" aria-label="Link to this section"></a></h3>
+<p>To add tools to the VM itself (outside your labs):</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">limactl shell rfswift -- sudo apt install -y &lt;package_name&gt;</span></span></code></pre></div></div>
-<h3 id="recreating-the-vm-from-scratch">Recreating the VM from scratch<a class="anchor" href="#recreating-the-vm-from-scratch" aria-label="Link to this section"></a></h3>
-<p>If the VM becomes misconfigured, use the built-in reset command:</p>
+<h3 id="rebuilding-the-vm-from-scratch">Rebuilding the VM from scratch<a class="anchor" href="#rebuilding-the-vm-from-scratch" aria-label="Link to this section"></a></h3>
+<p>If the VM gets misconfigured, reset it with RF Swift:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Preferred: use RF Swift&#39;s built-in command</span>
-</span></span><span class="line"><span class="cl">rfswift engine lima reset
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or with a specific template</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift engine lima reset
 </span></span><span class="line"><span class="cl">rfswift engine lima reset --template ~/my-custom-lima.yaml</span></span></code></pre></div></div>
-<p>Alternatively, you can use <code>limactl</code> directly:</p>
+<p>Or do it by hand with <code>limactl</code>:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">limactl stop rfswift
 </span></span><span class="line"><span class="cl">limactl delete rfswift
@@ -699,32 +656,28 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Recreate from template (or let RF Swift auto-create on next run)</span>
 </span></span><span class="line"><span class="cl">limactl create --name rfswift lima/rfswift.yaml
 </span></span><span class="line"><span class="cl">limactl start rfswift</span></span></code></pre></div></div>
-<div class="admonition admonition-info" role="note"><p>Deleting the VM does <strong>not</strong> delete your workspace files (<code>~/rfswift-workspace/</code>) or Docker images, which live on the host.</p>
+<div class="admonition admonition-info" role="note"><p>Deleting the VM does <strong>not</strong> delete your workspace files (<code>~/rfswift-workspace/</code>) or Docker images, which live on your Mac.</p>
 </div>
-<p>For non-destructive reconfiguration (e.g., changing CPU/memory/ports), use <a href="/docs/commands/engine/#engine-lima-reconfig"><code>rfswift engine lima reconfig</code></a> instead, which preserves the VM filesystem.</p>
-<h3 id="using-a-custom-template-location">Using a custom template location<a class="anchor" href="#using-a-custom-template-location" aria-label="Link to this section"></a></h3>
-<p>RF Swift searches for the Lima template in these locations (in order):</p>
+<p>To change CPU, memory or ports without losing anything, use <a href="/docs/commands/engine/#engine-lima-reconfig"><code>rfswift engine lima reconfig</code></a> instead: it keeps the VM&rsquo;s files.</p>
+<h3 id="using-your-own-template-by-default">Using your own template by default<a class="anchor" href="#using-your-own-template-by-default" aria-label="Link to this section"></a></h3>
+<p>RF Swift looks for the Lima template in this order:</p>
 <ol>
 <li><code>&lt;rfswift-binary-dir&gt;/lima/rfswift.yaml</code></li>
 <li><code>&lt;rfswift-binary-dir&gt;/../lima/rfswift.yaml</code></li>
 <li><code>~/.config/rfswift/lima.yaml</code></li>
 <li><code>~/.rfswift/lima.yaml</code></li>
 </ol>
-<p>To use your own customized template by default, place it at <code>~/.config/rfswift/lima.yaml</code>:</p>
+<p>To use your own template, copy the default to <code>~/.config/rfswift/lima.yaml</code> and edit it. RF Swift uses it the next time it creates the VM on an <code>--engine lima</code> run:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cp lima/rfswift.yaml ~/.config/rfswift/lima.yaml
 </span></span><span class="line"><span class="cl">vim ~/.config/rfswift/lima.yaml  <span class="c1"># customize</span></span></span></code></pre></div></div>
-<p>RF Swift will use this template when auto-creating the VM on first <code>--engine lima</code> run.</p>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="lima-not-installed">Lima not installed<a class="anchor" href="#lima-not-installed" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>macusb</code> commands fail because Lima is not installed</p>
-<p><strong>Solution:</strong></p>
+<h3 id="macusb-commands-fail-lima-is-not-installed"><code>macusb</code> commands fail: Lima is not installed<a class="anchor" href="#macusb-commands-fail-lima-is-not-installed" aria-label="Link to this section"></a></h3>
+<p>Install Lima and QEMU:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install lima qemu</span></span></code></pre></div></div>
-<h3 id="qmp-socket-not-found">QMP socket not found<a class="anchor" href="#qmp-socket-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>macusb status</code> reports no QMP socket</p>
-<p><strong>Solution:</strong> Your Lima VM must use <code>vmType: qemu</code>. The Apple Virtualization framework (<code>vmType: vz</code>) does not support USB passthrough.</p>
+<h3 id="macusb-status-reports-no-qmp-socket"><code>macusb status</code> reports no QMP socket<a class="anchor" href="#macusb-status-reports-no-qmp-socket" aria-label="Link to this section"></a></h3>
+<p>Your Lima VM must use <code>vmType: qemu</code>. Apple&rsquo;s Virtualization framework (<code>vmType: vz</code>) does not support USB passthrough. Check the setting, and recreate the VM with QEMU if needed:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check your VM config</span>
 </span></span><span class="line"><span class="cl">cat ~/.lima/rfswift/lima.yaml <span class="p">|</span> grep vmType
@@ -734,18 +687,16 @@
 </span></span><span class="line"><span class="cl">limactl delete rfswift
 </span></span><span class="line"><span class="cl">limactl create --name rfswift lima/rfswift.yaml
 </span></span><span class="line"><span class="cl">limactl start rfswift</span></span></code></pre></div></div>
-<h3 id="device-not-visible-in-container">Device not visible in container<a class="anchor" href="#device-not-visible-in-container" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Device attached via <code>macusb attach</code> but not visible in the container</p>
-<p><strong>Solution:</strong> Make sure you&rsquo;re using <code>--engine lima</code>:</p>
+<h3 id="the-device-is-attached-but-not-visible-in-the-lab">The device is attached but not visible in the lab<a class="anchor" href="#the-device-is-attached-but-not-visible-in-the-lab" aria-label="Link to this section"></a></h3>
+<p>The lab must run with <code>--engine lima</code>. Without it, the lab runs in Docker Desktop, which has no USB access:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Wrong: runs in Docker Desktop (no USB access)</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_light -n my_sdr
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Correct: runs in Lima&#39;s Docker (USB devices visible)</span>
 </span></span><span class="line"><span class="cl">rfswift --engine lima container create -i sdr_light -n my_sdr</span></span></code></pre></div></div>
-<h3 id="attach-fails-with-permission-error">Attach fails with permission error<a class="anchor" href="#attach-fails-with-permission-error" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>macusb attach</code> returns a QMP error</p>
-<p><strong>Solution:</strong> QEMU USB passthrough may require elevated permissions on macOS:</p>
+<h3 id="macusb-attach-returns-a-qmp-error"><code>macusb attach</code> returns a QMP error<a class="anchor" href="#macusb-attach-returns-a-qmp-error" aria-label="Link to this section"></a></h3>
+<p>QEMU USB passthrough may need elevated permissions on macOS. Check that the VM is running, and restart it if needed:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if the Lima VM is running</span>
 </span></span><span class="line"><span class="cl">rfswift macusb status
@@ -755,22 +706,15 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Or use limactl directly</span>
 </span></span><span class="line"><span class="cl">limactl stop rfswift <span class="o">&amp;&amp;</span> limactl start rfswift</span></span></code></pre></div></div>
-<hr>
-<h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
+<h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/engine"><code>--engine</code></a> - Select container engine (use <code>--engine lima</code> for USB)</li>
-<li><a href="/docs/commands/winusb"><code>winusb</code></a> - USB management on Windows/WSL2</li>
-<li><a href="/docs/commands/bindings"><code>bindings</code></a> - Device bindings on Linux</li>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create containers</li>
-<li><a href="/docs/commands/doctor"><code>doctor</code></a> - Diagnose environment (includes Lima checks on macOS)</li>
+<li><a href="/docs/commands/engine">engine</a>: choose the engine (<code>--engine lima</code> for USB) and manage the Lima VM</li>
+<li><a href="/docs/commands/usb">usb</a>: the cross-platform USB command</li>
+<li><a href="/docs/commands/winusb">winusb</a>: USB on Windows and WSL 2</li>
+<li><a href="/docs/commands/bindings">config bindings</a>: devices on Linux</li>
+<li><a href="/docs/commands/run">container create</a></li>
+<li><a href="/docs/commands/doctor">doctor</a>: checks Lima on macOS</li>
 </ul>
-<hr>
-<div class="admonition admonition-info" role="note"><p><strong>Prerequisites</strong>: Lima and QEMU must be installed (<code>brew install lima qemu</code>). The VM must use <code>vmType: qemu</code> for USB passthrough support.</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>macOS Only</strong>: This command is exclusively for macOS hosts. On Linux, USB devices are directly accessible. On Windows, use <a href="/docs/commands/winusb"><code>winusb</code></a>.</p>
-</div>
-<div class="admonition admonition-tip" role="note"><p><strong>Remember</strong>: Always use <code>rfswift --engine lima container create ...</code> when you need USB devices in your containers. Without <code>--engine lima</code>, containers run in Docker Desktop which has no USB access.</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -800,43 +744,43 @@
         <li><a href="#macusb-detach">macusb detach</a></li>
         <li><a href="#macusb-vm-devices">macusb vm-devices</a></li>
         <li><a href="#macusb-status">macusb status</a></li>
-        <li><a href="#global-options">Global options</a></li>
+        <li><a href="#option-for-every-subcommand">Option for every subcommand</a></li>
       </ul>
     </li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#complete-sdr-workflow-on-macos">Complete SDR workflow on macOS</a></li>
-        <li><a href="#attaching-multiple-devices">Attaching multiple devices</a></li>
-        <li><a href="#using-a-custom-lima-instance">Using a custom Lima instance</a></li>
+        <li><a href="#a-complete-sdr-session-on-macos">A complete SDR session on macOS</a></li>
+        <li><a href="#several-devices-at-once">Several devices at once</a></li>
+        <li><a href="#a-custom-lima-instance">A custom Lima instance</a></li>
       </ul>
     </li>
     <li><a href="#setup">Setup</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#first-time-setup">First-Time setup</a></li>
+        <li><a href="#what-you-need">What you need</a></li>
+        <li><a href="#first-run">First run</a></li>
         <li><a href="#supported-rf-devices">Supported RF devices</a></li>
       </ul>
     </li>
-    <li><a href="#customizing-the-lima-vm">Customizing the Lima VM</a>
+    <li><a href="#customising-the-lima-vm">Customising the Lima VM</a>
       <ul>
         <li><a href="#editing-the-configuration">Editing the configuration</a></li>
-        <li><a href="#configuration-reference">Configuration reference</a></li>
-        <li><a href="#adding-custom-udev-rules">Adding custom udev rules</a></li>
-        <li><a href="#adding-custom-kernel-modules">Adding custom kernel modules</a></li>
-        <li><a href="#installing-additional-packages">Installing additional packages</a></li>
-        <li><a href="#recreating-the-vm-from-scratch">Recreating the VM from scratch</a></li>
-        <li><a href="#using-a-custom-template-location">Using a custom template location</a></li>
+        <li><a href="#settings-you-can-change">Settings you can change</a></li>
+        <li><a href="#adding-udev-rules-for-other-hardware">Adding udev rules for other hardware</a></li>
+        <li><a href="#adding-kernel-modules">Adding kernel modules</a></li>
+        <li><a href="#installing-packages-in-the-vm">Installing packages in the VM</a></li>
+        <li><a href="#rebuilding-the-vm-from-scratch">Rebuilding the VM from scratch</a></li>
+        <li><a href="#using-your-own-template-by-default">Using your own template by default</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#lima-not-installed">Lima not installed</a></li>
-        <li><a href="#qmp-socket-not-found">QMP socket not found</a></li>
-        <li><a href="#device-not-visible-in-container">Device not visible in container</a></li>
-        <li><a href="#attach-fails-with-permission-error">Attach fails with permission error</a></li>
+        <li><a href="#macusb-commands-fail-lima-is-not-installed"><code>macusb</code> commands fail: Lima is not installed</a></li>
+        <li><a href="#macusb-status-reports-no-qmp-socket"><code>macusb status</code> reports no QMP socket</a></li>
+        <li><a href="#the-device-is-attached-but-not-visible-in-the-lab">The device is attached but not visible in the lab</a></li>
+        <li><a href="#macusb-attach-returns-a-qmp-error"><code>macusb attach</code> returns a QMP error</a></li>
       </ul>
     </li>
-    <li><a href="#related-commands">Related commands</a></li>
+    <li><a href="#related">Related</a></li>
   </ul>
 </nav>
   <a class="toc-top" href="#content">Back to top ↑</a>

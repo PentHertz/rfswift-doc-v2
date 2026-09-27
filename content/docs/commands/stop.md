@@ -7,21 +7,23 @@ description: "Stop a running container."
 weight: 6
 ---
 
-{{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift container stop`. The legacy form `rfswift stop` and the short alias `rfswift halt` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
-{{< /callout >}}
+`rfswift container stop` stops a running container without deleting it. Its files and settings are kept; only the programs running inside stop. Use it to free memory and CPU when you are done for the day.
 
-Stop a running container without removing it.
+```bash
+rfswift container stop -c my_sdr_container
+```
+
+To start it again, enter it with [`rfswift container shell`](/docs/commands/exec/): a stopped container is started for you.
+
+{{< callout type="info" >}}
+**Other spellings**: the legacy form `rfswift stop` and the short alias `rfswift halt` still work and print a notice. The flags are the same. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
 
 ## Synopsis
 
 ```bash
 rfswift container stop -c CONTAINER_NAME
 ```
-
-The `stop` command gracefully stops a running container while preserving all data and state. The container can be restarted later with `exec` or using Docker commands.
-
----
 
 ## Options
 
@@ -30,33 +32,31 @@ The `stop` command gracefully stops a running container while preserving all dat
 | `-c, --container STRING` | Container name or ID to stop | Yes | `-c my_container` |
 
 {{< callout type="info" >}}
-**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable picker listing only **running** containers with their name, ID, image, and state.
+**Container picker**: without `-c` in an interactive terminal, RF Swift shows a picker with only the **running** containers (name, ID, image and state).
 {{< /callout >}}
-
----
 
 ## Examples
 
 ### Basic usage
 
-**Stop a specific container:**
+#### Stop a specific container
 ```bash
 rfswift container stop -c my_sdr_container
 ```
 
-**Stop by container ID:**
+#### Stop by container ID
 ```bash
 rfswift container stop -c a1b2c3d4e5f6
 ```
 
-**Stop with short container ID:**
+#### Stop with short container ID
 ```bash
 rfswift container stop -c a1b2c3
 ```
 
-### Real-World scenarios
+### Everyday cases
 
-**End of work day:**
+#### End of work day
 ```bash
 # Stop assessment container for the day
 rfswift container stop -c client_assessment
@@ -65,7 +65,7 @@ rfswift container stop -c client_assessment
 rfswift container shell -c client_assessment
 ```
 
-**Free up resources:**
+#### Free up resources
 ```bash
 # Stop idle containers to free memory
 rfswift container stop -c sdr_capture
@@ -73,41 +73,36 @@ rfswift container stop -c wifi_analysis
 rfswift container stop -c bluetooth_scanner
 ```
 
-**Before system maintenance:**
+#### Before system maintenance
 
-For now you can do the following trick:
+To stop every running RF Swift container at once, for example before a system update:
 
 ```bash
-# Stop all RF Swift containers before system update
+# Stop all RF Swift containers before a system update
 for container in $(docker ps -q --filter "ancestor=penthertz/rfswift_resolute"); do
     rfswift container stop -c $container
 done
 ```
 
-**Temporary pause:**
+#### Take a break
 ```bash
-# Stop container during lunch break
-rfswift container stop -c long_running_capture
-
-# Resume after lunch
-rfswift container shell -c long_running_capture
+rfswift container stop -c long_running_capture     # stop it
+rfswift container shell -c long_running_capture    # pick up again later
 ```
-
----
 
 ## What happens when you stop a container
 
 ### Data persistence
 
-When a container is stopped:
-- **Container filesystem**: All data inside the container is preserved
-- **Mounted volumes**: Data in mounted directories remains intact
-- **Container configuration**: All settings, bindings, and capabilities are preserved
-- **Network configuration**: Port bindings and network settings are saved
-- **Running processes**: All processes inside the container are terminated
-- **Memory state**: RAM contents are lost (not hibernated)
+What is **kept** when a container stops:
+- every file inside the container, and your workspace and mounted folders;
+- its settings: bindings, capabilities, port and network settings.
 
-**Example:**
+What is **lost**:
+- the programs running inside: they are terminated;
+- whatever was only in memory: the container is not hibernated.
+
+#### Example
 ```bash
 # Create container with captures
 rfswift container create -i sdr_full -n capture_session -b ~/captures:/root/captures
@@ -128,16 +123,13 @@ ls /root/captures  # Files still there
 
 ### Process handling
 
-**Graceful shutdown:**
-1. Docker sends SIGTERM to all processes
-2. Processes have 10 seconds to clean up
-3. If processes don't exit, Docker sends SIGKILL
-4. Container stops
+The container shuts down gracefully:
+1. Docker sends SIGTERM to every process.
+2. The processes get 10 seconds to clean up.
+3. Any process still running then gets SIGKILL.
+4. The container stops.
 
-**Important for:**
-- Database containers (ensure data consistency)
-- Long-running captures (may lose in-progress data)
-- Network services (connections are dropped)
+Keep this in mind for long captures (data still being written may be lost), databases (let them finish writing) and network services (open connections are dropped).
 
 ### Container state after stop
 
@@ -149,31 +141,18 @@ docker ps -a | grep my_container
 # STATUS: Exited (0) 2 minutes ago
 ```
 
-**Container is:**
-- Still exists in Docker
-- Can be restarted
-- Can be committed to an image
-- Can be removed
-- Not consuming CPU
-- Not consuming RAM
-- Still consuming disk space
-
----
+A stopped container still exists: you can start it again, commit it to an image or remove it. It uses no CPU and no memory, but it still takes disk space.
 
 ### Stop vs exit
 
-| Operation | `stop` | `exit` (from shell) |
+| Operation | `container stop` | `exit` (from the shell) |
 |-----------|--------|---------------------|
-| Initiated from | Host | Inside container |
-| Stops container | Always | ⚠️ Sometimes* |
-| Graceful shutdown | Yes | ⚠️ Depends |
-| Use when | Managing from host | Done with current session |
+| Run from | Your computer | Inside the container |
+| Stops the container | Always | Only if nothing else is running inside |
+| Graceful shutdown | Yes | Depends |
+| Use it when | You are done with the container for now | You are done with this shell |
 
-{{< callout type="warning" >}}
-Container stops if no other processes are running
-{{< /callout >}}
-
-**Workflow comparison:**
+#### Workflow comparison
 ```bash
 # Using exit (from inside container)
 rfswift container shell -c my_container
@@ -186,15 +165,13 @@ rfswift container stop -c my_container
 # Container definitely stops, all processes terminate
 ```
 
----
-
 ## Common workflows
 
 ### Daily work cycle
 
 ```bash
 # Monday: Create container
-rfswift container create -i pentest -n weekly_work -b ~/work:/root/work
+rfswift container create -i network -n weekly_work -b ~/work:/root/work
 
 # Monday-Friday: Use throughout week
 rfswift container shell -c weekly_work
@@ -256,20 +233,18 @@ done
 docker stop capture1 capture2 capture3
 ```
 
----
-
 ## Troubleshooting
 
 ### Container already stopped
 
-**Problem:** Trying to stop an already stopped container
+You try to stop a container that is already stopped.
 
 ```bash
 rfswift container stop -c my_container
 # Error: Container is not running
 ```
 
-**Solution:**
+To fix it:
 ```bash
 # Check if running
 docker ps | grep my_container
@@ -282,9 +257,9 @@ docker ps -a | grep my_container
 
 ### Container not found
 
-**Error:** `Error: No such container: container_name`
+The error message is: `Error: No such container: container_name`
 
-**Solutions:**
+To fix it:
 ```bash
 # List all containers
 rfswift container last
@@ -296,9 +271,9 @@ rfswift container create -i image -n container_name
 
 ### Container won't stop
 
-**Problem:** Container doesn't stop after reasonable time
+The container doesn't stop after a reasonable time.
 
-**Solutions:**
+To fix it:
 ```bash
 # Wait longer (some containers need cleanup time)
 rfswift container stop -c my_container
@@ -313,9 +288,9 @@ docker logs my_container
 
 ### Multiple containers with similar names
 
-**Problem:** Ambiguous container name
+The name you gave matches more than one container.
 
-**Solutions:**
+To fix it:
 ```bash
 # Use full name
 rfswift container stop -c full_container_name
@@ -330,26 +305,26 @@ rfswift container last
 
 ### Permission denied
 
-**Problem:** Can't stop container
+You can't stop the container because your user can't talk to Docker yet (Linux).
 
-**Solutions:**
+To fix it, give your user access once (no logout needed), then try again:
 ```bash
-# Use sudo on Linux (if not in docker group)
-sudo rfswift container stop -c my_container
+rfswift host docker-access
+rfswift container stop -c my_container
+```
 
-# Or add user to docker group
+Or, by hand:
+```bash
 sudo usermod -aG docker $USER
 newgrp docker
-
-# Then try again
 rfswift container stop -c my_container
 ```
 
 ### Data loss concerns
 
-**Problem:** Worried about losing data when stopping
+You are worried about losing data when you stop a container.
 
-**Verification:**
+#### Verification
 ```bash
 # Check mounted volumes
 docker inspect my_container | grep -A 10 Mounts
@@ -363,26 +338,18 @@ rfswift container commit -c my_container -i backup_image
 rfswift container stop -c my_container
 ```
 
----
-
 ## Related commands
 
-- [`run`](/docs/commands/run) - Create new containers
-- [`exec`](/docs/commands/exec) - Enter and restart stopped containers
-- [`remove`](/docs/commands/remove) - Permanently delete containers
-- [`last`](/docs/commands/last) - List recent containers with status
-- [`commit`](/docs/commands/commit) - Save container state before stopping
-
----
-
-{{< callout >}}
-**Quick Tip**: Create a nightly cron job to stop idle RF Swift containers and free resources: `crontab -e` then add `0 2 * * * /path/to/stop_idle_containers.sh`
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Data Safety**: Stopping a container is completely safe - all your data is preserved. Only running processes are terminated. Think of it like "sleep mode" for your container!
-{{< /callout >}}
+- [`container create`](/docs/commands/run/): create a new container
+- [`container shell`](/docs/commands/exec/): enter a container (starts it if stopped)
+- [`container rm`](/docs/commands/remove/): delete a container for good
+- [`container last`](/docs/commands/last/): list recent containers with their status
+- [`container commit`](/docs/commands/commit/): save a container's state as an image
 
 {{< callout type="warning" >}}
-**Long-Running Processes**: If you have captures or long-running processes inside a container, they will be terminated when the container stops. Save your work before stopping!
+**Running captures are stopped too.** Any capture or long-running program inside the container is terminated when it stops. Let it finish, or save its output, before you stop the container.
+{{< /callout >}}
+
+{{< callout >}}
+**Tip**: to stop idle containers every night, put the loop from [Before system maintenance](#before-system-maintenance) in a script and schedule it with cron, for example `0 2 * * * /path/to/stop_idle_containers.sh`.
 {{< /callout >}}

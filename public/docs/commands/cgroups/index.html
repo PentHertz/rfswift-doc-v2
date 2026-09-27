@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift config cgroups · RF Swift</title>
   <meta name="description" content="Manage the cgroup device rules of an existing container.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/cgroups/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/cgroups/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift config cgroups · RF Swift">
   <meta property="og:description" content="Manage the cgroup device rules of an existing container.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/cgroups/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/cgroups/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,31 +231,27 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift config cgroups</h1><p class="doc-lead">Manage the cgroup device rules of an existing container.</p><p class="doc-meta">Reference · 6 min read · Updated September 27, 2026</p>
+      <h1>rfswift config cgroups</h1><p class="doc-lead">Manage the cgroup device rules of an existing container.</p><p class="doc-meta">Reference · 6 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4</strong>: this group lives under the <code>config</code> parent as <code>rfswift config cgroups</code> and remains available as <code>rfswift cgroups</code>; both spellings are current. On Linux Docker the change is applied in place after one <code>sudo</code> prompt; on Podman the container is committed and re-created. Add <code>--recreate</code> to force the commit-and-recreate path. Either way the container restarts. See <a href="/docs/commands/config">config</a>.</p>
+      <p><code>rfswift config cgroups</code> gives a container permission to use a type of hardware device, through a cgroup device rule. Use it when a device is visible inside the container but tools cannot open it.</p>
+<p>The most common use allows USB devices, which covers most SDRs:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config cgroups add -c sdr_work -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">What happens when you apply a change</p><p>The container restarts, so save your work first. On Linux with Docker, the change is applied in place after one <code>sudo</code> prompt. On Podman, the container is committed and created again; add <code>--recreate</code> to use that method on Docker too. Rootless Podman does not allow cgroup device rules at all. The shorter spelling <code>rfswift cgroups</code> also works. See <a href="/docs/commands/config">config</a>.</p>
 </div>
-<p>Dynamically add or remove cgroup device access rules to running containers.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add cgroup rule</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c CONTAINER -r <span class="s2">&#34;RULE&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove cgroup rule</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups rm -c CONTAINER -r <span class="s2">&#34;RULE&#34;</span></span></span></code></pre></div></div>
-<p>The <code>cgroups</code> command allows you to add or remove Linux cgroup device rules to containers without restarting them. This grants containers permission to access specific hardware devices.</p>
-<hr>
-<h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
-<h3 id="cgroups-add">cgroups add<a class="anchor" href="#cgroups-add" aria-label="Link to this section"></a></h3>
-<p>Add a cgroup device rule to a container.</p>
-<p><strong>Options:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config cgroups add -c CONTAINER -r <span class="s2">&#34;RULE&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config cgroups rm  -c CONTAINER -r <span class="s2">&#34;RULE&#34;</span></span></span></code></pre></div></div>
+<h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
+<p><code>add</code> and <code>rm</code> take the same options:</p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -277,320 +259,240 @@
   <tbody>
     <tr>
       <td><code>-c, --container STRING</code></td>
-      <td>Container ID or name</td>
+      <td>The container, by name or ID</td>
       <td>Yes</td>
       <td><code>-c my_container</code></td>
     </tr>
     <tr>
       <td><code>-r, --rule STRING</code></td>
-      <td>Cgroup device rule</td>
+      <td>The cgroup device rule</td>
       <td>Yes</td>
       <td><code>-r &quot;c 189:* rwm&quot;</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<h3 id="cgroups-rm">cgroups rm<a class="anchor" href="#cgroups-rm" aria-label="Link to this section"></a></h3>
-<p>Remove a cgroup device rule from a container.</p>
-<p><strong>Options:</strong></p>
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Flag</th>
-      <th>Description</th>
-      <th>Required</th>
-      <th>Example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>-c, --container STRING</code></td>
-      <td>Container ID or name</td>
-      <td>Yes</td>
-      <td><code>-c my_container</code></td>
-    </tr>
-    <tr>
-      <td><code>-r, --rule STRING</code></td>
-      <td>Cgroup device rule</td>
-      <td>Yes</td>
-      <td><code>-r &quot;c 189:* rwm&quot;</code></td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<hr>
-<h2 id="understanding-cgroup-rules">Understanding cgroup rules<a class="anchor" href="#understanding-cgroup-rules" aria-label="Link to this section"></a></h2>
+<h2 id="how-cgroup-rules-work">How cgroup rules work<a class="anchor" href="#how-cgroup-rules-work" aria-label="Link to this section"></a></h2>
 <h3 id="rule-format">Rule format<a class="anchor" href="#rule-format" aria-label="Link to this section"></a></h3>
-<p>Cgroup device rules follow this format:</p>
+<p>A rule has three parts:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>&lt;type&gt; &lt;major&gt;:&lt;minor&gt; &lt;permissions&gt;</code></pre></div>
-<p><strong>Components:</strong></p>
 <ul>
-<li><strong>type</strong>: <code>c</code> (character device) or <code>b</code> (block device)</li>
-<li><strong>major</strong>: Device major number or <code>*</code> for all</li>
-<li><strong>minor</strong>: Device minor number or <code>*</code> for all</li>
-<li><strong>permissions</strong>: <code>r</code> (read), <code>w</code> (write), <code>m</code> (mknod)</li>
+<li><strong>type</strong>: <code>c</code> for a character device, <code>b</code> for a block device</li>
+<li><strong>major</strong>: the device&rsquo;s major number, or <code>*</code> for all</li>
+<li><strong>minor</strong>: the device&rsquo;s minor number, or <code>*</code> for all</li>
+<li><strong>permissions</strong>: <code>r</code> (read), <code>w</code> (write), <code>m</code> (create the device file)</li>
 </ul>
-<h3 id="common-device-major-numbers">Common device major numbers<a class="anchor" href="#common-device-major-numbers" aria-label="Link to this section"></a></h3>
+<h3 id="common-major-numbers">Common major numbers<a class="anchor" href="#common-major-numbers" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
-      <th>Device Type</th>
-      <th>Major Number</th>
+      <th>Device type</th>
+      <th>Major number</th>
       <th>Examples</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>USB Serial</strong></td>
-      <td>188, 189</td>
-      <td>RTL-SDR, HackRF, USB devices</td>
+      <td><strong>USB devices</strong> (<code>/dev/bus/usb</code>)</td>
+      <td>189</td>
+      <td>RTL-SDR, HackRF and most SDRs</td>
     </tr>
     <tr>
-      <td><strong>USB ACM</strong></td>
+      <td><strong>USB serial</strong> (<code>/dev/ttyUSB*</code>)</td>
+      <td>188</td>
+      <td>USB serial adapters</td>
+    </tr>
+    <tr>
+      <td><strong>USB ACM</strong> (<code>/dev/ttyACM*</code>)</td>
       <td>166</td>
-      <td>ACM devices, modems</td>
+      <td>ACM devices such as a Proxmark3, modems</td>
     </tr>
     <tr>
-      <td><strong>USB Character</strong></td>
+      <td><strong>USB character</strong></td>
       <td>180</td>
-      <td>USB raw character devices</td>
+      <td>Raw USB character devices</td>
     </tr>
     <tr>
-      <td><strong>TTY Serial</strong></td>
+      <td><strong>TTY serial</strong></td>
       <td>4</td>
-      <td>/dev/tty devices</td>
+      <td><code>/dev/tty</code> devices</td>
     </tr>
     <tr>
       <td><strong>Video</strong></td>
       <td>81</td>
-      <td>/dev/video* (cameras)</td>
+      <td><code>/dev/video*</code> (cameras)</td>
     </tr>
     <tr>
       <td><strong>Sound</strong></td>
       <td>116</td>
-      <td>/dev/snd/* (audio)</td>
+      <td><code>/dev/snd/*</code> (audio)</td>
     </tr>
     <tr>
       <td><strong>Input</strong></td>
       <td>13</td>
-      <td>/dev/input/* (keyboards, mice)</td>
+      <td><code>/dev/input/*</code> (keyboards, mice)</td>
     </tr>
   </tbody>
 </table>
 </div>
 <h3 id="rule-examples">Rule examples<a class="anchor" href="#rule-examples" aria-label="Link to this section"></a></h3>
-<p><strong>USB devices (most SDRs):</strong></p>
+<p>USB devices (most SDRs), and USB serial adapters:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;c 189:* rwm&#34;</span>    <span class="c1"># USB serial devices (major 189)</span>
-</span></span><span class="line"><span class="cl"><span class="s2">&#34;c 188:* rwm&#34;</span>    <span class="c1"># USB serial devices (major 188)</span></span></span></code></pre></div></div>
-<p><strong>ACM devices:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;c 189:* rwm&#34;</span>    <span class="c1"># USB devices (major 189)</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;c 188:* rwm&#34;</span>    <span class="c1"># USB serial adapters (major 188)</span></span></span></code></pre></div></div>
+<p>ACM devices, and TTY serial ports:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;c 166:* rwm&#34;</span>    <span class="c1"># ACM devices (modems, etc.)</span></span></span></code></pre></div></div>
-<p><strong>TTY/Serial ports:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;c 4:* rwm&#34;</span>      <span class="c1"># TTY devices</span></span></span></code></pre></div></div>
-<p><strong>All USB devices:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;c 166:* rwm&#34;</span>    <span class="c1"># ACM devices (modems, etc.)</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;c 4:* rwm&#34;</span>      <span class="c1"># TTY devices</span></span></span></code></pre></div></div>
+<p>All the USB types together:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;c 189:* rwm&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="s2">&#34;c 188:* rwm&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="s2">&#34;c 180:* rwm&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="s2">&#34;c 166:* rwm&#34;</span></span></span></code></pre></div></div>
-<p><strong>Video devices:</strong></p>
+<p>Video devices:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;c 81:* rwm&#34;</span>     <span class="c1"># Video4Linux devices</span></span></span></code></pre></div></div>
-<p><strong>Specific device:</strong></p>
+<p>One specific device only:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;c 189:0 rwm&#34;</span>    <span class="c1"># Specific USB device (major 189, minor 0)</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Add USB device access:</strong></p>
+<p>Allow USB devices:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cgroups add -c sdr_work -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
-<p><strong>Add multiple device types:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config cgroups add -c sdr_work -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
+<p>Allow several device types:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cgroups add -c analysis -r <span class="s2">&#34;c 189:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c analysis -r <span class="s2">&#34;c 166:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c analysis -r <span class="s2">&#34;c 180:* rwm&#34;</span></span></span></code></pre></div></div>
-<p><strong>Remove cgroup rule:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config cgroups add -c analysis -r <span class="s2">&#34;c 189:* rwm&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c analysis -r <span class="s2">&#34;c 166:* rwm&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c analysis -r <span class="s2">&#34;c 180:* rwm&#34;</span></span></span></code></pre></div></div>
+<p>Remove a rule:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cgroups rm -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>USB based SDRs setup:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config cgroups rm -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
+<h3 id="a-usb-sdr">A USB SDR<a class="anchor" href="#a-usb-sdr" aria-label="Link to this section"></a></h3>
+<p>Create the container, give it the USB bus and the USB rule, then test the radio (here an RTL-SDR):</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create container</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdrtest
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdrtest
+</span></span><span class="line"><span class="cl">rfswift config bindings add -d -c sdrtest -s /dev/bus/usb -t /dev/bus/usb
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c sdrtest -r <span class="s2">&#34;c 189:* rwm&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add device binding</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -d -c sdrtest -s /dev/bus/usb -t /dev/bus/usb
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add cgroup rule for USB access</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c sdrtest -r <span class="s2">&#34;c 189:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Test access (e.g with RTL-SDR)</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c sdrtest
 </span></span><span class="line"><span class="cl">rtl_test -t
 </span></span><span class="line"><span class="cl">exit</span></span></code></pre></div></div>
-<p><strong>USB serial device:</strong></p>
+<h3 id="a-usb-serial-device">A USB serial device<a class="anchor" href="#a-usb-serial-device" aria-label="Link to this section"></a></h3>
+<p>Add the serial device and the matching rules, then open it with <code>screen</code>:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Container for serial work</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n serial_work
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n serial_work
+</span></span><span class="line"><span class="cl">rfswift config bindings add -d -c serial_work -s /dev/ttyUSB0 -t /dev/ttyUSB0
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c serial_work -r <span class="s2">&#34;c 188:* rwm&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c serial_work -r <span class="s2">&#34;c 4:* rwm&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add serial device</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -d -c serial_work -s /dev/ttyUSB0 -t /dev/ttyUSB0
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add cgroup rules</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c serial_work -r <span class="s2">&#34;c 188:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c serial_work -r <span class="s2">&#34;c 4:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Access serial</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c serial_work
 </span></span><span class="line"><span class="cl">screen /dev/ttyUSB0 <span class="m">115200</span>
 </span></span><span class="line"><span class="cl">exit</span></span></code></pre></div></div>
-<hr>
-<h2 id="device-access-workflow">Device access workflow<a class="anchor" href="#device-access-workflow" aria-label="Link to this section"></a></h2>
-<h3 id="complete-device-access-setup">Complete device access setup<a class="anchor" href="#complete-device-access-setup" aria-label="Link to this section"></a></h3>
-<p>To access a hardware device from a container, you need three things:</p>
+<h2 id="what-a-device-needs">What a device needs<a class="anchor" href="#what-a-device-needs" aria-label="Link to this section"></a></h2>
+<p>To use a hardware device from a container, you need:</p>
 <ol>
-<li><strong>Device binding</strong> (rfswift bindings)</li>
-<li><strong>Cgroup rule</strong> (rfswift cgroups)</li>
-<li><strong>Capabilities</strong> (rfswift capabilities) - sometimes</li>
+<li><strong>The device itself</strong>, added with <code>rfswift config bindings add -d</code>.</li>
+<li><strong>Permission</strong> to use it, with a cgroup rule (this page).</li>
+<li><strong>Sometimes a capability</strong>, with <code>rfswift config capabilities add</code> (for example <code>NET_ADMIN</code> for network devices).</li>
 </ol>
+<p>Add the device first: the container must see it before a rule can grant access.</p>
 <div class="mermaid-wrap"><pre class="mermaid">graph TD
     A[Device Plugged In] --&gt; B[Add Device Binding]
     B --&gt; C[Add Cgroup Rule]
     C --&gt; D{Need Capabilities?}
     D --&gt;|Network device| E[Add NET_ADMIN]
     D --&gt;|Regular device| F[Ready to Use]
-    E --&gt; F</pre></div><hr>
-<h2 id="finding-device-major-numbers">Finding device major numbers<a class="anchor" href="#finding-device-major-numbers" aria-label="Link to this section"></a></h2>
-<h3 id="using-ls--l">Using ls -l<a class="anchor" href="#using-ls--l" aria-label="Link to this section"></a></h3>
+    E --&gt; F</pre></div><h2 id="finding-a-devices-major-number">Finding a device&rsquo;s major number<a class="anchor" href="#finding-a-devices-major-number" aria-label="Link to this section"></a></h2>
+<h3 id="with-ls--l">With ls -l<a class="anchor" href="#with-ls--l" aria-label="Link to this section"></a></h3>
+<p><code>ls -l</code> shows the major and minor numbers in decimal, before the date:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check device major:minor numbers</span>
-</span></span><span class="line"><span class="cl">ls -l /dev/device
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l /dev/device
 </span></span><span class="line"><span class="cl"><span class="c1"># Output: crw-rw-rw- 1 root root 189, 0 Jan 12 10:00 /dev/device</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#                                 ^^^  ^</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#                                 major minor</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Multiple devices</span>
 </span></span><span class="line"><span class="cl">ls -l /dev/device* /dev/otherpatterns</span></span></code></pre></div></div>
-<h3 id="using-stat">Using stat<a class="anchor" href="#using-stat" aria-label="Link to this section"></a></h3>
+<h3 id="with-stat">With stat<a class="anchor" href="#with-stat" aria-label="Link to this section"></a></h3>
+<p><code>stat</code> prints the numbers in hexadecimal: <code>bd</code> is 189.</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Get device numbers with stat</span>
-</span></span><span class="line"><span class="cl">stat -c <span class="s2">&#34;%t:%T&#34;</span> /dev/device
-</span></span><span class="line"><span class="cl"><span class="c1"># Output: bd:0  (189 in hex, 0 in decimal)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Decimal format</span>
-</span></span><span class="line"><span class="cl">stat -c <span class="s2">&#34;%a %n&#34;</span> /dev/device</span></span></code></pre></div></div>
-<h3 id="using-sys-filesystem">Using /sys filesystem<a class="anchor" href="#using-sys-filesystem" aria-label="Link to this section"></a></h3>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">stat -c <span class="s2">&#34;%t:%T&#34;</span> /dev/device
+</span></span><span class="line"><span class="cl"><span class="c1"># Output: bd:0  (189 in hex, 0 in decimal)</span></span></span></code></pre></div></div>
+<h3 id="with-sys">With /sys<a class="anchor" href="#with-sys" aria-label="Link to this section"></a></h3>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Find all USB devices</span>
-</span></span><span class="line"><span class="cl">grep -r <span class="s2">&#34;189&#34;</span> /sys/class/*
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">grep -r <span class="s2">&#34;189&#34;</span> /sys/class/*
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check specific device</span>
 </span></span><span class="line"><span class="cl">cat /sys/class/tty/ttyUSB0/dev
 </span></span><span class="line"><span class="cl"><span class="c1"># Output: 188:0</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="permission-denied-after-adding-rule">Permission denied after adding rule<a class="anchor" href="#permission-denied-after-adding-rule" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Device still shows permission denied</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="still-permission-denied-after-adding-a-rule">Still “permission denied” after adding a rule<a class="anchor" href="#still-permission-denied-after-adding-a-rule" aria-label="Link to this section"></a></h3>
+<p>Check the rule was added, and that the device is visible inside the container:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check rule was added</span>
-</span></span><span class="line"><span class="cl">docker inspect container <span class="p">|</span> grep -A10 Devices
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker inspect container <span class="p">|</span> grep -A10 Devices
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify device binding exists</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c container
 </span></span><span class="line"><span class="cl">ls -l /dev/device
-</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If not visible, add binding first</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -d -c container -s /dev/device -t /dev/device
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then add cgroup rule</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check device major number is correct</span>
-</span></span><span class="line"><span class="cl">ls -l /dev/bus/usb
+</span></span><span class="line"><span class="cl">exit</span></span></code></pre></div></div>
+<p>If the device is not visible, add it first, then the rule:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -d -c container -s /dev/device -t /dev/device
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
+<p>Check the major number is the right one, and add rules for other types if the device needs them:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l /dev/bus/usb
 </span></span><span class="line"><span class="cl"><span class="c1"># crw-rw-rw- 1 root root 189, 0 ...</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#                        ^^^ use this number</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># May need multiple rules for some devices</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 188:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 180:* rwm&#34;</span></span></span></code></pre></div></div>
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 188:* rwm&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 180:* rwm&#34;</span></span></span></code></pre></div></div>
 <h3 id="wrong-major-number">Wrong major number<a class="anchor" href="#wrong-major-number" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Rule added but device still not accessible</p>
-<p><strong>Solutions:</strong></p>
+<p>Read the device&rsquo;s real major number, then add the rule with that number:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Get actual device major number</span>
-</span></span><span class="line"><span class="cl">ls -l /dev/device_name
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l /dev/device_name
 </span></span><span class="line"><span class="cl"><span class="c1"># crw-rw-rw- 1 root root 189, 0 ...</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#                        ^^^</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or use stat</span>
 </span></span><span class="line"><span class="cl">stat -c <span class="s2">&#34;%t:%T&#34;</span> /dev/device_name
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add rule with correct major number</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
-<h3 id="device-not-visible-in-container">Device not visible in container<a class="anchor" href="#device-not-visible-in-container" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Cgroup rule added but device doesn&rsquo;t exist in container</p>
-<p><strong>Solution:</strong></p>
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
+<h3 id="the-device-is-not-visible-in-the-container">The device is not visible in the container<a class="anchor" href="#the-device-is-not-visible-in-the-container" aria-label="Link to this section"></a></h3>
+<p>This is a binding problem, not a cgroup one. Add the device first, then the rule:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># This is a binding issue, not cgroups</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Add device binding first</span>
-</span></span><span class="line"><span class="cl">rfswift bindings add -d -c container <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -d -c container <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/device <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t /dev/device
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then add cgroup rule</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
-<h3 id="wildcard-not-working">Wildcard not working<a class="anchor" href="#wildcard-not-working" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>c 189:*</code> doesn&rsquo;t grant access to all devices</p>
-<p><strong>Solutions:</strong></p>
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
+<h3 id="a-wildcard-rule-does-not-cover-your-device">A wildcard rule does not cover your device<a class="anchor" href="#a-wildcard-rule-does-not-cover-your-device" aria-label="Link to this section"></a></h3>
+<p>Your device may use another major number. Add rules for the likely types, or a rule for that exact device:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Try specific major numbers</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 188:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or try specific device</span>
-</span></span><span class="line"><span class="cl">ls -l /dev/device
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 188:* rwm&#34;</span></span></span></code></pre></div></div>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l /dev/device
 </span></span><span class="line"><span class="cl"><span class="c1"># crw-rw-rw- 1 root root 189, 5 ...</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#                        ^^^ ^^^</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#                        maj min</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">rfswift cgroups add -c container -r <span class="s2">&#34;c 189:5 rwm&#34;</span></span></span></code></pre></div></div>
-<h3 id="cannot-remove-rule">Cannot remove rule<a class="anchor" href="#cannot-remove-rule" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Remove command fails or rule persists</p>
-<p><strong>Solutions:</strong></p>
+</span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 189:5 rwm&#34;</span></span></span></code></pre></div></div>
+<h3 id="removing-a-rule-fails-or-the-rule-stays">Removing a rule fails, or the rule stays<a class="anchor" href="#removing-a-rule-fails-or-the-rule-stays" aria-label="Link to this section"></a></h3>
+<p>Use exactly the same rule string as when you added it, and check the current rules:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use exact rule string</span>
-</span></span><span class="line"><span class="cl">rfswift cgroups rm -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check current rules</span>
-</span></span><span class="line"><span class="cl">docker inspect container <span class="p">|</span> grep -A10 Devices
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># May need to restart container for removal</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># (as last resort)</span>
-</span></span><span class="line"><span class="cl">rfswift container stop -c container
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config cgroups rm -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span>
+</span></span><span class="line"><span class="cl">docker inspect container <span class="p">|</span> grep -A10 Devices</span></span></code></pre></div></div>
+<p>As a last resort, stop the container and open it again:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container stop -c container
 </span></span><span class="line"><span class="cl">rfswift container shell -c container</span></span></code></pre></div></div>
-<hr>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/bindings"><code>bindings</code></a> - Add device bindings (required first)</li>
-<li><a href="/docs/commands/capabilities"><code>capabilities</code></a> - Add capabilities (sometimes needed)</li>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create containers with initial device access</li>
-<li><a href="/docs/commands/exec"><code>exec</code></a> - Access container after adding rules</li>
+<li><a href="/docs/commands/bindings"><code>bindings</code></a>: add the device first</li>
+<li><a href="/docs/commands/capabilities"><code>capabilities</code></a>: add a capability when needed</li>
+<li><a href="/docs/commands/run"><code>run</code></a>: create containers with device access from the start</li>
+<li><a href="/docs/commands/exec"><code>exec</code></a>: open a shell after adding a rule</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Device Access Trinity</strong>: For hardware device access, you need three things: (1) <code>bindings add -d</code> to expose the device, (2) <code>cgroups add</code> to grant permission, and (3) sometimes <code>capabilities add</code> for system privileges!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Binding First</strong>: Always add the device binding BEFORE adding cgroup rules. The container needs to see the device before you can grant permission to access it!</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>USB Devices</strong>: Most SDRs use USB serial (major 189). Use <code>ls -l /dev/device</code> to find the major number, then add rule <code>c 189:* rwm</code> for full access to all USB serial devices.</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -612,44 +514,35 @@
   <nav id="TableOfContents">
   <ul>
     <li><a href="#synopsis">Synopsis</a></li>
-    <li><a href="#subcommands">Subcommands</a>
-      <ul>
-        <li><a href="#cgroups-add">cgroups add</a></li>
-        <li><a href="#cgroups-rm">cgroups rm</a></li>
-      </ul>
-    </li>
-    <li><a href="#understanding-cgroup-rules">Understanding cgroup rules</a>
+    <li><a href="#options">Options</a></li>
+    <li><a href="#how-cgroup-rules-work">How cgroup rules work</a>
       <ul>
         <li><a href="#rule-format">Rule format</a></li>
-        <li><a href="#common-device-major-numbers">Common device major numbers</a></li>
+        <li><a href="#common-major-numbers">Common major numbers</a></li>
         <li><a href="#rule-examples">Rule examples</a></li>
       </ul>
     </li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#a-usb-sdr">A USB SDR</a></li>
+        <li><a href="#a-usb-serial-device">A USB serial device</a></li>
       </ul>
     </li>
-    <li><a href="#device-access-workflow">Device access workflow</a>
+    <li><a href="#what-a-device-needs">What a device needs</a></li>
+    <li><a href="#finding-a-devices-major-number">Finding a device&rsquo;s major number</a>
       <ul>
-        <li><a href="#complete-device-access-setup">Complete device access setup</a></li>
-      </ul>
-    </li>
-    <li><a href="#finding-device-major-numbers">Finding device major numbers</a>
-      <ul>
-        <li><a href="#using-ls--l">Using ls -l</a></li>
-        <li><a href="#using-stat">Using stat</a></li>
-        <li><a href="#using-sys-filesystem">Using /sys filesystem</a></li>
+        <li><a href="#with-ls--l">With ls -l</a></li>
+        <li><a href="#with-stat">With stat</a></li>
+        <li><a href="#with-sys">With /sys</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#permission-denied-after-adding-rule">Permission denied after adding rule</a></li>
+        <li><a href="#still-permission-denied-after-adding-a-rule">Still “permission denied” after adding a rule</a></li>
         <li><a href="#wrong-major-number">Wrong major number</a></li>
-        <li><a href="#device-not-visible-in-container">Device not visible in container</a></li>
-        <li><a href="#wildcard-not-working">Wildcard not working</a></li>
-        <li><a href="#cannot-remove-rule">Cannot remove rule</a></li>
+        <li><a href="#the-device-is-not-visible-in-the-container">The device is not visible in the container</a></li>
+        <li><a href="#a-wildcard-rule-does-not-cover-your-device">A wildcard rule does not cover your device</a></li>
+        <li><a href="#removing-a-rule-fails-or-the-rule-stays">Removing a rule fails, or the rule stays</a></li>
       </ul>
     </li>
     <li><a href="#related-commands">Related commands</a></li>

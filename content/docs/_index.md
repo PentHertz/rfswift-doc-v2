@@ -120,7 +120,7 @@ RF Swift has been presented at Black Hat Arsenal Europe 2024, Spectrum 2024, FOS
 
 {{% details title="Components and architecture" level="advanced" %}}
 
-RF Swift is more than a wrapper around a container engine. One command line, one GUI and one set of ideas (create, enter, configure, audit, export) drive four engines: Docker, Podman and Lima for containers, and Nix for native environments. The host plumbing they all need (USB, display, sound, udev rules, GPU) is handled by RF Swift, so the learning curve stays flat whichever engine you pick, and you can switch from a container to a native environment with one flag.
+RF Swift is more than a wrapper around a container engine. One command line, one GUI and one set of ideas (create, enter, configure, audit, export) drive four engines: Docker, Podman and Lima for containers, and Nix for native environments. RF Swift handles the host plumbing they all need (USB, display, sound, udev rules, GPU). So the learning curve stays flat whichever engine you pick, and you can switch from a container to a native environment with one flag.
 
 **Components**
 

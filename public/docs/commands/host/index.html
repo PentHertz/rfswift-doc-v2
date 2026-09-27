@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift host · RF Swift</title>
   <meta name="description" content="Prepare the host: udev rules, Docker access, the Nix jail and the audio server.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/host/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/host/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift host · RF Swift">
   <meta property="og:description" content="Prepare the host: udev rules, Docker access, the Nix jail and the audio server.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/host/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/host/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,10 +231,20 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift host</h1><p class="doc-lead">Prepare the host: udev rules, Docker access, the Nix jail and the audio server.</p><p class="doc-meta">Reference · 5 min read · Updated September 27, 2026</p>
+      <h1>rfswift host</h1><p class="doc-lead">Prepare the host: udev rules, Docker access, the Nix jail and the audio server.</p><p class="doc-meta">Reference · 6 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Configure the host for containers and native environments: the udev rules that let your user open RF hardware, Docker socket access without logging out, the Nix jail prerequisites, cleanup of stray device directories, and the host audio server for container sound.</p>
+      <p><code>rfswift host</code> prepares your computer (the &ldquo;host&rdquo;) for labs. It covers:</p>
+<ul>
+<li>the udev rules that let your user open RF hardware;</li>
+<li>Docker access without logging out;</li>
+<li>what the Nix <code>--isolate</code> jail needs;</li>
+<li>cleanup of stray device directories;</li>
+<li>the audio server that gives containers sound.</li>
+</ul>
+<p>On a fresh Linux desktop, start with the guided setup:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host setup</span></span></code></pre></div></div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host setup <span class="o">[</span>--yes<span class="o">]</span> <span class="o">[</span>--udev ask<span class="p">|</span>yes<span class="p">|</span>no<span class="o">]</span> <span class="o">[</span>--engine ask<span class="p">|</span>docker<span class="p">|</span>podman<span class="p">|</span>both<span class="p">|</span>none<span class="o">]</span> <span class="o">[</span>--nix ask<span class="p">|</span>yes<span class="p">|</span>no<span class="o">]</span> <span class="o">[</span>--docker-access ask<span class="p">|</span>yes<span class="p">|</span>no<span class="o">]</span> <span class="o">[</span>--isolate ask<span class="p">|</span>yes<span class="p">|</span>no<span class="o">]</span>
@@ -258,10 +254,10 @@
 </span></span><span class="line"><span class="cl">rfswift host devclean <span class="o">[</span>--list<span class="o">]</span> <span class="o">[</span>-y<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> <span class="o">[</span>-s tcp:127.0.0.1:34567<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift host audio unload</span></span></code></pre></div></div>
-<p>Every privileged step runs in <strong>one <code>sudo</code> call, after asking</strong>. Nothing is applied by the packages themselves.</p>
+<p>RF Swift asks before every privileged step, then runs it in <strong>one <code>sudo</code> call</strong>. Installing the packages never changes these settings by itself.</p>
 <hr>
 <h2 id="host-setup-linux">host setup (Linux)<a class="anchor" href="#host-setup-linux" aria-label="Link to this section"></a></h2>
-<p>The wizard the deb, rpm and pacman packages point at after installation, and the first thing to run on a fresh Linux desktop. It asks each step before running it:</p>
+<p>The guided setup. The deb, rpm and pacman packages point you to it after installation, and it is the first thing to run on a fresh Linux desktop. It asks before each step:</p>
 <ol>
 <li><strong>udev rules</strong>: RF Swift&rsquo;s rules for SDR, RF and hardware-security devices. Rootless Podman and Nix environments need them; Docker does not.</li>
 <li><strong>engine</strong>: install Docker and/or Podman from your distribution&rsquo;s repositories, or skip (Nix engine only).</li>
@@ -273,17 +269,27 @@
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host setup
 </span></span><span class="line"><span class="cl">rfswift host setup --yes --engine podman
 </span></span><span class="line"><span class="cl">rfswift host setup --udev no --engine none --nix yes --docker-access no</span></span></code></pre></div></div>
-<p><code>--yes</code> takes every recommended default (udev yes, Docker access yes, isolation yes; the engine step only with <code>--engine</code>). The first interactive run of a packaged <code>rfswift</code> offers this wizard by itself.</p>
+<p><code>--yes</code> accepts every recommended default: udev rules, Docker access and isolation. The engine step runs only when you pass <code>--engine</code>. The first time you run a packaged <code>rfswift</code> in a terminal, it offers this wizard by itself.</p>
 <h2 id="host-udev-linux">host udev (Linux)<a class="anchor" href="#host-udev-linux" aria-label="Link to this section"></a></h2>
-<p>Docker runs containers as root and needs no udev setup. Rootless Podman and native Nix environments run as your user and cannot open root-owned USB nodes, so SDR, RFID, Bluetooth and debug hardware fails with &ldquo;permission denied&rdquo; until rules on the <strong>host</strong> grant access (rules inside a container are never evaluated).</p>
+<p>Use this if you run rootless Podman or Nix environments. Docker runs containers as root and needs no udev setup.</p>
+<p>Rootless Podman and native Nix environments run as your user, and your user cannot open root-owned USB devices. SDR, RFID, Bluetooth and debug hardware then fails with &ldquo;permission denied&rdquo; until udev rules on the <strong>host</strong> grant access. Rules inside a container are never used.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host udev            <span class="c1"># show the state, offer to install</span>
 </span></span><span class="line"><span class="cl">rfswift host udev --list     <span class="c1"># only show</span>
 </span></span><span class="line"><span class="cl">rfswift host udev --yes      <span class="c1"># install without asking (scripts)</span>
 </span></span><span class="line"><span class="cl">rfswift host udev --remove   <span class="c1"># remove what RF Swift installed</span></span></span></code></pre></div></div>
-<p>The rules ship as a reference copy in <code>/usr/share/rfswift/udev/70-rfswift.rules</code> and inside the binary; this command installs them into <code>/etc/udev/rules.d</code>, creates the <code>plugdev</code> group, adds you to it and reloads and re-triggers udev. Nodes get mode <code>0660</code>, group <code>plugdev</code> and the systemd <code>uaccess</code> tag (a seat ACL for the logged-in user), never world-writable permissions; serial ports keep the <code>dialout</code> group. Log out and in (or <code>newgrp plugdev</code>) after the first install, then re-plug the device. The Nix engine has its own per-environment variant, <code>rfswift env udev</code>, for the rules the environment&rsquo;s packages ship.</p>
+<p>What the install does:</p>
+<ul>
+<li>copies the rules into <code>/etc/udev/rules.d</code> (a reference copy ships in <code>/usr/share/rfswift/udev/70-rfswift.rules</code> and inside the binary);</li>
+<li>creates the <code>plugdev</code> group and adds you to it;</li>
+<li>reloads udev and re-triggers it.</li>
+</ul>
+<p>Devices get mode <code>0660</code>, the <code>plugdev</code> group and the systemd <code>uaccess</code> tag (an access rule for the logged-in user). They are never made writable by everyone. Serial ports keep the <code>dialout</code> group.</p>
+<p>After the first install, log out and back in (or run <code>newgrp plugdev</code>), then unplug and replug the device.</p>
+<p>The Nix engine has its own per-environment version, <code>rfswift env udev</code>, for the rules that an environment&rsquo;s packages ship.</p>
 <h2 id="host-docker-access-linux">host docker-access (Linux)<a class="anchor" href="#host-docker-access-linux" aria-label="Link to this section"></a></h2>
-<p>The Docker socket belongs to <code>root:docker</code>. Being added to the <code>docker</code> group only counts from the next login; this command adds you <strong>and</strong> puts an ACL for you on the socket so Docker works right away (the ACL lasts until the daemon recreates the socket, by which time the group is active).</p>
+<p>Use this when Docker says &ldquo;permission denied&rdquo; on its socket.</p>
+<p>The Docker socket belongs to <code>root:docker</code>. Joining the <code>docker</code> group normally only takes effect at your next login. This command adds you to the group <strong>and</strong> gives you access to the socket right away. That temporary access lasts until the Docker service recreates the socket, and by then your group membership is active.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host docker-access            <span class="c1"># show the state, offer to fix it</span>
 </span></span><span class="line"><span class="cl">rfswift host docker-access --status   <span class="c1"># only show</span>
@@ -291,26 +297,42 @@
 <div class="admonition admonition-warning" role="note"><p>Members of the <code>docker</code> group are root-equivalent on the host.</p>
 </div>
 <h2 id="host-isolate-linux">host isolate (Linux)<a class="anchor" href="#host-isolate-linux" aria-label="Link to this section"></a></h2>
-<p><code>rfswift container create --engine nix --isolate</code> hides your home and the host filesystem from a Nix environment with a bubblewrap jail. bubblewrap must be able to create a user namespace as your user, and Ubuntu 24.04+ restricts that with AppArmor: only a profiled <code>/usr/bin/bwrap</code> may, so the jail otherwise fails with <code>bwrap: setting up uid map: Permission denied</code>.</p>
+<p>Use this if the Nix jail fails with <code>bwrap: setting up uid map: Permission denied</code>, typically on Ubuntu 24.04 and later.</p>
+<p><code>rfswift container create --engine nix --isolate</code> hides your home and the host files from a Nix environment, using a bubblewrap jail. bubblewrap needs to create a user namespace as your user. Ubuntu 24.04 and later restrict that with AppArmor: only a <code>/usr/bin/bwrap</code> with an AppArmor profile is allowed to.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host isolate            <span class="c1"># show what is in the way, offer the fix</span>
 </span></span><span class="line"><span class="cl">rfswift host isolate --status   <span class="c1"># only show</span>
 </span></span><span class="line"><span class="cl">rfswift host isolate --yes      <span class="c1"># apply without asking</span>
 </span></span><span class="line"><span class="cl">rfswift host isolate --sysctl   <span class="c1"># last resort, see below</span></span></span></code></pre></div></div>
-<p>The targeted fix installs the distribution&rsquo;s bubblewrap package when the bwrap in use is another one (a Nix profile&rsquo;s, a nixpkgs build), then the <code>bwrap-userns-restrict</code> AppArmor profile (loaded from <code>/etc/apparmor.d</code>, else copied from the <code>apparmor-profiles</code> extras). The restriction stays in force for every other program. A Debian kernel with <code>kernel.unprivileged_userns_clone=0</code> gets the distribution default back. <code>--sysctl</code> lifts Ubuntu&rsquo;s restriction for <strong>every</strong> program (<code>kernel.apparmor_restrict_unprivileged_userns=0</code>, persisted under <code>/etc/sysctl.d</code>), which weakens the host; use it only when the profile route is impossible. <code>rfswift doctor</code> reports the jail state and the Workbench engine doctor has an &ldquo;Enable sandbox&rdquo; button for the same fix.</p>
+<p>What the fix does:</p>
+<ul>
+<li>If the bwrap in use is not the distribution&rsquo;s (for example one from a Nix profile or a nixpkgs build), it installs the distribution&rsquo;s bubblewrap package.</li>
+<li>It then installs the <code>bwrap-userns-restrict</code> AppArmor profile, from <code>/etc/apparmor.d</code> or, if missing, from the <code>apparmor-profiles</code> extras. The restriction stays in force for every other program.</li>
+<li>On a Debian kernel with <code>kernel.unprivileged_userns_clone=0</code>, it restores the distribution default.</li>
+</ul>
+<p><code>--sysctl</code> is the last resort. It lifts Ubuntu&rsquo;s restriction for <strong>every</strong> program (<code>kernel.apparmor_restrict_unprivileged_userns=0</code>, kept under <code>/etc/sysctl.d</code>), which weakens the host. Use it only when the profile route is impossible.</p>
+<p><code>rfswift doctor</code> reports the jail state, and the Workbench engine doctor offers the same fix as an <strong>Enable sandbox</strong> button.</p>
 <h2 id="host-devclean-linux">host devclean (Linux)<a class="anchor" href="#host-devclean-linux" aria-label="Link to this section"></a></h2>
-<p>A container that bind-mounted a device node (<code>/dev/ttyACM0</code> listed under its volumes) while the device was unplugged made Docker or Podman create an empty, root-owned directory in its place; the device then never reappears under that name. RF Swift no longer creates such mounts; this command cleans up the ones that exist.</p>
+<p>Use this if a serial device (for example <code>/dev/ttyACM0</code>) never shows up again under its usual name.</p>
+<p>This happens when an older container bind-mounted a device node while the device was unplugged. Docker or Podman then created an empty, root-owned directory in its place, and the device can no longer appear under that name. RF Swift no longer creates such mounts; this command removes the leftovers.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host devclean          <span class="c1"># list, then offer to remove</span>
 </span></span><span class="line"><span class="cl">rfswift host devclean --list   <span class="c1"># only list</span>
 </span></span><span class="line"><span class="cl">rfswift host devclean --yes    <span class="c1"># remove without asking</span></span></span></code></pre></div></div>
 <h2 id="host-audio-linux-macos">host audio (Linux, macOS)<a class="anchor" href="#host-audio-linux-macos" aria-label="Link to this section"></a></h2>
-<p>Container sound goes through the host PulseAudio or PipeWire server: RF Swift loads <code>module-native-protocol-tcp</code> on the port of <code>[audio] pulse_server</code> (default <code>tcp:127.0.0.1:34567</code>, local connections only) and containers get <code>PULSE_SERVER</code> pointing at it. <code>rfswift container create</code> and the Workbench load the module automatically at every start; these commands do it by hand.</p>
+<p>Containers play sound through your computer&rsquo;s PulseAudio or PipeWire server. RF Swift loads <code>module-native-protocol-tcp</code> on the port set by <code>[audio] pulse_server</code> (default <code>tcp:127.0.0.1:34567</code>, local connections only), and points the container&rsquo;s <code>PULSE_SERVER</code> at it.</p>
+<p><code>rfswift container create</code> and the Workbench load the module automatically every time a lab starts. Use these commands to do it by hand, for example after a sound problem:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span>                          <span class="c1"># as your user, never root</span>
 </span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> -s tcp:127.0.0.1:34568
 </span></span><span class="line"><span class="cl">rfswift host audio unload</span></span></code></pre></div></div>
-<p><code>enable</code> detects PulseAudio or PipeWire, starts it when needed, and is idempotent: when the module already listens on the port it says so. On macOS it starts PulseAudio through Homebrew services (cleaning stale runtime links) and, when Lima runs, widens the ACL to the VM subnets. <code>unload</code> removes every instance of the module, even without <code>pactl</code>. When <code>pactl</code> is missing the message names the package to install. Windows needs none of this: containers use WSLg&rsquo;s PulseAudio socket, and <code>host audio enable</code> only checks it.</p>
+<ul>
+<li><code>enable</code> detects PulseAudio or PipeWire and starts it if needed. Running it twice is safe: if the module already listens on the port, it says so.</li>
+<li>On macOS, it starts PulseAudio through Homebrew services (and cleans stale runtime links). When Lima is running, it also allows the VM&rsquo;s network to connect.</li>
+<li><code>unload</code> removes every instance of the module, even without <code>pactl</code>.</li>
+<li>If <code>pactl</code> is missing, the message tells you which package to install.</li>
+</ul>
+<p>Windows needs none of this: containers use WSLg&rsquo;s PulseAudio socket, and <code>host audio enable</code> only checks it.</p>
 <div class="admonition admonition-info" role="note"><p>Binding the audio module to a network interface (<code>-s tcp:0.0.0.0:34567</code>) lets any machine on the network play through your speakers. Keep the default loopback address unless you know why you need otherwise.</p>
 </div>
 <h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>

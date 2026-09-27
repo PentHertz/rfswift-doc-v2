@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift agent · RF Swift</title>
   <meta name="description" content="Serve a lab machine&#39;s engines to authenticated remote clients over mutual TLS.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/agent/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/agent/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift agent · RF Swift">
   <meta property="og:description" content="Serve a lab machine&#39;s engines to authenticated remote clients over mutual TLS.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/agent/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/agent/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,10 +231,11 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift agent</h1><p class="doc-lead">Serve a lab machine&rsquo;s engines to authenticated remote clients over mutual TLS.</p><p class="doc-meta">Reference · 6 min read · Updated September 27, 2026</p>
+      <h1>rfswift agent</h1><p class="doc-lead">Serve a lab machine&rsquo;s engines to authenticated remote clients over mutual TLS.</p><p class="doc-meta">Reference · 6 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Serve the engines of a machine (Docker, Podman, Lima, Nix) to authenticated remote clients. Typical use: a lab machine holds the SDR, RFID, serial or GPU hardware; the <a href="/docs/guide/workbench">Workbench</a> on your laptop drives it through the agent. Alias: <code>rfswift remote</code>.</p>
+      <p><code>rfswift agent</code> lets you drive a lab machine from somewhere else. It serves that machine&rsquo;s engines (Docker, Podman, Lima, Nix) to authenticated clients.</p>
+<p>A typical setup: a machine in the lab, or a small board next to the antenna, holds the SDR, RFID, serial or GPU hardware, and the <a href="/docs/guide/workbench">Workbench</a> on your laptop controls it through the agent. The agent is built into the <code>rfswift</code> binary. The alias <code>rfswift remote</code> works too.</p>
 <div class="admonition admonition-warning" role="note"><p>A valid client certificate grants <strong>command execution</strong> on the agent host. Keep the agent on loopback and reach it through WireGuard, another authenticated VPN, or an SSH tunnel. Never bind it to a public interface. Read the <a href="/docs/guide/remote-agent">remote agent guide</a> for the security model and the limits.</p>
 </div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
@@ -267,7 +254,7 @@
 </span></span><span class="line"><span class="cl">rfswift agent certs <span class="nb">export</span> --bundle DIR <span class="o">[</span>--out FILE<span class="o">]</span> <span class="o">[</span>--passphrase-file FILE<span class="o">]</span></span></span></code></pre></div></div>
 <hr>
 <h2 id="rfswift-agent">rfswift agent<a class="anchor" href="#rfswift-agent" aria-label="Link to this section"></a></h2>
-<p>Runs the headless agent over TLS 1.3 with mandatory mutual TLS. It prints its &ldquo;listening&rdquo; line only once the key is decrypted from the OS vault and the socket is bound.</p>
+<p>Starts the agent. It uses TLS 1.3, and clients must present their own certificate (mutual TLS). The agent prints its &ldquo;listening&rdquo; line only after it has decrypted its key from the OS vault and opened its port.</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -316,15 +303,16 @@
   </tbody>
 </table>
 </div>
-<p>Missing items are listed by flag name. The agent refuses to start without a client CA or with an unencrypted key.</p>
+<p>If something is missing, the agent lists it by flag name. It refuses to start without a client CA or with an unencrypted key.</p>
+<p>Generate the certificates once, then start the agent:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift agent certs init --dir ~/.config/rfswift/remote/lab --name lab-agent --host lab.internal
 </span></span><span class="line"><span class="cl">rfswift agent --bundle ~/.config/rfswift/remote/lab</span></span></code></pre></div></div>
-<p>Run the agent in a session of the <strong>same user</strong> that ran <code>certs init</code>: the key passwords live in that user&rsquo;s vault (Secret Service on Linux, Keychain on macOS, Credential Manager on Windows), and a service under another account cannot open them. RF Swift fails closed when the vault is unavailable.</p>
+<p>Run the agent as the <strong>same user</strong> that ran <code>certs init</code>. The key passwords are stored in that user&rsquo;s vault (Secret Service on Linux, Keychain on macOS, Credential Manager on Windows), and a service running under another account cannot open them. If the vault is unavailable, RF Swift refuses to start rather than run unprotected.</p>
 <hr>
 <h2 id="rfswift-agent-certs">rfswift agent certs<a class="anchor" href="#rfswift-agent-certs" aria-label="Link to this section"></a></h2>
 <h3 id="certs-init">certs init<a class="anchor" href="#certs-init" aria-label="Link to this section"></a></h3>
-<p>Generates a private CA, a server certificate for <code>--host</code>, and an initial client certificate. Every private key is a password-encrypted PKCS#8 file; the random passwords go into the OS vault and are referenced from <code>bundle.json</code>.</p>
+<p>Creates a private certificate authority (CA), a server certificate for <code>--host</code>, and a first client certificate. Every private key is encrypted with a random password (PKCS#8). The passwords are stored in the OS vault, and <code>bundle.json</code> records where to find them.</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -349,9 +337,14 @@
   </tbody>
 </table>
 </div>
-<p>The directory contains <code>ca.pem</code>, <code>ca-key.pem</code>, <code>server.pem</code>, <code>server-key.pem</code>, <code>client.pem</code>, <code>client-key.pem</code> and <code>bundle.json</code> (key files and <code>bundle.json</code> are <code>0600</code>). The command ends by printing the agent start command and the server certificate fingerprint to pin.</p>
+<p>The directory then contains <code>ca.pem</code>, <code>ca-key.pem</code>, <code>server.pem</code>, <code>server-key.pem</code>, <code>client.pem</code>, <code>client-key.pem</code> and <code>bundle.json</code> (the key files and <code>bundle.json</code> are <code>0600</code>). At the end, the command prints how to start the agent and the server certificate fingerprint that clients should pin.</p>
 <h3 id="certs-client">certs client<a class="anchor" href="#certs-client" aria-label="Link to this section"></a></h3>
-<p>Signs a <strong>new</strong> client certificate with the bundle&rsquo;s CA and writes one JSON file with everything that client needs: the CA, the certificate, the private key encrypted under a transfer passphrase (12 characters or more; scrypt and AES-256-GCM), the agent address and the server fingerprint to pin.</p>
+<p>Creates a <strong>new</strong> client certificate, signed by the bundle&rsquo;s CA, and writes a single JSON file with everything that client needs:</p>
+<ul>
+<li>the CA and the client certificate;</li>
+<li>the private key, encrypted with a transfer passphrase you choose (12 characters or more; scrypt and AES-256-GCM);</li>
+<li>the agent address and the server fingerprint to pin.</li>
+</ul>
 <div class="table-wrap">
 <table>
   <thead>
@@ -384,11 +377,11 @@
   </tbody>
 </table>
 </div>
-<p>Do not copy <code>client-key.pem</code> from the bundle to another machine: it only opens with the vault of the user who generated it. Issue a client file instead. Each machine gets its own certificate and can be recognised by its fingerprint.</p>
+<p>Don&rsquo;t copy <code>client-key.pem</code> from the bundle to another machine: it only opens with the vault of the user who created it. Issue a client file instead. Each machine then gets its own certificate, recognisable by its fingerprint.</p>
 <h3 id="certs-export">certs export<a class="anchor" href="#certs-export" aria-label="Link to this section"></a></h3>
-<p>Packs the agent&rsquo;s <strong>own</strong> side (server certificate, its key under a passphrase, and the CA that verifies clients) into <code>server-credentials.json</code>, to run the agent on another host. Useful when the bundle was generated in the Workbench and the agent must run elsewhere.</p>
+<p>Packs the agent&rsquo;s <strong>own</strong> side (its server certificate, its key protected by a passphrase, and the CA that checks clients) into <code>server-credentials.json</code>, so you can run the agent on another host. This is useful when you created the bundle in the Workbench but the agent must run elsewhere.</p>
 <h3 id="certs-import">certs import<a class="anchor" href="#certs-import" aria-label="Link to this section"></a></h3>
-<p>Installs a client or server credential file on this machine. It checks the certificate against the CA, decrypts the key with the passphrase and re-encrypts it under a random password in <strong>this</strong> machine&rsquo;s vault; the passphrase is not kept.</p>
+<p>Installs a client or server credential file on this machine. It checks the certificate against the CA, decrypts the key with your passphrase, then re-encrypts it with a new random password stored in <strong>this</strong> machine&rsquo;s vault. The passphrase itself is not kept.</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -409,6 +402,7 @@
   </tbody>
 </table>
 </div>
+<p>A typical exchange: issue a file on the agent host, move it to the laptop, and import it there.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># On the agent host</span>
 </span></span><span class="line"><span class="cl">rfswift agent certs client --bundle ~/.config/rfswift/remote/lab --name laptop
@@ -418,8 +412,18 @@
 </span></span><span class="line"><span class="cl">rfswift agent certs import laptop-client.json --dir ~/.config/rfswift/remote/lab-client</span></span></code></pre></div></div>
 <hr>
 <h2 id="what-the-agent-serves">What the agent serves<a class="anchor" href="#what-the-agent-serves" aria-label="Link to this section"></a></h2>
-<p>Authenticated clients get a typed control plane, not a shell: target listing across every engine of the host, inspection, start and stop, container and Nix creation as cancellable jobs with live progress, deletion, container configuration, image checks and pulls, profile defaults, audits, tool search and install, interactive terminals (PTY, ConPTY on Windows), mission-workspace artifact listing and transfer, engine status and prune, Nix garbage collection, and USB passthrough (macOS Lima, Windows usbipd). A few Workbench calls still run the remote <code>rfswift</code> binary through a bounded JSON argument array (never a shell), with <code>-q</code> so no banner reaches the output.</p>
-<p>Unknown routes are closed without a response. Without a trusted client certificate nothing answers, not even <code>/health</code> or <code>/v1/info</code>.</p>
+<p>Authenticated clients get a fixed set of typed operations, not a shell:</p>
+<ul>
+<li>list the targets of every engine on the host, inspect them, start and stop them;</li>
+<li>create containers and Nix environments as cancellable jobs with live progress, delete them, configure containers;</li>
+<li>check and pull images, read profile defaults, run audits, search and install tools;</li>
+<li>open interactive terminals (PTY, ConPTY on Windows);</li>
+<li>list and transfer artifacts from mission workspaces;</li>
+<li>see engine status, reclaim space, collect Nix garbage;</li>
+<li>pass USB devices through (Lima on macOS, usbipd on Windows).</li>
+</ul>
+<p>A few Workbench calls still run the remote <code>rfswift</code> binary, always through a bounded JSON argument array (never a shell) and with <code>-q</code> so no banner reaches the output.</p>
+<p>Unknown requests are closed without a response. Without a trusted client certificate nothing answers at all, not even <code>/health</code> or <code>/v1/info</code>.</p>
 <hr>
 <h2 id="common-errors">Common errors<a class="anchor" href="#common-errors" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">

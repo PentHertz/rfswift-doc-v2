@@ -7,7 +7,15 @@ description: "Attach and detach USB devices on macOS (Lima) and Windows (usbipd-
 weight: 61
 ---
 
-Attach and detach USB devices for RF Swift containers and Nix environments on the two platforms whose containers run inside a VM. `rfswift usb` is the cross-platform front door: on macOS it drives the Lima VM's USB hot-plug, on Windows it drives usbipd-win into WSL 2. On Linux there is no attach step; devices are mapped when the container is created.
+On macOS and Windows, containers run inside a virtual machine that cannot see your USB ports on its own. `rfswift usb` forwards a device (an SDR, a Proxmark3, a serial adapter) into that machine so your containers and Nix environments can use it.
+
+- **macOS**: it drives USB hot-plug in the Lima VM.
+- **Windows**: it drives usbipd-win into WSL 2.
+- **Linux**: there is no attach step. Devices are mapped when the container is created.
+
+```bash
+rfswift usb attach      # shows a picker of your USB devices
+```
 
 ## Synopsis
 
@@ -21,7 +29,11 @@ rfswift usb vm-devices                            # what the VM currently sees
 rfswift usb status                                # Lima VM readiness for passthrough
 ```
 
-Requires `brew install qemu lima`. The VM is created and started on first use of `--engine lima`; a device must be attached to the VM **and** the container must run with `--engine lima`. Docker Desktop and Podman machine cannot receive USB devices. Details: [macusb](/docs/commands/macusb), [engine lima](/docs/commands/engine).
+Install Lima once with `brew install qemu lima`. The VM is created and started the first time you use `--engine lima`.
+
+For a device to work, two things are needed: the device must be attached to the VM, **and** the container must run with `--engine lima`. Docker Desktop and Podman machine cannot receive USB devices.
+
+Details: [macusb](/docs/commands/macusb), [engine lima](/docs/commands/engine).
   {{< /tab >}}
   {{< tab >}}
 ```bash
@@ -35,20 +47,36 @@ rfswift usb unbind --busid 2-3        # stop sharing (--guid for a device that i
 rfswift usb vm-devices                # devices as seen inside WSL 2
 ```
 
-Requires [usbipd-win](https://github.com/dorssel/usbipd-win) (`winget install usbipd`, or the installer bundle). Only **sharing** a device the first time needs administrator rights; RF Swift raises one UAC prompt for `usbipd.exe` itself, never a shell. Attach and detach stay unprivileged. The picker warns before forwarding keyboard- or mouse-like devices and shows friendly names for common RF hardware (RTL-SDR, HackRF, bladeRF, Proxmark, LimeSDR, USRP, ...). A forwarded device is visible to every WSL 2 distribution, including Docker Desktop's and the one hosting the Nix engine, because they share one kernel. Details: [winusb](/docs/commands/winusb).
+This needs [usbipd-win](https://github.com/dorssel/usbipd-win) (`winget install usbipd`, or the installer bundle).
+
+- Only **sharing** a device the first time needs administrator rights. RF Swift raises one UAC prompt for `usbipd.exe` itself, never for a shell. Attaching and detaching need no special rights.
+- The picker warns you before forwarding something that looks like a keyboard or a mouse, and shows friendly names for common RF hardware (RTL-SDR, HackRF, bladeRF, Proxmark, LimeSDR, USRP, ...).
+- A forwarded device is visible to every WSL 2 distribution, including Docker Desktop's and the one that hosts the Nix engine, because they all share one kernel.
+
+Details: [winusb](/docs/commands/winusb).
   {{< /tab >}}
   {{< tab >}}
-`rfswift usb` only prints a reminder. Pass devices at creation (`-s /dev/ttyUSB0`, the USB tree is mapped by default) or add them later with `rfswift config bindings add -c NAME -d -t /dev/ttyACM0`. Serial ports are hot-pluggable on Docker and rootful Podman ([config serial-hotplug](/docs/commands/config)). Rootless Podman and Nix environments run tools as your user and need the host udev rules: `rfswift host udev`.
+On Linux, `rfswift usb` only prints a reminder. Instead:
+
+- pass devices when you create the container (`-s /dev/ttyUSB0`); the USB tree is mapped by default;
+- or add them later with `rfswift config bindings add -c NAME -d -t /dev/ttyACM0`.
+
+Serial ports are hot-pluggable on Docker and rootful Podman (see [config serial-hotplug](/docs/commands/config)). Rootless Podman and Nix environments run tools as your user, so they need the host udev rules: `rfswift host udev`.
   {{< /tab >}}
 {{< /tabs >}}
 
----
-
 ## Inside the container
 
-A forwarded device is reachable only when `/dev/bus/usb` is mapped **and** USB device major 189 is allowed (`c 189:* rwm`). Both are part of the RF Swift defaults. A bare bind mount lists the nodes but `open()` fails with "Permission denied", and **privileged mode is not required**. `rfswift container create` and the Workbench mission form check this before creating the container and say what is missing; the Workbench offers "Apply USB hotplug defaults" in one click.
+A forwarded device can be opened only when both of these are true:
 
-`rfswift container create`, `container shell` and `env shell` on Windows offer the usbipd picker themselves when they detect shared or known RF hardware; plain keyboards and webcams never trigger it. The Workbench exposes the same as **USB passthrough...** on Docker, Podman and Nix missions.
+- `/dev/bus/usb` is mapped into the container;
+- USB device major 189 is allowed (`c 189:* rwm`).
+
+Both are part of the RF Swift defaults, and **privileged mode is not required**. A bare bind mount is not enough: it lists the device nodes, but opening them fails with "Permission denied".
+
+`rfswift container create` and the Workbench mission form check this before creating the container and tell you what is missing. The Workbench offers **Apply USB hotplug defaults** to fix it in one click.
+
+On Windows, `rfswift container create`, `container shell` and `env shell` open the usbipd picker themselves when they detect shared or known RF hardware; ordinary keyboards and webcams never trigger it. The Workbench offers the same as **USB passthrough...** on Docker, Podman and Nix missions.
 
 ## Related
 

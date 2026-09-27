@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift config · RF Swift</title>
   <meta name="description" content="Change the devices, mounts, capabilities, cgroups, GPUs, ports and ulimits of an existing container.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/config/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/config/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift config · RF Swift">
   <meta property="og:description" content="Change the devices, mounts, capabilities, cgroups, GPUs, ports and ulimits of an existing container.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/config/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/config/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,10 +231,14 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift config</h1><p class="doc-lead">Change the devices, mounts, capabilities, cgroups, GPUs, ports and ulimits of an existing container.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
+      <h1>rfswift config</h1><p class="doc-lead">Change the devices, mounts, capabilities, cgroups, GPUs, ports and ulimits of an existing container.</p><p class="doc-meta">Reference · 5 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Change the runtime configuration of an <strong>existing</strong> container: devices and bind mounts, Linux capabilities, cgroup device rules, GPU requests, exposed and published ports, ulimits, and the serial hot-plug. Alias: <code>rfswift cfg</code>. Each group is also available at the top level (<code>rfswift ports bind ...</code>), and neither form is deprecated.</p>
+      <p><code>rfswift config</code> changes a container you already created, without starting over. Use it to add a device or a folder, grant or remove a Linux capability, change device rules, request a GPU, open ports, set resource limits, or switch serial hot-plug on or off.</p>
+<p>The most common use adds a device, such as a Proxmark3 on <code>/dev/ttyACM0</code>:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -c rfid -d -t /dev/ttyACM0</span></span></code></pre></div></div>
+<p>The short alias is <code>rfswift cfg</code>. Every group also works at the top level (for example <code>rfswift ports bind ...</code>); both forms are supported and neither is deprecated.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings      add<span class="p">|</span>rm   -c NAME <span class="o">[</span>-d<span class="o">]</span> -t TARGET <span class="o">[</span>-s SOURCE<span class="o">]</span>
@@ -259,8 +249,8 @@
 </span></span><span class="line"><span class="cl">rfswift config ulimits       add<span class="p">|</span>rm<span class="p">|</span>list -c NAME <span class="o">[</span>-n NAME -v VALUE<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift config serial-hotplug on<span class="p">|</span>off -c NAME</span></span></code></pre></div></div>
 <p><code>-c</code> accepts a container name or ID, full or abbreviated. Every group accepts <code>--recreate</code>.</p>
-<hr>
 <h2 id="how-a-change-is-applied">How a change is applied<a class="anchor" href="#how-a-change-is-applied" aria-label="Link to this section"></a></h2>
+<p>How RF Swift applies the change depends on your engine:</p>
 <div class="doc-tabs" data-tabs>
   <div class="tabs" role="tablist">
       <button type="button" role="tab" data-tab="0" data-label="docker (linux)" data-os="linux" aria-selected="true">Docker (Linux)</button>
@@ -268,14 +258,16 @@
       <button type="button" role="tab" data-tab="2" data-label="lima / macos" data-os="mac" aria-selected="false">Lima / macOS</button>
       <button type="button" role="tab" data-tab="3" data-label="remote agent" aria-selected="false">Remote agent</button>
   </div>
-  <div class="doc-tab-panel" role="tabpanel" data-panel="0"><p>Docker keeps a container&rsquo;s configuration in files under <code>/var/lib/docker</code> that only root can edit. RF Swift rewrites them in place and restarts the Docker service: no copy of the container, no extra disk. It asks for the missing root itself, with <strong>one <code>sudo</code> prompt</strong>, then re-runs as root. The edited container comes back running, and the other containers the service restart stopped are started again.</p>
-<p>A change that cannot work is refused <strong>before</strong> the password prompt, not after.</p>
+  <div class="doc-tab-panel" role="tabpanel" data-panel="0"><p>Docker keeps each container&rsquo;s configuration in files under <code>/var/lib/docker</code> that only root can edit. RF Swift edits those files in place and restarts the Docker service. The container is not copied, so no extra disk space is used.</p>
+<p>RF Swift asks for root itself, with <strong>one <code>sudo</code> prompt</strong>, and then runs the change as root. The edited container comes back running, and any other containers stopped by the service restart are started again.</p>
+<p>If a change cannot work, RF Swift refuses it <strong>before</strong> asking for your password.</p>
 </div>
-  <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><p>Podman has no editable store, so the change is applied by <strong>committing</strong> the container to a snapshot image and re-creating it with the new setting. No root is needed; one snapshot image is left per change. Rootless Podman allows neither cgroup device rules nor <code>mknod</code>, so cgroup rules are dropped with a warning and serial ports must be present at creation.</p>
+  <div class="doc-tab-panel" role="tabpanel" data-panel="1" hidden><p>Podman has no configuration files to edit. RF Swift <strong>commits</strong> the container to a snapshot image and creates it again with the new setting. No root is needed, and each change leaves one snapshot image behind.</p>
+<p>Rootless Podman allows neither cgroup device rules nor <code>mknod</code>. Cgroup rules are therefore dropped with a warning, and serial ports must be plugged in when the container is created.</p>
 </div>
-  <div class="doc-tab-panel" role="tabpanel" data-panel="2" hidden><p>Docker inside the Lima VM edits through the VM&rsquo;s own sudo, without a prompt.</p>
+  <div class="doc-tab-panel" role="tabpanel" data-panel="2" hidden><p>With Docker inside the Lima VM, RF Swift edits through the VM&rsquo;s own <code>sudo</code>, without asking you for a password.</p>
 </div>
-  <div class="doc-tab-panel" role="tabpanel" data-panel="3" hidden><p>When the Workbench is connected to an agent, the same change runs on the agent host through the <code>targets.configure</code> method. Docker on that host asks nothing: the agent&rsquo;s user must already be able to edit the daemon&rsquo;s files or the commit-and-recreate path is used.</p>
+  <div class="doc-tab-panel" role="tabpanel" data-panel="3" hidden><p>When the Workbench is connected to a remote agent, the same change runs on the agent&rsquo;s machine (through the <code>targets.configure</code> method). Docker on that machine asks nothing: either the agent&rsquo;s user can already edit Docker&rsquo;s files, or RF Swift uses the commit-and-recreate method.</p>
 </div>
 </div>
 <div class="table-wrap">
@@ -283,54 +275,53 @@
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>--recreate</code></td>
-      <td>Commit the container and re-create it with the new setting instead of editing its files. No root needed, leaves a snapshot image per change. This is always the way on Podman</td>
+      <td>Commit the container and create it again with the new setting, instead of editing its files. No root needed; each change leaves a snapshot image. This is always the method on Podman</td>
     </tr>
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-warning" role="note"><p>Either path <strong>restarts the container</strong>. Processes running inside are interrupted. Save your work before changing a configuration.</p>
+<div class="admonition admonition-warning" role="note"><p class="admonition-title">The container restarts</p><p>Both methods restart the container, which stops any process running inside it. Save your work before changing the configuration.</p>
 </div>
-<hr>
 <h2 id="groups">Groups<a class="anchor" href="#groups" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Group</th>
-      <th>Purpose</th>
+      <th>What it changes</th>
       <th>Page</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>bindings</code></td>
-      <td>Add or remove a bind mount (<code>-b</code>/<code>-s</code>+<code>-t</code>) or a device mapping (<code>-d</code>). A device node given as a bind mount is bind-mounted with the cgroup rule its major needs; a <code>/dev</code> tree such as <code>/dev/bus/usb</code> gets the rule that makes its nodes usable; a serial port added with <code>-d</code> is attached on demand and hot-pluggable</td>
+      <td>Adds or removes a folder (<code>-b</code>, or <code>-s</code> with <code>-t</code>) or a device (<code>-d</code>). See the notes below the table</td>
       <td><a href="/docs/commands/bindings">bindings</a></td>
     </tr>
     <tr>
       <td><code>capabilities</code></td>
-      <td>Add or remove Linux capabilities. Names are compared and shown in short form (<code>NET_ADMIN</code>), so removing one works and adding twice does not duplicate</td>
+      <td>Adds or removes Linux capabilities. Names are shown in short form (<code>NET_ADMIN</code>); removing works, and adding the same one twice does not duplicate it</td>
       <td><a href="/docs/commands/capabilities">capabilities</a></td>
     </tr>
     <tr>
       <td><code>cgroups</code></td>
-      <td>Device cgroup rules (<code>c 189:* rwm</code>)</td>
+      <td>Device cgroup rules such as <code>c 189:* rwm</code></td>
       <td><a href="/docs/commands/cgroups">cgroups</a></td>
     </tr>
     <tr>
       <td><code>gpus</code></td>
-      <td>GPU device requests (<code>all</code>, <code>0,1</code>). The request survives a re-creation</td>
+      <td>GPU requests (<code>all</code>, <code>0,1</code>). The request is kept when the container is created again</td>
       <td><a href="/docs/commands/gpu">gpus</a></td>
     </tr>
     <tr>
       <td><code>ports</code></td>
-      <td>Expose a port to other containers, or bind (publish) it to the host, and undo both</td>
+      <td>Exposes a port to other containers, or publishes it to the host, and undoes both</td>
       <td><a href="/docs/commands/ports">ports</a></td>
     </tr>
     <tr>
@@ -340,46 +331,50 @@
     </tr>
     <tr>
       <td><code>serial-hotplug</code></td>
-      <td>Switch the serial hot-plug on or off for a container (below)</td>
+      <td>Switches serial hot-plug on or off (see below)</td>
       <td>this page</td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
+<p>What <code>bindings</code> does with devices:</p>
+<ul>
+<li>A device node given as a bind mount is mounted with the cgroup rule its device type needs.</li>
+<li>A <code>/dev</code> tree such as <code>/dev/bus/usb</code> gets the rule that makes its devices usable.</li>
+<li>A serial port added with <code>-d</code> is attached when needed, and can be plugged in later (hot-plug).</li>
+</ul>
 <h2 id="config-serial-hotplug">config serial-hotplug<a class="anchor" href="#config-serial-hotplug" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config serial-hotplug on  -c NAME
 </span></span><span class="line"><span class="cl">rfswift config serial-hotplug off -c NAME</span></span></code></pre></div></div>
-<p>With the hot-plug <strong>on</strong> (the default as soon as a mission names a serial port), the container may open serial ports (<code>/dev/ttyACM*</code>, <code>/dev/ttyUSB*</code>, <code>/dev/ttyAMA*</code>) through its device cgroup, and RF Swift creates their nodes inside the container when it starts and whenever a terminal or command opens in it, removing nodes whose device is gone. A port that is unplugged at creation is recorded and attached on demand instead of failing the start: plug it in, open a shell, and the port is there.</p>
-<p><strong>Off</strong> removes those cgroup rules and leaves the container&rsquo;s <code>/dev</code> alone; ports must then be mapped or bind-mounted explicitly.</p>
-<p>Supported on Docker and rootful Podman. Rootless Podman keeps the mapping and needs the port present at creation; Lima on macOS and Windows hosts forward USB into a VM first (see <a href="/docs/commands/usb">usb</a>).</p>
-<div class="admonition admonition-info" role="note"><p>Earlier versions could leave an empty, root-owned directory where a device node belongs (<code>/dev/ttyACM0</code> bind-mounted while the reader was unplugged). <code>rfswift host devclean</code> lists and removes those.</p>
+<p><strong>On</strong> is the default as soon as a container names a serial port. The container may then open serial ports (<code>/dev/ttyACM*</code>, <code>/dev/ttyUSB*</code>, <code>/dev/ttyAMA*</code>). RF Swift creates their device files inside the container when it starts and every time you open a terminal or run a command in it, and removes the ones whose device is gone. A port that was unplugged when the container was created is remembered and attached later: plug it in, open a shell, and it is there.</p>
+<p><strong>Off</strong> removes those rules and leaves the container&rsquo;s <code>/dev</code> alone. You then have to map or bind-mount each port yourself.</p>
+<p>Serial hot-plug works on Docker and rootful Podman. Rootless Podman keeps the mapping but needs the port plugged in at creation. With Lima on macOS, and on Windows, USB is first forwarded into a virtual machine (see <a href="/docs/commands/usb">usb</a>).</p>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">Clean up after older versions</p><p>Earlier versions could leave an empty, root-owned folder where a device file belongs (for example <code>/dev/ttyACM0</code> mounted while the reader was unplugged). <code>rfswift host devclean</code> lists and removes those folders.</p>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
+<p>Plug a Proxmark3 into a running RFID container:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Hot-plug a Proxmark3 into a running RFID container</span>
-</span></span><span class="line"><span class="cl">rfswift config bindings add -c rfid -d -t /dev/ttyACM0
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Give a Wi-Fi container the capabilities its tools need, then take them back</span>
-</span></span><span class="line"><span class="cl">rfswift config capabilities add -c wifi -p NET_ADMIN
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config bindings add -c rfid -d -t /dev/ttyACM0</span></span></code></pre></div></div>
+<p>Give a Wi-Fi container the capabilities its tools need, then remove one:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config capabilities add -c wifi -p NET_ADMIN
 </span></span><span class="line"><span class="cl">rfswift config capabilities add -c wifi -p NET_RAW
-</span></span><span class="line"><span class="cl">rfswift config capabilities rm  -c wifi -p NET_RAW
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Publish a web UI on localhost only</span>
-</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c web -b 127.0.0.1:8080:80/tcp
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># GPU for an OpenCL image, on Podman (commit + recreate)</span>
-</span></span><span class="line"><span class="cl">rfswift --engine podman config gpus add -c gpu_work -g all --recreate
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Realtime limits by hand (or: rfswift realtime enable -c sdr)</span>
-</span></span><span class="line"><span class="cl">rfswift config ulimits add -c sdr -n rtprio -v <span class="m">95</span>
+</span></span><span class="line"><span class="cl">rfswift config capabilities rm  -c wifi -p NET_RAW</span></span></code></pre></div></div>
+<p>Publish a web interface on this computer only (localhost):</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c web -b 127.0.0.1:8080:80/tcp</span></span></code></pre></div></div>
+<p>Give a Podman container access to all GPUs, for an OpenCL image (commit and recreate):</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift --engine podman config gpus add -c gpu_work -g all --recreate</span></span></code></pre></div></div>
+<p>Set realtime limits by hand, then list them. <code>rfswift realtime enable -c sdr</code> does the same in one step:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ulimits add -c sdr -n rtprio -v <span class="m">95</span>
 </span></span><span class="line"><span class="cl">rfswift config ulimits add -c sdr -n memlock -v -1
 </span></span><span class="line"><span class="cl">rfswift config ulimits list -c sdr</span></span></code></pre></div></div>
 <h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/guide/container-management">Dynamic container management</a></li>
+<li><a href="/docs/guide/container-management">Change a container after creation</a></li>
 <li><a href="/docs/commands/realtime">realtime</a></li>
 <li><a href="/docs/commands/host">host devclean</a></li>
 </ul>

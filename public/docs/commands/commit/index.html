@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift container commit · RF Swift</title>
   <meta name="description" content="Save a container&#39;s current state as a new image.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/commit/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/commit/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift container commit · RF Swift">
   <meta property="og:description" content="Save a container&#39;s current state as a new image.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/commit/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/commit/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,17 +231,18 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift container commit</h1><p class="doc-lead">Save a container&rsquo;s current state as a new image.</p><p class="doc-meta">Reference · 5 min read · Updated September 27, 2026</p>
+      <h1>rfswift container commit</h1><p class="doc-lead">Save a container&rsquo;s current state as a new image.</p><p class="doc-meta">Reference · 5 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift container commit</code>. The legacy form <code>rfswift commit</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+      <p><code>rfswift container commit</code> saves a container&rsquo;s current state as a new image: every tool you installed and every file you changed inside it. Use it to keep a setup you spent time on, to take a snapshot before a risky change, or to share a customised environment.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container commit -c my_sdr_work -i my_sdr_backup</span></span></code></pre></div></div>
+<p>You can then create new containers from that image with <code>rfswift container create -i my_sdr_backup -n NAME</code>.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Other spellings</strong>: the legacy form <code>rfswift commit</code> still works and prints a notice. The flags are the same. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
-<p>Save a container&rsquo;s current state as a new Docker image.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container commit -c CONTAINER_NAME -i NEW_IMAGE_NAME</span></span></code></pre></div></div>
-<p>The <code>commit</code> command creates a new Docker image from a container&rsquo;s current state, capturing all changes made to the filesystem. This is useful for preserving work, creating backups, or sharing customized environments.</p>
-<hr>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
@@ -283,18 +270,17 @@
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Interactive Picker</strong>: When run without <code>-c</code> in an interactive terminal, RF Swift displays a scrollable container picker. If <code>-i</code> is also omitted, the image name is auto-suggested based on the container&rsquo;s current image (fallback: <code>rfswift/committed:latest</code>).</p>
+<div class="admonition admonition-info" role="note"><p><strong>Container picker</strong>: without <code>-c</code> in an interactive terminal, RF Swift shows a container picker. If you also leave out <code>-i</code>, it suggests an image name based on the container&rsquo;s current image (or <code>rfswift/committed:latest</code>).</p>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
 <h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Create backup image:</strong></p>
+<h4 id="create-backup-image">Create backup image<a class="anchor" href="#create-backup-image" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container commit -c my_sdr_work -i my_sdr_backup</span></span></code></pre></div></div>
-<p><strong>With version tag:</strong></p>
+<h4 id="with-version-tag">With version tag<a class="anchor" href="#with-version-tag" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container commit -c assessment -i assessment_backup:v1.0</span></span></code></pre></div></div>
-<p><strong>Before removing container:</strong></p>
+<h4 id="before-removing-container">Before removing container<a class="anchor" href="#before-removing-container" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Save state first</span>
 </span></span><span class="line"><span class="cl">rfswift container commit -c temp_container -i saved_state
@@ -304,17 +290,17 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Can recreate later</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i saved_state -n restored_container</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Save configured environment:</strong></p>
+<h3 id="everyday-cases">Everyday cases<a class="anchor" href="#everyday-cases" aria-label="Link to this section"></a></h3>
+<h4 id="save-configured-environment">Save configured environment<a class="anchor" href="#save-configured-environment" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Spent hours configuring tools</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># You spent hours configuring tools</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c sdr_work
 </span></span><span class="line"><span class="cl"><span class="c1"># ... install additional tools, configure settings ...</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Save all that work</span>
 </span></span><span class="line"><span class="cl">rfswift container commit -c sdr_work -i sdr_configured:2024_01</span></span></code></pre></div></div>
-<p><strong>Create project snapshot:</strong></p>
+<h4 id="create-project-snapshot">Create project snapshot<a class="anchor" href="#create-project-snapshot" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># End of assessment phase</span>
 </span></span><span class="line"><span class="cl">rfswift container commit -c client_assessment -i client_assessment_phase1:final
@@ -326,20 +312,20 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Save phase 2</span>
 </span></span><span class="line"><span class="cl">rfswift container commit -c client_assessment -i client_assessment_phase2:final</span></span></code></pre></div></div>
-<p><strong>Share custom environment with team:</strong></p>
+<h4 id="share-custom-environment-with-team">Share custom environment with team<a class="anchor" href="#share-custom-environment-with-team" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create customized environment</span>
 </span></span><span class="line"><span class="cl">rfswift container commit -c my_setup -i team_sdr_environment:v1
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Export container for sharing</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c team_sdr_environment:v1 -o sdr_backup.tar.gz
+</span></span><span class="line"><span class="cl"><span class="c1"># Export the image to a file you can share</span>
+</span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span> image -i team_sdr_environment:v1 -o sdr_backup.tar.gz
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Export image for sharing</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span> image -i imagetoexport -o sdr_backup.tar.gz
+</span></span><span class="line"><span class="cl"><span class="c1"># (or export the container itself)</span>
+</span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c my_setup -o sdr_backup.tar.gz
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Team members import</span>
-</span></span><span class="line"><span class="cl">docker import </span></span></code></pre></div></div>
-<p><strong>Before major changes:</strong></p>
+</span></span><span class="line"><span class="cl"><span class="c1"># Team members import the file</span>
+</span></span><span class="line"><span class="cl">rfswift image import image -i sdr_backup.tar.gz</span></span></code></pre></div></div>
+<h4 id="before-major-changes">Before major changes<a class="anchor" href="#before-major-changes" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Checkpoint before risky operation</span>
 </span></span><span class="line"><span class="cl">rfswift container commit -c production_monitor -i production_monitor_backup:pre_upgrade
@@ -353,7 +339,7 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Restore from backup</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c production_monitor
 </span></span><span class="line"><span class="cl">rfswift container create -i production_monitor_backup:pre_upgrade -n production_monitor</span></span></code></pre></div></div>
-<p><strong>Create versioned snapshots:</strong></p>
+<h4 id="create-versioned-snapshots">Create versioned snapshots<a class="anchor" href="#create-versioned-snapshots" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Daily snapshots during project</span>
 </span></span><span class="line"><span class="cl">rfswift container commit -c research_container -i research_project:day_1
@@ -364,10 +350,9 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Can return to any day&#39;s state</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i research_project:day_2 -n restore_day_2</span></span></code></pre></div></div>
-<hr>
 <h2 id="what-gets-committed">What gets committed<a class="anchor" href="#what-gets-committed" aria-label="Link to this section"></a></h2>
 <h3 id="captured-in-image">Captured in image<a class="anchor" href="#captured-in-image" aria-label="Link to this section"></a></h3>
-<p>When you commit a container, the new image includes:</p>
+<p>What the new image contains:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -400,8 +385,8 @@
     </tr>
     <tr>
       <td>Environment variables</td>
-      <td>⚠️ Partial</td>
-      <td>Runtime vars not preserved</td>
+      <td>Partial</td>
+      <td>Runtime variables are not kept</td>
     </tr>
     <tr>
       <td>Running processes</td>
@@ -415,18 +400,18 @@
     </tr>
     <tr>
       <td>Network configuration</td>
-      <td>⚠️ Partial</td>
-      <td>Basic config only</td>
+      <td>Partial</td>
+      <td>Basic settings only</td>
     </tr>
     <tr>
       <td>Port bindings</td>
       <td>No</td>
-      <td>Must reconfigure on new container</td>
+      <td>Set them again on the new container</td>
     </tr>
   </tbody>
 </table>
 </div>
-<p><strong>Example of what&rsquo;s saved:</strong></p>
+<h4 id="example-of-whats-saved">Example of what&rsquo;s saved<a class="anchor" href="#example-of-whats-saved" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Inside container</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c my_container
@@ -441,13 +426,13 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Changes that WON&#39;T be in committed image:</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Data in mounted volumes                # Not saved</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Running processes                       # Not saved</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Temporary /tmp files may not persist   # ⚠️ Depends</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Temporary /tmp files may not persist   # Depends</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">rfswift container commit -c my_container -i my_configured_image</span></span></code></pre></div></div>
 <h3 id="mounted-volumes">Mounted volumes<a class="anchor" href="#mounted-volumes" aria-label="Link to this section"></a></h3>
-<p><strong>Important:</strong> Mounted volume data is NOT included in committed images:</p>
+<p><strong>Mounted folders are not included.</strong> Files in a folder you mounted from your computer (with <code>-b</code>) stay on your computer and are not copied into the image. To include them, copy them into the container&rsquo;s own filesystem before committing, or back them up separately:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create container with volume</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_full -n capture_work <span class="se">\
@@ -472,40 +457,40 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Need to mount volume again</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c restored
 </span></span><span class="line"><span class="cl">rfswift container create -i capture_backup -n restored -b ~/captures:/root/captures</span></span></code></pre></div></div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
 <h3 id="container-not-found">Container not found<a class="anchor" href="#container-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: No such container: container_name</code></p>
-<p><strong>Solutions:</strong></p>
+<p>The error message is: <code>Error: No such container: container_name</code></p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List containers</span>
 </span></span><span class="line"><span class="cl">rfswift container last</span></span></code></pre></div></div>
 <h3 id="image-name-already-exists">Image name already exists<a class="anchor" href="#image-name-already-exists" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: Conflict: Tag already exists</code></p>
-<p><strong>Solutions:</strong></p>
+<p>The error message is: <code>Error: Conflict: Tag already exists</code></p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Option 1: Use different tag</span>
 </span></span><span class="line"><span class="cl">rfswift container commit -c container -i image:v2
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Option 2: Remove old image first</span>
-</span></span><span class="line"><span class="cl">rfswift container rm -c container
+</span></span><span class="line"><span class="cl"><span class="c1"># Option 2: Remove the old image first</span>
+</span></span><span class="line"><span class="cl">rfswift image rm -i image:v1
 </span></span><span class="line"><span class="cl">rfswift container commit -c container -i image:v1</span></span></code></pre></div></div>
-<hr>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create containers from committed images</li>
-<li><a href="/docs/commands/export"><code>export</code></a> - Alternative backup method (creates tar.gz)</li>
-<li><a href="/docs/commands/import"><code>import</code></a> - Import exported containers</li>
-<li><a href="/docs/commands/download"><code>download</code></a> - Download images from registry to tar.gz</li>
-<li><a href="/docs/commands/images"><code>images</code></a> - Manage committed images</li>
-<li><a href="/docs/commands/remove"><code>remove</code></a> - Remove containers after committing</li>
+<li><a href="/docs/commands/run/"><code>container create</code></a>: create containers from a committed image</li>
+<li><a href="/docs/commands/export/"><code>image export</code></a>: another way to back up (a <code>.tar.gz</code> file)</li>
+<li><a href="/docs/commands/import/"><code>image import</code></a>: import exported containers and images</li>
+<li><a href="/docs/commands/download/"><code>image download</code></a>: save registry images to <code>.tar.gz</code></li>
+<li><a href="/docs/commands/images/"><code>image local</code></a>: list and manage your images</li>
+<li><a href="/docs/commands/remove/"><code>container rm</code></a>: remove a container after committing it</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Pro Tip</strong>: Before committing, clean up unnecessary files to keep image size small. Run <code>apt-get clean</code>, remove logs, and clear caches inside the container first! For portable backups, consider using <code>export</code> instead.</p>
+<div class="admonition admonition-tip" role="note"><p><strong>Keep images small</strong>: before committing, clean up inside the container (<code>apt-get clean</code>, old logs, caches). For a portable backup, use <code>image export</code> instead.</p>
 </div>
-<div class="admonition admonition-warning" role="note"><p><strong>Volume Data Not Included</strong>: Data in mounted volumes (specified with <code>-b</code> flag) is NOT saved in committed images. Only the container&rsquo;s internal filesystem is captured. Use <code>export</code> for backups or copy volume data into container before committing.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Commit vs Export vs Download</strong>: <code>commit</code> creates a Docker image for reuse, <code>export</code> creates a compressed portable backup, and <code>download</code> saves registry images offline. Choose based on your use case: development (commit), backup/transfer (export), or getting base images (download).</p>
+<div class="admonition admonition-info" role="note"><p><strong>Commit, export or download?</strong></p>
+<ul>
+<li><code>container commit</code> creates an image you reuse to create new containers.</li>
+<li><code>image export</code> creates a compressed file to back up or move to another machine.</li>
+<li><code>image download</code> saves a published image to a file for offline use.</li>
+</ul>
 </div>
 
     </div>
@@ -532,7 +517,7 @@
     <li><a href="#examples">Examples</a>
       <ul>
         <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#everyday-cases">Everyday cases</a></li>
       </ul>
     </li>
     <li><a href="#what-gets-committed">What gets committed</a>

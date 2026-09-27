@@ -7,21 +7,18 @@ description: "Manage profiles: YAML presets for quick container creation."
 weight: 11
 ---
 
-Manage container profiles, the YAML presets used for quick container creation.
+A profile is a named preset for creating containers: image, network mode, features (desktop, realtime, privileged), device mappings, capabilities, cgroup rules and port bindings in one YAML file. `rfswift profile` lists, shows, creates and deletes them. Use profiles so you don't have to type long `rfswift container create` commands again and again.
+
+```bash
+rfswift profile init                                   # generate the built-in profiles
+rfswift container create --profile sdr-full -n my_sdr  # use one
+```
 
 ## Synopsis
 
 ```bash
 rfswift profile [subcommand] [options]
 ```
-
-Profiles bundle image, network mode, features (desktop, realtime, privileged), device mappings, capabilities, cgroup rules, and port bindings into a single named preset. Instead of typing long `rfswift container create` commands, you can create a profile once and reuse it.
-
-{{< callout type="info" >}}
-**Quick Start**: Run `rfswift profile init` to generate default profiles, then use them with `rfswift container create --profile sdr-full -n my_container`.
-{{< /callout >}}
-
----
 
 ## Subcommands
 
@@ -33,11 +30,9 @@ Profiles bundle image, network mode, features (desktop, realtime, privileged), d
 | `init` | Generate default profile YAML files |
 | `delete [name]` | Delete a profile |
 
----
-
 ## Profile storage
 
-Profiles are stored as individual YAML files in a platform-specific directory:
+Each profile is a YAML file in this folder:
 
 {{< tabs items="Linux,macOS,Windows" >}}
   {{< tab >}}
@@ -57,9 +52,7 @@ Profiles are stored as individual YAML files in a platform-specific directory:
   {{< /tab >}}
 {{< /tabs >}}
 
-Each profile is a standalone `.yaml` file that you can edit, copy, or share.
-
----
+You can edit, copy or share these files like any other file.
 
 ## Profile format
 
@@ -107,8 +100,6 @@ vpn: ""
 | `gpus` | string | GPU passthrough (`all` or comma-separated IDs) | `all` |
 | `vpn` | string | VPN configuration | `tailscale` |
 
----
-
 ## Examples
 
 ### Initialize default profiles
@@ -119,7 +110,7 @@ Generate the built-in starter profiles:
 rfswift profile init
 ```
 
-This creates the built-in profiles covering common RF and security use cases:
+This creates the built-in profiles for common RF and security work:
 
 | Profile | Purpose |
 |---------|---------|
@@ -138,7 +129,7 @@ This creates the built-in profiles covering common RF and security use cases:
 | `reversing` | Reversing tools with a desktop |
 | `headless` | No X11, NAT network |
 
-Run `rfswift profile show NAME` for the exact settings of each. A built-in profile you never edited is refreshed automatically when RF Swift improves it (a fingerprint records what RF Swift wrote); an edited copy is kept and reported.
+`rfswift profile show NAME` prints the exact settings of each one. When RF Swift improves a built-in profile, your copy is refreshed automatically, unless you edited it: an edited copy is kept, and RF Swift tells you (a fingerprint records what RF Swift wrote).
 
 To overwrite existing profiles:
 ```bash
@@ -151,7 +142,7 @@ rfswift profile init --force
 rfswift profile list
 ```
 
-Displays a table with name, description, image, network mode, and enabled features for all profiles.
+It prints a table with each profile's name, description, image, network mode and enabled features.
 
 ### Show profile details
 
@@ -163,7 +154,7 @@ rfswift profile show sdr-full
 rfswift profile show
 ```
 
-Shows the full configuration and the equivalent `rfswift container create` CLI command.
+It shows the full configuration and the equivalent `rfswift container create` command.
 
 ### Create a profile interactively
 
@@ -171,7 +162,7 @@ Shows the full configuration and the equivalent `rfswift container create` CLI c
 rfswift profile create
 ```
 
-Launches a step-by-step wizard to create a new profile:
+A step-by-step wizard asks for:
 
 1. **Profile name**: unique identifier (e.g., `my-sdr-setup`)
 2. **Description**: what this profile is for
@@ -185,7 +176,7 @@ Launches a step-by-step wizard to create a new profile:
 10. **Cgroup rules**: multi-select from common device access rules (USB, serial, sound, etc.)
 11. **Recap and confirm**
 
-The profile is saved as a YAML file that you can further edit manually.
+The profile is saved as a YAML file that you can edit afterwards.
 
 ### Delete a profile
 
@@ -209,8 +200,6 @@ nano ~/.config/rfswift/profiles/sdr-full.yaml
 nano ~/Library/Application\ Support/rfswift/profiles/sdr-full.yaml
 ```
 
----
-
 ## Using profiles with `rfswift container create`
 
 ### Basic usage
@@ -221,11 +210,11 @@ Use a profile with the `--profile` flag:
 rfswift container create --profile sdr-full -n my_sdr
 ```
 
-This applies all the profile's settings (image, network, features, devices, etc.) and creates the container.
+The container is created with all of the profile's settings (image, network, features, devices...).
 
 ### Profile + CLI overrides
 
-CLI flags override profile values, so you can customize on the fly:
+Flags you add on the command line override the profile's values:
 
 ```bash
 # Use wifi profile but with a different image
@@ -247,7 +236,7 @@ When you run `rfswift container create` without `-i` and `-n`, the wizard offers
   > No profile (manual configuration)
     sdr-full: Full SDR suite, realtime and USB hotplug
     wifi: Wi-Fi monitor mode and injection, unprivileged
-    pentest-full: Everything on: privileged, USB, realtime, GPU
+    yolo: Everything on: privileged, USB, realtime, GPU
     ...
 ```
 
@@ -259,14 +248,12 @@ After selecting a profile, you're asked:
     No, let me customize
 ```
 
-- **Yes, use as-is**: Skips all configuration steps. It only asks for the container name, shows a recap, and creates the container. This is the fastest way to spin up a container.
-- **No, let me customize**: Pre-fills all wizard fields with the profile's values, then lets you change anything before creation. You can also choose a different image while keeping all other profile settings.
-
----
+- **Yes, use as-is**: skips the configuration steps. The wizard only asks for the container name, shows a recap and creates the container. This is the fastest way to get a container.
+- **No, let me customize**: fills in every wizard step with the profile's values and lets you change anything before creation, including the image.
 
 ## Sharing profiles
 
-Since profiles are plain YAML files, sharing is straightforward:
+Profiles are plain YAML files, so you share them like any file:
 
 ```bash
 # Copy a profile to another machine
@@ -276,20 +263,12 @@ scp ~/.config/rfswift/profiles/my-setup.yaml user@remote:~/.config/rfswift/profi
 cp team-standard.yaml ~/.config/rfswift/profiles/
 ```
 
----
-
 ## Related commands
 
-- [`run`](/docs/commands/run) - Create containers (supports `--profile` flag)
-- [Configurations](/docs/guide/configurations) - Global configuration file
-- [Running RF Swift](/docs/guide/running-rf-swift) - Core workflows and features
-
----
+- [`container create`](/docs/commands/run/): create containers (accepts `--profile`)
+- [Configuration](/docs/guide/configurations/): the global configuration file
+- [Running RF Swift](/docs/guide/running-rf-swift/): everyday workflows
 
 {{< callout >}}
-**Tip**: Create profiles for your most common setups (pentesting, SDR capture, hardware debug) and use `--profile` to skip repetitive configuration. Edit the YAML files directly for fine-tuning.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Exegol-style Presets**: RF Swift profiles are inspired by [Exegol's](https://github.com/ThePorgs/Exegol) profile system. If you're coming from Exegol, you'll find the concept familiar: profiles bundle all container settings into a reusable preset.
+**Tip**: create a profile for each setup you use often (SDR capture, hardware debugging, network testing...) and use `--profile` instead of repeating the same flags. Edit the YAML files directly for fine-tuning.
 {{< /callout >}}

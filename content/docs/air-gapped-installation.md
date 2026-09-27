@@ -6,7 +6,7 @@ description: "Install and run RF Swift on machines with no internet access: prep
 weight: 20
 ---
 
-This guide installs RF Swift on a machine with **no internet access**: secure facilities, classified networks, critical infrastructure, or simply a lab machine that must stay offline. You prepare everything on a connected computer, carry it over, and install it offline. After that, RF Swift works completely offline with the `-q` (disconnected mode) flag.
+This guide installs RF Swift on a machine with **no internet access**: secure facilities, classified networks, critical infrastructure, or a lab machine that must stay offline. You prepare everything on a connected computer, carry it over, and install it offline. After that, RF Swift works completely offline with the `-q` (disconnected mode) flag.
 
 **The four phases:**
 

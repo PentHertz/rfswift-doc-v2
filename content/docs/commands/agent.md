@@ -7,7 +7,9 @@ description: "Serve a lab machine's engines to authenticated remote clients over
 weight: 80
 ---
 
-Serve the engines of a machine (Docker, Podman, Lima, Nix) to authenticated remote clients. Typical use: a lab machine holds the SDR, RFID, serial or GPU hardware; the [Workbench](/docs/guide/workbench) on your laptop drives it through the agent. Alias: `rfswift remote`.
+`rfswift agent` lets you drive a lab machine from somewhere else. It serves that machine's engines (Docker, Podman, Lima, Nix) to authenticated clients.
+
+A typical setup: a machine in the lab, or a small board next to the antenna, holds the SDR, RFID, serial or GPU hardware, and the [Workbench](/docs/guide/workbench) on your laptop controls it through the agent. The agent is built into the `rfswift` binary. The alias `rfswift remote` works too.
 
 {{< callout type="warning" >}}
 A valid client certificate grants **command execution** on the agent host. Keep the agent on loopback and reach it through WireGuard, another authenticated VPN, or an SSH tunnel. Never bind it to a public interface. Read the [remote agent guide](/docs/guide/remote-agent) for the security model and the limits.
@@ -34,7 +36,7 @@ rfswift agent certs export --bundle DIR [--out FILE] [--passphrase-file FILE]
 
 ## rfswift agent
 
-Runs the headless agent over TLS 1.3 with mandatory mutual TLS. It prints its "listening" line only once the key is decrypted from the OS vault and the socket is bound.
+Starts the agent. It uses TLS 1.3, and clients must present their own certificate (mutual TLS). The agent prints its "listening" line only after it has decrypted its key from the OS vault and opened its port.
 
 | Flag | Description | Default |
 |------|-------------|---------|
@@ -46,14 +48,16 @@ Runs the headless agent over TLS 1.3 with mandatory mutual TLS. It prints its "l
 | `--client-ca` | CA PEM that clients must be signed by (`ca.pem`) | `ca.pem` of the bundle |
 | `--name` | Display name reported to clients | `RF Swift agent` |
 
-Missing items are listed by flag name. The agent refuses to start without a client CA or with an unencrypted key.
+If something is missing, the agent lists it by flag name. It refuses to start without a client CA or with an unencrypted key.
+
+Generate the certificates once, then start the agent:
 
 ```bash
 rfswift agent certs init --dir ~/.config/rfswift/remote/lab --name lab-agent --host lab.internal
 rfswift agent --bundle ~/.config/rfswift/remote/lab
 ```
 
-Run the agent in a session of the **same user** that ran `certs init`: the key passwords live in that user's vault (Secret Service on Linux, Keychain on macOS, Credential Manager on Windows), and a service under another account cannot open them. RF Swift fails closed when the vault is unavailable.
+Run the agent as the **same user** that ran `certs init`. The key passwords are stored in that user's vault (Secret Service on Linux, Keychain on macOS, Credential Manager on Windows), and a service running under another account cannot open them. If the vault is unavailable, RF Swift refuses to start rather than run unprotected.
 
 ---
 
@@ -61,7 +65,7 @@ Run the agent in a session of the **same user** that ran `certs init`: the key p
 
 ### certs init
 
-Generates a private CA, a server certificate for `--host`, and an initial client certificate. Every private key is a password-encrypted PKCS#8 file; the random passwords go into the OS vault and are referenced from `bundle.json`.
+Creates a private certificate authority (CA), a server certificate for `--host`, and a first client certificate. Every private key is encrypted with a random password (PKCS#8). The passwords are stored in the OS vault, and `bundle.json` records where to find them.
 
 | Flag | Default |
 |------|---------|
@@ -69,11 +73,15 @@ Generates a private CA, a server certificate for `--host`, and an initial client
 | `--name` | `rfswift-agent` (recorded in `bundle.json`; certificate subjects stay neutral) |
 | `--host` | `localhost` (use the DNS name or IP clients will dial) |
 
-The directory contains `ca.pem`, `ca-key.pem`, `server.pem`, `server-key.pem`, `client.pem`, `client-key.pem` and `bundle.json` (key files and `bundle.json` are `0600`). The command ends by printing the agent start command and the server certificate fingerprint to pin.
+The directory then contains `ca.pem`, `ca-key.pem`, `server.pem`, `server-key.pem`, `client.pem`, `client-key.pem` and `bundle.json` (the key files and `bundle.json` are `0600`). At the end, the command prints how to start the agent and the server certificate fingerprint that clients should pin.
 
 ### certs client
 
-Signs a **new** client certificate with the bundle's CA and writes one JSON file with everything that client needs: the CA, the certificate, the private key encrypted under a transfer passphrase (12 characters or more; scrypt and AES-256-GCM), the agent address and the server fingerprint to pin.
+Creates a **new** client certificate, signed by the bundle's CA, and writes a single JSON file with everything that client needs:
+
+- the CA and the client certificate;
+- the private key, encrypted with a transfer passphrase you choose (12 characters or more; scrypt and AES-256-GCM);
+- the agent address and the server fingerprint to pin.
 
 | Flag | Default |
 |------|---------|
@@ -83,20 +91,22 @@ Signs a **new** client certificate with the bundle's CA and writes one JSON file
 | `--out` | `<bundle>/clients/<name>-client.json` |
 | `--passphrase-file` | read the passphrase from a file instead of the terminal |
 
-Do not copy `client-key.pem` from the bundle to another machine: it only opens with the vault of the user who generated it. Issue a client file instead. Each machine gets its own certificate and can be recognised by its fingerprint.
+Don't copy `client-key.pem` from the bundle to another machine: it only opens with the vault of the user who created it. Issue a client file instead. Each machine then gets its own certificate, recognisable by its fingerprint.
 
 ### certs export
 
-Packs the agent's **own** side (server certificate, its key under a passphrase, and the CA that verifies clients) into `server-credentials.json`, to run the agent on another host. Useful when the bundle was generated in the Workbench and the agent must run elsewhere.
+Packs the agent's **own** side (its server certificate, its key protected by a passphrase, and the CA that checks clients) into `server-credentials.json`, so you can run the agent on another host. This is useful when you created the bundle in the Workbench but the agent must run elsewhere.
 
 ### certs import
 
-Installs a client or server credential file on this machine. It checks the certificate against the CA, decrypts the key with the passphrase and re-encrypts it under a random password in **this** machine's vault; the passphrase is not kept.
+Installs a client or server credential file on this machine. It checks the certificate against the CA, decrypts the key with your passphrase, then re-encrypts it with a new random password stored in **this** machine's vault. The passphrase itself is not kept.
 
 | Flag | Default |
 |------|---------|
 | `--dir` | the file's name without `.json` |
 | `--passphrase-file` | read the passphrase from a file |
+
+A typical exchange: issue a file on the agent host, move it to the laptop, and import it there.
 
 ```bash
 # On the agent host
@@ -111,9 +121,19 @@ rfswift agent certs import laptop-client.json --dir ~/.config/rfswift/remote/lab
 
 ## What the agent serves
 
-Authenticated clients get a typed control plane, not a shell: target listing across every engine of the host, inspection, start and stop, container and Nix creation as cancellable jobs with live progress, deletion, container configuration, image checks and pulls, profile defaults, audits, tool search and install, interactive terminals (PTY, ConPTY on Windows), mission-workspace artifact listing and transfer, engine status and prune, Nix garbage collection, and USB passthrough (macOS Lima, Windows usbipd). A few Workbench calls still run the remote `rfswift` binary through a bounded JSON argument array (never a shell), with `-q` so no banner reaches the output.
+Authenticated clients get a fixed set of typed operations, not a shell:
 
-Unknown routes are closed without a response. Without a trusted client certificate nothing answers, not even `/health` or `/v1/info`.
+- list the targets of every engine on the host, inspect them, start and stop them;
+- create containers and Nix environments as cancellable jobs with live progress, delete them, configure containers;
+- check and pull images, read profile defaults, run audits, search and install tools;
+- open interactive terminals (PTY, ConPTY on Windows);
+- list and transfer artifacts from mission workspaces;
+- see engine status, reclaim space, collect Nix garbage;
+- pass USB devices through (Lima on macOS, usbipd on Windows).
+
+A few Workbench calls still run the remote `rfswift` binary, always through a bounded JSON argument array (never a shell) and with `-q` so no banner reaches the output.
+
+Unknown requests are closed without a response. Without a trusted client certificate nothing answers at all, not even `/health` or `/v1/info`.
 
 ---
 

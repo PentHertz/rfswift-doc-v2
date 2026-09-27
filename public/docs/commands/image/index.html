@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift image · RF Swift</title>
   <meta name="description" content="List, pull, audit, build, tag, export and import container images.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/image/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/image/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift image · RF Swift">
   <meta property="og:description" content="List, pull, audit, build, tag, export and import container images.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/image/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/image/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,10 +231,14 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift image</h1><p class="doc-lead">List, pull, audit, build, tag, export and import container images.</p><p class="doc-meta">Reference · 3 min read · Updated September 27, 2026</p>
+      <h1>rfswift image</h1><p class="doc-lead">List, pull, audit, build, tag, export and import container images.</p><p class="doc-meta">Reference · 3 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Manage container images: list what is local or published, pull, audit for vulnerabilities, build from a recipe, tag, and move images or containers around as archives. This is the canonical v4 group; <code>rfswift images ...</code>, <code>rfswift build</code>, <code>rfswift delete</code>, <code>rfswift retag</code>, <code>rfswift download</code>, <code>rfswift export</code> and <code>rfswift import</code> still work and print a notice.</p>
+      <p><code>rfswift image</code> groups every command that works on container images. Use it to see which images you have, download new ones, check them for vulnerabilities, build your own, and move images between machines.</p>
+<p>The most common use is downloading a toolbox:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image pull -i sdr_full</span></span></code></pre></div></div>
+<p>This is the canonical v4 group. The older spellings (<code>rfswift images ...</code>, <code>rfswift build</code>, <code>rfswift delete</code>, <code>rfswift retag</code>, <code>rfswift download</code>, <code>rfswift export</code> and <code>rfswift import</code>) still work and print a notice with the new name.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">local</span>     <span class="o">[</span>-v<span class="o">]</span> <span class="o">[</span>-f FILTER<span class="o">]</span>                 <span class="c1"># was: images local</span>
@@ -262,108 +252,106 @@
 </span></span><span class="line"><span class="cl">rfswift image download  -i IMAGE <span class="o">[</span>-o FILE<span class="o">]</span> <span class="o">[</span>--pull<span class="o">]</span>      <span class="c1"># was: download</span>
 </span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span>    container<span class="p">|</span>image ...              <span class="c1"># was: export</span>
 </span></span><span class="line"><span class="cl">rfswift image import    container<span class="p">|</span>image ...              <span class="c1"># was: import</span></span></span></code></pre></div></div>
-<p>Group-level flags <code>-v, --show-versions</code> and <code>-f, --filter</code> apply to <code>local</code> and <code>remote</code>.</p>
-<hr>
+<p>The group-level flags <code>-v, --show-versions</code> and <code>-f, --filter</code> apply to <code>local</code> and <code>remote</code>.</p>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Purpose</th>
+      <th>What it does</th>
       <th>Details</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>local</code></td>
-      <td>RF Swift images present on the active engine, with version status</td>
+      <td>Lists the RF Swift images on the active engine, with their version status</td>
       <td><a href="/docs/commands/images">images</a></td>
     </tr>
     <tr>
       <td><code>remote</code></td>
-      <td>Images published in the official repository for your architecture</td>
+      <td>Lists the images published in the official repository for your architecture</td>
       <td><a href="/docs/commands/images">images</a></td>
     </tr>
     <tr>
       <td><code>pull</code></td>
-      <td>Pull an image (<code>-V</code> picks a published version, <code>-t</code> retags it locally)</td>
+      <td>Downloads an image. <code>-V</code> picks a published version, <code>-t</code> gives it a local tag</td>
       <td><a href="/docs/commands/images">images</a></td>
     </tr>
     <tr>
       <td><code>versions</code></td>
-      <td>Every published version of each image</td>
+      <td>Lists every published version of each image</td>
       <td><a href="/docs/commands/images">images</a></td>
     </tr>
     <tr>
       <td><code>audit</code></td>
-      <td>Scan one or more images for CVEs with trivy (host binary, else run as a container through the engine), plus a host grype second opinion; <code>--format stdout,json,html,pdf</code>, <code>--fail-on</code>, <code>--out</code></td>
+      <td>Scans one or more images for known vulnerabilities (CVEs) with trivy, plus a second opinion from grype on the host. trivy runs from the host binary, or as a container through the engine if it is not installed. Options: <code>--format stdout,json,html,pdf</code>, <code>--fail-on</code>, <code>--out</code></td>
       <td><a href="/docs/commands/audit">audit</a></td>
     </tr>
     <tr>
       <td><code>build</code></td>
-      <td>Build an image from a simplified YAML recipe</td>
+      <td>Builds an image from a simplified YAML recipe</td>
       <td><a href="/docs/commands/build">build</a></td>
     </tr>
     <tr>
       <td><code>rm</code></td>
-      <td>Delete an image (interactive picker if <code>-i</code> is omitted)</td>
+      <td>Deletes an image. Without <code>-i</code>, a picker opens</td>
       <td><a href="/docs/commands/delete">delete</a></td>
     </tr>
     <tr>
       <td><code>tag</code></td>
-      <td>Rename an image tag</td>
+      <td>Renames an image tag</td>
       <td><a href="/docs/commands/retag">retag</a></td>
     </tr>
     <tr>
       <td><code>download</code></td>
-      <td>Save an image to a compressed <code>tar.gz</code> (<code>--pull</code> fetches it first)</td>
+      <td>Saves an image to a compressed <code>tar.gz</code> file. <code>--pull</code> fetches it first</td>
       <td><a href="/docs/commands/download">download</a></td>
     </tr>
     <tr>
       <td><code>export container</code> / <code>export image</code></td>
-      <td>Export a container filesystem or one or more images to <code>tar.gz</code></td>
+      <td>Exports a container&rsquo;s filesystem, or one or more images, to <code>tar.gz</code></td>
       <td><a href="/docs/commands/export">export</a></td>
     </tr>
     <tr>
       <td><code>import container</code> / <code>import image</code></td>
-      <td>Import an archive back (a file picker opens when <code>-i</code> is omitted)</td>
+      <td>Imports such an archive back. Without <code>-i</code>, a file picker opens</td>
       <td><a href="/docs/commands/import">import</a></td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
+<p>See which images are on this machine, and whether newer versions are published:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># What is on this machine, with freshness against the registry</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">local</span> -v
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># What can be pulled for this architecture</span>
-</span></span><span class="line"><span class="cl">rfswift image remote -f telecom
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Pull a specific published version and give it a short local tag</span>
-</span></span><span class="line"><span class="cl">rfswift image pull -i sdr_full -V 0.1.1 -t sdr:pinned
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Audit before an engagement, fail the pipeline on critical CVEs</span>
-</span></span><span class="line"><span class="cl">rfswift image audit penthertz/rfswift_resolute:sdr_full --format json,html --fail-on critical
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Move an image to an air-gapped machine</span>
-</span></span><span class="line"><span class="cl">rfswift image download -i sdr_light -o sdr_light.tar.gz --pull
-</span></span><span class="line"><span class="cl">rfswift image import image -i sdr_light.tar.gz
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Snapshot a customised container and carry it elsewhere</span>
-</span></span><span class="line"><span class="cl">rfswift container commit -c lab -i lab_ready:v1
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">local</span> -v</span></span></code></pre></div></div>
+<p>See which telecom images you can pull for this architecture:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image remote -f telecom</span></span></code></pre></div></div>
+<p>Pull a specific published version and give it a short local tag:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image pull -i sdr_full -V 0.1.1 -t sdr:pinned</span></span></code></pre></div></div>
+<p>Audit an image before an engagement, and make a CI pipeline fail on critical vulnerabilities:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image audit penthertz/rfswift_resolute:sdr_full --format json,html --fail-on critical</span></span></code></pre></div></div>
+<p>Move an image to an air-gapped machine: save it on a connected machine, then import it on the offline one:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image download -i sdr_light -o sdr_light.tar.gz --pull
+</span></span><span class="line"><span class="cl">rfswift image import image -i sdr_light.tar.gz</span></span></code></pre></div></div>
+<p>Save a customised container as an image and carry it to another machine:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container commit -c lab -i lab_ready:v1
 </span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span> image -i lab_ready:v1 -o lab_ready.tar.gz</span></span></code></pre></div></div>
-<div class="admonition admonition-info" role="note"><p><strong>Image repository</strong>: since v3.0.0 official images live under <code>penthertz/rfswift_resolute</code> (Ubuntu 26.04). Short names such as <code>sdr_full</code> are expanded with the <code>repotag</code> of your <code>config.ini</code>. RF Swift prints a notice when a container still runs an image from the older <code>rfswift_noble</code> repository.</p>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">Where official images live</p><p>Since v3.0.0, official images are published under <code>penthertz/rfswift_resolute</code> (Ubuntu 26.04). Short names such as <code>sdr_full</code> are expanded with the <code>repotag</code> set in your <code>config.ini</code>. RF Swift prints a notice when a container still runs an image from the older <code>rfswift_noble</code> repository.</p>
 </div>
-<div class="admonition admonition-warning" role="note"><p><strong>Pull errors mentioning <code>invalid username/password</code></strong> come from a stale <code>docker login</code> / <code>podman login</code> for Docker Hub kept by the engine. RF Swift sends no credentials of its own; the message names the credential file and the <code>logout</code> command that clears it.</p>
+<div class="admonition admonition-warning" role="note"><p class="admonition-title">Pull fails with “invalid username/password”</p><p>This comes from an old <code>docker login</code> or <code>podman login</code> for Docker Hub that the engine still remembers. RF Swift sends no credentials of its own. The error message names the credential file and the <code>logout</code> command that clears it.</p>
 </div>
 <h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/container">container</a> to run what you pulled</li>
-<li><a href="/docs/air-gapped-installation">Air-gapped installation</a> for the download / import workflow</li>
-<li><a href="/docs/commands/env">env export / import</a> for the Nix equivalent (<code>.rfenv</code> archives)</li>
+<li><a href="/docs/commands/container">container</a>: run what you pulled</li>
+<li><a href="/docs/air-gapped-installation">Air-gapped installation</a>: the full download and import workflow</li>
+<li><a href="/docs/commands/env">env export / import</a>: the Nix equivalent, with <code>.rfenv</code> archives</li>
 </ul>
 
     </div>

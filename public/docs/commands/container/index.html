@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift container · RF Swift</title>
   <meta name="description" content="Create, enter, stop, remove, rename, commit and upgrade containers.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/container/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/container/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift container · RF Swift">
   <meta property="og:description" content="Create, enter, stop, remove, rename, commit and upgrade containers.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/container/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/container/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,10 +231,13 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift container</h1><p class="doc-lead">Create, enter, stop, remove, rename, commit and upgrade containers.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
+      <h1>rfswift container</h1><p class="doc-lead">Create, enter, stop, remove, rename, commit and upgrade containers.</p><p class="doc-meta">Reference · 4 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Create and manage RF Swift containers. This is the canonical v4 group for everything that used to live at the top level (<code>run</code>, <code>exec</code>, <code>stop</code>, <code>remove</code>, &hellip;).</p>
+      <p><code>rfswift container</code> groups every command that creates and manages containers (labs): create, enter, list, stop, remove, rename, commit and upgrade. In RF Swift v4 these commands moved here from the top level (<code>run</code>, <code>exec</code>, <code>stop</code>, <code>remove</code>&hellip;); the old names still work.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n lab    <span class="c1"># create a lab and enter it</span>
+</span></span><span class="line"><span class="cl">rfswift container shell -c lab                 <span class="c1"># come back to it later</span></span></span></code></pre></div></div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create   -i IMAGE -n NAME <span class="o">[</span>options<span class="o">]</span>     <span class="c1"># was: rfswift run</span>
@@ -260,9 +249,8 @@
 </span></span><span class="line"><span class="cl">rfswift container rename   -n OLD -d NEW                  <span class="c1"># was: rfswift rename</span>
 </span></span><span class="line"><span class="cl">rfswift container commit   -c NAME -i IMAGE               <span class="c1"># was: rfswift commit</span>
 </span></span><span class="line"><span class="cl">rfswift container upgrade  -c NAME <span class="o">[</span>-i IMAGE<span class="o">]</span> <span class="o">[</span>-r DIRS<span class="o">]</span>   <span class="c1"># was: rfswift upgrade</span></span></span></code></pre></div></div>
-<div class="admonition admonition-info" role="note"><p>Every subcommand accepts the global <code>--engine</code> flag. With <code>--engine nix</code>, <code>container create</code> and <code>container shell</code> create and enter a <strong>native Nix environment</strong> instead of a container, with the same flags plus the Nix-only ones (<code>--lazy</code>, <code>--pure</code>, <code>--isolate</code>, <code>--flake</code>, <code>--rebuild</code>, <code>--create-only</code>). See the <a href="/docs/guide/nix-engine">Nix engine guide</a>.</p>
+<div class="admonition admonition-info" role="note"><p>Every subcommand accepts the global <code>--engine</code> flag. With <code>--engine nix</code>, <code>container create</code> and <code>container shell</code> create and enter a <strong>native Nix environment</strong> instead of a container. They take the same flags, plus the Nix-only ones (<code>--lazy</code>, <code>--pure</code>, <code>--isolate</code>, <code>--flake</code>, <code>--rebuild</code>, <code>--create-only</code>). See the <a href="/docs/guide/nix-engine/">Nix engine guide</a>.</p>
 </div>
-<hr>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
@@ -322,20 +310,18 @@
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="what-a-container-gets-by-default">What a container gets by default<a class="anchor" href="#what-a-container-gets-by-default" aria-label="Link to this section"></a></h2>
 <p>When you run <code>rfswift container create -i sdr_full -n lab</code>, RF Swift:</p>
 <ul>
-<li>pulls <code>penthertz/rfswift_resolute:sdr_full</code> if it is not local (short names resolve through <code>repotag</code> in <code>config.ini</code>);</li>
-<li>mounts a <strong>workspace</strong>: <code>~/rfswift-workspace/lab/</code> on the host, <code>/workspace</code> in the container (<code>--workspace</code>, <code>--cwd</code>, <code>--no-workspace</code> change this);</li>
-<li>maps the devices and cgroup rules of <code>config.ini</code> (USB tree, sound, DRI, input, &hellip;), and checks before creation that the engine can map them on this host. Devices that cannot work (rootless Podman root-only nodes, a device absent from the Lima VM, USB on Docker Desktop for macOS) are listed with the reason and dropped after you confirm;</li>
-<li>checks USB reachability: <code>/dev/bus/usb</code> mapped <strong>and</strong> <code>c 189:* rwm</code> allowed, without privileged mode;</li>
-<li>arms the <strong>serial hot-plug</strong> when a serial port is named: <code>/dev/ttyACM*</code>, <code>/dev/ttyUSB*</code> and <code>/dev/ttyAMA*</code> get cgroup rules and their nodes are created inside the container at every start and every shell, so a reader plugged in later works without re-creating anything (Docker and rootful Podman);</li>
-<li>forwards the display (X11 on Linux, XQuartz with EGL on macOS, WSLg on Windows) and audio (host PulseAudio/PipeWire TCP module loaded automatically on Linux and macOS, WSLg&rsquo;s PulseAudio socket on Windows);</li>
-<li>opens <code>/bin/zsh</code> (Bash if zsh is missing) and prints a summary: image version and freshness, size, shell, display, privileges, mounts, devices, seccomp, ulimits, GPUs, network mode and ports.</li>
+<li><strong>pulls the image</strong> <code>penthertz/rfswift_resolute:sdr_full</code> if it is not on your computer yet. Short names resolve through <code>repotag</code> in <code>config.ini</code>.</li>
+<li><strong>mounts a workspace</strong>: <code>~/rfswift-workspace/lab/</code> on your computer is <code>/workspace</code> in the container. <code>--workspace</code>, <code>--cwd</code> and <code>--no-workspace</code> change this.</li>
+<li><strong>maps the devices</strong> and cgroup rules listed in <code>config.ini</code> (USB tree, sound, DRI, input&hellip;). Before creating anything, it checks that the engine can map them on this computer. Devices that cannot work (root-only nodes on rootless Podman, a device missing from the Lima VM, USB on Docker Desktop for macOS) are listed with the reason and dropped after you confirm.</li>
+<li><strong>checks that USB devices will be reachable</strong>: <code>/dev/bus/usb</code> must be mapped <strong>and</strong> <code>c 189:* rwm</code> allowed. Privileged mode is not needed.</li>
+<li><strong>sets up serial hot-plug</strong> when you name a serial port. <code>/dev/ttyACM*</code>, <code>/dev/ttyUSB*</code> and <code>/dev/ttyAMA*</code> get cgroup rules, and their device nodes are created inside the container at every start and every shell. A reader you plug in later then works without re-creating anything (Docker and rootful Podman).</li>
+<li><strong>forwards the display</strong> (X11 on Linux, XQuartz with EGL on macOS, WSLg on Windows) <strong>and sound</strong> (the host PulseAudio/PipeWire TCP module, loaded automatically on Linux and macOS; WSLg&rsquo;s PulseAudio socket on Windows).</li>
+<li><strong>opens a shell</strong>: <code>/bin/zsh</code>, or Bash if zsh is missing. It first prints a summary: image version and freshness, size, shell, display, privileges, mounts, devices, seccomp, ulimits, GPUs, network mode and ports.</li>
 </ul>
-<p>On Windows, <code>create</code>, <code>shell</code> and <code>env shell</code> offer the usbipd device picker when they detect shared or known RF hardware, so a radio can be forwarded into WSL 2 before the container starts.</p>
-<hr>
+<p>On Windows, <code>create</code>, <code>shell</code> and <code>env shell</code> offer the usbipd device picker when they detect shared or known RF hardware, so you can forward a radio into WSL 2 before the container starts.</p>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Interactive wizard (profiles, image, workspace, devices, network, features)</span>
@@ -358,13 +344,12 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Upgrade to the latest image, keeping two directories</span>
 </span></span><span class="line"><span class="cl">rfswift container upgrade -c sdr -r /root/captures,/opt/tools</span></span></code></pre></div></div>
-<hr>
 <h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/guide/running-rf-swift">Running RF Swift</a> for the day-to-day workflow</li>
-<li><a href="/docs/commands/config">config</a> to change devices, mounts, capabilities and ports afterwards</li>
-<li><a href="/docs/commands/env">env</a> for the Nix counterpart of this group</li>
-<li><a href="/docs/guide/limitations">Known limits</a> for what each engine and platform cannot do</li>
+<li><a href="/docs/guide/running-rf-swift/">Running RF Swift</a>: the day-to-day workflow</li>
+<li><a href="/docs/commands/config/"><code>config</code></a>: change devices, mounts, capabilities and ports afterwards</li>
+<li><a href="/docs/commands/env/"><code>env</code></a>: the Nix counterpart of this group</li>
+<li><a href="/docs/guide/limitations/">Known limits</a>: what each engine and platform cannot do</li>
 </ul>
 
     </div>

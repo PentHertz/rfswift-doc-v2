@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift image export · RF Swift</title>
   <meta name="description" content="Export containers or images to archives.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/export/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/export/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift image export · RF Swift">
   <meta property="og:description" content="Export containers or images to archives.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/export/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/export/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,21 +231,23 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift image export</h1><p class="doc-lead">Export containers or images to archives.</p><p class="doc-meta">Reference · 3 min read · Updated September 27, 2026</p>
+      <h1>rfswift image export</h1><p class="doc-lead">Export containers or images to archives.</p><p class="doc-meta">Reference · 4 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift image export</code>. The legacy form <code>rfswift export</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
-</div>
-<p>Export containers or images to compressed archive files for backup or transfer.</p>
-<h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
+      <p><code>rfswift image export</code> saves a container or an image as a compressed <code>tar.gz</code> archive. Use it to back up your work, or to move a lab to another machine.</p>
+<p>The most common use backs up a container:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Export container</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c CONTAINER_NAME -o OUTPUT_FILE.tar.gz
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Export image</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span> image -i IMAGE_NAME -o OUTPUT_FILE.tar.gz</span></span></code></pre></div></div>
-<p>The <code>export</code> command creates compressed tar.gz archives of containers or images, preserving all data, configuration, and metadata. This is the recommended method for creating portable backups.</p>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c my_sdr_container -o sdr_backup.tar.gz</span></span></code></pre></div></div>
+<p>Bring an archive back with <a href="/docs/commands/import"><code>rfswift image import</code></a>.</p>
+<div class="admonition admonition-info" role="note"><p><code>rfswift image export</code> is the v4 spelling. The older <code>rfswift export</code> still works, takes the same flags and prints a notice with the new name. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+</div>
+<h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
+<p>Export a container:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c CONTAINER_NAME -o OUTPUT_FILE.tar.gz</span></span></code></pre></div></div>
+<p>Export an image:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">export</span> image -i IMAGE_NAME -o OUTPUT_FILE.tar.gz</span></span></code></pre></div></div>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <h3 id="export-container">Export container<a class="anchor" href="#export-container" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
@@ -267,7 +255,7 @@
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -275,13 +263,13 @@
   <tbody>
     <tr>
       <td><code>-c, --container STRING</code></td>
-      <td>Container to export</td>
+      <td>The container to export</td>
       <td>Yes</td>
       <td><code>-c my_container</code></td>
     </tr>
     <tr>
       <td><code>-o, --output STRING</code></td>
-      <td>Output filename</td>
+      <td>The output file</td>
       <td>No</td>
       <td><code>-o backup.tar.gz</code></td>
     </tr>
@@ -294,7 +282,7 @@
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -302,55 +290,52 @@
   <tbody>
     <tr>
       <td><code>-i, --images STRINGS</code></td>
-      <td>Image(s) to export (can specify multiple)</td>
+      <td>The image or images to export</td>
       <td>Yes</td>
       <td><code>-i sdr_full</code></td>
     </tr>
     <tr>
       <td><code>-o, --output STRING</code></td>
-      <td>Output filename</td>
+      <td>The output file</td>
       <td>No</td>
       <td><code>-o backup.tar.gz</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Auto-generated filenames</strong>: If <code>-o</code> is omitted, filenames are generated automatically:</p>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">Default file names</p><p>Without <code>-o</code>, the file name is generated for you:</p>
 <ul>
 <li><strong>Container export</strong>: <code>{container_name}-{YYYYMMDD}.tar.gz</code></li>
-<li><strong>Image export</strong>: <code>{image_name}_converted.tar.gz</code> (with <code>/</code> and <code>:</code> replaced by <code>_</code>)</li>
+<li><strong>Image export</strong>: <code>{image_name}_converted.tar.gz</code>, with <code>/</code> and <code>:</code> replaced by <code>_</code></li>
 </ul>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
 <h3 id="export-containers">Export containers<a class="anchor" href="#export-containers" aria-label="Link to this section"></a></h3>
-<p><strong>Basic container export:</strong></p>
+<p>Export a container to a file:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c my_sdr_container -o sdr_backup.tar.gz</span></span></code></pre></div></div>
-<p><strong>Export with descriptive filename:</strong></p>
+<p>Include today&rsquo;s date in the file name:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c client_assessment <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o client_assessment_<span class="k">$(</span>date +%Y%m%d<span class="k">)</span>.tar.gz</span></span></code></pre></div></div>
-<p><strong>Export to specific directory:</strong></p>
+<p>Save into a specific folder:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c important_work <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o ~/backups/containers/important_work_backup.tar.gz</span></span></code></pre></div></div>
-<p><strong>Export before removal:</strong></p>
+<p>Keep a final backup before you delete a container:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create backup before deleting</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c old_container -o archives/old_container_final.tar.gz
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c old_container -o archives/old_container_final.tar.gz
 </span></span><span class="line"><span class="cl">rfswift container rm -c old_container</span></span></code></pre></div></div>
 <h3 id="export-images">Export images<a class="anchor" href="#export-images" aria-label="Link to this section"></a></h3>
-<p><strong>Basic image export:</strong></p>
+<p>Export an image to a file:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">export</span> image -i sdr_full -o sdr_full_image.tar.gz</span></span></code></pre></div></div>
-<p><strong>Export custom image:</strong></p>
+<p>Export an image you built yourself:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">export</span> image -i my_custom_sdr:v1.0 -o custom_sdr_v1.tar.gz</span></span></code></pre></div></div>
-<hr>
 <h2 id="what-gets-exported">What gets exported<a class="anchor" href="#what-gets-exported" aria-label="Link to this section"></a></h2>
 <h3 id="container-export">Container export<a class="anchor" href="#container-export" aria-label="Link to this section"></a></h3>
-<p>When exporting a container:</p>
+<p>A container export captures the container&rsquo;s filesystem only. Docker settings such as port bindings and network configuration are not included.</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -364,35 +349,35 @@
     <tr>
       <td>Container filesystem</td>
       <td>Yes</td>
-      <td>All files and modifications</td>
+      <td>All files and changes</td>
     </tr>
     <tr>
       <td>Installed packages</td>
       <td>Yes</td>
-      <td>Everything in container</td>
+      <td>Everything in the container</td>
     </tr>
     <tr>
       <td>Configuration files</td>
       <td>Yes</td>
-      <td>Modified configs</td>
+      <td>Including the ones you changed</td>
     </tr>
     <tr>
       <td>Running processes</td>
       <td>No</td>
-      <td>Only filesystem</td>
+      <td>Only the filesystem</td>
     </tr>
     <tr>
       <td>Mounted volumes</td>
       <td>No</td>
-      <td>Volume data not included</td>
+      <td>Volume data is not included</td>
     </tr>
     <tr>
       <td>Container metadata</td>
-      <td>⚠️ Limited</td>
-      <td>Basic info only</td>
+      <td>Limited</td>
+      <td>Basic information only</td>
     </tr>
     <tr>
-      <td>Network config</td>
+      <td>Network configuration</td>
       <td>No</td>
       <td>Not preserved</td>
     </tr>
@@ -404,9 +389,9 @@
   </tbody>
 </table>
 </div>
-<p><strong>Important:</strong> Export captures filesystem only, not Docker metadata like port bindings or network configuration.</p>
+<div class="admonition admonition-warning" role="note"><p class="admonition-title">Mounted folders are not included</p><p>Folders mounted into the container, such as the workspace, stay on your computer and are not in the archive. Back them up separately with your usual file backup tools.</p>
+</div>
 <h3 id="image-export">Image export<a class="anchor" href="#image-export" aria-label="Link to this section"></a></h3>
-<p>When exporting an image:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -425,12 +410,12 @@
     <tr>
       <td>Image metadata</td>
       <td>Yes</td>
-      <td>Tags, labels, etc.</td>
+      <td>Tags, labels and so on</td>
     </tr>
     <tr>
       <td>Build history</td>
       <td>Yes</td>
-      <td>Layer history</td>
+      <td>The layer history</td>
     </tr>
     <tr>
       <td>Configuration</td>
@@ -440,17 +425,16 @@
   </tbody>
 </table>
 </div>
-<hr>
-<h2 id="file-size-considerations">File size considerations<a class="anchor" href="#file-size-considerations" aria-label="Link to this section"></a></h2>
-<h3 id="typical-export-sizes">Typical export sizes<a class="anchor" href="#typical-export-sizes" aria-label="Link to this section"></a></h3>
+<h2 id="file-sizes">File sizes<a class="anchor" href="#file-sizes" aria-label="Link to this section"></a></h2>
+<p>Archives are compressed as <code>tar.gz</code>, usually to about a third of the original size. These are rough examples; your sizes depend on the image and what you added to it. The official toolboxes are larger than these examples: <code>rfswift image remote</code> lists their sizes.</p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
-      <th>Container Type</th>
+      <th>Container type</th>
       <th>Uncompressed</th>
       <th>Compressed (tar.gz)</th>
-      <th>Compression Ratio</th>
+      <th>Ratio</th>
     </tr>
   </thead>
   <tbody>
@@ -481,71 +465,47 @@
   </tbody>
 </table>
 </div>
-<h3 id="minimizing-export-size">Minimizing export size<a class="anchor" href="#minimizing-export-size" aria-label="Link to this section"></a></h3>
-<p><strong>Before exporting, clean up:</strong></p>
+<h3 id="make-the-archive-smaller">Make the archive smaller<a class="anchor" href="#make-the-archive-smaller" aria-label="Link to this section"></a></h3>
+<p>Clean up inside the container before exporting. Open a shell in it:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c my_container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove package caches</span>
-</span></span><span class="line"><span class="cl">apt-get clean
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c my_container</span></span></code></pre></div></div>
+<p>Inside the container, remove package caches, temporary files, logs and build tools you no longer need, then leave:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt-get clean
 </span></span><span class="line"><span class="cl">rm -rf /var/lib/apt/lists/*
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove temporary files</span>
 </span></span><span class="line"><span class="cl">rm -rf /tmp/*
 </span></span><span class="line"><span class="cl">rm -rf /root/.cache/*
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove unnecessary logs</span>
 </span></span><span class="line"><span class="cl">truncate -s <span class="m">0</span> /var/log/*.log
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove development files if not needed</span>
 </span></span><span class="line"><span class="cl">apt-get remove -y build-essential
 </span></span><span class="line"><span class="cl">apt-get autoremove -y
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Now export will be smaller</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c my_container -o clean_backup.tar.gz</span></span></code></pre></div></div>
-<hr>
+</span></span><span class="line"><span class="cl">exit</span></span></code></pre></div></div>
+<p>Then export as usual:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c my_container -o clean_backup.tar.gz</span></span></code></pre></div></div>
+<div class="admonition admonition-tip" role="note"><p class="admonition-title">Keep regular backups</p><p>For work you cannot lose, export on a schedule and keep copies in more than one place: locally, on a NAS and off-site.</p>
+</div>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="containerimage-not-found">Container/Image not found<a class="anchor" href="#containerimage-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: No such container/image: name</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="no-such-containerimage">“No such container/image”<a class="anchor" href="#no-such-containerimage" aria-label="Link to this section"></a></h3>
+<p>The name does not match a container or image on this computer. List them and check the exact name:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List containers</span>
-</span></span><span class="line"><span class="cl">rfswift container last
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># List images</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container last
 </span></span><span class="line"><span class="cl">rfswift image local</span></span></code></pre></div></div>
-<h3 id="permission-denied">Permission denied<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Permission denied</code> when writing output file</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="permission-denied-when-writing-the-file">“Permission denied” when writing the file<a class="anchor" href="#permission-denied-when-writing-the-file" aria-label="Link to this section"></a></h3>
+<p>You cannot write to the output folder. Check its permissions, or create a folder you own:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check output directory permissions</span>
-</span></span><span class="line"><span class="cl">ls -ld ~/backups/
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Create directory if needed</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -ld ~/backups/
 </span></span><span class="line"><span class="cl">mkdir -p ~/backups/containers
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Set correct permissions</span>
-</span></span><span class="line"><span class="cl">chmod <span class="m">755</span> ~/backups/containers
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or use sudo</span>
-</span></span><span class="line"><span class="cl">sudo rfswift image <span class="nb">export</span> container -c container -o /backup/file.tar.gz</span></span></code></pre></div></div>
-<hr>
+</span></span><span class="line"><span class="cl">chmod <span class="m">755</span> ~/backups/containers</span></span></code></pre></div></div>
+<p>To write to a system folder, use <code>sudo</code>:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo rfswift image <span class="nb">export</span> container -c container -o /backup/file.tar.gz</span></span></code></pre></div></div>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/import"><code>import</code></a> - Import exported containers/images</li>
-<li><a href="/docs/commands/commit"><code>commit</code></a> - Create images from containers</li>
-<li><a href="/docs/commands/download"><code>download</code></a> - Download images from registry</li>
-<li><a href="/docs/commands/remove"><code>remove</code></a> - Remove containers after export</li>
+<li><a href="/docs/commands/import"><code>import</code></a>: import exported containers and images</li>
+<li><a href="/docs/commands/commit"><code>commit</code></a>: turn a container into an image</li>
+<li><a href="/docs/commands/download"><code>download</code></a>: save an image from the registry</li>
+<li><a href="/docs/commands/remove"><code>remove</code></a>: remove containers after exporting them</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Backup Strategy</strong>: Export creates compressed, portable backups. For production environments, schedule regular automated exports to multiple locations (local, NAS, offsite).</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Volume Data Not Included</strong>: Exports only include the container filesystem, not mounted volumes. Back up volume data separately using standard file backup tools.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Compression</strong>: Export automatically compresses to tar.gz format, typically achieving 3:1 compression ratio. This saves significant storage space compared to uncompressed backups.</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -585,16 +545,15 @@
         <li><a href="#image-export">Image export</a></li>
       </ul>
     </li>
-    <li><a href="#file-size-considerations">File size considerations</a>
+    <li><a href="#file-sizes">File sizes</a>
       <ul>
-        <li><a href="#typical-export-sizes">Typical export sizes</a></li>
-        <li><a href="#minimizing-export-size">Minimizing export size</a></li>
+        <li><a href="#make-the-archive-smaller">Make the archive smaller</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#containerimage-not-found">Container/Image not found</a></li>
-        <li><a href="#permission-denied">Permission denied</a></li>
+        <li><a href="#no-such-containerimage">“No such container/image”</a></li>
+        <li><a href="#permission-denied-when-writing-the-file">“Permission denied” when writing the file</a></li>
       </ul>
     </li>
     <li><a href="#related-commands">Related commands</a></li>

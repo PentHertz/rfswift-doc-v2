@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift cleanup · RF Swift</title>
   <meta name="description" content="Remove old containers and images to reclaim disk space.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/cleanup/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/cleanup/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift cleanup · RF Swift">
   <meta property="og:description" content="Remove old containers and images to reclaim disk space.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/cleanup/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/cleanup/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,45 +231,43 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift cleanup</h1><p class="doc-lead">Remove old containers and images to reclaim disk space.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
+      <h1>rfswift cleanup</h1><p class="doc-lead">Remove old containers and images to reclaim disk space.</p><p class="doc-meta">Reference · 3 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift system cleanup</code>. The legacy form <code>rfswift cleanup</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+      <p><code>rfswift cleanup</code> frees disk space by removing old or unused containers and images. You can target containers, images or both, and filter by age. Always preview first with <code>--dry-run</code>: it shows what would be removed without deleting anything.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --dry-run</span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift system cleanup</code>. The legacy form <code>rfswift cleanup</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
-<p>Clean up containers and images to free disk space.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup &lt;subcommand&gt; <span class="o">[</span>OPTIONS<span class="o">]</span></span></span></code></pre></div></div>
-<p>The <code>cleanup</code> command removes old or unused containers and images based on age filters. It provides three subcommands to target specific resource types or clean everything at once.</p>
-<hr>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Description</th>
+      <th>What it removes</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>all</code></td>
-      <td>Remove both old containers and images</td>
+      <td>Old containers and old images</td>
     </tr>
     <tr>
       <td><code>containers</code></td>
-      <td>Remove old containers only</td>
+      <td>Old containers only</td>
     </tr>
     <tr>
       <td><code>images</code></td>
-      <td>Remove old images only</td>
+      <td>Old images only</td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
-<h2 id="common-options">Common options<a class="anchor" href="#common-options" aria-label="Link to this section"></a></h2>
-<p>These options are available on <strong>all</strong> subcommands (<code>all</code>, <code>containers</code>, <code>images</code>):</p>
+<h2 id="options-for-every-subcommand">Options for every subcommand<a class="anchor" href="#options-for-every-subcommand" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
@@ -297,7 +281,7 @@
   <tbody>
     <tr>
       <td><code>--older-than</code></td>
-      <td>Remove items older than duration</td>
+      <td>Only remove items older than this</td>
       <td><code>&quot;&quot;</code></td>
       <td><code>--older-than 7d</code></td>
     </tr>
@@ -309,15 +293,15 @@
     </tr>
     <tr>
       <td><code>--dry-run</code></td>
-      <td>Show what would be deleted without actually deleting</td>
+      <td>Show what would be removed, without removing it</td>
       <td><code>false</code></td>
       <td><code>--dry-run</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<p>The <code>--older-than</code> flag accepts durations such as <code>24h</code>, <code>7d</code>, <code>1m</code>, and <code>1y</code>.</p>
-<h2 id="subcommand-specific-options">Subcommand-Specific options<a class="anchor" href="#subcommand-specific-options" aria-label="Link to this section"></a></h2>
+<p><code>--older-than</code> accepts durations such as <code>24h</code>, <code>7d</code>, <code>1m</code> and <code>1y</code>.</p>
+<h2 id="options-for-one-subcommand">Options for one subcommand<a class="anchor" href="#options-for-one-subcommand" aria-label="Link to this section"></a></h2>
 <h3 id="containers">containers<a class="anchor" href="#containers" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
 <table>
@@ -359,170 +343,113 @@
     </tr>
     <tr>
       <td><code>--prune-children</code></td>
-      <td>Also remove dependent child images</td>
+      <td>Also remove the child images that depend on them</td>
       <td><code>false</code></td>
       <td><code>--prune-children</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Clean both containers and images:</strong></p>
+<h3 id="basic-use">Basic use<a class="anchor" href="#basic-use" aria-label="Link to this section"></a></h3>
+<p>Preview a full cleanup, then run it:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all</span></span></code></pre></div></div>
-<p><strong>Preview what would be deleted:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --dry-run</span></span></code></pre></div></div>
-<p><strong>Full cleanup without prompts:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --dry-run
+</span></span><span class="line"><span class="cl">rfswift cleanup all</span></span></code></pre></div></div>
+<p>Run it without the confirmation prompt:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div>
-<p><strong>Remove containers only:</strong></p>
+<p>Clean only containers, or only images:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers</span></span></code></pre></div></div>
-<p><strong>Remove images only:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers
+</span></span><span class="line"><span class="cl">rfswift cleanup images</span></span></code></pre></div></div>
+<h3 id="filter-by-age">Filter by age<a class="anchor" href="#filter-by-age" aria-label="Link to this section"></a></h3>
+<p>Remove containers older than a week, images older than a month, or everything older than a day:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup images</span></span></code></pre></div></div>
-<h3 id="filtering-by-age">Filtering by age<a class="anchor" href="#filtering-by-age" aria-label="Link to this section"></a></h3>
-<p><strong>Remove containers older than 7 days:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers --older-than 7d
+</span></span><span class="line"><span class="cl">rfswift cleanup images --older-than 1m
+</span></span><span class="line"><span class="cl">rfswift cleanup all --older-than 24h --force</span></span></code></pre></div></div>
+<h3 id="weekly-maintenance">Weekly maintenance<a class="anchor" href="#weekly-maintenance" aria-label="Link to this section"></a></h3>
+<p>Remove stopped containers older than a week, then dangling images:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers --older-than 7d</span></span></code></pre></div></div>
-<p><strong>Remove images older than 1 month:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup images --older-than 1m</span></span></code></pre></div></div>
-<p><strong>Remove all resources older than 24 hours:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --older-than 24h --force</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Weekly maintenance:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove stopped containers older than a week</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup containers --stopped --older-than 7d --force
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove dangling images</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers --stopped --older-than 7d --force
 </span></span><span class="line"><span class="cl">rfswift cleanup images --dangling --force</span></span></code></pre></div></div>
-<p><strong>Before major operations:</strong></p>
+<h3 id="make-room-before-a-large-download">Make room before a large download<a class="anchor" href="#make-room-before-a-large-download" aria-label="Link to this section"></a></h3>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Free space before pulling large images</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup all --force
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then pull new images</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --force
 </span></span><span class="line"><span class="cl">rfswift image pull -i penthertz/rfswift_resolute:sdr_full</span></span></code></pre></div></div>
-<p><strong>Emergency disk space recovery:</strong></p>
+<h3 id="the-disk-is-full">The disk is full<a class="anchor" href="#the-disk-is-full" aria-label="Link to this section"></a></h3>
+<p>Remove everything unused, then check how much space you got back:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Aggressive cleanup when disk is full</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup all --force
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check space recovered</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --force
 </span></span><span class="line"><span class="cl">df -h</span></span></code></pre></div></div>
-<p><strong>Selective image cleanup:</strong></p>
+<h3 id="only-dangling-images-and-their-children">Only dangling images and their children<a class="anchor" href="#only-dangling-images-and-their-children" aria-label="Link to this section"></a></h3>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove only dangling images and their children</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup images --dangling --prune-children --force</span></span></code></pre></div></div>
-<p><strong>Safe preview before cleanup:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># See what would be removed without deleting anything</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup all --dry-run
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If the list looks right, run for real</span>
-</span></span><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div>
-<hr>
-<h2 id="cleanup-strategies">Cleanup strategies<a class="anchor" href="#cleanup-strategies" aria-label="Link to this section"></a></h2>
-<h3 id="conservative-strategy">Conservative strategy<a class="anchor" href="#conservative-strategy" aria-label="Link to this section"></a></h3>
-<p>Remove only stopped containers and dangling images:</p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup containers --stopped --force
-</span></span><span class="line"><span class="cl">rfswift cleanup images --dangling --force</span></span></code></pre></div></div>
-<p><strong>Good for:</strong></p>
-<ul>
-<li>Production systems</li>
-<li>Careful disk management</li>
-<li>Preserving development environments</li>
-</ul>
-<h3 id="balanced-strategy">Balanced strategy<a class="anchor" href="#balanced-strategy" aria-label="Link to this section"></a></h3>
-<p>Remove older unused resources:</p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --older-than 7d --force</span></span></code></pre></div></div>
-<p><strong>Good for:</strong></p>
-<ul>
-<li>Regular maintenance</li>
-<li>Development systems</li>
-<li>General cleanup</li>
-</ul>
-<h3 id="aggressive-strategy">Aggressive strategy<a class="anchor" href="#aggressive-strategy" aria-label="Link to this section"></a></h3>
-<p>Remove everything unused:</p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div>
-<p><strong>Good for:</strong></p>
-<ul>
-<li>Emergency space recovery</li>
-<li>Fresh start scenarios</li>
-<li>CI/CD systems</li>
-</ul>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift cleanup images --dangling --prune-children --force</span></span></code></pre></div></div>
+<h2 id="choosing-how-much-to-remove">Choosing how much to remove<a class="anchor" href="#choosing-how-much-to-remove" aria-label="Link to this section"></a></h2>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Approach</th>
+      <th>Command</th>
+      <th>Good for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Careful</strong>: only stopped containers and dangling images</td>
+      <td><code>rfswift cleanup containers --stopped --force</code> then <code>rfswift cleanup images --dangling --force</code></td>
+      <td>Production machines, careful disk management, keeping development labs</td>
+    </tr>
+    <tr>
+      <td><strong>Balanced</strong>: older unused items</td>
+      <td><code>rfswift cleanup all --older-than 7d --force</code></td>
+      <td>Regular maintenance, development machines</td>
+    </tr>
+    <tr>
+      <td><strong>Everything unused</strong></td>
+      <td><code>rfswift cleanup all --force</code></td>
+      <td>Emergency space recovery, a fresh start, CI machines</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>For regular maintenance, running <code>rfswift cleanup all --older-than 7d --force</code> daily or weekly keeps disk usage in check.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="cleanup-not-freeing-space">Cleanup not freeing space<a class="anchor" href="#cleanup-not-freeing-space" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Ran cleanup but disk usage still high</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="cleanup-doesnt-free-enough-space">Cleanup doesn&rsquo;t free enough space<a class="anchor" href="#cleanup-doesnt-free-enough-space" aria-label="Link to this section"></a></h3>
+<p>See what uses the space first:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check what&#39;s using space</span>
-</span></span><span class="line"><span class="cl">docker system df -v
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Try more aggressive cleanup</span>
-</span></span><span class="line"><span class="cl">docker system prune -a -f --volumes
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check for large log files</span>
-</span></span><span class="line"><span class="cl">find /var/lib/docker -name <span class="s2">&#34;*.log&#34;</span> -size +100M
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check other disk usage</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker system df -v
 </span></span><span class="line"><span class="cl">du -sh /var/lib/docker/*
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># May need to clean Docker logs</span>
+</span></span><span class="line"><span class="cl">find /var/lib/docker -name <span class="s2">&#34;*.log&#34;</span> -size +100M</span></span></code></pre></div></div>
+<p>If you need more space, these Docker commands go further. Both are <strong>destructive</strong>: <code>docker system prune -a --volumes</code> removes every unused image, container and volume, including ones RF Swift did not create, and truncating the logs erases them.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker system prune -a -f --volumes
 </span></span><span class="line"><span class="cl">truncate -s <span class="m">0</span> /var/lib/docker/containers/*/*-json.log</span></span></code></pre></div></div>
-<h3 id="permission-denied">Permission denied<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Cleanup fails with permission errors</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="permission-denied">&ldquo;Permission denied&rdquo;<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
+<p>Give your user access to Docker (see <a href="/docs/commands/host">host docker-access</a>), then run the cleanup again. By hand, add yourself to the <code>docker</code> group:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use sudo</span>
-</span></span><span class="line"><span class="cl">sudo rfswift cleanup all --force
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or add user to docker group</span>
-</span></span><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
 </span></span><span class="line"><span class="cl">newgrp docker
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then retry</span>
 </span></span><span class="line"><span class="cl">rfswift cleanup all --force</span></span></code></pre></div></div>
-<h3 id="important-container-removed">Important container removed<a class="anchor" href="#important-container-removed" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Accidentally removed needed container</p>
-<p><strong>Solutions:</strong></p>
+<p>As a one-off, <code>sudo rfswift cleanup all --force</code> also works.</p>
+<h3 id="a-container-you-needed-was-removed">A container you needed was removed<a class="anchor" href="#a-container-you-needed-was-removed" aria-label="Link to this section"></a></h3>
+<p>If you exported it before, import it again. Otherwise, re-create it from its image:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check backups</span>
-</span></span><span class="line"><span class="cl">ls ~/docker-backups/
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Restore from export</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls ~/docker-backups/
 </span></span><span class="line"><span class="cl">rfswift image import container -i backup.tar.gz -n restored_container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Recreate from image if no backup</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n recreated_container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Lesson: Always export important containers before cleanup</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c important -o backup.tar.gz</span></span></code></pre></div></div>
-<hr>
-<h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
+</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n recreated_container</span></span></code></pre></div></div>
+<p>Next time, export important containers before cleaning up:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c important -o backup.tar.gz</span></span></code></pre></div></div>
+<h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/last"><code>last</code></a> - List containers before cleanup</li>
-<li><a href="/docs/commands/remove"><code>remove</code></a> - Remove specific containers</li>
-<li><a href="/docs/commands/delete"><code>delete</code></a> - Remove specific images</li>
-<li><a href="/docs/commands/images"><code>images</code></a> - Check images before cleanup</li>
+<li><a href="/docs/commands/last">container last</a>: see your containers before cleaning up</li>
+<li><a href="/docs/commands/remove">container rm</a>: remove one container</li>
+<li><a href="/docs/commands/delete">image rm</a>: remove one image</li>
+<li><a href="/docs/commands/images">image local</a>: see your images before cleaning up</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Regular Maintenance</strong>: Schedule regular cleanup with <code>rfswift cleanup all --older-than 7d --force</code> to prevent disk space issues. Daily or weekly cleanup keeps your system healthy!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Use Dry Run First</strong>: Before running a large cleanup, use <code>--dry-run</code> to preview what will be deleted. This helps avoid accidentally removing resources you still need.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Targeted Cleanup</strong>: Use the <code>containers</code> and <code>images</code> subcommands with their specific flags (<code>--stopped</code>, <code>--dangling</code>, <code>--prune-children</code>) for precise control over what gets removed.</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -545,8 +472,8 @@
   <ul>
     <li><a href="#synopsis">Synopsis</a></li>
     <li><a href="#subcommands">Subcommands</a></li>
-    <li><a href="#common-options">Common options</a></li>
-    <li><a href="#subcommand-specific-options">Subcommand-Specific options</a>
+    <li><a href="#options-for-every-subcommand">Options for every subcommand</a></li>
+    <li><a href="#options-for-one-subcommand">Options for one subcommand</a>
       <ul>
         <li><a href="#containers">containers</a></li>
         <li><a href="#images">images</a></li>
@@ -554,26 +481,23 @@
     </li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#filtering-by-age">Filtering by age</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#basic-use">Basic use</a></li>
+        <li><a href="#filter-by-age">Filter by age</a></li>
+        <li><a href="#weekly-maintenance">Weekly maintenance</a></li>
+        <li><a href="#make-room-before-a-large-download">Make room before a large download</a></li>
+        <li><a href="#the-disk-is-full">The disk is full</a></li>
+        <li><a href="#only-dangling-images-and-their-children">Only dangling images and their children</a></li>
       </ul>
     </li>
-    <li><a href="#cleanup-strategies">Cleanup strategies</a>
-      <ul>
-        <li><a href="#conservative-strategy">Conservative strategy</a></li>
-        <li><a href="#balanced-strategy">Balanced strategy</a></li>
-        <li><a href="#aggressive-strategy">Aggressive strategy</a></li>
-      </ul>
-    </li>
+    <li><a href="#choosing-how-much-to-remove">Choosing how much to remove</a></li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#cleanup-not-freeing-space">Cleanup not freeing space</a></li>
-        <li><a href="#permission-denied">Permission denied</a></li>
-        <li><a href="#important-container-removed">Important container removed</a></li>
+        <li><a href="#cleanup-doesnt-free-enough-space">Cleanup doesn&rsquo;t free enough space</a></li>
+        <li><a href="#permission-denied">&ldquo;Permission denied&rdquo;</a></li>
+        <li><a href="#a-container-you-needed-was-removed">A container you needed was removed</a></li>
       </ul>
     </li>
-    <li><a href="#related-commands">Related commands</a></li>
+    <li><a href="#related">Related</a></li>
   </ul>
 </nav>
   <a class="toc-top" href="#content">Back to top ↑</a>

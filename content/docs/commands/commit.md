@@ -7,21 +7,23 @@ description: "Save a container's current state as a new image."
 weight: 9
 ---
 
-{{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift container commit`. The legacy form `rfswift commit` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
-{{< /callout >}}
+`rfswift container commit` saves a container's current state as a new image: every tool you installed and every file you changed inside it. Use it to keep a setup you spent time on, to take a snapshot before a risky change, or to share a customised environment.
 
-Save a container's current state as a new Docker image.
+```bash
+rfswift container commit -c my_sdr_work -i my_sdr_backup
+```
+
+You can then create new containers from that image with `rfswift container create -i my_sdr_backup -n NAME`.
+
+{{< callout type="info" >}}
+**Other spellings**: the legacy form `rfswift commit` still works and prints a notice. The flags are the same. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
 
 ## Synopsis
 
 ```bash
 rfswift container commit -c CONTAINER_NAME -i NEW_IMAGE_NAME
 ```
-
-The `commit` command creates a new Docker image from a container's current state, capturing all changes made to the filesystem. This is useful for preserving work, creating backups, or sharing customized environments.
-
----
 
 ## Options
 
@@ -31,26 +33,24 @@ The `commit` command creates a new Docker image from a container's current state
 | `-i, --image STRING` | Name for new image | Yes | `-i my_backup:v1` |
 
 {{< callout type="info" >}}
-**Interactive Picker**: When run without `-c` in an interactive terminal, RF Swift displays a scrollable container picker. If `-i` is also omitted, the image name is auto-suggested based on the container's current image (fallback: `rfswift/committed:latest`).
+**Container picker**: without `-c` in an interactive terminal, RF Swift shows a container picker. If you also leave out `-i`, it suggests an image name based on the container's current image (or `rfswift/committed:latest`).
 {{< /callout >}}
-
----
 
 ## Examples
 
 ### Basic usage
 
-**Create backup image:**
+#### Create backup image
 ```bash
 rfswift container commit -c my_sdr_work -i my_sdr_backup
 ```
 
-**With version tag:**
+#### With version tag
 ```bash
 rfswift container commit -c assessment -i assessment_backup:v1.0
 ```
 
-**Before removing container:**
+#### Before removing container
 ```bash
 # Save state first
 rfswift container commit -c temp_container -i saved_state
@@ -62,11 +62,11 @@ rfswift container rm -c temp_container
 rfswift container create -i saved_state -n restored_container
 ```
 
-### Real-World scenarios
+### Everyday cases
 
-**Save configured environment:**
+#### Save configured environment
 ```bash
-# Spent hours configuring tools
+# You spent hours configuring tools
 rfswift container shell -c sdr_work
 # ... install additional tools, configure settings ...
 exit
@@ -75,7 +75,7 @@ exit
 rfswift container commit -c sdr_work -i sdr_configured:2024_01
 ```
 
-**Create project snapshot:**
+#### Create project snapshot
 ```bash
 # End of assessment phase
 rfswift container commit -c client_assessment -i client_assessment_phase1:final
@@ -89,22 +89,22 @@ exit
 rfswift container commit -c client_assessment -i client_assessment_phase2:final
 ```
 
-**Share custom environment with team:**
+#### Share custom environment with team
 ```bash
 # Create customized environment
 rfswift container commit -c my_setup -i team_sdr_environment:v1
 
-# Export container for sharing
-rfswift image export container -c team_sdr_environment:v1 -o sdr_backup.tar.gz
+# Export the image to a file you can share
+rfswift image export image -i team_sdr_environment:v1 -o sdr_backup.tar.gz
 
-# Export image for sharing
-rfswift image export image -i imagetoexport -o sdr_backup.tar.gz
+# (or export the container itself)
+rfswift image export container -c my_setup -o sdr_backup.tar.gz
 
-# Team members import
-docker import 
+# Team members import the file
+rfswift image import image -i sdr_backup.tar.gz
 ```
 
-**Before major changes:**
+#### Before major changes
 ```bash
 # Checkpoint before risky operation
 rfswift container commit -c production_monitor -i production_monitor_backup:pre_upgrade
@@ -120,7 +120,7 @@ rfswift container rm -c production_monitor
 rfswift container create -i production_monitor_backup:pre_upgrade -n production_monitor
 ```
 
-**Create versioned snapshots:**
+#### Create versioned snapshots
 ```bash
 # Daily snapshots during project
 rfswift container commit -c research_container -i research_project:day_1
@@ -133,13 +133,11 @@ rfswift container commit -c research_container -i research_project:day_3
 rfswift container create -i research_project:day_2 -n restore_day_2
 ```
 
----
-
 ## What gets committed
 
 ### Captured in image
 
-When you commit a container, the new image includes:
+What the new image contains:
 
 | Content | Included? | Notes |
 |---------|-----------|-------|
@@ -147,13 +145,13 @@ When you commit a container, the new image includes:
 | Installed packages | Yes | APT, pip, npm packages |
 | Configuration files | Yes | Modified configs in container |
 | Created files | Yes | Scripts, data files, logs |
-| Environment variables | ⚠️ Partial | Runtime vars not preserved |
+| Environment variables | Partial | Runtime variables are not kept |
 | Running processes | No | Only filesystem, not RAM |
 | Mounted volumes | No | Volume data not in image |
-| Network configuration | ⚠️ Partial | Basic config only |
-| Port bindings | No | Must reconfigure on new container |
+| Network configuration | Partial | Basic settings only |
+| Port bindings | No | Set them again on the new container |
 
-**Example of what's saved:**
+#### Example of what's saved
 ```bash
 # Inside container
 rfswift container shell -c my_container
@@ -168,7 +166,7 @@ cp tool.py /usr/local/bin/              # Saved
 # Changes that WON'T be in committed image:
 # Data in mounted volumes                # Not saved
 # Running processes                       # Not saved
-# Temporary /tmp files may not persist   # ⚠️ Depends
+# Temporary /tmp files may not persist   # Depends
 
 exit
 
@@ -177,7 +175,7 @@ rfswift container commit -c my_container -i my_configured_image
 
 ### Mounted volumes
 
-**Important:** Mounted volume data is NOT included in committed images:
+**Mounted folders are not included.** Files in a folder you mounted from your computer (with `-b`) stay on your computer and are not copied into the image. To include them, copy them into the container's own filesystem before committing, or back them up separately:
 
 ```bash
 # Create container with volume
@@ -205,15 +203,13 @@ rfswift container rm -c restored
 rfswift container create -i capture_backup -n restored -b ~/captures:/root/captures
 ```
 
----
-
 ## Troubleshooting
 
 ### Container not found
 
-**Error:** `Error: No such container: container_name`
+The error message is: `Error: No such container: container_name`
 
-**Solutions:**
+To fix it:
 ```bash
 # List containers
 rfswift container last
@@ -221,40 +217,34 @@ rfswift container last
 
 ### Image name already exists
 
-**Error:** `Error: Conflict: Tag already exists`
+The error message is: `Error: Conflict: Tag already exists`
 
-**Solutions:**
+To fix it:
 ```bash
 # Option 1: Use different tag
 rfswift container commit -c container -i image:v2
 
-# Option 2: Remove old image first
-rfswift container rm -c container
+# Option 2: Remove the old image first
+rfswift image rm -i image:v1
 rfswift container commit -c container -i image:v1
 ```
 
----
-
 ## Related commands
 
-- [`run`](/docs/commands/run) - Create containers from committed images
-- [`export`](/docs/commands/export) - Alternative backup method (creates tar.gz)
-- [`import`](/docs/commands/import) - Import exported containers
-- [`download`](/docs/commands/download) - Download images from registry to tar.gz
-- [`images`](/docs/commands/images) - Manage committed images
-- [`remove`](/docs/commands/remove) - Remove containers after committing
-
-
----
+- [`container create`](/docs/commands/run/): create containers from a committed image
+- [`image export`](/docs/commands/export/): another way to back up (a `.tar.gz` file)
+- [`image import`](/docs/commands/import/): import exported containers and images
+- [`image download`](/docs/commands/download/): save registry images to `.tar.gz`
+- [`image local`](/docs/commands/images/): list and manage your images
+- [`container rm`](/docs/commands/remove/): remove a container after committing it
 
 {{< callout >}}
-**Pro Tip**: Before committing, clean up unnecessary files to keep image size small. Run `apt-get clean`, remove logs, and clear caches inside the container first! For portable backups, consider using `export` instead.
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Volume Data Not Included**: Data in mounted volumes (specified with `-b` flag) is NOT saved in committed images. Only the container's internal filesystem is captured. Use `export` for backups or copy volume data into container before committing.
+**Keep images small**: before committing, clean up inside the container (`apt-get clean`, old logs, caches). For a portable backup, use `image export` instead.
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**Commit vs Export vs Download**: `commit` creates a Docker image for reuse, `export` creates a compressed portable backup, and `download` saves registry images offline. Choose based on your use case: development (commit), backup/transfer (export), or getting base images (download).
+**Commit, export or download?**
+- `container commit` creates an image you reuse to create new containers.
+- `image export` creates a compressed file to back up or move to another machine.
+- `image download` saves a published image to a file for offline use.
 {{< /callout >}}

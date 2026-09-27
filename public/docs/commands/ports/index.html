@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift config ports · RF Swift</title>
   <meta name="description" content="Expose and publish ports on an existing container.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/ports/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/ports/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift config ports · RF Swift">
   <meta property="og:description" content="Expose and publish ports on an existing container.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/ports/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/ports/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,37 +231,34 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift config ports</h1><p class="doc-lead">Expose and publish ports on an existing container.</p><p class="doc-meta">Reference · 7 min read · Updated September 27, 2026</p>
+      <h1>rfswift config ports</h1><p class="doc-lead">Expose and publish ports on an existing container.</p><p class="doc-meta">Reference · 7 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4</strong>: this group lives under the <code>config</code> parent as <code>rfswift config ports</code> and remains available as <code>rfswift ports</code>; both spellings are current. On Linux Docker the change is applied in place after one <code>sudo</code> prompt; on Podman the container is committed and re-created. Add <code>--recreate</code> to force the commit-and-recreate path. Either way the container restarts. See <a href="/docs/commands/config">config</a>.</p>
-</div>
-<p>Dynamically manage port bindings on running containers.</p>
-<h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
+      <p><code>rfswift config ports</code> opens or closes network ports on a container you already created. Use it to reach a service running in the container (a web interface, an API, a collector) from your computer or from other containers.</p>
+<p>The most common use publishes a web interface on your computer only:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Expose a port on a container</span>
-</span></span><span class="line"><span class="cl">rfswift ports expose -c CONTAINER -p <span class="s2">&#34;PORT/PROTOCOL&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove an exposed port</span>
-</span></span><span class="line"><span class="cl">rfswift ports unexpose -c CONTAINER -p <span class="s2">&#34;PORT/PROTOCOL&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Bind a container port to a host port</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c CONTAINER -b <span class="s2">&#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Unbind a port binding</span>
-</span></span><span class="line"><span class="cl">rfswift ports unbind -c CONTAINER -b <span class="s2">&#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34;</span></span></span></code></pre></div></div>
-<p>The <code>ports</code> command allows you to expose ports, manage port bindings, and remove port mappings for containers without restarting them. This enables dynamic port management for network services.</p>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c web -b <span class="s2">&#34;127.0.0.1:8080:80/tcp&#34;</span></span></span></code></pre></div></div>
+<p>Publishing ports matters when the container uses an isolated network such as <code>bridge</code> or <code>nat</code>. The default <code>host</code> mode has no network isolation, so a service in the container already uses your computer&rsquo;s ports. See the <a href="/docs/commands/run/#network-modes--t---network">network modes</a>.</p>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">What happens when you apply a change</p><p>The container restarts, so save your work first. On Linux with Docker, the change is applied in place after one <code>sudo</code> prompt. On Podman, the container is committed and created again; add <code>--recreate</code> to use that method on Docker too. The shorter spelling <code>rfswift ports</code> also works. See <a href="/docs/commands/config">config</a>.</p>
+</div>
+<h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
+<p>Expose a port to other containers, or stop exposing it:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports expose   -c CONTAINER -p <span class="s2">&#34;PORT/PROTOCOL&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports unexpose -c CONTAINER -p <span class="s2">&#34;PORT/PROTOCOL&#34;</span></span></span></code></pre></div></div>
+<p>Publish a container port on a host port, or remove it:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span>   -c CONTAINER -b <span class="s2">&#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports unbind -c CONTAINER -b <span class="s2">&#34;HOST_PORT:CONTAINER_PORT/PROTOCOL&#34;</span></span></span></code></pre></div></div>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
-<h3 id="ports-expose">ports expose<a class="anchor" href="#ports-expose" aria-label="Link to this section"></a></h3>
-<p>Expose a port on a container, making it available to other containers on the same network.</p>
-<p><strong>Options:</strong></p>
+<h3 id="expose-and-unexpose">expose and unexpose<a class="anchor" href="#expose-and-unexpose" aria-label="Link to this section"></a></h3>
+<p><code>expose</code> makes a port available to other containers on the same network. <code>unexpose</code> removes it.</p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -283,28 +266,27 @@
   <tbody>
     <tr>
       <td><code>-c, --container STRING</code></td>
-      <td>Container ID or name</td>
+      <td>The container, by name or ID</td>
       <td>Yes</td>
       <td><code>-c my_container</code></td>
     </tr>
     <tr>
       <td><code>-p, --port STRING</code></td>
-      <td>Port to expose (e.g., <code>8080/tcp</code>)</td>
+      <td>The port and protocol</td>
       <td>Yes</td>
       <td><code>-p &quot;8080/tcp&quot;</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<h3 id="ports-unexpose">ports unexpose<a class="anchor" href="#ports-unexpose" aria-label="Link to this section"></a></h3>
-<p>Remove an exposed port from a container.</p>
-<p><strong>Options:</strong></p>
+<h3 id="bind-and-unbind">bind and unbind<a class="anchor" href="#bind-and-unbind" aria-label="Link to this section"></a></h3>
+<p><code>bind</code> publishes a container port on a port of your computer, so you can reach the service from the host. <code>unbind</code> removes it.</p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -312,198 +294,101 @@
   <tbody>
     <tr>
       <td><code>-c, --container STRING</code></td>
-      <td>Container ID or name</td>
-      <td>Yes</td>
-      <td><code>-c my_container</code></td>
-    </tr>
-    <tr>
-      <td><code>-p, --port STRING</code></td>
-      <td>Port to remove</td>
-      <td>Yes</td>
-      <td><code>-p &quot;8080/tcp&quot;</code></td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<h3 id="ports-bind">ports bind<a class="anchor" href="#ports-bind" aria-label="Link to this section"></a></h3>
-<p>Bind a container port to a host port, making the service accessible from the host.</p>
-<p><strong>Options:</strong></p>
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Flag</th>
-      <th>Description</th>
-      <th>Required</th>
-      <th>Example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>-c, --container STRING</code></td>
-      <td>Container ID or name</td>
+      <td>The container, by name or ID</td>
       <td>Yes</td>
       <td><code>-c my_container</code></td>
     </tr>
     <tr>
       <td><code>-b, --binding STRING</code></td>
-      <td>Port binding specification</td>
+      <td>The binding, see the format below</td>
       <td>Yes</td>
       <td><code>-b &quot;8080:80/tcp&quot;</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<h3 id="ports-unbind">ports unbind<a class="anchor" href="#ports-unbind" aria-label="Link to this section"></a></h3>
-<p>Remove a port binding from a container.</p>
-<p><strong>Options:</strong></p>
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Flag</th>
-      <th>Description</th>
-      <th>Required</th>
-      <th>Example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>-c, --container STRING</code></td>
-      <td>Container ID or name</td>
-      <td>Yes</td>
-      <td><code>-c my_container</code></td>
-    </tr>
-    <tr>
-      <td><code>-b, --binding STRING</code></td>
-      <td>Port binding specification</td>
-      <td>Yes</td>
-      <td><code>-b &quot;8080:80/tcp&quot;</code></td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<hr>
-<h2 id="port-binding-format">Port binding format<a class="anchor" href="#port-binding-format" aria-label="Link to this section"></a></h2>
-<h3 id="binding-syntax">Binding syntax<a class="anchor" href="#binding-syntax" aria-label="Link to this section"></a></h3>
-<p>Port bindings follow this format:</p>
+<h2 id="binding-format">Binding format<a class="anchor" href="#binding-format" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>[host_ip:]host_port:container_port/protocol</code></pre></div>
-<p><strong>Components:</strong></p>
 <ul>
-<li><strong>host_ip</strong>: Host IP to bind to (optional, defaults to 0.0.0.0)</li>
-<li><strong>host_port</strong>: Port on host system</li>
-<li><strong>container_port</strong>: Port inside container</li>
-<li><strong>protocol</strong>: <code>tcp</code> or <code>udp</code></li>
+<li><strong>host_ip</strong> (optional): the address on your computer to listen on. The default is <code>0.0.0.0</code>, which means every network interface.</li>
+<li><strong>host_port</strong>: the port on your computer.</li>
+<li><strong>container_port</strong>: the port inside the container.</li>
+<li><strong>protocol</strong>: <code>tcp</code>, <code>udp</code> or <code>sctp</code>. Always write it; a service that needs two protocols needs one binding for each.</li>
 </ul>
-<h3 id="binding-examples">Binding examples<a class="anchor" href="#binding-examples" aria-label="Link to this section"></a></h3>
-<p><strong>Basic TCP port:</strong></p>
+<p>Examples:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;8080:80/tcp&#34;</span>           <span class="c1"># Host port 8080 -&gt; Container port 80 (TCP)</span></span></span></code></pre></div></div>
-<p><strong>UDP port:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;5000:5000/udp&#34;</span>         <span class="c1"># Host port 5000 -&gt; Container port 5000 (UDP)</span></span></span></code></pre></div></div>
-<p><strong>Same port both sides:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;3000:3000/tcp&#34;</span>         <span class="c1"># Port 3000 on both sides</span></span></span></code></pre></div></div>
-<p><strong>Specific host IP:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;127.0.0.1:8080:80/tcp&#34;</span> <span class="c1"># Only accessible from localhost</span></span></span></code></pre></div></div>
-<p><strong>Multiple port mappings:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;8080:80/tcp&#34;</span>           <span class="c1"># Host port 8080 -&gt; Container port 80 (TCP)</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;5000:5000/udp&#34;</span>         <span class="c1"># Host port 5000 -&gt; Container port 5000 (UDP)</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;3000:3000/tcp&#34;</span>         <span class="c1"># Port 3000 on both sides</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;127.0.0.1:8080:80/tcp&#34;</span> <span class="c1"># Only accessible from localhost</span></span></span></code></pre></div></div>
+<p>Several services at once, one binding each:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;8080:80/tcp&#34;</span>           <span class="c1"># HTTP</span>
 </span></span><span class="line"><span class="cl"><span class="s2">&#34;8443:443/tcp&#34;</span>          <span class="c1"># HTTPS</span>
 </span></span><span class="line"><span class="cl"><span class="s2">&#34;3000:3000/udp&#34;</span>         <span class="c1"># Custom UDP service</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Expose a port:</strong></p>
+<p>Expose a port to other containers:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ports expose -c web_server -p <span class="s2">&#34;80/tcp&#34;</span></span></span></code></pre></div></div>
-<p><strong>Bind port to host:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports expose -c web_server -p <span class="s2">&#34;80/tcp&#34;</span></span></span></code></pre></div></div>
+<p>Publish it on port 8080 of your computer:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c web_server -b <span class="s2">&#34;8080:80/tcp&#34;</span></span></span></code></pre></div></div>
-<p><strong>Unbind port:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c web_server -b <span class="s2">&#34;8080:80/tcp&#34;</span></span></span></code></pre></div></div>
+<p>Remove the published port, then stop exposing it:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ports unbind -c web_server -b <span class="s2">&#34;8080:80/tcp&#34;</span></span></span></code></pre></div></div>
-<p><strong>Remove exposed port:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports unbind -c web_server -b <span class="s2">&#34;8080:80/tcp&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports unexpose -c web_server -p <span class="s2">&#34;80/tcp&#34;</span></span></span></code></pre></div></div>
+<h3 id="a-web-server-on-a-custom-port">A web server on a custom port<a class="anchor" href="#a-web-server-on-a-custom-port" aria-label="Link to this section"></a></h3>
+<p>Publish port 80 of the container on port 8080, start a web server inside, then open <code>http://localhost:8080</code> on your computer:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ports unexpose -c web_server -p <span class="s2">&#34;80/tcp&#34;</span></span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Web server on custom port:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Start container</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n web_service
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n web_service
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c web_service -b <span class="s2">&#34;8080:80/tcp&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add web server port</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c web_service -b <span class="s2">&#34;8080:80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Start web server</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c web_service
 </span></span><span class="line"><span class="cl">python3 -m http.server <span class="m">80</span>
-</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Access from host: http://localhost:8080</span></span></span></code></pre></div></div>
-<p><strong>Multiple service ports:</strong></p>
+</span></span><span class="line"><span class="cl">exit</span></span></code></pre></div></div>
+<h3 id="several-services">Several services<a class="anchor" href="#several-services" aria-label="Link to this section"></a></h3>
+<p>Publish HTTP, HTTPS and a metrics port, and expose the same ports to other containers:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># API server container</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n api_server
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n api_server
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Bind HTTP and HTTPS</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c api_server -b <span class="s2">&#34;8080:80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c api_server -b <span class="s2">&#34;8443:443/tcp&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c api_server -b <span class="s2">&#34;8080:80/tcp&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c api_server -b <span class="s2">&#34;8443:443/tcp&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c api_server -b <span class="s2">&#34;9090:9090/tcp&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add metrics port</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c api_server -b <span class="s2">&#34;9090:9090/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Expose the ports for inter-container communication</span>
-</span></span><span class="line"><span class="cl">rfswift ports expose -c api_server -p <span class="s2">&#34;80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift ports expose -c api_server -p <span class="s2">&#34;443/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift ports expose -c api_server -p <span class="s2">&#34;9090/tcp&#34;</span></span></span></code></pre></div></div>
-<p><strong>UDP service:</strong></p>
+</span></span><span class="line"><span class="cl">rfswift config ports expose -c api_server -p <span class="s2">&#34;80/tcp&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports expose -c api_server -p <span class="s2">&#34;443/tcp&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports expose -c api_server -p <span class="s2">&#34;9090/tcp&#34;</span></span></span></code></pre></div></div>
+<h3 id="a-udp-service">A UDP service<a class="anchor" href="#a-udp-service" aria-label="Link to this section"></a></h3>
+<p>Publish a UDP port, then start a NetFlow collector on it:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Network analysis container</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n netflow
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n netflow
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c netflow -b <span class="s2">&#34;2055:2055/udp&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add UDP port for netflow</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c netflow -b <span class="s2">&#34;2055:2055/udp&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Start netflow collector</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c netflow
 </span></span><span class="line"><span class="cl">nfcapd -p <span class="m">2055</span>
 </span></span><span class="line"><span class="cl">exit</span></span></code></pre></div></div>
-<p><strong>Development server:</strong></p>
+<h3 id="a-development-setup">A development setup<a class="anchor" href="#a-development-setup" aria-label="Link to this section"></a></h3>
+<p>Publish the ports of a front-end server, an API backend and LiveReload:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Development container</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n dev_env
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add development ports</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c dev_env -b <span class="s2">&#34;3000:3000/tcp&#34;</span>  <span class="c1"># React dev server</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c dev_env -b <span class="s2">&#34;5000:5000/tcp&#34;</span>  <span class="c1"># API backend</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c dev_env -b <span class="s2">&#34;35729:35729/tcp&#34;</span> <span class="c1"># LiveReload</span></span></span></code></pre></div></div>
-<p><strong>Temporary port for testing:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n dev_env
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c dev_env -b <span class="s2">&#34;3000:3000/tcp&#34;</span>  <span class="c1"># React dev server</span>
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c dev_env -b <span class="s2">&#34;5000:5000/tcp&#34;</span>  <span class="c1"># API backend</span>
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c dev_env -b <span class="s2">&#34;35729:35729/tcp&#34;</span> <span class="c1"># LiveReload</span></span></span></code></pre></div></div>
+<h3 id="a-temporary-port-for-testing">A temporary port for testing<a class="anchor" href="#a-temporary-port-for-testing" aria-label="Link to this section"></a></h3>
+<p>Publish a port, test it, and remove it when you are done:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Test container</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n test_service
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Bind port temporarily</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c test_service -b <span class="s2">&#34;9999:80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Run tests</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n test_service
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c test_service -b <span class="s2">&#34;9999:80/tcp&#34;</span>
 </span></span><span class="line"><span class="cl">curl http://localhost:9999
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove when done</span>
-</span></span><span class="line"><span class="cl">rfswift ports unbind -c test_service -b <span class="s2">&#34;9999:80/tcp&#34;</span></span></span></code></pre></div></div>
-<p><strong>Change port mapping:</strong></p>
+</span></span><span class="line"><span class="cl">rfswift config ports unbind -c test_service -b <span class="s2">&#34;9999:80/tcp&#34;</span></span></span></code></pre></div></div>
+<h3 id="moving-a-service-to-another-port">Moving a service to another port<a class="anchor" href="#moving-a-service-to-another-port" aria-label="Link to this section"></a></h3>
+<p>Remove the old binding and add the new one. The service is then on port 8081:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Switch from port 8080 to 8081</span>
-</span></span><span class="line"><span class="cl">rfswift ports unbind -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8081:80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Now accessible on port 8081</span></span></span></code></pre></div></div>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports unbind -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8081:80/tcp&#34;</span></span></span></code></pre></div></div>
 <h2 id="common-port-numbers">Common port numbers<a class="anchor" href="#common-port-numbers" aria-label="Link to this section"></a></h2>
-<h3 id="standard-ports">Standard ports<a class="anchor" href="#standard-ports" aria-label="Link to this section"></a></h3>
+<h3 id="standard-services">Standard services<a class="anchor" href="#standard-services" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
 <table>
   <thead>
@@ -511,7 +396,7 @@
       <th>Service</th>
       <th>Port</th>
       <th>Protocol</th>
-      <th>Use Case</th>
+      <th>Used for</th>
     </tr>
   </thead>
   <tbody>
@@ -567,7 +452,7 @@
       <td><strong>Redis</strong></td>
       <td>6379</td>
       <td>TCP</td>
-      <td>Cache/database</td>
+      <td>Cache or database</td>
     </tr>
     <tr>
       <td><strong>MongoDB</strong></td>
@@ -578,14 +463,14 @@
   </tbody>
 </table>
 </div>
-<h3 id="development-ports">Development ports<a class="anchor" href="#development-ports" aria-label="Link to this section"></a></h3>
+<h3 id="development-servers">Development servers<a class="anchor" href="#development-servers" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Service</th>
       <th>Port</th>
-      <th>Use Case</th>
+      <th>Used for</th>
     </tr>
   </thead>
   <tbody>
@@ -602,7 +487,7 @@
     <tr>
       <td><strong>Python HTTP</strong></td>
       <td>8000</td>
-      <td>Python SimpleHTTPServer</td>
+      <td>Python&rsquo;s built-in web server</td>
     </tr>
     <tr>
       <td><strong>Flask</strong></td>
@@ -617,7 +502,7 @@
     <tr>
       <td><strong>LiveReload</strong></td>
       <td>35729</td>
-      <td>Live reload/hot reload</td>
+      <td>Live reload</td>
     </tr>
     <tr>
       <td><strong>Webpack</strong></td>
@@ -632,14 +517,14 @@
   </tbody>
 </table>
 </div>
-<h3 id="rf-swift-common-ports">RF Swift common ports<a class="anchor" href="#rf-swift-common-ports" aria-label="Link to this section"></a></h3>
+<h3 id="ports-often-used-by-tool-interfaces">Ports often used by tool interfaces<a class="anchor" href="#ports-often-used-by-tool-interfaces" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Service</th>
       <th>Port</th>
-      <th>Use Case</th>
+      <th>Used for</th>
     </tr>
   </thead>
   <tbody>
@@ -671,123 +556,75 @@
   </tbody>
 </table>
 </div>
-<hr>
-<h2 id="security-considerations">Security considerations<a class="anchor" href="#security-considerations" aria-label="Link to this section"></a></h2>
-<h3 id="binding-to-specific-ips">Binding to specific IPs<a class="anchor" href="#binding-to-specific-ips" aria-label="Link to this section"></a></h3>
-<p><strong>Public access (default):</strong></p>
+<h2 id="security">Security<a class="anchor" href="#security" aria-label="Link to this section"></a></h2>
+<h3 id="choose-who-can-reach-the-port">Choose who can reach the port<a class="anchor" href="#choose-who-can-reach-the-port" aria-label="Link to this section"></a></h3>
+<p>By default a published port listens on every network interface (<code>0.0.0.0</code>), so other machines on your network can reach it:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Accessible from anywhere</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Binds to 0.0.0.0:8080</span></span></span></code></pre></div></div>
-<p><strong>Localhost only:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span></span></span></code></pre></div></div>
+<p>To allow only your own computer, bind to localhost:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Only accessible from host</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;127.0.0.1:8080:80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Binds to 127.0.0.1:8080</span></span></span></code></pre></div></div>
-<p><strong>Specific network interface:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;127.0.0.1:8080:80/tcp&#34;</span></span></span></code></pre></div></div>
+<p>To allow only one network interface, bind to its address:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Only accessible from specific IP</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;192.168.1.100:8080:80/tcp&#34;</span></span></span></code></pre></div></div>
-<h3 id="port-range-restrictions">Port range restrictions<a class="anchor" href="#port-range-restrictions" aria-label="Link to this section"></a></h3>
-<p><strong>Safe port ranges:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;192.168.1.100:8080:80/tcp&#34;</span></span></span></code></pre></div></div>
+<h3 id="choose-the-host-port">Choose the host port<a class="anchor" href="#choose-the-host-port" aria-label="Link to this section"></a></h3>
+<p>Ports 1024 to 49151 are fine for normal use, and 49152 to 65535 suit temporary services:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># User ports (1024-49151) - Safe for non-root users</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Dynamic/private ports (49152-65535) - Good for temporary services</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;50000:80/tcp&#34;</span></span></span></code></pre></div></div>
-<p><strong>Avoid privileged ports:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;50000:80/tcp&#34;</span></span></span></code></pre></div></div>
+<div class="admonition admonition-warning" role="note"><p class="admonition-title">Avoid host ports below 1024</p><p>Host ports below 1024 need special privileges. Use a higher port (8080 instead of 80), and put a reverse proxy in front if you need the standard port.</p>
+</div>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Privileged ports (&lt;1024) require special capabilities</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Use higher ports and reverse proxy if needed</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span>  <span class="c1"># Good</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Not: rfswift ports bind -c service -b &#34;80:80/tcp&#34;  # Requires privileges</span></span></span></code></pre></div></div>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span>  <span class="c1"># Good</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Not: rfswift config ports bind -c service -b &#34;80:80/tcp&#34;  # Requires privileges</span></span></span></code></pre></div></div>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="port-already-in-use">Port already in use<a class="anchor" href="#port-already-in-use" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>port is already allocated</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="port-is-already-allocated">“port is already allocated”<a class="anchor" href="#port-is-already-allocated" aria-label="Link to this section"></a></h3>
+<p>Another program already uses that port on your computer. Find it, then either use another port or stop that program:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check what&#39;s using the port</span>
-</span></span><span class="line"><span class="cl">netstat -tuln <span class="p">|</span> grep :8080
-</span></span><span class="line"><span class="cl">lsof -i :8080
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use different host port</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8081:80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or stop conflicting service</span>
-</span></span><span class="line"><span class="cl">sudo systemctl stop service-using-8080
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then bind</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span></span></span></code></pre></div></div>
-<h3 id="cannot-bind-to-port">Cannot bind to port<a class="anchor" href="#cannot-bind-to-port" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Binding fails without clear error</p>
-<p><strong>Solutions:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">netstat -tuln <span class="p">|</span> grep :8080
+</span></span><span class="line"><span class="cl">lsof -i :8080</span></span></code></pre></div></div>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if container is running</span>
-</span></span><span class="line"><span class="cl">docker ps <span class="p">|</span> grep container_name
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check permissions for low ports (&lt;1024)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Use higher port instead</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check firewall rules</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8081:80/tcp&#34;</span></span></span></code></pre></div></div>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl stop service-using-8080
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span></span></span></code></pre></div></div>
+<h3 id="binding-fails-without-a-clear-error">Binding fails without a clear error<a class="anchor" href="#binding-fails-without-a-clear-error" aria-label="Link to this section"></a></h3>
+<p>Check that the container is running, use a port above 1024, and look at the firewall:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker ps <span class="p">|</span> grep container_name
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;8080:80/tcp&#34;</span>
 </span></span><span class="line"><span class="cl">sudo iptables -L -n <span class="p">|</span> grep <span class="m">8080</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check if port is blocked</span>
 </span></span><span class="line"><span class="cl">sudo ufw status</span></span></code></pre></div></div>
-<h3 id="service-not-accessible">Service not accessible<a class="anchor" href="#service-not-accessible" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Port bound but service not accessible</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="the-port-is-published-but-the-service-does-not-answer">The port is published but the service does not answer<a class="anchor" href="#the-port-is-published-but-the-service-does-not-answer" aria-label="Link to this section"></a></h3>
+<p>Test from inside the container first. If it works there, test from your computer, then check the container&rsquo;s network mode and the firewall:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check binding was successful in the summary &amp; test from inside container first</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c container
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c container
 </span></span><span class="line"><span class="cl">curl localhost:80
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If works inside, check from host</span>
 </span></span><span class="line"><span class="cl">curl localhost:8080
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check container network mode</span>
 </span></span><span class="line"><span class="cl">docker inspect container <span class="p">|</span> grep -A5 NetworkMode
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify firewall</span>
 </span></span><span class="line"><span class="cl">sudo iptables -L -n
 </span></span><span class="line"><span class="cl">sudo ufw status</span></span></code></pre></div></div>
-<h3 id="wrong-protocol">Wrong protocol<a class="anchor" href="#wrong-protocol" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Service works with TCP but not UDP (or vice versa)</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="it-works-over-tcp-but-not-udp-or-the-reverse">It works over TCP but not UDP (or the reverse)<a class="anchor" href="#it-works-over-tcp-but-not-udp-or-the-reverse" aria-label="Link to this section"></a></h3>
+<p>Bind the protocol the service really uses. Some services, such as DNS, need both:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Bind correct protocol</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;5000:5000/udp&#34;</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;5000:5000/udp&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Some services need both</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;53:53/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;53:53/udp&#34;</span></span></span></code></pre></div></div>
-<h3 id="port-unbind-fails">Port unbind fails<a class="anchor" href="#port-unbind-fails" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Cannot remove port binding</p>
-<p><strong>Solutions:</strong></p>
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;53:53/tcp&#34;</span>
+</span></span><span class="line"><span class="cl">rfswift config ports <span class="nb">bind</span> -c service -b <span class="s2">&#34;53:53/udp&#34;</span></span></span></code></pre></div></div>
+<h3 id="removing-a-binding-fails">Removing a binding fails<a class="anchor" href="#removing-a-binding-fails" aria-label="Link to this section"></a></h3>
+<p>Use exactly the same binding string as when you added it. As a last resort, restart the container:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use exact binding string that was used to bind</span>
-</span></span><span class="line"><span class="cl">rfswift ports unbind -c container -b <span class="s2">&#34;8080:80/tcp&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># If still fails, may need container restart</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># (as last resort)</span></span></span></code></pre></div></div>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ports unbind -c container -b <span class="s2">&#34;8080:80/tcp&#34;</span></span></span></code></pre></div></div>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create containers with initial port bindings</li>
-<li><a href="/docs/commands/exec"><code>exec</code></a> - Access container to test services</li>
-<li><a href="/docs/commands/bindings"><code>bindings</code></a> - Manage volume/device bindings</li>
-<li><a href="/docs/commands/last"><code>last</code></a> - List containers with port information</li>
+<li><a href="/docs/commands/run"><code>run</code></a>: create containers with published ports from the start</li>
+<li><a href="/docs/commands/exec"><code>exec</code></a>: open a shell to test a service</li>
+<li><a href="/docs/commands/bindings"><code>bindings</code></a>: folders and devices</li>
+<li><a href="/docs/commands/last"><code>last</code></a>: list containers with their ports</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Dynamic Port Mapping</strong>: The <code>ports</code> command enables adding and removing port bindings without restarting containers. Perfect for development when you need to expose services on the fly!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Privileged Ports</strong>: Ports below 1024 require special privileges. Use ports 1024+ (like 8080 instead of 80) to avoid permission issues. Set up a reverse proxy if you need standard ports.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Protocol Matters</strong>: Always specify the protocol (<code>/tcp</code>, <code>/sctp</code> or <code>/udp</code>) in your binding. Some services need both protocols on the same port - bind each separately!</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -811,44 +648,41 @@
     <li><a href="#synopsis">Synopsis</a></li>
     <li><a href="#subcommands">Subcommands</a>
       <ul>
-        <li><a href="#ports-expose">ports expose</a></li>
-        <li><a href="#ports-unexpose">ports unexpose</a></li>
-        <li><a href="#ports-bind">ports bind</a></li>
-        <li><a href="#ports-unbind">ports unbind</a></li>
+        <li><a href="#expose-and-unexpose">expose and unexpose</a></li>
+        <li><a href="#bind-and-unbind">bind and unbind</a></li>
       </ul>
     </li>
-    <li><a href="#port-binding-format">Port binding format</a>
-      <ul>
-        <li><a href="#binding-syntax">Binding syntax</a></li>
-        <li><a href="#binding-examples">Binding examples</a></li>
-      </ul>
-    </li>
+    <li><a href="#binding-format">Binding format</a></li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#a-web-server-on-a-custom-port">A web server on a custom port</a></li>
+        <li><a href="#several-services">Several services</a></li>
+        <li><a href="#a-udp-service">A UDP service</a></li>
+        <li><a href="#a-development-setup">A development setup</a></li>
+        <li><a href="#a-temporary-port-for-testing">A temporary port for testing</a></li>
+        <li><a href="#moving-a-service-to-another-port">Moving a service to another port</a></li>
       </ul>
     </li>
     <li><a href="#common-port-numbers">Common port numbers</a>
       <ul>
-        <li><a href="#standard-ports">Standard ports</a></li>
-        <li><a href="#development-ports">Development ports</a></li>
-        <li><a href="#rf-swift-common-ports">RF Swift common ports</a></li>
+        <li><a href="#standard-services">Standard services</a></li>
+        <li><a href="#development-servers">Development servers</a></li>
+        <li><a href="#ports-often-used-by-tool-interfaces">Ports often used by tool interfaces</a></li>
       </ul>
     </li>
-    <li><a href="#security-considerations">Security considerations</a>
+    <li><a href="#security">Security</a>
       <ul>
-        <li><a href="#binding-to-specific-ips">Binding to specific IPs</a></li>
-        <li><a href="#port-range-restrictions">Port range restrictions</a></li>
+        <li><a href="#choose-who-can-reach-the-port">Choose who can reach the port</a></li>
+        <li><a href="#choose-the-host-port">Choose the host port</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#port-already-in-use">Port already in use</a></li>
-        <li><a href="#cannot-bind-to-port">Cannot bind to port</a></li>
-        <li><a href="#service-not-accessible">Service not accessible</a></li>
-        <li><a href="#wrong-protocol">Wrong protocol</a></li>
-        <li><a href="#port-unbind-fails">Port unbind fails</a></li>
+        <li><a href="#port-is-already-allocated">“port is already allocated”</a></li>
+        <li><a href="#binding-fails-without-a-clear-error">Binding fails without a clear error</a></li>
+        <li><a href="#the-port-is-published-but-the-service-does-not-answer">The port is published but the service does not answer</a></li>
+        <li><a href="#it-works-over-tcp-but-not-udp-or-the-reverse">It works over TCP but not UDP (or the reverse)</a></li>
+        <li><a href="#removing-a-binding-fails">Removing a binding fails</a></li>
       </ul>
     </li>
     <li><a href="#related-commands">Related commands</a></li>

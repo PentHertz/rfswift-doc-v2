@@ -7,10 +7,18 @@ description: "Create and start a new container, or a native Nix environment, wit
 weight: 2
 ---
 
-Create and start a new container from an RF Swift image, or, with `--engine nix`, a native Nix environment.
+`rfswift container create` creates a new lab (container) from a toolbox image and opens a shell in it. With `--engine nix`, it creates a native Nix environment instead. Use it whenever you start a new piece of work.
+
+The most common form names a toolbox and a lab:
+
+```bash
+rfswift container create -i sdr_full -n my_sdr
+```
+
+Run it with no options in a terminal and a wizard asks you everything step by step.
 
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift container create`. The legacy form `rfswift run` and the short aliases `rfswift create` and `rfswift new` still work and print a notice. Flags are identical on every spelling; the examples below use the short legacy form for brevity.
+**Other spellings**: the legacy form `rfswift run` and the short aliases `rfswift create` and `rfswift new` still work and print a notice. The flags are the same for every spelling; this page uses `rfswift container create`.
 {{< /callout >}}
 
 ## Synopsis
@@ -21,13 +29,19 @@ rfswift run -i IMAGE -n CONTAINER_NAME [options]                    # legacy spe
 rfswift container create --engine nix -i ENVIRONMENT -n NAME [--lazy] [--pure] [--isolate] [--flake REF] [--create-only]
 ```
 
-The command pulls the image if it is not local, checks that the engine can map the devices you asked for (and says which it cannot, with the reason, before dropping them on your confirmation), checks USB reachability, creates the container with a workspace, and enters it with an interactive shell. On Windows it offers the usbipd device picker when it detects RF hardware.
+What the command does, in order:
+
+- pulls the image if it is not on your computer yet;
+- checks that the engine can map the devices you asked for. If it cannot map some of them, it tells you which ones and why, and drops them only after you confirm;
+- checks that USB devices will be reachable;
+- creates the container with a [workspace](#workspace-options) folder;
+- opens an interactive shell inside it.
+
+On Windows, it also offers the usbipd device picker when it detects RF hardware.
 
 {{< callout type="info" >}}
-**Interactive Wizard**: When run without `-i` and `-n` flags in an interactive terminal, RF Swift launches a guided wizard that walks you through all options step by step. See [Interactive Wizard](#interactive-wizard) below.
+**Interactive wizard**: without `-i` and `-n` in an interactive terminal, RF Swift starts a guided wizard that walks you through every option. See [Interactive wizard](#interactive-wizard) below.
 {{< /callout >}}
-
----
 
 ## Options
 
@@ -39,14 +53,14 @@ The command pulls the image if it is not local, checks that the engine can map t
 | `-n, --name STRING` | Name for the new container | `-n my_container` |
 
 {{< callout type="info" >}}
-Both flags are optional when using the interactive wizard. If omitted in an interactive terminal, the wizard launches automatically.
+Both flags are optional in an interactive terminal: if you leave them out, the wizard starts.
 {{< /callout >}}
 
 ### Security options
 
 | Flag | Description | Default | Example |
 |------|-------------|---------|---------|
-| `-u, --privileged INT` | Privilege level (1=privileged, 0=unprivileged). Never required for USB devices | `0` | `-u 0` |
+| `-u, --privileged INT` | Privilege level: `1` privileged, `0` unprivileged. Never needed for USB devices | `0` | `-u 0` |
 | `-a, --capabilities STRING` | Additional capabilities (comma-separated) | None | `-a NET_ADMIN,NET_RAW` |
 | `-g, --cgroups STRING` | Cgroup device rules (comma-separated) | See config | `-g "c 189:* rwm"` |
 | `-m, --seccomp STRING` | Custom seccomp profile path | Default | `-m /path/to/profile.json` |
@@ -67,14 +81,15 @@ Both flags are optional when using the interactive wizard. If omitted in an inte
 | `--cwd` | Mount current directory as workspace | false | `--cwd` |
 | `--no-workspace` | Disable automatic workspace | false | `--no-workspace` |
 
-By default, every container gets a **shared workspace directory** automatically mounted:
-- **Host**: `~/rfswift-workspace/<container-name>/`
-- **Container**: `/workspace`
+Every container gets a **shared workspace folder** by default:
 
-Files saved to `/workspace` inside the container are immediately available on the host. IQ captures, logs, reports and scripts all land in one place, without manual `--bind` flags.
+- on your computer: `~/rfswift-workspace/<container-name>/`
+- inside the container: `/workspace`
+
+Anything you save to `/workspace` appears on your computer right away. IQ captures, logs, reports and scripts all land in one place, without any `--bind` flag.
 
 {{< callout type="info" >}}
-The workspace directory persists after the container is deleted. Your data stays on the host.
+The workspace folder stays on your computer after you delete the container.
 {{< /callout >}}
 
 ### Device & volume options
@@ -111,14 +126,11 @@ The workspace directory persists after the container is deleted. Your data stays
 |------|-------------|---------|
 | `--profile STRING` | Use a preset profile | `--profile sdr-full` |
 
-Profiles bundle image, network, features, devices, ports, capabilities, and cgroup rules into a single named preset. CLI flags override profile values. See [`rfswift profile`](/docs/commands/profile/) for details.
+A profile is a named preset: image, network, features, devices, ports, capabilities and cgroup rules in one. Flags you add on the command line override the profile's values. See [`rfswift profile`](/docs/commands/profile/).
 
 ```bash
-# Use a profile
-rfswift container create --profile sdr-full -n my_sdr
-
-# Profile with CLI overrides
-rfswift container create --profile wifi -n my_wifi -t nat --realtime
+rfswift container create --profile sdr-full -n my_sdr                    # use a profile
+rfswift container create --profile wifi -n my_wifi -t nat --realtime     # profile plus overrides
 ```
 
 ### VPN options
@@ -137,7 +149,7 @@ rfswift container create --profile wifi -n my_wifi -t nat --realtime
 | `netbird` | Setup key (optional) | `--vpn netbird` or `--vpn netbird:nb-setup-xxx` |
 
 {{< callout type="info" >}}
-**Privileged mode**: WireGuard and OpenVPN require `-u 1`. Tailscale and Netbird work without privileges (userspace mode with SOCKS5 proxy). See [VPN Inside Containers](/docs/guide/vpn) for details.
+**Privileged mode**: WireGuard and OpenVPN need `-u 1`. Tailscale and Netbird work without privileges (userspace mode with a SOCKS5 proxy). See [VPN inside containers](/docs/guide/vpn/).
 {{< /callout >}}
 
 ### Recording options
@@ -164,27 +176,25 @@ rfswift container create --profile wifi -n my_wifi -t nat --realtime
 | `--rebuild` | Force re-realisation of the closure at creation |
 | `--create-only` | Create and realise without entering (scripts, the Workbench) |
 
-With the Nix engine the workspace, `--cwd`, `--no-workspace`, `--record`, `-e` and the wizard behave as for containers; container-only flags (devices, capabilities, ports, desktop, VPN) do not apply. See the [Nix engine guide](/docs/guide/nix-engine).
-
----
+With the Nix engine, the workspace, `--cwd`, `--no-workspace`, `--record`, `-e` and the wizard work as they do for containers. Container-only flags (devices, capabilities, ports, desktop, VPN) do not apply. See the [Nix engine guide](/docs/guide/nix-engine/).
 
 ## Examples
 
 ### Basic usage
 
-**Create a simple SDR container:**
+#### Create a simple SDR container
 ```bash
 rfswift container create -i sdr_full -n my_sdr
 rfswift run -i sdr_full -n my_sdr            # same, legacy spelling
 ```
 
-**Create a native Nix environment instead:**
+#### Create a native Nix environment instead
 ```bash
 rfswift container create --engine nix -i sdr_light -n radio
 rfswift container create --engine nix -i rfid -n badge --lazy --isolate
 ```
 
-**Create with default image from config:**
+#### Use the default image from your config
 ```bash
 # Requires imagename set in ~/.config/rfswift/config.ini
 rfswift container create -n my_container
@@ -192,28 +202,28 @@ rfswift container create -n my_container
 
 ### With realtime mode
 
-**Create container optimized for SDR operations:**
+#### Container tuned for SDR work
 ```bash
 rfswift container create -i sdr_full -n sdr_realtime --realtime
 ```
 
-This automatically configures:
+`--realtime` sets these for you:
 - `SYS_NICE` capability
 - `rtprio=95` ulimit
 - `memlock=unlimited` ulimit
 - `nice=40` ulimit
 
-**With custom ulimits:**
+#### With custom ulimits
 ```bash
 rfswift container create -i sdr_full -n custom_limits --ulimits "rtprio=95,memlock=-1,nofile=65536"
 ```
 
-**Combine realtime with custom overrides:**
+#### Combine realtime with custom overrides
 ```bash
 rfswift container create -i sdr_full -n sdr_pro --realtime --ulimits "rtprio=99"
 ```
 
-**Professional SDR setup with all optimizations:**
+#### SDR setup with realtime, USB and recording
 ```bash
 rfswift container create -i sdr_full -n rf_pentest \
   --realtime \
@@ -225,41 +235,40 @@ rfswift container create -i sdr_full -n rf_pentest \
 
 ### With profiles
 
-**Quick container from a profile:**
+#### Quick container from a profile
 ```bash
 rfswift container create --profile sdr-full -n my_sdr
 ```
 
-**Profile with image override:**
+#### Profile with image override
 ```bash
 rfswift container create --profile wifi -n wifi_custom -i penthertz/rfswift_resolute:sdr_full
 ```
 
-**Profile with NAT isolation:**
+#### Profile with NAT isolation
 ```bash
-rfswift container create --profile pentest-full -n pentest_session
+rfswift container create --profile network-nat -n pentest_session
 ```
 
 ### With devices
 
-**All USB devices:**
+#### All USB devices
 ```bash
 rfswift container create -i sdr_full -n rtlsdr_work \
   -s /dev/bus/usb:/dev/bus/usb \
   -g "c 189:* rwm"
 ```
 
-**Multiple USB serial devices:**
+#### Multiple USB serial devices
 ```bash
 rfswift container create -i hardware -n multi_device \
   -s /dev/ttyUSB0:/dev/ttyUSB0,/dev/ttyACM0:/dev/ttyACM0 \
   -g "c 189:* rwm,c 166:* rwm"
 ```
 
-
 ### With security configuration
 
-**Unprivileged container with specific capabilities:**
+#### Unprivileged container with specific capabilities
 ```bash
 rfswift container create -i wifi -n wifi_scan \
   -u 0 \
@@ -267,15 +276,15 @@ rfswift container create -i wifi -n wifi_scan \
   -t bridge
 ```
 
-**With custom seccomp profile:**
+#### With custom seccomp profile
 ```bash
-rfswift container create -i pentest -n secure_assessment \
+rfswift container create -i network -n secure_assessment \
   -u 0 \
   -m ~/seccomp-profiles/restricted.json \
   -g "c 189:* rwm"
 ```
 
-**Privileged mode (use sparingly):**
+#### Privileged mode (use sparingly)
 ```bash
 rfswift container create -i hardware -n hardware_debug \
   -u 1
@@ -283,29 +292,29 @@ rfswift container create -i hardware -n hardware_debug \
 
 ### With network configuration
 
-**Bridge network with port binding:**
+#### Bridge network with port binding
 ```bash
-rfswift container create -i web_tools -n web_server \
+rfswift container create -i network -n web_server \
   -t bridge \
   -w 8080:80/tcp
 ```
 
-**Multiple ports exposed and bound:**
+#### Multiple ports exposed and bound
 ```bash
-rfswift container create -i api_server -n backend \
+rfswift container create -i network -n backend \
   -t bridge \
   -z 3000,3001,3002 \
   -w 8080:3000/tcp,8081:3001/tcp
 ```
 
-**Network isolation (no network):**
+#### Network isolation (no network)
 ```bash
-rfswift container create -i analysis -n offline_analysis \
+rfswift container create -i reversing -n offline_analysis \
   -t none \
   -b ~/data:/root/data
 ```
 
-**Custom host entries:**
+#### Custom host entries
 ```bash
 rfswift container create -i penthertz/rfswift_resolute:telecom -n network_test \
   -x "device1.local:192.168.1.10,device2.local:192.168.1.11"
@@ -313,65 +322,64 @@ rfswift container create -i penthertz/rfswift_resolute:telecom -n network_test \
 
 ### With session recording
 
-**Record with auto-generated filename:**
+#### Record with auto-generated filename
 ```bash
 rfswift container create -i bluetooth -n bt_assessment \
   --record
 ```
 
-**Record with custom filename:**
+#### Record with custom filename
 ```bash
 rfswift container create -i sdr_full -n client_pentest \
   --record \
   --record-output client-assessment-2024-01-12.cast
 ```
 
-**Combined: Recording with security and devices:**
+#### Combined: Recording with security and devices
 ```bash
 rfswift container create -i wifi -n wifi_audit \
   -u 0 \
   -a NET_ADMIN,NET_RAW \
   -t bridge \
-  -s /dev/wlan0:/dev/wlan0 \
   --record \
   --record-output wifi-audit-session.cast
 ```
 
 ### With remote desktop
 
-**Enable noVNC desktop (browser-based GUI):**
+#### Enable noVNC desktop (browser-based GUI)
 ```bash
 rfswift container create -i sdr_full -n sdr_desktop --desktop
 ```
-Then open `http://127.0.0.1:6080` in your browser to access the GUI desktop.
+Then open `http://127.0.0.1:6080` in your browser to reach the desktop.
 
-**Expose desktop on all interfaces:**
+#### Expose desktop on all interfaces
 ```bash
 rfswift container create -i sdr_full -n sdr_desktop \
   --desktop --desktop-config "http:0.0.0.0:6080"
 ```
 
-**Use raw VNC instead of noVNC:**
+#### Use raw VNC instead of noVNC
 ```bash
 rfswift container create -i sdr_full -n sdr_desktop \
   --desktop --desktop-config "vnc::5900"
 ```
-Then connect with a VNC client (e.g., TigerVNC, RealVNC) to `127.0.0.1:5900`.
+Then connect a VNC client (TigerVNC, RealVNC...) to `127.0.0.1:5900`.
 
-**Custom port:**
+#### Custom port
 ```bash
 rfswift container create -i sdr_full -n sdr_desktop \
   --desktop --desktop-config "http:0.0.0.0:8080"
 ```
 
-**With VNC password (recommended when exposing on network):**
+#### With VNC password (recommended when exposing on network)
 ```bash
 rfswift container create -i sdr_full -n sdr_desktop \
   --desktop --desktop-config "http:0.0.0.0:6080" \
   --desktop-pass "mysecretpass"
 ```
 
-**Desktop with SDR devices and no X11 forwarding:**
+#### Desktop with SDR devices and no X11 forwarding
 ```bash
 rfswift container create -i sdr_full -n sdr_desktop \
   --desktop \
@@ -384,25 +392,25 @@ rfswift container create -i sdr_full -n sdr_desktop \
 
 ### With VPN
 
-**Tailscale mesh (interactive login):**
+#### Tailscale mesh (interactive login)
 ```bash
 rfswift container create -i sdr_full -n mesh_sdr --vpn tailscale
 ```
 
-**Tailscale with auth key (headless):**
+#### Tailscale with auth key (headless)
 ```bash
 rfswift container create -i sdr_full -n mesh_sdr \
   --vpn tailscale:tskey-auth-xxxxxxxxxxxx
 ```
 
-**WireGuard tunnel (requires privileged mode):**
+#### WireGuard tunnel (requires privileged mode)
 ```bash
 rfswift container create -i sdr_full -n vpn_sdr \
   -u 1 \
   --vpn wireguard:./wg0.conf
 ```
 
-**OpenVPN with bridge network:**
+#### OpenVPN with bridge network
 ```bash
 rfswift container create -i sdr_full -n corp_sdr \
   -u 1 \
@@ -410,12 +418,12 @@ rfswift container create -i sdr_full -n corp_sdr \
   --vpn openvpn:./client.ovpn
 ```
 
-**Netbird mesh (interactive login):**
+#### Netbird mesh (interactive login)
 ```bash
 rfswift container create -i sdr_full -n nb_sdr --vpn netbird
 ```
 
-**VPN + Remote Desktop + SDR (full remote setup):**
+#### VPN + Remote Desktop + SDR (full remote setup)
 ```bash
 rfswift container create -i sdr_full -n remote_sdr \
   -u 1 \
@@ -426,9 +434,9 @@ rfswift container create -i sdr_full -n remote_sdr \
   --record
 ```
 
-### Complex Real-World examples
+### Complete setups
 
-**Complete SDR assessment setup:**
+#### Complete SDR assessment setup
 ```bash
 rfswift container create -i sdr_full -n site_survey \
   -u 0 \
@@ -443,7 +451,7 @@ rfswift container create -i sdr_full -n site_survey \
   --record-output site-survey-2024-01-12.cast
 ```
 
-**Bluetooth security assessment:**
+#### Bluetooth security assessment
 ```bash
 rfswift container create -i bluetooth -n bt_pentest \
   -u 0 \
@@ -455,7 +463,7 @@ rfswift container create -i bluetooth -n bt_pentest \
   --record
 ```
 
-**High-performance signal capture:**
+#### High-performance signal capture
 ```bash
 rfswift container create -i sdr_full -n high_perf_capture \
   --realtime \
@@ -464,15 +472,13 @@ rfswift container create -i sdr_full -n high_perf_capture \
   -b ~/captures:/root/captures
 ```
 
----
-
 ## Detailed option explanations
 
 ### Image selection (`-i, --image`)
 
-Specifies which RF Swift image to use for the container.
+The toolbox image the container is built from.
 
-**Formats:**
+#### Formats
 ```bash
 # Full registry path
 -i penthertz/rfswift_resolute:sdr_full
@@ -484,7 +490,7 @@ Specifies which RF Swift image to use for the container.
 -i myregistry.com/rfswift:custom
 ```
 
-**Common images:**
+Common images:
 - `sdr_full` - Complete SDR toolkit
 - `sdr_light` - Lightweight SDR tools
 - `bluetooth` - Bluetooth security tools
@@ -496,9 +502,9 @@ See [List of Images](/docs/guide/list-of-images/) for all available images.
 
 ### Container naming (`-n, --name`)
 
-Assigns a unique name to the container. Names must be unique across all containers (running or stopped).
+The container's name. It must be unique across all your containers, running or stopped.
 
-**Naming conventions:**
+#### Naming conventions
 ```bash
 # Good names (descriptive, unique)
 -n rtlsdr_capture_session_1
@@ -513,7 +519,7 @@ Assigns a unique name to the container. Names must be unique across all containe
 
 ### Realtime mode (`--realtime`)
 
-Enables optimized settings for low-latency SDR operations. This is a convenience flag that automatically configures:
+Low-latency settings for SDR work, in one flag. It sets:
 
 | Setting | Value | Purpose |
 |---------|-------|---------|
@@ -522,11 +528,11 @@ Enables optimized settings for low-latency SDR operations. This is a convenience
 | memlock ulimit | unlimited | Prevents sample buffers from being swapped |
 | nice ulimit | 40 | Allows nice -20 to +19 |
 
-**When to use:**
+When to use:
 - High sample rate captures (avoid buffer underruns)
 - Real-time signal processing with GNU Radio, SDR++, GQRX
 - Time-critical protocols (RFID, NFC, automotive)
-- Professional pentesting where reliability is critical
+- Engagements where dropped samples are not acceptable
 
 ```bash
 # Simple usage
@@ -543,7 +549,7 @@ chrt -f 50 rtl_sdr -f 433920000 -s 2048000 output.bin
 
 ### GPU passthrough (`--gpus`)
 
-Passes GPU devices into the container for hardware-accelerated workloads. Requires the appropriate GPU runtime (NVIDIA Container Toolkit, ROCm, etc.) installed on the host.
+Gives the container access to GPUs for hardware-accelerated work. The host needs the matching GPU runtime (NVIDIA Container Toolkit, ROCm...).
 
 | Specifier | Meaning |
 |-----------|---------|
@@ -566,7 +572,7 @@ See [`gpus`](/docs/commands/gpu) for full documentation, prerequisites, and trou
 
 ### Custom ulimits (`--ulimits`)
 
-Set specific resource limits for fine-grained control.
+Sets individual resource limits.
 
 **Format:** `name=value` or `name=soft:hard` (comma-separated for multiple)
 
@@ -578,7 +584,7 @@ Set specific resource limits for fine-grained control.
 | `nofile` | Max open file descriptors | `nofile=65536` |
 | `nproc` | Max processes | `nproc=4096` |
 
-**Examples:**
+#### Examples
 ```bash
 # Single ulimit
 --ulimits "rtprio=95"
@@ -595,24 +601,23 @@ Set specific resource limits for fine-grained control.
 
 ### Privilege level (`-u, --privileged`)
 
-Controls container privilege level:
-- `0` (default): Unprivileged - Recommended for most use cases
-- `1`: Privileged - Full host access, use only when necessary
+- `0` (default): unprivileged. Use this for almost everything.
+- `1`: privileged, with full access to the host. Use it only when nothing else works.
 
-**When to use privileged mode:**
+When to use privileged mode:
 - Kernel module loading required
 - Low-level hardware access
 - Complex network operations
 
 {{< callout type="warning" >}}
-**Security Risk**: Privileged containers can escape isolation and compromise the host. Use `-u 1` only when absolutely necessary and remove the container after use.
+**Security risk**: a privileged container can escape its isolation and compromise the host. Use `-u 1` only when you must, and remove the container afterwards.
 {{< /callout >}}
 
 ### Capabilities (`-a, --capabilities`)
 
-Add specific Linux capabilities for fine-grained privilege control.
+Adds individual Linux capabilities instead of full privileges.
 
-**Common capabilities:**
+#### Common capabilities
 ```bash
 # Network operations
 -a NET_ADMIN,NET_RAW
@@ -630,18 +635,18 @@ Add specific Linux capabilities for fine-grained privilege control.
 -a CHOWN,DAC_OVERRIDE
 ```
 
-See [Capabilities Reference](/docs/commands/capabilities/) for complete list.
+The full list is in the [capabilities reference](/docs/commands/capabilities/).
 
 ### Cgroups (`-g, --cgroups`)
 
-Control which device types the container can access.
+Which device types the container may open.
 
 **Format:** `type major:minor permissions`
 - `type`: `c` (character) or `b` (block)
 - `major:minor`: Device numbers (use `*` for all)
 - `permissions`: `r` (read), `w` (write), `m` (mknod)
 
-**Common rules:**
+#### Common rules
 ```bash
 # USB serial (RTL-SDR, HackRF)
 -g "c 189:* rwm"
@@ -671,7 +676,10 @@ ls -l /dev/your_device
 
 ### Device mappings (`-s, --devices`)
 
-Make specific host devices available in the container. Serial ports (`/dev/ttyACM*`, `/dev/ttyUSB*`, `/dev/ttyAMA*`) named here are **hot-pluggable** on Docker and rootful Podman: plugged in at creation they are mapped, absent they are attached on demand when you plug them in and open a shell. Before creation RF Swift lists the devices this engine cannot map on your host (rootless Podman root-only nodes, a device absent from the Lima VM, USB on Docker Desktop for macOS) and asks once before dropping them.
+Makes specific host devices available in the container.
+
+- **Serial ports** (`/dev/ttyACM*`, `/dev/ttyUSB*`, `/dev/ttyAMA*`) named here are **hot-pluggable** on Docker and rootful Podman. If the device is plugged in at creation, it is mapped. If not, it is attached when you plug it in and open a shell.
+- **Devices the engine can't map** (root-only nodes on rootless Podman, a device missing from the Lima VM, USB on Docker Desktop for macOS) are listed before creation, and RF Swift asks once before dropping them.
 
 **Format:** `host_device:container_device` or just `host_device` (same path in container)
 
@@ -684,16 +692,16 @@ Make specific host devices available in the container. Serial ports (`/dev/ttyAC
 ```
 
 {{< callout type="info" >}}
-**Cgroups + Devices**: You need BOTH cgroup rules and device mappings. Cgroups allow access to device types, mappings make specific devices available. For USB, the default `/dev/bus/usb` mapping with `c 189:* rwm` is what makes a device reachable; a bind mount alone lists the nodes but cannot open them, and `--privileged` is not required. RF Swift checks this before creating the container.
+**Cgroups and devices go together**: the cgroup rule allows a type of device, the mapping makes a specific device visible. For USB, the default `/dev/bus/usb` mapping with `c 189:* rwm` is what makes a device reachable. A bind mount alone lists the device nodes but cannot open them, and `--privileged` is not needed. RF Swift checks this before creating the container.
 {{< /callout >}}
 
 ### Volume bindings (`-b, --bind`)
 
-Share directories between host and container.
+Shares folders between your computer and the container.
 
 **Format:** `host_path:container_path[:options]`
 
-**Options:**
+Options:
 - None (default): Read-write access
 - `:ro`: Read-only access
 
@@ -708,7 +716,7 @@ Share directories between host and container.
 -b ~/projects:/root/projects,~/captures:/root/captures
 ```
 
-**Use cases:**
+Use cases:
 - Share project files
 - Save captures to host
 - Mount firmware samples (read-only)
@@ -716,7 +724,7 @@ Share directories between host and container.
 
 ### Network modes (`-t, --network`)
 
-Configure container network isolation:
+How the container connects to the network:
 
 | Mode | Description | Use Case |
 |------|-------------|----------|
@@ -745,7 +753,7 @@ Configure container network isolation:
 ```
 
 {{< callout type="info" >}}
-**NAT mode** creates an isolated network with its own subnet. RF Swift automatically manages the network lifecycle. When using NAT with desktop mode, port bindings are configured automatically so you can access the desktop from your browser on the host.
+**NAT mode** creates an isolated network with its own subnet, and RF Swift manages it for you. With the desktop enabled, the port bindings are set up automatically so you can open the desktop in your browser.
 {{< /callout >}}
 
 ### Port configuration
@@ -782,14 +790,14 @@ Configure container network isolation:
 -p tcp:localhost:4713      # Custom port
 ```
 
-**Disable X11 (`--no-x11`)**: Disables X11 forwarding and removes the `/tmp/.X11-unix` socket binding from the container for improved security.
+**Disable X11 (`--no-x11`)**: turns off X11 forwarding and removes the `/tmp/.X11-unix` socket from the container, which is safer when you don't need it.
 ```bash
 --no-x11    # No X11 forwarding, no X11 socket binding
 ```
 
 ### Remote desktop (`--desktop`)
 
-Enable a remote desktop inside the container, accessible via a web browser (noVNC) or a VNC client. This is useful for running GUI tools (SDR++, SDRangel, GQRX, etc.) without requiring X11 forwarding on the host.
+Starts a desktop inside the container that you open in a web browser (noVNC) or a VNC client. It lets you run graphical tools (SDR++, SDRangel, GQRX...) without X11 forwarding on the host.
 
 When enabled, RF Swift:
 - Injects `RFSWIFT_DESKTOP_PROTO`, `RFSWIFT_DESKTOP_HOST`, and `RFSWIFT_DESKTOP_PORT` environment variables into the container
@@ -820,7 +828,7 @@ All parts are optional and fall back to defaults:
 --desktop --desktop-config "http:0.0.0.0:8080"
 ```
 
-**Password protection (`--desktop-pass`):**
+Password protection (`--desktop-pass`):
 
 Set a VNC password to secure the desktop session. Recommended when binding to `0.0.0.0`:
 
@@ -829,11 +837,11 @@ Set a VNC password to secure the desktop session. Recommended when binding to `0
 --desktop --desktop-config "http:0.0.0.0:6080" --desktop-pass "mysecretpass"
 ```
 
-When a password is set, both noVNC (browser) and VNC clients will prompt for it before connecting. Without a password, access is unauthenticated. That is safe when bound to `127.0.0.1` (the default), but a security risk when exposed on the network.
+With a password set, both noVNC and VNC clients ask for it before connecting. Without one, anyone who can reach the port gets in: fine on `127.0.0.1` (the default), risky on the network.
 
-**SSL/TLS encryption (`--desktop-ssl`):**
+SSL/TLS encryption (`--desktop-ssl`):
 
-Enable SSL/TLS to encrypt the desktop connection. A self-signed certificate is automatically generated inside the container:
+Encrypts the desktop connection. A self-signed certificate is generated inside the container:
 
 ```bash
 # SSL-encrypted desktop with password
@@ -843,7 +851,7 @@ Enable SSL/TLS to encrypt the desktop connection. A self-signed certificate is a
 --desktop --desktop-config "vnc:0.0.0.0:5900" --desktop-pass "mysecretpass" --desktop-ssl
 ```
 
-With SSL enabled, noVNC uses `https://` and VNC clients connect via `vncs://` (TLS-wrapped VNC). The self-signed certificate will trigger a browser warning on first connection, which is expected.
+With SSL on, noVNC uses `https://` and VNC clients connect with `vncs://` (VNC over TLS). Your browser warns about the self-signed certificate the first time; that is expected.
 
 The password and SSL can also be set in the config file (`~/.config/rfswift/config.ini`):
 ```ini
@@ -853,7 +861,7 @@ ssl = true
 ```
 
 {{< callout type="info" >}}
-**Tip**: Combine `--desktop` with `--no-x11` when you only need browser-based GUI access. This removes the X11 socket binding entirely, which improves security and avoids the need for `xhost` or X11 configuration on the host.
+**Tip**: combine `--desktop` with `--no-x11` when you only need the browser desktop. The X11 socket is not mounted at all, which is safer and needs no `xhost` or X11 setup on the host.
 {{< /callout >}}
 
 ### Recording options
@@ -876,15 +884,13 @@ Recordings are saved in asciinema format (.cast files) and can be replayed with 
 rfswift-run-{container_name}-{YYYYMMDD-HHMMSS}.cast
 ```
 
-**Recording indicator:** During recording, the terminal title changes to `⏺ REC | RF Swift` as a visual reminder. The environment variable `RFSWIFT_RECORDING=1` is also set inside the container, which can be used by scripts to detect recording mode.
-
----
+**Recording indicator:** while recording, the terminal title reads `⏺ REC | RF Swift`, and `RFSWIFT_RECORDING=1` is set inside the container so scripts can detect it.
 
 ## Interactive wizard
 
-When you run `rfswift container create` without specifying `-i` (image) and `-n` (name) in an interactive terminal, RF Swift launches a step-by-step guided wizard using a TUI (Terminal User Interface).
+Run `rfswift container create` without `-i` and `-n` in an interactive terminal and RF Swift starts a step-by-step wizard in the terminal.
 
-**Launch the wizard:**
+#### Launch the wizard
 ```bash
 rfswift container create
 ```
@@ -1025,10 +1031,8 @@ Equivalent CLI command:
 ```
 
 {{< callout type="info" >}}
-**Non-interactive mode**: The wizard only appears in interactive terminals. When piping or scripting, always provide `-i` and `-n` flags explicitly.
+**Scripts**: the wizard only appears in interactive terminals. In scripts and pipes, always pass `-i` and `-n`.
 {{< /callout >}}
-
----
 
 ## Common patterns
 
@@ -1058,7 +1062,7 @@ rfswift container create -i sdr_full -n high_perf \
 # Save as script: setup_assessment.sh
 #!/bin/bash
 CONTAINER_NAME="assessment_$(date +%Y%m%d)"
-rfswift container create -i pentest -n "$CONTAINER_NAME" \
+rfswift container create -i network -n "$CONTAINER_NAME" \
   -u 0 \
   --realtime \
   -t bridge \
@@ -1102,15 +1106,13 @@ rfswift container create -i reversing -n isolated_analysis \
   --no-x11
 ```
 
----
-
 ## Troubleshooting
 
 ### Container name already exists
 
-**Error:** `container name 'X' is already in use. Use a different name with -n, or exec into the existing container with: rfswift exec -c X`
+The error message is: `container name 'X' is already in use. Use a different name with -n, or exec into the existing container with: rfswift exec -c X`
 
-**Solution:**
+To fix it:
 ```bash
 # Exec into the existing container
 rfswift container shell -c container_name
@@ -1124,22 +1126,22 @@ rfswift container create -i image -n container_name_2
 
 ### Image not found
 
-**Error:** `Error: No such image: penthertz/rfswift_resolute:image_name`
+The error message is: `Error: No such image: penthertz/rfswift_resolute:image_name`
 
-**Solution:**
+To fix it:
 ```bash
 # Pull image first
 rfswift image pull -i image_name
 
-# Or let run pull automatically (if network available)
+# Or let container create pull it for you (needs network)
 rfswift container create -i image_name -n container
 ```
 
 ### Device not accessible
 
-**Problem:** Device binding added but can't access device in container
+Device binding added but can't access device in container.
 
-**Solution:**
+To fix it:
 ```bash
 # Add cgroup rule for device type
 rfswift container create -i image -n container \
@@ -1152,9 +1154,9 @@ rfswift config cgroups add -c container -r "c 189:* rwm"
 
 ### Permission denied for device
 
-**Problem:** Permission denied when accessing device
+Permission denied when accessing device.
 
-**Solution:**
+To fix it:
 ```bash
 # Check host permissions
 ls -l /dev/your_device
@@ -1169,9 +1171,9 @@ rfswift container create -i image -n container -s /dev/your_device:/dev/your_dev
 
 ### Network operations fail
 
-**Problem:** Wi-Fi/Bluetooth tools can't configure interfaces
+Wi-Fi/Bluetooth tools can't configure interfaces.
 
-**Solution:**
+To fix it:
 ```bash
 # Add network capabilities
 rfswift container create -i wifi -n wifi_tools \
@@ -1181,9 +1183,9 @@ rfswift container create -i wifi -n wifi_tools \
 
 ### X11 not working
 
-**Problem:** GUI applications won't start or display
+GUI applications won't start or display.
 
-**Solution:**
+To fix it:
 ```bash
 # On host (Linux)
 xhost +local:
@@ -1197,9 +1199,9 @@ rfswift container create -i image -n container --no-x11
 
 ### Audio not working
 
-**Problem:** No audio output from container
+No audio output from container.
 
-**Solution:**
+To fix it:
 ```bash
 # Enable audio support first
 rfswift host audio enable
@@ -1213,9 +1215,9 @@ rfswift container create -i image -n container -p tcp:127.0.0.1:34567
 
 ### Port already in use
 
-**Problem:** Can't bind port - already in use
+Can't bind port - already in use.
 
-**Solution:**
+To fix it:
 ```bash
 # Check what's using the port
 sudo lsof -i :8080
@@ -1229,9 +1231,9 @@ sudo systemctl stop service_name
 
 ### Buffer underruns with SDR
 
-**Problem:** Experiencing sample drops or buffer underruns
+Experiencing sample drops or buffer underruns.
 
-**Solution:**
+To fix it:
 ```bash
 # Enable realtime mode
 rfswift container create -i sdr_full -n sdr_work --realtime
@@ -1247,8 +1249,6 @@ rfswift container shell -c sdr_work -e "ulimit -r"
 chrt -f 50 your_sdr_command
 ```
 
----
-
 ## Best practices
 
 ### 1. Use descriptive names
@@ -1263,7 +1263,7 @@ rfswift container create -i sdr_full -n test1
 
 ### 2. Start unprivileged
 
-Always start with `-u 0` and add capabilities as needed:
+Start with `-u 0` and add capabilities only when you need them:
 
 ```bash
 # Start unprivileged
@@ -1276,14 +1276,14 @@ rfswift config capabilities add -c wifi_scan -p NET_ADMIN
 ### 3. Use realtime mode for SDR work
 
 ```bash
-# Always use --realtime for SDR captures
+# Use --realtime for SDR captures
 rfswift container create -i sdr_full -n hackrf_capture --realtime
 ```
 
 ### 4. Use Read-Only mounts for reference data
 
 ```bash
-rfswift container create -i analysis -n data_analysis \
+rfswift container create -i reversing -n data_analysis \
   -b ~/samples:/root/samples:ro \
   -b ~/output:/root/output
 ```
@@ -1291,7 +1291,7 @@ rfswift container create -i analysis -n data_analysis \
 ### 5. Record important sessions
 
 ```bash
-rfswift container create -i pentest -n client_assessment \
+rfswift container create -i network -n client_assessment \
   --record \
   --record-output client-$(date +%Y%m%d).cast
 ```
@@ -1299,7 +1299,7 @@ rfswift container create -i pentest -n client_assessment \
 ### 6. Use bridge network for services
 
 ```bash
-rfswift container create -i web_tools -n web_server \
+rfswift container create -i network -n web_server \
   -t bridge \
   -w 127.0.0.1:8080:80/tcp
 ```
@@ -1316,29 +1316,25 @@ rfswift container create -i sdr_full -n assessment \
   --record-output /pathto/rf-assessments/recordings/session.cast
 ```
 
----
-
 ## Related commands
 
-- [`profile`](/docs/commands/profile) - Manage container profiles (presets)
-- [`exec`](/docs/commands/exec) - Enter an existing container
-- [`stop`](/docs/commands/stop) - Stop a running container
-- [`remove`](/docs/commands/remove) - Remove a container
-- [`bindings`](/docs/commands/bindings) - Dynamically add devices/volumes
-- [`capabilities`](/docs/commands/capabilities) - Modify capabilities after creation
-- [`cgroups`](/docs/commands/cgroups) - Modify cgroup rules after creation
-- [`ports`](/docs/commands/ports) - Manage ports after creation
-- [`realtime`](/docs/commands/realtime) - Enable/disable realtime mode on existing containers
-- [`ulimits`](/docs/commands/ulimits) - Manage ulimits on existing containers
-- [VPN Inside Containers](/docs/guide/vpn) - Detailed VPN setup guide
-- [Using Podman](/docs/guide/podman) - Podman-specific guidance
-
----
+- [`profile`](/docs/commands/profile/): manage profiles (presets)
+- [`container shell`](/docs/commands/exec/): enter an existing container
+- [`container stop`](/docs/commands/stop/): stop a running container
+- [`container rm`](/docs/commands/remove/): remove a container
+- [`config bindings`](/docs/commands/bindings/): add devices and folders later
+- [`config capabilities`](/docs/commands/capabilities/): change capabilities later
+- [`config cgroups`](/docs/commands/cgroups/): change cgroup rules later
+- [`config ports`](/docs/commands/ports/): change ports later
+- [`realtime`](/docs/commands/realtime/): turn realtime mode on or off on an existing container
+- [`config ulimits`](/docs/commands/ulimits/): change ulimits later
+- [VPN inside containers](/docs/guide/vpn/): the VPN setup guide
+- [Using Podman](/docs/guide/podman/): Podman specifics
 
 {{< callout >}}
-**SDR Performance**: Use `--realtime` flag for optimal SDR performance. It automatically configures rtprio, memlock, nice ulimits and SYS_NICE capability to eliminate buffer underruns!
+**SDR performance**: add `--realtime` for SDR work. It sets the rtprio, memlock and nice limits and the `SYS_NICE` capability, which helps avoid buffer underruns.
 {{< /callout >}}
 
 {{< callout >}}
-**Tip**: Use `rfswift container create --help` to see all options with their current default values from your config file.
+**Tip**: `rfswift container create --help` shows every option with the defaults from your config file.
 {{< /callout >}}

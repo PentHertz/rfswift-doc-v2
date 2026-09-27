@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RF Swift and dedicated RF distributions · RF Swift</title>
   <meta name="description" content="How RF Swift compares with Kali, Parrot, DragonOS and other distributions, and how to use them together.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/comparisons/">
+  <link rel="canonical" href="http://localhost:1313/docs/comparisons/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="RF Swift and dedicated RF distributions · RF Swift">
   <meta property="og:description" content="How RF Swift compares with Kali, Parrot, DragonOS and other distributions, and how to use them together.">
-  <meta property="og:url" content="https://rfswift.io/docs/comparisons/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/comparisons/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -244,7 +230,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>RF Swift and dedicated RF distributions</h1><p class="doc-lead">How RF Swift compares with Kali, Parrot, DragonOS and other distributions, and how to use them together.</p><p class="doc-meta">14 min read · Updated September 27, 2026</p>
+      <h1>RF Swift and dedicated RF distributions</h1><p class="doc-lead">How RF Swift compares with Kali, Parrot, DragonOS and other distributions, and how to use them together.</p><p class="doc-meta">14 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
       <p>This page is not a contest. Dedicated distributions (Kali, Parrot, Pentoo, BlackArch, DragonOS) and RF Swift solve different problems, and they combine well. RF Swift isn&rsquo;t meant to replace them: it completes them, or brings the same tools to a plain system.</p>
@@ -450,7 +436,7 @@
 <ul>
 <li><strong>Everything is there after one install.</strong> Boot, plug the radio, type the command. No engine, no image, no device mapping to learn.</li>
 <li><strong>The kernel is part of the package.</strong> Drivers, realtime patches, kernel modules and firmware are integrated and tested together. A container still runs on your host&rsquo;s kernel.</li>
-<li><strong>Full hardware access is the default.</strong> USB, PCIe cards, Wi-Fi monitor mode and GPUs need no passthrough, which matters most on a Windows or macOS host where a VM sits between the tools and the hardware.</li>
+<li><strong>Full hardware access is the default.</strong> USB, PCIe cards, Wi-Fi monitor mode and GPUs need no passthrough. That matters most on a Windows or macOS host, where a VM sits between the tools and the hardware.</li>
 <li><strong>Made for a machine you dedicate.</strong> A lab PC or a burner laptop with nothing else on it is exactly their use case.</li>
 </ul>
 <p><strong>Where a separate tool helps</strong></p>
@@ -464,11 +450,11 @@
 </ul>
 <p><strong>What RF Swift adds</strong></p>
 <ul>
-<li><strong>Containers, per task.</strong> <code>rfswift container create -i rfid -n badge</code> gives a tested toolbox for that job, from a digest that is identical on every machine, on Linux, macOS and Windows, on x86_64, ARM64 and RISC-V64. Delete it when the engagement ends.</li>
-<li><strong>Nix, per tool.</strong> <code>rfswift env run sdr_light sdrpp</code> fetches that tool&rsquo;s closure (prebuilt for standard packages, built once for RF Swift&rsquo;s patched ones) and runs it natively with USB, audio and OpenGL, on a laptop that has no container engine. <code>rfswift env install &lt;package&gt;</code> adds one package, pinned, with rollback. A tool costs its closure, not a distribution. In lazy mode (<code>--lazy</code>) a whole environment starts empty and fetches each tool the first time you call it.</li>
-<li><strong>Native, and isolated when you want it.</strong> On Linux and macOS the same native environment runs inside a jail with <code>--isolate</code> (bubblewrap, or Seatbelt on macOS): your home and the host filesystem disappear, the radios, the display and the network stay. Without it, the same separation usually takes a VM.</li>
+<li><strong>Containers, per task.</strong> <code>rfswift container create -i rfid -n badge</code> gives a tested toolbox for that job. It comes from a digest that is identical on every machine: Linux, macOS and Windows, on x86_64, ARM64 and RISC-V64. Delete it when the engagement ends.</li>
+<li><strong>Nix, per tool.</strong> <code>rfswift env run sdr_light sdrpp</code> fetches that tool&rsquo;s closure (prebuilt for standard packages, built once for RF Swift&rsquo;s patched ones). It runs natively with USB, audio and OpenGL, even on a laptop with no container engine. <code>rfswift env install &lt;package&gt;</code> adds one package, pinned, with rollback. A tool costs its closure, not a distribution. In lazy mode (<code>--lazy</code>) a whole environment starts empty and fetches each tool the first time you call it.</li>
+<li><strong>Native, and isolated when you want it.</strong> On Linux and macOS the same native environment can run inside a jail with <code>--isolate</code> (bubblewrap, or Seatbelt on macOS). Your home and the host filesystem disappear; the radios, the display and the network stay. Without it, the same separation usually takes a VM.</li>
 <li><strong>Your OS stays.</strong> Both run next to your desktop, and the Workbench, a standalone desktop app with nothing else to install, keeps the engagement&rsquo;s notes, findings, captures and reports with the target.</li>
-<li><strong>You know what you run.</strong> <code>rfswift audit</code> tells you the CVEs and the attack surface of what you are about to use, so a large tool set is a conscious choice, not a silent default.</li>
+<li><strong>You know what you run.</strong> <code>rfswift audit</code> tells you the CVEs and the attack surface of what you are about to use. A large tool set becomes a conscious choice, not a silent default.</li>
 <li><strong>The gaps are stated.</strong> What a container cannot bring from the host kernel, and the few tools that do not build on an architecture, are written down as <a href="/docs/guide/limitations/">known limits</a> rather than hidden.</li>
 </ul>
 <p>How to install one tool, one image or one environment: <a href="/docs/guide/installing-software/">Installing software</a>. How the caches make the second machine fast: <a href="/docs/guide/caches/">Caches and fast delivery</a>.</p>
@@ -477,11 +463,11 @@
 <p>None of this asks you to leave Kali, Parrot, Pentoo, BlackArch or DragonOS. Many people keep the distribution they know and add RF Swift on top, and the Nix engine makes that work without a container engine, a VM or a single change to the distribution&rsquo;s packages. Your distribution is the operating system. RF Swift is the lab you carry from one engagement to the next.</p>
 <p><strong>Why they work well together</strong></p>
 <ul>
-<li><strong>RF Swift focuses on the RF stack.</strong> A distribution&rsquo;s GNU Radio is the version its release shipped, and out-of-tree modules often break when that version changes; srsRAN, OCUDU, the patched SDR forks and the telecom stacks are simply not in the repositories. RF Swift brings 50+ GNU Radio modules that build and are tested, the 2G-to-5G stacks, RFID, automotive and hardware sets, pinned to a revision. Kali keeps the general pentest tooling; RF Swift brings the radio side to the same laptop, both current.</li>
+<li><strong>RF Swift focuses on the RF stack.</strong> A distribution&rsquo;s GNU Radio is the version its release shipped, and out-of-tree modules often break when that version changes. srsRAN, OCUDU, the patched SDR forks and the telecom stacks are not in the repositories at all. RF Swift brings 50+ GNU Radio modules that build and are tested, the 2G-to-5G stacks, RFID, automotive and hardware sets, pinned to a revision. Kali keeps the general pentest tooling; RF Swift brings the radio side to the same laptop, both current.</li>
 <li><strong>One environment per engagement, instead of one shared state.</strong> On a distribution, two clients&rsquo; captures, wordlists, credentials and half-installed tools live in the same home. With RF Swift each engagement is its own environment or container, with its own workspace, deletable when the report is delivered and exportable as one archive when a colleague takes over. The Workbench keeps notes, findings and evidence with it.</li>
 <li><strong>Try anything without breaking what you rely on.</strong> Installing a bleeding-edge tool on the distribution can take down the ones you depend on tomorrow morning. In a Nix environment it is pinned, updates are transactional and <code>env rollback</code> undoes them; <code>rfswift env run</code> tries a tool with no footprint at all. Nix never fights the distribution&rsquo;s package manager: a tool that needs Python 3.14 or Boost 1.90 carries its own closure while the distribution keeps its versions.</li>
-<li><strong>Untrusted tools stop being a risk to the whole laptop.</strong> A pentest laptop carries client data and SSH keys next to tools downloaded from anywhere. <code>--isolate</code> runs an environment in a jail that hides your home and the system while the USB radio, the display and the network keep working; <code>rfswift audit</code> tells you the CVEs and attack surface of a tool set before you use it. Otherwise this kind of separation usually takes a VM.</li>
-<li><strong>The same lab on every machine, and on the one in the rack.</strong> An environment is a flake revision, an image is a digest: the DragonOS box in the lab, the Kali laptop and a colleague&rsquo;s Mac run the same tools, and the remote agent lets the laptop drive the lab box from the Workbench. Everyone runs the same tools.</li>
+<li><strong>Untrusted tools stop being a risk to the whole laptop.</strong> A pentest laptop carries client data and SSH keys next to tools downloaded from anywhere. <code>--isolate</code> runs an environment in a jail that hides your home and the system, while the USB radio, the display and the network keep working. <code>rfswift audit</code> tells you the CVEs and attack surface of a tool set before you use it. Otherwise this kind of separation usually takes a VM.</li>
+<li><strong>The same lab on every machine, and on the one in the rack.</strong> An environment is a flake revision and an image is a digest, so the DragonOS box in the lab, the Kali laptop and a colleague&rsquo;s Mac run the same tools. The remote agent lets the laptop drive the lab box from the Workbench. Everyone runs the same tools.</li>
 <li><strong>It costs what you use, and it leaves no trace.</strong> One tool costs its closure, not a second VM or a dual boot. Everything RF Swift installs lives in <code>/nix/store</code> and <code>~/.rfswift/nix/</code>, so <code>rfswift env remove</code> and <code>rfswift env gc</code> take it away without a line changed in the distribution&rsquo;s package database.</li>
 </ul>
 <div class="code">
@@ -523,7 +509,7 @@
 </div>
 <p>A container engine is optional; rootless Podman is the least intrusive one on a shared box. Whichever you pick, the distribution stays exactly as it was: RF Swift only fills in what it did not ship.</p>
 <h3 id="or-start-from-a-plain-lighter-system">Or start from a plain, lighter system<a class="anchor" href="#or-start-from-a-plain-lighter-system" aria-label="Link to this section"></a></h3>
-<p>The other route is a system that ships nothing security-specific at all: a freshly installed Arch, Debian, Fedora or Ubuntu, a Mac, a Windows laptop, a Raspberry Pi 5 or a RISC-V board. One command brings the whole tool set, with nothing to compile: a toolbox image arrives already built, and a lazy Nix environment is ready in seconds and fetches each tool the first time you run it. It stays light, because you install the base system once and then only the tool sets you use.</p>
+<p>The other route is a system that ships nothing security-specific at all: a freshly installed Arch, Debian, Fedora or Ubuntu, a Mac, a Windows laptop, a Raspberry Pi 5 or a RISC-V board. One command brings the whole tool set, with nothing to compile. A toolbox image arrives already built; a lazy Nix environment is ready in seconds and fetches each tool the first time you run it. It stays light, because you install the base system once and then only the tool sets you use.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Arch (pacman package), Debian and Ubuntu (deb), Fedora (rpm): one installer, or the package by hand</span>
 </span></span><span class="line"><span class="cl">curl -fsSL <span class="s2">&#34;https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh&#34;</span> <span class="p">|</span> sh
@@ -533,7 +519,7 @@
 <ul>
 <li><strong>A base you chose.</strong> Your window manager, your dotfiles, your update cadence. RF Swift does not care which Linux it is, and the same commands work on macOS and Windows.</li>
 <li><strong>Only what you use on disk.</strong> The base system plus the images or closures you asked for. A laptop set up for SDR and RFID work carries those two sets, not thirty tool categories.</li>
-<li><strong>The same tools as the Kali user next to you.</strong> Environments are pinned to a flake revision and images to a digest, so a team can mix Arch, Kali, macOS and a Pi in the lab and still run identical tools.</li>
+<li><strong>The same tools as the Kali user next to you.</strong> Environments are pinned to a flake revision and images to a digest. A team can mix Arch, Kali, macOS and a Pi in the lab and still run identical tools.</li>
 <li><strong>Quick to rebuild.</strong> A reinstalled laptop is back in minutes: install RF Swift, then pull again or restore the <code>.rfenv</code> and image archives you exported.</li>
 <li><strong>Small boards included.</strong> arm64 and riscv64 images cover the Raspberry Pi 5 and RISC-V boards, where dedicated images are rare or absent, and the Nix engine runs on arm64 too.</li>
 </ul>
@@ -588,8 +574,7 @@
   </tbody>
 </table>
 </div>
-<h2 id="next-steps">Next steps<a class="anchor" href="#next-steps" aria-label="Link to this section"></a></h2>
-<div class="doc-cards">
+<h2 id="next-sthahahugoshortcode231s0hbhbs-">Next st<div class="doc-cards">
   <a class="doc-card" href="/docs/getting-started/">
     <span class="doc-card-title">Install RF Swift</span><span class="doc-card-sub">On Linux, macOS or Windows, including on top of your distribution</span><span class="doc-card-tag">Beginner</span>
   </a>
@@ -602,8 +587,8 @@
   <a class="doc-card" href="/docs/development/compiling-rfswift/">
     <span class="doc-card-title">Compile RF Swift</span><span class="doc-card-sub">Build the CLI and the Workbench from source</span><span class="doc-card-tag">Advanced</span>
   </a>
-</div>
-<p>Questions or feedback? <a href="https://github.com/PentHertz/RF-Swift/issues" target="_blank" rel="noopener">Open an issue</a> or ask on <a href="https://discord.gg/NS3HayKrpA" target="_blank" rel="noopener">Discord</a>.</p>
+</div>s &gt;}}<a class="anchor" href="#next-sthahahugoshortcode231s0hbhbs-" aria-label="Link to this section"></a></h2>
+<p>Questions or feedback? <a href="https://github.com/PentHertz/RF-Swift/issues" target="_blank" rel="noopener">Open an issue</a> or ask on [Discord](<a href="https://discord.gg/NS3HayKr" target="_blank" rel="noopener">https://discord.gg/NS3HayKr</a></p>
 
     </div>
     <footer class="doc-foot">
@@ -637,7 +622,7 @@
       </ul>
     </li>
     <li><a href="#which-fits-when">Which fits when</a></li>
-    <li><a href="#next-steps">Next steps</a></li>
+    <li><a href="#next-sthahahugoshortcode231s0hbhbs-">Next stHAHAHUGOSHORTCODE231s0HBHBs &gt;}}</a></li>
   </ul>
 </nav>
   <a class="toc-top" href="#content">Back to top ↑</a>

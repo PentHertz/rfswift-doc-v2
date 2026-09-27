@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift container rm · RF Swift</title>
   <meta name="description" content="Remove a container. Its workspace folder on the host is kept.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/remove/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/remove/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift container rm · RF Swift">
   <meta property="og:description" content="Remove a container. Its workspace folder on the host is kept.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/remove/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/remove/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,19 +231,20 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift container rm</h1><p class="doc-lead">Remove a container. Its workspace folder on the host is kept.</p><p class="doc-meta">Reference · 9 min read · Updated September 27, 2026</p>
+      <h1>rfswift container rm</h1><p class="doc-lead">Remove a container. Its workspace folder on the host is kept.</p><p class="doc-meta">Reference · 10 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift container rm</code>. The legacy form <code>rfswift remove</code> and the short alias <code>rfswift rm</code> still work and print a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+      <p><code>rfswift container rm</code> deletes a container for good and frees its disk space. Use it when a piece of work is finished, or before re-creating a container with different settings.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container rm -c my_old_container</span></span></code></pre></div></div>
+<p>Your workspace folder (<code>~/rfswift-workspace/&lt;name&gt;/</code>) and any folder you mounted from your computer are kept. Everything else stored inside the container is lost.</p>
+<div class="admonition admonition-warning" role="note"><p><strong>This cannot be undone.</strong> Files you saved inside the container, outside the workspace and mounted folders, are deleted with it. To keep the container&rsquo;s state, <a href="/docs/commands/commit/">commit it to an image</a> first.</p>
 </div>
-<p>Permanently delete a container and free associated disk space.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Other spellings</strong>: the legacy form <code>rfswift remove</code> and the short alias <code>rfswift rm</code> still work and print a notice. The flags are the same. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+</div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container rm -c CONTAINER_NAME</span></span></code></pre></div></div>
-<p>The <code>remove</code> command permanently deletes a container from your system. This operation cannot be undone - all data stored within the container&rsquo;s filesystem will be lost.</p>
-<div class="admonition admonition-warning" role="note"><p><strong>Destructive Operation</strong>: This command permanently deletes the container. Data in mounted volumes is preserved, but any data stored inside the container filesystem is lost forever.</p>
-</div>
-<hr>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
@@ -279,47 +266,44 @@
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Interactive Picker</strong>: When run without <code>-c</code> in an interactive terminal, RF Swift displays a scrollable container picker listing all containers with their name, ID, image, and state. A confirmation prompt is shown before deletion.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Container picker</strong>: without <code>-c</code> in an interactive terminal, RF Swift shows a picker with every container&rsquo;s name, ID, image and state, then asks you to confirm before deleting.</p>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
 <h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Remove a stopped container:</strong></p>
+<h4 id="remove-a-stopped-container">Remove a stopped container<a class="anchor" href="#remove-a-stopped-container" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container rm -c my_old_container</span></span></code></pre></div></div>
-<p><strong>Remove by container ID:</strong></p>
+<h4 id="remove-by-container-id">Remove by container ID<a class="anchor" href="#remove-by-container-id" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container rm -c a1b2c3d4e5f6</span></span></code></pre></div></div>
-<p><strong>Remove with short container ID:</strong></p>
+<h4 id="remove-with-short-container-id">Remove with short container ID<a class="anchor" href="#remove-with-short-container-id" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container rm -c a1b2c3</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Clean up completed project:</strong></p>
+<h3 id="everyday-cases">Everyday cases<a class="anchor" href="#everyday-cases" aria-label="Link to this section"></a></h3>
+<h4 id="clean-up-completed-project">Clean up completed project<a class="anchor" href="#clean-up-completed-project" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Project complete, remove container</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c client_assessment_2024_01</span></span></code></pre></div></div>
-<p><strong>Free disk space:</strong></p>
+<h4 id="free-disk-space">Free disk space<a class="anchor" href="#free-disk-space" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove old test containers</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c test_container_1
 </span></span><span class="line"><span class="cl">rfswift container rm -c test_container_2
 </span></span><span class="line"><span class="cl">rfswift container rm -c experiment_old</span></span></code></pre></div></div>
-<p><strong>Remove failed containers:</strong></p>
+<h4 id="remove-failed-containers">Remove failed containers<a class="anchor" href="#remove-failed-containers" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Clean up containers that didn&#39;t work</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c broken_config
 </span></span><span class="line"><span class="cl">rfswift container rm -c failed_setup</span></span></code></pre></div></div>
-<p><strong>Weekly cleanup:</strong></p>
+<h4 id="weekly-cleanup">Weekly cleanup<a class="anchor" href="#weekly-cleanup" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove all containers older than 7 days</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># (See cleanup command for automated version)</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># One container at a time; for age-based cleanup see rfswift system cleanup</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c week_old_container</span></span></code></pre></div></div>
-<p><strong>Before recreating container:</strong></p>
+<h4 id="before-recreating-container">Before recreating container<a class="anchor" href="#before-recreating-container" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Need to recreate with different config</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c sdr_container
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_full -n sdr_container -s /dev/bus/usb:/dev/bus/usb</span></span></code></pre></div></div>
-<hr>
 <h2 id="what-gets-deleted">What gets deleted<a class="anchor" href="#what-gets-deleted" aria-label="Link to this section"></a></h2>
 <h3 id="data-loss">Data loss<a class="anchor" href="#data-loss" aria-label="Link to this section"></a></h3>
 <p>When you remove a container:</p>
@@ -327,41 +311,46 @@
 <table>
   <thead>
     <tr>
-      <th>Data Location</th>
-      <th>Preserved?</th>
+      <th>Data location</th>
+      <th>Kept?</th>
       <th>Example</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Container filesystem</td>
-      <td><strong>DELETED</strong></td>
-      <td><code>/root/captures/data.bin</code> (inside container)</td>
+      <td><strong>Deleted</strong></td>
+      <td><code>/root/captures/data.bin</code> (inside the container)</td>
+    </tr>
+    <tr>
+      <td>Workspace folder</td>
+      <td><strong>Kept</strong></td>
+      <td><code>~/rfswift-workspace/my_container/</code> on your computer</td>
     </tr>
     <tr>
       <td>Mounted volumes</td>
-      <td><strong>PRESERVED</strong></td>
-      <td><code>~/captures:/root/captures</code> (host directory)</td>
+      <td><strong>Kept</strong></td>
+      <td><code>~/captures:/root/captures</code> (a folder on your computer)</td>
     </tr>
     <tr>
       <td>Container configuration</td>
-      <td><strong>DELETED</strong></td>
+      <td><strong>Deleted</strong></td>
       <td>Network settings, capabilities, cgroups</td>
     </tr>
     <tr>
       <td>Container metadata</td>
-      <td><strong>DELETED</strong></td>
+      <td><strong>Deleted</strong></td>
       <td>Creation date, history, logs</td>
     </tr>
     <tr>
-      <td>Docker images</td>
-      <td><strong>PRESERVED</strong></td>
-      <td>Source images remain available</td>
+      <td>Images</td>
+      <td><strong>Kept</strong></td>
+      <td>The image you created it from stays available</td>
     </tr>
   </tbody>
 </table>
 </div>
-<p><strong>Important distinction:</strong></p>
+<h4 id="important-distinction">Important distinction<a class="anchor" href="#important-distinction" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create container with volume</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_full -n my_container <span class="se">\
@@ -376,15 +365,8 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># ~/captures on host: Still exists</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># /root/temp_work: Gone forever</span></span></span></code></pre></div></div>
 <h3 id="configuration-loss">Configuration loss<a class="anchor" href="#configuration-loss" aria-label="Link to this section"></a></h3>
-<p>Removed containers lose:</p>
-<ul>
-<li>Port bindings and network configuration</li>
-<li>Device bindings and cgroups</li>
-<li>Capabilities and security settings</li>
-<li>Environment variables</li>
-<li>Startup commands</li>
-</ul>
-<p><strong>To preserve configuration:</strong></p>
+<p>The container&rsquo;s settings go with it: port and network settings, device bindings and cgroup rules, capabilities and security settings, environment variables and startup commands.</p>
+<h4 id="to-preserve-configuration">To preserve configuration<a class="anchor" href="#to-preserve-configuration" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Option 1: Commit to image before removing</span>
 </span></span><span class="line"><span class="cl">rfswift container commit -c my_container -i my_container_backup
@@ -394,7 +376,6 @@
 </span></span><span class="line"><span class="cl">docker inspect my_container &gt; container_config.json
 </span></span><span class="line"><span class="cl">rfswift container rm -c my_container
 </span></span><span class="line"><span class="cl"><span class="c1"># Recreate later from documentation</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="safe-removal-practices">Safe removal practices<a class="anchor" href="#safe-removal-practices" aria-label="Link to this section"></a></h2>
 <h3 id="before-removing-checklist">Before removing: checklist<a class="anchor" href="#before-removing-checklist" aria-label="Link to this section"></a></h3>
 <div class="code">
@@ -415,12 +396,11 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 5. Remove</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c container_name</span></span></code></pre></div></div>
-<hr>
 <h2 id="common-workflows">Common workflows<a class="anchor" href="#common-workflows" aria-label="Link to this section"></a></h2>
 <h3 id="project-lifecycle">Project lifecycle<a class="anchor" href="#project-lifecycle" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Week 1: Create project container</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i pentest -n project_alpha <span class="se">\
+</span></span><span class="line"><span class="cl">rfswift container create -i network -n project_alpha <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/projects/alpha:/root/work
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Weeks 1-4: Use for project</span>
@@ -450,11 +430,10 @@
 </span></span><span class="line"><span class="cl">rfswift container rm -c test_new_config
 </span></span><span class="line"><span class="cl"><span class="c1"># Create production container with working config</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_full -n production <span class="c1"># Use tested config</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
 <h3 id="container-not-found">Container not found<a class="anchor" href="#container-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: No such container: container_name</code></p>
-<p><strong>Solutions:</strong></p>
+<p>The error message is: <code>Error: No such container: container_name</code></p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List all containers</span>
 </span></span><span class="line"><span class="cl">rfswift container last
@@ -466,29 +445,26 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Container may already be removed</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># No action needed if that&#39;s the case</span></span></span></code></pre></div></div>
 <h3 id="container-still-running">Container still running<a class="anchor" href="#container-still-running" aria-label="Link to this section"></a></h3>
-<p><strong>Warning:</strong> <code>Container is running, stopping first...</code></p>
-<p><strong>This is normal:</strong> RF Swift automatically stops running containers before removal.</p>
-<p><strong>To avoid the warning:</strong></p>
+<p>RF Swift prints <code>Container is running, stopping first...</code>. This is normal: it stops a running container before removing it.</p>
+<h4 id="to-avoid-the-warning">To avoid the warning<a class="anchor" href="#to-avoid-the-warning" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Stop first</span>
 </span></span><span class="line"><span class="cl">rfswift container stop -c my_container
 </span></span><span class="line"><span class="cl">rfswift container rm -c my_container</span></span></code></pre></div></div>
 <h3 id="permission-denied">Permission denied<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Permission denied</code> or <code>Cannot connect to Docker daemon</code></p>
-<p><strong>Solutions:</strong></p>
+<p>The error message is: <code>Permission denied</code> or <code>Cannot connect to Docker daemon</code></p>
+<p>On Linux, your user can&rsquo;t talk to Docker yet. Give it access once (no logout needed), then try again:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use sudo on Linux</span>
-</span></span><span class="line"><span class="cl">sudo rfswift container rm -c my_container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or add user to docker group</span>
-</span></span><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host docker-access
+</span></span><span class="line"><span class="cl">rfswift container rm -c my_container</span></span></code></pre></div></div>
+<p>Or, by hand:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
 </span></span><span class="line"><span class="cl">newgrp docker
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then try again</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c my_container</span></span></code></pre></div></div>
 <h3 id="container-has-dependent-containers">Container has dependent containers<a class="anchor" href="#container-has-dependent-containers" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: cannot remove container: container has dependent containers</code></p>
-<p><strong>Solutions:</strong></p>
+<p>The error message is: <code>Error: cannot remove container: container has dependent containers</code></p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Find dependent containers</span>
 </span></span><span class="line"><span class="cl">docker ps -a --filter <span class="s2">&#34;ancestor=container_name&#34;</span>
@@ -502,14 +478,8 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Or force remove entire chain</span>
 </span></span><span class="line"><span class="cl">docker rm -f <span class="k">$(</span>docker ps -aq --filter <span class="s2">&#34;ancestor=container_name&#34;</span><span class="k">)</span></span></span></code></pre></div></div>
 <h3 id="disk-space-not-freed">Disk space not freed<a class="anchor" href="#disk-space-not-freed" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Removed container but disk space unchanged</p>
-<p><strong>Explanation:</strong> Container removed, but:</p>
-<ul>
-<li>Image still exists (most disk space)</li>
-<li>Volumes still exist</li>
-<li>Build cache remains</li>
-</ul>
-<p><strong>Solutions:</strong></p>
+<p>You removed a container, but your free disk space barely changed. That is expected: the image (which takes most of the space), the volumes and the build cache are still there.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove unused images</span>
 </span></span><span class="line"><span class="cl">docker image prune -a
@@ -525,31 +495,23 @@
 </span></span><span class="line"><span class="cl">docker rmi image_name
 </span></span><span class="line"><span class="cl">docker volume rm volume_name</span></span></code></pre></div></div>
 <h3 id="accidental-removal">Accidental removal<a class="anchor" href="#accidental-removal" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Removed wrong container</p>
-<p><strong>Recovery options:</strong></p>
-<p><strong>If you have backups:</strong></p>
+<p>You removed the wrong container.</p>
+<h4 id="if-you-have-backups">If you have backups<a class="anchor" href="#if-you-have-backups" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># From committed image</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i backup_image -n restored_container
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># From exported tar</span>
 </span></span><span class="line"><span class="cl">rfswift image import container -i backup.tar.gz</span></span></code></pre></div></div>
-<p><strong>If no backups:</strong></p>
-<ul>
-<li>Container cannot be recovered</li>
-<li>Data inside container is lost</li>
-<li>Mounted volumes still exist</li>
-<li>Can recreate container from original image</li>
-</ul>
-<p><strong>Prevention:</strong></p>
+<p>Without a backup, the container and the data inside it cannot be recovered. Your workspace and mounted folders are still there, and you can create a new container from the original image.</p>
+<h4 id="prevention">Prevention<a class="anchor" href="#prevention" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Always verify before removing</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check before removing</span>
 </span></span><span class="line"><span class="cl">docker ps -a <span class="p">|</span> grep container_name
 </span></span><span class="line"><span class="cl"><span class="c1"># Read the output carefully before confirming</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Use tab completion to avoid typos</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c my_cont&lt;TAB&gt;</span></span></code></pre></div></div>
-<hr>
 <h2 id="best-practices">Best practices<a class="anchor" href="#best-practices" aria-label="Link to this section"></a></h2>
 <h3 id="1-verify-before-removing">1. Verify before removing<a class="anchor" href="#1-verify-before-removing" aria-label="Link to this section"></a></h3>
 <div class="code">
@@ -626,7 +588,6 @@
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Run every Sunday at 2 AM</span>
 </span></span><span class="line"><span class="cl"><span class="m">0</span> <span class="m">2</span> * * <span class="m">0</span> /path/to/cleanup_old_containers.sh</span></span></code></pre></div></div>
-<hr>
 <h2 id="advanced-usage">Advanced usage<a class="anchor" href="#advanced-usage" aria-label="Link to this section"></a></h2>
 <h3 id="conditional-removal">Conditional removal<a class="anchor" href="#conditional-removal" aria-label="Link to this section"></a></h3>
 <div class="code">
@@ -701,7 +662,6 @@
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Error: Archive creation failed. Container NOT removed.&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
 </span></span><span class="line"><span class="cl"><span class="k">fi</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="disk-space-management">Disk space management<a class="anchor" href="#disk-space-management" aria-label="Link to this section"></a></h2>
 <h3 id="understanding-disk-usage">Understanding disk usage<a class="anchor" href="#understanding-disk-usage" aria-label="Link to this section"></a></h3>
 <div class="code">
@@ -715,22 +675,23 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Local Volumes   3        1        500MB     300MB (60%)</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Build Cache     15       0        2.1GB     2.1GB (100%)</span></span></span></code></pre></div></div>
 <h3 id="freeing-disk-space">Freeing disk space<a class="anchor" href="#freeing-disk-space" aria-label="Link to this section"></a></h3>
-<p><strong>Conservative approach (remove only stopped containers):</strong></p>
+<h4 id="conservative-approach-remove-only-stopped-containers">Conservative approach (remove only stopped containers)<a class="anchor" href="#conservative-approach-remove-only-stopped-containers" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove specific stopped containers</span>
 </span></span><span class="line"><span class="cl">rfswift container rm -c old_container_1
 </span></span><span class="line"><span class="cl">rfswift container rm -c old_container_2
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove all stopped containers</span>
-</span></span><span class="line"><span class="cl">docker cleanup <span class="o">[</span>other options<span class="o">]</span> <span class="c1"># check that command before ;)</span></span></span></code></pre></div></div>
-<p><strong>Moderate approach (remove old data):</strong></p>
+</span></span><span class="line"><span class="cl"><span class="c1"># Remove all stopped containers (preview first with --dry-run)</span>
+</span></span><span class="line"><span class="cl">rfswift system cleanup containers --stopped --dry-run
+</span></span><span class="line"><span class="cl">rfswift system cleanup containers --stopped</span></span></code></pre></div></div>
+<h4 id="moderate-approach-remove-old-data">Moderate approach (remove old data)<a class="anchor" href="#moderate-approach-remove-old-data" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Remove containers unused for 7 days</span>
 </span></span><span class="line"><span class="cl">docker container prune --filter <span class="s2">&#34;until=168h&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Remove images unused for 7 days</span>
 </span></span><span class="line"><span class="cl">docker image prune -a --filter <span class="s2">&#34;until=168h&#34;</span></span></span></code></pre></div></div>
-<p><strong>Aggressive approach (full cleanup):</strong></p>
+<h4 id="aggressive-approach-full-cleanup">Aggressive approach (full cleanup)<a class="anchor" href="#aggressive-approach-full-cleanup" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># WARNING: This removes ALL unused Docker data!</span>
 </span></span><span class="line"><span class="cl">docker system prune -a --volumes
@@ -741,7 +702,7 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># - Unused networks</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># - Unused volumes</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># - Build cache</span></span></span></code></pre></div></div>
-<p><strong>Space recovery comparison:</strong></p>
+<h4 id="space-recovery-comparison">Space recovery comparison<a class="anchor" href="#space-recovery-comparison" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Before cleanup</span>
 </span></span><span class="line"><span class="cl">docker system df
@@ -756,22 +717,18 @@
 </span></span><span class="line"><span class="cl">docker system df
 </span></span><span class="line"><span class="cl"><span class="c1"># Containers: 2GB (0GB reclaimable)</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Freed: 3GB</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create new containers</li>
-<li><a href="/docs/commands/stop"><code>stop</code></a> - Stop containers before removing</li>
-<li><a href="/docs/commands/commit"><code>commit</code></a> - Save container state before removing</li>
-<li><a href="/docs/commands/export"><code>export</code></a> - Export container before removing</li>
-<li><a href="/docs/commands/cleanup"><code>cleanup</code></a> - Automated container cleanup</li>
-<li><a href="/docs/commands/last"><code>last</code></a> - List containers to identify removal candidates</li>
+<li><a href="/docs/commands/run/"><code>container create</code></a>: create a new container</li>
+<li><a href="/docs/commands/stop/"><code>container stop</code></a>: stop a container before removing it</li>
+<li><a href="/docs/commands/commit/"><code>container commit</code></a>: save a container&rsquo;s state as an image first</li>
+<li><a href="/docs/commands/export/"><code>image export</code></a>: export a container to an archive first</li>
+<li><a href="/docs/commands/cleanup/"><code>system cleanup</code></a>: remove old containers and images by age</li>
+<li><a href="/docs/commands/last/"><code>container last</code></a>: list containers to find the ones to remove</li>
 </ul>
-<hr>
-<div class="admonition admonition-warning" role="note"><p><strong>Cannot Be Undone</strong>: Container removal is permanent. All data inside the container filesystem is lost forever. Only mounted volumes are preserved. Always verify you&rsquo;re removing the correct container!</p>
+<div class="admonition admonition-tip" role="note"><p><strong>A safety net for important containers</strong>: commit first with <code>rfswift container commit -c container -i backup</code>, then run <code>rfswift container rm -c container</code>. You can re-create the container from <code>backup</code> at any time.</p>
 </div>
-<div class="admonition admonition-tip" role="note"><p><strong>Before Removing Important Containers</strong>: Always commit to an image first: <code>rfswift container commit -c container -i backup</code> then <code>rfswift container rm -c container</code>. This gives you a safety net!</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Disk Space Tip</strong>: Removing containers frees some space, but most disk usage is from images. Use <code>docker image prune</code> to free significant disk space after removing containers.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Disk space</strong>: removing containers frees some space, but images take most of it. <code>docker image prune</code> frees much more after you remove containers.</p>
 </div>
 
     </div>
@@ -798,7 +755,7 @@
     <li><a href="#examples">Examples</a>
       <ul>
         <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#everyday-cases">Everyday cases</a></li>
       </ul>
     </li>
     <li><a href="#what-gets-deleted">What gets deleted</a>

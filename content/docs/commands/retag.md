@@ -7,11 +7,17 @@ description: "Rename an image tag."
 weight: 24
 ---
 
-{{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift image tag`. The legacy form `rfswift retag` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
-{{< /callout >}}
+`rfswift image tag` gives an existing image an extra name (a tag). Use it to organise images, create short aliases, mark versions such as `stable` or `v1.2.0`, or prepare an image for sharing.
 
-Create new tags for existing Docker images or rename image tags.
+The most common use gives an official image a shorter local name:
+
+```bash
+rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
+```
+
+{{< callout type="info" >}}
+`rfswift image tag` is the v4 spelling. The older `rfswift retag` still works, takes the same flags and prints a notice with the new name. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
 
 ## Synopsis
 
@@ -19,84 +25,72 @@ Create new tags for existing Docker images or rename image tags.
 rfswift image tag -i IMAGE_REFERENCE -t NEW_TAG
 ```
 
-The `retag` command creates a new tag for an existing Docker image. This is useful for organizing images, creating aliases, marking versions, or preparing images for distribution.
-
----
-
 ## Options
 
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-i, --image STRING` | Source image reference | Yes | `-i penthertz/rfswift_resolute:sdr_full` |
-| `-t, --tag STRING` | New tag name | Yes | `-t my_sdr:production` |
+| Flag | What it does | Required | Example |
+|------|--------------|----------|---------|
+| `-i, --image STRING` | The image to tag | Yes | `-i penthertz/rfswift_resolute:sdr_full` |
+| `-t, --tag STRING` | The new tag | Yes | `-t my_sdr:production` |
 
-{{< callout type="info" >}}
-**Interactive Picker**: When run without `-i` in an interactive terminal, RF Swift displays a scrollable image picker listing all local images with their tags.
+{{< callout type="info" title="Pick from a list" >}}
+Run it without `-i` in a terminal and RF Swift shows a scrollable list of your local images and their tags.
 {{< /callout >}}
-
----
 
 ## Examples
 
-### Basic usage
+Give an image a new tag:
 
-**Create new tag for existing image:**
 ```bash
 rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
 ```
 
-**Create alias for convenience:**
+Create a short alias:
+
 ```bash
 rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr:latest
 ```
 
-**Mark as production:**
+Mark a tested image as production:
+
 ```bash
 rfswift image tag -i my_custom_image:test -t my_custom_image:production
 ```
 
-**Version tagging:**
+Give an image a version number:
+
 ```bash
 rfswift image tag -i my_image:latest -t my_image:v1.0.0
 ```
 
-### Real-World scenarios
+### One image, one tag per environment
 
-**Environment-based tagging:**
+Pull the image once, then give it a tag for each environment:
+
 ```bash
-# Pull image
 rfswift image pull -i penthertz/rfswift_resolute:sdr_full
-
-# Create environment-specific tags
 rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:development
 rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:staging
 rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:production
 ```
 
-**Version management:**
+### Version tags
+
+Tag the current build with its version, keep `latest` pointing at it, and mark it stable:
+
 ```bash
-# Tag current version
 rfswift image tag -i my_custom_sdr:latest -t my_custom_sdr:v1.2.0
-
-# Keep latest tag updated
 rfswift image tag -i my_custom_sdr:v1.2.0 -t my_custom_sdr:latest
-
-# Create stable release tag
 rfswift image tag -i my_custom_sdr:v1.2.0 -t my_custom_sdr:stable
 ```
 
----
+## How tagging works
 
-## How retag works
+A tag is only a name that points to an image. When you add one:
 
-### Tag creation process
-
-When you retag an image:
-
-1. **No duplication**: New tag points to same image layers
-2. **No disk space used**: Both tags reference same underlying data
-3. **Multiple tags allowed**: One image can have many tags
-4. **Original tag remains**: Source tag is NOT removed
+1. **Nothing is copied.** The new tag points to the same image layers.
+2. **No disk space is used.** Both tags share the same data.
+3. **You can have many tags.** One image can carry as many tags as you like.
+4. **The original tag stays.** The source tag is not removed.
 
 ```mermaid
 graph LR
@@ -105,7 +99,8 @@ graph LR
     A --> D[Tag: my_version:prod]
 ```
 
-**Example:**
+After tagging, both names show the same image ID, and no extra space is used:
+
 ```bash
 # Original image
 docker images
@@ -121,43 +116,38 @@ docker images
 # Same image ID, no extra disk space
 ```
 
----
+{{< callout type="warning" title="The old tag is kept" >}}
+Unlike renaming a container, tagging an image does not remove the original name: both tags exist afterwards. Use `rfswift image rm` to remove a tag you no longer want.
+{{< /callout >}}
 
-## Retag vs rename
+## Tagging an image or renaming a container?
 
-### Key differences
+| | `rfswift image tag` (legacy `retag`) | `rfswift container rename` |
+|---|---|---|
+| **Works on** | Images | Containers |
+| **What it does** | Adds a tag | Changes the container's name |
+| **Original name** | Kept | Replaced |
+| **Several names** | Yes, many tags | No, one name |
+| **Disk space** | None | None |
 
-| Feature | `retag` | `rename` |
-|---------|---------|----------|
-| **Target** | Images | Containers |
-| **Operation** | Creates new tag | Changes container name |
-| **Original** | Remains unchanged | Changed |
-| **Multiple names** | Yes (many tags) | No (one name) |
-| **Disk usage** | None | None |
+## Choosing tag names
 
----
+Tags are easiest to use when they say what the image is. Common patterns:
 
-## Tag naming conventions
+Versions, dates or Git references:
 
-### Recommended patterns
-
-**Version-based:**
 ```bash
-# Semantic versioning
 my_image:v1.2.3
 my_image:v1.2
 my_image:v1
-
-# Date-based
 my_image:2025.01.12
 my_image:2026_q1
-
-# Git-based
 my_image:commit_a1b2c3d
 my_image:branch_develop
 ```
 
-**Environment-based:**
+Environments:
+
 ```bash
 my_image:development
 my_image:dev
@@ -169,7 +159,8 @@ my_image:production
 my_image:prod
 ```
 
-**Purpose-based:**
+Purpose:
+
 ```bash
 my_image:latest
 my_image:stable
@@ -178,7 +169,8 @@ my_image:beta
 my_image:release
 ```
 
-**Combined:**
+A combination of these:
+
 ```bash
 my_image:v1.2.3_production
 my_image:v1.2_stable
@@ -186,148 +178,109 @@ my_image:2026.01_dev
 my_image:v1_experimental
 ```
 
-### Tag best practices
+Clear, descriptive tags work well:
 
-**Good tag names:**
 ```bash
-# Clear and descriptive
 sdr_analysis:v2.1.0_production
 sdr_analysis:stable
 sdr_analysis:2026_q1_release
-
-# Environment markers
 app:prod_v1.2
 app:dev_latest
 app:staging_candidate
 ```
 
-**Avoid:**
+Avoid tags that are ambiguous or too generic:
+
 ```bash
-# Ambiguous
 image:1
 image:a
 image:test1
-
-# Too generic
 my_tag
 temp
 old
 new
 ```
 
----
+Version tags such as `v1.2.3`, a major-version tag such as `v1`, and special tags such as `latest` or `stable` make it easy to go back to an earlier version.
 
 ## Troubleshooting
 
-### Source image not found
+### “No such image”
 
-**Error:** `Error: No such image: source:tag`
+The full error is `Error: No such image: source:tag`. The image you want to tag is not on this computer, or its name is slightly different. List your images, pull the image if needed, then tag it:
 
-**Solutions:**
 ```bash
-# List available images
 rfswift image local
-
-# Check exact image name
 docker images | grep image_name
-
-# Pull if needed
 rfswift image pull -i penthertz/rfswift_resolute:sdr_full
-
-# Then retag
 rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
 ```
 
-### Invalid tag format
+### “invalid reference format”
 
-**Error:** `invalid reference format`
+The new tag contains characters that are not allowed, such as spaces. Use underscores or hyphens instead.
 
-**Solutions:**
+This works:
+
 ```bash
-# Check tag format (no spaces, special chars)
-# Good
 rfswift image tag -i image:old -t image:new
-
-# Bad
-rfswift image tag -i image:old -t "image with spaces:new"
-rfswift image tag -i image:old -t "image:new tag"
-
-# Use underscores or hyphens
 rfswift image tag -i image:old -t image_new:v1
 rfswift image tag -i image:old -t image-new:v1
 ```
 
-### Tag already exists
+This fails:
 
-**Problem:** Tag already points to different image
-
-**Solution:**
 ```bash
-# Check existing tag
+rfswift image tag -i image:old -t "image with spaces:new"
+rfswift image tag -i image:old -t "image:new tag"
+```
+
+### The tag already points to another image
+
+Check your images, remove the old tag, then create the new one:
+
+```bash
 rfswift image local
-
-# Remove old tag first
-rfswift image rm old_image:new_tag
-
-# Then create new tag
+rfswift image rm -i old_image:new_tag
 rfswift image tag -i source:tag -t new_tag:version
+```
 
-# Or: Tag overwrites automatically with same ID
+You can also tag over it directly: the tag then moves to the new image.
+
+```bash
 rfswift image tag -i source:tag -t existing:tag
 ```
 
-### Permission denied
+### “Permission denied”
 
-**Error:** `Permission denied`
+Your user cannot talk to Docker. On Linux, `rfswift host docker-access` grants access without logging out. You can also add your user to the `docker` group by hand, or run the command with `sudo`:
 
-**Solutions:**
 ```bash
-# Use sudo
-sudo rfswift image tag -i source:tag -t new:tag
+rfswift host docker-access
+```
 
-# Or add user to docker group
+```bash
 sudo usermod -aG docker $USER
 newgrp docker
-
-# Then retry
 rfswift image tag -i source:tag -t new:tag
 ```
 
-### Cannot retag while container running
-
-**Problem:** Want to retag image being used by container
-
-**Solution:**
 ```bash
-# This is actually OK - containers are unaffected
-# Tags can be changed while containers are running
-
-# Container continues using the image it was started with
-# New tag just provides another reference to same image
-rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
-# Running containers using penthertz/rfswift_resolute:sdr_full are unaffected
+sudo rfswift image tag -i source:tag -t new:tag
 ```
 
----
+### Tagging an image that a running container uses
+
+This is fine. Running containers keep using the image they started from, and the new tag is only one more name for the same image:
+
+```bash
+rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
+```
 
 ## Related commands
 
-- [`images`](/docs/commands/images) - List and manage images
-- [`rename`](/docs/commands/rename) - Rename containers
-- [`build`](/docs/commands/build) - Build images to tag
-- [`delete`](/docs/commands/delete) - Remove old tags
-- [`export`](/docs/commands/export) - Export tagged images
-
----
-
-{{< callout >}}
-**No Disk Space Used**: Retagging creates a new reference to the same image data. Multiple tags for one image don't use extra disk space - they all point to the same layers!
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Original Tag Remains**: Unlike `rename` for containers, `retag` doesn't remove the original tag. Both the old and new tags will exist. Use `delete` to remove unwanted tags.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Version Management**: Use `retag` to create semantic version tags (v1.2.3), major version tags (v1), and special tags (latest, stable). This makes version management and rollback much easier!
-{{< /callout >}}
+- [`images`](/docs/commands/images): list and manage images
+- [`rename`](/docs/commands/rename): rename containers
+- [`build`](/docs/commands/build): build images to tag
+- [`delete`](/docs/commands/delete): remove old tags
+- [`export`](/docs/commands/export): export tagged images

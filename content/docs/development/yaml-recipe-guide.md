@@ -1,21 +1,19 @@
 ---
 title: "YAML recipe guide"
 level: advanced
-description: "Build custom RF Swift images from readable YAML recipes instead of Dockerfiles."
+description: "Build your own RF Swift image from a short YAML file: a base image, the packages you want and a few commands."
 weight: 2
 ---
 
-YAML recipes provide a simplified, readable way to build custom RF Swift container images without writing complex Dockerfiles. This guide covers everything you need to know about creating, customizing, and building images with YAML recipes.
+A YAML recipe describes a custom RF Swift image in a few lines: which image to start from, which packages to add and which commands to run. RF Swift turns it into a Dockerfile and builds the image for you.
 
-{{< callout type="info" >}}
-**Why YAML Recipes?** They eliminate the complexity of Dockerfiles while providing all the power you need for RF and hardware security tool containers. Perfect for quick prototyping and sharing configurations!
-{{< /callout >}}
+Use a recipe when the official toolboxes miss a tool you need every time, or when a team should share one reproducible image. To add a single tool to one lab, [Add more software](/docs/guide/installing-software/) is quicker.
 
----
+**Where to start:** copy the [first recipe](#your-first-recipe) below, build it, then look at the [complete examples](#complete-examples). The [helper functions reference](/docs/development/building-images/) lists the build helpers you can call from a recipe.
 
 ## Quick start
 
-### Your first YAML recipe
+### Your first recipe
 
 Create a file named `my-sdr.yaml`:
 
@@ -42,13 +40,22 @@ Build it:
 rfswift image build -r my-sdr.yaml
 ```
 
-That's it! You now have a custom SDR container image.
+You now have a local image called `my-sdr:latest`. Create a lab from it like any other image: `rfswift container create -i my-sdr:latest -n mylab`.
 
----
+## Recipe fields
 
-## YAML recipe structure
+A recipe has two required fields and four optional ones.
 
-### Complete field reference
+| Field | Type | Required | What it does |
+|-------|------|----------|-------------|
+| `base_image` | String | Yes | The image to start from (for example `ubuntu:24.04`) |
+| `tag` | String | Yes | Name and tag of the image you build |
+| `packages` | List | No | System packages installed with APT |
+| `python_packages` | List | No | Python packages installed with pip |
+| `run_commands` | List | No | Bash commands run during the build |
+| `context` | String | No | Build context directory (default: `.`) |
+
+Here is every field in one file:
 
 ```yaml
 # Base configuration (required)
@@ -82,30 +89,17 @@ run_commands:                      # Bash commands to execute
 context: "."                       # Build context directory (default: ".")
 ```
 
-### Field descriptions
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `base_image` | String | Yes | Base Docker image (e.g., `ubuntu:24.04`) |
-| `tag` | String | Yes | Name and tag for resulting image |
-| `packages` | List | No | APT/system packages to install |
-| `python_packages` | List | No | Python packages to install via pip |
-| `run_commands` | List | No | Custom bash commands to execute |
-| `context` | String | No | Build context directory (default: `.`) |
-
----
-
 ## Choosing a base image
 
-### Official RF Swift base images
+### RF Swift base images
 
-Start from RF Swift's optimized base images for best results:
+Starting from an RF Swift base image gives you its libraries and helper functions from the start:
 
 ```yaml
 # Core RF Swift base (recommended)
 base_image: "penthertz/rfswift_resolute:core"
 
-# Ubuntu Noble (24.04) - Latest LTS
+# RF Swift base image
 base_image: "penthertz/rfswift_resolute:base"
 
 # Ubuntu Jammy (22.04) - Stable LTS
@@ -114,7 +108,7 @@ base_image: "ubuntu:22.04"
 
 ### Standard base images
 
-For building from scratch:
+To build from scratch, start from a distribution image:
 
 ```yaml
 # Ubuntu (recommended for RF tools)
@@ -133,39 +127,24 @@ base_image: "fedora:39"
 base_image: "alpine:3.19"       # Warning: May lack some RF libraries
 ```
 
-### Choosing the right base
+### Which base to pick
 
-**Use Ubuntu 24.04 when:**
-- You want the latest packages and kernel support
-- Building general-purpose SDR containers
-- You need wide hardware compatibility
-- You're new to RF Swift development
+| Base | Pick it when |
+|---|---|
+| Ubuntu 24.04 | You want recent packages and wide hardware support, you build a general-purpose SDR image, or you are new to recipes |
+| Ubuntu 22.04 | You need proven stability, long-term support, or you work in an enterprise environment |
+| Debian | You prefer Debian's package stability, want slightly less overhead than Ubuntu, or run Debian-based infrastructure |
+| Alpine | Image size matters most (a base under 50 MB). Few RF libraries are packaged, so expect to compile a lot yourself |
 
-**Use Ubuntu 22.04 when:**
-- You need proven stability
-- Working with enterprise environments
-- Long-term support is critical
-
-**Use Debian when:**
-- You prefer Debian's package stability
-- You need minimal overhead beyond Ubuntu
-- Working in Debian-based infrastructure
-
-**Use Alpine when:**
-- Image size is critical (<50MB base)
-- ⚠️ Warning: Limited RF library support, manual compilation often needed
-
-{{< callout type="warning" >}}
-**Architecture Note:** Ensure your base image supports your target architecture (amd64, arm64, or riscv64). Use multi-arch images like `ubuntu:24.04` which support multiple architectures.
+{{< callout type="warning" title="Check the architecture" >}}
+Make sure the base image exists for your target architecture (amd64, arm64 or riscv64). Multi-architecture images such as `ubuntu:24.04` cover all three.
 {{< /callout >}}
 
----
-
-## Package management
+## Installing packages
 
 ### System packages (APT)
 
-The `packages` section installs system packages using apt:
+List system packages under `packages`. Comments help keep long lists readable:
 
 ```yaml
 packages:
@@ -192,14 +171,15 @@ packages:
  - vim
 ```
 
-**Best Practices:**
-- Group related packages together with comments
-- Use `-dev` packages for libraries you'll compile against
-- Include all build dependencies before compilation steps
+Good habits:
+
+- Group related packages and label each group with a comment.
+- Add the `-dev` package of every library you compile against.
+- List all build dependencies here, so they are installed before any compilation step in `run_commands`.
 
 ### Python packages (pip)
 
-The `python_packages` section installs Python packages:
+List Python packages under `python_packages`. You can pin versions, install from Git and request extras:
 
 ```yaml
 python_packages:
@@ -221,7 +201,8 @@ python_packages:
  - "jupyter[notebook]"
 ```
 
-**Version Specifications:**
+The version syntax is pip's:
+
 ```yaml
 python_packages:
  - "package"           # Latest version
@@ -230,13 +211,13 @@ python_packages:
  - "package>=1.0,<2.0" # Version range
 ```
 
----
+## Running commands (run_commands)
 
-## Custom commands (run_commands)
-
-The `run_commands` section executes bash commands during the build:
+Everything under `run_commands` runs in Bash during the build, in order.
 
 ### Simple commands
+
+One command per line:
 
 ```yaml
 run_commands:
@@ -248,7 +229,7 @@ run_commands:
 
 ### Multi-line commands
 
-Use YAML's pipe (`|`) syntax for complex commands:
+For several steps that belong together, use YAML's pipe (`|`) syntax:
 
 ```yaml
 run_commands:
@@ -261,9 +242,9 @@ run_commands:
     make install
 ```
 
-### Using helper functions
+### Helper functions
 
-RF Swift provides powerful helper functions:
+RF Swift's build helpers are available in every recipe. They print coloured messages, retry network steps, and clone and build CMake projects and GNU Radio out-of-tree modules:
 
 ```yaml
 run_commands:
@@ -294,15 +275,13 @@ run_commands:
  - "goodecho 'Installation complete!'"
 ```
 
-See the [Helper Functions Reference](/docs/development/building-images/) for complete documentation.
-
----
+Every helper and its arguments are described in the [helper functions reference](/docs/development/building-images/).
 
 ## Complete examples
 
-### Example 1: simple SDR image
+### Example 1: a simple SDR image
 
-Basic SDR tools for learning and experimentation:
+Basic SDR tools for learning and experimenting:
 
 ```yaml
 base_image: "ubuntu:24.04"
@@ -322,13 +301,11 @@ run_commands:
  - "echo 'SDR tools ready!'"
 ```
 
-Build: `rfswift image build -r sdr-beginner.yaml`
+Build it with `rfswift image build -r sdr-beginner.yaml`.
 
----
+### Example 2: a GNU Radio development environment
 
-### Example 2: GNU Radio development environment
-
-Complete GNU Radio setup with OOT modules:
+GNU Radio 3.10 built from source, with the gr-osmosdr out-of-tree module:
 
 ```yaml
 base_image: "ubuntu:24.04"
@@ -391,11 +368,9 @@ run_commands:
  - "goodecho 'GNU Radio environment ready!'"
 ```
 
----
+### Example 3: several SDR devices
 
-### Example 3: Multi-SDR hardware support
-
-Support for multiple SDR devices:
+Drivers for RTL-SDR, HackRF, Airspy and LimeSDR, built from source:
 
 ```yaml
 base_image: "ubuntu:24.04"
@@ -469,11 +444,9 @@ run_commands:
  - "goodecho 'All SDR devices supported!'"
 ```
 
----
-
 ### Example 4: Bluetooth analysis tools
 
-Specialized Bluetooth security container:
+The BlueZ stack, Ubertooth and Python tools for Bluetooth work:
 
 ```yaml
 base_image: "ubuntu:24.04"
@@ -517,11 +490,9 @@ run_commands:
  - "goodecho 'Bluetooth tools ready!'"
 ```
 
----
+### Example 5: an RF assessment toolkit
 
-### Example 5: RF hacking suite
-
-Complete RF security assessment toolkit:
+SDR, analysis and YARD Stick One tools on top of the RF Swift core image:
 
 ```yaml
 base_image: "penthertz/rfswift_resolute:core"
@@ -564,11 +535,11 @@ run_commands:
  - "goodecho 'RF Hacking suite ready!'"
 ```
 
----
-
 ## Advanced techniques
 
-### Multi-stage builds (using run_commands)
+### Keeping the image small
+
+Build in `/tmp`, then delete sources and APT caches at the end:
 
 ```yaml
 base_image: "ubuntu:24.04"
@@ -598,7 +569,9 @@ run_commands:
  - "rm -rf /var/lib/apt/lists/*"
 ```
 
-### Conditional builds
+### Different steps per architecture
+
+Test `uname -m` to run architecture-specific steps:
 
 ```yaml
 base_image: "ubuntu:24.04"
@@ -616,7 +589,9 @@ run_commands:
     fi
 ```
 
-### Version pinning for reproducibility
+### Pinning versions for reproducible builds
+
+Pin APT and pip versions, and pass a commit to the build helper (fourth argument of `cmake_clone_and_build`):
 
 ```yaml
 base_image: "ubuntu:24.04"
@@ -632,17 +607,19 @@ python_packages:
  - "matplotlib==3.7.1"
 
 run_commands:
-  # Pin specific git commits
+  # Pin a specific git commit (fourth argument)
  - |
     cmake_clone_and_build \
       'https://github.com/osmocom/rtl-sdr.git' \
       'build' \
       'master' \
-      'a1b2c3d4e5f6'  # Specific commit
+      'a1b2c3d4e5f6' \
       'rtlsdr_install'
 ```
 
 ### Environment variables
+
+Append `export` lines to the shell profile:
 
 ```yaml
 base_image: "ubuntu:24.04"
@@ -655,11 +632,9 @@ run_commands:
  - "echo 'export PYTHONPATH=/opt/tools/python:$PYTHONPATH' >> /root/.bashrc"
 ```
 
----
-
 ## Building your recipe
 
-### Basic build
+### Build commands
 
 ```bash
 # Build with default settings
@@ -672,7 +647,7 @@ rfswift image build -r my-recipe.yaml --no-cache
 rfswift image build -r my-recipe.yaml -t custom-tag:latest
 ```
 
-### Build options
+### Options
 
 ```bash
 rfswift image build [options]
@@ -684,22 +659,22 @@ Options:
   -h, --help            Help for build command
 ```
 
-### Build process
+### What happens during a build
 
 When you run `rfswift image build -r recipe.yaml`, RF Swift:
 
-1. **Validates** the YAML structure
-2. **Generates** an optimized Dockerfile
-3. **Prepares** the build context
-4. **Executes** the Docker build
-5. **Tags** the resulting image
-6. **Cleans up** temporary files
+1. checks the YAML structure;
+2. generates a Dockerfile from it;
+3. prepares the build context;
+4. runs the Docker build;
+5. tags the resulting image;
+6. removes its temporary files.
 
----
+## Good practices
 
-## Best practices
+### Keep recipes organised
 
-### Organization
+Group packages by purpose and comment each group:
 
 ```yaml
 # Good: Organized and commented
@@ -732,7 +707,9 @@ run_commands:
  - "goodecho 'Build complete!'"
 ```
 
-### Version control
+### Keep recipes in Git
+
+Version your recipes and tag releases, so a team can rebuild the same image later:
 
 ```bash
 # Store recipes in git
@@ -744,7 +721,9 @@ git tag recipe-sdr-v1.0
 git push origin main --tags
 ```
 
-### Testing
+### Test before you share
+
+Build under a test tag, create a lab from it and check the tools:
 
 ```bash
 # Build locally
@@ -757,9 +736,9 @@ rfswift container create -i test:dev -n test-container
 rfswift container shell -c test-container
 ```
 
-### Documentation
+### Document the recipe
 
-Add comments to your recipes:
+A short header says what the recipe is for and what it was tested with:
 
 ```yaml
 # SDR Analysis Container v1.2
@@ -781,13 +760,12 @@ python_packages:
  - scipy>=1.10.0  # Signal processing
 ```
 
----
-
 ## Troubleshooting
 
-### Common issues
+### "Package not found"
 
-**Issue: "Package not found"**
+The package name is wrong, or the package does not exist in the base image's repositories. Check the exact name for that distribution:
+
 ```yaml
 # Problem: Package name incorrect or not available
 packages:
@@ -798,7 +776,10 @@ packages:
  - rtl-sdr
 ```
 
-**Issue: "Python package install fails"**
+### A Python package fails to install
+
+It usually needs system libraries that are missing. Install them under `packages` first:
+
 ```yaml
 # Problem: Missing system dependencies
 python_packages:
@@ -813,7 +794,10 @@ python_packages:
  - matplotlib
 ```
 
-**Issue: "Command not found in run_commands"**
+### "Command not found" in run_commands
+
+The helper functions are always available, so this is almost always a syntax error. Check the quoting and the line continuations:
+
 ```yaml
 # Problem: Helper functions not available
 run_commands:
@@ -830,9 +814,9 @@ run_commands:
       'install_name'
 ```
 
-### Validation
+### Checking a recipe before a long build
 
-Before building, validate your YAML:
+There is no dry-run flag yet. Check the YAML syntax, then build into a throwaway tag:
 
 ```bash
 # Check YAML syntax
@@ -842,7 +826,9 @@ python3 -c "import yaml; yaml.safe_load(open('recipe.yaml'))"
 rfswift image build -r recipe.yaml -t recipe-check:test
 ```
 
-### Debugging builds
+### Debugging a failing build
+
+Rebuild with full output, or try the recipe's commands by hand in a plain lab:
 
 ```bash
 # Build with verbose output
@@ -856,15 +842,11 @@ rfswift container create -i ubuntu:24.04 -n debug
 # Manually test commands from recipe
 ```
 
----
+## Sharing recipes
 
-## Recipe library
+A small Git repository, organised by category, is enough to share recipes with a team or the community:
 
-### Sharing recipes
-
-Share your recipes with the community:
-
-```bash
+````bash
 # Create a recipe repository
 mkdir rf-swift-recipes
 cd rf-swift-recipes
@@ -884,6 +866,7 @@ cat > README.md << 'EOF'
 ```bash
 rfswift image build -r sdr/rtlsdr-basic.yaml
 ```
+EOF
 
 # Share on GitHub
 git init
@@ -891,31 +874,22 @@ git add .
 git commit -m "Initial recipe collection"
 git remote add origin https://github.com/yourusername/rf-swift-recipes.git
 git push -u origin main
-```
+````
 
-### Community recipes
+Where to find and share recipes:
 
-Browse community recipes:
-- [Official RF Swift Recipes](https://github.com/PentHertz/RF-Swift/blob/main/recipes)
-- Share your recipes on Discord
-- Contribute to the recipe library
+- the [official RF Swift recipes](https://github.com/PentHertz/RF-Swift/blob/main/recipes);
+- the [RF Swift recipe repository](https://github.com/PentHertz/RF-Swift-Recipes), which accepts contributions;
+- the [Discord](https://discord.gg/NS3HayKrpA) community.
 
----
+{{< callout type="tip" >}}
+Start with a small recipe and grow it: build, test, then add the next tool.
+{{< /callout >}}
 
 ## Related documentation
 
 {{< cards >}}
-  {{< card link="/docs/development/building-images/" title="Helper Functions" icon="terminal" subtitle="Complete reference for all helper functions" >}}
-  {{< card link="/docs/development/compiling-rfswift" title="Compile RF Swift" icon="chip" subtitle="Build the RF Swift binary from source" >}}
-  {{< card link="/docs/guide/list-of-images" title="Official Images" icon="cube" subtitle="Browse pre-built RF Swift images" >}}
+  {{< card link="/docs/development/building-images/" title="Helper functions" subtitle="Every helper you can call from a recipe" >}}
+  {{< card link="/docs/development/compiling-rfswift/" title="Compile RF Swift" subtitle="Build the RF Swift binary from source" >}}
+  {{< card link="/docs/guide/list-of-images/" title="Official images" subtitle="Browse the pre-built RF Swift images" >}}
 {{< /cards >}}
-
----
-
-{{< callout >}}
-**Pro Tip:** Start with a simple recipe and iterate. Build, test, refine. YAML recipes make experimentation fast and easy!
-{{< /callout >}}
-
-{{< callout >}}
-**Contribute:** Share your recipes with the community! Submit them to the [RF Swift Recipe Repository](https://github.com/PentHertz/RF-Swift-Recipes) or share on [Discord](https://discord.gg/NS3HayKrpA).
-{{< /callout >}}

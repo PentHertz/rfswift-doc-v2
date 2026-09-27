@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift image import · RF Swift</title>
   <meta name="description" content="Import containers or images from archives.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/import/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/import/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift image import · RF Swift">
   <meta property="og:description" content="Import containers or images from archives.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/import/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/import/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,27 +231,33 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift image import</h1><p class="doc-lead">Import containers or images from archives.</p><p class="doc-meta">Reference · 5 min read · Updated September 27, 2026</p>
+      <h1>rfswift image import</h1><p class="doc-lead">Import containers or images from archives.</p><p class="doc-meta">Reference · 6 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift image import</code>. The legacy form <code>rfswift import</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
-</div>
-<p>Import containers or images from compressed archive files.</p>
-<h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
+      <p><code>rfswift image import</code> brings back an archive created with <a href="/docs/commands/export"><code>rfswift image export</code></a> or <a href="/docs/commands/download"><code>rfswift image download</code></a>. Use it to restore a backup, move a lab to a new machine, or install images on an offline system.</p>
+<p>The most common use restores an image saved on another machine:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Import container filesystem as image</span>
-</span></span><span class="line"><span class="cl">rfswift image import container <span class="o">[</span>-i INPUT_FILE.tar.gz<span class="o">]</span> <span class="o">[</span>-n IMAGE_NAME<span class="o">]</span>
-</span></span><span class="line"><span class="cl">rfswift image import container <span class="o">[</span>FILE<span class="o">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Import Docker image(s)</span>
-</span></span><span class="line"><span class="cl">rfswift image import image <span class="o">[</span>-i INPUT_FILE.tar.gz<span class="o">]</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import image -i sdr_full_image.tar.gz</span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p><code>rfswift image import</code> is the v4 spelling. The older <code>rfswift import</code> still works, takes the same flags and prints a notice with the new name. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+</div>
+<h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
+<p>Import a container archive as a new image:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import container <span class="o">[</span>-i INPUT_FILE.tar.gz<span class="o">]</span> <span class="o">[</span>-n IMAGE_NAME<span class="o">]</span>
+</span></span><span class="line"><span class="cl">rfswift image import container <span class="o">[</span>FILE<span class="o">]</span></span></span></code></pre></div></div>
+<p>Import one or more images:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import image <span class="o">[</span>-i INPUT_FILE.tar.gz<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift image import image <span class="o">[</span>FILE<span class="o">]</span></span></span></code></pre></div></div>
-<p>The <code>import</code> command restores containers and images from tar.gz archives created by the <code>export</code> or <code>download</code> commands, enabling backup restoration and system migration.</p>
-<p><strong>Positional argument</strong>: Both subcommands accept the file path as a positional argument instead of the <code>-i</code> flag:</p>
+<p>Both subcommands also accept the file path on its own, without <code>-i</code>:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import container /path/to/backup.tar.gz
 </span></span><span class="line"><span class="cl">rfswift image import image /path/to/image.tar.gz</span></span></code></pre></div></div>
-<hr>
+<h3 id="container-or-image-which-one">Container or image: which one?<a class="anchor" href="#container-or-image-which-one" aria-label="Link to this section"></a></h3>
+<ul>
+<li>Use <code>import container</code> for archives made with <code>export container</code>. It creates a new image with a single, flattened layer.</li>
+<li>Use <code>import image</code> for archives made with <code>export image</code> or <code>download</code>. It keeps the layers and tags.</li>
+</ul>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <h3 id="import-container">Import container<a class="anchor" href="#import-container" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
@@ -273,7 +265,7 @@
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -281,13 +273,13 @@
   <tbody>
     <tr>
       <td><code>-i, --input STRING</code></td>
-      <td>Input tar.gz file path</td>
+      <td>The archive to import</td>
       <td>No*</td>
       <td><code>-i backup.tar.gz</code></td>
     </tr>
     <tr>
       <td><code>-n, --name STRING</code></td>
-      <td>Name for the imported image</td>
+      <td>The name of the new image</td>
       <td>No*</td>
       <td><code>-n myimage:tag</code></td>
     </tr>
@@ -300,7 +292,7 @@
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -308,99 +300,76 @@
   <tbody>
     <tr>
       <td><code>-i, --input STRING</code></td>
-      <td>Input tar.gz file path</td>
+      <td>The archive to import</td>
       <td>No*</td>
       <td><code>-i images.tar.gz</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<p><em>* When flags are omitted in an interactive terminal, RF Swift provides interactive pickers and auto-suggested values.</em></p>
-<div class="admonition admonition-info" role="note"><p><strong>Interactive File Picker</strong>: When run without <code>-i</code> and without a positional argument in an interactive terminal, RF Swift scans the current directory for <code>.tar.gz</code> files and displays a scrollable picker showing filenames and sizes (in MB).</p>
-<p><strong>Auto-suggested image name</strong>: For <code>import container</code>, if <code>-n</code> is omitted, the image name is auto-generated from the filename as <code>rfswift/{filename}:imported</code>.</p>
+<p><em>* In a terminal, RF Swift asks for anything you leave out.</em></p>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">Defaults</p><p>Without <code>-i</code> or a file path, RF Swift lists the <code>.tar.gz</code> files in the current folder, with their sizes in MB, so you can pick one.</p>
+<p>For <code>import container</code>, if you leave out <code>-n</code>, the image is named after the file: <code>rfswift/{filename}:imported</code>.</p>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
 <h3 id="import-containers">Import containers<a class="anchor" href="#import-containers" aria-label="Link to this section"></a></h3>
-<p><strong>Basic container import:</strong></p>
+<p>Import a container archive under a name of your choice:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import container -i sdr_backup.tar.gz -n sdr_restored:v1</span></span></code></pre></div></div>
-<p><strong>Import with descriptive tag:</strong></p>
+<p>Use a descriptive tag, such as the backup date:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import container -i client_assessment_20250112.tar.gz <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -n client_assessment_restored:2025_01_12</span></span></code></pre></div></div>
-<p><strong>Import and immediately run:</strong></p>
+<p>Import, then create a container from the new image straight away:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Import</span>
-</span></span><span class="line"><span class="cl">rfswift image import container -i backup.tar.gz -n my_container_restored
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Run new container from imported image</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import container -i backup.tar.gz -n my_container_restored
 </span></span><span class="line"><span class="cl">rfswift container create -i my_container_restored -n my_container</span></span></code></pre></div></div>
 <h3 id="import-images">Import images<a class="anchor" href="#import-images" aria-label="Link to this section"></a></h3>
-<p><strong>Basic image import:</strong></p>
+<p>Import an image archive:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import image -i sdr_full_image.tar.gz</span></span></code></pre></div></div>
-<p><strong>Import multiple images:</strong></p>
+<p>If the archive holds several images, they are all imported:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># This imports all images contained in the archive</span>
-</span></span><span class="line"><span class="cl">rfswift image import image -i rfswift_images_bundle.tar.gz</span></span></code></pre></div></div>
-<p><strong>Import downloaded RF Swift image:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import image -i rfswift_images_bundle.tar.gz</span></span></code></pre></div></div>
+<p>Import an image saved with <code>rfswift image download</code>:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import image -i rfswift-sdr-full-20250112.tar.gz</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Disaster recovery:</strong></p>
+<h3 id="recover-after-a-failure">Recover after a failure<a class="anchor" href="#recover-after-a-failure" aria-label="Link to this section"></a></h3>
+<p>On the backup system, import the container, create it again and check it works:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># On backup system, import critical containers</span>
-</span></span><span class="line"><span class="cl">rfswift image import container -i /backup/dr/production_monitor_20250112.tar.gz <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import container -i /backup/dr/production_monitor_20250112.tar.gz <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -n production_monitor_restored
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Start restored container</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i production_monitor_restored -n production_monitor
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify functionality</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c production_monitor</span></span></code></pre></div></div>
-<p><strong>System migration:</strong></p>
+<h3 id="move-to-a-new-machine">Move to a new machine<a class="anchor" href="#move-to-a-new-machine" aria-label="Link to this section"></a></h3>
+<p>On the new machine, import the archive, create the container under its old name with the same folders, and carry on:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># On new system after receiving transfer</span>
-</span></span><span class="line"><span class="cl">rfswift image import container -i sdr_work_transfer.tar.gz <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import container -i sdr_work_transfer.tar.gz <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -n sdr_work_migrated:v1
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Run with same name as original</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_work_migrated:v1 -n sdr_work <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/captures:/root/captures
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Resume work</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c sdr_work</span></span></code></pre></div></div>
-<p><strong>Offline installation:</strong></p>
+<h3 id="install-images-offline">Install images offline<a class="anchor" href="#install-images-offline" aria-label="Link to this section"></a></h3>
+<p>On an air-gapped system, import the images, check they are there, and create a container:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Import RF Swift images on air-gapped system</span>
-</span></span><span class="line"><span class="cl">rfswift image import image -i rfswift-images-offline-bundle.tar.gz
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># List imported images</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import image -i rfswift-images-offline-bundle.tar.gz
 </span></span><span class="line"><span class="cl">rfswift image <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Run container</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n offline_work</span></span></code></pre></div></div>
-<p><strong>Team distribution:</strong></p>
+<h3 id="share-a-training-environment">Share a training environment<a class="anchor" href="#share-a-training-environment" aria-label="Link to this section"></a></h3>
+<p>Each team member imports the same image and creates their own workspace:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Each team member imports training environment</span>
-</span></span><span class="line"><span class="cl">rfswift image import image -i sdr_course_2024_q1.tar.gz
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Run personal workspace</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import image -i sdr_course_2024_q1.tar.gz
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_course_2024_q1 -n student_workspace</span></span></code></pre></div></div>
-<p><strong>Project restoration:</strong></p>
+<h3 id="reopen-an-archived-project">Reopen an archived project<a class="anchor" href="#reopen-an-archived-project" aria-label="Link to this section"></a></h3>
+<p>Import the archived container and open it with a review folder mounted:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Import archived project</span>
-</span></span><span class="line"><span class="cl">rfswift image import container -i archives/client_2024_01_container.tar.gz <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import container -i archives/client_2024_01_container.tar.gz <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -n client_project_archive:2024_01
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Run for review</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i client_project_archive:2024_01 -n project_review <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/pathto/review:/root/work</span></span></code></pre></div></div>
-<hr>
 <h2 id="what-gets-imported">What gets imported<a class="anchor" href="#what-gets-imported" aria-label="Link to this section"></a></h2>
 <h3 id="container-import">Container import<a class="anchor" href="#container-import" aria-label="Link to this section"></a></h3>
-<p>When importing a container (from <code>export container</code>):</p>
+<p>From an <code>export container</code> archive:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -414,7 +383,7 @@
     <tr>
       <td>Container filesystem</td>
       <td>Yes</td>
-      <td>Complete filesystem state</td>
+      <td>The complete filesystem</td>
     </tr>
     <tr>
       <td>Installed packages</td>
@@ -424,7 +393,7 @@
     <tr>
       <td>Configuration files</td>
       <td>Yes</td>
-      <td>All configs</td>
+      <td>All configuration</td>
     </tr>
     <tr>
       <td>Created files</td>
@@ -434,17 +403,17 @@
     <tr>
       <td>Layer history</td>
       <td>No</td>
-      <td>Flattened to single layer</td>
+      <td>Flattened into one layer</td>
     </tr>
     <tr>
       <td>Container metadata</td>
-      <td>⚠️ Limited</td>
-      <td>Basic info only</td>
+      <td>Limited</td>
+      <td>Basic information only</td>
     </tr>
     <tr>
       <td>Mounted volumes</td>
       <td>No</td>
-      <td>Not included in export</td>
+      <td>Not in the export</td>
     </tr>
     <tr>
       <td>Running processes</td>
@@ -455,7 +424,7 @@
 </table>
 </div>
 <h3 id="image-import">Image import<a class="anchor" href="#image-import" aria-label="Link to this section"></a></h3>
-<p>When importing an image (from <code>export image</code> or <code>download</code>):</p>
+<p>From an <code>export image</code> or <code>download</code> archive:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -469,30 +438,31 @@
     <tr>
       <td>Image layers</td>
       <td>Yes</td>
-      <td>Complete layer history</td>
+      <td>The complete layer history</td>
     </tr>
     <tr>
       <td>Image metadata</td>
       <td>Yes</td>
-      <td>Tags, labels, config</td>
+      <td>Tags, labels, configuration</td>
     </tr>
     <tr>
       <td>Build history</td>
       <td>Yes</td>
-      <td>Layer creation history</td>
+      <td>How the layers were created</td>
     </tr>
     <tr>
       <td>Default configuration</td>
       <td>Yes</td>
-      <td>CMD, ENV, WORKDIR, etc.</td>
+      <td>CMD, ENV, WORKDIR and so on</td>
     </tr>
   </tbody>
 </table>
 </div>
-<p><strong>Important:</strong> Volume data is never included in exports/imports. Back up volumes separately.</p>
-<hr>
+<div class="admonition admonition-warning" role="note"><p class="admonition-title">Mounted folders are never included</p><p>Exports and imports never contain the data of mounted folders (volumes). Back them up and restore them separately, then mount them again when you create the restored container.</p>
+</div>
 <h2 id="common-workflows">Common workflows<a class="anchor" href="#common-workflows" aria-label="Link to this section"></a></h2>
-<h3 id="disaster-recovery-workflow">Disaster recovery workflow<a class="anchor" href="#disaster-recovery-workflow" aria-label="Link to this section"></a></h3>
+<h3 id="recover-a-failed-system">Recover a failed system<a class="anchor" href="#recover-a-failed-system" aria-label="Link to this section"></a></h3>
+<p>This example restores a container and its data from backups, then publishes a port and checks the service:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># === Scenario: Production system failed ===</span>
 </span></span><span class="line"><span class="cl">
@@ -514,11 +484,10 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 5. Verify service</span>
 </span></span><span class="line"><span class="cl">curl http://localhost:8080/health</span></span></code></pre></div></div>
-<h3 id="cross-platform-migration">Cross-Platform migration<a class="anchor" href="#cross-platform-migration" aria-label="Link to this section"></a></h3>
+<h3 id="move-from-a-laptop-to-a-linux-server">Move from a laptop to a Linux server<a class="anchor" href="#move-from-a-laptop-to-a-linux-server" aria-label="Link to this section"></a></h3>
+<p>Export on the laptop (macOS or Windows), copy the file, then import and create the container on the server with its devices and folders:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># === From Development Laptop to Production Server ===</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># On development laptop (macOS/Windows)</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># On development laptop (macOS/Windows)</span>
 </span></span><span class="line"><span class="cl">rfswift image <span class="nb">export</span> container -c sdr_dev -o sdr_dev_export.tar.gz
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Transfer to production server (Linux)</span>
@@ -534,53 +503,37 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/device:/dev/device <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 189:* rwm&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge</span></span></code></pre></div></div>
-<hr>
+<div class="admonition admonition-tip" role="note"><p class="admonition-title">Check archives before importing</p><p>List an archive&rsquo;s contents with <code>tar -tzf file.tar.gz</code> to check it is intact. For production systems, try the import on a test machine first.</p>
+</div>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="image-name-already-exists">Image name already exists<a class="anchor" href="#image-name-already-exists" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: image name already in use</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="image-name-already-in-use">“image name already in use”<a class="anchor" href="#image-name-already-in-use" aria-label="Link to this section"></a></h3>
+<p>An image with that name already exists. Choose another name, add a version tag, or remove the existing image first:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Option 1: Use different name</span>
-</span></span><span class="line"><span class="cl">rfswift image import container -i backup.tar.gz -n restored_alternative:v1
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Option 2: Remove existing image first</span>
-</span></span><span class="line"><span class="cl">docker rmi existing_image:tag
-</span></span><span class="line"><span class="cl">rfswift image import container -i backup.tar.gz -n existing_image:tag
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Option 3: Add version tag</span>
-</span></span><span class="line"><span class="cl">rfswift image import container -i backup.tar.gz -n existing_image:v2</span></span></code></pre></div></div>
-<h3 id="permission-denied">Permission denied<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Permission denied</code> reading archive</p>
-<p><strong>Solutions:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import container -i backup.tar.gz -n restored_alternative:v1</span></span></code></pre></div></div>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check file permissions</span>
-</span></span><span class="line"><span class="cl">ls -l backup.tar.gz
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Read permission for user</span>
-</span></span><span class="line"><span class="cl">chmod <span class="m">644</span> backup.tar.gz
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or use sudo</span>
-</span></span><span class="line"><span class="cl">sudo rfswift image import container -i backup.tar.gz -n restored:v1
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or add user to docker group</span>
-</span></span><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image import container -i backup.tar.gz -n existing_image:v2</span></span></code></pre></div></div>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker rmi existing_image:tag
+</span></span><span class="line"><span class="cl">rfswift image import container -i backup.tar.gz -n existing_image:tag</span></span></code></pre></div></div>
+<h3 id="permission-denied-when-reading-the-archive">“Permission denied” when reading the archive<a class="anchor" href="#permission-denied-when-reading-the-archive" aria-label="Link to this section"></a></h3>
+<p>Check that you can read the file, and make it readable if needed:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l backup.tar.gz
+</span></span><span class="line"><span class="cl">chmod <span class="m">644</span> backup.tar.gz</span></span></code></pre></div></div>
+<p>If the problem is access to Docker itself, run <code>rfswift host docker-access</code> on Linux, add your user to the <code>docker</code> group, or use <code>sudo</code>:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
 </span></span><span class="line"><span class="cl">newgrp docker</span></span></code></pre></div></div>
-<hr>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo rfswift image import container -i backup.tar.gz -n restored:v1</span></span></code></pre></div></div>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/export"><code>export</code></a> - Create archives to import</li>
-<li><a href="/docs/commands/download"><code>download</code></a> - Download images for offline import</li>
-<li><a href="/docs/commands/run"><code>run</code></a> - Run containers from imported images</li>
-<li><a href="/docs/commands/images"><code>images</code></a> - Manage imported images</li>
-<li><a href="/docs/commands/remove"><code>remove</code></a> - Remove imported containers</li>
+<li><a href="/docs/commands/export"><code>export</code></a>: create the archives to import</li>
+<li><a href="/docs/commands/download"><code>download</code></a>: save images for an offline import</li>
+<li><a href="/docs/commands/run"><code>run</code></a>: create containers from imported images</li>
+<li><a href="/docs/commands/images"><code>images</code></a>: manage imported images</li>
+<li><a href="/docs/commands/remove"><code>remove</code></a>: remove imported containers</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Import Strategy</strong>: Always verify archive integrity before importing with <code>tar -tzf file.tar.gz</code>. For production systems, test imports in a non-production environment first!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Volume Data</strong>: Imported containers don&rsquo;t include volume data from the original. Back up and restore volumes separately, then remount when running the restored container.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Container vs Image Import</strong>: Use <code>import container</code> for container exports (creates new flattened image), use <code>import image</code> for image exports (preserves layers and tags). Choose based on your source archive type!</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -601,7 +554,11 @@
   <p class="toc-title">On this page</p>
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#synopsis">Synopsis</a></li>
+    <li><a href="#synopsis">Synopsis</a>
+      <ul>
+        <li><a href="#container-or-image-which-one">Container or image: which one?</a></li>
+      </ul>
+    </li>
     <li><a href="#options">Options</a>
       <ul>
         <li><a href="#import-container">Import container</a></li>
@@ -612,7 +569,11 @@
       <ul>
         <li><a href="#import-containers">Import containers</a></li>
         <li><a href="#import-images">Import images</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#recover-after-a-failure">Recover after a failure</a></li>
+        <li><a href="#move-to-a-new-machine">Move to a new machine</a></li>
+        <li><a href="#install-images-offline">Install images offline</a></li>
+        <li><a href="#share-a-training-environment">Share a training environment</a></li>
+        <li><a href="#reopen-an-archived-project">Reopen an archived project</a></li>
       </ul>
     </li>
     <li><a href="#what-gets-imported">What gets imported</a>
@@ -623,14 +584,14 @@
     </li>
     <li><a href="#common-workflows">Common workflows</a>
       <ul>
-        <li><a href="#disaster-recovery-workflow">Disaster recovery workflow</a></li>
-        <li><a href="#cross-platform-migration">Cross-Platform migration</a></li>
+        <li><a href="#recover-a-failed-system">Recover a failed system</a></li>
+        <li><a href="#move-from-a-laptop-to-a-linux-server">Move from a laptop to a Linux server</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#image-name-already-exists">Image name already exists</a></li>
-        <li><a href="#permission-denied">Permission denied</a></li>
+        <li><a href="#image-name-already-in-use">“image name already in use”</a></li>
+        <li><a href="#permission-denied-when-reading-the-archive">“Permission denied” when reading the archive</a></li>
       </ul>
     </li>
     <li><a href="#related-commands">Related commands</a></li>

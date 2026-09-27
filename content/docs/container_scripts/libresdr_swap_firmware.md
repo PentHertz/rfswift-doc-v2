@@ -6,39 +6,23 @@ description: "Back up, replace and restore the FPGA firmware of USRP B210/B220 b
 weight: 7
 ---
 
-## Overview
+`libresdr_swapfpga` switches the FPGA firmware of a USRP B210 or B220 between the original UHD image and the LibreSDR versions. A short menu lets you back up the original, replace it, and restore it later.
 
-The `libresdr_swapfpga` utility allows you to easily switch between different FPGA firmware binaries for USRP B210/B220 devices when using them with LibreSDR. This tool provides a simple interface to backup, replace, and restore FPGA firmware files, enabling enhanced functionality with LibreSDR modifications.
+Use it when:
 
-## What this utility does
+- you want to add LibreSDR capabilities to a USRP B210/B220;
+- you switch between FPGA firmware versions for testing;
+- you want the original firmware back for standard UHD operation.
 
-This utility manages the FPGA firmware files that control the behavior of USRP B210/B220 software-defined radio devices. It allows you to:
+## Run it
 
-1. **Backup** the original USRP FPGA firmware
-2. **Replace** the firmware with LibreSDR-enhanced versions
-3. **Restore** the original firmware when needed
-
-## When to use this utility
-
-Use the `libresdr_swapfpga` utility when:
-
-- You want to enhance your USRP B210/B220 with LibreSDR capabilities
-- You need to switch between different FPGA firmware versions for testing
-- You want to restore the original firmware for standard UHD operation
-
-## Using the utility
-
-### Running the utility
-
-The utility must be run with root privileges:
+The utility needs root privileges, because it writes to `/usr/share/uhd/images/`:
 
 ```bash
 sudo libresdr_swapfpga
 ```
 
-### Main menu options
-
-The utility presents a menu with four options:
+It shows a menu with four choices:
 
 ```
 What would you like to do?
@@ -48,27 +32,25 @@ What would you like to do?
 4) Exit
 ```
 
-#### 1. Backup the original binary
+### 1. Back up the original firmware
 
-Before making any changes, it's recommended to back up the original FPGA firmware:
+Do this first, before any change:
 
 ```bash
 Enter your choice [1-4]: 1
 ```
 
-This creates a backup at: `/usr/share/uhd/images/usrp_b210_fpga_backup.bin`
+The backup is written to `/usr/share/uhd/images/usrp_b210_fpga_backup.bin`. If a backup already exists, this step is skipped, so your first backup is never overwritten.
 
-If a backup already exists, this operation will be skipped to prevent overwriting your existing backup.
+### 2. Replace the firmware
 
-#### 2. Replace the original binary
-
-To replace the original firmware with a LibreSDR version:
+Install a LibreSDR firmware in place of the original:
 
 ```bash
 Enter your choice [1-4]: 2
 ```
 
-You'll be presented with two replacement options:
+Then pick the image for your board:
 
 ```
 Select the binary to replace the original:
@@ -77,69 +59,58 @@ Select the binary to replace the original:
 3) Cancel
 ```
 
-- `libresdr_b210.bin`: Enhanced firmware for USRP B210 devices
-- `libresdr_b220.bin`: Enhanced firmware for USRP B220 devices
+- `libresdr_b210.bin`: LibreSDR firmware for USRP B210 devices.
+- `libresdr_b220.bin`: LibreSDR firmware for USRP B220 devices.
 
-#### 3. Restore the backup binary
+### 3. Restore the original firmware
 
-If you need to revert to the original firmware:
+Put the backed-up firmware back:
 
 ```bash
 Enter your choice [1-4]: 3
 ```
 
-This will restore the previously backed-up firmware file.
-
-#### 4. Exit
-
-To exit the utility:
+### 4. Exit
 
 ```bash
 Enter your choice [1-4]: 4
 ```
 
-## Technical details
+## Good to know
 
-### File locations
+- **Back up the original firmware** before any change.
+- Restart any application that uses the USRP after changing the firmware.
+- Some LibreSDR features need matching software support.
+- The LibreSDR firmware may draw more power or run hotter.
 
-The utility manages the following files:
+## Files it manages
 
-- Original firmware: `/usr/share/uhd/images/usrp_b210_fpga.bin`
-- Backup location: `/usr/share/uhd/images/usrp_b210_fpga_backup.bin`
-- LibreSDR B210: `/rftools/sdr/libresdr/libresdr_b210.bin`
-- LibreSDR B220: `/rftools/sdr/libresdr/libresdr_b220.bin`
+| File | Path |
+|---|---|
+| Original firmware | `/usr/share/uhd/images/usrp_b210_fpga.bin` |
+| Backup | `/usr/share/uhd/images/usrp_b210_fpga_backup.bin` |
+| LibreSDR B210 | `/rftools/sdr/libresdr/libresdr_b210.bin` |
+| LibreSDR B220 | `/rftools/sdr/libresdr/libresdr_b220.bin` |
 
-### System requirements
-
-- Root privileges (required to modify files in `/usr/share/uhd/images/`)
-- UHD (USRP Hardware Driver) installed
-- LibreSDR firmware files
-
-## Important notes
-
-- **Always backup your original firmware** before making any changes
-- After changing firmware, you may need to restart any applications using the USRP device
-- Some LibreSDR features may require specific software support
-- The enhanced firmware may consume more power or generate more heat during operation
+Requirements: root privileges, UHD (the USRP Hardware Driver), and the LibreSDR firmware files above.
 
 ## Troubleshooting
 
-### Common issues
+### The device is not recognised after the swap
 
-**Device not recognized after firmware swap:**
-- Disconnect and reconnect the device
-- Restart the UHD service: `sudo systemctl restart uhd`
+Unplug the device and plug it back in, then restart the UHD service: `sudo systemctl restart uhd`.
 
-**Errors during firmware replacement:**
-- Ensure you have sufficient disk space
-- Verify that the LibreSDR firmware files exist in the correct location
+### The replacement fails
 
-**Permission issues:**
-- The utility must be run with sudo or as root
+Check that there is enough free disk space, and that the LibreSDR firmware files are at the paths listed above.
 
-### Restoring from command line
+### Permission errors
 
-If you need to restore the original firmware without the utility:
+Run the utility with `sudo` or as root.
+
+### Restore without the utility
+
+Copy the backup over the original by hand:
 
 ```bash
 sudo cp /usr/share/uhd/images/usrp_b210_fpga_backup.bin /usr/share/uhd/images/usrp_b210_fpga.bin

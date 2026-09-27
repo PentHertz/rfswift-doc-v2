@@ -6,7 +6,7 @@ level: beginner
 weight: 10
 ---
 
-The Workbench is the desktop companion of the `rfswift` command line. It turns every RF Swift container or native Nix environment into a **mission**, and gives each mission its own terminals, notebook, findings, captures and report, so one window takes you from "plug in the SDR" to "hand over the report".
+The Workbench is the desktop companion of the `rfswift` command line. It turns every RF Swift container or native Nix environment into a **mission**. Each mission gets its own terminals, notebook, findings, captures and report, so one window takes you from "plug in the SDR" to "hand over the report".
 
 It is a completely standalone desktop app: no code editor, no IDE, no plugins and no browser extension to install. It drives the same engines as the CLI (Docker, Podman, Lima, Nix), on your computer or on a remote lab machine, and there is nothing in it you cannot also do from a terminal.
 
@@ -107,8 +107,8 @@ On Linux the Workbench links your system's GTK and WebKit; use the package or Ap
 
 ## The window at a glance
 
-- **Left rail, "Targets"**: two scope tabs, "Containers" and "Nix envs", a search box, an engine filter (all, docker, podman, lima) and one card per mission with its status dot, name, findings chip, "env" audit chip, engine and state, plus a Start/Stop button. Below: "New mission", "Import...", "Refresh", "Engine doctor". Right-click a card for the mission menu.
-- **Top bar**: the project button (`project: default`), the "Agent" button (shows the connected coding-agent CLI), "Report", the connection chip (a lock coloured by the security audit, "This machine / local IPC" or the agent name and "mTLS / TLS 1.3"), and the theme toggle.
+- **Left rail, "Targets"**: two tabs ("Containers" and "Nix envs"), a search box and an engine filter (all, docker, podman, lima). Below them, one card per mission shows its status dot, name, findings chip, "env" audit chip, engine and state, with a Start/Stop button. Below: "New mission", "Import...", "Refresh", "Engine doctor". Right-click a card for the mission menu.
+- **Top bar**: the project button (`project: default`), the "Agent" button (shows the connected coding-agent CLI), "Report" and the theme toggle. The connection chip shows a lock coloured by the security audit, with "This machine / local IPC" or the agent name and "mTLS / TLS 1.3".
 - **Mission bar**: title, path and engine of the selected mission, "Start mission" / "Stop mission" (Nix environments are native and have no lifecycle), "+ Panel" to open a panel you closed, "Reset layout".
 - **Panels**: Notebook, Console, Config & network, Findings, Captures, Secrets, Agent terminal.
   - Drag a tab beside another to make a column, above or below to make a row, or drop it on a tab strip to stack.
@@ -131,7 +131,13 @@ Missions of the open project are shown; a live container or environment that is 
 
 Press **New mission**. The **Create mission** dialog is the GUI twin of `rfswift container create`.
 
-**Common fields**: Name, Title, Engine (Nix, Docker, Podman, and Lima on macOS), Environment / image with a hint that resolves short names, an optional Workspace path (empty for the automatic `~/rfswift-workspace/<name>`, "none" to disable), and a live line about USB reachability and devices the engine cannot map on this host.
+**Common fields**:
+
+- Name and Title.
+- Engine: Nix, Docker, Podman, and Lima on macOS.
+- Environment / image, with a hint that resolves short names.
+- Workspace path (optional): empty for the automatic `~/rfswift-workspace/<name>`, "none" to disable.
+- A live line about USB reachability and the devices the engine cannot map on this host.
 
 {{% details title="Container options" level="advanced" %}}
 - **RF-Swift preset**: the same profiles as `rfswift profile list`; typing a known image applies its preset.
@@ -203,7 +209,7 @@ One Markdown note per mission (`notes/note.md`).
 - Paste a screenshot or drop an image file: it is copied into `notes/assets/` and embedded. Image blocks have Copy, caption, move and delete controls.
 - Embed a terminal recording as an inline player.
 - **Export** saves the note as Markdown.
-- **AI** sends the selection or the whole document with your instruction ("Improve clarity", "Summarize", "Remediation steps", "Proofread", or your own) to the connected coding agent, which writes the result back through MCP; the note refreshes when it does.
+- **AI** sends the selection or the whole document to the connected coding agent with your instruction ("Improve clarity", "Summarize", "Remediation steps", "Proofread", or your own). The agent writes the result back through MCP, and the note refreshes.
 
 ### Config & network
 
@@ -300,7 +306,7 @@ The **Tool environment security** card on the Config & network panel runs the sa
 - for Nix: vulnix, syft, grype, osv-scanner and the integrity and provenance checks;
 - for containers: trivy and configuration checks.
 
-It shows the stage while it runs, keeps the raw report as ground truth under `environment-audits/`, and lists every record with severity, scope (runtime closure, build-time only, environment, container image), component, installed and fixed versions, scanner and raw evidence.
+It shows the current stage while it runs and keeps the raw report as ground truth under `environment-audits/`. Every record lists its severity, scope (runtime closure, build-time only, environment, container image), component, installed and fixed versions, scanner and raw evidence.
 
 **Audit with AI** first runs the deterministic audit, then asks the connected agent to explain the report without inventing anything and without saving findings. The counters feed the "env" chip on the mission card and never count as mission findings.
 
@@ -328,7 +334,7 @@ The rail's **Engine doctor** is `rfswift doctor` with buttons:
   - **Host audio** with Enable and Disable (Linux; audio also on macOS).
 - **The Nix block**: native, in WSL 2 (with "Set up Nix in WSL 2" and "Reset WSLg display" on Windows) or on the agent host, "Collect garbage", and the workspace root.
 
-While connected to a remote agent the doctor describes the agent host: every engine with its state, the containers the agent can list on it and the reason it cannot use one, whether Nix is installed there, and "Reclaim space" and "Collect garbage" run there. Host fixes and the Lima VM stay local.
+While you are connected to a remote agent, the doctor describes the agent host: every engine with its state, the containers the agent can list (and why it cannot use one), and whether Nix is installed there. "Reclaim space" and "Collect garbage" also run there. Host fixes and the Lima VM stay local.
 
 ## Remote agents and connection security
 
@@ -346,7 +352,7 @@ The connection chip opens **Connection & security**:
 3. **Credentials for another machine**: **Issue client file** (a Workbench elsewhere) or **Export server file** (an agent elsewhere), each protected by a transfer passphrase of 12 characters or more.
 4. **Verify an existing agent** with explicit certificate paths and vault reference.
 
-Once authenticated, the Workbench switches to the agent, fail-closed: missions, terminals, creation, configuration, audits, pulls, artifacts, engine doctor rows and USB passthrough come from the agent host, a heartbeat watches the connection, and **Disconnect** returns to the local machine explicitly. What stays local and the size limits are listed in [Remote agent](/docs/guide/remote-agent/#what-runs-where-once-connected).
+Once authenticated, the Workbench switches to the agent, fail-closed. Missions, terminals, creation, configuration, audits, pulls, artifacts, engine doctor rows and USB passthrough then come from the agent host. A heartbeat watches the connection, and **Disconnect** takes you back to the local machine. What stays local and the size limits are listed in [Remote agent](/docs/guide/remote-agent/#what-runs-where-once-connected).
 
 ## Where the data lives
 

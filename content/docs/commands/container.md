@@ -7,7 +7,12 @@ description: "Create, enter, stop, remove, rename, commit and upgrade containers
 weight: 1
 ---
 
-Create and manage RF Swift containers. This is the canonical v4 group for everything that used to live at the top level (`run`, `exec`, `stop`, `remove`, ...).
+`rfswift container` groups every command that creates and manages containers (labs): create, enter, list, stop, remove, rename, commit and upgrade. In RF Swift v4 these commands moved here from the top level (`run`, `exec`, `stop`, `remove`...); the old names still work.
+
+```bash
+rfswift container create -i sdr_full -n lab    # create a lab and enter it
+rfswift container shell -c lab                 # come back to it later
+```
 
 ## Synopsis
 
@@ -24,10 +29,8 @@ rfswift container upgrade  -c NAME [-i IMAGE] [-r DIRS]   # was: rfswift upgrade
 ```
 
 {{< callout type="info" >}}
-Every subcommand accepts the global `--engine` flag. With `--engine nix`, `container create` and `container shell` create and enter a **native Nix environment** instead of a container, with the same flags plus the Nix-only ones (`--lazy`, `--pure`, `--isolate`, `--flake`, `--rebuild`, `--create-only`). See the [Nix engine guide](/docs/guide/nix-engine).
+Every subcommand accepts the global `--engine` flag. With `--engine nix`, `container create` and `container shell` create and enter a **native Nix environment** instead of a container. They take the same flags, plus the Nix-only ones (`--lazy`, `--pure`, `--isolate`, `--flake`, `--rebuild`, `--create-only`). See the [Nix engine guide](/docs/guide/nix-engine/).
 {{< /callout >}}
-
----
 
 ## Subcommands
 
@@ -43,23 +46,19 @@ Every subcommand accepts the global `--engine` flag. With `--engine nix`, `conta
 | `commit` | Save the container's current filesystem as a new image. | [container commit](/docs/commands/commit) |
 | `upgrade` | Re-create the container from a newer (or another) image, preserving listed directories. | [container upgrade](/docs/commands/upgrade) |
 
----
-
 ## What a container gets by default
 
 When you run `rfswift container create -i sdr_full -n lab`, RF Swift:
 
-- pulls `penthertz/rfswift_resolute:sdr_full` if it is not local (short names resolve through `repotag` in `config.ini`);
-- mounts a **workspace**: `~/rfswift-workspace/lab/` on the host, `/workspace` in the container (`--workspace`, `--cwd`, `--no-workspace` change this);
-- maps the devices and cgroup rules of `config.ini` (USB tree, sound, DRI, input, ...), and checks before creation that the engine can map them on this host. Devices that cannot work (rootless Podman root-only nodes, a device absent from the Lima VM, USB on Docker Desktop for macOS) are listed with the reason and dropped after you confirm;
-- checks USB reachability: `/dev/bus/usb` mapped **and** `c 189:* rwm` allowed, without privileged mode;
-- arms the **serial hot-plug** when a serial port is named: `/dev/ttyACM*`, `/dev/ttyUSB*` and `/dev/ttyAMA*` get cgroup rules and their nodes are created inside the container at every start and every shell, so a reader plugged in later works without re-creating anything (Docker and rootful Podman);
-- forwards the display (X11 on Linux, XQuartz with EGL on macOS, WSLg on Windows) and audio (host PulseAudio/PipeWire TCP module loaded automatically on Linux and macOS, WSLg's PulseAudio socket on Windows);
-- opens `/bin/zsh` (Bash if zsh is missing) and prints a summary: image version and freshness, size, shell, display, privileges, mounts, devices, seccomp, ulimits, GPUs, network mode and ports.
+- **pulls the image** `penthertz/rfswift_resolute:sdr_full` if it is not on your computer yet. Short names resolve through `repotag` in `config.ini`.
+- **mounts a workspace**: `~/rfswift-workspace/lab/` on your computer is `/workspace` in the container. `--workspace`, `--cwd` and `--no-workspace` change this.
+- **maps the devices** and cgroup rules listed in `config.ini` (USB tree, sound, DRI, input...). Before creating anything, it checks that the engine can map them on this computer. Devices that cannot work (root-only nodes on rootless Podman, a device missing from the Lima VM, USB on Docker Desktop for macOS) are listed with the reason and dropped after you confirm.
+- **checks that USB devices will be reachable**: `/dev/bus/usb` must be mapped **and** `c 189:* rwm` allowed. Privileged mode is not needed.
+- **sets up serial hot-plug** when you name a serial port. `/dev/ttyACM*`, `/dev/ttyUSB*` and `/dev/ttyAMA*` get cgroup rules, and their device nodes are created inside the container at every start and every shell. A reader you plug in later then works without re-creating anything (Docker and rootful Podman).
+- **forwards the display** (X11 on Linux, XQuartz with EGL on macOS, WSLg on Windows) **and sound** (the host PulseAudio/PipeWire TCP module, loaded automatically on Linux and macOS; WSLg's PulseAudio socket on Windows).
+- **opens a shell**: `/bin/zsh`, or Bash if zsh is missing. It first prints a summary: image version and freshness, size, shell, display, privileges, mounts, devices, seccomp, ulimits, GPUs, network mode and ports.
 
-On Windows, `create`, `shell` and `env shell` offer the usbipd device picker when they detect shared or known RF hardware, so a radio can be forwarded into WSL 2 before the container starts.
-
----
+On Windows, `create`, `shell` and `env shell` offer the usbipd device picker when they detect shared or known RF hardware, so you can forward a radio into WSL 2 before the container starts.
 
 ## Examples
 
@@ -86,11 +85,9 @@ rfswift --engine nix container create -i sdr_light -n radio --lazy --isolate
 rfswift container upgrade -c sdr -r /root/captures,/opt/tools
 ```
 
----
-
 ## Related
 
-- [Running RF Swift](/docs/guide/running-rf-swift) for the day-to-day workflow
-- [config](/docs/commands/config) to change devices, mounts, capabilities and ports afterwards
-- [env](/docs/commands/env) for the Nix counterpart of this group
-- [Known limits](/docs/guide/limitations) for what each engine and platform cannot do
+- [Running RF Swift](/docs/guide/running-rf-swift/): the day-to-day workflow
+- [`config`](/docs/commands/config/): change devices, mounts, capabilities and ports afterwards
+- [`env`](/docs/commands/env/): the Nix counterpart of this group
+- [Known limits](/docs/guide/limitations/): what each engine and platform cannot do

@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift config ulimits · RF Swift</title>
   <meta name="description" content="Set resource limits (ulimits) on an existing container.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/ulimits/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/ulimits/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift config ulimits · RF Swift">
   <meta property="og:description" content="Set resource limits (ulimits) on an existing container.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/ulimits/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/ulimits/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,45 +231,45 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift config ulimits</h1><p class="doc-lead">Set resource limits (ulimits) on an existing container.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
+      <h1>rfswift config ulimits</h1><p class="doc-lead">Set resource limits (ulimits) on an existing container.</p><p class="doc-meta">Reference · 4 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4</strong>: this group lives under the <code>config</code> parent as <code>rfswift config ulimits</code> and remains available as <code>rfswift ulimits</code>; both spellings are current. On Linux Docker the change is applied in place after one <code>sudo</code> prompt; on Podman the container is committed and re-created. Add <code>--recreate</code> to force the commit-and-recreate path. Either way the container restarts. See <a href="/docs/commands/config">config</a>.</p>
+      <p>Resource limits (&ldquo;ulimits&rdquo;) control things like real-time priority, locked memory and open files for the processes in a container. For SDR work, the right limits prevent buffer underruns (dropped samples) and improve real-time performance. <code>rfswift config ulimits</code> adds, removes and lists them on an existing container.</p>
+<p>For radio work, the one-command shortcut is usually enough: <code>rfswift realtime enable -c NAME</code> sets every limit SDR tools need (see <a href="/docs/commands/realtime">realtime</a>).</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ulimits add -c my_sdr -n rtprio -v <span class="m">95</span></span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p><strong>RF Swift v4</strong>: this group lives under <code>config</code> as <code>rfswift config ulimits</code>. The short form <code>rfswift ulimits</code> is still current. On Linux Docker the change is applied in place after one <code>sudo</code> prompt. On Podman the container is committed and re-created; add <code>--recreate</code> to force that path on Docker too. Either way, the container restarts. See <a href="/docs/commands/config">config</a>.</p>
 </div>
-<p>Manage resource limits (ulimits) for containers to optimize SDR performance.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ulimits add -c CONTAINER -n NAME -v VALUE
-</span></span><span class="line"><span class="cl">rfswift ulimits rm -c CONTAINER -n NAME
-</span></span><span class="line"><span class="cl">rfswift ulimits list -c CONTAINER</span></span></code></pre></div></div>
-<p>The <code>ulimits</code> command allows you to add, remove, or list resource limits on containers. Ulimits control various kernel-level resource constraints that affect process scheduling, memory locking, and file descriptors. For SDR work for example, proper ulimit configuration can eliminate buffer underruns and improve real-time performance.</p>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ulimits add  -c CONTAINER -n NAME -v VALUE
+</span></span><span class="line"><span class="cl">rfswift config ulimits rm   -c CONTAINER -n NAME
+</span></span><span class="line"><span class="cl">rfswift config ulimits list -c CONTAINER</span></span></code></pre></div></div>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Subcommand</th>
-      <th>Description</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>add</code></td>
-      <td>Add or update an ulimit on a container</td>
+      <td>Adds or updates a limit on a container</td>
     </tr>
     <tr>
       <td><code>rm</code></td>
-      <td>Remove an ulimit from a container</td>
+      <td>Removes a limit from a container</td>
     </tr>
     <tr>
       <td><code>list</code></td>
-      <td>List all ulimits set on a container</td>
+      <td>Lists the limits set on a container</td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <h3 id="ulimits-add">ulimits add<a class="anchor" href="#ulimits-add" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
@@ -305,13 +291,13 @@
     </tr>
     <tr>
       <td><code>-n, --name STRING</code></td>
-      <td>Ulimit name</td>
+      <td>Limit name</td>
       <td>Yes</td>
       <td><code>-n rtprio</code></td>
     </tr>
     <tr>
       <td><code>-v, --value STRING</code></td>
-      <td>Ulimit value</td>
+      <td>Limit value</td>
       <td>Yes</td>
       <td><code>-v 95</code></td>
     </tr>
@@ -338,7 +324,7 @@
     </tr>
     <tr>
       <td><code>-n, --name STRING</code></td>
-      <td>Ulimit name to remove</td>
+      <td>Name of the limit to remove</td>
       <td>Yes</td>
       <td><code>-n rtprio</code></td>
     </tr>
@@ -366,27 +352,26 @@
   </tbody>
 </table>
 </div>
-<hr>
-<h2 id="common-ulimit-names">Common ulimit names<a class="anchor" href="#common-ulimit-names" aria-label="Link to this section"></a></h2>
+<h2 id="common-limits">Common limits<a class="anchor" href="#common-limits" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
-      <th>SDR Use Case</th>
+      <th>What it controls</th>
+      <th>Why it matters for SDR</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>rtprio</code></td>
       <td>Real-time scheduling priority (0-99)</td>
-      <td>Enables <code>chrt</code> for real-time SDR processing</td>
+      <td>Lets you run SDR processing with real-time priority (<code>chrt</code>)</td>
     </tr>
     <tr>
       <td><code>memlock</code></td>
-      <td>Max locked memory in bytes (-1 = unlimited)</td>
-      <td>Prevents sample buffers from being swapped</td>
+      <td>Maximum locked memory in bytes (-1 = unlimited)</td>
+      <td>Keeps sample buffers in RAM instead of swap</td>
     </tr>
     <tr>
       <td><code>nice</code></td>
@@ -395,147 +380,115 @@
     </tr>
     <tr>
       <td><code>nofile</code></td>
-      <td>Max open file descriptors</td>
-      <td>Multiple SDR devices or large file operations</td>
+      <td>Maximum open file descriptors</td>
+      <td>Several SDR devices, or large file operations</td>
     </tr>
     <tr>
       <td><code>nproc</code></td>
-      <td>Max number of processes</td>
+      <td>Maximum number of processes</td>
       <td>Parallel processing pipelines</td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="value-format">Value format<a class="anchor" href="#value-format" aria-label="Link to this section"></a></h2>
-<p>Ulimit values can be specified in two formats:</p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Format</th>
-      <th>Description</th>
+      <th>Meaning</th>
       <th>Example</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>value</code></td>
-      <td>Sets both soft and hard limit</td>
+      <td>Same soft and hard limit</td>
       <td><code>95</code></td>
     </tr>
     <tr>
       <td><code>soft:hard</code></td>
-      <td>Sets soft and hard limits separately</td>
+      <td>Separate soft and hard limits</td>
       <td><code>1024:65536</code></td>
     </tr>
     <tr>
       <td><code>-1</code> or <code>unlimited</code></td>
-      <td>Unlimited value</td>
+      <td>No limit</td>
       <td><code>-1</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Add rtprio ulimit for real-time scheduling:</strong></p>
+<h3 id="basic-use">Basic use<a class="anchor" href="#basic-use" aria-label="Link to this section"></a></h3>
+<p>Allow real-time scheduling:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ulimits add -c sdr_work -n rtprio -v <span class="m">95</span></span></span></code></pre></div></div>
-<p><strong>Set unlimited memory locking:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ulimits add -c sdr_work -n rtprio -v <span class="m">95</span></span></span></code></pre></div></div>
+<p>Allow unlimited locked memory:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ulimits add -c sdr_work -n memlock -v -1</span></span></code></pre></div></div>
-<p><strong>Set file descriptor limits with soft/hard values:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ulimits add -c sdr_work -n memlock -v -1</span></span></code></pre></div></div>
+<p>Set separate soft and hard limits for open files:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ulimits add -c sdr_work -n nofile -v 1024:65536</span></span></code></pre></div></div>
-<p><strong>List current ulimits:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ulimits add -c sdr_work -n nofile -v 1024:65536</span></span></code></pre></div></div>
+<p>List the current limits, then remove one:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ulimits list -c sdr_work</span></span></code></pre></div></div>
-<p><strong>Remove an ulimit:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ulimits list -c sdr_work
+</span></span><span class="line"><span class="cl">rfswift config ulimits rm -c sdr_work -n rtprio</span></span></code></pre></div></div>
+<h3 id="tune-a-lab-for-sdr-work">Tune a lab for SDR work<a class="anchor" href="#tune-a-lab-for-sdr-work" aria-label="Link to this section"></a></h3>
+<p>Set the three limits SDR tools use, then check them:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift ulimits rm -c sdr_work -n rtprio</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Optimize container for SDR work:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ulimits add -c hackrf_work -n rtprio -v <span class="m">95</span>
+</span></span><span class="line"><span class="cl">rfswift config ulimits add -c hackrf_work -n memlock -v unlimited
+</span></span><span class="line"><span class="cl">rfswift config ulimits add -c hackrf_work -n nice -v <span class="m">40</span>
+</span></span><span class="line"><span class="cl">rfswift config ulimits list -c hackrf_work</span></span></code></pre></div></div>
+<h3 id="fix-buffer-underruns">Fix buffer underruns<a class="anchor" href="#fix-buffer-underruns" aria-label="Link to this section"></a></h3>
+<p>Check the limits, add <code>rtprio</code> if it is missing, then confirm it from inside the lab (it should print 95):</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add all SDR-relevant ulimits</span>
-</span></span><span class="line"><span class="cl">rfswift ulimits add -c hackrf_work -n rtprio -v <span class="m">95</span>
-</span></span><span class="line"><span class="cl">rfswift ulimits add -c hackrf_work -n memlock -v unlimited
-</span></span><span class="line"><span class="cl">rfswift ulimits add -c hackrf_work -n nice -v <span class="m">40</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ulimits list -c sdr_container
+</span></span><span class="line"><span class="cl">rfswift config ulimits add -c sdr_container -n rtprio -v <span class="m">95</span>
+</span></span><span class="line"><span class="cl">rfswift container shell -c sdr_container -e <span class="s2">&#34;ulimit -r&#34;</span></span></span></code></pre></div></div>
+<h3 id="run-a-tool-with-real-time-priority">Run a tool with real-time priority<a class="anchor" href="#run-a-tool-with-real-time-priority" aria-label="Link to this section"></a></h3>
+<p>Once <code>rtprio</code> is set, enter the lab and start the tool with a real-time or raised priority:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container shell -c sdr_container
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify configuration</span>
-</span></span><span class="line"><span class="cl">rfswift ulimits list -c hackrf_work</span></span></code></pre></div></div>
-<p><strong>Fix buffer underruns:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check current ulimits</span>
-</span></span><span class="line"><span class="cl">rfswift ulimits list -c sdr_container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Add rtprio if missing</span>
-</span></span><span class="line"><span class="cl">rfswift ulimits add -c sdr_container -n rtprio -v <span class="m">95</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify inside container</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c sdr_container -e <span class="s2">&#34;ulimit -r&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Should output: 95</span></span></span></code></pre></div></div>
-<p><strong>Use real-time scheduling inside container:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># After setting rtprio ulimit</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c sdr_container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Inside container, run SDR tool with real-time priority</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Inside the container, run SDR tool with real-time priority</span>
 </span></span><span class="line"><span class="cl">chrt -f <span class="m">50</span> rtl_sdr -f <span class="m">433920000</span> -s <span class="m">2048000</span> - <span class="p">|</span> ...
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Or with higher nice priority</span>
 </span></span><span class="line"><span class="cl">nice -n -10 gqrx</span></span></code></pre></div></div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="ulimit-not-taking-effect">Ulimit not taking effect<a class="anchor" href="#ulimit-not-taking-effect" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Ulimit set but not working inside container</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="a-limit-is-set-but-has-no-effect">A limit is set but has no effect<a class="anchor" href="#a-limit-is-set-but-has-no-effect" aria-label="Link to this section"></a></h3>
+<p>Check that the limit is set, then look at it from inside the lab. <code>rtprio</code> also needs the <code>SYS_NICE</code> capability. <code>realtime enable</code> sets everything at once:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Verify ulimit is set</span>
-</span></span><span class="line"><span class="cl">rfswift ulimits list -c container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check inside container</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ulimits list -c container
 </span></span><span class="line"><span class="cl">rfswift container shell -c container -e <span class="s2">&#34;ulimit -a&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># For rtprio, also need SYS_NICE capability</span>
-</span></span><span class="line"><span class="cl">rfswift capabilities add -c container -p SYS_NICE
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or use realtime mode which sets everything</span>
+</span></span><span class="line"><span class="cl">rfswift config capabilities add -c container -p SYS_NICE
 </span></span><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span> -c container</span></span></code></pre></div></div>
-<h3 id="permission-denied-with-chrt">Permission denied with chrt<a class="anchor" href="#permission-denied-with-chrt" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>chrt: failed to set pid 0's policy: Operation not permitted</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="chrt-failed-to-set-pid-0s-policy-operation-not-permitted"><code>chrt: failed to set pid 0's policy: Operation not permitted</code><a class="anchor" href="#chrt-failed-to-set-pid-0s-policy-operation-not-permitted" aria-label="Link to this section"></a></h3>
+<p>Real-time scheduling needs both the <code>rtprio</code> limit <strong>and</strong> the <code>SYS_NICE</code> capability. Add both, or enable realtime mode:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Need both rtprio ulimit AND SYS_NICE capability</span>
-</span></span><span class="line"><span class="cl">rfswift ulimits add -c container -n rtprio -v <span class="m">95</span>
-</span></span><span class="line"><span class="cl">rfswift capabilities add -c container -p SYS_NICE
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or simply enable realtime mode</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift config ulimits add -c container -n rtprio -v <span class="m">95</span>
+</span></span><span class="line"><span class="cl">rfswift config capabilities add -c container -p SYS_NICE
 </span></span><span class="line"><span class="cl">rfswift realtime <span class="nb">enable</span> -c container</span></span></code></pre></div></div>
-<h3 id="container-recreation">Container recreation<a class="anchor" href="#container-recreation" aria-label="Link to this section"></a></h3>
-<p><strong>Note:</strong> Modifying ulimits requires container recreation. The container will be stopped, removed, and recreated with the new settings. Your data in mounted volumes is preserved, but uncommitted changes inside the container may be lost.</p>
+<h3 id="the-container-restarts">The container restarts<a class="anchor" href="#the-container-restarts" aria-label="Link to this section"></a></h3>
+<p>Changing a limit always restarts the container. On Linux Docker the change is applied in place; on Podman (or with <code>--recreate</code>) the container is committed and re-created. Files in mounted volumes and in the workspace are kept. To be safe, commit important changes first:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Commit important changes before modifying ulimits</span>
-</span></span><span class="line"><span class="cl">rfswift container commit -c container -i my_image:backup
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then modify ulimits</span>
-</span></span><span class="line"><span class="cl">rfswift ulimits add -c container -n rtprio -v <span class="m">95</span></span></span></code></pre></div></div>
-<hr>
-<h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container commit -c container -i my_image:backup
+</span></span><span class="line"><span class="cl">rfswift config ulimits add -c container -n rtprio -v <span class="m">95</span></span></span></code></pre></div></div>
+<h2 id="good-to-know">Good to know<a class="anchor" href="#good-to-know" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/realtime"><code>realtime</code></a> - Quick setup for all SDR-related ulimits</li>
-<li><a href="/docs/commands/capabilities"><code>capabilities</code></a> - Manage container capabilities</li>
-<li><a href="/docs/commands/exec"><code>exec</code></a> - Test ulimits inside container</li>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create container with ulimits using <code>--ulimits</code> flag</li>
+<li>To set limits for every container on a host, you can also configure default ulimits in <code>/etc/docker/daemon.json</code>. See <a href="/docs/commands/realtime">realtime</a>.</li>
+<li>You can set limits when creating a lab with <code>rfswift container create --ulimits</code>.</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Quick Setup</strong>: For RF work, use <code>rfswift realtime enable -c container</code> instead of setting individual ulimits. It configures rtprio, memlock, nice, and SYS_NICE capability automatically!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Container Restart</strong>: Changing ulimits requires recreating the container. Commit your work first with <code>rfswift container commit</code> if you have uncommitted changes!</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Host Alternative</strong>: You can also configure default ulimits in <code>/etc/docker/daemon.json</code> to apply to all containers on the host. See the <a href="/docs/commands/realtime">realtime documentation</a> for details.</p>
-</div>
+<h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
+<ul>
+<li><a href="/docs/commands/realtime">realtime</a>: all SDR limits in one command</li>
+<li><a href="/docs/commands/capabilities">config capabilities</a></li>
+<li><a href="/docs/commands/exec">container shell</a>: check limits inside a container</li>
+<li><a href="/docs/commands/run">container create</a>: the <code>--ulimits</code> flag</li>
+</ul>
 
     </div>
     <footer class="doc-foot">
@@ -565,22 +518,25 @@
         <li><a href="#ulimits-list">ulimits list</a></li>
       </ul>
     </li>
-    <li><a href="#common-ulimit-names">Common ulimit names</a></li>
+    <li><a href="#common-limits">Common limits</a></li>
     <li><a href="#value-format">Value format</a></li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#basic-use">Basic use</a></li>
+        <li><a href="#tune-a-lab-for-sdr-work">Tune a lab for SDR work</a></li>
+        <li><a href="#fix-buffer-underruns">Fix buffer underruns</a></li>
+        <li><a href="#run-a-tool-with-real-time-priority">Run a tool with real-time priority</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#ulimit-not-taking-effect">Ulimit not taking effect</a></li>
-        <li><a href="#permission-denied-with-chrt">Permission denied with chrt</a></li>
-        <li><a href="#container-recreation">Container recreation</a></li>
+        <li><a href="#a-limit-is-set-but-has-no-effect">A limit is set but has no effect</a></li>
+        <li><a href="#chrt-failed-to-set-pid-0s-policy-operation-not-permitted"><code>chrt: failed to set pid 0's policy: Operation not permitted</code></a></li>
+        <li><a href="#the-container-restarts">The container restarts</a></li>
       </ul>
     </li>
-    <li><a href="#related-commands">Related commands</a></li>
+    <li><a href="#good-to-know">Good to know</a></li>
+    <li><a href="#related">Related</a></li>
   </ul>
 </nav>
   <a class="toc-top" href="#content">Back to top ↑</a>

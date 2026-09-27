@@ -72,7 +72,7 @@ Run `rfswift container create` with no options and a guided wizard asks you the 
 
 **What it is:** instead of a container, the **Nix engine** installs a toolbox's tools straight onto your computer, as your user, pinned to exact versions so they never clash with your system. It's handy on a laptop without Docker, or when you want tools as close to the hardware as possible.
 
-**Lazy mode keeps it light.** Add `--lazy` (or tick **Lazy tools** in the Workbench) and nothing is installed up front: each tool is fetched the first time you type its name, then kept pinned. Use `sdrpp` and only SDR++ lands on your disk.
+**Lazy mode keeps it light.** Add `--lazy` (or tick **Lazy tools** in the Workbench) and nothing is installed up front. Each tool is fetched the first time you type its name, then kept pinned. Use `sdrpp` and only SDR++ lands on your disk.
 
 **Think of it as** a tool rack that fills itself: you reach for a tool, and it appears.
 
@@ -143,7 +143,7 @@ rfswift --help
 rfswift container create --help
 ```
 
-Most commands open an interactive picker when you leave out a required option, so you can't really get lost. `rfswift` is a single self-contained program (no Python or other runtime to install), and it also contains the **remote agent**, which lets the Workbench on your laptop drive a lab machine or a small board somewhere else. Full list: [Command reference](/docs/commands/).
+Most commands open an interactive picker when you leave out a required option, so you can't really get lost. `rfswift` is a single self-contained program, with no Python or other runtime to install. It also contains the **remote agent**, which lets the Workbench on your laptop drive a lab machine or a small board somewhere else. Full list: [Command reference](/docs/commands/).
 
 ## Cheat sheet
 

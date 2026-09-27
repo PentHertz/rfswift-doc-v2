@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift container create · RF Swift</title>
   <meta name="description" content="Create and start a new container, or a native Nix environment, with every available option.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/run/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/run/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift container create · RF Swift">
   <meta property="og:description" content="Create and start a new container, or a native Nix environment, with every available option.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/run/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/run/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,21 +231,32 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift container create</h1><p class="doc-lead">Create and start a new container, or a native Nix environment, with every available option.</p><p class="doc-meta">Reference · 23 min read · Updated September 27, 2026</p>
+      <h1>rfswift container create</h1><p class="doc-lead">Create and start a new container, or a native Nix environment, with every available option.</p><p class="doc-meta">Reference · 23 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Create and start a new container from an RF Swift image, or, with <code>--engine nix</code>, a native Nix environment.</p>
-<div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift container create</code>. The legacy form <code>rfswift run</code> and the short aliases <code>rfswift create</code> and <code>rfswift new</code> still work and print a notice. Flags are identical on every spelling; the examples below use the short legacy form for brevity.</p>
+      <p><code>rfswift container create</code> creates a new lab (container) from a toolbox image and opens a shell in it. With <code>--engine nix</code>, it creates a native Nix environment instead. Use it whenever you start a new piece of work.</p>
+<p>The most common form names a toolbox and a lab:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n my_sdr</span></span></code></pre></div></div>
+<p>Run it with no options in a terminal and a wizard asks you everything step by step.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Other spellings</strong>: the legacy form <code>rfswift run</code> and the short aliases <code>rfswift create</code> and <code>rfswift new</code> still work and print a notice. The flags are the same for every spelling; this page uses <code>rfswift container create</code>.</p>
 </div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i IMAGE -n CONTAINER_NAME <span class="o">[</span>options<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift run -i IMAGE -n CONTAINER_NAME <span class="o">[</span>options<span class="o">]</span>                    <span class="c1"># legacy spelling</span>
 </span></span><span class="line"><span class="cl">rfswift container create --engine nix -i ENVIRONMENT -n NAME <span class="o">[</span>--lazy<span class="o">]</span> <span class="o">[</span>--pure<span class="o">]</span> <span class="o">[</span>--isolate<span class="o">]</span> <span class="o">[</span>--flake REF<span class="o">]</span> <span class="o">[</span>--create-only<span class="o">]</span></span></span></code></pre></div></div>
-<p>The command pulls the image if it is not local, checks that the engine can map the devices you asked for (and says which it cannot, with the reason, before dropping them on your confirmation), checks USB reachability, creates the container with a workspace, and enters it with an interactive shell. On Windows it offers the usbipd device picker when it detects RF hardware.</p>
-<div class="admonition admonition-info" role="note"><p><strong>Interactive Wizard</strong>: When run without <code>-i</code> and <code>-n</code> flags in an interactive terminal, RF Swift launches a guided wizard that walks you through all options step by step. See <a href="#interactive-wizard">Interactive Wizard</a> below.</p>
+<p>What the command does, in order:</p>
+<ul>
+<li>pulls the image if it is not on your computer yet;</li>
+<li>checks that the engine can map the devices you asked for. If it cannot map some of them, it tells you which ones and why, and drops them only after you confirm;</li>
+<li>checks that USB devices will be reachable;</li>
+<li>creates the container with a <a href="#workspace-options">workspace</a> folder;</li>
+<li>opens an interactive shell inside it.</li>
+</ul>
+<p>On Windows, it also offers the usbipd device picker when it detects RF hardware.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Interactive wizard</strong>: without <code>-i</code> and <code>-n</code> in an interactive terminal, RF Swift starts a guided wizard that walks you through every option. See <a href="#interactive-wizard">Interactive wizard</a> below.</p>
 </div>
-<hr>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <h3 id="required-flags">Required flags<a class="anchor" href="#required-flags" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
@@ -285,7 +282,7 @@
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-info" role="note"><p>Both flags are optional when using the interactive wizard. If omitted in an interactive terminal, the wizard launches automatically.</p>
+<div class="admonition admonition-info" role="note"><p>Both flags are optional in an interactive terminal: if you leave them out, the wizard starts.</p>
 </div>
 <h3 id="security-options">Security options<a class="anchor" href="#security-options" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
@@ -301,7 +298,7 @@
   <tbody>
     <tr>
       <td><code>-u, --privileged INT</code></td>
-      <td>Privilege level (1=privileged, 0=unprivileged). Never required for USB devices</td>
+      <td>Privilege level: <code>1</code> privileged, <code>0</code> unprivileged. Never needed for USB devices</td>
       <td><code>0</code></td>
       <td><code>-u 0</code></td>
     </tr>
@@ -392,13 +389,13 @@
   </tbody>
 </table>
 </div>
-<p>By default, every container gets a <strong>shared workspace directory</strong> automatically mounted:</p>
+<p>Every container gets a <strong>shared workspace folder</strong> by default:</p>
 <ul>
-<li><strong>Host</strong>: <code>~/rfswift-workspace/&lt;container-name&gt;/</code></li>
-<li><strong>Container</strong>: <code>/workspace</code></li>
+<li>on your computer: <code>~/rfswift-workspace/&lt;container-name&gt;/</code></li>
+<li>inside the container: <code>/workspace</code></li>
 </ul>
-<p>Files saved to <code>/workspace</code> inside the container are immediately available on the host. IQ captures, logs, reports and scripts all land in one place, without manual <code>--bind</code> flags.</p>
-<div class="admonition admonition-info" role="note"><p>The workspace directory persists after the container is deleted. Your data stays on the host.</p>
+<p>Anything you save to <code>/workspace</code> appears on your computer right away. IQ captures, logs, reports and scripts all land in one place, without any <code>--bind</code> flag.</p>
+<div class="admonition admonition-info" role="note"><p>The workspace folder stays on your computer after you delete the container.</p>
 </div>
 <h3 id="device--volume-options">Device &amp; volume options<a class="anchor" href="#device--volume-options" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
@@ -539,13 +536,10 @@
   </tbody>
 </table>
 </div>
-<p>Profiles bundle image, network, features, devices, ports, capabilities, and cgroup rules into a single named preset. CLI flags override profile values. See <a href="/docs/commands/profile/"><code>rfswift profile</code></a> for details.</p>
+<p>A profile is a named preset: image, network, features, devices, ports, capabilities and cgroup rules in one. Flags you add on the command line override the profile&rsquo;s values. See <a href="/docs/commands/profile/"><code>rfswift profile</code></a>.</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use a profile</span>
-</span></span><span class="line"><span class="cl">rfswift container create --profile sdr-full -n my_sdr
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Profile with CLI overrides</span>
-</span></span><span class="line"><span class="cl">rfswift container create --profile wifi -n my_wifi -t nat --realtime</span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create --profile sdr-full -n my_sdr                    <span class="c1"># use a profile</span>
+</span></span><span class="line"><span class="cl">rfswift container create --profile wifi -n my_wifi -t nat --realtime     <span class="c1"># profile plus overrides</span></span></span></code></pre></div></div>
 <h3 id="vpn-options">VPN options<a class="anchor" href="#vpn-options" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
 <table>
@@ -599,7 +593,7 @@
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Privileged mode</strong>: WireGuard and OpenVPN require <code>-u 1</code>. Tailscale and Netbird work without privileges (userspace mode with SOCKS5 proxy). See <a href="/docs/guide/vpn">VPN Inside Containers</a> for details.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Privileged mode</strong>: WireGuard and OpenVPN need <code>-u 1</code>. Tailscale and Netbird work without privileges (userspace mode with a SOCKS5 proxy). See <a href="/docs/guide/vpn/">VPN inside containers</a>.</p>
 </div>
 <h3 id="recording-options">Recording options<a class="anchor" href="#recording-options" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
@@ -683,40 +677,39 @@
   </tbody>
 </table>
 </div>
-<p>With the Nix engine the workspace, <code>--cwd</code>, <code>--no-workspace</code>, <code>--record</code>, <code>-e</code> and the wizard behave as for containers; container-only flags (devices, capabilities, ports, desktop, VPN) do not apply. See the <a href="/docs/guide/nix-engine">Nix engine guide</a>.</p>
-<hr>
+<p>With the Nix engine, the workspace, <code>--cwd</code>, <code>--no-workspace</code>, <code>--record</code>, <code>-e</code> and the wizard work as they do for containers. Container-only flags (devices, capabilities, ports, desktop, VPN) do not apply. See the <a href="/docs/guide/nix-engine/">Nix engine guide</a>.</p>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
 <h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Create a simple SDR container:</strong></p>
+<h4 id="create-a-simple-sdr-container">Create a simple SDR container<a class="anchor" href="#create-a-simple-sdr-container" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n my_sdr
 </span></span><span class="line"><span class="cl">rfswift run -i sdr_full -n my_sdr            <span class="c1"># same, legacy spelling</span></span></span></code></pre></div></div>
-<p><strong>Create a native Nix environment instead:</strong></p>
+<h4 id="create-a-native-nix-environment-instead">Create a native Nix environment instead<a class="anchor" href="#create-a-native-nix-environment-instead" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create --engine nix -i sdr_light -n radio
 </span></span><span class="line"><span class="cl">rfswift container create --engine nix -i rfid -n badge --lazy --isolate</span></span></code></pre></div></div>
-<p><strong>Create with default image from config:</strong></p>
+<h4 id="use-the-default-image-from-your-config">Use the default image from your config<a class="anchor" href="#use-the-default-image-from-your-config" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Requires imagename set in ~/.config/rfswift/config.ini</span>
 </span></span><span class="line"><span class="cl">rfswift container create -n my_container</span></span></code></pre></div></div>
 <h3 id="with-realtime-mode">With realtime mode<a class="anchor" href="#with-realtime-mode" aria-label="Link to this section"></a></h3>
-<p><strong>Create container optimized for SDR operations:</strong></p>
+<h4 id="container-tuned-for-sdr-work">Container tuned for SDR work<a class="anchor" href="#container-tuned-for-sdr-work" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n sdr_realtime --realtime</span></span></code></pre></div></div>
-<p>This automatically configures:</p>
+<p><code>--realtime</code> sets these for you:</p>
 <ul>
 <li><code>SYS_NICE</code> capability</li>
 <li><code>rtprio=95</code> ulimit</li>
 <li><code>memlock=unlimited</code> ulimit</li>
 <li><code>nice=40</code> ulimit</li>
 </ul>
-<p><strong>With custom ulimits:</strong></p>
+<h4 id="with-custom-ulimits">With custom ulimits<a class="anchor" href="#with-custom-ulimits" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n custom_limits --ulimits <span class="s2">&#34;rtprio=95,memlock=-1,nofile=65536&#34;</span></span></span></code></pre></div></div>
-<p><strong>Combine realtime with custom overrides:</strong></p>
+<h4 id="combine-realtime-with-custom-overrides">Combine realtime with custom overrides<a class="anchor" href="#combine-realtime-with-custom-overrides" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n sdr_pro --realtime --ulimits <span class="s2">&#34;rtprio=99&#34;</span></span></span></code></pre></div></div>
-<p><strong>Professional SDR setup with all optimizations:</strong></p>
+<h4 id="sdr-setup-with-realtime-usb-and-recording">SDR setup with realtime, USB and recording<a class="anchor" href="#sdr-setup-with-realtime-usb-and-recording" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n rf_pentest <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --realtime <span class="se">\
@@ -725,107 +718,106 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/captures:/root/captures <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record</span></span></code></pre></div></div>
 <h3 id="with-profiles">With profiles<a class="anchor" href="#with-profiles" aria-label="Link to this section"></a></h3>
-<p><strong>Quick container from a profile:</strong></p>
+<h4 id="quick-container-from-a-profile">Quick container from a profile<a class="anchor" href="#quick-container-from-a-profile" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create --profile sdr-full -n my_sdr</span></span></code></pre></div></div>
-<p><strong>Profile with image override:</strong></p>
+<h4 id="profile-with-image-override">Profile with image override<a class="anchor" href="#profile-with-image-override" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create --profile wifi -n wifi_custom -i penthertz/rfswift_resolute:sdr_full</span></span></code></pre></div></div>
-<p><strong>Profile with NAT isolation:</strong></p>
+<h4 id="profile-with-nat-isolation">Profile with NAT isolation<a class="anchor" href="#profile-with-nat-isolation" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create --profile pentest-full -n pentest_session</span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create --profile network-nat -n pentest_session</span></span></code></pre></div></div>
 <h3 id="with-devices">With devices<a class="anchor" href="#with-devices" aria-label="Link to this section"></a></h3>
-<p><strong>All USB devices:</strong></p>
+<h4 id="all-usb-devices">All USB devices<a class="anchor" href="#all-usb-devices" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n rtlsdr_work <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/bus/usb:/dev/bus/usb <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
-<p><strong>Multiple USB serial devices:</strong></p>
+<h4 id="multiple-usb-serial-devices">Multiple USB serial devices<a class="anchor" href="#multiple-usb-serial-devices" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i hardware -n multi_device <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/ttyUSB0:/dev/ttyUSB0,/dev/ttyACM0:/dev/ttyACM0 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 189:* rwm,c 166:* rwm&#34;</span></span></span></code></pre></div></div>
 <h3 id="with-security-configuration">With security configuration<a class="anchor" href="#with-security-configuration" aria-label="Link to this section"></a></h3>
-<p><strong>Unprivileged container with specific capabilities:</strong></p>
+<h4 id="unprivileged-container-with-specific-capabilities">Unprivileged container with specific capabilities<a class="anchor" href="#unprivileged-container-with-specific-capabilities" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i wifi -n wifi_scan <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">0</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -a NET_ADMIN,NET_RAW <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge</span></span></code></pre></div></div>
-<p><strong>With custom seccomp profile:</strong></p>
+<h4 id="with-custom-seccomp-profile">With custom seccomp profile<a class="anchor" href="#with-custom-seccomp-profile" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i pentest -n secure_assessment <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i network -n secure_assessment <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">0</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -m ~/seccomp-profiles/restricted.json <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
-<p><strong>Privileged mode (use sparingly):</strong></p>
+<h4 id="privileged-mode-use-sparingly">Privileged mode (use sparingly)<a class="anchor" href="#privileged-mode-use-sparingly" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i hardware -n hardware_debug <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">1</span></span></span></code></pre></div></div>
 <h3 id="with-network-configuration">With network configuration<a class="anchor" href="#with-network-configuration" aria-label="Link to this section"></a></h3>
-<p><strong>Bridge network with port binding:</strong></p>
+<h4 id="bridge-network-with-port-binding">Bridge network with port binding<a class="anchor" href="#bridge-network-with-port-binding" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i web_tools -n web_server <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i network -n web_server <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -w 8080:80/tcp</span></span></code></pre></div></div>
-<p><strong>Multiple ports exposed and bound:</strong></p>
+<h4 id="multiple-ports-exposed-and-bound">Multiple ports exposed and bound<a class="anchor" href="#multiple-ports-exposed-and-bound" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i api_server -n backend <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i network -n backend <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -z 3000,3001,3002 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -w 8080:3000/tcp,8081:3001/tcp</span></span></code></pre></div></div>
-<p><strong>Network isolation (no network):</strong></p>
+<h4 id="network-isolation-no-network">Network isolation (no network)<a class="anchor" href="#network-isolation-no-network" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i analysis -n offline_analysis <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i reversing -n offline_analysis <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t none <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/data:/root/data</span></span></code></pre></div></div>
-<p><strong>Custom host entries:</strong></p>
+<h4 id="custom-host-entries">Custom host entries<a class="anchor" href="#custom-host-entries" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:telecom -n network_test <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -x <span class="s2">&#34;device1.local:192.168.1.10,device2.local:192.168.1.11&#34;</span></span></span></code></pre></div></div>
 <h3 id="with-session-recording">With session recording<a class="anchor" href="#with-session-recording" aria-label="Link to this section"></a></h3>
-<p><strong>Record with auto-generated filename:</strong></p>
+<h4 id="record-with-auto-generated-filename">Record with auto-generated filename<a class="anchor" href="#record-with-auto-generated-filename" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i bluetooth -n bt_assessment <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record</span></span></code></pre></div></div>
-<p><strong>Record with custom filename:</strong></p>
+<h4 id="record-with-custom-filename">Record with custom filename<a class="anchor" href="#record-with-custom-filename" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n client_pentest <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record-output client-assessment-2024-01-12.cast</span></span></code></pre></div></div>
-<p><strong>Combined: Recording with security and devices:</strong></p>
+<h4 id="combined-recording-with-security-and-devices">Combined: Recording with security and devices<a class="anchor" href="#combined-recording-with-security-and-devices" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i wifi -n wifi_audit <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">0</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -a NET_ADMIN,NET_RAW <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/wlan0:/dev/wlan0 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record-output wifi-audit-session.cast</span></span></code></pre></div></div>
 <h3 id="with-remote-desktop">With remote desktop<a class="anchor" href="#with-remote-desktop" aria-label="Link to this section"></a></h3>
-<p><strong>Enable noVNC desktop (browser-based GUI):</strong></p>
+<h4 id="enable-novnc-desktop-browser-based-gui">Enable noVNC desktop (browser-based GUI)<a class="anchor" href="#enable-novnc-desktop-browser-based-gui" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n sdr_desktop --desktop</span></span></code></pre></div></div>
-<p>Then open <code>http://127.0.0.1:6080</code> in your browser to access the GUI desktop.</p>
-<p><strong>Expose desktop on all interfaces:</strong></p>
+<p>Then open <code>http://127.0.0.1:6080</code> in your browser to reach the desktop.</p>
+<h4 id="expose-desktop-on-all-interfaces">Expose desktop on all interfaces<a class="anchor" href="#expose-desktop-on-all-interfaces" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n sdr_desktop <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --desktop --desktop-config <span class="s2">&#34;http:0.0.0.0:6080&#34;</span></span></span></code></pre></div></div>
-<p><strong>Use raw VNC instead of noVNC:</strong></p>
+<h4 id="use-raw-vnc-instead-of-novnc">Use raw VNC instead of noVNC<a class="anchor" href="#use-raw-vnc-instead-of-novnc" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n sdr_desktop <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --desktop --desktop-config <span class="s2">&#34;vnc::5900&#34;</span></span></span></code></pre></div></div>
-<p>Then connect with a VNC client (e.g., TigerVNC, RealVNC) to <code>127.0.0.1:5900</code>.</p>
-<p><strong>Custom port:</strong></p>
+<p>Then connect a VNC client (TigerVNC, RealVNC&hellip;) to <code>127.0.0.1:5900</code>.</p>
+<h4 id="custom-port">Custom port<a class="anchor" href="#custom-port" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n sdr_desktop <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --desktop --desktop-config <span class="s2">&#34;http:0.0.0.0:8080&#34;</span></span></span></code></pre></div></div>
-<p><strong>With VNC password (recommended when exposing on network):</strong></p>
+<h4 id="with-vnc-password-recommended-when-exposing-on-network">With VNC password (recommended when exposing on network)<a class="anchor" href="#with-vnc-password-recommended-when-exposing-on-network" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n sdr_desktop <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --desktop --desktop-config <span class="s2">&#34;http:0.0.0.0:6080&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --desktop-pass <span class="s2">&#34;mysecretpass&#34;</span></span></span></code></pre></div></div>
-<p><strong>Desktop with SDR devices and no X11 forwarding:</strong></p>
+<h4 id="desktop-with-sdr-devices-and-no-x11-forwarding">Desktop with SDR devices and no X11 forwarding<a class="anchor" href="#desktop-with-sdr-devices-and-no-x11-forwarding" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n sdr_desktop <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --desktop <span class="se">\
@@ -835,28 +827,28 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 189:* rwm&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --no-x11</span></span></code></pre></div></div>
 <h3 id="with-vpn">With VPN<a class="anchor" href="#with-vpn" aria-label="Link to this section"></a></h3>
-<p><strong>Tailscale mesh (interactive login):</strong></p>
+<h4 id="tailscale-mesh-interactive-login">Tailscale mesh (interactive login)<a class="anchor" href="#tailscale-mesh-interactive-login" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n mesh_sdr --vpn tailscale</span></span></code></pre></div></div>
-<p><strong>Tailscale with auth key (headless):</strong></p>
+<h4 id="tailscale-with-auth-key-headless">Tailscale with auth key (headless)<a class="anchor" href="#tailscale-with-auth-key-headless" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n mesh_sdr <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --vpn tailscale:tskey-auth-xxxxxxxxxxxx</span></span></code></pre></div></div>
-<p><strong>WireGuard tunnel (requires privileged mode):</strong></p>
+<h4 id="wireguard-tunnel-requires-privileged-mode">WireGuard tunnel (requires privileged mode)<a class="anchor" href="#wireguard-tunnel-requires-privileged-mode" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n vpn_sdr <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">1</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --vpn wireguard:./wg0.conf</span></span></code></pre></div></div>
-<p><strong>OpenVPN with bridge network:</strong></p>
+<h4 id="openvpn-with-bridge-network">OpenVPN with bridge network<a class="anchor" href="#openvpn-with-bridge-network" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n corp_sdr <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">1</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --vpn openvpn:./client.ovpn</span></span></code></pre></div></div>
-<p><strong>Netbird mesh (interactive login):</strong></p>
+<h4 id="netbird-mesh-interactive-login">Netbird mesh (interactive login)<a class="anchor" href="#netbird-mesh-interactive-login" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n nb_sdr --vpn netbird</span></span></code></pre></div></div>
-<p><strong>VPN + Remote Desktop + SDR (full remote setup):</strong></p>
+<h4 id="vpn--remote-desktop--sdr-full-remote-setup">VPN + Remote Desktop + SDR (full remote setup)<a class="anchor" href="#vpn--remote-desktop--sdr-full-remote-setup" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n remote_sdr <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">1</span> <span class="se">\
@@ -865,8 +857,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/bus/usb:/dev/bus/usb <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 189:* rwm&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record</span></span></code></pre></div></div>
-<h3 id="complex-real-world-examples">Complex Real-World examples<a class="anchor" href="#complex-real-world-examples" aria-label="Link to this section"></a></h3>
-<p><strong>Complete SDR assessment setup:</strong></p>
+<h3 id="complete-setups">Complete setups<a class="anchor" href="#complete-setups" aria-label="Link to this section"></a></h3>
+<h4 id="complete-sdr-assessment-setup">Complete SDR assessment setup<a class="anchor" href="#complete-sdr-assessment-setup" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n site_survey <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">0</span> <span class="se">\
@@ -879,7 +871,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -w 8080:80/tcp <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record-output site-survey-2024-01-12.cast</span></span></code></pre></div></div>
-<p><strong>Bluetooth security assessment:</strong></p>
+<h4 id="bluetooth-security-assessment">Bluetooth security assessment<a class="anchor" href="#bluetooth-security-assessment" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i bluetooth -n bt_pentest <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">0</span> <span class="se">\
@@ -889,18 +881,17 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 166:* rwm&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record</span></span></code></pre></div></div>
-<p><strong>High-performance signal capture:</strong></p>
+<h4 id="high-performance-signal-capture">High-performance signal capture<a class="anchor" href="#high-performance-signal-capture" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_full -n high_perf_capture <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --realtime <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -s /dev/bus/usb:/dev/bus/usb <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -g <span class="s2">&#34;c 189:* rwm&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/captures:/root/captures</span></span></code></pre></div></div>
-<hr>
 <h2 id="detailed-option-explanations">Detailed option explanations<a class="anchor" href="#detailed-option-explanations" aria-label="Link to this section"></a></h2>
 <h3 id="image-selection--i---image">Image selection (<code>-i, --image</code>)<a class="anchor" href="#image-selection--i---image" aria-label="Link to this section"></a></h3>
-<p>Specifies which RF Swift image to use for the container.</p>
-<p><strong>Formats:</strong></p>
+<p>The toolbox image the container is built from.</p>
+<h4 id="formats">Formats<a class="anchor" href="#formats" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Full registry path</span>
 </span></span><span class="line"><span class="cl">-i penthertz/rfswift_resolute:sdr_full
@@ -910,7 +901,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Custom registry</span>
 </span></span><span class="line"><span class="cl">-i myregistry.com/rfswift:custom</span></span></code></pre></div></div>
-<p><strong>Common images:</strong></p>
+<p>Common images:</p>
 <ul>
 <li><code>sdr_full</code> - Complete SDR toolkit</li>
 <li><code>sdr_light</code> - Lightweight SDR tools</li>
@@ -921,8 +912,8 @@
 </ul>
 <p>See <a href="/docs/guide/list-of-images/">List of Images</a> for all available images.</p>
 <h3 id="container-naming--n---name">Container naming (<code>-n, --name</code>)<a class="anchor" href="#container-naming--n---name" aria-label="Link to this section"></a></h3>
-<p>Assigns a unique name to the container. Names must be unique across all containers (running or stopped).</p>
-<p><strong>Naming conventions:</strong></p>
+<p>The container&rsquo;s name. It must be unique across all your containers, running or stopped.</p>
+<h4 id="naming-conventions">Naming conventions<a class="anchor" href="#naming-conventions" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Good names (descriptive, unique)</span>
 </span></span><span class="line"><span class="cl">-n rtlsdr_capture_session_1
@@ -934,7 +925,7 @@
 </span></span><span class="line"><span class="cl">-n <span class="nb">test</span>        <span class="c1"># Too generic</span>
 </span></span><span class="line"><span class="cl">-n container1  <span class="c1"># Not descriptive</span></span></span></code></pre></div></div>
 <h3 id="realtime-mode---realtime">Realtime mode (<code>--realtime</code>)<a class="anchor" href="#realtime-mode---realtime" aria-label="Link to this section"></a></h3>
-<p>Enables optimized settings for low-latency SDR operations. This is a convenience flag that automatically configures:</p>
+<p>Low-latency settings for SDR work, in one flag. It sets:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -968,12 +959,12 @@
   </tbody>
 </table>
 </div>
-<p><strong>When to use:</strong></p>
+<p>When to use:</p>
 <ul>
 <li>High sample rate captures (avoid buffer underruns)</li>
 <li>Real-time signal processing with GNU Radio, SDR++, GQRX</li>
 <li>Time-critical protocols (RFID, NFC, automotive)</li>
-<li>Professional pentesting where reliability is critical</li>
+<li>Engagements where dropped samples are not acceptable</li>
 </ul>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Simple usage</span>
@@ -987,7 +978,7 @@
 </span></span><span class="line"><span class="cl">rfswift container shell -c sdr_work
 </span></span><span class="line"><span class="cl">chrt -f <span class="m">50</span> rtl_sdr -f <span class="m">433920000</span> -s <span class="m">2048000</span> output.bin</span></span></code></pre></div></div>
 <h3 id="gpu-passthrough---gpus">GPU passthrough (<code>--gpus</code>)<a class="anchor" href="#gpu-passthrough---gpus" aria-label="Link to this section"></a></h3>
-<p>Passes GPU devices into the container for hardware-accelerated workloads. Requires the appropriate GPU runtime (NVIDIA Container Toolkit, ROCm, etc.) installed on the host.</p>
+<p>Gives the container access to GPUs for hardware-accelerated work. The host needs the matching GPU runtime (NVIDIA Container Toolkit, ROCm&hellip;).</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -1023,7 +1014,7 @@
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_full -n gpu_sdr --gpus all --realtime --desktop</span></span></code></pre></div></div>
 <p>See <a href="/docs/commands/gpu"><code>gpus</code></a> for full documentation, prerequisites, and troubleshooting.</p>
 <h3 id="custom-ulimits---ulimits">Custom ulimits (<code>--ulimits</code>)<a class="anchor" href="#custom-ulimits---ulimits" aria-label="Link to this section"></a></h3>
-<p>Set specific resource limits for fine-grained control.</p>
+<p>Sets individual resource limits.</p>
 <p><strong>Format:</strong> <code>name=value</code> or <code>name=soft:hard</code> (comma-separated for multiple)</p>
 <div class="table-wrap">
 <table>
@@ -1063,7 +1054,7 @@
   </tbody>
 </table>
 </div>
-<p><strong>Examples:</strong></p>
+<h4 id="examples-1">Examples<a class="anchor" href="#examples-1" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Single ulimit</span>
 </span></span><span class="line"><span class="cl">--ulimits <span class="s2">&#34;rtprio=95&#34;</span>
@@ -1077,22 +1068,21 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Combine with realtime (custom values override defaults)</span>
 </span></span><span class="line"><span class="cl">--realtime --ulimits <span class="s2">&#34;rtprio=99&#34;</span></span></span></code></pre></div></div>
 <h3 id="privilege-level--u---privileged">Privilege level (<code>-u, --privileged</code>)<a class="anchor" href="#privilege-level--u---privileged" aria-label="Link to this section"></a></h3>
-<p>Controls container privilege level:</p>
 <ul>
-<li><code>0</code> (default): Unprivileged - Recommended for most use cases</li>
-<li><code>1</code>: Privileged - Full host access, use only when necessary</li>
+<li><code>0</code> (default): unprivileged. Use this for almost everything.</li>
+<li><code>1</code>: privileged, with full access to the host. Use it only when nothing else works.</li>
 </ul>
-<p><strong>When to use privileged mode:</strong></p>
+<p>When to use privileged mode:</p>
 <ul>
 <li>Kernel module loading required</li>
 <li>Low-level hardware access</li>
 <li>Complex network operations</li>
 </ul>
-<div class="admonition admonition-warning" role="note"><p><strong>Security Risk</strong>: Privileged containers can escape isolation and compromise the host. Use <code>-u 1</code> only when absolutely necessary and remove the container after use.</p>
+<div class="admonition admonition-warning" role="note"><p><strong>Security risk</strong>: a privileged container can escape its isolation and compromise the host. Use <code>-u 1</code> only when you must, and remove the container afterwards.</p>
 </div>
 <h3 id="capabilities--a---capabilities">Capabilities (<code>-a, --capabilities</code>)<a class="anchor" href="#capabilities--a---capabilities" aria-label="Link to this section"></a></h3>
-<p>Add specific Linux capabilities for fine-grained privilege control.</p>
-<p><strong>Common capabilities:</strong></p>
+<p>Adds individual Linux capabilities instead of full privileges.</p>
+<h4 id="common-capabilities">Common capabilities<a class="anchor" href="#common-capabilities" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Network operations</span>
 </span></span><span class="line"><span class="cl">-a NET_ADMIN,NET_RAW
@@ -1108,16 +1098,16 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># File ownership changes</span>
 </span></span><span class="line"><span class="cl">-a CHOWN,DAC_OVERRIDE</span></span></code></pre></div></div>
-<p>See <a href="/docs/commands/capabilities/">Capabilities Reference</a> for complete list.</p>
+<p>The full list is in the <a href="/docs/commands/capabilities/">capabilities reference</a>.</p>
 <h3 id="cgroups--g---cgroups">Cgroups (<code>-g, --cgroups</code>)<a class="anchor" href="#cgroups--g---cgroups" aria-label="Link to this section"></a></h3>
-<p>Control which device types the container can access.</p>
+<p>Which device types the container may open.</p>
 <p><strong>Format:</strong> <code>type major:minor permissions</code></p>
 <ul>
 <li><code>type</code>: <code>c</code> (character) or <code>b</code> (block)</li>
 <li><code>major:minor</code>: Device numbers (use <code>*</code> for all)</li>
 <li><code>permissions</code>: <code>r</code> (read), <code>w</code> (write), <code>m</code> (mknod)</li>
 </ul>
-<p><strong>Common rules:</strong></p>
+<h4 id="common-rules">Common rules<a class="anchor" href="#common-rules" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># USB serial (RTL-SDR, HackRF)</span>
 </span></span><span class="line"><span class="cl">-g <span class="s2">&#34;c 189:* rwm&#34;</span>
@@ -1142,7 +1132,11 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Example output: crw-rw---- 1 root dialout 189, 0 ...</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#                                          ^^^ major number</span></span></span></code></pre></div></div>
 <h3 id="device-mappings--s---devices">Device mappings (<code>-s, --devices</code>)<a class="anchor" href="#device-mappings--s---devices" aria-label="Link to this section"></a></h3>
-<p>Make specific host devices available in the container. Serial ports (<code>/dev/ttyACM*</code>, <code>/dev/ttyUSB*</code>, <code>/dev/ttyAMA*</code>) named here are <strong>hot-pluggable</strong> on Docker and rootful Podman: plugged in at creation they are mapped, absent they are attached on demand when you plug them in and open a shell. Before creation RF Swift lists the devices this engine cannot map on your host (rootless Podman root-only nodes, a device absent from the Lima VM, USB on Docker Desktop for macOS) and asks once before dropping them.</p>
+<p>Makes specific host devices available in the container.</p>
+<ul>
+<li><strong>Serial ports</strong> (<code>/dev/ttyACM*</code>, <code>/dev/ttyUSB*</code>, <code>/dev/ttyAMA*</code>) named here are <strong>hot-pluggable</strong> on Docker and rootful Podman. If the device is plugged in at creation, it is mapped. If not, it is attached when you plug it in and open a shell.</li>
+<li><strong>Devices the engine can&rsquo;t map</strong> (root-only nodes on rootless Podman, a device missing from the Lima VM, USB on Docker Desktop for macOS) are listed before creation, and RF Swift asks once before dropping them.</li>
+</ul>
 <p><strong>Format:</strong> <code>host_device:container_device</code> or just <code>host_device</code> (same path in container)</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Single device</span>
@@ -1150,12 +1144,12 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Multiple devices</span>
 </span></span><span class="line"><span class="cl">-s /dev/ttyUSB0:/dev/ttyUSB0,/dev/ttyACM0:/dev/ttyACM0</span></span></code></pre></div></div>
-<div class="admonition admonition-info" role="note"><p><strong>Cgroups + Devices</strong>: You need BOTH cgroup rules and device mappings. Cgroups allow access to device types, mappings make specific devices available. For USB, the default <code>/dev/bus/usb</code> mapping with <code>c 189:* rwm</code> is what makes a device reachable; a bind mount alone lists the nodes but cannot open them, and <code>--privileged</code> is not required. RF Swift checks this before creating the container.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Cgroups and devices go together</strong>: the cgroup rule allows a type of device, the mapping makes a specific device visible. For USB, the default <code>/dev/bus/usb</code> mapping with <code>c 189:* rwm</code> is what makes a device reachable. A bind mount alone lists the device nodes but cannot open them, and <code>--privileged</code> is not needed. RF Swift checks this before creating the container.</p>
 </div>
 <h3 id="volume-bindings--b---bind">Volume bindings (<code>-b, --bind</code>)<a class="anchor" href="#volume-bindings--b---bind" aria-label="Link to this section"></a></h3>
-<p>Share directories between host and container.</p>
+<p>Shares folders between your computer and the container.</p>
 <p><strong>Format:</strong> <code>host_path:container_path[:options]</code></p>
-<p><strong>Options:</strong></p>
+<p>Options:</p>
 <ul>
 <li>None (default): Read-write access</li>
 <li><code>:ro</code>: Read-only access</li>
@@ -1169,7 +1163,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Multiple bindings</span>
 </span></span><span class="line"><span class="cl">-b ~/projects:/root/projects,~/captures:/root/captures</span></span></code></pre></div></div>
-<p><strong>Use cases:</strong></p>
+<p>Use cases:</p>
 <ul>
 <li>Share project files</li>
 <li>Save captures to host</li>
@@ -1177,7 +1171,7 @@
 <li>Share tool configurations</li>
 </ul>
 <h3 id="network-modes--t---network">Network modes (<code>-t, --network</code>)<a class="anchor" href="#network-modes--t---network" aria-label="Link to this section"></a></h3>
-<p>Configure container network isolation:</p>
+<p>How the container connects to the network:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -1236,7 +1230,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Complete isolation</span>
 </span></span><span class="line"><span class="cl">-t none</span></span></code></pre></div></div>
-<div class="admonition admonition-info" role="note"><p><strong>NAT mode</strong> creates an isolated network with its own subnet. RF Swift automatically manages the network lifecycle. When using NAT with desktop mode, port bindings are configured automatically so you can access the desktop from your browser on the host.</p>
+<div class="admonition admonition-info" role="note"><p><strong>NAT mode</strong> creates an isolated network with its own subnet, and RF Swift manages it for you. With the desktop enabled, the port bindings are set up automatically so you can open the desktop in your browser.</p>
 </div>
 <h3 id="port-configuration">Port configuration<a class="anchor" href="#port-configuration" aria-label="Link to this section"></a></h3>
 <p><strong>Exposed ports (<code>-z</code>)</strong>: Make ports available to other containers</p>
@@ -1262,11 +1256,11 @@
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">-p tcp:127.0.0.1:34567    <span class="c1"># Default</span>
 </span></span><span class="line"><span class="cl">-p tcp:localhost:4713      <span class="c1"># Custom port</span></span></span></code></pre></div></div>
-<p><strong>Disable X11 (<code>--no-x11</code>)</strong>: Disables X11 forwarding and removes the <code>/tmp/.X11-unix</code> socket binding from the container for improved security.</p>
+<p><strong>Disable X11 (<code>--no-x11</code>)</strong>: turns off X11 forwarding and removes the <code>/tmp/.X11-unix</code> socket from the container, which is safer when you don&rsquo;t need it.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">--no-x11    <span class="c1"># No X11 forwarding, no X11 socket binding</span></span></span></code></pre></div></div>
 <h3 id="remote-desktop---desktop">Remote desktop (<code>--desktop</code>)<a class="anchor" href="#remote-desktop---desktop" aria-label="Link to this section"></a></h3>
-<p>Enable a remote desktop inside the container, accessible via a web browser (noVNC) or a VNC client. This is useful for running GUI tools (SDR++, SDRangel, GQRX, etc.) without requiring X11 forwarding on the host.</p>
+<p>Starts a desktop inside the container that you open in a web browser (noVNC) or a VNC client. It lets you run graphical tools (SDR++, SDRangel, GQRX&hellip;) without X11 forwarding on the host.</p>
 <p>When enabled, RF Swift:</p>
 <ul>
 <li>Injects <code>RFSWIFT_DESKTOP_PROTO</code>, <code>RFSWIFT_DESKTOP_HOST</code>, and <code>RFSWIFT_DESKTOP_PORT</code> environment variables into the container</li>
@@ -1315,27 +1309,27 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Custom port on all interfaces</span>
 </span></span><span class="line"><span class="cl">--desktop --desktop-config <span class="s2">&#34;http:0.0.0.0:8080&#34;</span></span></span></code></pre></div></div>
-<p><strong>Password protection (<code>--desktop-pass</code>):</strong></p>
+<p>Password protection (<code>--desktop-pass</code>):</p>
 <p>Set a VNC password to secure the desktop session. Recommended when binding to <code>0.0.0.0</code>:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Password-protected desktop on all interfaces</span>
 </span></span><span class="line"><span class="cl">--desktop --desktop-config <span class="s2">&#34;http:0.0.0.0:6080&#34;</span> --desktop-pass <span class="s2">&#34;mysecretpass&#34;</span></span></span></code></pre></div></div>
-<p>When a password is set, both noVNC (browser) and VNC clients will prompt for it before connecting. Without a password, access is unauthenticated. That is safe when bound to <code>127.0.0.1</code> (the default), but a security risk when exposed on the network.</p>
-<p><strong>SSL/TLS encryption (<code>--desktop-ssl</code>):</strong></p>
-<p>Enable SSL/TLS to encrypt the desktop connection. A self-signed certificate is automatically generated inside the container:</p>
+<p>With a password set, both noVNC and VNC clients ask for it before connecting. Without one, anyone who can reach the port gets in: fine on <code>127.0.0.1</code> (the default), risky on the network.</p>
+<p>SSL/TLS encryption (<code>--desktop-ssl</code>):</p>
+<p>Encrypts the desktop connection. A self-signed certificate is generated inside the container:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># SSL-encrypted desktop with password</span>
 </span></span><span class="line"><span class="cl">--desktop --desktop-config <span class="s2">&#34;http:0.0.0.0:6080&#34;</span> --desktop-pass <span class="s2">&#34;mysecretpass&#34;</span> --desktop-ssl
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># SSL with VNC client</span>
 </span></span><span class="line"><span class="cl">--desktop --desktop-config <span class="s2">&#34;vnc:0.0.0.0:5900&#34;</span> --desktop-pass <span class="s2">&#34;mysecretpass&#34;</span> --desktop-ssl</span></span></code></pre></div></div>
-<p>With SSL enabled, noVNC uses <code>https://</code> and VNC clients connect via <code>vncs://</code> (TLS-wrapped VNC). The self-signed certificate will trigger a browser warning on first connection, which is expected.</p>
+<p>With SSL on, noVNC uses <code>https://</code> and VNC clients connect with <code>vncs://</code> (VNC over TLS). Your browser warns about the self-signed certificate the first time; that is expected.</p>
 <p>The password and SSL can also be set in the config file (<code>~/.config/rfswift/config.ini</code>):</p>
 <div class="code">
   <div class="code-bar"><span>ini</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[desktop]</span>
 </span></span><span class="line"><span class="cl"><span class="na">password</span> <span class="o">=</span> <span class="s">mysecretpass</span>
 </span></span><span class="line"><span class="cl"><span class="na">ssl</span> <span class="o">=</span> <span class="s">true</span></span></span></code></pre></div></div>
-<div class="admonition admonition-info" role="note"><p><strong>Tip</strong>: Combine <code>--desktop</code> with <code>--no-x11</code> when you only need browser-based GUI access. This removes the X11 socket binding entirely, which improves security and avoids the need for <code>xhost</code> or X11 configuration on the host.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Tip</strong>: combine <code>--desktop</code> with <code>--no-x11</code> when you only need the browser desktop. The X11 socket is not mounted at all, which is safer and needs no <code>xhost</code> or X11 setup on the host.</p>
 </div>
 <h3 id="recording-options-1">Recording options<a class="anchor" href="#recording-options-1" aria-label="Link to this section"></a></h3>
 <p><strong>Enable recording (<code>--record</code>)</strong>: Records terminal session</p>
@@ -1349,11 +1343,10 @@
 <p><strong>Auto-generated filenames:</strong> When <code>--record</code> is used without <code>--record-output</code>, the filename is automatically generated as:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>rfswift-run-{container_name}-{YYYYMMDD-HHMMSS}.cast</code></pre></div>
-<p><strong>Recording indicator:</strong> During recording, the terminal title changes to <code>⏺ REC | RF Swift</code> as a visual reminder. The environment variable <code>RFSWIFT_RECORDING=1</code> is also set inside the container, which can be used by scripts to detect recording mode.</p>
-<hr>
+<p><strong>Recording indicator:</strong> while recording, the terminal title reads <code>⏺ REC | RF Swift</code>, and <code>RFSWIFT_RECORDING=1</code> is set inside the container so scripts can detect it.</p>
 <h2 id="interactive-wizard">Interactive wizard<a class="anchor" href="#interactive-wizard" aria-label="Link to this section"></a></h2>
-<p>When you run <code>rfswift container create</code> without specifying <code>-i</code> (image) and <code>-n</code> (name) in an interactive terminal, RF Swift launches a step-by-step guided wizard using a TUI (Terminal User Interface).</p>
-<p><strong>Launch the wizard:</strong></p>
+<p>Run <code>rfswift container create</code> without <code>-i</code> and <code>-n</code> in an interactive terminal and RF Swift starts a step-by-step wizard in the terminal.</p>
+<h4 id="launch-the-wizard">Launch the wizard<a class="anchor" href="#launch-the-wizard" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create</span></span></code></pre></div></div>
 <h3 id="wizard-steps">Wizard steps<a class="anchor" href="#wizard-steps" aria-label="Link to this section"></a></h3>
@@ -1514,9 +1507,8 @@ Equivalent CLI command:
     -a NET_ADMIN,NET_RAW -g &#34;c 189:* rwm&#34; --realtime --vpn tailscale
 
 ? Create this container? Yes</code></pre></div>
-<div class="admonition admonition-info" role="note"><p><strong>Non-interactive mode</strong>: The wizard only appears in interactive terminals. When piping or scripting, always provide <code>-i</code> and <code>-n</code> flags explicitly.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Scripts</strong>: the wizard only appears in interactive terminals. In scripts and pipes, always pass <code>-i</code> and <code>-n</code>.</p>
 </div>
-<hr>
 <h2 id="common-patterns">Common patterns<a class="anchor" href="#common-patterns" aria-label="Link to this section"></a></h2>
 <h3 id="quick-container-for-testing">Quick container for testing<a class="anchor" href="#quick-container-for-testing" aria-label="Link to this section"></a></h3>
 <div class="code">
@@ -1537,7 +1529,7 @@ Equivalent CLI command:
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Save as script: setup_assessment.sh</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#!/bin/bash</span>
 </span></span><span class="line"><span class="cl"><span class="nv">CONTAINER_NAME</span><span class="o">=</span><span class="s2">&#34;assessment_</span><span class="k">$(</span>date +%Y%m%d<span class="k">)</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i pentest -n <span class="s2">&#34;</span><span class="nv">$CONTAINER_NAME</span><span class="s2">&#34;</span> <span class="se">\
+</span></span><span class="line"><span class="cl">rfswift container create -i network -n <span class="s2">&#34;</span><span class="nv">$CONTAINER_NAME</span><span class="s2">&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -u <span class="m">0</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --realtime <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge <span class="se">\
@@ -1570,11 +1562,10 @@ Equivalent CLI command:
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/samples:/root/samples:ro <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/output:/root/output <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --no-x11</span></span></code></pre></div></div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
 <h3 id="container-name-already-exists">Container name already exists<a class="anchor" href="#container-name-already-exists" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>container name 'X' is already in use. Use a different name with -n, or exec into the existing container with: rfswift exec -c X</code></p>
-<p><strong>Solution:</strong></p>
+<p>The error message is: <code>container name 'X' is already in use. Use a different name with -n, or exec into the existing container with: rfswift exec -c X</code></p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Exec into the existing container</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c container_name
@@ -1585,17 +1576,17 @@ Equivalent CLI command:
 </span></span><span class="line"><span class="cl"><span class="c1"># Or use a different name</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i image -n container_name_2</span></span></code></pre></div></div>
 <h3 id="image-not-found">Image not found<a class="anchor" href="#image-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: No such image: penthertz/rfswift_resolute:image_name</code></p>
-<p><strong>Solution:</strong></p>
+<p>The error message is: <code>Error: No such image: penthertz/rfswift_resolute:image_name</code></p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull image first</span>
 </span></span><span class="line"><span class="cl">rfswift image pull -i image_name
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or let run pull automatically (if network available)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Or let container create pull it for you (needs network)</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i image_name -n container</span></span></code></pre></div></div>
 <h3 id="device-not-accessible">Device not accessible<a class="anchor" href="#device-not-accessible" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Device binding added but can&rsquo;t access device in container</p>
-<p><strong>Solution:</strong></p>
+<p>Device binding added but can&rsquo;t access device in container.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add cgroup rule for device type</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i image -n container <span class="se">\
@@ -1605,8 +1596,8 @@ Equivalent CLI command:
 </span></span><span class="line"><span class="cl"><span class="c1"># Or add dynamically</span>
 </span></span><span class="line"><span class="cl">rfswift config cgroups add -c container -r <span class="s2">&#34;c 189:* rwm&#34;</span></span></span></code></pre></div></div>
 <h3 id="permission-denied-for-device">Permission denied for device<a class="anchor" href="#permission-denied-for-device" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Permission denied when accessing device</p>
-<p><strong>Solution:</strong></p>
+<p>Permission denied when accessing device.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check host permissions</span>
 </span></span><span class="line"><span class="cl">ls -l /dev/your_device
@@ -1618,16 +1609,16 @@ Equivalent CLI command:
 </span></span><span class="line"><span class="cl"><span class="c1"># Then run container</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i image -n container -s /dev/your_device:/dev/your_device</span></span></code></pre></div></div>
 <h3 id="network-operations-fail">Network operations fail<a class="anchor" href="#network-operations-fail" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Wi-Fi/Bluetooth tools can&rsquo;t configure interfaces</p>
-<p><strong>Solution:</strong></p>
+<p>Wi-Fi/Bluetooth tools can&rsquo;t configure interfaces.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add network capabilities</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i wifi -n wifi_tools <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -a NET_ADMIN,NET_RAW <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge</span></span></code></pre></div></div>
 <h3 id="x11-not-working">X11 not working<a class="anchor" href="#x11-not-working" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> GUI applications won&rsquo;t start or display</p>
-<p><strong>Solution:</strong></p>
+<p>GUI applications won&rsquo;t start or display.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># On host (Linux)</span>
 </span></span><span class="line"><span class="cl">xhost +local:
@@ -1638,8 +1629,8 @@ Equivalent CLI command:
 </span></span><span class="line"><span class="cl"><span class="c1"># Or disable X11 for headless operation</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i image -n container --no-x11</span></span></code></pre></div></div>
 <h3 id="audio-not-working">Audio not working<a class="anchor" href="#audio-not-working" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> No audio output from container</p>
-<p><strong>Solution:</strong></p>
+<p>No audio output from container.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Enable audio support first</span>
 </span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span>
@@ -1650,8 +1641,8 @@ Equivalent CLI command:
 </span></span><span class="line"><span class="cl"><span class="c1"># Run container with correct server</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i image -n container -p tcp:127.0.0.1:34567</span></span></code></pre></div></div>
 <h3 id="port-already-in-use">Port already in use<a class="anchor" href="#port-already-in-use" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Can&rsquo;t bind port - already in use</p>
-<p><strong>Solution:</strong></p>
+<p>Can&rsquo;t bind port - already in use.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check what&#39;s using the port</span>
 </span></span><span class="line"><span class="cl">sudo lsof -i :8080
@@ -1662,8 +1653,8 @@ Equivalent CLI command:
 </span></span><span class="line"><span class="cl"><span class="c1"># Or stop conflicting service</span>
 </span></span><span class="line"><span class="cl">sudo systemctl stop service_name</span></span></code></pre></div></div>
 <h3 id="buffer-underruns-with-sdr">Buffer underruns with SDR<a class="anchor" href="#buffer-underruns-with-sdr" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Experiencing sample drops or buffer underruns</p>
-<p><strong>Solution:</strong></p>
+<p>Experiencing sample drops or buffer underruns.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Enable realtime mode</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_full -n sdr_work --realtime
@@ -1677,7 +1668,6 @@ Equivalent CLI command:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Use real-time scheduling</span>
 </span></span><span class="line"><span class="cl">chrt -f <span class="m">50</span> your_sdr_command</span></span></code></pre></div></div>
-<hr>
 <h2 id="best-practices">Best practices<a class="anchor" href="#best-practices" aria-label="Link to this section"></a></h2>
 <h3 id="1-use-descriptive-names">1. Use descriptive names<a class="anchor" href="#1-use-descriptive-names" aria-label="Link to this section"></a></h3>
 <div class="code">
@@ -1687,7 +1677,7 @@ Equivalent CLI command:
 </span></span><span class="line"><span class="cl"><span class="c1"># Not recommended</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_full -n test1</span></span></code></pre></div></div>
 <h3 id="2-start-unprivileged">2. Start unprivileged<a class="anchor" href="#2-start-unprivileged" aria-label="Link to this section"></a></h3>
-<p>Always start with <code>-u 0</code> and add capabilities as needed:</p>
+<p>Start with <code>-u 0</code> and add capabilities only when you need them:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Start unprivileged</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i wifi -n wifi_scan -u <span class="m">0</span>
@@ -1696,21 +1686,21 @@ Equivalent CLI command:
 </span></span><span class="line"><span class="cl">rfswift config capabilities add -c wifi_scan -p NET_ADMIN</span></span></code></pre></div></div>
 <h3 id="3-use-realtime-mode-for-sdr-work">3. Use realtime mode for SDR work<a class="anchor" href="#3-use-realtime-mode-for-sdr-work" aria-label="Link to this section"></a></h3>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Always use --realtime for SDR captures</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use --realtime for SDR captures</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_full -n hackrf_capture --realtime</span></span></code></pre></div></div>
 <h3 id="4-use-read-only-mounts-for-reference-data">4. Use Read-Only mounts for reference data<a class="anchor" href="#4-use-read-only-mounts-for-reference-data" aria-label="Link to this section"></a></h3>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i analysis -n data_analysis <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i reversing -n data_analysis <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/samples:/root/samples:ro <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b ~/output:/root/output</span></span></code></pre></div></div>
 <h3 id="5-record-important-sessions">5. Record important sessions<a class="anchor" href="#5-record-important-sessions" aria-label="Link to this section"></a></h3>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i pentest -n client_assessment <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i network -n client_assessment <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record-output client-<span class="k">$(</span>date +%Y%m%d<span class="k">)</span>.cast</span></span></code></pre></div></div>
 <h3 id="6-use-bridge-network-for-services">6. Use bridge network for services<a class="anchor" href="#6-use-bridge-network-for-services" aria-label="Link to this section"></a></h3>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i web_tools -n web_server <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i network -n web_server <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -t bridge <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -w 127.0.0.1:8080:80/tcp</span></span></code></pre></div></div>
 <h3 id="7-organize-project-directories">7. Organize project directories<a class="anchor" href="#7-organize-project-directories" aria-label="Link to this section"></a></h3>
@@ -1722,26 +1712,24 @@ Equivalent CLI command:
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_full -n assessment <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -b /pathto/rf-assessments/captures:/root/captures,/pathto/rf-assessments/projects:/root/projects <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --record-output /pathto/rf-assessments/recordings/session.cast</span></span></code></pre></div></div>
-<hr>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/profile"><code>profile</code></a> - Manage container profiles (presets)</li>
-<li><a href="/docs/commands/exec"><code>exec</code></a> - Enter an existing container</li>
-<li><a href="/docs/commands/stop"><code>stop</code></a> - Stop a running container</li>
-<li><a href="/docs/commands/remove"><code>remove</code></a> - Remove a container</li>
-<li><a href="/docs/commands/bindings"><code>bindings</code></a> - Dynamically add devices/volumes</li>
-<li><a href="/docs/commands/capabilities"><code>capabilities</code></a> - Modify capabilities after creation</li>
-<li><a href="/docs/commands/cgroups"><code>cgroups</code></a> - Modify cgroup rules after creation</li>
-<li><a href="/docs/commands/ports"><code>ports</code></a> - Manage ports after creation</li>
-<li><a href="/docs/commands/realtime"><code>realtime</code></a> - Enable/disable realtime mode on existing containers</li>
-<li><a href="/docs/commands/ulimits"><code>ulimits</code></a> - Manage ulimits on existing containers</li>
-<li><a href="/docs/guide/vpn">VPN Inside Containers</a> - Detailed VPN setup guide</li>
-<li><a href="/docs/guide/podman">Using Podman</a> - Podman-specific guidance</li>
+<li><a href="/docs/commands/profile/"><code>profile</code></a>: manage profiles (presets)</li>
+<li><a href="/docs/commands/exec/"><code>container shell</code></a>: enter an existing container</li>
+<li><a href="/docs/commands/stop/"><code>container stop</code></a>: stop a running container</li>
+<li><a href="/docs/commands/remove/"><code>container rm</code></a>: remove a container</li>
+<li><a href="/docs/commands/bindings/"><code>config bindings</code></a>: add devices and folders later</li>
+<li><a href="/docs/commands/capabilities/"><code>config capabilities</code></a>: change capabilities later</li>
+<li><a href="/docs/commands/cgroups/"><code>config cgroups</code></a>: change cgroup rules later</li>
+<li><a href="/docs/commands/ports/"><code>config ports</code></a>: change ports later</li>
+<li><a href="/docs/commands/realtime/"><code>realtime</code></a>: turn realtime mode on or off on an existing container</li>
+<li><a href="/docs/commands/ulimits/"><code>config ulimits</code></a>: change ulimits later</li>
+<li><a href="/docs/guide/vpn/">VPN inside containers</a>: the VPN setup guide</li>
+<li><a href="/docs/guide/podman/">Using Podman</a>: Podman specifics</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>SDR Performance</strong>: Use <code>--realtime</code> flag for optimal SDR performance. It automatically configures rtprio, memlock, nice ulimits and SYS_NICE capability to eliminate buffer underruns!</p>
+<div class="admonition admonition-tip" role="note"><p><strong>SDR performance</strong>: add <code>--realtime</code> for SDR work. It sets the rtprio, memlock and nice limits and the <code>SYS_NICE</code> capability, which helps avoid buffer underruns.</p>
 </div>
-<div class="admonition admonition-tip" role="note"><p><strong>Tip</strong>: Use <code>rfswift container create --help</code> to see all options with their current default values from your config file.</p>
+<div class="admonition admonition-tip" role="note"><p><strong>Tip</strong>: <code>rfswift container create --help</code> shows every option with the defaults from your config file.</p>
 </div>
 
     </div>
@@ -1791,7 +1779,7 @@ Equivalent CLI command:
         <li><a href="#with-session-recording">With session recording</a></li>
         <li><a href="#with-remote-desktop">With remote desktop</a></li>
         <li><a href="#with-vpn">With VPN</a></li>
-        <li><a href="#complex-real-world-examples">Complex Real-World examples</a></li>
+        <li><a href="#complete-setups">Complete setups</a></li>
       </ul>
     </li>
     <li><a href="#detailed-option-explanations">Detailed option explanations</a>
@@ -1815,6 +1803,7 @@ Equivalent CLI command:
     </li>
     <li><a href="#interactive-wizard">Interactive wizard</a>
       <ul>
+        <li></li>
         <li><a href="#wizard-steps">Wizard steps</a></li>
         <li><a href="#example-wizard-with-profile-fast-path">Example: wizard with profile (fast path)</a></li>
         <li><a href="#example-wizard-without-profile">Example: wizard without profile</a></li>

@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift container stop · RF Swift</title>
   <meta name="description" content="Stop a running container.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/stop/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/stop/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift container stop · RF Swift">
   <meta property="og:description" content="Stop a running container.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/stop/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/stop/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,17 +231,18 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift container stop</h1><p class="doc-lead">Stop a running container.</p><p class="doc-meta">Reference · 6 min read · Updated September 27, 2026</p>
+      <h1>rfswift container stop</h1><p class="doc-lead">Stop a running container.</p><p class="doc-meta">Reference · 6 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift container stop</code>. The legacy form <code>rfswift stop</code> and the short alias <code>rfswift halt</code> still work and print a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+      <p><code>rfswift container stop</code> stops a running container without deleting it. Its files and settings are kept; only the programs running inside stop. Use it to free memory and CPU when you are done for the day.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container stop -c my_sdr_container</span></span></code></pre></div></div>
+<p>To start it again, enter it with <a href="/docs/commands/exec/"><code>rfswift container shell</code></a>: a stopped container is started for you.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Other spellings</strong>: the legacy form <code>rfswift stop</code> and the short alias <code>rfswift halt</code> still work and print a notice. The flags are the same. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
-<p>Stop a running container without removing it.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container stop -c CONTAINER_NAME</span></span></code></pre></div></div>
-<p>The <code>stop</code> command gracefully stops a running container while preserving all data and state. The container can be restarted later with <code>exec</code> or using Docker commands.</p>
-<hr>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
@@ -277,61 +264,57 @@
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Interactive Picker</strong>: When run without <code>-c</code> in an interactive terminal, RF Swift displays a scrollable picker listing only <strong>running</strong> containers with their name, ID, image, and state.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Container picker</strong>: without <code>-c</code> in an interactive terminal, RF Swift shows a picker with only the <strong>running</strong> containers (name, ID, image and state).</p>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
 <h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Stop a specific container:</strong></p>
+<h4 id="stop-a-specific-container">Stop a specific container<a class="anchor" href="#stop-a-specific-container" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container stop -c my_sdr_container</span></span></code></pre></div></div>
-<p><strong>Stop by container ID:</strong></p>
+<h4 id="stop-by-container-id">Stop by container ID<a class="anchor" href="#stop-by-container-id" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container stop -c a1b2c3d4e5f6</span></span></code></pre></div></div>
-<p><strong>Stop with short container ID:</strong></p>
+<h4 id="stop-with-short-container-id">Stop with short container ID<a class="anchor" href="#stop-with-short-container-id" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container stop -c a1b2c3</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>End of work day:</strong></p>
+<h3 id="everyday-cases">Everyday cases<a class="anchor" href="#everyday-cases" aria-label="Link to this section"></a></h3>
+<h4 id="end-of-work-day">End of work day<a class="anchor" href="#end-of-work-day" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Stop assessment container for the day</span>
 </span></span><span class="line"><span class="cl">rfswift container stop -c client_assessment
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Resume tomorrow</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c client_assessment</span></span></code></pre></div></div>
-<p><strong>Free up resources:</strong></p>
+<h4 id="free-up-resources">Free up resources<a class="anchor" href="#free-up-resources" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Stop idle containers to free memory</span>
 </span></span><span class="line"><span class="cl">rfswift container stop -c sdr_capture
 </span></span><span class="line"><span class="cl">rfswift container stop -c wifi_analysis
 </span></span><span class="line"><span class="cl">rfswift container stop -c bluetooth_scanner</span></span></code></pre></div></div>
-<p><strong>Before system maintenance:</strong></p>
-<p>For now you can do the following trick:</p>
+<h4 id="before-system-maintenance">Before system maintenance<a class="anchor" href="#before-system-maintenance" aria-label="Link to this section"></a></h4>
+<p>To stop every running RF Swift container at once, for example before a system update:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Stop all RF Swift containers before system update</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Stop all RF Swift containers before a system update</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> container in <span class="k">$(</span>docker ps -q --filter <span class="s2">&#34;ancestor=penthertz/rfswift_resolute&#34;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
 </span></span><span class="line"><span class="cl">    rfswift container stop -c <span class="nv">$container</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div></div>
-<p><strong>Temporary pause:</strong></p>
+<h4 id="take-a-break">Take a break<a class="anchor" href="#take-a-break" aria-label="Link to this section"></a></h4>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Stop container during lunch break</span>
-</span></span><span class="line"><span class="cl">rfswift container stop -c long_running_capture
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Resume after lunch</span>
-</span></span><span class="line"><span class="cl">rfswift container shell -c long_running_capture</span></span></code></pre></div></div>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container stop -c long_running_capture     <span class="c1"># stop it</span>
+</span></span><span class="line"><span class="cl">rfswift container shell -c long_running_capture    <span class="c1"># pick up again later</span></span></span></code></pre></div></div>
 <h2 id="what-happens-when-you-stop-a-container">What happens when you stop a container<a class="anchor" href="#what-happens-when-you-stop-a-container" aria-label="Link to this section"></a></h2>
 <h3 id="data-persistence">Data persistence<a class="anchor" href="#data-persistence" aria-label="Link to this section"></a></h3>
-<p>When a container is stopped:</p>
+<p>What is <strong>kept</strong> when a container stops:</p>
 <ul>
-<li><strong>Container filesystem</strong>: All data inside the container is preserved</li>
-<li><strong>Mounted volumes</strong>: Data in mounted directories remains intact</li>
-<li><strong>Container configuration</strong>: All settings, bindings, and capabilities are preserved</li>
-<li><strong>Network configuration</strong>: Port bindings and network settings are saved</li>
-<li><strong>Running processes</strong>: All processes inside the container are terminated</li>
-<li><strong>Memory state</strong>: RAM contents are lost (not hibernated)</li>
+<li>every file inside the container, and your workspace and mounted folders;</li>
+<li>its settings: bindings, capabilities, port and network settings.</li>
 </ul>
-<p><strong>Example:</strong></p>
+<p>What is <strong>lost</strong>:</p>
+<ul>
+<li>the programs running inside: they are terminated;</li>
+<li>whatever was only in memory: the container is not hibernated.</li>
+</ul>
+<h4 id="example">Example<a class="anchor" href="#example" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create container with captures</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i sdr_full -n capture_session -b ~/captures:/root/captures
@@ -349,19 +332,14 @@
 </span></span><span class="line"><span class="cl">rfswift container shell -c capture_session
 </span></span><span class="line"><span class="cl">ls /root/captures  <span class="c1"># Files still there</span></span></span></code></pre></div></div>
 <h3 id="process-handling">Process handling<a class="anchor" href="#process-handling" aria-label="Link to this section"></a></h3>
-<p><strong>Graceful shutdown:</strong></p>
+<p>The container shuts down gracefully:</p>
 <ol>
-<li>Docker sends SIGTERM to all processes</li>
-<li>Processes have 10 seconds to clean up</li>
-<li>If processes don&rsquo;t exit, Docker sends SIGKILL</li>
-<li>Container stops</li>
+<li>Docker sends SIGTERM to every process.</li>
+<li>The processes get 10 seconds to clean up.</li>
+<li>Any process still running then gets SIGKILL.</li>
+<li>The container stops.</li>
 </ol>
-<p><strong>Important for:</strong></p>
-<ul>
-<li>Database containers (ensure data consistency)</li>
-<li>Long-running captures (may lose in-progress data)</li>
-<li>Network services (connections are dropped)</li>
-</ul>
+<p>Keep this in mind for long captures (data still being written may be lost), databases (let them finish writing) and network services (open connections are dropped).</p>
 <h3 id="container-state-after-stop">Container state after stop<a class="anchor" href="#container-state-after-stop" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check container status</span>
@@ -369,54 +347,42 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Output shows:</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># STATUS: Exited (0) 2 minutes ago</span></span></span></code></pre></div></div>
-<p><strong>Container is:</strong></p>
-<ul>
-<li>Still exists in Docker</li>
-<li>Can be restarted</li>
-<li>Can be committed to an image</li>
-<li>Can be removed</li>
-<li>Not consuming CPU</li>
-<li>Not consuming RAM</li>
-<li>Still consuming disk space</li>
-</ul>
-<hr>
+<p>A stopped container still exists: you can start it again, commit it to an image or remove it. It uses no CPU and no memory, but it still takes disk space.</p>
 <h3 id="stop-vs-exit">Stop vs exit<a class="anchor" href="#stop-vs-exit" aria-label="Link to this section"></a></h3>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Operation</th>
-      <th><code>stop</code></th>
-      <th><code>exit</code> (from shell)</th>
+      <th><code>container stop</code></th>
+      <th><code>exit</code> (from the shell)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Initiated from</td>
-      <td>Host</td>
-      <td>Inside container</td>
+      <td>Run from</td>
+      <td>Your computer</td>
+      <td>Inside the container</td>
     </tr>
     <tr>
-      <td>Stops container</td>
+      <td>Stops the container</td>
       <td>Always</td>
-      <td>⚠️ Sometimes*</td>
+      <td>Only if nothing else is running inside</td>
     </tr>
     <tr>
       <td>Graceful shutdown</td>
       <td>Yes</td>
-      <td>⚠️ Depends</td>
+      <td>Depends</td>
     </tr>
     <tr>
-      <td>Use when</td>
-      <td>Managing from host</td>
-      <td>Done with current session</td>
+      <td>Use it when</td>
+      <td>You are done with the container for now</td>
+      <td>You are done with this shell</td>
     </tr>
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-warning" role="note"><p>Container stops if no other processes are running</p>
-</div>
-<p><strong>Workflow comparison:</strong></p>
+<h4 id="workflow-comparison">Workflow comparison<a class="anchor" href="#workflow-comparison" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Using exit (from inside container)</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c my_container
@@ -427,12 +393,11 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Using stop (from host)</span>
 </span></span><span class="line"><span class="cl">rfswift container stop -c my_container
 </span></span><span class="line"><span class="cl"><span class="c1"># Container definitely stops, all processes terminate</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="common-workflows">Common workflows<a class="anchor" href="#common-workflows" aria-label="Link to this section"></a></h2>
 <h3 id="daily-work-cycle">Daily work cycle<a class="anchor" href="#daily-work-cycle" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Monday: Create container</span>
-</span></span><span class="line"><span class="cl">rfswift container create -i pentest -n weekly_work -b ~/work:/root/work
+</span></span><span class="line"><span class="cl">rfswift container create -i network -n weekly_work -b ~/work:/root/work
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Monday-Friday: Use throughout week</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c weekly_work
@@ -483,14 +448,13 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Or using docker directly</span>
 </span></span><span class="line"><span class="cl">docker stop capture1 capture2 capture3</span></span></code></pre></div></div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
 <h3 id="container-already-stopped">Container already stopped<a class="anchor" href="#container-already-stopped" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Trying to stop an already stopped container</p>
+<p>You try to stop a container that is already stopped.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container stop -c my_container
 </span></span><span class="line"><span class="cl"><span class="c1"># Error: Container is not running</span></span></span></code></pre></div></div>
-<p><strong>Solution:</strong></p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if running</span>
 </span></span><span class="line"><span class="cl">docker ps <span class="p">|</span> grep my_container
@@ -500,8 +464,8 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># No action needed</span></span></span></code></pre></div></div>
 <h3 id="container-not-found">Container not found<a class="anchor" href="#container-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: No such container: container_name</code></p>
-<p><strong>Solutions:</strong></p>
+<p>The error message is: <code>Error: No such container: container_name</code></p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List all containers</span>
 </span></span><span class="line"><span class="cl">rfswift container last
@@ -510,8 +474,8 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Need to create new one</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i image -n container_name</span></span></code></pre></div></div>
 <h3 id="container-wont-stop">Container won&rsquo;t stop<a class="anchor" href="#container-wont-stop" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Container doesn&rsquo;t stop after reasonable time</p>
-<p><strong>Solutions:</strong></p>
+<p>The container doesn&rsquo;t stop after a reasonable time.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Wait longer (some containers need cleanup time)</span>
 </span></span><span class="line"><span class="cl">rfswift container stop -c my_container
@@ -523,8 +487,8 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Check what&#39;s preventing shutdown</span>
 </span></span><span class="line"><span class="cl">docker logs my_container</span></span></code></pre></div></div>
 <h3 id="multiple-containers-with-similar-names">Multiple containers with similar names<a class="anchor" href="#multiple-containers-with-similar-names" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Ambiguous container name</p>
-<p><strong>Solutions:</strong></p>
+<p>The name you gave matches more than one container.</p>
+<p>To fix it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use full name</span>
 </span></span><span class="line"><span class="cl">rfswift container stop -c full_container_name
@@ -536,21 +500,19 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># List to identify</span>
 </span></span><span class="line"><span class="cl">rfswift container last</span></span></code></pre></div></div>
 <h3 id="permission-denied">Permission denied<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Can&rsquo;t stop container</p>
-<p><strong>Solutions:</strong></p>
+<p>You can&rsquo;t stop the container because your user can&rsquo;t talk to Docker yet (Linux).</p>
+<p>To fix it, give your user access once (no logout needed), then try again:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use sudo on Linux (if not in docker group)</span>
-</span></span><span class="line"><span class="cl">sudo rfswift container stop -c my_container
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or add user to docker group</span>
-</span></span><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host docker-access
+</span></span><span class="line"><span class="cl">rfswift container stop -c my_container</span></span></code></pre></div></div>
+<p>Or, by hand:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
 </span></span><span class="line"><span class="cl">newgrp docker
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then try again</span>
 </span></span><span class="line"><span class="cl">rfswift container stop -c my_container</span></span></code></pre></div></div>
 <h3 id="data-loss-concerns">Data loss concerns<a class="anchor" href="#data-loss-concerns" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Worried about losing data when stopping</p>
-<p><strong>Verification:</strong></p>
+<p>You are worried about losing data when you stop a container.</p>
+<h4 id="verification">Verification<a class="anchor" href="#verification" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check mounted volumes</span>
 </span></span><span class="line"><span class="cl">docker inspect my_container <span class="p">|</span> grep -A <span class="m">10</span> Mounts
@@ -562,21 +524,17 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># To be extra safe, commit before stopping</span>
 </span></span><span class="line"><span class="cl">rfswift container commit -c my_container -i backup_image
 </span></span><span class="line"><span class="cl">rfswift container stop -c my_container</span></span></code></pre></div></div>
-<hr>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/run"><code>run</code></a> - Create new containers</li>
-<li><a href="/docs/commands/exec"><code>exec</code></a> - Enter and restart stopped containers</li>
-<li><a href="/docs/commands/remove"><code>remove</code></a> - Permanently delete containers</li>
-<li><a href="/docs/commands/last"><code>last</code></a> - List recent containers with status</li>
-<li><a href="/docs/commands/commit"><code>commit</code></a> - Save container state before stopping</li>
+<li><a href="/docs/commands/run/"><code>container create</code></a>: create a new container</li>
+<li><a href="/docs/commands/exec/"><code>container shell</code></a>: enter a container (starts it if stopped)</li>
+<li><a href="/docs/commands/remove/"><code>container rm</code></a>: delete a container for good</li>
+<li><a href="/docs/commands/last/"><code>container last</code></a>: list recent containers with their status</li>
+<li><a href="/docs/commands/commit/"><code>container commit</code></a>: save a container&rsquo;s state as an image</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Quick Tip</strong>: Create a nightly cron job to stop idle RF Swift containers and free resources: <code>crontab -e</code> then add <code>0 2 * * * /path/to/stop_idle_containers.sh</code></p>
+<div class="admonition admonition-warning" role="note"><p><strong>Running captures are stopped too.</strong> Any capture or long-running program inside the container is terminated when it stops. Let it finish, or save its output, before you stop the container.</p>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Data Safety</strong>: Stopping a container is completely safe - all your data is preserved. Only running processes are terminated. Think of it like &ldquo;sleep mode&rdquo; for your container!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Long-Running Processes</strong>: If you have captures or long-running processes inside a container, they will be terminated when the container stops. Save your work before stopping!</p>
+<div class="admonition admonition-tip" role="note"><p><strong>Tip</strong>: to stop idle containers every night, put the loop from <a href="#before-system-maintenance">Before system maintenance</a> in a script and schedule it with cron, for example <code>0 2 * * * /path/to/stop_idle_containers.sh</code>.</p>
 </div>
 
     </div>
@@ -603,7 +561,7 @@
     <li><a href="#examples">Examples</a>
       <ul>
         <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#everyday-cases">Everyday cases</a></li>
       </ul>
     </li>
     <li><a href="#what-happens-when-you-stop-a-container">What happens when you stop a container</a>

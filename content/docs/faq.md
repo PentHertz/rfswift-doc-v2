@@ -33,7 +33,13 @@ To try a single tool without creating anything: `rfswift env run sdr_light sdrpp
 
 ### Does it work on Windows and macOS?
 
-Yes. On Windows, one installer sets up WSL 2, USB passthrough and the engine. On macOS, use Homebrew or the signed disk image, then pick your engine: Docker Desktop or Podman for containers, **Lima** when containers need your USB radio, or **Nix** to run the tools natively (the lightest option, with direct USB access). Some hardware features differ per system: see [Will it run on my computer?](/docs/supports/) and [Known limits](/docs/guide/limitations/).
+Yes. On Windows, one installer sets up WSL 2, USB passthrough and the engine. On macOS, install with Homebrew or the signed disk image, then pick your engine:
+
+- **Docker Desktop** or **Podman** for containers;
+- **Lima** when containers need your USB radio;
+- **Nix** to run the tools natively: the lightest option, with direct USB access.
+
+Some hardware features differ per system: see [Will it run on my computer?](/docs/supports/) and [Known limits](/docs/guide/limitations/).
 
 ### Does it run on a Raspberry Pi or other small boards?
 

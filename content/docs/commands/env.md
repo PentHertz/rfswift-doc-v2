@@ -7,10 +7,18 @@ description: "Create, enter, update, roll back, audit and export native Nix envi
 weight: 30
 ---
 
-Create and manage **native Nix environments**: the same RF Swift tool sets as the container images (`sdr_light`, `rfid`, `wifi`, ...), installed on the host as reproducible, pinned Nix closures, without a daemon or a container boundary. `rfswift nix ...` is the legacy spelling and still works.
+`rfswift env` manages **native Nix environments**: the same RF Swift tool sets as the container images (`sdr_light`, `rfid`, `wifi`, ...), installed directly on your computer as pinned, reproducible Nix packages. There is no daemon and no container in between.
+
+The most common use runs one tool without setting anything up:
+
+```bash
+rfswift env run sdr_light sdrpp
+```
+
+`rfswift nix ...` is the legacy spelling and still works.
 
 {{< callout type="info" >}}
-Read the [Nix engine guide](/docs/guide/nix-engine) first: it explains eager and on-demand builds, the `--isolate` jail, OpenGL on non-NixOS hosts, udev rules, and how the engine runs inside WSL 2 on Windows.
+New to the Nix engine? Read the [Nix engine guide](/docs/guide/nix-engine) first. It explains eager and on-demand (lazy) builds, the `--isolate` jail, OpenGL on hosts that are not NixOS, udev rules, and how the engine runs inside WSL 2 on Windows.
 {{< /callout >}}
 
 ## Synopsis
@@ -49,23 +57,25 @@ rfswift env udev NAME [--list] [--remove] [--no-groups] [--json] [-y]
 rfswift env wsl status|setup|use|shell|display-reset       # Windows only
 ```
 
----
-
 ## Creating and entering
 
-Creation is `rfswift container create` (or the legacy `rfswift run`) with `--engine nix`. Without `-i` and `-n` the wizard opens with a searchable catalog, a build-mode choice (eager or on-demand) and the isolation toggle.
+You create an environment with `rfswift container create` (or the legacy `rfswift run`) and `--engine nix`. Without `-i` and `-n`, a wizard opens: it offers a searchable catalog, the choice between eager and on-demand builds, and the isolation switch.
 
-| Flag | Meaning |
-|------|---------|
-| `--lazy` | On-demand: nothing is prebuilt, each tool is a shim that builds on first call and is then pinned under `<env>/tools/<attribute>` |
-| `--pure` | Enter a pure shell (`nix develop --ignore-environment`), not inheriting the host environment |
-| `--isolate` | Enter inside a jail: bubblewrap on Linux, Seatbelt (`sandbox-exec`) on macOS. Hides `$HOME` and the host filesystem, keeps USB/serial devices, the display and the network. Stored on the environment, so later entries re-enter the same jail |
-| `--flake REF` | Flake reference instead of the default (`RFSWIFT_NIX_FLAKE`, a local `RF-Swift-nix` checkout, else `github:PentHertz/RF-Swift-nix`) |
-| `--rebuild` | Force re-realisation during creation (eager mode) |
-| `--create-only` | Create and realise without entering (scripts, the Workbench) |
-| `--workspace`, `--cwd`, `--no-workspace` | Same workspace options as containers; inside a Linux jail the workspace is mounted at `/workspace` |
+| Flag | What it does |
+|------|--------------|
+| `--lazy` | On-demand mode. Nothing is built up front: each tool is a small launcher (shim) that builds the tool the first time you call it, then keeps it pinned under `<env>/tools/<attribute>` |
+| `--pure` | Enter a pure shell (`nix develop --ignore-environment`) that does not inherit your host environment |
+| `--isolate` | Enter inside a jail: bubblewrap on Linux, Seatbelt (`sandbox-exec`) on macOS. It hides `$HOME` and the host filesystem, and keeps USB and serial devices, the display and the network. The setting is saved, so later entries use the same jail |
+| `--flake REF` | Use this flake instead of the default. The default is `RFSWIFT_NIX_FLAKE`, then a local `RF-Swift-nix` checkout, then `github:PentHertz/RF-Swift-nix` |
+| `--rebuild` | Force a rebuild during creation (eager mode) |
+| `--create-only` | Create and build without entering the shell (for scripts and the Workbench) |
+| `--workspace`, `--cwd`, `--no-workspace` | The same workspace options as containers. Inside a Linux jail the workspace is mounted at `/workspace` |
 
-Entering prints a container-style summary (workspace, flake and pin, build mode, tool count, native-user execution) and warns when a visible serial device cannot be opened by your session. The shell (bash or zsh) shows a `(rfswift:<name>)` prompt, has the tools on `PATH`, and provides `rfsudo <tool>` to run one tool as root while keeping the display and the OpenGL runtime.
+When you enter an environment, RF Swift prints a summary: workspace, flake and pin, build mode, number of tools, and the fact that tools run as your own user. It warns you when a serial device is visible but your session cannot open it.
+
+The shell (bash or zsh) shows a `(rfswift:<name>)` prompt and has the tools on its `PATH`. To run one tool as root while keeping the display and the OpenGL runtime, use `rfsudo <tool>`.
+
+Create an isolated RFID environment, enter it, or run a single command in it:
 
 ```bash
 rfswift --engine nix container create -i rfid -n badge --isolate
@@ -73,108 +83,127 @@ rfswift env shell badge
 rfswift --engine nix container shell -c badge -e "proxmark3 -h"
 ```
 
----
-
 ## Subcommands
 
 ### Discovery
 
-| Subcommand | Notes |
+| Subcommand | What it does |
 |---|---|
-| `catalog` | Environments defined by RF-Swift-nix (name, category, description, tools). The wizard filters this list by name or tool |
-| `list` | Created environments with their mode and pin |
-| `info NAME` | Flake, pinned revision and the reference it came from, packages, workspace, isolation, and the **Security posture** line from the last audit |
-| `tools NAME` | Per-tool state: on-demand shims (built or not, store path) and packages installed with `env install --env NAME`. `--installed` keeps only the latter |
-| `search TERM` | Curated RF Swift tool set, telling which environments bundle each hit. `--nixpkgs` searches the whole pinned nixpkgs (slower, exhaustive), `--env` uses that environment's pinned flake |
-| `versions` | Latest published tag, nightly default-branch commit and older tags, for `--flake` at creation |
+| `catalog` | Lists the environments defined by RF-Swift-nix, with their category, description and tools. The wizard lets you filter this list by name or tool |
+| `list` | Lists the environments you created, with their mode and pin |
+| `info NAME` | Shows the flake, the pinned revision and where it came from, the packages, the workspace, the isolation setting, and the **Security posture** line from the last audit |
+| `tools NAME` | Shows each tool's state: on-demand shims (built or not, and their store path) and packages added with `env install --env NAME`. `--installed` shows only the added packages |
+| `search TERM` | Searches the curated RF Swift tool set and tells you which environments include each result. `--nixpkgs` searches the whole pinned nixpkgs (slower, but complete). `--env` uses that environment's pinned flake |
+| `versions` | Lists the latest published tag, the nightly commit of the default branch and older tags, to pass to `--flake` when you create an environment |
 
 ### Running and installing tools
 
-| Subcommand | Notes |
+| Subcommand | What it does |
 |---|---|
-| `run ENV\|IMAGE TOOL [-- args]` | Builds only that tool's closure and runs it. For a catalog image the command name maps to the package that provides it (`sdr_light sdrpp` runs the HydraSDR fork of SDR++); for an existing environment the tool runs exactly as from its shell (its pin, GC-safe, with the OpenGL runtime). `--flake` runs a tool from an explicit flake |
-| `install [PACKAGE...]` | Adds nixpkgs packages to a persistent profile: the **shared** profile (on `PATH` in every environment) or one environment with `--env`. Without a package the guided installer opens (curated set or all of nixpkgs, shared or scoped). Installing a device library offers to install its udev rules right away. Shell completion suggests package names |
+| `run ENV\|IMAGE TOOL [-- args]` | Builds only that tool and runs it. With a catalog name, the command maps to the package that provides it (`sdr_light sdrpp` runs the HydraSDR fork of SDR++). With an existing environment, the tool runs exactly as it would from that environment's shell: same pin, protected from garbage collection, with the OpenGL runtime. `--flake` runs a tool from a specific flake |
+| `install [PACKAGE...]` | Adds nixpkgs packages to a persistent profile: the **shared** profile (on `PATH` in every environment), or one environment with `--env`. Without a package name, a guided installer opens (curated set or all of nixpkgs, shared or one environment). When you install a device library, it offers to install its udev rules right away. Shell completion suggests package names |
 
 ### Updating, rebuilding, rolling back
 
-| Subcommand | Notes |
+| Subcommand | What it does |
 |---|---|
-| `update [NAME]` | Without a name: a wizard (environment picker, check-only / all inputs / one input, recap with rollback points, confirmation). `--check` previews lock changes without writing or building. `--input nixpkgs` updates one input (needs a writable local flake checkout). `--tool TOOL` refreshes one on-demand shim or installed extra. `-y` for CI |
-| `rebuild NAME` | Rebuild with the lock that is already pinned |
-| `generations NAME` | Rollback points kept under `~/.rfswift/nix/environments/<name>/generations/`, registered as GC roots |
-| `rollback NAME [GENERATION]` | Restore the newest, or a listed, previous generation |
+| `update [NAME]` | Without a name, a wizard opens: pick an environment, choose check-only, all inputs or one input, review a recap with the rollback points, then confirm. `--check` previews lock changes without writing or building anything. `--input nixpkgs` updates one input (this needs a writable local flake checkout). `--tool TOOL` refreshes one on-demand shim or added package. `-y` skips questions, for CI |
+| `rebuild NAME` | Rebuilds with the lock that is already pinned |
+| `generations NAME` | Lists the rollback points, kept under `~/.rfswift/nix/environments/<name>/generations/` and protected from garbage collection |
+| `rollback NAME [GENERATION]` | Restores the newest previous generation, or the one you name |
 
-Updates are transactional for eager environments: a candidate closure is built before the active profile changes, a failed build leaves the current environment active, and a failed local update restores `flake.lock`. Lazy environments are pinned to a flake revision instead: `update --check` tells whether the reference moved on, `update` moves the pin and rebuilds the tools already built. Lazy environments have no rollback generations. Updating invalidates the environment's security audit (the old report is kept as stale); run `env audit` again.
+**How updates work for eager environments.** Updates are transactional: the new version is built before anything changes, a failed build leaves your current environment active, and a failed local update restores `flake.lock`.
 
-### Portability and disk
+**How updates work for lazy environments.** They are pinned to a flake revision instead. `update --check` tells you whether that revision moved on, and `update` moves the pin and rebuilds the tools you already built. Lazy environments have no rollback generations.
 
-| Subcommand | Notes |
+After any update, the environment's security audit is marked out of date (the old report is kept). Run `env audit` again.
+
+### Portability and disk space
+
+| Subcommand | What it does |
 |---|---|
-| `export NAME [-o FILE.rfenv]` | Realises the environment and packs its whole Nix closure plus its workspace into one compressed `.rfenv` archive |
-| `import FILE.rfenv` | Adds the closure to the local store, restores the workspace and registers the environment. `--name` and `--workspace` override the archived values. Extraction refuses traversal, device entries, escaping links and malformed store paths, but an `.rfenv` is **executable code**: import only archives you trust |
-| `remove NAME [--workspace]` | Deletes the environment (frees its GC roots). The workspace is kept unless `--workspace` is given; home directories, filesystem roots and symlinked workspaces are refused |
-| `gc [--dry-run] [--max-free 5G]` | Collects unreferenced store paths. Environments, their built on-demand tools, generations and the OpenGL runtime are rooted and survive |
+| `export NAME [-o FILE.rfenv]` | Builds the environment, then packs all its Nix packages and its workspace into one compressed `.rfenv` archive |
+| `import FILE.rfenv` | Adds the packages to the local store, restores the workspace and registers the environment. `--name` and `--workspace` override the archived values. Extraction rejects unsafe paths, device entries, links that point outside and malformed store paths. Still, an `.rfenv` is **executable code**: import only archives you trust |
+| `remove NAME [--workspace]` | Deletes the environment and frees what only it used. The workspace is kept unless you add `--workspace`. Home folders, filesystem roots and symlinked workspaces are refused |
+| `gc [--dry-run] [--max-free 5G]` | Frees disk space by removing store paths nothing uses. Environments, their built on-demand tools, generations and the OpenGL runtime are protected and kept |
 
 ### Security
 
-| Subcommand | Notes |
+| Subcommand | What it does |
 |---|---|
-| `audit [NAME]` | vulnix (closure CVEs), syft SBOM, grype, osv-scanner, store integrity, signature provenance and flake hygiene, through the flake's `audit` app. `--format stdout,txt,json,html,pdf` (default `stdout,txt,json`), `--fail-on`, `--out`. See [audit](/docs/commands/audit) |
+| `audit [NAME]` | Runs vulnix (known vulnerabilities in the packages), a syft software bill of materials, grype, osv-scanner, a store integrity check, signature provenance and flake hygiene, through the flake's `audit` app. `--format stdout,txt,json,html,pdf` (default `stdout,txt,json`), `--fail-on`, `--out`. See [audit](/docs/commands/audit) |
 
 ### Host integration
 
-| Subcommand | Notes |
+| Subcommand | What it does |
 |---|---|
-| `gl [NAME] [--check]` | Shows the OpenGL runtime GUI tools get on this host (Mesa from the environment's nixpkgs, or the matching proprietary NVIDIA libraries), the GPUs the kernel exposes and their drivers, and with `--check` creates a context and prints the driver that answered. Run it first when SDR++ or gqrx will not open a window |
-| `udev NAME` | Installs the udev rules shipped by the environment's packages (HackRF, RTL-SDR, bladeRF, Airspy, LimeSDR, USRP, Proxmark, ...) into `/etc/udev/rules.d`, creates the groups they rely on and adds you to them, in one `sudo`. `--list` shows the state, `--remove` takes them out, `--no-groups` installs the rules only. Log out and in (or `newgrp plugdev`), then re-plug the device |
-| `wsl ...` | **Windows only.** `status` shows the WSL 2 distribution serving the engine and what it offers (nix, rfswift, WSLg sockets, forwarded USB). `setup` provisions it: systemd, Nix with flakes, the Linux `rfswift` at the Windows version (`--yes`, `--distro`, `--install-distro Ubuntu`, `--update`, `--version TAG`, `--binary FILE`, `--no-nix`, `--no-rfswift`). `use DISTRO` picks the distribution (saved in `config.ini`). `shell` opens a login shell in it. `display-reset` restarts WSLg's display client when a GUI tool shows only a taskbar icon |
-
----
+| `gl [NAME] [--check]` | Shows the OpenGL runtime that graphical tools get on this computer (Mesa from the environment's nixpkgs, or the matching NVIDIA libraries), the GPUs the kernel sees and their drivers. With `--check`, it creates an OpenGL context and prints which driver answered. Run it first when SDR++ or gqrx does not open a window |
+| `udev NAME` | Installs the udev rules that come with the environment's packages (HackRF, RTL-SDR, bladeRF, Airspy, LimeSDR, USRP, Proxmark, ...) into `/etc/udev/rules.d`, creates the groups they need and adds you to them, with one `sudo`. `--list` shows what is installed, `--remove` takes the rules out, `--no-groups` installs only the rules. Afterwards, log out and in (or run `newgrp plugdev`), then plug the device in again |
+| `wsl ...` | **Windows only.** `status` shows the WSL 2 distribution that runs the engine and what it provides (Nix, rfswift, WSLg sockets, forwarded USB). `setup` prepares it: systemd, Nix with flakes, and the Linux `rfswift` at the same version as on Windows (`--yes`, `--distro`, `--install-distro Ubuntu`, `--update`, `--version TAG`, `--binary FILE`, `--no-nix`, `--no-rfswift`). `use DISTRO` picks the distribution and saves it in `config.ini`. `shell` opens a login shell in it. `display-reset` restarts WSLg's display client when a graphical tool shows only a taskbar icon |
 
 ## Examples
 
+Browse the catalog, then create an eager environment and enter it:
+
 ```bash
-# Browse, then create an eager environment and enter it
 rfswift env catalog
 rfswift --engine nix container create -i sdr_light -n mysdr
+```
 
-# Run one tool without creating anything
+Run one tool without creating anything:
+
+```bash
 rfswift env run sdr_light gqrx
+```
 
-# Add a Soapy module to that environment only, then check what is installed
+Add a Soapy module to one environment only, then check what you added:
+
+```bash
 rfswift env install soapyrtlsdr --env mysdr
 rfswift env tools mysdr --installed
+```
 
-# Safe update: preview, apply, roll back if needed
+Update safely: preview the changes, apply them, and roll back if something breaks:
+
+```bash
 rfswift env update --check mysdr
 rfswift env update mysdr
 rfswift env rollback mysdr
+```
 
-# Hardware access without root
+Let your user open the radio hardware without root:
+
+```bash
 rfswift env udev mysdr
+```
 
-# Take the environment to another machine
+Move the environment to another machine:
+
+```bash
 rfswift env export mysdr -o mysdr.rfenv
 rfswift env import mysdr.rfenv --name mysdr2
+```
 
-# Windows: provision the WSL 2 side once
+On Windows, prepare the WSL 2 side once, then check it:
+
+```bash
 rfswift env wsl setup
 rfswift env wsl status
 ```
 
 ## Files
 
-| Path | Content |
-|------|---------|
-| `~/.rfswift/nix/environments/<name>/` | Profile link (GC root), `tools/` shims, `generations/`, audit reports, `build.log` of the last Workbench-driven build |
-| `~/rfswift-workspace/<name>/` | Default workspace |
+| Path | What it holds |
+|------|---------------|
+| `~/.rfswift/nix/environments/<name>/` | The profile link (protected from garbage collection), `tools/` shims, `generations/`, audit reports, and the `build.log` of the last build started from the Workbench |
+| `~/rfswift-workspace/<name>/` | The default workspace |
 | `~/.rfswift/nix/gl/` | OpenGL runtime pins (`nvidia-<version>`, `rfswift-gl.nix`) |
 
-On Windows these live inside the WSL 2 distribution, reachable from Explorer at `\\wsl.localhost\<distro>\home\<user>\...`.
+On Windows these are inside the WSL 2 distribution. You can reach them from Explorer at `\\wsl.localhost\<distro>\home\<user>\...`.
 
 ## Related
 
 - [Nix engine guide](/docs/guide/nix-engine)
 - [audit](/docs/commands/audit)
-- [host isolate](/docs/commands/host) when `--isolate` fails on Ubuntu 24.04+
+- [host isolate](/docs/commands/host): when `--isolate` fails on Ubuntu 24.04 and later
 - [Known limits](/docs/guide/limitations)

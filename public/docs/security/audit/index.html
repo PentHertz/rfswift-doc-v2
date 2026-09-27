@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Audits and hardened deployment · RF Swift</title>
-  <meta name="description" content="RF Swift&#39;s built-in vulnerability and attack-surface audits, and the hardened deployment baseline.">
+  <meta name="description" content="RF Swift&#39;s built-in vulnerability and attack-surface audits, the project&#39;s own security review, and a hardened deployment baseline.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/security/audit/">
+  <link rel="canonical" href="http://localhost:1313/docs/security/audit/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Audits and hardened deployment · RF Swift">
-  <meta property="og:description" content="RF Swift&#39;s built-in vulnerability and attack-surface audits, and the hardened deployment baseline.">
-  <meta property="og:url" content="https://rfswift.io/docs/security/audit/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:description" content="RF Swift&#39;s built-in vulnerability and attack-surface audits, the project&#39;s own security review, and a hardened deployment baseline.">
+  <meta property="og:url" content="http://localhost:1313/docs/security/audit/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -244,11 +230,12 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Audits and hardened deployment</h1><p class="doc-lead">RF Swift&rsquo;s built-in vulnerability and attack-surface audits, and the hardened deployment baseline.</p><p class="doc-meta">Advanced · 4 min read · Updated September 27, 2026</p>
+      <h1>Audits and hardened deployment</h1><p class="doc-lead">RF Swift&rsquo;s built-in vulnerability and attack-surface audits, the project&rsquo;s own security review, and a hardened deployment baseline.</p><p class="doc-meta">Advanced · 4 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>RF Swift v4 ships its own vulnerability and attack-surface audits, and the project publishes a dated security review of its own code. This page summarises both and gives the deployment baseline for sensitive environments.</p>
+      <p>RF Swift can audit what you run: its images, containers and Nix environments. The project also publishes a dated security review of its own code. This page summarises both, then gives a deployment baseline for sensitive environments.</p>
 <h2 id="auditing-what-you-run">Auditing what you run<a class="anchor" href="#auditing-what-you-run" aria-label="Link to this section"></a></h2>
+<p><code>rfswift audit</code> detects the kind of target by itself. You can also call the image and environment audits directly:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift audit &lt;target&gt;                       <span class="c1"># auto-detects a Nix environment, an image or a container</span>
 </span></span><span class="line"><span class="cl">rfswift env audit mysdr --format json,html   <span class="c1"># Nix closure: vulnix, syft SBOM, grype, osv-scanner, integrity, provenance, hygiene</span>
@@ -283,9 +270,17 @@
   </tbody>
 </table>
 </div>
-<p>Reports go to <code>./security-report</code> (<code>--out</code>) as <code>stdout</code>, <code>json</code>, <code>html</code> or <code>pdf</code>; <code>--fail-on high</code> turns the audit into a CI gate. Nix environments keep a <strong>Security posture</strong> line in <code>rfswift env info</code> and print it after each build; updating an environment marks its audit stale. The Workbench runs the same scanners from its Security posture panel and keeps the raw JSON as ground truth for its optional AI review. Full reference: <a href="/docs/commands/audit">audit</a>.</p>
+<p>Good to know:</p>
+<ul>
+<li>Reports go to <code>./security-report</code> (change it with <code>--out</code>), as <code>stdout</code>, <code>json</code>, <code>html</code> or <code>pdf</code>.</li>
+<li><code>--fail-on high</code> makes the audit fail the run, which turns it into a CI gate.</li>
+<li>Nix environments keep a <strong>Security posture</strong> line in <code>rfswift env info</code> and print it after each build. Updating an environment marks its audit as stale.</li>
+<li>The Workbench runs the same scanners from its Security posture panel, and keeps the raw JSON as ground truth for its optional AI review.</li>
+</ul>
+<p>Full reference: <a href="/docs/commands/audit/">audit</a>.</p>
 <h2 id="the-projects-own-security-posture">The project&rsquo;s own security posture<a class="anchor" href="#the-projects-own-security-posture" aria-label="Link to this section"></a></h2>
-<p>RF Swift maintains a dated <strong>security ground truth</strong> in the repository (<a href="https://github.com/PentHertz/RF-Swift/blob/main/docs/security-ground-truth-2026-08-31.md" target="_blank" rel="noopener">docs/security-ground-truth-2026-08-31.md</a>) covering the CLI and remote agent, the Workbench backend and its import/export paths, the installers and the GitHub Actions workflows. The trust boundaries it defines:</p>
+<p>RF Swift keeps a dated <strong>security ground truth</strong> in its repository: <a href="https://github.com/PentHertz/RF-Swift/blob/main/docs/security-ground-truth-2026-08-31.md" target="_blank" rel="noopener">docs/security-ground-truth-2026-08-31.md</a>. It covers the CLI and remote agent, the Workbench backend and its import/export paths, the installers and the GitHub Actions workflows.</p>
+<p>It defines these trust boundaries:</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -322,20 +317,37 @@
   </tbody>
 </table>
 </div>
-<p>A dedicated review of the remote agent protocol, run against a live agent before its network exposure, is recorded in <a href="https://github.com/PentHertz/RF-Swift/blob/main/docs/remote-agent-security-audit-2026-09.md" target="_blank" rel="noopener">docs/remote-agent-security-audit-2026-09.md</a>; its findings (credential files now carry an integrity tag, the agent reports its version, every authenticated request is logged) are fixed in v4.0.2 and its deployment rules are on the <a href="/docs/security/remote-agent">Remote agent hardening</a> page.</p>
-<p>Controls confirmed in the current baseline include mandatory mTLS and TLS 1.3 for the agent with bounded responses and full server timeouts, central path validation in the Workbench store, native path-safe extraction of <code>.rfenv</code> and project archives with entry and size bounds (20 GiB / 100,000 entries for mission companion data), bounded remote command output, installer checksum and archive-member checks, GitHub Actions pinned to commit SHAs, and read-only default permissions in the release workflow. Residual risks remain by design: coarse remote-agent authorisation, executable Nix imports, engine sockets and privileged missions controlling the host, third-party bootstrap scripts (Docker&rsquo;s installer, the Determinate Nix installer), and secret-dependent release signing.</p>
+<h3 id="the-remote-agent-review">The remote agent review<a class="anchor" href="#the-remote-agent-review" aria-label="Link to this section"></a></h3>
+<p>A dedicated review of the remote agent protocol was run against a live agent before its network exposure. It is recorded in <a href="https://github.com/PentHertz/RF-Swift/blob/main/docs/remote-agent-security-audit-2026-09.md" target="_blank" rel="noopener">docs/remote-agent-security-audit-2026-09.md</a>. Its findings are fixed in v4.0.2: credential files now carry an integrity tag, the agent reports its version, and every authenticated request is logged. Its deployment rules are on the <a href="/docs/security/remote-agent/">Remote agent hardening</a> page.</p>
+<h3 id="controls-confirmed-in-the-current-baseline">Controls confirmed in the current baseline<a class="anchor" href="#controls-confirmed-in-the-current-baseline" aria-label="Link to this section"></a></h3>
+<ul>
+<li>mandatory mTLS and TLS 1.3 for the agent, with bounded responses and full server timeouts;</li>
+<li>central path validation in the Workbench store;</li>
+<li>native, path-safe extraction of <code>.rfenv</code> and project archives, with entry and size limits (20 GiB / 100,000 entries for mission companion data);</li>
+<li>bounded remote command output;</li>
+<li>installer checksum and archive-member checks;</li>
+<li>GitHub Actions pinned to commit SHAs, and read-only default permissions in the release workflow.</li>
+</ul>
+<h3 id="residual-risks-by-design">Residual risks, by design<a class="anchor" href="#residual-risks-by-design" aria-label="Link to this section"></a></h3>
+<ul>
+<li>coarse remote-agent authorisation (every client has the same rights);</li>
+<li>executable Nix imports;</li>
+<li>engine sockets and privileged missions that control the host;</li>
+<li>third-party bootstrap scripts (Docker&rsquo;s installer, the Determinate Nix installer);</li>
+<li>release signing that depends on secrets.</li>
+</ul>
 <h2 id="hardened-deployment-baseline">Hardened deployment baseline<a class="anchor" href="#hardened-deployment-baseline" aria-label="Link to this section"></a></h2>
 <ol>
-<li>Install only artifacts whose checksum, signature or attestation, repository and version were independently verified: <code>gh attestation verify &lt;file&gt; --repo PentHertz/RF-Swift</code>; review <code>get_rfswift.sh</code> before running it, or use the native packages and the <a href="/docs/air-gapped-installation">air-gapped procedure</a>.</li>
-<li>Use a dedicated non-administrator account; keep engine and hardware groups narrowly assigned. Members of the <code>docker</code> group are root-equivalent.</li>
-<li>Prefer rootless Podman, read-only binds, explicit devices and minimal capabilities. Avoid <code>--privileged</code>, host networking, broad <code>/dev</code> mounts, <code>SYS_ADMIN</code> and writable host binds unless required. <code>rfswift audit &lt;container&gt;</code> shows what you granted.</li>
-<li>Keep the remote agent on loopback or a private authenticated tunnel; protect its key directory with owner-only permissions; rotate the bundle after a loss or a personnel change.</li>
-<li>Treat imported missions, notes, captures, images and Nix environments as untrusted until provenance is established. Import <code>.rfenv</code> archives only from sources you trust.</li>
-<li>Nix environments run natively as your user: use <code>--isolate</code> for tools you do not fully trust, and <code>rfswift env audit</code> for supply-chain posture.</li>
-<li>Re-run <code>rfswift audit</code> on images and environments before each engagement and after every update.</li>
+<li><strong>Verify what you install.</strong> Install only artifacts whose checksum, signature or attestation, repository and version you checked yourself: <code>gh attestation verify &lt;file&gt; --repo PentHertz/RF-Swift</code>. Review <code>get_rfswift.sh</code> before running it, or use the native packages and the <a href="/docs/air-gapped-installation/">air-gapped procedure</a>.</li>
+<li><strong>Use a dedicated, non-administrator account.</strong> Keep membership of the engine and hardware groups narrow. Members of the <code>docker</code> group are root-equivalent.</li>
+<li><strong>Grant as little as possible.</strong> Prefer rootless Podman, read-only binds, explicit devices and minimal capabilities. Avoid <code>--privileged</code>, host networking, broad <code>/dev</code> mounts, <code>SYS_ADMIN</code> and writable host binds unless you need them. <code>rfswift audit &lt;container&gt;</code> shows what you granted.</li>
+<li><strong>Keep the remote agent private.</strong> Keep it on loopback or a private authenticated tunnel, make its key directory owner-only, and rotate the bundle after a loss or a change of staff.</li>
+<li><strong>Treat imports as untrusted</strong> until you know where they come from: missions, notes, captures, images and Nix environments. Import <code>.rfenv</code> archives only from sources you trust.</li>
+<li><strong>Jail tools you do not fully trust.</strong> Nix environments run natively as your user: use <code>--isolate</code> for such tools, and <code>rfswift env audit</code> for supply-chain posture.</li>
+<li><strong>Audit again regularly.</strong> Re-run <code>rfswift audit</code> on images and environments before each engagement and after every update.</li>
 </ol>
 <h2 id="reporting-a-vulnerability">Reporting a vulnerability<a class="anchor" href="#reporting-a-vulnerability" aria-label="Link to this section"></a></h2>
-<p>Report security issues privately to the maintainers (<a href="https://penthertz.com/" target="_blank" rel="noopener">penthertz.com</a>) before opening a public issue. The repository&rsquo;s security workflow runs dependency audits, ShellCheck, installer tests, fuzzing of the remote and archive parsers, and the immutable-action guard on every push.</p>
+<p>Report security issues privately to the maintainers (<a href="https://penthertz.com/" target="_blank" rel="noopener">penthertz.com</a>) before opening a public issue. On every push, the repository&rsquo;s security workflow runs dependency audits, ShellCheck, installer tests, fuzzing of the remote and archive parsers, and the immutable-action guard.</p>
 
     </div>
     <footer class="doc-foot">
@@ -357,7 +369,13 @@
   <nav id="TableOfContents">
   <ul>
     <li><a href="#auditing-what-you-run">Auditing what you run</a></li>
-    <li><a href="#the-projects-own-security-posture">The project&rsquo;s own security posture</a></li>
+    <li><a href="#the-projects-own-security-posture">The project&rsquo;s own security posture</a>
+      <ul>
+        <li><a href="#the-remote-agent-review">The remote agent review</a></li>
+        <li><a href="#controls-confirmed-in-the-current-baseline">Controls confirmed in the current baseline</a></li>
+        <li><a href="#residual-risks-by-design">Residual risks, by design</a></li>
+      </ul>
+    </li>
     <li><a href="#hardened-deployment-baseline">Hardened deployment baseline</a></li>
     <li><a href="#reporting-a-vulnerability">Reporting a vulnerability</a></li>
   </ul>

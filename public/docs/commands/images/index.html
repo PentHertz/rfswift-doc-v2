@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift image local / remote / pull / versions · RF Swift</title>
   <meta name="description" content="List local images, browse the official registry, pull images and track their versions.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/images/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/images/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift image local / remote / pull / versions · RF Swift">
   <meta property="og:description" content="List local images, browse the official registry, pull images and track their versions.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/images/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/images/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,11 +231,14 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift image local / remote / pull / versions</h1><p class="doc-lead">List local images, browse the official registry, pull images and track their versions.</p><p class="doc-meta">Reference · 5 min read · Updated September 27, 2026</p>
+      <h1>rfswift image local / remote / pull / versions</h1><p class="doc-lead">List local images, browse the official registry, pull images and track their versions.</p><p class="doc-meta">Reference · 5 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>List local images, browse the official registry, pull images and track their versions.</p>
-<div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift image ...</code>. The legacy <code>rfswift images ...</code> tree still works and prints a notice. The whole group, including <code>build</code>, <code>rm</code>, <code>tag</code>, <code>download</code>, <code>export</code>, <code>import</code> and <code>audit</code>, is described on the <a href="/docs/commands/image">image</a> page.</p>
+      <p>These four subcommands answer everyday questions about images: what do I have, what can I download, how do I get it, and which version is it?</p>
+<p>The most common use is downloading a toolbox:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image pull -i sdr_full</span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p><code>rfswift image ...</code> is the v4 spelling. The older <code>rfswift images ...</code> still works and prints a notice. The whole group, including <code>build</code>, <code>rm</code>, <code>tag</code>, <code>download</code>, <code>export</code>, <code>import</code> and <code>audit</code>, is described on the <a href="/docs/commands/image">image</a> page.</p>
 </div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
@@ -258,93 +247,73 @@
 </span></span><span class="line"><span class="cl">rfswift image pull -i IMAGE <span class="o">[</span>-t TAG<span class="o">]</span> <span class="o">[</span>-V VERSION<span class="o">]</span> <span class="c1"># pull, optionally a specific version, optionally retag</span>
 </span></span><span class="line"><span class="cl">rfswift image versions <span class="o">[</span>-f FILTER<span class="o">]</span>                <span class="c1"># every published version of each image</span>
 </span></span><span class="line"><span class="cl">rfswift image audit IMAGE <span class="o">[</span>--format ...<span class="o">]</span>          <span class="c1"># CVE scan, see the audit page</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <h3 id="images-local">images local<a class="anchor" href="#images-local" aria-label="Link to this section"></a></h3>
-<p>List all RF Swift images present on the local system.</p>
-<p><strong>Usage:</strong></p>
+<p>Lists the RF Swift images on this computer.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">local</span> <span class="o">[</span>-v<span class="o">]</span> <span class="o">[</span>-f FILTER<span class="o">]</span></span></span></code></pre></div></div>
-<p><strong>Options:</strong></p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Example</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>-v, --show-versions</code></td>
-      <td>Show version information for images</td>
+      <td>Also show version information</td>
       <td><code>-v</code></td>
     </tr>
     <tr>
       <td><code>-f, --filter STRING</code></td>
-      <td>Filter images by name</td>
+      <td>Only show images whose name matches</td>
       <td><code>-f sdr_full</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<p><strong>Output includes:</strong></p>
-<ul>
-<li>Image repository and tag</li>
-<li>Image ID</li>
-<li>Creation date</li>
-<li>Image size</li>
-<li><strong>Version information</strong> (v0.7.0+)</li>
-</ul>
+<p>For each image you see the repository and tag, the image ID, the creation date, the size and, since v0.7.0, the version.</p>
 <h3 id="images-remote">images remote<a class="anchor" href="#images-remote" aria-label="Link to this section"></a></h3>
-<p>List available RF Swift images from the official Penthertz registry.</p>
-<p><strong>Usage:</strong></p>
+<p>Lists the RF Swift images published in the official Penthertz registry.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image remote <span class="o">[</span>-v<span class="o">]</span> <span class="o">[</span>-f FILTER<span class="o">]</span></span></span></code></pre></div></div>
-<p><strong>Options:</strong></p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Example</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>-v, --show-versions</code></td>
-      <td>Show version information for images</td>
+      <td>Also show the version history</td>
       <td><code>-v</code></td>
     </tr>
     <tr>
       <td><code>-f, --filter STRING</code></td>
-      <td>Filter images by name</td>
+      <td>Only show images whose name matches</td>
       <td><code>-f wifi</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<p><strong>Output includes:</strong></p>
-<ul>
-<li>Available image names</li>
-<li>Image descriptions</li>
-<li>Available tags/versions</li>
-<li><strong>Version history</strong> (with <code>-v</code> flag)</li>
-</ul>
+<p>For each image you see its name, description and available tags. With <code>-v</code> you also get the version history.</p>
 <h3 id="images-pull">images pull<a class="anchor" href="#images-pull" aria-label="Link to this section"></a></h3>
-<p>Pull images from Docker registries to local system.</p>
-<p><strong>Usage:</strong></p>
+<p>Downloads an image from a registry to this computer.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image pull -i IMAGE_NAME <span class="o">[</span>-t TAG<span class="o">]</span> <span class="o">[</span>-V version<span class="o">]</span></span></span></code></pre></div></div>
-<p><strong>Options:</strong></p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -352,19 +321,19 @@
   <tbody>
     <tr>
       <td><code>-i, --image STRING</code></td>
-      <td>Image reference to pull</td>
+      <td>The image to pull</td>
       <td>Yes</td>
       <td><code>-i penthertz/rfswift_resolute:sdr_full</code></td>
     </tr>
     <tr>
       <td><code>-t, --tag STRING</code></td>
-      <td>Rename to target tag locally</td>
+      <td>Local tag to give the pulled image</td>
       <td>No</td>
       <td><code>-t my_sdr:v1</code></td>
     </tr>
     <tr>
       <td><code>-V, --version STRING</code></td>
-      <td>Rename to wanted version</td>
+      <td>Pull a specific published version</td>
       <td>No</td>
       <td><code>-V 0.1.1</code></td>
     </tr>
@@ -372,37 +341,34 @@
 </table>
 </div>
 <h3 id="images-versions">images versions<a class="anchor" href="#images-versions" aria-label="Link to this section"></a></h3>
-<p>List all available versions for RF Swift images.</p>
-<p><strong>Usage:</strong></p>
+<p>Lists every published version of each RF Swift image.</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image versions <span class="o">[</span>-f FILTER<span class="o">]</span></span></span></code></pre></div></div>
-<p><strong>Options:</strong></p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Example</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>-f, --filter STRING</code></td>
-      <td>Filter by image name</td>
+      <td>Only show images whose name matches</td>
       <td><code>-f sdr_full</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<p><strong>Example:</strong></p>
+<p>List the versions of all images:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List versions for all images</span>
-</span></span><span class="line"><span class="cl">rfswift image versions
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># List versions for a specific image</span>
-</span></span><span class="line"><span class="cl">rfswift image versions -f wifi</span></span></code></pre></div></div>
-<p><strong>Example output:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image versions</span></span></code></pre></div></div>
+<p>List the versions of one image:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image versions -f wifi</span></span></code></pre></div></div>
+<p>Example output:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>┌──────────────────────────────────────┬────────────────────┬──────────────┐
 │ Image                                │ Version            │ Status       │
@@ -413,14 +379,13 @@
 ├──────────────────────────────────────┼────────────────────┼──────────────┤
 │ penthertz/rfswift_resolute:sdr_light    │ latest, 0.1.1      │ Up to date   │
 └──────────────────────────────────────┴────────────────────┴──────────────┘</code></pre></div>
-<hr>
 <h2 id="version-management-v070">Version management (v0.7.0+)<a class="anchor" href="#version-management-v070" aria-label="Link to this section"></a></h2>
-<p>Starting with RF Swift v0.7.0, images now support <strong>proper versioning</strong> to help you track and manage different image releases.</p>
-<h3 id="viewing-available-versions">Viewing available versions<a class="anchor" href="#viewing-available-versions" aria-label="Link to this section"></a></h3>
+<p>Since RF Swift v0.7.0, images carry version numbers. This lets you pin a known release and see when a newer one is published.</p>
+<h3 id="see-which-versions-exist">See which versions exist<a class="anchor" href="#see-which-versions-exist" aria-label="Link to this section"></a></h3>
+<p>List the published images together with their versions:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List remote images with all available versions</span>
-</span></span><span class="line"><span class="cl">rfswift image remote -v</span></span></code></pre></div></div>
-<p><strong>Example output:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image remote -v</span></span></code></pre></div></div>
+<p>Example output:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>┌──────────────────────┬────────────────────┬─────────────────────────────────────┬──────────────┬──────────────────────────────────────────────────────────────┐
 │ Tag                  │ Pushed Date        │ Image                               │ Size         │ Versions                                                     │
@@ -429,14 +394,15 @@
 ├──────────────────────┼────────────────────┼─────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
 │ sdr_full             │ 2026-01-27 16:27   │ penthertz/rfswift_resolute:sdr_full    │ 14176.2 MB   │ latest, 0.1.1                                                │
 ├──────────────────────┼────────────────────┼─────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤</code></pre></div>
-<h3 id="pulling-specific-versions">Pulling specific versions<a class="anchor" href="#pulling-specific-versions" aria-label="Link to this section"></a></h3>
+<h3 id="pull-a-specific-version">Pull a specific version<a class="anchor" href="#pull-a-specific-version" aria-label="Link to this section"></a></h3>
+<p>Pull the latest version (the default):</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull latest version (default)</span>
-</span></span><span class="line"><span class="cl">rfswift image pull -i sdr_full
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Pull specific version</span>
-</span></span><span class="line"><span class="cl">rfswift image pull -i sdr_full -V 0.1.1</span></span></code></pre></div></div>
-<h3 id="version-comparison">Version comparison<a class="anchor" href="#version-comparison" aria-label="Link to this section"></a></h3>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image pull -i sdr_full</span></span></code></pre></div></div>
+<p>Pull a specific version:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image pull -i sdr_full -V 0.1.1</span></span></code></pre></div></div>
+<h3 id="compare-local-versions">Compare local versions<a class="anchor" href="#compare-local-versions" aria-label="Link to this section"></a></h3>
+<p>The Version column shows which release each local image is:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  📦 RF Swift Images                                                                                                            
 </span></span><span class="line"><span class="cl">┌──────────────────────────────┬─────────────────┬──────────────┬───────────────────────────┬─────────────┬────────────┬─────────┐
@@ -444,91 +410,58 @@
 </span></span><span class="line"><span class="cl">├──────────────────────────────┼─────────────────┼──────────────┼───────────────────────────┼─────────────┼────────────┼─────────┤
 </span></span><span class="line"><span class="cl">│ penthertz/rfswift_resolute      │ sdr_light_0.1.1 │ cdf39442893e │ 2026-01-19T20:17:49+01:00 │ 13076.96 MB │ Up to date │ 0.1.1   │
 </span></span><span class="line"><span class="cl">...</span></span></code></pre></div></div>
-<hr>
+<div class="admonition admonition-warning" role="note"><p class="admonition-title">Check your disk space first</p><p>Images are large: several gigabytes each (about 8 GB for <code>wifi</code> and 14 GB for <code>sdr_full</code> in the listing above). Check free space with <code>df -h</code> before pulling several images or versions. On a small disk, start with <code>sdr_light</code>.</p>
+</div>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="no-images-listed-locally">No images listed locally<a class="anchor" href="#no-images-listed-locally" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>images local</code> shows no RF Swift images</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="no-images-are-listed-locally">No images are listed locally<a class="anchor" href="#no-images-are-listed-locally" aria-label="Link to this section"></a></h3>
+<p><code>rfswift image local</code> shows nothing when you have not pulled an image yet, or when the engine is not running.</p>
+<p>Pull your first image:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull your first image</span>
-</span></span><span class="line"><span class="cl">rfswift image pull -i sdr_full
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check all Docker images (not just RF Swift)</span>
-</span></span><span class="line"><span class="cl">docker images
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify Docker is running</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image pull -i sdr_full</span></span></code></pre></div></div>
+<p>List every image the engine knows (not only RF Swift ones), and check that Docker is running:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker images
 </span></span><span class="line"><span class="cl">docker ps</span></span></code></pre></div></div>
-<h3 id="remote-registry-not-accessible">Remote registry not accessible<a class="anchor" href="#remote-registry-not-accessible" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>images remote</code> fails or shows no images</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="the-remote-list-is-empty-or-fails">The remote list is empty or fails<a class="anchor" href="#the-remote-list-is-empty-or-fails" aria-label="Link to this section"></a></h3>
+<p><code>rfswift image remote</code> needs to reach Docker Hub. Check the network, Docker Hub itself, and whether a proxy or firewall blocks the connection:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check network connectivity</span>
-</span></span><span class="line"><span class="cl">ping registry.hub.docker.com
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check Docker Hub status</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ping registry.hub.docker.com
 </span></span><span class="line"><span class="cl">curl -I https://hub.docker.com
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Try direct docker search</span>
-</span></span><span class="line"><span class="cl">docker search penthertz/rfswift_resolute
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check if behind proxy/firewall</span></span></span></code></pre></div></div>
-<h3 id="pull-fails">Pull fails<a class="anchor" href="#pull-fails" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>unable to retrieve auth token: invalid username/password</code></p>
-<p>The engine presents a stored <code>docker login</code> or <code>podman login</code> for Docker Hub that is no longer valid; RF Swift sends no credentials. The message names the credential file and the <code>logout</code> command that clears it.</p>
-<p><strong>Error:</strong> <code>Error pulling image</code></p>
-<p><strong>Solutions:</strong></p>
+</span></span><span class="line"><span class="cl">docker search penthertz/rfswift_resolute</span></span></code></pre></div></div>
+<h3 id="pull-fails-with-invalid-usernamepassword">Pull fails with “invalid username/password”<a class="anchor" href="#pull-fails-with-invalid-usernamepassword" aria-label="Link to this section"></a></h3>
+<p>The full error is <code>unable to retrieve auth token: invalid username/password</code>. The engine is presenting an old <code>docker login</code> or <code>podman login</code> for Docker Hub that is no longer valid. RF Swift sends no credentials of its own. The error message names the credential file and the <code>logout</code> command that clears it.</p>
+<h3 id="pull-fails-with-error-pulling-image">Pull fails with “Error pulling image”<a class="anchor" href="#pull-fails-with-error-pulling-image" aria-label="Link to this section"></a></h3>
+<p>Check the exact image name and version, then try pulling with Docker directly. Also check free disk space and the network:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check image name spelling</span>
-</span></span><span class="line"><span class="cl">rfswift image remote -v  <span class="c1"># Verify exact name and version</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Try with docker directly</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image remote -v
 </span></span><span class="line"><span class="cl">docker pull penthertz/rfswift_resolute:sdr_full
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check disk space</span>
 </span></span><span class="line"><span class="cl">df -h
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check network</span>
 </span></span><span class="line"><span class="cl">ping registry.hub.docker.com</span></span></code></pre></div></div>
-<h3 id="version-not-found">Version not found<a class="anchor" href="#version-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Version not found</code> or <code>Tag not found</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="version-not-found-or-tag-not-found">“Version not found” or “Tag not found”<a class="anchor" href="#version-not-found-or-tag-not-found" aria-label="Link to this section"></a></h3>
+<p>The version you asked for is not published. List the available versions and copy the version string exactly as shown:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># List all available versions</span>
-</span></span><span class="line"><span class="cl">rfswift image remote -v
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify the version exists</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Use the exact version string shown in the list</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Pull with correct version format</span>
-</span></span><span class="line"><span class="cl">rfswift image pull -i wifi v0.1.0</span></span></code></pre></div></div>
-<h3 id="authentication-required">Authentication required<a class="anchor" href="#authentication-required" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Private registry requires login</p>
-<p><strong>Solutions:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image remote -v
+</span></span><span class="line"><span class="cl">rfswift image pull -i wifi -V 0.1.1</span></span></code></pre></div></div>
+<h3 id="a-private-registry-asks-for-a-login">A private registry asks for a login<a class="anchor" href="#a-private-registry-asks-for-a-login" aria-label="Link to this section"></a></h3>
+<p>Log in with the engine first, then pull as usual. For a private registry:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Login to registry</span>
-</span></span><span class="line"><span class="cl">docker login registry.example.com
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then pull</span>
-</span></span><span class="line"><span class="cl">rfswift image pull -i registry.example.com/image:tag
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># For Docker Hub private images</span>
-</span></span><span class="line"><span class="cl">docker login
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker login registry.example.com
+</span></span><span class="line"><span class="cl">rfswift image pull -i registry.example.com/image:tag</span></span></code></pre></div></div>
+<p>For private images on Docker Hub:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker login
 </span></span><span class="line"><span class="cl">rfswift image pull -i myuser/private-image:tag</span></span></code></pre></div></div>
-<hr>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/build"><code>build</code></a> - Build custom images</li>
-<li><a href="/docs/commands/download"><code>download</code></a> - Download images to files</li>
-<li><a href="/docs/commands/export"><code>export</code></a> - Export images to archives</li>
-<li><a href="/docs/commands/import"><code>import</code></a> - Import images from archives</li>
-<li><a href="/docs/commands/delete"><code>delete</code></a> - Remove images</li>
-<li><a href="/docs/commands/retag"><code>retag</code></a> - Retag images locally</li>
-<li><a href="/docs/commands/run"><code>run</code></a> - Run containers from images</li>
-<li><a href="/docs/commands/upgrade"><code>upgrade</code></a> - Upgrade container to new image version</li>
+<li><a href="/docs/commands/build"><code>build</code></a>: build your own images</li>
+<li><a href="/docs/commands/download"><code>download</code></a>: save images to files</li>
+<li><a href="/docs/commands/export"><code>export</code></a>: export images to archives</li>
+<li><a href="/docs/commands/import"><code>import</code></a>: import images from archives</li>
+<li><a href="/docs/commands/delete"><code>delete</code></a>: remove images</li>
+<li><a href="/docs/commands/retag"><code>retag</code></a>: give images a new local tag</li>
+<li><a href="/docs/commands/run"><code>run</code></a>: create containers from images</li>
+<li><a href="/docs/commands/upgrade"><code>upgrade</code></a>: move a container to a newer image</li>
 </ul>
-<hr>
-<div class="admonition admonition-warning" role="note"><p><strong>Disk Space</strong>: RF Swift images can be large (1.5-4GB). Always check available disk space with <code>df -h</code> before pulling multiple images or versions. Use <code>sdr_light</code> for space-constrained systems.</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -560,18 +493,19 @@
     </li>
     <li><a href="#version-management-v070">Version management (v0.7.0+)</a>
       <ul>
-        <li><a href="#viewing-available-versions">Viewing available versions</a></li>
-        <li><a href="#pulling-specific-versions">Pulling specific versions</a></li>
-        <li><a href="#version-comparison">Version comparison</a></li>
+        <li><a href="#see-which-versions-exist">See which versions exist</a></li>
+        <li><a href="#pull-a-specific-version">Pull a specific version</a></li>
+        <li><a href="#compare-local-versions">Compare local versions</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#no-images-listed-locally">No images listed locally</a></li>
-        <li><a href="#remote-registry-not-accessible">Remote registry not accessible</a></li>
-        <li><a href="#pull-fails">Pull fails</a></li>
-        <li><a href="#version-not-found">Version not found</a></li>
-        <li><a href="#authentication-required">Authentication required</a></li>
+        <li><a href="#no-images-are-listed-locally">No images are listed locally</a></li>
+        <li><a href="#the-remote-list-is-empty-or-fails">The remote list is empty or fails</a></li>
+        <li><a href="#pull-fails-with-invalid-usernamepassword">Pull fails with “invalid username/password”</a></li>
+        <li><a href="#pull-fails-with-error-pulling-image">Pull fails with “Error pulling image”</a></li>
+        <li><a href="#version-not-found-or-tag-not-found">“Version not found” or “Tag not found”</a></li>
+        <li><a href="#a-private-registry-asks-for-a-login">A private registry asks for a login</a></li>
       </ul>
     </li>
     <li><a href="#related-commands">Related commands</a></li>

@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift audit · RF Swift</title>
   <meta name="description" content="Audit a Nix environment, a container image or a container for vulnerabilities and attack surface.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/audit/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/audit/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift audit · RF Swift">
   <meta property="og:description" content="Audit a Nix environment, a container image or a container for vulnerabilities and attack surface.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/audit/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/audit/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,17 +231,25 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift audit</h1><p class="doc-lead">Audit a Nix environment, a container image or a container for vulnerabilities and attack surface.</p><p class="doc-meta">Reference · 3 min read · Updated September 27, 2026</p>
+      <h1>rfswift audit</h1><p class="doc-lead">Audit a Nix environment, a container image or a container for vulnerabilities and attack surface.</p><p class="doc-meta">Reference · 3 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>Audit the security posture of a Nix environment, a container image, or a running container. <code>rfswift audit</code> auto-detects the target type; <code>rfswift env audit</code> and <code>rfswift image audit</code> are the dedicated forms.</p>
+      <p><code>rfswift audit</code> tells you how exposed a toolbox is before you rely on it. It scans a Nix environment, a container image or a running container for known vulnerabilities (CVEs) and risky settings, and writes a report.</p>
+<p>It detects the kind of target on its own. <code>rfswift env audit</code> and <code>rfswift image audit</code> are the dedicated forms.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift audit penthertz/rfswift_resolute:sdr_full</span></span></code></pre></div></div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift audit TARGET <span class="o">[</span>--type auto<span class="p">|</span>env<span class="p">|</span>image<span class="p">|</span>container<span class="o">]</span> <span class="o">[</span>--format stdout,json,html,pdf<span class="o">]</span> <span class="o">[</span>--fail-on SEVERITY<span class="o">]</span> <span class="o">[</span>--out DIR<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift env audit <span class="o">[</span>NAME<span class="o">]</span> <span class="o">[</span>--env NAME<span class="o">]</span> <span class="o">[</span>--format stdout,txt,json,html,pdf<span class="o">]</span> <span class="o">[</span>--fail-on SEVERITY<span class="o">]</span> <span class="o">[</span>--out DIR<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift image audit IMAGE <span class="o">[</span>IMAGE...<span class="o">]</span> <span class="o">[</span>--format ...<span class="o">]</span> <span class="o">[</span>--fail-on SEVERITY<span class="o">]</span> <span class="o">[</span>--out DIR<span class="o">]</span></span></span></code></pre></div></div>
-<p>Detection order: a name from the Nix catalog is an environment, a reference with a tag or a <code>/</code> is an image, anything else is a container. <code>--type</code> forces it.</p>
-<hr>
+<p>How the target is detected:</p>
+<ol>
+<li>a name from the Nix catalog is a Nix environment;</li>
+<li>a reference with a tag or a <code>/</code> is an image;</li>
+<li>anything else is a container.</li>
+</ol>
+<p>Use <code>--type</code> to force it.</p>
 <h2 id="what-each-audit-covers">What each audit covers<a class="anchor" href="#what-each-audit-covers" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
@@ -268,11 +262,11 @@
   <tbody>
     <tr>
       <td><strong>Nix environment</strong></td>
-      <td>vulnix (CVEs in the Nix closure), syft SBOM, grype, osv-scanner, store integrity, signature provenance, flake and configuration hygiene. Runs through the flake&rsquo;s <code>audit</code> app. Each vulnix match is embedded with package, installed version, derivation, score, severity and description</td>
+      <td>vulnix (CVEs in the Nix closure), a syft SBOM, grype, osv-scanner, store integrity, signature provenance, and flake and configuration hygiene. It runs through the flake&rsquo;s <code>audit</code> app. Each vulnix match lists the package, installed version, derivation, score, severity and description</td>
     </tr>
     <tr>
       <td><strong>Container image</strong></td>
-      <td>trivy on OS packages and language dependencies. A host trivy is used when present, otherwise trivy runs as a container through the active engine (<code>save</code> + <code>--input</code>, so no socket mount is needed, and it works on Linux, macOS and Windows). A host grype gives a second opinion when installed</td>
+      <td>trivy on OS packages and language dependencies. RF Swift uses trivy on the host when it is installed; otherwise it runs trivy as a container through the active engine (<code>save</code> + <code>--input</code>, so no socket mount is needed, and it works on Linux, macOS and Windows). A host grype, when installed, gives a second opinion</td>
     </tr>
     <tr>
       <td><strong>Container</strong></td>
@@ -299,13 +293,13 @@
     </tr>
     <tr>
       <td><code>--fail-on</code></td>
-      <td>Exit non-zero when a finding is at least <code>low</code>, <code>medium</code>, <code>high</code> or <code>critical</code></td>
+      <td>Exit with an error when a finding is at least <code>low</code>, <code>medium</code>, <code>high</code> or <code>critical</code></td>
       <td><code>none</code></td>
     </tr>
     <tr>
       <td><code>--out</code></td>
-      <td>Report output directory</td>
-      <td><code>./security-report</code> (Nix environments keep their report beside the environment metadata)</td>
+      <td>Directory for the reports</td>
+      <td><code>./security-report</code> (Nix environments keep their report next to the environment metadata)</td>
     </tr>
     <tr>
       <td><code>--type</code></td>
@@ -315,30 +309,29 @@
   </tbody>
 </table>
 </div>
-<p>PDF output needs a host <code>weasyprint</code> or <code>wkhtmltopdf</code>; without one the HTML report is still produced.</p>
-<hr>
+<p>PDF output needs <code>weasyprint</code> or <code>wkhtmltopdf</code> on the host. Without one, you still get the HTML report.</p>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
+<p>Audit a Nix environment, then write JSON and HTML reports for another one:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># A Nix environment</span>
-</span></span><span class="line"><span class="cl">rfswift audit wifi
-</span></span><span class="line"><span class="cl">rfswift env audit mysdr --format json,html
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># An image, gating a CI pipeline</span>
-</span></span><span class="line"><span class="cl">rfswift audit penthertz/rfswift_resolute:sdr_full --fail-on critical
-</span></span><span class="line"><span class="cl">rfswift image audit myimage:latest --format all --out /tmp/audit
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># A running container&#39;s attack surface</span>
-</span></span><span class="line"><span class="cl">rfswift audit mysdr --type container --format json,html</span></span></code></pre></div></div>
-<h2 id="routine-awareness">Routine awareness<a class="anchor" href="#routine-awareness" aria-label="Link to this section"></a></h2>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift audit wifi
+</span></span><span class="line"><span class="cl">rfswift env audit mysdr --format json,html</span></span></code></pre></div></div>
+<p>Audit an image and fail a CI pipeline on critical findings, or write every report format to a folder:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift audit penthertz/rfswift_resolute:sdr_full --fail-on critical
+</span></span><span class="line"><span class="cl">rfswift image audit myimage:latest --format all --out /tmp/audit</span></span></code></pre></div></div>
+<p>Check the attack surface of a running container:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift audit mysdr --type container --format json,html</span></span></code></pre></div></div>
+<h2 id="keeping-audits-current">Keeping audits current<a class="anchor" href="#keeping-audits-current" aria-label="Link to this section"></a></h2>
 <ul>
-<li><code>rfswift env info NAME</code> prints a <strong>Security posture</strong> line from the last audit, and building a Nix environment prints it too.</li>
-<li>Updating an environment marks its audit stale; audit again after <code>env update</code>.</li>
-<li>The Workbench runs the same scanners from the Security posture panel and keeps the unmodified JSON report as ground truth for its optional AI review; environment CVEs never count as mission findings.</li>
+<li><code>rfswift env info NAME</code> shows a <strong>Security posture</strong> line from the last audit. Building a Nix environment prints it too.</li>
+<li>Updating an environment marks its audit as stale. Run the audit again after <code>env update</code>.</li>
+<li>The Workbench runs the same scanners from its <strong>Security posture</strong> panel. It keeps the unmodified JSON report as the reference for its optional AI review. Environment CVEs never count as mission findings.</li>
 </ul>
 <h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <ul>
 <li><a href="/docs/security/guide_lines">Security guidelines</a></li>
-<li><a href="/docs/security/audit">Security audit page</a> for the deployment baseline and residual risks</li>
+<li><a href="/docs/security/audit">Audits and hardened deployment</a> for the deployment baseline and residual risks</li>
 <li><a href="/docs/commands/env">env</a>, <a href="/docs/commands/image">image</a></li>
 </ul>
 
@@ -365,7 +358,7 @@
     <li><a href="#what-each-audit-covers">What each audit covers</a></li>
     <li><a href="#options">Options</a></li>
     <li><a href="#examples">Examples</a></li>
-    <li><a href="#routine-awareness">Routine awareness</a></li>
+    <li><a href="#keeping-audits-current">Keeping audits current</a></li>
     <li><a href="#related">Related</a></li>
   </ul>
 </nav>

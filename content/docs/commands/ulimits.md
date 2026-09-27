@@ -7,33 +7,33 @@ description: "Set resource limits (ulimits) on an existing container."
 weight: 46
 ---
 
-{{< callout type="info" >}}
-**RF Swift v4**: this group lives under the `config` parent as `rfswift config ulimits` and remains available as `rfswift ulimits`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
-{{< /callout >}}
+Resource limits ("ulimits") control things like real-time priority, locked memory and open files for the processes in a container. For SDR work, the right limits prevent buffer underruns (dropped samples) and improve real-time performance. `rfswift config ulimits` adds, removes and lists them on an existing container.
 
-Manage resource limits (ulimits) for containers to optimize SDR performance.
+For radio work, the one-command shortcut is usually enough: `rfswift realtime enable -c NAME` sets every limit SDR tools need (see [realtime](/docs/commands/realtime)).
+
+```bash
+rfswift config ulimits add -c my_sdr -n rtprio -v 95
+```
+
+{{< callout type="info" >}}
+**RF Swift v4**: this group lives under `config` as `rfswift config ulimits`. The short form `rfswift ulimits` is still current. On Linux Docker the change is applied in place after one `sudo` prompt. On Podman the container is committed and re-created; add `--recreate` to force that path on Docker too. Either way, the container restarts. See [config](/docs/commands/config).
+{{< /callout >}}
 
 ## Synopsis
 
 ```bash
-rfswift ulimits add -c CONTAINER -n NAME -v VALUE
-rfswift ulimits rm -c CONTAINER -n NAME
-rfswift ulimits list -c CONTAINER
+rfswift config ulimits add  -c CONTAINER -n NAME -v VALUE
+rfswift config ulimits rm   -c CONTAINER -n NAME
+rfswift config ulimits list -c CONTAINER
 ```
-
-The `ulimits` command allows you to add, remove, or list resource limits on containers. Ulimits control various kernel-level resource constraints that affect process scheduling, memory locking, and file descriptors. For SDR work for example, proper ulimit configuration can eliminate buffer underruns and improve real-time performance.
-
----
 
 ## Subcommands
 
-| Subcommand | Description |
-|------------|-------------|
-| `add` | Add or update an ulimit on a container |
-| `rm` | Remove an ulimit from a container |
-| `list` | List all ulimits set on a container |
-
----
+| Subcommand | What it does |
+|------------|--------------|
+| `add` | Adds or updates a limit on a container |
+| `rm` | Removes a limit from a container |
+| `list` | Lists the limits set on a container |
 
 ## Options
 
@@ -42,15 +42,15 @@ The `ulimits` command allows you to add, remove, or list resource limits on cont
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
 | `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
-| `-n, --name STRING` | Ulimit name | Yes | `-n rtprio` |
-| `-v, --value STRING` | Ulimit value | Yes | `-v 95` |
+| `-n, --name STRING` | Limit name | Yes | `-n rtprio` |
+| `-v, --value STRING` | Limit value | Yes | `-v 95` |
 
 ### ulimits rm
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
 | `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
-| `-n, --name STRING` | Ulimit name to remove | Yes | `-n rtprio` |
+| `-n, --name STRING` | Name of the limit to remove | Yes | `-n rtprio` |
 
 ### ulimits list
 
@@ -58,167 +58,128 @@ The `ulimits` command allows you to add, remove, or list resource limits on cont
 |------|-------------|----------|---------|
 | `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
 
----
+## Common limits
 
-## Common ulimit names
-
-| Name | Description | SDR Use Case |
-|------|-------------|--------------|
-| `rtprio` | Real-time scheduling priority (0-99) | Enables `chrt` for real-time SDR processing |
-| `memlock` | Max locked memory in bytes (-1 = unlimited) | Prevents sample buffers from being swapped |
+| Name | What it controls | Why it matters for SDR |
+|------|------------------|------------------------|
+| `rtprio` | Real-time scheduling priority (0-99) | Lets you run SDR processing with real-time priority (`chrt`) |
+| `memlock` | Maximum locked memory in bytes (-1 = unlimited) | Keeps sample buffers in RAM instead of swap |
 | `nice` | Nice priority range (40 allows nice -20) | Higher process priority |
-| `nofile` | Max open file descriptors | Multiple SDR devices or large file operations |
-| `nproc` | Max number of processes | Parallel processing pipelines |
-
----
+| `nofile` | Maximum open file descriptors | Several SDR devices, or large file operations |
+| `nproc` | Maximum number of processes | Parallel processing pipelines |
 
 ## Value format
 
-Ulimit values can be specified in two formats:
-
-| Format | Description | Example |
-|--------|-------------|---------|
-| `value` | Sets both soft and hard limit | `95` |
-| `soft:hard` | Sets soft and hard limits separately | `1024:65536` |
-| `-1` or `unlimited` | Unlimited value | `-1` |
-
----
+| Format | Meaning | Example |
+|--------|---------|---------|
+| `value` | Same soft and hard limit | `95` |
+| `soft:hard` | Separate soft and hard limits | `1024:65536` |
+| `-1` or `unlimited` | No limit | `-1` |
 
 ## Examples
 
-### Basic usage
+### Basic use
 
-**Add rtprio ulimit for real-time scheduling:**
+Allow real-time scheduling:
+
 ```bash
-rfswift ulimits add -c sdr_work -n rtprio -v 95
+rfswift config ulimits add -c sdr_work -n rtprio -v 95
 ```
 
-**Set unlimited memory locking:**
+Allow unlimited locked memory:
+
 ```bash
-rfswift ulimits add -c sdr_work -n memlock -v -1
+rfswift config ulimits add -c sdr_work -n memlock -v -1
 ```
 
-**Set file descriptor limits with soft/hard values:**
+Set separate soft and hard limits for open files:
+
 ```bash
-rfswift ulimits add -c sdr_work -n nofile -v 1024:65536
+rfswift config ulimits add -c sdr_work -n nofile -v 1024:65536
 ```
 
-**List current ulimits:**
+List the current limits, then remove one:
+
 ```bash
-rfswift ulimits list -c sdr_work
+rfswift config ulimits list -c sdr_work
+rfswift config ulimits rm -c sdr_work -n rtprio
 ```
 
-**Remove an ulimit:**
+### Tune a lab for SDR work
+
+Set the three limits SDR tools use, then check them:
+
 ```bash
-rfswift ulimits rm -c sdr_work -n rtprio
+rfswift config ulimits add -c hackrf_work -n rtprio -v 95
+rfswift config ulimits add -c hackrf_work -n memlock -v unlimited
+rfswift config ulimits add -c hackrf_work -n nice -v 40
+rfswift config ulimits list -c hackrf_work
 ```
 
-### Real-World scenarios
+### Fix buffer underruns
 
-**Optimize container for SDR work:**
+Check the limits, add `rtprio` if it is missing, then confirm it from inside the lab (it should print 95):
+
 ```bash
-# Add all SDR-relevant ulimits
-rfswift ulimits add -c hackrf_work -n rtprio -v 95
-rfswift ulimits add -c hackrf_work -n memlock -v unlimited
-rfswift ulimits add -c hackrf_work -n nice -v 40
-
-# Verify configuration
-rfswift ulimits list -c hackrf_work
-```
-
-**Fix buffer underruns:**
-```bash
-# Check current ulimits
-rfswift ulimits list -c sdr_container
-
-# Add rtprio if missing
-rfswift ulimits add -c sdr_container -n rtprio -v 95
-
-# Verify inside container
+rfswift config ulimits list -c sdr_container
+rfswift config ulimits add -c sdr_container -n rtprio -v 95
 rfswift container shell -c sdr_container -e "ulimit -r"
-# Should output: 95
 ```
 
-**Use real-time scheduling inside container:**
+### Run a tool with real-time priority
+
+Once `rtprio` is set, enter the lab and start the tool with a real-time or raised priority:
+
 ```bash
-# After setting rtprio ulimit
 rfswift container shell -c sdr_container
 
-# Inside container, run SDR tool with real-time priority
+# Inside the container, run SDR tool with real-time priority
 chrt -f 50 rtl_sdr -f 433920000 -s 2048000 - | ...
 
 # Or with higher nice priority
 nice -n -10 gqrx
 ```
 
----
-
 ## Troubleshooting
 
-### Ulimit not taking effect
+### A limit is set but has no effect
 
-**Problem:** Ulimit set but not working inside container
+Check that the limit is set, then look at it from inside the lab. `rtprio` also needs the `SYS_NICE` capability. `realtime enable` sets everything at once:
 
-**Solutions:**
 ```bash
-# Verify ulimit is set
-rfswift ulimits list -c container
-
-# Check inside container
+rfswift config ulimits list -c container
 rfswift container shell -c container -e "ulimit -a"
-
-# For rtprio, also need SYS_NICE capability
-rfswift capabilities add -c container -p SYS_NICE
-
-# Or use realtime mode which sets everything
+rfswift config capabilities add -c container -p SYS_NICE
 rfswift realtime enable -c container
 ```
 
-### Permission denied with chrt
+### `chrt: failed to set pid 0's policy: Operation not permitted`
 
-**Problem:** `chrt: failed to set pid 0's policy: Operation not permitted`
+Real-time scheduling needs both the `rtprio` limit **and** the `SYS_NICE` capability. Add both, or enable realtime mode:
 
-**Solutions:**
 ```bash
-# Need both rtprio ulimit AND SYS_NICE capability
-rfswift ulimits add -c container -n rtprio -v 95
-rfswift capabilities add -c container -p SYS_NICE
-
-# Or simply enable realtime mode
+rfswift config ulimits add -c container -n rtprio -v 95
+rfswift config capabilities add -c container -p SYS_NICE
 rfswift realtime enable -c container
 ```
 
-### Container recreation
+### The container restarts
 
-**Note:** Modifying ulimits requires container recreation. The container will be stopped, removed, and recreated with the new settings. Your data in mounted volumes is preserved, but uncommitted changes inside the container may be lost.
+Changing a limit always restarts the container. On Linux Docker the change is applied in place; on Podman (or with `--recreate`) the container is committed and re-created. Files in mounted volumes and in the workspace are kept. To be safe, commit important changes first:
 
 ```bash
-# Commit important changes before modifying ulimits
 rfswift container commit -c container -i my_image:backup
-
-# Then modify ulimits
-rfswift ulimits add -c container -n rtprio -v 95
+rfswift config ulimits add -c container -n rtprio -v 95
 ```
 
----
+## Good to know
 
-## Related commands
+- To set limits for every container on a host, you can also configure default ulimits in `/etc/docker/daemon.json`. See [realtime](/docs/commands/realtime).
+- You can set limits when creating a lab with `rfswift container create --ulimits`.
 
-- [`realtime`](/docs/commands/realtime) - Quick setup for all SDR-related ulimits
-- [`capabilities`](/docs/commands/capabilities) - Manage container capabilities
-- [`exec`](/docs/commands/exec) - Test ulimits inside container
-- [`run`](/docs/commands/run) - Create container with ulimits using `--ulimits` flag
+## Related
 
----
-
-{{< callout >}}
-**Quick Setup**: For RF work, use `rfswift realtime enable -c container` instead of setting individual ulimits. It configures rtprio, memlock, nice, and SYS_NICE capability automatically!
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Container Restart**: Changing ulimits requires recreating the container. Commit your work first with `rfswift container commit` if you have uncommitted changes!
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Host Alternative**: You can also configure default ulimits in `/etc/docker/daemon.json` to apply to all containers on the host. See the [realtime documentation](/docs/commands/realtime) for details.
-{{< /callout >}}
+- [realtime](/docs/commands/realtime): all SDR limits in one command
+- [config capabilities](/docs/commands/capabilities)
+- [container shell](/docs/commands/exec): check limits inside a container
+- [container create](/docs/commands/run): the `--ulimits` flag

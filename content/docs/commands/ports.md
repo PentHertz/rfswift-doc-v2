@@ -7,243 +7,183 @@ description: "Expose and publish ports on an existing container."
 weight: 45
 ---
 
-{{< callout type="info" >}}
-**RF Swift v4**: this group lives under the `config` parent as `rfswift config ports` and remains available as `rfswift ports`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
-{{< /callout >}}
+`rfswift config ports` opens or closes network ports on a container you already created. Use it to reach a service running in the container (a web interface, an API, a collector) from your computer or from other containers.
 
-Dynamically manage port bindings on running containers.
+The most common use publishes a web interface on your computer only:
+
+```bash
+rfswift config ports bind -c web -b "127.0.0.1:8080:80/tcp"
+```
+
+Publishing ports matters when the container uses an isolated network such as `bridge` or `nat`. The default `host` mode has no network isolation, so a service in the container already uses your computer's ports. See the [network modes](/docs/commands/run/#network-modes--t---network).
+
+{{< callout type="info" title="What happens when you apply a change" >}}
+The container restarts, so save your work first. On Linux with Docker, the change is applied in place after one `sudo` prompt. On Podman, the container is committed and created again; add `--recreate` to use that method on Docker too. The shorter spelling `rfswift ports` also works. See [config](/docs/commands/config).
+{{< /callout >}}
 
 ## Synopsis
 
+Expose a port to other containers, or stop exposing it:
+
 ```bash
-# Expose a port on a container
-rfswift ports expose -c CONTAINER -p "PORT/PROTOCOL"
-
-# Remove an exposed port
-rfswift ports unexpose -c CONTAINER -p "PORT/PROTOCOL"
-
-# Bind a container port to a host port
-rfswift ports bind -c CONTAINER -b "HOST_PORT:CONTAINER_PORT/PROTOCOL"
-
-# Unbind a port binding
-rfswift ports unbind -c CONTAINER -b "HOST_PORT:CONTAINER_PORT/PROTOCOL"
+rfswift config ports expose   -c CONTAINER -p "PORT/PROTOCOL"
+rfswift config ports unexpose -c CONTAINER -p "PORT/PROTOCOL"
 ```
 
-The `ports` command allows you to expose ports, manage port bindings, and remove port mappings for containers without restarting them. This enables dynamic port management for network services.
+Publish a container port on a host port, or remove it:
 
----
+```bash
+rfswift config ports bind   -c CONTAINER -b "HOST_PORT:CONTAINER_PORT/PROTOCOL"
+rfswift config ports unbind -c CONTAINER -b "HOST_PORT:CONTAINER_PORT/PROTOCOL"
+```
 
 ## Subcommands
 
-### ports expose
+### expose and unexpose
 
-Expose a port on a container, making it available to other containers on the same network.
+`expose` makes a port available to other containers on the same network. `unexpose` removes it.
 
-**Options:**
+| Flag | What it does | Required | Example |
+|------|--------------|----------|---------|
+| `-c, --container STRING` | The container, by name or ID | Yes | `-c my_container` |
+| `-p, --port STRING` | The port and protocol | Yes | `-p "8080/tcp"` |
 
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
-| `-p, --port STRING` | Port to expose (e.g., `8080/tcp`) | Yes | `-p "8080/tcp"` |
+### bind and unbind
 
-### ports unexpose
+`bind` publishes a container port on a port of your computer, so you can reach the service from the host. `unbind` removes it.
 
-Remove an exposed port from a container.
+| Flag | What it does | Required | Example |
+|------|--------------|----------|---------|
+| `-c, --container STRING` | The container, by name or ID | Yes | `-c my_container` |
+| `-b, --binding STRING` | The binding, see the format below | Yes | `-b "8080:80/tcp"` |
 
-**Options:**
-
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
-| `-p, --port STRING` | Port to remove | Yes | `-p "8080/tcp"` |
-
-### ports bind
-
-Bind a container port to a host port, making the service accessible from the host.
-
-**Options:**
-
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
-| `-b, --binding STRING` | Port binding specification | Yes | `-b "8080:80/tcp"` |
-
-### ports unbind
-
-Remove a port binding from a container.
-
-**Options:**
-
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
-| `-b, --binding STRING` | Port binding specification | Yes | `-b "8080:80/tcp"` |
-
----
-
-## Port binding format
-
-### Binding syntax
-
-Port bindings follow this format:
+## Binding format
 
 ```
 [host_ip:]host_port:container_port/protocol
 ```
 
-**Components:**
-- **host_ip**: Host IP to bind to (optional, defaults to 0.0.0.0)
-- **host_port**: Port on host system
-- **container_port**: Port inside container
-- **protocol**: `tcp` or `udp`
+- **host_ip** (optional): the address on your computer to listen on. The default is `0.0.0.0`, which means every network interface.
+- **host_port**: the port on your computer.
+- **container_port**: the port inside the container.
+- **protocol**: `tcp`, `udp` or `sctp`. Always write it; a service that needs two protocols needs one binding for each.
 
-### Binding examples
+Examples:
 
-**Basic TCP port:**
 ```bash
 "8080:80/tcp"           # Host port 8080 -> Container port 80 (TCP)
-```
-
-**UDP port:**
-```bash
 "5000:5000/udp"         # Host port 5000 -> Container port 5000 (UDP)
-```
-
-**Same port both sides:**
-```bash
 "3000:3000/tcp"         # Port 3000 on both sides
-```
-
-**Specific host IP:**
-```bash
 "127.0.0.1:8080:80/tcp" # Only accessible from localhost
 ```
 
-**Multiple port mappings:**
+Several services at once, one binding each:
+
 ```bash
 "8080:80/tcp"           # HTTP
 "8443:443/tcp"          # HTTPS
 "3000:3000/udp"         # Custom UDP service
 ```
 
----
-
 ## Examples
 
-### Basic usage
+Expose a port to other containers:
 
-**Expose a port:**
 ```bash
-rfswift ports expose -c web_server -p "80/tcp"
+rfswift config ports expose -c web_server -p "80/tcp"
 ```
 
-**Bind port to host:**
+Publish it on port 8080 of your computer:
+
 ```bash
-rfswift ports bind -c web_server -b "8080:80/tcp"
+rfswift config ports bind -c web_server -b "8080:80/tcp"
 ```
 
-**Unbind port:**
+Remove the published port, then stop exposing it:
+
 ```bash
-rfswift ports unbind -c web_server -b "8080:80/tcp"
+rfswift config ports unbind -c web_server -b "8080:80/tcp"
+rfswift config ports unexpose -c web_server -p "80/tcp"
 ```
 
-**Remove exposed port:**
-```bash
-rfswift ports unexpose -c web_server -p "80/tcp"
-```
+### A web server on a custom port
 
-### Real-World scenarios
+Publish port 80 of the container on port 8080, start a web server inside, then open `http://localhost:8080` on your computer:
 
-**Web server on custom port:**
 ```bash
-# Start container
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n web_service
+rfswift config ports bind -c web_service -b "8080:80/tcp"
 
-# Add web server port
-rfswift ports bind -c web_service -b "8080:80/tcp"
-
-# Start web server
 rfswift container shell -c web_service
 python3 -m http.server 80
 exit
-
-# Access from host: http://localhost:8080
 ```
 
-**Multiple service ports:**
+### Several services
+
+Publish HTTP, HTTPS and a metrics port, and expose the same ports to other containers:
+
 ```bash
-# API server container
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n api_server
 
-# Bind HTTP and HTTPS
-rfswift ports bind -c api_server -b "8080:80/tcp"
-rfswift ports bind -c api_server -b "8443:443/tcp"
+rfswift config ports bind -c api_server -b "8080:80/tcp"
+rfswift config ports bind -c api_server -b "8443:443/tcp"
+rfswift config ports bind -c api_server -b "9090:9090/tcp"
 
-# Add metrics port
-rfswift ports bind -c api_server -b "9090:9090/tcp"
-
-# Expose the ports for inter-container communication
-rfswift ports expose -c api_server -p "80/tcp"
-rfswift ports expose -c api_server -p "443/tcp"
-rfswift ports expose -c api_server -p "9090/tcp"
+rfswift config ports expose -c api_server -p "80/tcp"
+rfswift config ports expose -c api_server -p "443/tcp"
+rfswift config ports expose -c api_server -p "9090/tcp"
 ```
 
-**UDP service:**
+### A UDP service
+
+Publish a UDP port, then start a NetFlow collector on it:
+
 ```bash
-# Network analysis container
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n netflow
+rfswift config ports bind -c netflow -b "2055:2055/udp"
 
-# Add UDP port for netflow
-rfswift ports bind -c netflow -b "2055:2055/udp"
-
-# Start netflow collector
 rfswift container shell -c netflow
 nfcapd -p 2055
 exit
 ```
 
-**Development server:**
+### A development setup
+
+Publish the ports of a front-end server, an API backend and LiveReload:
+
 ```bash
-# Development container
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n dev_env
-
-# Add development ports
-rfswift ports bind -c dev_env -b "3000:3000/tcp"  # React dev server
-rfswift ports bind -c dev_env -b "5000:5000/tcp"  # API backend
-rfswift ports bind -c dev_env -b "35729:35729/tcp" # LiveReload
+rfswift config ports bind -c dev_env -b "3000:3000/tcp"  # React dev server
+rfswift config ports bind -c dev_env -b "5000:5000/tcp"  # API backend
+rfswift config ports bind -c dev_env -b "35729:35729/tcp" # LiveReload
 ```
 
-**Temporary port for testing:**
+### A temporary port for testing
+
+Publish a port, test it, and remove it when you are done:
+
 ```bash
-# Test container
 rfswift container create -i penthertz/rfswift_resolute:sdr_full -n test_service
-
-# Bind port temporarily
-rfswift ports bind -c test_service -b "9999:80/tcp"
-
-# Run tests
+rfswift config ports bind -c test_service -b "9999:80/tcp"
 curl http://localhost:9999
-
-# Remove when done
-rfswift ports unbind -c test_service -b "9999:80/tcp"
+rfswift config ports unbind -c test_service -b "9999:80/tcp"
 ```
 
-**Change port mapping:**
+### Moving a service to another port
+
+Remove the old binding and add the new one. The service is then on port 8081:
+
 ```bash
-# Switch from port 8080 to 8081
-rfswift ports unbind -c service -b "8080:80/tcp"
-rfswift ports bind -c service -b "8081:80/tcp"
-
-# Now accessible on port 8081
+rfswift config ports unbind -c service -b "8080:80/tcp"
+rfswift config ports bind -c service -b "8081:80/tcp"
 ```
-
----
 
 ## Common port numbers
 
-### Standard ports
+### Standard services
 
-| Service | Port | Protocol | Use Case |
+| Service | Port | Protocol | Used for |
 |---------|------|----------|----------|
 | **HTTP** | 80 | TCP | Web servers |
 | **HTTPS** | 443 | TCP | Secure web servers |
@@ -253,25 +193,25 @@ rfswift ports bind -c service -b "8081:80/tcp"
 | **DNS** | 53 | TCP/UDP | Domain name service |
 | **MySQL** | 3306 | TCP | Database |
 | **PostgreSQL** | 5432 | TCP | Database |
-| **Redis** | 6379 | TCP | Cache/database |
+| **Redis** | 6379 | TCP | Cache or database |
 | **MongoDB** | 27017 | TCP | Database |
 
-### Development ports
+### Development servers
 
-| Service | Port | Use Case |
+| Service | Port | Used for |
 |---------|------|----------|
 | **React Dev** | 3000 | React development server |
 | **Node.js** | 3000, 8000 | Node applications |
-| **Python HTTP** | 8000 | Python SimpleHTTPServer |
+| **Python HTTP** | 8000 | Python's built-in web server |
 | **Flask** | 5000 | Flask development |
 | **Django** | 8000 | Django development |
-| **LiveReload** | 35729 | Live reload/hot reload |
+| **LiveReload** | 35729 | Live reload |
 | **Webpack** | 8080 | Webpack dev server |
 | **Vite** | 5173 | Vite dev server |
 
-### RF Swift common ports
+### Ports often used by tool interfaces
 
-| Service | Port | Use Case |
+| Service | Port | Used for |
 |---------|------|----------|
 | **Web UI** | 8080 | Web interfaces |
 | **API** | 8000 | REST APIs |
@@ -279,163 +219,115 @@ rfswift ports bind -c service -b "8081:80/tcp"
 | **Metrics** | 9090 | Prometheus metrics |
 | **Status** | 8081 | Health checks |
 
----
+## Security
 
-## Security considerations
+### Choose who can reach the port
 
-### Binding to specific IPs
+By default a published port listens on every network interface (`0.0.0.0`), so other machines on your network can reach it:
 
-**Public access (default):**
 ```bash
-# Accessible from anywhere
-rfswift ports bind -c service -b "8080:80/tcp"
-# Binds to 0.0.0.0:8080
+rfswift config ports bind -c service -b "8080:80/tcp"
 ```
 
-**Localhost only:**
+To allow only your own computer, bind to localhost:
+
 ```bash
-# Only accessible from host
-rfswift ports bind -c service -b "127.0.0.1:8080:80/tcp"
-# Binds to 127.0.0.1:8080
+rfswift config ports bind -c service -b "127.0.0.1:8080:80/tcp"
 ```
 
-**Specific network interface:**
+To allow only one network interface, bind to its address:
+
 ```bash
-# Only accessible from specific IP
-rfswift ports bind -c service -b "192.168.1.100:8080:80/tcp"
+rfswift config ports bind -c service -b "192.168.1.100:8080:80/tcp"
 ```
 
-### Port range restrictions
+### Choose the host port
 
-**Safe port ranges:**
+Ports 1024 to 49151 are fine for normal use, and 49152 to 65535 suit temporary services:
+
 ```bash
-# User ports (1024-49151) - Safe for non-root users
-rfswift ports bind -c service -b "8080:80/tcp"
-
-# Dynamic/private ports (49152-65535) - Good for temporary services
-rfswift ports bind -c service -b "50000:80/tcp"
+rfswift config ports bind -c service -b "8080:80/tcp"
+rfswift config ports bind -c service -b "50000:80/tcp"
 ```
 
-**Avoid privileged ports:**
-```bash
-# Privileged ports (<1024) require special capabilities
-# Use higher ports and reverse proxy if needed
-rfswift ports bind -c service -b "8080:80/tcp"  # Good
-# Not: rfswift ports bind -c service -b "80:80/tcp"  # Requires privileges
-```
+{{< callout type="warning" title="Avoid host ports below 1024" >}}
+Host ports below 1024 need special privileges. Use a higher port (8080 instead of 80), and put a reverse proxy in front if you need the standard port.
+{{< /callout >}}
 
----
+```bash
+rfswift config ports bind -c service -b "8080:80/tcp"  # Good
+# Not: rfswift config ports bind -c service -b "80:80/tcp"  # Requires privileges
+```
 
 ## Troubleshooting
 
-### Port already in use
+### “port is already allocated”
 
-**Error:** `port is already allocated`
+Another program already uses that port on your computer. Find it, then either use another port or stop that program:
 
-**Solutions:**
 ```bash
-# Check what's using the port
 netstat -tuln | grep :8080
 lsof -i :8080
-
-# Use different host port
-rfswift ports bind -c service -b "8081:80/tcp"
-
-# Or stop conflicting service
-sudo systemctl stop service-using-8080
-
-# Then bind
-rfswift ports bind -c service -b "8080:80/tcp"
 ```
 
-### Cannot bind to port
-
-**Problem:** Binding fails without clear error
-
-**Solutions:**
 ```bash
-# Check if container is running
+rfswift config ports bind -c service -b "8081:80/tcp"
+```
+
+```bash
+sudo systemctl stop service-using-8080
+rfswift config ports bind -c service -b "8080:80/tcp"
+```
+
+### Binding fails without a clear error
+
+Check that the container is running, use a port above 1024, and look at the firewall:
+
+```bash
 docker ps | grep container_name
-
-# Check permissions for low ports (<1024)
-# Use higher port instead
-rfswift ports bind -c service -b "8080:80/tcp"
-
-# Check firewall rules
+rfswift config ports bind -c service -b "8080:80/tcp"
 sudo iptables -L -n | grep 8080
-
-# Check if port is blocked
 sudo ufw status
 ```
 
-### Service not accessible
+### The port is published but the service does not answer
 
-**Problem:** Port bound but service not accessible
+Test from inside the container first. If it works there, test from your computer, then check the container's network mode and the firewall:
 
-**Solutions:**
 ```bash
-# Check binding was successful in the summary & test from inside container first
 rfswift container shell -c container
 curl localhost:80
 exit
 
-# If works inside, check from host
 curl localhost:8080
 
-# Check container network mode
 docker inspect container | grep -A5 NetworkMode
-
-# Verify firewall
 sudo iptables -L -n
 sudo ufw status
 ```
 
-### Wrong protocol
+### It works over TCP but not UDP (or the reverse)
 
-**Problem:** Service works with TCP but not UDP (or vice versa)
+Bind the protocol the service really uses. Some services, such as DNS, need both:
 
-**Solutions:**
 ```bash
-# Bind correct protocol
-rfswift ports bind -c service -b "5000:5000/udp"
+rfswift config ports bind -c service -b "5000:5000/udp"
 
-# Some services need both
-rfswift ports bind -c service -b "53:53/tcp"
-rfswift ports bind -c service -b "53:53/udp"
+rfswift config ports bind -c service -b "53:53/tcp"
+rfswift config ports bind -c service -b "53:53/udp"
 ```
 
-### Port unbind fails
+### Removing a binding fails
 
-**Problem:** Cannot remove port binding
+Use exactly the same binding string as when you added it. As a last resort, restart the container:
 
-**Solutions:**
 ```bash
-# Use exact binding string that was used to bind
-rfswift ports unbind -c container -b "8080:80/tcp"
-
-# If still fails, may need container restart
-# (as last resort)
+rfswift config ports unbind -c container -b "8080:80/tcp"
 ```
-
----
 
 ## Related commands
 
-- [`run`](/docs/commands/run) - Create containers with initial port bindings
-- [`exec`](/docs/commands/exec) - Access container to test services
-- [`bindings`](/docs/commands/bindings) - Manage volume/device bindings
-- [`last`](/docs/commands/last) - List containers with port information
-
----
-
-{{< callout >}}
-**Dynamic Port Mapping**: The `ports` command enables adding and removing port bindings without restarting containers. Perfect for development when you need to expose services on the fly!
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Privileged Ports**: Ports below 1024 require special privileges. Use ports 1024+ (like 8080 instead of 80) to avoid permission issues. Set up a reverse proxy if you need standard ports.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Protocol Matters**: Always specify the protocol (`/tcp`, `/sctp` or `/udp`) in your binding. Some services need both protocols on the same port - bind each separately!
-{{< /callout >}}
+- [`run`](/docs/commands/run): create containers with published ports from the start
+- [`exec`](/docs/commands/exec): open a shell to test a service
+- [`bindings`](/docs/commands/bindings): folders and devices
+- [`last`](/docs/commands/last): list containers with their ports

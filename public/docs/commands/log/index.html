@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift log · RF Swift</title>
   <meta name="description" content="Record and replay terminal sessions.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/log/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/log/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift log · RF Swift">
   <meta property="og:description" content="Record and replay terminal sessions.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/log/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/log/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,31 +231,26 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift log</h1><p class="doc-lead">Record and replay terminal sessions.</p><p class="doc-meta">Reference · 6 min read · Updated September 27, 2026</p>
+      <h1>rfswift log</h1><p class="doc-lead">Record and replay terminal sessions.</p><p class="doc-meta">Reference · 6 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift system log</code>. The legacy form <code>rfswift log</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+      <p><code>rfswift log</code> records your terminal sessions and plays them back. Use it to keep evidence of what you did during an assessment, to write tutorials, or to show a colleague how to reproduce a problem. Recordings use <code>asciinema</code> (or the <code>script</code> command as a fallback), and assessment reports list them automatically.</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log start</span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift system log</code>. The legacy form <code>rfswift log</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
-<p>Record and replay terminal sessions for documentation and training.</p>
+<div class="admonition admonition-warning" role="note"><p>A recording captures everything shown in the terminal, including passwords and API keys if they appear on screen. Review a recording before you share it.</p>
+</div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Start recording a session</span>
-</span></span><span class="line"><span class="cl">rfswift log start <span class="o">[</span>-o OUTPUT_FILE<span class="o">]</span> <span class="o">[</span>--use-script<span class="o">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Stop recording</span>
-</span></span><span class="line"><span class="cl">rfswift log stop
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Replay a recorded session</span>
-</span></span><span class="line"><span class="cl">rfswift log replay -i INPUT_FILE <span class="o">[</span>-s SPEED<span class="o">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># List recorded sessions</span>
-</span></span><span class="line"><span class="cl">rfswift log list <span class="o">[</span>--dir DIRECTORY<span class="o">]</span></span></span></code></pre></div></div>
-<p>The <code>log</code> command records RF Swift terminal sessions using <code>asciinema</code> (or the <code>script</code> command as fallback). This is perfect for creating tutorials, documenting workflows, or sharing demonstrations.</p>
-<hr>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log start <span class="o">[</span>-o OUTPUT_FILE<span class="o">]</span> <span class="o">[</span>--use-script<span class="o">]</span>   <span class="c1"># start recording</span>
+</span></span><span class="line"><span class="cl">rfswift log stop                                    <span class="c1"># stop recording</span>
+</span></span><span class="line"><span class="cl">rfswift log replay -i INPUT_FILE <span class="o">[</span>-s SPEED<span class="o">]</span>         <span class="c1"># play a recording</span>
+</span></span><span class="line"><span class="cl">rfswift log list <span class="o">[</span>--dir DIRECTORY<span class="o">]</span>                  <span class="c1"># list recordings</span></span></span></code></pre></div></div>
+<p>You can also record a lab session directly: add <code>--record</code> to <code>rfswift container create</code> or <code>rfswift container shell</code>.</p>
 <h2 id="subcommands">Subcommands<a class="anchor" href="#subcommands" aria-label="Link to this section"></a></h2>
 <h3 id="log-start">log start<a class="anchor" href="#log-start" aria-label="Link to this section"></a></h3>
-<p>Start recording a terminal session.</p>
-<p><strong>Options:</strong></p>
+<p>Starts recording the terminal.</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -283,13 +264,13 @@
   <tbody>
     <tr>
       <td><code>-o, --output STRING</code></td>
-      <td>Output file path</td>
+      <td>Output file</td>
       <td>Auto-generated</td>
       <td><code>-o my-session.cast</code></td>
     </tr>
     <tr>
       <td><code>--use-script</code></td>
-      <td>Force use of <code>script</code> command</td>
+      <td>Use the <code>script</code> command instead of asciinema</td>
       <td>false</td>
       <td><code>--use-script</code></td>
     </tr>
@@ -297,17 +278,12 @@
 </table>
 </div>
 <h3 id="log-stop">log stop<a class="anchor" href="#log-stop" aria-label="Link to this section"></a></h3>
-<p>Stop the currently active recording session. The terminal title is restored to its default.</p>
-<p><strong>No options required.</strong></p>
+<p>Stops the current recording and restores the terminal title. It takes no options.</p>
 <h3 id="log-replay">log replay<a class="anchor" href="#log-replay" aria-label="Link to this section"></a></h3>
-<p>Replay a previously recorded session.</p>
+<p>Plays a recording back. Give the file with <code>-i</code>, or directly as an argument:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log replay <span class="o">[</span>-i INPUT_FILE<span class="o">]</span> <span class="o">[</span>-s SPEED<span class="o">]</span>
-</span></span><span class="line"><span class="cl">rfswift log replay <span class="o">[</span>FILE<span class="o">]</span></span></span></code></pre></div></div>
-<p><strong>Positional argument</strong>: The file path can be passed as a positional argument instead of <code>-i</code>:</p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log replay session.cast</span></span></code></pre></div></div>
-<p><strong>Options:</strong></p>
+</span></span><span class="line"><span class="cl">rfswift log replay session.cast</span></span></code></pre></div></div>
 <div class="table-wrap">
 <table>
   <thead>
@@ -321,7 +297,7 @@
   <tbody>
     <tr>
       <td><code>-i, --input STRING</code></td>
-      <td>Input file to replay</td>
+      <td>File to replay</td>
       <td>None</td>
       <td><code>-i session.cast</code></td>
     </tr>
@@ -334,11 +310,9 @@
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Interactive Picker</strong>: When run without <code>-i</code> and without a positional argument in an interactive terminal, RF Swift scans for recording files and displays a scrollable picker showing the file path, recording tool (<code>asciinema</code> or <code>script</code>), file size in KB, and modification date.</p>
-</div>
+<p>In an interactive terminal, running it without a file shows a list of your recordings to pick from, with each file&rsquo;s path, recording tool (<code>asciinema</code> or <code>script</code>), size in KB and date.</p>
 <h3 id="log-list">log list<a class="anchor" href="#log-list" aria-label="Link to this section"></a></h3>
-<p>List all recorded session files in a directory.</p>
-<p><strong>Options:</strong></p>
+<p>Lists the recordings in a folder.</p>
 <div class="table-wrap">
 <table>
   <thead>
@@ -352,14 +326,14 @@
   <tbody>
     <tr>
       <td><code>--dir STRING</code></td>
-      <td>Directory to search</td>
-      <td>Current directory</td>
+      <td>Folder to search</td>
+      <td>Current folder</td>
       <td><code>--dir ~/recordings</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<p>The output is displayed as a styled TUI table:</p>
+<p>The list is shown as a table:</p>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>Session Recordings
 ┌───┬──────────────────────────────────────────┬───────────┬─────────┬──────────────────┐
@@ -369,118 +343,101 @@
 │ 2 │ rfswift-exec-debug-20250116-0900.cast    │ asciinema │ 12.1 KB │ 2025-01-16 09:00 │
 │ 3 │ rfswift-session-20250117-1100.cast       │ asciinema │ 45.3 KB │ 2025-01-17 11:00 │
 └───┴──────────────────────────────────────────┴───────────┴─────────┴──────────────────┘</code></pre></div>
-<hr>
+<h2 id="while-a-recording-runs">While a recording runs<a class="anchor" href="#while-a-recording-runs" aria-label="Link to this section"></a></h2>
+<ul>
+<li>The terminal title changes to <code>⏺ REC | RF Swift</code>, as a reminder.</li>
+<li>The environment variable <code>RFSWIFT_RECORDING=1</code> is set, so scripts can tell that the session is being recorded.</li>
+</ul>
+<p>Without <code>-o</code>, the file name depends on how the recording started:</p>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Started with</th>
+      <th>File name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>log start</code></td>
+      <td><code>rfswift-session-{YYYYMMDD-HHMMSS}.cast</code></td>
+    </tr>
+    <tr>
+      <td><code>container create --record</code></td>
+      <td><code>rfswift-run-{container_name}-{YYYYMMDD-HHMMSS}.cast</code></td>
+    </tr>
+    <tr>
+      <td><code>container shell --record</code></td>
+      <td><code>rfswift-exec-{container_name}-{YYYYMMDD-HHMMSS}.cast</code></td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Start recording:</strong></p>
+<h3 id="basic-use">Basic use<a class="anchor" href="#basic-use" aria-label="Link to this section"></a></h3>
+<p>Start a recording (RF Swift prints the file name):</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log start
 </span></span><span class="line"><span class="cl"><span class="c1"># Recording started: rfswift-session-20250112-143015.cast</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Terminal title changes to: ⏺ REC | RF Swift</span></span></span></code></pre></div></div>
-<p><strong>Auto-generated filenames:</strong> When <code>-o</code> is omitted, the filename follows these patterns depending on context:</p>
-<ul>
-<li><code>log start</code>: <code>rfswift-session-{YYYYMMDD-HHMMSS}.cast</code></li>
-<li><code>run --record</code>: <code>rfswift-run-{container_name}-{YYYYMMDD-HHMMSS}.cast</code></li>
-<li><code>exec --record</code>: <code>rfswift-exec-{container_name}-{YYYYMMDD-HHMMSS}.cast</code></li>
-</ul>
-<p><strong>Recording indicator:</strong> During recording, the terminal title is set to <code>⏺ REC | RF Swift</code> as a visual reminder. The environment variable <code>RFSWIFT_RECORDING=1</code> is also set, allowing scripts to detect when a session is being recorded.</p>
-<p><strong>Start recording with custom filename:</strong></p>
+<p>Record to a file name you choose, then stop:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log start -o tutorial-wifi-analysis.cast</span></span></code></pre></div></div>
-<p><strong>Stop recording:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log start -o tutorial-wifi-analysis.cast
+</span></span><span class="line"><span class="cl">rfswift log stop</span></span></code></pre></div></div>
+<p>Replay it at normal speed, then twice as fast:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log stop</span></span></code></pre></div></div>
-<p><strong>Replay a session:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log replay -i tutorial-wifi-analysis.cast
+</span></span><span class="line"><span class="cl">rfswift log replay -i tutorial-wifi-analysis.cast -s 2.0</span></span></code></pre></div></div>
+<p>List the recordings here, or in another folder:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log replay -i tutorial-wifi-analysis.cast</span></span></code></pre></div></div>
-<p><strong>Replay at 2x speed:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log list
+</span></span><span class="line"><span class="cl">rfswift log list --dir ~/rfswift-tutorials</span></span></code></pre></div></div>
+<h3 id="record-a-tutorial">Record a tutorial<a class="anchor" href="#record-a-tutorial" aria-label="Link to this section"></a></h3>
+<p>Start recording, go through the steps in a lab, stop, and replay to check:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log replay -i tutorial-wifi-analysis.cast -s 2.0</span></span></code></pre></div></div>
-<p><strong>List all recordings:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log list</span></span></code></pre></div></div>
-<p><strong>List recordings in specific directory:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log list --dir ~/rfswift-tutorials</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Create a tutorial:</strong></p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Start recording</span>
-</span></span><span class="line"><span class="cl">rfswift log start -o sdr-tutorial-basics.cast
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log start -o sdr-tutorial-basics.cast
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Perform tutorial steps</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i penthertz/rfswift_resolute:sdr_full -n tutorial
 </span></span><span class="line"><span class="cl">rfswift container shell -c tutorial
 </span></span><span class="line"><span class="cl">rtl_test -t
 </span></span><span class="line"><span class="cl"><span class="c1"># ... demonstrate features ...</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Stop recording</span>
 </span></span><span class="line"><span class="cl">rfswift log stop
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Replay to verify</span>
 </span></span><span class="line"><span class="cl">rfswift log replay -i sdr-tutorial-basics.cast</span></span></code></pre></div></div>
-<p><strong>Document a bug:</strong></p>
+<h3 id="record-a-bug">Record a bug<a class="anchor" href="#record-a-bug" aria-label="Link to this section"></a></h3>
+<p>Record yourself reproducing the problem, then share the <code>.cast</code> file with your team:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Record the problem</span>
-</span></span><span class="line"><span class="cl">rfswift log start -o bug-report-issue-123.cast
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log start -o bug-report-issue-123.cast
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Reproduce the issue</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c production
 </span></span><span class="line"><span class="cl"><span class="c1"># ... reproduce bug ...</span>
 </span></span><span class="line"><span class="cl"><span class="nb">exit</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Stop recording</span>
-</span></span><span class="line"><span class="cl">rfswift log stop
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Share bug-report-issue-123.cast with team</span></span></span></code></pre></div></div>
-<hr>
-<h2 id="recording-format">Recording format<a class="anchor" href="#recording-format" aria-label="Link to this section"></a></h2>
-<h3 id="asciinema-format-cast">Asciinema format (.cast)<a class="anchor" href="#asciinema-format-cast" aria-label="Link to this section"></a></h3>
-<p>By default, RF Swift uses asciinema format, which records:</p>
-<ul>
-<li>Terminal output with timing information</li>
-<li>Exact keystroke timing</li>
-<li>Terminal dimensions</li>
-<li>Environment metadata</li>
-</ul>
-<p><strong>Advantages:</strong></p>
-<ul>
-<li>Compact file size</li>
-<li>Precise timing reproduction</li>
-<li>Web-embeddable</li>
-<li>Editable timing</li>
-</ul>
-<p><strong>Example .cast file:</strong></p>
+</span></span><span class="line"><span class="cl">rfswift log stop</span></span></code></pre></div></div>
+<h2 id="recording-formats">Recording formats<a class="anchor" href="#recording-formats" aria-label="Link to this section"></a></h2>
+<h3 id="asciinema-cast-the-default">asciinema (.cast), the default<a class="anchor" href="#asciinema-cast-the-default" aria-label="Link to this section"></a></h3>
+<p>An asciinema recording keeps the terminal output with its timing, the timing of each keystroke, the terminal size and some environment details. The files are small, replay with exact timing, can be embedded in web pages, and their timing can be edited.</p>
+<p>A <code>.cast</code> file looks like this:</p>
 <div class="code">
   <div class="code-bar"><span>json</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span><span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nt">&#34;width&#34;</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span> <span class="nt">&#34;height&#34;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="nt">&#34;timestamp&#34;</span><span class="p">:</span> <span class="mi">1704981234</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mf">0.123456</span><span class="p">,</span> <span class="s2">&#34;o&#34;</span><span class="p">,</span> <span class="s2">&#34;$ rfswift container create -i sdr_full -n demo\r\n&#34;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mf">1.234567</span><span class="p">,</span> <span class="s2">&#34;o&#34;</span><span class="p">,</span> <span class="s2">&#34;Container started: demo\r\n&#34;</span><span class="p">]</span></span></span></code></pre></div></div>
-<h3 id="script-format-fallback">Script format (fallback)<a class="anchor" href="#script-format-fallback" aria-label="Link to this section"></a></h3>
-<p>When asciinema is not available, RF Swift falls back to the <code>script</code> command:</p>
-<p><strong>Use <code>--use-script</code> flag to force:</strong></p>
+<h3 id="script-the-fallback">script, the fallback<a class="anchor" href="#script-the-fallback" aria-label="Link to this section"></a></h3>
+<p>When asciinema isn&rsquo;t available, RF Swift uses the <code>script</code> command instead. To use it on purpose:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log start --use-script -o session.txt</span></span></code></pre></div></div>
-<hr>
-<h2 id="playback-control">Playback control<a class="anchor" href="#playback-control" aria-label="Link to this section"></a></h2>
-<h3 id="speed-control">Speed control<a class="anchor" href="#speed-control" aria-label="Link to this section"></a></h3>
+<h2 id="playback">Playback<a class="anchor" href="#playback" aria-label="Link to this section"></a></h2>
+<h3 id="speed">Speed<a class="anchor" href="#speed" aria-label="Link to this section"></a></h3>
+<p><code>-s</code> sets the speed: above 1 is faster, below 1 is slower.</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Normal speed (1.0x)</span>
-</span></span><span class="line"><span class="cl">rfswift log replay -i session.cast
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Fast playback (2x)</span>
-</span></span><span class="line"><span class="cl">rfswift log replay -i session.cast -s 2.0
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Very fast (3x)</span>
-</span></span><span class="line"><span class="cl">rfswift log replay -i session.cast -s 3.0
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Slow playback (0.5x)</span>
-</span></span><span class="line"><span class="cl">rfswift log replay -i session.cast -s 0.5
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Very slow (0.25x)</span>
-</span></span><span class="line"><span class="cl">rfswift log replay -i session.cast -s 0.25</span></span></code></pre></div></div>
-<h3 id="interactive-playback">Interactive playback<a class="anchor" href="#interactive-playback" aria-label="Link to this section"></a></h3>
-<p>If using asciinema format, you can use asciinema player for interactive control:</p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift log replay -i session.cast            <span class="c1"># normal speed</span>
+</span></span><span class="line"><span class="cl">rfswift log replay -i session.cast -s 2.0     <span class="c1"># 2x</span>
+</span></span><span class="line"><span class="cl">rfswift log replay -i session.cast -s 3.0     <span class="c1"># 3x</span>
+</span></span><span class="line"><span class="cl">rfswift log replay -i session.cast -s 0.5     <span class="c1"># half speed</span>
+</span></span><span class="line"><span class="cl">rfswift log replay -i session.cast -s 0.25    <span class="c1"># quarter speed</span></span></span></code></pre></div></div>
+<h3 id="pause-and-step-with-asciinema">Pause and step with asciinema<a class="anchor" href="#pause-and-step-with-asciinema" aria-label="Link to this section"></a></h3>
+<p>With the asciinema player you can pause and step through a recording:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install asciinema</span>
 </span></span><span class="line"><span class="cl">pip install asciinema
@@ -492,9 +449,9 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Space - Pause/Resume</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># . - Step forward</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Ctrl+C - Exit</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="sharing-recordings">Sharing recordings<a class="anchor" href="#sharing-recordings" aria-label="Link to this section"></a></h2>
-<h3 id="web-embedding-asciinema">Web embedding (asciinema)<a class="anchor" href="#web-embedding-asciinema" aria-label="Link to this section"></a></h3>
+<h3 id="on-asciinemaorg">On asciinema.org<a class="anchor" href="#on-asciinemaorg" aria-label="Link to this section"></a></h3>
+<p>Upload a recording, then embed it in your documentation with the script tag it gives you:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Upload to asciinema.org</span>
 </span></span><span class="line"><span class="cl">asciinema upload session.cast
@@ -503,14 +460,15 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Embed in documentation:</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># &lt;script src=&#34;https://asciinema.org/a/abc123.js&#34; id=&#34;asciicast-abc123&#34; async&gt;&lt;/script&gt;</span></span></span></code></pre></div></div>
-<h3 id="self-hosting">Self-Hosting<a class="anchor" href="#self-hosting" aria-label="Link to this section"></a></h3>
+<h3 id="on-your-own-web-server">On your own web server<a class="anchor" href="#on-your-own-web-server" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Copy recordings to web server</span>
 </span></span><span class="line"><span class="cl">scp *.cast webserver:/var/www/tutorials/
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Link in documentation</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># https://tutorials.example.com/wifi-setup.cast</span></span></span></code></pre></div></div>
-<h3 id="distribution">Distribution<a class="anchor" href="#distribution" aria-label="Link to this section"></a></h3>
+<h3 id="as-a-training-package">As a training package<a class="anchor" href="#as-a-training-package" aria-label="Link to this section"></a></h3>
+<p>Put the recordings in a folder with a README, and pack it as one archive:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create distribution package</span>
 </span></span><span class="line"><span class="cl">mkdir -p rfswift-training-package
@@ -536,68 +494,38 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Distribute</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Share rfswift-training.tar.gz with team</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="recording-not-starting">Recording not starting<a class="anchor" href="#recording-not-starting" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> <code>rfswift log start</code> fails</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="rfswift-log-start-fails"><code>rfswift log start</code> fails<a class="anchor" href="#rfswift-log-start-fails" aria-label="Link to this section"></a></h3>
+<p>Check that asciinema is installed, install it if needed, or record with <code>script</code> instead:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check if asciinema is installed</span>
-</span></span><span class="line"><span class="cl">which asciinema
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">which asciinema
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Install asciinema</span>
 </span></span><span class="line"><span class="cl">pip install asciinema
 </span></span><span class="line"><span class="cl"><span class="c1"># or</span>
 </span></span><span class="line"><span class="cl">apt-get install asciinema  <span class="c1"># Ubuntu/Debian</span>
 </span></span><span class="line"><span class="cl">brew install asciinema      <span class="c1"># macOS</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use script command as fallback</span>
 </span></span><span class="line"><span class="cl">rfswift log start --use-script</span></span></code></pre></div></div>
-<h3 id="recording-file-not-found">Recording file not found<a class="anchor" href="#recording-file-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Cannot find recorded file</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="you-cant-find-a-recording">You can&rsquo;t find a recording<a class="anchor" href="#you-cant-find-a-recording" aria-label="Link to this section"></a></h3>
+<p>Look in the current folder, list recordings here and in your home folder, or search for recent <code>.cast</code> files:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check current directory</span>
-</span></span><span class="line"><span class="cl">ls -la *.cast
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># List all recordings</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -la *.cast
 </span></span><span class="line"><span class="cl">rfswift log list
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check in home directory</span>
 </span></span><span class="line"><span class="cl">rfswift log list --dir ~
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Find by date</span>
 </span></span><span class="line"><span class="cl">find ~ -name <span class="s2">&#34;*.cast&#34;</span> -mtime -1  <span class="c1"># Last 24 hours</span></span></span></code></pre></div></div>
-<h3 id="replay-not-working">Replay not working<a class="anchor" href="#replay-not-working" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Cannot replay session</p>
-<p><strong>Solutions:</strong></p>
+<h3 id="a-recording-doesnt-replay">A recording doesn&rsquo;t replay<a class="anchor" href="#a-recording-doesnt-replay" aria-label="Link to this section"></a></h3>
+<p>Check that the file exists and isn&rsquo;t damaged, and try playing it with asciinema directly. If recordings keep failing, record with <code>script</code> instead:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check file exists</span>
-</span></span><span class="line"><span class="cl">ls -l session.cast
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify file is not corrupted</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l session.cast
 </span></span><span class="line"><span class="cl">file session.cast
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Try with asciinema directly</span>
 </span></span><span class="line"><span class="cl">asciinema play session.cast
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use script format instead</span>
 </span></span><span class="line"><span class="cl">rfswift log start --use-script</span></span></code></pre></div></div>
-<hr>
-<h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
+<h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/report"><code>report</code></a> - Generate assessment reports (includes recordings automatically)</li>
-<li><a href="/docs/commands/exec"><code>exec</code></a> - Execute commands that can be recorded</li>
-<li><a href="/docs/commands/run"><code>run</code></a> - Run containers to record</li>
-<li><a href="/docs/commands/last"><code>last</code></a> - Show containers for recording sessions</li>
+<li><a href="/docs/commands/report">report</a>: reports list your recordings automatically</li>
+<li><a href="/docs/commands/exec">container shell</a> and <a href="/docs/commands/run">container create</a>: <code>--record</code></li>
+<li><a href="/docs/commands/last">container last</a></li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Perfect for Training</strong>: The <code>log</code> command is ideal for creating training materials. Record once, share with your entire team. Students can replay at their own pace with speed control!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Sensitive Information</strong>: Recordings capture everything displayed in the terminal, including passwords and API keys if shown. Review recordings before sharing publicly!</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Asciinema vs Script</strong>: RF Swift prefers asciinema format (.cast) for its precise timing and web-embeddable features. The script command is available as a fallback with <code>--use-script</code>.</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -627,39 +555,41 @@
         <li><a href="#log-list">log list</a></li>
       </ul>
     </li>
+    <li><a href="#while-a-recording-runs">While a recording runs</a></li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#basic-use">Basic use</a></li>
+        <li><a href="#record-a-tutorial">Record a tutorial</a></li>
+        <li><a href="#record-a-bug">Record a bug</a></li>
       </ul>
     </li>
-    <li><a href="#recording-format">Recording format</a>
+    <li><a href="#recording-formats">Recording formats</a>
       <ul>
-        <li><a href="#asciinema-format-cast">Asciinema format (.cast)</a></li>
-        <li><a href="#script-format-fallback">Script format (fallback)</a></li>
+        <li><a href="#asciinema-cast-the-default">asciinema (.cast), the default</a></li>
+        <li><a href="#script-the-fallback">script, the fallback</a></li>
       </ul>
     </li>
-    <li><a href="#playback-control">Playback control</a>
+    <li><a href="#playback">Playback</a>
       <ul>
-        <li><a href="#speed-control">Speed control</a></li>
-        <li><a href="#interactive-playback">Interactive playback</a></li>
+        <li><a href="#speed">Speed</a></li>
+        <li><a href="#pause-and-step-with-asciinema">Pause and step with asciinema</a></li>
       </ul>
     </li>
     <li><a href="#sharing-recordings">Sharing recordings</a>
       <ul>
-        <li><a href="#web-embedding-asciinema">Web embedding (asciinema)</a></li>
-        <li><a href="#self-hosting">Self-Hosting</a></li>
-        <li><a href="#distribution">Distribution</a></li>
+        <li><a href="#on-asciinemaorg">On asciinema.org</a></li>
+        <li><a href="#on-your-own-web-server">On your own web server</a></li>
+        <li><a href="#as-a-training-package">As a training package</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#recording-not-starting">Recording not starting</a></li>
-        <li><a href="#recording-file-not-found">Recording file not found</a></li>
-        <li><a href="#replay-not-working">Replay not working</a></li>
+        <li><a href="#rfswift-log-start-fails"><code>rfswift log start</code> fails</a></li>
+        <li><a href="#you-cant-find-a-recording">You can&rsquo;t find a recording</a></li>
+        <li><a href="#a-recording-doesnt-replay">A recording doesn&rsquo;t replay</a></li>
       </ul>
     </li>
-    <li><a href="#related-commands">Related commands</a></li>
+    <li><a href="#related">Related</a></li>
   </ul>
 </nav>
   <a class="toc-top" href="#content">Back to top ↑</a>

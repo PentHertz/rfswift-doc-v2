@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift image rm · RF Swift</title>
   <meta name="description" content="Delete a local image.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/delete/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/delete/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift image rm · RF Swift">
   <meta property="og:description" content="Delete a local image.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/delete/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/delete/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,24 +231,25 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift image rm</h1><p class="doc-lead">Delete a local image.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
+      <h1>rfswift image rm</h1><p class="doc-lead">Delete a local image.</p><p class="doc-meta">Reference · 4 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift image rm</code>. The legacy form <code>rfswift delete</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+      <p><code>rfswift image rm</code> deletes an image from your computer. Use it to free disk space, remove old versions, or clean up after testing.</p>
+<p>The most common use deletes one image by its tag:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image rm -i penthertz/rfswift_resolute:old_version</span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p><code>rfswift image rm</code> is the v4 spelling. The older <code>rfswift delete</code> still works, takes the same flags and prints a notice with the new name. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
-<p>Delete Docker images from the local system to free disk space.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image rm -i IMAGE_ID_OR_TAG</span></span></code></pre></div></div>
-<p>The <code>delete</code> command removes Docker images from your local system. This is useful for freeing disk space, removing old versions, or cleaning up after testing.</p>
-<hr>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Required</th>
       <th>Example</th>
     </tr>
@@ -270,82 +257,62 @@
   <tbody>
     <tr>
       <td><code>-i, --image STRING</code></td>
-      <td>Image ID or tag to delete</td>
+      <td>The image ID or tag to delete</td>
       <td>Yes</td>
       <td><code>-i penthertz/rfswift_resolute:old_version</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<div class="admonition admonition-info" role="note"><p><strong>Interactive Picker</strong>: When run without <code>-i</code> in an interactive terminal, RF Swift displays a scrollable image picker listing all local images. A confirmation prompt (<code>Delete image 'name'?</code>) is shown before deletion.</p>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">Pick from a list</p><p>Run it without <code>-i</code> in a terminal and RF Swift shows a scrollable list of your local images. It asks for confirmation (<code>Delete image 'name'?</code>) before deleting.</p>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Delete by tag:</strong></p>
+<p>Delete an image by its tag:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image rm -i penthertz/rfswift_resolute:old_version</span></span></code></pre></div></div>
-<p><strong>Delete by image ID:</strong></p>
+<p>Delete an image by its ID:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image rm -i a1b2c3d4e5f6</span></span></code></pre></div></div>
-<p><strong>Delete custom built image:</strong></p>
+<p>Delete an image you built yourself:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image rm -i my_custom_sdr:v1.0</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Clean up old versions:</strong></p>
+<h3 id="clean-up-old-versions">Clean up old versions<a class="anchor" href="#clean-up-old-versions" aria-label="Link to this section"></a></h3>
+<p>List your images, delete the old one, then check it is gone:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check what you have</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Delete old version</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">local</span>
 </span></span><span class="line"><span class="cl">rfswift image rm -i penthertz/rfswift_resolute:tag
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify deletion</span>
 </span></span><span class="line"><span class="cl">rfswift image local</span></span></code></pre></div></div>
-<p><strong>Remove test images:</strong></p>
+<h3 id="remove-test-images">Remove test images<a class="anchor" href="#remove-test-images" aria-label="Link to this section"></a></h3>
+<p>Delete test images one by one:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># After testing</span>
-</span></span><span class="line"><span class="cl">rfswift image rm -i test_image:experimental
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove multiple test images</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image rm -i test_image:experimental
 </span></span><span class="line"><span class="cl">rfswift image rm -i test_build:v1
 </span></span><span class="line"><span class="cl">rfswift image rm -i test_build:v2
 </span></span><span class="line"><span class="cl">rfswift image rm -i test_build:v3</span></span></code></pre></div></div>
-<p><strong>Free disk space:</strong></p>
+<h3 id="free-disk-space">Free disk space<a class="anchor" href="#free-disk-space" aria-label="Link to this section"></a></h3>
+<p>Compare disk usage before and after deleting a large image:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check current usage</span>
-</span></span><span class="line"><span class="cl">docker system df
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Delete large unused images</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker system df
 </span></span><span class="line"><span class="cl">rfswift image rm -i penthertz/rfswift_resolute:sdr_full_old
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check space recovered</span>
 </span></span><span class="line"><span class="cl">docker system df</span></span></code></pre></div></div>
-<p><strong>Remove failed builds:</strong></p>
+<h3 id="remove-a-failed-build">Remove a failed build<a class="anchor" href="#remove-a-failed-build" aria-label="Link to this section"></a></h3>
+<p>A failed build can leave an image behind. Delete it by tag or by ID:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Build failed, leaving dangling image</span>
-</span></span><span class="line"><span class="cl">rfswift image rm -i failed_build:latest
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or delete by ID</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image rm -i failed_build:latest
 </span></span><span class="line"><span class="cl">rfswift image rm -i a1b2c3d4e5f6</span></span></code></pre></div></div>
-<p><strong>Cleanup after upgrade:</strong></p>
+<h3 id="clean-up-after-an-upgrade">Clean up after an upgrade<a class="anchor" href="#clean-up-after-an-upgrade" aria-label="Link to this section"></a></h3>
+<p>Once a container has moved to a new image, delete the old one:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># After upgrading containers, remove old image</span>
-</span></span><span class="line"><span class="cl">rfswift container upgrade -c my_container -i new_image:v2
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Delete old image</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container upgrade -c my_container -i new_image:v2
 </span></span><span class="line"><span class="cl">rfswift image rm -i old_image:v1</span></span></code></pre></div></div>
-<hr>
 <h2 id="what-gets-deleted">What gets deleted<a class="anchor" href="#what-gets-deleted" aria-label="Link to this section"></a></h2>
-<h3 id="image-deletion-impact">Image deletion impact<a class="anchor" href="#image-deletion-impact" aria-label="Link to this section"></a></h3>
-<p>When you delete an image:</p>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Item</th>
       <th>Deleted?</th>
-      <th>Impact</th>
+      <th>What it means</th>
     </tr>
   </thead>
   <tbody>
@@ -357,155 +324,117 @@
     <tr>
       <td>Image metadata</td>
       <td>Yes</td>
-      <td>Tags, labels removed</td>
+      <td>Tags and labels are removed</td>
     </tr>
     <tr>
-      <td>Containers using image</td>
+      <td>Containers using the image</td>
       <td>No</td>
-      <td>Continue running</td>
+      <td>They are not touched, and while they exist the image cannot be deleted (see below)</td>
     </tr>
     <tr>
-      <td>Exported tar.gz files</td>
+      <td>Exported <code>tar.gz</code> files</td>
       <td>No</td>
-      <td>Remain on disk</td>
+      <td>They stay on disk</td>
     </tr>
     <tr>
-      <td>Custom files you added</td>
+      <td>Files you added to the image</td>
       <td>Yes</td>
-      <td>Gone from image</td>
+      <td>Gone with the image</td>
     </tr>
   </tbody>
 </table>
 </div>
-<h3 id="important-notes">Important notes<a class="anchor" href="#important-notes" aria-label="Link to this section"></a></h3>
-<p><strong>Images in use cannot be deleted:</strong></p>
+<p>Deleting an image is permanent. If you might need it again, back it up first with <code>rfswift image export image</code>; you can bring it back later with <code>rfswift image import</code>.</p>
+<h3 id="images-in-use-cannot-be-deleted">Images in use cannot be deleted<a class="anchor" href="#images-in-use-cannot-be-deleted" aria-label="Link to this section"></a></h3>
+<p>This fails while a container still uses the image:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># This will fail if containers are using the image</span>
-</span></span><span class="line"><span class="cl">rfswift image rm -i penthertz/rfswift_resolute:sdr_full
-</span></span><span class="line"><span class="cl">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image rm -i penthertz/rfswift_resolute:sdr_full
 </span></span><span class="line"><span class="cl"><span class="c1"># Error: image is being used by running container</span></span></span></code></pre></div></div>
-<p><strong>Solution: Stop/remove containers first:</strong></p>
+<p>Stop and remove the containers that use it first, then delete the image:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Stop containers using the image</span>
-</span></span><span class="line"><span class="cl">rfswift container stop -c container_using_image
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove containers</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container stop -c container_using_image
 </span></span><span class="line"><span class="cl">rfswift container rm -c container_using_image
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Now delete image</span>
 </span></span><span class="line"><span class="cl">rfswift image rm -i penthertz/rfswift_resolute:old_version</span></span></code></pre></div></div>
-<hr>
-<h2 id="delete-vs-remove">Delete vs remove<a class="anchor" href="#delete-vs-remove" aria-label="Link to this section"></a></h2>
-<h3 id="comparison">Comparison<a class="anchor" href="#comparison" aria-label="Link to this section"></a></h3>
+<h2 id="image-rm-or-container-rm">image rm or container rm?<a class="anchor" href="#image-rm-or-container-rm" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Command</th>
-      <th>Target</th>
-      <th>What It Deletes</th>
+      <th>Works on</th>
+      <th>What it deletes</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code>delete</code></td>
+      <td><code>rfswift image rm</code> (legacy <code>delete</code>)</td>
       <td>Images</td>
-      <td>Docker images</td>
+      <td>A toolbox image</td>
     </tr>
     <tr>
-      <td><code>remove</code></td>
+      <td><code>rfswift container rm</code> (legacy <code>remove</code>)</td>
       <td>Containers</td>
-      <td>Container instances</td>
+      <td>One lab built from an image</td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="image-in-use">Image in use<a class="anchor" href="#image-in-use" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: image is being used by running container</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="image-is-being-used-by-running-container">“image is being used by running container”<a class="anchor" href="#image-is-being-used-by-running-container" aria-label="Link to this section"></a></h3>
+<p>A container still uses the image. Find those containers, stop and remove them, then delete the image:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Find containers using the image</span>
-</span></span><span class="line"><span class="cl">docker ps -a --filter <span class="nv">ancestor</span><span class="o">=</span><span class="s2">&#34;image:tag&#34;</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker ps -a --filter <span class="nv">ancestor</span><span class="o">=</span><span class="s2">&#34;image:tag&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Stop containers</span>
 </span></span><span class="line"><span class="cl">docker ps -a --filter <span class="nv">ancestor</span><span class="o">=</span><span class="s2">&#34;image:tag&#34;</span> --format <span class="s2">&#34;{{.Names}}&#34;</span> <span class="p">|</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>xargs -r docker stop
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Remove containers</span>
 </span></span><span class="line"><span class="cl">docker ps -a --filter <span class="nv">ancestor</span><span class="o">=</span><span class="s2">&#34;image:tag&#34;</span> --format <span class="s2">&#34;{{.Names}}&#34;</span> <span class="p">|</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>xargs -r docker rm
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Now delete image</span>
 </span></span><span class="line"><span class="cl">rfswift image rm -i image:tag</span></span></code></pre></div></div>
-<h3 id="image-has-dependent-child-images">Image has dependent child images<a class="anchor" href="#image-has-dependent-child-images" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: image has dependent child images</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="image-has-dependent-child-images">“image has dependent child images”<a class="anchor" href="#image-has-dependent-child-images" aria-label="Link to this section"></a></h3>
+<p>Another image was built on top of this one. Either force the deletion with Docker, or delete the child images first and then the parent:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Force delete with docker</span>
-</span></span><span class="line"><span class="cl">docker rmi -f image:tag
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or delete child images first</span>
-</span></span><span class="line"><span class="cl">docker images --filter <span class="s2">&#34;since=image:tag&#34;</span> --format <span class="s2">&#34;{{.Repository}}:{{.Tag}}&#34;</span> <span class="p">|</span> <span class="se">\
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker rmi -f image:tag</span></span></code></pre></div></div>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker images --filter <span class="s2">&#34;since=image:tag&#34;</span> --format <span class="s2">&#34;{{.Repository}}:{{.Tag}}&#34;</span> <span class="p">|</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="k">while</span> <span class="nb">read</span> child<span class="p">;</span> <span class="k">do</span>
 </span></span><span class="line"><span class="cl">    rfswift image rm -i <span class="s2">&#34;</span><span class="nv">$child</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then delete parent</span>
 </span></span><span class="line"><span class="cl">rfswift image rm -i image:tag</span></span></code></pre></div></div>
-<h3 id="image-not-found">Image not found<a class="anchor" href="#image-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: No such image: image:tag</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="no-such-image">“No such image”<a class="anchor" href="#no-such-image" aria-label="Link to this section"></a></h3>
+<p>The full error is <code>Error: No such image: image:tag</code>. Check the exact name or ID, then use it as shown:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check exact image name</span>
-</span></span><span class="line"><span class="cl">rfswift image <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check image ID</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image <span class="nb">local</span>
 </span></span><span class="line"><span class="cl">docker images
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use correct format</span>
 </span></span><span class="line"><span class="cl">rfswift image rm -i penthertz/rfswift_resolute:sdr_full
-</span></span><span class="line"><span class="cl"><span class="c1"># Or by ID</span>
 </span></span><span class="line"><span class="cl">rfswift image rm -i a1b2c3d4e5f6</span></span></code></pre></div></div>
-<h3 id="permission-denied">Permission denied<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Permission denied</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="permission-denied">“Permission denied”<a class="anchor" href="#permission-denied" aria-label="Link to this section"></a></h3>
+<p>Your user cannot talk to Docker. On Linux, <code>rfswift host docker-access</code> grants access without logging out. You can also add your user to the <code>docker</code> group by hand, or run the command with <code>sudo</code>:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use sudo</span>
-</span></span><span class="line"><span class="cl">sudo rfswift image rm -i image:tag
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or add user to docker group</span>
-</span></span><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host docker-access</span></span></code></pre></div></div>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG docker <span class="nv">$USER</span>
 </span></span><span class="line"><span class="cl">newgrp docker
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Then retry</span>
 </span></span><span class="line"><span class="cl">rfswift image rm -i image:tag</span></span></code></pre></div></div>
-<h3 id="tag-refers-to-multiple-images">Tag refers to multiple images<a class="anchor" href="#tag-refers-to-multiple-images" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Same tag on different images</p>
-<p><strong>Solution:</strong></p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use image ID instead of tag</span>
-</span></span><span class="line"><span class="cl">docker images
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Delete by specific ID</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo rfswift image rm -i image:tag</span></span></code></pre></div></div>
+<h3 id="the-same-tag-points-to-several-images">The same tag points to several images<a class="anchor" href="#the-same-tag-points-to-several-images" aria-label="Link to this section"></a></h3>
+<p>Delete by image ID instead. List the images to find the right ID:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker images
 </span></span><span class="line"><span class="cl">rfswift image rm -i a1b2c3d4e5f6</span></span></code></pre></div></div>
-<hr>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">How much space you get back</p><p>Images take several gigabytes each, so deleting one frees a lot of space. Run <code>docker system df</code> before and after to see how much.</p>
+</div>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/images"><code>images</code></a> - List and manage images</li>
-<li><a href="/docs/commands/remove"><code>remove</code></a> - Remove containers</li>
-<li><a href="/docs/commands/export"><code>export</code></a> - Backup images before deletion</li>
-<li><a href="/docs/commands/build"><code>build</code></a> - Build new images</li>
-<li><a href="/docs/commands/cleanup"><code>cleanup</code></a> - Automated cleanup</li>
+<li><a href="/docs/commands/images"><code>images</code></a>: list and manage images</li>
+<li><a href="/docs/commands/remove"><code>remove</code></a>: remove containers</li>
+<li><a href="/docs/commands/export"><code>export</code></a>: back up an image before deleting it</li>
+<li><a href="/docs/commands/build"><code>build</code></a>: build new images</li>
+<li><a href="/docs/commands/cleanup"><code>cleanup</code></a>: automated cleanup</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Permanent Deletion</strong>: Deleting an image is permanent. If you might need it later, use <code>export image</code> to create a backup first. You can always <code>import</code> it back if needed.</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>Containers First</strong>: You cannot delete an image while containers are using it. Stop and remove containers first with <code>stop</code> and <code>remove</code> commands, then delete the image.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Disk Space Recovery</strong>: Deleting large images can free significant disk space (1-4GB per image). Check with <code>docker system df</code> before and after to see space recovered!</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -530,28 +459,26 @@
     <li><a href="#options">Options</a></li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#clean-up-old-versions">Clean up old versions</a></li>
+        <li><a href="#remove-test-images">Remove test images</a></li>
+        <li><a href="#free-disk-space">Free disk space</a></li>
+        <li><a href="#remove-a-failed-build">Remove a failed build</a></li>
+        <li><a href="#clean-up-after-an-upgrade">Clean up after an upgrade</a></li>
       </ul>
     </li>
     <li><a href="#what-gets-deleted">What gets deleted</a>
       <ul>
-        <li><a href="#image-deletion-impact">Image deletion impact</a></li>
-        <li><a href="#important-notes">Important notes</a></li>
+        <li><a href="#images-in-use-cannot-be-deleted">Images in use cannot be deleted</a></li>
       </ul>
     </li>
-    <li><a href="#delete-vs-remove">Delete vs remove</a>
-      <ul>
-        <li><a href="#comparison">Comparison</a></li>
-      </ul>
-    </li>
+    <li><a href="#image-rm-or-container-rm">image rm or container rm?</a></li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#image-in-use">Image in use</a></li>
-        <li><a href="#image-has-dependent-child-images">Image has dependent child images</a></li>
-        <li><a href="#image-not-found">Image not found</a></li>
-        <li><a href="#permission-denied">Permission denied</a></li>
-        <li><a href="#tag-refers-to-multiple-images">Tag refers to multiple images</a></li>
+        <li><a href="#image-is-being-used-by-running-container">“image is being used by running container”</a></li>
+        <li><a href="#image-has-dependent-child-images">“image has dependent child images”</a></li>
+        <li><a href="#no-such-image">“No such image”</a></li>
+        <li><a href="#permission-denied">“Permission denied”</a></li>
+        <li><a href="#the-same-tag-points-to-several-images">The same tag points to several images</a></li>
       </ul>
     </li>
     <li><a href="#related-commands">Related commands</a></li>

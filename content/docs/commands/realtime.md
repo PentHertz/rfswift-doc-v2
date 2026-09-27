@@ -7,111 +7,93 @@ description: "Enable or disable realtime mode for better SDR performance."
 weight: 47
 ---
 
-Enable or disable realtime mode for optimal SDR performance.
+Realtime mode sets up a container for low-latency radio work in one command. It adds the capability and the resource limits that SDR tools need to run with real-time priority, which helps avoid buffer underruns (dropped samples).
+
+Use it when a capture drops samples, or before time-critical work. For a new lab, pass `--realtime` to `rfswift container create` instead.
+
+```bash
+rfswift realtime enable -c my_sdr
+```
 
 ## Synopsis
 
 ```bash
-rfswift realtime enable -c CONTAINER
+rfswift realtime enable  -c CONTAINER
 rfswift realtime disable -c CONTAINER
-rfswift realtime status -c CONTAINER
+rfswift realtime status  -c CONTAINER
 ```
 
-The `realtime` command provides a one-command solution to configure containers for low-latency RF/SDR operations. It automatically sets up the necessary capabilities and ulimits to eliminate buffer underruns and enable real-time scheduling.
-
----
-
-## What realtime mode configures
-
-When you enable realtime mode, RF Swift automatically configures:
+## What realtime mode sets
 
 | Setting | Value | Purpose |
 |---------|-------|---------|
-| **SYS_NICE capability** | Added | Allows setting process priorities and real-time scheduling |
-| **rtprio ulimit** | 95 | Enables real-time scheduling up to priority 95 |
-| **memlock ulimit** | unlimited | Prevents sample buffers from being swapped to disk |
+| **SYS_NICE capability** | Added | Allows changing process priorities and real-time scheduling |
+| **rtprio ulimit** | 95 | Real-time scheduling up to priority 95 |
+| **memlock ulimit** | unlimited | Keeps sample buffers in RAM instead of swap |
 | **nice ulimit** | 40 | Allows nice values from -20 to 19 |
 
----
+{{< callout type="warning" >}}
+Enabling or disabling realtime mode re-creates the container. Commit important changes first with `rfswift container commit`.
+{{< /callout >}}
 
 ## Subcommands
 
-| Subcommand | Description |
-|------------|-------------|
-| `enable` | Enable realtime mode on a container |
-| `disable` | Disable realtime mode on a container |
-| `status` | Check realtime mode status and current ulimits |
+| Subcommand | What it does |
+|------------|--------------|
+| `enable` | Turns realtime mode on for a container |
+| `disable` | Turns realtime mode off |
+| `status` | Shows whether realtime mode is on, and the current limits |
 
----
-
-## Options
-
-### realtime enable / disable / status
-
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
-
----
+All three take `-c, --container STRING` (container ID or name, required), for example `-c my_container`.
 
 ## Examples
 
-### Basic usage
+### Basic use
 
-**Enable realtime mode:**
-```bash
-rfswift realtime enable -c sdr_work
-```
+Turn realtime mode on, check it, and turn it off:
 
-**Check realtime status:**
 ```bash
-rfswift realtime status -c sdr_work
-```
-
-**Disable realtime mode:**
-```bash
+rfswift realtime enable  -c sdr_work
+rfswift realtime status  -c sdr_work
 rfswift realtime disable -c sdr_work
 ```
 
-### Real-World scenarios
+### Fix SDR buffer underruns
 
-**Fix SDR buffer underruns:**
+If a HackRF, BladeRF or RTL-SDR capture drops samples, enable realtime mode, check that `rtprio` is now 95, then run the capture with real-time priority:
+
 ```bash
-# Experiencing underruns with HackRF/BladeRF/RTL-SDR?
 rfswift realtime enable -c sdr_container
-
-# Verify it's working
 rfswift container shell -c sdr_container -e "ulimit -r"
 # Output: 95
 
-# Now run your SDR application with real-time priority
 rfswift container shell -c sdr_container
 chrt -f 50 hackrf_transfer -r samples.bin -f 433920000 -s 8000000
 ```
 
-**Create new container with realtime mode:**
-```bash
-# Use --realtime flag during creation
-rfswift container create -n sdr_realtime -i penthertz/rfswift_resolute:sdr_full --realtime
+### Create a lab with realtime mode already on
 
-# Container is ready for low-latency SDR work
+```bash
+rfswift container create -n sdr_realtime -i penthertz/rfswift_resolute:sdr_full --realtime
 rfswift container shell -c sdr_realtime
 ```
 
-**Professional RF testing setup:**
-```bash
-# Create optimized container
-rfswift container create -n rf_pentest -i penthertz/rfswift_resolute:rfid --realtime
+### Time-critical RFID captures
 
-# Verify configuration
+Create an `rfid` lab with realtime mode, check it, and run the Proxmark3 client with real-time priority:
+
+```bash
+rfswift container create -n rf_pentest -i penthertz/rfswift_resolute:rfid --realtime
 rfswift realtime status -c rf_pentest
 
-# Run time-critical captures
 rfswift container shell -c rf_pentest
 chrt -f 70 proxmark3 /dev/ttyACM0
 ```
 
-**Using real-time scheduling inside container:**
+### Real-time scheduling inside a lab
+
+Inside the lab, `chrt` starts a program with real-time scheduling, and `nice` raises its priority:
+
 ```bash
 rfswift container shell -c sdr_container
 
@@ -128,32 +110,27 @@ nice -n -15 gnuradio-companion
 chrt -p $$
 ```
 
----
-
 ## When to use realtime mode
 
-### Enable realtime mode for:
+### Useful for
 
-- **High sample rate captures** - Prevents dropped samples at high bandwidths
-- **Real-time signal processing** - GNU Radio flowgraphs, SDR++, GQRX
-- **Multiple SDR tools** - Running several applications simultaneously
-- **Time-critical protocols** - RFID, NFC, automotive keyfobs
-- **Professional pentesting** - When reliability is critical
-- **Live demonstrations** - Avoid embarrassing buffer underruns
+- **High sample rates**: avoids dropped samples at high bandwidths.
+- **Live signal processing**: GNU Radio flowgraphs, SDR++, GQRX.
+- **Several SDR tools at once.**
+- **Time-critical protocols**: RFID, NFC, car key fobs.
+- **Professional assessments**, where reliability matters.
+- **Live demonstrations**, to avoid dropped samples in front of an audience.
 
-### Not necessary for:
+### Not needed for
 
-- **Offline analysis** - Inspectrum, signal analysis of recorded files
-- **Low sample rates** - Simple FM reception, slow protocols
-- **Non-SDR work** - General container usage, development
+- **Offline analysis**: Inspectrum, or analysing recorded files.
+- **Low sample rates**: simple FM reception, slow protocols.
+- **Non-SDR work**: general use, development.
 
----
+## Set it for every container on the host
 
-## Alternative: Host-Level configuration
+Instead of setting it per container, you can configure default limits for the Docker service. Edit `/etc/docker/daemon.json`:
 
-Instead of per-container settings, you can configure Docker daemon defaults:
-
-**Edit `/etc/docker/daemon.json`:**
 ```json
 {
   "default-ulimits": {
@@ -164,118 +141,81 @@ Instead of per-container settings, you can configure Docker daemon defaults:
 }
 ```
 
-**Restart Docker:**
+Then restart Docker. Every container on the host now gets these limits:
+
 ```bash
 sudo systemctl restart docker
 ```
 
-This applies realtime ulimits to **all** containers on the host automatically.
-
----
-
 ## Troubleshooting
 
-### Realtime mode not working
+### Captures still drop samples after enabling realtime mode
 
-**Problem:** Still experiencing buffer underruns after enabling realtime mode
+Check that realtime mode is on and that the limits reached the lab (you should see 95 and unlimited). Real-time priority only applies to programs you start with `chrt`. Also check the host kernel: `-virtual` and `-cloud` kernels are not suited to real-time work.
 
-**Solutions:**
 ```bash
-# Verify realtime mode is enabled
 rfswift realtime status -c container
-
-# Check ulimits inside container
 rfswift container shell -c container -e "ulimit -r && ulimit -l"
-# Should show: 95 and unlimited
 
-# Ensure you're actually using real-time scheduling
 rfswift container shell -c container
 chrt -f 50 your_sdr_command  # Must use chrt!
 
-# Check if host kernel supports real-time
 uname -a  # Should not be a -virtual or -cloud kernel
 ```
 
-### Permission denied
+### `Operation not permitted` when using `chrt`
 
-**Problem:** `Operation not permitted` when using `chrt`
+Enable realtime mode again (this re-creates the container) and check that the `SYS_NICE` capability is present:
 
-**Solutions:**
 ```bash
-# Re-enable realtime mode (recreates container)
 rfswift realtime enable -c container
-
-# Verify SYS_NICE capability
 rfswift container shell -c container -e "grep Cap /proc/self/status"
-
-# If using rootless Docker, also set host ulimits
-# Edit /etc/security/limits.conf:
-# your_user - rtprio  95
-# your_user - memlock unlimited
 ```
 
-### Container won't start after enable
+With rootless Docker, also raise the limits on the host, in `/etc/security/limits.conf`:
 
-**Problem:** Container fails to start after enabling realtime mode
+```
+your_user - rtprio  95
+your_user - memlock unlimited
+```
 
-**Solutions:**
+### The container doesn't start after enabling realtime mode
+
+Look at the engine's logs, try disabling and enabling again, and if it still fails, create a new lab with `--realtime`:
+
 ```bash
-# Check Docker logs
 docker logs container_name
-
-# Try disabling and re-enabling
 rfswift realtime disable -c container
 rfswift realtime enable -c container
-
-# If persists, recreate container
 rfswift container create -n new_container -i image_name --realtime
 ```
 
----
+## How it works
 
-## Technical details
+1. **Inspect**: RF Swift reads the container's current configuration.
+2. **Update**: it adds the `SYS_NICE` capability and the limits.
+3. **Re-create**: it stops, removes and re-creates the container with the new settings.
+4. **Start**: the container starts with realtime settings.
 
-### How it works
+### What the values mean
 
-1. **Container inspection** - RF Swift reads current container configuration
-2. **Configuration update** - Adds SYS_NICE capability and ulimits
-3. **Container recreation** - Stops, removes, and recreates container with new settings
-4. **Verification** - Container starts with realtime configuration
-
-### Ulimit values explained
-
-| Ulimit | Value | Meaning |
-|--------|-------|---------|
-| rtprio=95 | Max RT priority | Can use `chrt -f 1` through `chrt -f 95` |
-| memlock=-1 | Unlimited | No limit on locked memory (prevents swapping) |
-| nice=40 | Range adjustment | Allows nice -20 to +19 (40-20=20 range) |
+| Limit | Value | Meaning |
+|-------|-------|---------|
+| rtprio=95 | Maximum real-time priority | You can use `chrt -f 1` through `chrt -f 95` |
+| memlock=-1 | Unlimited | No limit on locked memory, so nothing is swapped out |
+| nice=40 | Range | Allows nice -20 to +19 (40 - 20 = 20) |
 
 ### Kernel requirements
 
 Real-time scheduling works best with:
-- **Standard kernels** (not -virtual or -cloud variants)
-- **PREEMPT_RT patches** (optional, for hard real-time)
-- **Sufficient CPU resources** (avoid overcommitting)
 
----
+- a **standard kernel** (not a `-virtual` or `-cloud` variant);
+- the **PREEMPT_RT patches**, optionally, for hard real-time;
+- **enough CPU**: avoid overcommitting the machine.
 
-## Related commands
+## Related
 
-- [`ulimits`](/docs/commands/ulimits) - Fine-grained ulimit control
-- [`capabilities`](/docs/commands/capabilities) - Manage container capabilities
-- [`run`](/docs/commands/run) - Create container with `--realtime` flag
-- [`exec`](/docs/commands/exec) - Access container to use real-time scheduling
-
----
-
-{{< callout >}}
-**One Command Setup**: `rfswift realtime enable -c container` configures everything needed for optimal SDR performance. No need to understand ulimits or capabilities!
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Container Recreation**: Enabling/disabling realtime mode recreates the container. Commit important changes first with `rfswift container commit`!
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**New Containers**: Use `rfswift container create -n name -i image --realtime` to create containers with realtime mode already enabled!
-{{< /callout >}}
+- [config ulimits](/docs/commands/ulimits): set individual limits
+- [config capabilities](/docs/commands/capabilities)
+- [container create](/docs/commands/run): the `--realtime` flag
+- [container shell](/docs/commands/exec)

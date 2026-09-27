@@ -23,7 +23,7 @@ presented:
 
 workbench:
   title: "Your whole assessment in one window"
-  lead: "A desktop app for everyone who prefers clicking to typing. Create a mission, open terminals into your labs, take notes, log findings and captures, then export a branded report."
+  lead: "A desktop app for everyone who prefers clicking to typing. Create a mission for each engagement, open terminals into your labs, take notes, log findings and captures, then export a branded report."
   standalone:
     title: "Completely standalone"
     text: "A native desktop app, not an editor add-on. No VS Code, no IDE, no plugins, no browser extension. It ships with RF Swift and runs on Linux, macOS and Windows."
@@ -38,7 +38,7 @@ workbench:
 
 what:
   title: "A ready-made radio lab that runs next to your system, not instead of it"
-  text: "Radio tools are hard to install: each one needs its own drivers, libraries and versions, and they often break each other. RF Swift ships them pre-installed in isolated environments. You pick a toolbox, plug in your radio, and start working. When you're done, your computer is exactly as it was. Already on Kali, Parrot or DragonOS? Keep it: RF Swift adds to it. On a plain, freshly installed system, one command brings the whole tool set."
+  text: "Radio tools are hard to install. Each one needs its own drivers, libraries and versions, and they often break each other. RF Swift ships them ready to use, in isolated environments: you pick a toolbox, plug in your radio and start working. When you're done, your computer is exactly as it was. Already on Kali, Parrot or DragonOS? Keep it: RF Swift adds to it."
   steps:
     - { title: "Install once", text: "One installer sets up RF Swift and the engine it needs. No manual Docker setup." }
     - { title: "Pick a toolbox", text: "Images are grouped by job: SDR, Wi-Fi, Bluetooth, telecom, automotive, hardware, reversing, Active Directory and more. Or stay light with a lazy Nix environment that fetches each tool the first time you use it." }
@@ -92,7 +92,7 @@ engines:
     text: "In lazy mode nothing is installed up front. Each tool becomes a small launcher that fetches the real tool the first time you run it, then keeps it pinned for good."
     points:
       - { title: "Only what you run", text: "Type sdrpp and only SDR++ is fetched. Run inspectrum next and only that is added. Standard tools come prebuilt from the binary cache." }
-      - { title: "Pinned, then instant", text: "The environment stays on the revision you created it from, so nothing rebuilds behind your back, and a fetched tool starts directly afterwards." }
+      - { title: "Pinned, then instant", text: "Your environment stays on the version you created it from, so nothing changes behind your back. Once fetched, a tool starts straight away." }
       - { title: "In the Workbench too", text: "Pick the Nix engine and tick “Lazy tools (build on first use)” when you create a mission." }
     terminal:
       - { cmd: "rfswift container create --engine nix -i sdr_light -n radio --lazy" }
@@ -105,7 +105,7 @@ engines:
       - { note: "# or run one tool without creating anything" }
   mac:
     title: "Especially good on a Mac"
-    text: "With Nix, the tools run natively on macOS: your USB radio opens directly, sound plays natively and OpenGL needs no setup, with no Linux VM in between. Add `--isolate` to run them inside Apple's built-in Seatbelt sandbox. Need containers instead? Lima brings USB radios to them, and Docker Desktop or Podman cover everything else."
+    text: "With Nix, the tools run natively on macOS, with no Linux VM in between. Your USB radio opens directly, sound plays natively and OpenGL needs no setup. Add `--isolate` to run them inside Apple's built-in Seatbelt sandbox. Prefer containers? Lima gives them your USB radios, and Docker Desktop or Podman cover everything else."
 
 benefits:
   title: "Spend your time on the signal, not on the setup"
@@ -113,7 +113,7 @@ benefits:
     - { title: "Ready in minutes", text: "Skip days of compiling and dependency hunting. Hundreds of RF and hardware security tools come already built and tested together, and one command pulls the latest ones." }
     - { title: "One program, no Python", text: "RF Swift itself is a single self-contained binary: no Python, no pip, no virtual environment to manage on your computer. The Workbench is a standalone desktop app." }
     - { title: "Keeps your computer clean", text: "No new OS, no dual boot, no reformatting. Every assessment runs in its own environment that you can throw away." }
-    - { title: "Your hardware just works", text: "USB, audio and video forwarding with minimal configuration. HydraSDR, HackRF, USRP, bladeRF, Proxmark3, Proxmark5 and many other devices are recognised out of the box." }
+    - { title: "Your hardware just works", text: "Your USB devices, sound and display are passed through for you. HydraSDR, HackRF, USRP, bladeRF, Proxmark3, Proxmark5 and many other devices work out of the box." }
     - { title: "Same lab on every machine", text: "Linux, macOS or Windows, on x86_64, ARM64 or RISCV64. From a workstation to a Raspberry Pi or a Steam Deck." }
     - { title: "Stay light", text: "Full images in Docker, Podman or Lima when you want the whole toolbox, or lazy Nix environments where each tool is fetched the first time you run it." }
     - { title: "Covers the whole target", text: "Radio is where it starts, not where it ends. Reversing, Active Directory, network and other assessment tools ship too, so one lab covers the entire target." }
@@ -143,8 +143,8 @@ stats:
 products:
   - { title: "Nix engine", text: "Tools installed natively and pinned. In lazy mode each one is fetched the first time you run it. Excellent on macOS.", url: "/docs/guide/nix-engine/" }
   - { title: "Remote agent", text: "Built into the rfswift binary. Run it on a lab server or a small board near the antenna and drive it securely from your laptop.", url: "/docs/guide/remote-agent/" }
-  - { title: "AI assistant (MCP)", text: "Let an assistant operate RF Swift through a controlled bridge.", url: "/docs/guide/ai-assistant/" }
-  - { title: "Container images", text: "Toolboxes by domain, or build your own from YAML recipes.", url: "/docs/guide/list-of-images/" }
+  - { title: "AI assistant (MCP)", text: "Connect a coding assistant to a Workbench mission through a local bridge, with permissions you choose.", url: "/docs/guide/ai-assistant/" }
+  - { title: "Container images", text: "Ready-made toolboxes, one per kind of job, or your own built from a YAML recipe.", url: "/docs/guide/list-of-images/" }
 
 install:
   - id: linux
@@ -187,8 +187,8 @@ learn:
       links:
         - { title: "All commands", url: "/docs/commands/" }
         - { title: "Container create options", url: "/docs/commands/run/" }
-        - { title: "Configurations", url: "/docs/guide/configurations/" }
-        - { title: "Dynamic container management", url: "/docs/guide/container-management/" }
+        - { title: "Configuration file", url: "/docs/guide/configurations/" }
+        - { title: "Change a container later", url: "/docs/guide/container-management/" }
         - { title: "Known limits", url: "/docs/guide/limitations/" }
     - group: "Engines & platforms"
       links:
@@ -209,9 +209,9 @@ learn:
 
 faq:
   - q: "Do I need to know Docker or Linux?"
-    a: "No. The installer sets up the container engine for you, and the Workbench lets you create and open environments without typing commands."
+    a: "No. The installer sets up the engine for you, and the Workbench lets you create and open labs without typing commands."
   - q: "Should I use the CLI or the Workbench?"
-    a: "Either. They manage the same environments. The Workbench adds missions, notes, findings and reports; the CLI is best for scripting and remote machines."
+    a: "Either: they manage the same labs. The Workbench adds missions, notes, findings and reports. The command line (CLI) is best for scripting and remote machines."
   - q: "Does the Workbench need VS Code or another editor?"
     a: "No. The Workbench is a completely standalone desktop app: no VS Code, no IDE, no plugins, no browser extension. It installs with RF Swift and needs nothing else."
   - q: "Do I have to download a whole toolbox image?"

@@ -97,7 +97,7 @@ More in [usb](/docs/commands/usb/) and [engine](/docs/commands/engine/).
 
 **Why pick it**
 - **The lightest option.** In lazy mode (`--lazy`, or **Lazy tools** in the Workbench) nothing is installed up front: each tool is fetched the first time you run it, then pinned. `rfswift env run sdr_light sdrpp` runs a single tool without creating anything.
-- **Closest to the hardware.** On Linux and macOS there is no container and no VM in between: USB radios open directly, sound plays natively, graphical tools get a working OpenGL runtime, and GPUs use their native drivers.
+- **Closest to the hardware.** On Linux and macOS there is no container and no VM in between. USB radios open directly and sound plays natively. Graphical tools get a working OpenGL runtime, and GPUs use their native drivers.
 - **Excellent on macOS.** Tools run natively on your Mac with direct USB access and no Linux VM, and `--isolate` uses Apple's built-in Seatbelt sandbox.
 - **Reproducible and safe to update.** An environment is pinned to the revision it was created from; full (non-lazy) environments update transactionally and can roll back.
 - **No container engine needed**, and it never touches your distribution's packages: ideal for adding RF tools to Kali, Parrot or DragonOS.

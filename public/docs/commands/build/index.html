@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift image build · RF Swift</title>
   <meta name="description" content="Build a container image from a YAML recipe.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/commands/build/">
+  <link rel="canonical" href="http://localhost:1313/docs/commands/build/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift image build · RF Swift">
   <meta property="og:description" content="Build a container image from a YAML recipe.">
-  <meta property="og:url" content="https://rfswift.io/docs/commands/build/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:url" content="http://localhost:1313/docs/commands/build/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,24 +231,25 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift image build</h1><p class="doc-lead">Build a container image from a YAML recipe.</p><p class="doc-meta">Reference · 5 min read · Updated September 27, 2026</p>
+      <h1>rfswift image build</h1><p class="doc-lead">Build a container image from a YAML recipe.</p><p class="doc-meta">Reference · 5 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift image build</code>. The legacy form <code>rfswift build</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+      <p><code>rfswift image build</code> creates your own container image from a short YAML recipe. Use it when you want an RF Swift image with extra tools or settings baked in, without writing a Dockerfile.</p>
+<p>The most common use builds from a recipe file:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build -r my-recipe.yaml</span></span></code></pre></div></div>
+<div class="admonition admonition-info" role="note"><p><code>rfswift image build</code> is the v4 spelling. The older <code>rfswift build</code> still works, takes the same flags and prints a notice with the new name. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
-<p>Build custom Docker images from simplified YAML recipe files.</p>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build <span class="o">[</span>-r RECIPE_FILE<span class="o">]</span> <span class="o">[</span>-t TAG<span class="o">]</span> <span class="o">[</span>--no-cache<span class="o">]</span></span></span></code></pre></div></div>
-<p>The <code>build</code> command creates Docker images using RF Swift&rsquo;s simplified YAML recipe format. This provides an easier alternative to Dockerfiles for building custom RF Swift images with specific tools and configurations.</p>
-<hr>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Flag</th>
-      <th>Description</th>
+      <th>What it does</th>
       <th>Default</th>
       <th>Example</th>
     </tr>
@@ -270,45 +257,42 @@
   <tbody>
     <tr>
       <td><code>-r, --recipe STRING</code></td>
-      <td>Path to recipe file</td>
+      <td>Path to the recipe file</td>
       <td><code>rfswift-recipe.yaml</code></td>
       <td><code>-r my-recipe.yaml</code></td>
     </tr>
     <tr>
       <td><code>-t, --tag STRING</code></td>
-      <td>Override tag from recipe</td>
-      <td>From recipe</td>
+      <td>Use this tag instead of the one in the recipe</td>
+      <td>From the recipe</td>
       <td><code>-t my_custom:v1</code></td>
     </tr>
     <tr>
       <td><code>--no-cache</code></td>
-      <td>Build without using cache</td>
+      <td>Build without Docker&rsquo;s layer cache</td>
       <td>false</td>
       <td><code>--no-cache</code></td>
     </tr>
   </tbody>
 </table>
 </div>
-<hr>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
-<h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
-<p><strong>Build from default recipe:</strong></p>
+<p>Build from <code>rfswift-recipe.yaml</code> in the current directory:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build</span></span></code></pre></div></div>
-<p><strong>Build from specific recipe:</strong></p>
+<p>Build from a specific recipe:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build -r custom-sdr-recipe.yaml</span></span></code></pre></div></div>
-<p><strong>Build with custom tag:</strong></p>
+<p>Build with a different tag than the one in the recipe:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build -r my-recipe.yaml -t my_image:test</span></span></code></pre></div></div>
-<p><strong>Build without cache:</strong></p>
+<p>Rebuild everything from scratch, ignoring the cache:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build -r recipe.yaml --no-cache</span></span></code></pre></div></div>
-<h3 id="real-world-scenarios">Real-World scenarios<a class="anchor" href="#real-world-scenarios" aria-label="Link to this section"></a></h3>
-<p><strong>Create custom SDR environment:</strong></p>
+<h3 id="a-custom-sdr-image">A custom SDR image<a class="anchor" href="#a-custom-sdr-image" aria-label="Link to this section"></a></h3>
+<p>This recipe starts from <code>sdr_light</code>, adds three tools and cleans up the package cache. Write it to a file, then build it:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create recipe</span>
-</span></span><span class="line"><span class="cl">cat &gt; sdr-custom.yaml <span class="s">&lt;&lt; &#39;EOF&#39;
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat &gt; sdr-custom.yaml <span class="s">&lt;&lt; &#39;EOF&#39;
 </span></span></span><span class="line"><span class="cl"><span class="s">name: my_sdr_custom
 </span></span></span><span class="line"><span class="cl"><span class="s">tag: sdr_custom:v1.0
 </span></span></span><span class="line"><span class="cl"><span class="s">base: penthertz/rfswift_resolute:sdr_light
@@ -321,11 +305,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="s"> - rm -rf /var/lib/apt/lists/*
 </span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Build</span>
 </span></span><span class="line"><span class="cl">rfswift image build -r sdr-custom.yaml</span></span></code></pre></div></div>
-<hr>
 <h2 id="recipe-file-format">Recipe file format<a class="anchor" href="#recipe-file-format" aria-label="Link to this section"></a></h2>
-<h3 id="basic-structure">Basic structure<a class="anchor" href="#basic-structure" aria-label="Link to this section"></a></h3>
+<h3 id="structure">Structure<a class="anchor" href="#structure" aria-label="Link to this section"></a></h3>
+<p>A recipe has three required keys (<code>name</code>, <code>tag</code>, <code>base</code>) and several optional sections:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Image metadata</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">my_custom_image</span><span class="w">
@@ -346,7 +329,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># File copies</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">files</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l">local/file.txt</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/container/path/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/container/path/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Custom commands</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">commands</span><span class="p">:</span><span class="w">
@@ -361,6 +344,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Working directory</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">workdir</span><span class="p">:</span><span class="w"> </span><span class="l">/root/workspace</span></span></span></code></pre></div></div>
 <h3 id="complete-example">Complete example<a class="anchor" href="#complete-example" aria-label="Link to this section"></a></h3>
+<p>This recipe adds SDR and cellular tools to <code>sdr_full</code>, sets environment variables, copies a few files in and prepares working folders:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">advanced_sdr_setup</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l">advanced_sdr:v2.0</span><span class="w">
@@ -384,11 +368,11 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Copy custom files</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">files</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l">./configs/sdr-config.conf</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/root/.config/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/root/.config/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l">./scripts/startup.sh</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/local/bin/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/local/bin/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l">./tools/custom-tool</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/tools/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/tools/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Post-installation commands</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">commands</span><span class="p">:</span><span class="w">
@@ -407,30 +391,29 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Set working directory</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">workdir</span><span class="p">:</span><span class="w"> </span><span class="l">/root/workspace</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="recipe-sections">Recipe sections<a class="anchor" href="#recipe-sections" aria-label="Link to this section"></a></h2>
 <h3 id="name-required">name (required)<a class="anchor" href="#name-required" aria-label="Link to this section"></a></h3>
-<p>Image name for documentation purposes.</p>
+<p>A name for the image, used for documentation.</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">my_custom_sdr</span></span></span></code></pre></div></div>
 <h3 id="tag-required">tag (required)<a class="anchor" href="#tag-required" aria-label="Link to this section"></a></h3>
-<p>Docker image tag (repository:tag format).</p>
+<p>The Docker tag of the image you build, in <code>repository:tag</code> form.</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l">my_custom_sdr:v1.0</span></span></span></code></pre></div></div>
-<p>Can be overridden with <code>-t</code> flag:</p>
+<p>The <code>-t</code> flag overrides it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build -r recipe.yaml -t override_tag:v2</span></span></code></pre></div></div>
 <h3 id="base-required">base (required)<a class="anchor" href="#base-required" aria-label="Link to this section"></a></h3>
-<p>Base image to build from. Usually an RF Swift image.</p>
+<p>The image to start from, usually an RF Swift image.</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base</span><span class="p">:</span><span class="w"> </span><span class="l">penthertz/rfswift_resolute:sdr_full</span></span></span></code></pre></div></div>
 <p>Common base images:</p>
 <ul>
-<li><code>penthertz/rfswift_resolute:sdr_full</code> - Complete SDR stack</li>
-<li><code>penthertz/rfswift_resolute:sdr_light</code> - Lightweight SDR</li>
-<li><code>penthertz/rfswift_resolute:bluetooth</code> - Bluetooth tools</li>
-<li><code>penthertz/rfswift_resolute:wifi</code> - WiFi tools</li>
-<li><code>penthertz/rfswift_resolute:hardware</code> - Hardware security tools</li>
+<li><code>penthertz/rfswift_resolute:sdr_full</code>: the complete SDR stack</li>
+<li><code>penthertz/rfswift_resolute:sdr_light</code>: the essential SDR tools</li>
+<li><code>penthertz/rfswift_resolute:bluetooth</code>: Bluetooth tools</li>
+<li><code>penthertz/rfswift_resolute:wifi</code>: Wi-Fi tools</li>
+<li><code>penthertz/rfswift_resolute:hardware</code>: hardware security tools</li>
 </ul>
 <h3 id="packages-optional">packages (optional)<a class="anchor" href="#packages-optional" aria-label="Link to this section"></a></h3>
 <p>APT packages to install.</p>
@@ -441,29 +424,24 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">wireshark</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">python3-pip</span></span></span></code></pre></div></div>
 <h3 id="environment-optional">environment (optional)<a class="anchor" href="#environment-optional" aria-label="Link to this section"></a></h3>
-<p>Environment variables to set.</p>
+<p>Environment variables to set in the image.</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">environment</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">PATH=/opt/tools:$PATH</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">CUSTOM_VAR=value</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">DEBUG=1</span></span></span></code></pre></div></div>
 <h3 id="files-optional">files (optional)<a class="anchor" href="#files-optional" aria-label="Link to this section"></a></h3>
-<p>Files to copy into the image.</p>
+<p>Files to copy into the image. <code>src</code> is relative to the recipe file; <code>dest</code> is an absolute path in the image.</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">files</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l">./local/config.txt</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/root/.config/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/root/.config/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l">./scripts/</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/scripts/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/scripts/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l">./tool</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/local/bin/tool</span></span></span></code></pre></div></div>
-<p><strong>Paths:</strong></p>
-<ul>
-<li><code>src</code>: Relative to recipe file location</li>
-<li><code>dest</code>: Absolute path in container</li>
-</ul>
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/local/bin/tool</span></span></span></code></pre></div></div>
 <h3 id="commands-optional">commands (optional)<a class="anchor" href="#commands-optional" aria-label="Link to this section"></a></h3>
-<p>Commands to run during build.</p>
+<p>Commands to run during the build.</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">chmod +x /usr/local/bin/script.sh</span><span class="w">
@@ -471,7 +449,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">git clone https://github.com/user/repo /opt/repo</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">make -C /opt/repo install</span></span></span></code></pre></div></div>
 <h3 id="scripts-optional">scripts (optional)<a class="anchor" href="#scripts-optional" aria-label="Link to this section"></a></h3>
-<p>Cleanup scripts run at the end of the build.</p>
+<p>Cleanup commands, run at the end of the build.</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">scripts</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">apt-get clean</span><span class="w">
@@ -479,103 +457,67 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">rm -rf /tmp/*</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">history -c</span></span></span></code></pre></div></div>
 <h3 id="workdir-optional">workdir (optional)<a class="anchor" href="#workdir-optional" aria-label="Link to this section"></a></h3>
-<p>Default working directory for the image.</p>
+<p>The default working directory of the image.</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">workdir</span><span class="p">:</span><span class="w"> </span><span class="l">/root/projects</span></span></span></code></pre></div></div>
-<hr>
+<div class="admonition admonition-warning" role="note"><p class="admonition-title">Files must exist next to the recipe</p><p>Every file in the <code>files</code> section must exist, relative to the recipe file&rsquo;s location. Prefix paths with <code>./</code> for clarity, and check they are there before you build.</p>
+</div>
+<div class="admonition admonition-info" role="note"><p class="admonition-title">When to use --no-cache</p><p>Docker reuses cached layers, so repeated builds are fast. Use <code>--no-cache</code> when you want every package updated and every command run again.</p>
+</div>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="recipe-file-not-found">Recipe file not found<a class="anchor" href="#recipe-file-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: recipe file not found</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="recipe-file-not-found">“recipe file not found”<a class="anchor" href="#recipe-file-not-found" aria-label="Link to this section"></a></h3>
+<p>The full error is <code>Error: recipe file not found</code>. RF Swift looks for <code>rfswift-recipe.yaml</code> in the current directory unless you pass <code>-r</code>. Check the file is there, or give its full path:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check file exists</span>
-</span></span><span class="line"><span class="cl">ls -l rfswift-recipe.yaml
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use absolute path</span>
-</span></span><span class="line"><span class="cl">rfswift image build -r /full/path/to/recipe.yaml
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check current directory</span>
-</span></span><span class="line"><span class="cl">pwd</span></span></code></pre></div></div>
-<h3 id="invalid-recipe-format">Invalid recipe format<a class="anchor" href="#invalid-recipe-format" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error parsing recipe: invalid YAML</code></p>
-<p><strong>Solutions:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l rfswift-recipe.yaml
+</span></span><span class="line"><span class="cl"><span class="nb">pwd</span>
+</span></span><span class="line"><span class="cl">rfswift image build -r /full/path/to/recipe.yaml</span></span></code></pre></div></div>
+<h3 id="invalid-yaml">“invalid YAML”<a class="anchor" href="#invalid-yaml" aria-label="Link to this section"></a></h3>
+<p>The full error is <code>Error parsing recipe: invalid YAML</code>. The usual causes are a missing colon after a key, wrong indentation, or tabs instead of spaces. Check the syntax, and look for tabs (shown as <code>^I</code>):</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Validate YAML syntax</span>
-</span></span><span class="line"><span class="cl">yamllint recipe.yaml
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check indentation (must use spaces, not tabs)</span>
-</span></span><span class="line"><span class="cl">cat -A recipe.yaml <span class="p">|</span> grep <span class="s2">&#34;^I&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Common issues:</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># - Missing colons after keys</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># - Incorrect indentation</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># - Tabs instead of spaces</span></span></span></code></pre></div></div>
-<h3 id="base-image-not-found">Base image not found<a class="anchor" href="#base-image-not-found" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>Error: base image not found</code></p>
-<p><strong>Solutions:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">yamllint recipe.yaml
+</span></span><span class="line"><span class="cl">cat -A recipe.yaml <span class="p">|</span> grep <span class="s2">&#34;^I&#34;</span></span></span></code></pre></div></div>
+<h3 id="base-image-not-found">“base image not found”<a class="anchor" href="#base-image-not-found" aria-label="Link to this section"></a></h3>
+<p>The full error is <code>Error: base image not found</code>. Pull the base image first, then check its exact name in your recipe:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull base image first</span>
-</span></span><span class="line"><span class="cl">rfswift image pull penthertz/rfswift_resolute:sdr_full
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check available images</span>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image pull -i penthertz/rfswift_resolute:sdr_full
 </span></span><span class="line"><span class="cl">rfswift image <span class="nb">local</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify base image name in recipe</span>
 </span></span><span class="line"><span class="cl">grep <span class="s2">&#34;^base:&#34;</span> recipe.yaml</span></span></code></pre></div></div>
-<h3 id="package-installation-failed">Package installation failed<a class="anchor" href="#package-installation-failed" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>E: Unable to locate package</code></p>
-<p><strong>Solutions:</strong></p>
+<h3 id="unable-to-locate-package">“Unable to locate package”<a class="anchor" href="#unable-to-locate-package" aria-label="Link to this section"></a></h3>
+<p>The full error is <code>E: Unable to locate package</code>. Check the package name first:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Update package lists in recipe</span>
-</span></span><span class="line"><span class="cl">packages:
-</span></span><span class="line"><span class="cl"> - apt-update  <span class="c1"># Add this first</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Or add to commands section</span>
-</span></span><span class="line"><span class="cl">commands:
-</span></span><span class="line"><span class="cl"> - apt-get update
-</span></span><span class="line"><span class="cl"> - apt-get install -y your-package
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Check package name spelling</span>
-</span></span><span class="line"><span class="cl">apt-cache search package-name</span></span></code></pre></div></div>
-<h3 id="file-copy-failed">File copy failed<a class="anchor" href="#file-copy-failed" aria-label="Link to this section"></a></h3>
-<p><strong>Error:</strong> <code>COPY failed: stat /src/file: no such file or directory</code></p>
-<p><strong>Solutions:</strong></p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt-cache search package-name</span></span></code></pre></div></div>
+<p>If the name is right, refresh the package lists before installing: add an update step at the start of <code>packages</code>, or run the install from the <code>commands</code> section:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check source file exists relative to recipe</span>
-</span></span><span class="line"><span class="cl">ls -l ./configs/file.txt
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use correct relative path</span>
-</span></span><span class="line"><span class="cl">files:
-</span></span><span class="line"><span class="cl"> - src: ./configs/file.txt  <span class="c1"># Relative to recipe location</span>
-</span></span><span class="line"><span class="cl">    dest: /root/.config/
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Verify directory structure</span>
+  <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">packages</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">apt-update </span><span class="w"> </span><span class="c"># Add this first</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">commands</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">apt-get update</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">apt-get install -y your-package</span></span></span></code></pre></div></div>
+<h3 id="copy-failed-no-such-file-or-directory">“COPY failed: no such file or directory”<a class="anchor" href="#copy-failed-no-such-file-or-directory" aria-label="Link to this section"></a></h3>
+<p>The full error looks like <code>COPY failed: stat /src/file: no such file or directory</code>. A <code>src</code> path in <code>files</code> does not exist relative to the recipe. Check the file and the folder layout:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls -l ./configs/file.txt
 </span></span><span class="line"><span class="cl">tree .</span></span></code></pre></div></div>
-<h3 id="build-cache-issues">Build cache issues<a class="anchor" href="#build-cache-issues" aria-label="Link to this section"></a></h3>
-<p><strong>Problem:</strong> Build not reflecting changes</p>
-<p><strong>Solution:</strong></p>
+<p>Then use the correct relative path:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Force rebuild without cache</span>
-</span></span><span class="line"><span class="cl">rfswift image build -r recipe.yaml --no-cache
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Clear Docker build cache</span>
+  <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">files</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l">./configs/file.txt </span><span class="w"> </span><span class="c"># Relative to recipe location</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/root/.config/</span></span></span></code></pre></div></div>
+<h3 id="the-build-does-not-pick-up-your-changes">The build does not pick up your changes<a class="anchor" href="#the-build-does-not-pick-up-your-changes" aria-label="Link to this section"></a></h3>
+<p>Docker&rsquo;s cache reused an old layer. Rebuild without the cache, or clear Docker&rsquo;s build cache:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build -r recipe.yaml --no-cache
 </span></span><span class="line"><span class="cl">docker builder prune</span></span></code></pre></div></div>
-<hr>
 <h2 id="related-commands">Related commands<a class="anchor" href="#related-commands" aria-label="Link to this section"></a></h2>
 <ul>
-<li><a href="/docs/commands/run"><code>run</code></a> - Run containers from built images</li>
-<li><a href="/docs/commands/commit"><code>commit</code></a> - Save modified containers as images</li>
-<li><a href="/docs/commands/export"><code>export</code></a> - Export built images</li>
-<li><a href="/docs/commands/images"><code>images</code></a> - Manage built images</li>
-<li><a href="/docs/commands/delete"><code>delete</code></a> - Remove built images</li>
+<li><a href="/docs/commands/run"><code>run</code></a>: create containers from the images you built</li>
+<li><a href="/docs/commands/commit"><code>commit</code></a>: save a modified container as an image</li>
+<li><a href="/docs/commands/export"><code>export</code></a>: export the images you built</li>
+<li><a href="/docs/commands/images"><code>images</code></a>: list and manage images</li>
+<li><a href="/docs/commands/delete"><code>delete</code></a>: remove images</li>
+<li><a href="/docs/development/yaml-recipe-guide/">YAML recipe guide</a>: recipes in depth</li>
 </ul>
-<hr>
-<div class="admonition admonition-tip" role="note"><p><strong>Recipe vs Dockerfile</strong>: RF Swift recipes provide a simplified YAML format that&rsquo;s easier to read and maintain than Dockerfiles. They&rsquo;re perfect for building custom RF Swift variants without Dockerfile complexity!</p>
-</div>
-<div class="admonition admonition-warning" role="note"><p><strong>File Paths</strong>: Files referenced in the <code>files</code> section must exist relative to the recipe file location. Use <code>./</code> prefix for clarity and always verify files exist before building.</p>
-</div>
-<div class="admonition admonition-info" role="note"><p><strong>Cache Control</strong>: Use <code>--no-cache</code> when you want to ensure all packages are updated and all commands run fresh. Otherwise, Docker&rsquo;s layer caching speeds up repeated builds.</p>
-</div>
 
     </div>
     <footer class="doc-foot">
@@ -600,13 +542,12 @@
     <li><a href="#options">Options</a></li>
     <li><a href="#examples">Examples</a>
       <ul>
-        <li><a href="#basic-usage">Basic usage</a></li>
-        <li><a href="#real-world-scenarios">Real-World scenarios</a></li>
+        <li><a href="#a-custom-sdr-image">A custom SDR image</a></li>
       </ul>
     </li>
     <li><a href="#recipe-file-format">Recipe file format</a>
       <ul>
-        <li><a href="#basic-structure">Basic structure</a></li>
+        <li><a href="#structure">Structure</a></li>
         <li><a href="#complete-example">Complete example</a></li>
       </ul>
     </li>
@@ -625,12 +566,12 @@
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#recipe-file-not-found">Recipe file not found</a></li>
-        <li><a href="#invalid-recipe-format">Invalid recipe format</a></li>
-        <li><a href="#base-image-not-found">Base image not found</a></li>
-        <li><a href="#package-installation-failed">Package installation failed</a></li>
-        <li><a href="#file-copy-failed">File copy failed</a></li>
-        <li><a href="#build-cache-issues">Build cache issues</a></li>
+        <li><a href="#recipe-file-not-found">“recipe file not found”</a></li>
+        <li><a href="#invalid-yaml">“invalid YAML”</a></li>
+        <li><a href="#base-image-not-found">“base image not found”</a></li>
+        <li><a href="#unable-to-locate-package">“Unable to locate package”</a></li>
+        <li><a href="#copy-failed-no-such-file-or-directory">“COPY failed: no such file or directory”</a></li>
+        <li><a href="#the-build-does-not-pick-up-your-changes">The build does not pick up your changes</a></li>
       </ul>
     </li>
     <li><a href="#related-commands">Related commands</a></li>

@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Remote agent hardening · RF Swift</title>
-  <meta name="description" content="Expose the remote agent safely: certificates, network exposure and operations.">
+  <meta name="description" content="Expose the remote agent safely: network, dedicated user, keys, vault, service, logs and incident response.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/security/remote-agent/">
+  <link rel="canonical" href="http://localhost:1313/docs/security/remote-agent/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Remote agent hardening · RF Swift">
-  <meta property="og:description" content="Expose the remote agent safely: certificates, network exposure and operations.">
-  <meta property="og:url" content="https://rfswift.io/docs/security/remote-agent/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:description" content="Expose the remote agent safely: network, dedicated user, keys, vault, service, logs and incident response.">
+  <meta property="og:url" content="http://localhost:1313/docs/security/remote-agent/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -244,23 +230,32 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Remote agent hardening</h1><p class="doc-lead">Expose the remote agent safely: certificates, network exposure and operations.</p><p class="doc-meta">Advanced · 9 min read · Updated September 27, 2026</p>
+      <h1>Remote agent hardening</h1><p class="doc-lead">Expose the remote agent safely: network, dedicated user, keys, vault, service, logs and incident response.</p><p class="doc-meta">Advanced · 9 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p><code>rfswift agent</code> turns a lab machine into a server that a Workbench can drive. A client certificate signed by the agent&rsquo;s CA is <strong>full command execution as the agent&rsquo;s user</strong> on that machine: creating privileged containers, mounting host directories into them, opening terminals, pulling images. Treat the agent like SSH with a shared root key, and deploy it with the same care. This page is the checklist; the <a href="/docs/guide/remote-agent">remote agent guide</a> explains the mechanics and the <a href="/docs/security/audit">audit</a> records what was verified in the code.</p>
+      <p><code>rfswift agent</code> turns a lab machine into a server that a Workbench can drive. A client certificate signed by the agent&rsquo;s CA gives <strong>full command execution as the agent&rsquo;s user</strong> on that machine: creating privileged containers, mounting host directories into them, opening terminals, pulling images.</p>
+<p>Treat the agent like SSH with a shared root key, and deploy it with the same care. This page is the checklist. The <a href="/docs/guide/remote-agent/">remote agent guide</a> explains how it works, and the <a href="/docs/security/audit/">audit page</a> records what was verified in the code.</p>
+<p><strong>In short</strong></p>
+<ol>
+<li>Never expose the port publicly: keep it on loopback and reach it through a VPN or an SSH tunnel.</li>
+<li>Run the agent as a dedicated, unprivileged user, ideally with rootless Podman.</li>
+<li>Keep the CA key off the agent host, and issue one client file per person and per machine.</li>
+<li>Run it as a service and read its logs.</li>
+<li>Know how to rotate: there is no revocation, only a new bundle.</li>
+</ol>
 <h2 id="what-the-protocol-guarantees-and-what-it-does-not">What the protocol guarantees, and what it does not<a class="anchor" href="#what-the-protocol-guarantees-and-what-it-does-not" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
   <thead>
     <tr>
       <th>Guaranteed by the implementation (verified)</th>
-      <th>Not provided, your deployment must cover it</th>
+      <th>Not provided: your deployment must cover it</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>TLS 1.3 only; TLS 1.2 handshakes are refused</td>
-      <td>Any hiding of the port: an open TLS port is visible to scanners</td>
+      <td>Hiding the port: an open TLS port is visible to scanners</td>
     </tr>
     <tr>
       <td>Mutual TLS: a connection without a CA-signed client certificate is closed during the handshake; nothing HTTP is reachable, not even a health route</td>
@@ -268,7 +263,7 @@
     </tr>
     <tr>
       <td>Expired, wrong-usage (a server certificate used as a client one) and foreign-CA certificates are refused</td>
-      <td>Revocation of one client: only rotating the whole bundle revokes</td>
+      <td>Revoking one client: only rotating the whole bundle revokes</td>
     </tr>
     <tr>
       <td>The client pins the server certificate&rsquo;s SHA-256 fingerprint and verifies its name against the CA</td>
@@ -276,11 +271,11 @@
     </tr>
     <tr>
       <td>Unknown routes and wrong methods close the connection without a byte</td>
-      <td>Protection of the agent host from what an authorised client asks for</td>
+      <td>Protecting the agent host from what an authorised client asks for</td>
     </tr>
     <tr>
-      <td>Request bodies are capped (64 KiB commands, 2 MiB control, 16 KiB headers), idle and slow connections are closed after 5 s of silence, 15 s to read a request, 30 s idle</td>
-      <td>Confinement of the agent&rsquo;s user: it runs containers, so a docker-group user is root-equivalent</td>
+      <td>Request bodies are capped (64 KiB commands, 2 MiB control, 16 KiB headers); idle and slow connections are closed after 5 s of silence, 15 s to read a request, 30 s idle</td>
+      <td>Confining the agent&rsquo;s user: it runs containers, so a docker-group user is root-equivalent</td>
     </tr>
     <tr>
       <td>Private keys are encrypted at rest with random passwords held only in the OS vault</td>
@@ -288,11 +283,11 @@
     </tr>
     <tr>
       <td>Transferable credential files are protected by a passphrase (scrypt, AES-256-GCM) and, since v4.0.2, carry an integrity tag that binds the CA, certificate, endpoint and pin to the same passphrase</td>
-      <td>Verification of files issued by older releases: compare fingerprints by hand</td>
+      <td>Verifying files issued by older releases: compare fingerprints by hand</td>
     </tr>
     <tr>
       <td>Every authenticated request is logged with the client&rsquo;s certificate fingerprint, source address and method</td>
-      <td>Log shipping, retention and review</td>
+      <td>Shipping, keeping and reviewing the logs</td>
     </tr>
   </tbody>
 </table>
@@ -300,33 +295,45 @@
 <h2 id="deployment-checklist">Deployment checklist<a class="anchor" href="#deployment-checklist" aria-label="Link to this section"></a></h2>
 <h3 id="1-network-never-a-public-port">1. Network: never a public port<a class="anchor" href="#1-network-never-a-public-port" aria-label="Link to this section"></a></h3>
 <ul>
-<li>Keep the default bind, <code>127.0.0.1:8443</code>, and reach it through <strong>WireGuard</strong> (preferred for a permanent lab), another authenticated VPN, or an SSH tunnel (<code>ssh -N -L 8443:127.0.0.1:8443 user@lab</code>). The agent only ever sees connections from the tunnel endpoint.</li>
-<li>If it must listen on an interface, bind it to the VPN interface address (<code>--bind 10.8.0.5:8443</code>), not <code>0.0.0.0</code>, and add a firewall rule that drops everything except the VPN peers. <code>rfswift agent</code> reports &ldquo;lan&rdquo; exposure to the Workbench for any non-loopback bind, and the connection audit warns.</li>
-<li>Do not port-forward the agent from a home router, do not put it behind a reverse proxy that terminates TLS (the client certificate must reach the agent itself), and do not add it to a DNS name that resolves publicly.</li>
+<li>Keep the default bind, <code>127.0.0.1:8443</code>. Reach it through <strong>WireGuard</strong> (best for a permanent lab), another authenticated VPN, or an SSH tunnel: <code>ssh -N -L 8443:127.0.0.1:8443 user@lab</code>. The agent then only ever sees connections from the tunnel endpoint.</li>
+<li>If it must listen on an interface, bind it to the VPN interface address (<code>--bind 10.8.0.5:8443</code>), not <code>0.0.0.0</code>. Add a firewall rule that drops everything except the VPN peers. For any non-loopback bind, <code>rfswift agent</code> reports &ldquo;lan&rdquo; exposure to the Workbench and the connection audit warns.</li>
+<li>Do not port-forward the agent from a home router. Do not put it behind a reverse proxy that terminates TLS: the client certificate must reach the agent itself. Do not give it a DNS name that resolves publicly.</li>
 </ul>
 <h3 id="2-identity-a-dedicated-unprivileged-agent-user">2. Identity: a dedicated, unprivileged agent user<a class="anchor" href="#2-identity-a-dedicated-unprivileged-agent-user" aria-label="Link to this section"></a></h3>
 <ul>
 <li>Run the agent as a <strong>dedicated account</strong> that owns nothing else: no personal SSH keys, no browser profile, no other projects. Everything a client does runs as this user.</li>
-<li>Give that account only the engine access it needs. On Linux Docker this means the <code>docker</code> group, which is root-equivalent by design: prefer <strong>rootless Podman</strong> for an exposed agent, so a client that creates a privileged container gets root inside a user namespace, not on the host. <code>rfswift host udev</code> gives the account hardware access without root.</li>
-<li>Keep the agent&rsquo;s own user out of <code>sudo</code>. Host setup steps (<code>rfswift host setup</code>) are done once, by an administrator, not through the agent.</li>
+<li>Give that account only the engine access it needs. On Linux with Docker that means the <code>docker</code> group, which is root-equivalent by design. For an exposed agent, prefer <strong>rootless Podman</strong>: a client that creates a privileged container then gets root inside a user namespace, not on the host. <code>rfswift host udev</code> gives the account hardware access without root.</li>
+<li>Keep the agent&rsquo;s user out of <code>sudo</code>. Host setup (<code>rfswift host setup</code>) is done once by an administrator, not through the agent.</li>
 </ul>
 <h3 id="3-keys-generate-them-where-you-can-protect-them">3. Keys: generate them where you can protect them<a class="anchor" href="#3-keys-generate-them-where-you-can-protect-them" aria-label="Link to this section"></a></h3>
 <ul>
-<li><strong>Keep the CA off the exposed host.</strong> Run <code>rfswift agent certs init</code> on your administration workstation, export the agent&rsquo;s side with <code>rfswift agent certs export</code>, and install it on the lab machine with <code>rfswift agent certs import</code>. The lab machine then holds only its server key and the CA certificate; it cannot mint client certificates, and a compromise there does not give the attacker your CA.</li>
-<li>Issue one client file <strong>per person and per machine</strong> (<code>rfswift agent certs client --name alice-laptop</code>), never share a client file, and record the client fingerprint the command prints: the agent logs requests under it.</li>
-<li>Use a <strong>long transfer passphrase</strong> (12 characters is the minimum, a full sentence is better) and send the file and the passphrase over different channels. On import, compare the endpoint and the server fingerprint the import prints with the values printed at issue time; files from releases before v4.0.2 carry no integrity tag, and the import says so.</li>
-<li>Certificates live one year. Put the expiry in your calendar: an expired client certificate fails with a bare &ldquo;bad certificate&rdquo;, and the Workbench warns only for the server certificate (30 days ahead). Rotation is &ldquo;new bundle, re-issue every client&rdquo;: plan it during a quiet week.</li>
-<li>Key directories are owner-only (<code>0700</code>, key files <code>0600</code>); on Windows keep them inside the user profile, whose ACL does the same job. Never copy <code>client-key.pem</code> or <code>server-key.pem</code> to another machine: they only open with the vault of the user who generated them.</li>
+<li><strong>Keep the CA off the exposed host.</strong> Run <code>rfswift agent certs init</code> on your administration workstation, export the agent&rsquo;s side with <code>rfswift agent certs export</code>, and install it on the lab machine with <code>rfswift agent certs import</code>. The lab machine then holds only its server key and the CA certificate. It cannot mint client certificates, and a compromise there does not give an attacker your CA.</li>
+<li>Issue one client file <strong>per person and per machine</strong> (<code>rfswift agent certs client --name alice-laptop</code>). Never share a client file. Write down the client fingerprint the command prints: the agent logs requests under it.</li>
+<li>Use a <strong>long transfer passphrase</strong>: 12 characters is the minimum, a full sentence is better. Send the file and the passphrase over different channels.</li>
+<li>On import, compare the endpoint and server fingerprint the import prints with the values printed when the file was issued. Files from releases before v4.0.2 carry no integrity tag, and the import says so.</li>
+<li>Certificates last one year. Put the expiry date in your calendar: an expired client certificate fails with a bare &ldquo;bad certificate&rdquo;, and the Workbench warns only about the server certificate (30 days ahead). Rotating means a new bundle and re-issuing every client; plan it for a quiet week.</li>
+<li>Key directories are owner-only (<code>0700</code>, key files <code>0600</code>). On Windows, keep them inside the user profile, whose ACL does the same job. Never copy <code>client-key.pem</code> or <code>server-key.pem</code> to another machine: they only open with the vault of the user who generated them.</li>
 </ul>
 <h3 id="4-the-vault-on-a-server">4. The vault on a server<a class="anchor" href="#4-the-vault-on-a-server" aria-label="Link to this section"></a></h3>
 <p>The agent decrypts its key with a password stored in the OS credential vault of the user it runs as: macOS Keychain, Windows Credential Manager, or <strong>Secret Service</strong> on Linux (GNOME Keyring, KDE Wallet with the Secret Service bridge, KeePassXC). It fails closed when the vault is missing or locked.</p>
 <ul>
-<li>Linux servers without a desktop need a Secret Service on the agent user&rsquo;s session D-Bus, unlocked. The practical setups: run the agent inside a login session of that user (a <code>tmux</code> session after an SSH login where <code>gnome-keyring-daemon --unlock</code> was run), or a systemd user service with <code>loginctl enable-linger</code> and a keyring unlocked at boot. Test with <code>rfswift agent --bundle DIR</code>: it prints &ldquo;listening&rdquo; only after the key was decrypted.</li>
-<li>Windows: run the agent in a session of the same Windows user that imported the credentials; a scheduled task under another account cannot open that vault.</li>
-<li>Do not work around a missing vault by decrypting keys into plaintext files.</li>
+<li>
+<p><strong>Linux servers without a desktop</strong> need an unlocked Secret Service on the agent user&rsquo;s session D-Bus. Two practical setups:</p>
+<ul>
+<li>run the agent inside a login session of that user, for example a <code>tmux</code> session after an SSH login where <code>gnome-keyring-daemon --unlock</code> was run;</li>
+<li>run it as a systemd user service with <code>loginctl enable-linger</code> and a keyring unlocked at boot.</li>
+</ul>
+<p>Test with <code>rfswift agent --bundle DIR</code>: it prints &ldquo;listening&rdquo; only once the key was decrypted.</p>
+</li>
+<li>
+<p><strong>Windows:</strong> run the agent in a session of the same Windows user that imported the credentials. A scheduled task under another account cannot open that vault.</p>
+</li>
+<li>
+<p>Do not work around a missing vault by decrypting keys into plaintext files.</p>
+</li>
 </ul>
 <h3 id="5-run-it-as-a-service-with-logs">5. Run it as a service, with logs<a class="anchor" href="#5-run-it-as-a-service-with-logs" aria-label="Link to this section"></a></h3>
-<p>A minimal hardened systemd <strong>user</strong> unit (the agent must run as the credential owner; <code>loginctl enable-linger agent</code> keeps the session alive):</p>
+<p>A minimal hardened systemd <strong>user</strong> unit. The agent must run as the credential owner; <code>loginctl enable-linger agent</code> keeps the session alive:</p>
 <div class="code">
   <div class="code-bar"><span>ini</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="c1"># ~/.config/systemd/user/rfswift-agent.service</span>
 </span></span><span class="line"><span class="cl"><span class="k">[Unit]</span>
@@ -345,31 +352,33 @@
 </span></span><span class="line"><span class="cl"><span class="k">[Install]</span>
 </span></span><span class="line"><span class="cl"><span class="na">WantedBy</span><span class="o">=</span><span class="s">default.target</span></span></span></code></pre></div></div>
 <ul>
-<li>Every authenticated request is logged to stderr as <code>agent: client &lt;fingerprint prefix&gt; from &lt;address&gt;: &lt;method&gt;</code>; rejected handshakes appear as <code>http: TLS handshake error from &lt;address&gt;: &lt;reason&gt;</code>. Ship the journal somewhere you read it, and alert on handshake errors from unexpected addresses and on <code>command</code> or <code>control targets.create</code> lines outside working hours.</li>
-<li>Restart the service after <code>rfswift update</code>: the Workbench refuses creation through an agent whose schema is older than its own and warns when the versions differ.</li>
+<li>Every authenticated request is logged to stderr as <code>agent: client &lt;fingerprint prefix&gt; from &lt;address&gt;: &lt;method&gt;</code>. Rejected handshakes appear as <code>http: TLS handshake error from &lt;address&gt;: &lt;reason&gt;</code>.</li>
+<li>Send the journal somewhere you actually read it. Alert on handshake errors from unexpected addresses, and on <code>command</code> or <code>control targets.create</code> lines outside working hours.</li>
+<li>Restart the service after <code>rfswift update</code>. The Workbench refuses to create anything through an agent whose schema is older than its own, and warns when the versions differ.</li>
 </ul>
-<h3 id="6-what-clients-can-do-once-inside-and-how-to-limit-the-blast-radius">6. What clients can do once inside, and how to limit the blast radius<a class="anchor" href="#6-what-clients-can-do-once-inside-and-how-to-limit-the-blast-radius" aria-label="Link to this section"></a></h3>
-<p>An authenticated client can run any <code>rfswift</code> command as the agent user, create containers with any mount, capability or device the engine allows, open interactive shells, read the mission workspace, prune images and collect the Nix store. Limit what that reaches:</p>
+<h3 id="6-limit-what-an-authorised-client-can-reach">6. Limit what an authorised client can reach<a class="anchor" href="#6-limit-what-an-authorised-client-can-reach" aria-label="Link to this section"></a></h3>
+<p>Once connected, a client can run any <code>rfswift</code> command as the agent user. It can create containers with any mount, capability or device the engine allows, open interactive shells, read the mission workspace, prune images and collect the Nix store. Limit what that reaches:</p>
 <ul>
-<li>Keep assessment data for other engagements off the agent host, or in workspaces the agent user cannot read.</li>
+<li>Keep other engagements&rsquo; data off the agent host, or in workspaces the agent user cannot read.</li>
 <li>Prefer rootless Podman, which refuses root-only devices and cgroup rules, over Docker.</li>
-<li>Do not point mission workspaces at the agent user&rsquo;s home or at shared directories; the artifact listing is confined to the workspace, but the workspace is whatever the creator chose.</li>
-<li>Review the access log for <code>command</code> lines: the Workbench only issues <code>exec -c &lt;mission&gt; -e &lt;command&gt;</code> there; anything else is not the Workbench.</li>
+<li>Do not point mission workspaces at the agent user&rsquo;s home or at shared directories. The artifact listing is confined to the workspace, but the workspace is whatever the creator chose.</li>
+<li>Review the access log for <code>command</code> lines. The Workbench only ever issues <code>exec -c &lt;mission&gt; -e &lt;command&gt;</code> there; anything else is not the Workbench.</li>
 </ul>
 <h3 id="7-rotation-and-incident-response">7. Rotation and incident response<a class="anchor" href="#7-rotation-and-incident-response" aria-label="Link to this section"></a></h3>
 <ul>
-<li><strong>Lost or stolen client file or laptop</strong>: there is no revocation list. Generate a new bundle (<code>certs init</code> in a new directory), export the server side to the agent, restart it, and re-issue every legitimate client. The old CA is then worthless.</li>
-<li><strong>Compromised agent host</strong>: assume every mission workspace and every container on it is compromised, and that the attacker holds the server key and the CA certificate (not the CA key, if you kept it off the host). Rebuild the host, new bundle, new clients.</li>
-<li><strong>Passphrase typed into the wrong place</strong>: it only protects the file in transit; once imported, the key is re-encrypted under a vault password. Re-issue the client anyway.</li>
+<li><strong>A client file or laptop is lost or stolen.</strong> There is no revocation list. Generate a new bundle (<code>certs init</code> in a new directory), export the server side to the agent, restart it, and re-issue every legitimate client. The old CA is then worthless.</li>
+<li><strong>The agent host is compromised.</strong> Assume every mission workspace and container on it is compromised, and that the attacker holds the server key and the CA certificate (but not the CA key, if you kept it off the host). Rebuild the host, create a new bundle and new clients.</li>
+<li><strong>A passphrase was typed into the wrong place.</strong> It only protects the file in transit; once imported, the key is re-encrypted under a vault password. Re-issue the client anyway.</li>
 </ul>
 <h2 id="on-the-workbench-side">On the Workbench side<a class="anchor" href="#on-the-workbench-side" aria-label="Link to this section"></a></h2>
 <ul>
-<li>The Workbench was reviewed as a target of a hostile agent: everything an agent returns is escaped or rendered as text, the WebView runs under a Content Security Policy that forbids remote connections, and secrets never cross the JavaScript bridge. You still do not want to connect to an agent you do not trust: a hostile agent can feed you wrong evidence and can attack the terminals and tools you use through it.</li>
-<li>Open <strong>Connection &amp; security</strong> after connecting and read the audit rows: transport, authentication, server identity, certificate validity, network exposure and <strong>agent version</strong> must all be green. &ldquo;Reachable on the local network&rdquo; means the agent is not bound to loopback; &ldquo;Agent reports X; this Workbench is Y&rdquo; means one side was not updated.</li>
-<li>Saved agent profiles hold the endpoint, the pinned fingerprint and the credential folder, nothing secret; <strong>Forget</strong> removes the profile and leaves the certificate files and the vault entry in place. Clean those up by hand when a credential is retired.</li>
-<li>When importing a client file the Workbench shows the endpoint and the fingerprint it found; a file from an older release is announced as unverified. Compare with what the issuing side printed before pressing <strong>Connect</strong>.</li>
+<li>The Workbench was reviewed as the target of a hostile agent. Everything an agent returns is escaped or shown as text, the WebView runs under a Content Security Policy that forbids remote connections, and secrets never cross the JavaScript bridge. Still, do not connect to an agent you do not trust: a hostile agent can feed you wrong evidence and attack the terminals and tools you use through it.</li>
+<li>After connecting, open <strong>Connection &amp; security</strong> and read the audit rows. Transport, authentication, server identity, certificate validity, network exposure and <strong>agent version</strong> must all be green. &ldquo;Reachable on the local network&rdquo; means the agent is not bound to loopback. &ldquo;Agent reports X; this Workbench is Y&rdquo; means one side was not updated.</li>
+<li>Saved agent profiles hold the endpoint, the pinned fingerprint and the credential folder, nothing secret. <strong>Forget</strong> removes the profile but leaves the certificate files and the vault entry; clean those up by hand when you retire a credential.</li>
+<li>When you import a client file, the Workbench shows the endpoint and fingerprint it found, and flags a file from an older release as unverified. Compare them with what the issuing side printed before you press <strong>Connect</strong>.</li>
 </ul>
 <h2 id="quick-reference">Quick reference<a class="anchor" href="#quick-reference" aria-label="Link to this section"></a></h2>
+<p>The whole setup, from the administration workstation to each Workbench machine:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># administration workstation: CA stays here</span>
 </span></span><span class="line"><span class="cl">rfswift agent certs init --dir ~/agents/lab --name lab --host lab.vpn.internal
@@ -383,7 +392,7 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># each Workbench machine</span>
 </span></span><span class="line"><span class="cl">rfswift agent certs import alice-laptop-client.json --dir ~/.config/rfswift/remote/lab-client
 </span></span><span class="line"><span class="cl"><span class="c1"># then Workbench &gt; Connection &amp; security &gt; Add agent &gt; Import client credentials, compare the fingerprint, Connect</span></span></span></code></pre></div></div>
-<p>The <a href="/docs/guide/limitations#remote-agent-mode">Known limits</a> page lists the sizes, timeouts and unsupported operations of remote mode.</p>
+<p>The sizes, timeouts and unsupported operations of remote mode are listed in <a href="/docs/guide/limitations/#remote-agent-mode">Known limits</a>.</p>
 
     </div>
     <footer class="doc-foot">
@@ -412,7 +421,7 @@
         <li><a href="#3-keys-generate-them-where-you-can-protect-them">3. Keys: generate them where you can protect them</a></li>
         <li><a href="#4-the-vault-on-a-server">4. The vault on a server</a></li>
         <li><a href="#5-run-it-as-a-service-with-logs">5. Run it as a service, with logs</a></li>
-        <li><a href="#6-what-clients-can-do-once-inside-and-how-to-limit-the-blast-radius">6. What clients can do once inside, and how to limit the blast radius</a></li>
+        <li><a href="#6-limit-what-an-authorised-client-can-reach">6. Limit what an authorised client can reach</a></li>
         <li><a href="#7-rotation-and-incident-response">7. Rotation and incident response</a></li>
       </ul>
     </li>

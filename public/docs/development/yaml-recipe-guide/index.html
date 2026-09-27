@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>YAML recipe guide · RF Swift</title>
-  <meta name="description" content="Build custom RF Swift images from readable YAML recipes instead of Dockerfiles.">
+  <meta name="description" content="Build your own RF Swift image from a short YAML file: a base image, the packages you want and a few commands.">
   <meta name="theme-color" content="#0b1416">
-  <link rel="canonical" href="https://rfswift.io/docs/development/yaml-recipe-guide/">
+  <link rel="canonical" href="http://localhost:1313/docs/development/yaml-recipe-guide/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="YAML recipe guide · RF Swift">
-  <meta property="og:description" content="Build custom RF Swift images from readable YAML recipes instead of Dockerfiles.">
-  <meta property="og:url" content="https://rfswift.io/docs/development/yaml-recipe-guide/">
-  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta property="og:description" content="Build your own RF Swift image from a short YAML file: a base image, the packages you want and a few commands.">
+  <meta property="og:url" content="http://localhost:1313/docs/development/yaml-recipe-guide/">
+  <meta property="og:image" content="http://localhost:1313/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@PentHertz">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -21,21 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-X1KH5KRN5B');
-        }
-      </script>
+  <link rel="stylesheet" href="/css/main.min.8efba756d0c796b2711c2d802bdeabf0022baea85860fbaf28104ab644586e5d.css" integrity="sha256-jvunVtDHlrJxHC2AK96r8AIrrqhYYPuvKBBKtkRYbl0=">
 </head>
 <body class="is-docs">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -245,15 +231,14 @@
 </nav>
 
     <header class="doc-head">
-      <h1>YAML recipe guide</h1><p class="doc-lead">Build custom RF Swift images from readable YAML recipes instead of Dockerfiles.</p><p class="doc-meta">Advanced · 10 min read · Updated September 27, 2026</p>
+      <h1>YAML recipe guide</h1><p class="doc-lead">Build your own RF Swift image from a short YAML file: a base image, the packages you want and a few commands.</p><p class="doc-meta">Advanced · 12 min read · Updated September 8, 2026</p>
     </header>
     <div class="prose">
-      <p>YAML recipes provide a simplified, readable way to build custom RF Swift container images without writing complex Dockerfiles. This guide covers everything you need to know about creating, customizing, and building images with YAML recipes.</p>
-<div class="admonition admonition-info" role="note"><p><strong>Why YAML Recipes?</strong> They eliminate the complexity of Dockerfiles while providing all the power you need for RF and hardware security tool containers. Perfect for quick prototyping and sharing configurations!</p>
-</div>
-<hr>
+      <p>A YAML recipe describes a custom RF Swift image in a few lines: which image to start from, which packages to add and which commands to run. RF Swift turns it into a Dockerfile and builds the image for you.</p>
+<p>Use a recipe when the official toolboxes miss a tool you need every time, or when a team should share one reproducible image. To add a single tool to one lab, <a href="/docs/guide/installing-software/">Add more software</a> is quicker.</p>
+<p><strong>Where to start:</strong> copy the <a href="#your-first-recipe">first recipe</a> below, build it, then look at the <a href="#complete-examples">complete examples</a>. The <a href="/docs/development/building-images/">helper functions reference</a> lists the build helpers you can call from a recipe.</p>
 <h2 id="quick-start">Quick start<a class="anchor" href="#quick-start" aria-label="Link to this section"></a></h2>
-<h3 id="your-first-yaml-recipe">Your first YAML recipe<a class="anchor" href="#your-first-yaml-recipe" aria-label="Link to this section"></a></h3>
+<h3 id="your-first-recipe">Your first recipe<a class="anchor" href="#your-first-recipe" aria-label="Link to this section"></a></h3>
 <p>Create a file named <code>my-sdr.yaml</code>:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
@@ -273,10 +258,60 @@
 <p>Build it:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build -r my-sdr.yaml</span></span></code></pre></div></div>
-<p>That&rsquo;s it! You now have a custom SDR container image.</p>
-<hr>
-<h2 id="yaml-recipe-structure">YAML recipe structure<a class="anchor" href="#yaml-recipe-structure" aria-label="Link to this section"></a></h2>
-<h3 id="complete-field-reference">Complete field reference<a class="anchor" href="#complete-field-reference" aria-label="Link to this section"></a></h3>
+<p>You now have a local image called <code>my-sdr:latest</code>. Create a lab from it like any other image: <code>rfswift container create -i my-sdr:latest -n mylab</code>.</p>
+<h2 id="recipe-fields">Recipe fields<a class="anchor" href="#recipe-fields" aria-label="Link to this section"></a></h2>
+<p>A recipe has two required fields and four optional ones.</p>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>base_image</code></td>
+      <td>String</td>
+      <td>Yes</td>
+      <td>The image to start from (for example <code>ubuntu:24.04</code>)</td>
+    </tr>
+    <tr>
+      <td><code>tag</code></td>
+      <td>String</td>
+      <td>Yes</td>
+      <td>Name and tag of the image you build</td>
+    </tr>
+    <tr>
+      <td><code>packages</code></td>
+      <td>List</td>
+      <td>No</td>
+      <td>System packages installed with APT</td>
+    </tr>
+    <tr>
+      <td><code>python_packages</code></td>
+      <td>List</td>
+      <td>No</td>
+      <td>Python packages installed with pip</td>
+    </tr>
+    <tr>
+      <td><code>run_commands</code></td>
+      <td>List</td>
+      <td>No</td>
+      <td>Bash commands run during the build</td>
+    </tr>
+    <tr>
+      <td><code>context</code></td>
+      <td>String</td>
+      <td>No</td>
+      <td>Build context directory (default: <code>.</code>)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>Here is every field in one file:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Base configuration (required)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">        </span><span class="c"># Base Docker image</span><span class="w">
@@ -307,72 +342,20 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Build context (optional)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;.&#34;</span><span class="w">                       </span><span class="c"># Build context directory (default: &#34;.&#34;)</span></span></span></code></pre></div></div>
-<h3 id="field-descriptions">Field descriptions<a class="anchor" href="#field-descriptions" aria-label="Link to this section"></a></h3>
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>base_image</code></td>
-      <td>String</td>
-      <td>Yes</td>
-      <td>Base Docker image (e.g., <code>ubuntu:24.04</code>)</td>
-    </tr>
-    <tr>
-      <td><code>tag</code></td>
-      <td>String</td>
-      <td>Yes</td>
-      <td>Name and tag for resulting image</td>
-    </tr>
-    <tr>
-      <td><code>packages</code></td>
-      <td>List</td>
-      <td>No</td>
-      <td>APT/system packages to install</td>
-    </tr>
-    <tr>
-      <td><code>python_packages</code></td>
-      <td>List</td>
-      <td>No</td>
-      <td>Python packages to install via pip</td>
-    </tr>
-    <tr>
-      <td><code>run_commands</code></td>
-      <td>List</td>
-      <td>No</td>
-      <td>Custom bash commands to execute</td>
-    </tr>
-    <tr>
-      <td><code>context</code></td>
-      <td>String</td>
-      <td>No</td>
-      <td>Build context directory (default: <code>.</code>)</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<hr>
 <h2 id="choosing-a-base-image">Choosing a base image<a class="anchor" href="#choosing-a-base-image" aria-label="Link to this section"></a></h2>
-<h3 id="official-rf-swift-base-images">Official RF Swift base images<a class="anchor" href="#official-rf-swift-base-images" aria-label="Link to this section"></a></h3>
-<p>Start from RF Swift&rsquo;s optimized base images for best results:</p>
+<h3 id="rf-swift-base-images">RF Swift base images<a class="anchor" href="#rf-swift-base-images" aria-label="Link to this section"></a></h3>
+<p>Starting from an RF Swift base image gives you its libraries and helper functions from the start:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Core RF Swift base (recommended)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;penthertz/rfswift_resolute:core&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Ubuntu Noble (24.04) - Latest LTS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># RF Swift base image</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;penthertz/rfswift_resolute:base&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Ubuntu Jammy (22.04) - Stable LTS</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:22.04&#34;</span></span></span></code></pre></div></div>
 <h3 id="standard-base-images">Standard base images<a class="anchor" href="#standard-base-images" aria-label="Link to this section"></a></h3>
-<p>For building from scratch:</p>
+<p>To build from scratch, start from a distribution image:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Ubuntu (recommended for RF tools)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">      </span><span class="c"># Noble Numbat (latest LTS)</span><span class="w">
@@ -388,37 +371,40 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Alpine (for minimal images)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;alpine:3.19&#34;</span><span class="w">       </span><span class="c"># Warning: May lack some RF libraries</span></span></span></code></pre></div></div>
-<h3 id="choosing-the-right-base">Choosing the right base<a class="anchor" href="#choosing-the-right-base" aria-label="Link to this section"></a></h3>
-<p><strong>Use Ubuntu 24.04 when:</strong></p>
-<ul>
-<li>You want the latest packages and kernel support</li>
-<li>Building general-purpose SDR containers</li>
-<li>You need wide hardware compatibility</li>
-<li>You&rsquo;re new to RF Swift development</li>
-</ul>
-<p><strong>Use Ubuntu 22.04 when:</strong></p>
-<ul>
-<li>You need proven stability</li>
-<li>Working with enterprise environments</li>
-<li>Long-term support is critical</li>
-</ul>
-<p><strong>Use Debian when:</strong></p>
-<ul>
-<li>You prefer Debian&rsquo;s package stability</li>
-<li>You need minimal overhead beyond Ubuntu</li>
-<li>Working in Debian-based infrastructure</li>
-</ul>
-<p><strong>Use Alpine when:</strong></p>
-<ul>
-<li>Image size is critical (&lt;50MB base)</li>
-<li>⚠️ Warning: Limited RF library support, manual compilation often needed</li>
-</ul>
-<div class="admonition admonition-warning" role="note"><p><strong>Architecture Note:</strong> Ensure your base image supports your target architecture (amd64, arm64, or riscv64). Use multi-arch images like <code>ubuntu:24.04</code> which support multiple architectures.</p>
+<h3 id="which-base-to-pick">Which base to pick<a class="anchor" href="#which-base-to-pick" aria-label="Link to this section"></a></h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Base</th>
+      <th>Pick it when</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ubuntu 24.04</td>
+      <td>You want recent packages and wide hardware support, you build a general-purpose SDR image, or you are new to recipes</td>
+    </tr>
+    <tr>
+      <td>Ubuntu 22.04</td>
+      <td>You need proven stability, long-term support, or you work in an enterprise environment</td>
+    </tr>
+    <tr>
+      <td>Debian</td>
+      <td>You prefer Debian&rsquo;s package stability, want slightly less overhead than Ubuntu, or run Debian-based infrastructure</td>
+    </tr>
+    <tr>
+      <td>Alpine</td>
+      <td>Image size matters most (a base under 50 MB). Few RF libraries are packaged, so expect to compile a lot yourself</td>
+    </tr>
+  </tbody>
+</table>
 </div>
-<hr>
-<h2 id="package-management">Package management<a class="anchor" href="#package-management" aria-label="Link to this section"></a></h2>
+<div class="admonition admonition-warning" role="note"><p class="admonition-title">Check the architecture</p><p>Make sure the base image exists for your target architecture (amd64, arm64 or riscv64). Multi-architecture images such as <code>ubuntu:24.04</code> cover all three.</p>
+</div>
+<h2 id="installing-packages">Installing packages<a class="anchor" href="#installing-packages" aria-label="Link to this section"></a></h2>
 <h3 id="system-packages-apt">System packages (APT)<a class="anchor" href="#system-packages-apt" aria-label="Link to this section"></a></h3>
-<p>The <code>packages</code> section installs system packages using apt:</p>
+<p>List system packages under <code>packages</code>. Comments help keep long lists readable:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">packages</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Development tools</span><span class="w">
@@ -442,14 +428,14 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">wget</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">curl</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">vim</span></span></span></code></pre></div></div>
-<p><strong>Best Practices:</strong></p>
+<p>Good habits:</p>
 <ul>
-<li>Group related packages together with comments</li>
-<li>Use <code>-dev</code> packages for libraries you&rsquo;ll compile against</li>
-<li>Include all build dependencies before compilation steps</li>
+<li>Group related packages and label each group with a comment.</li>
+<li>Add the <code>-dev</code> package of every library you compile against.</li>
+<li>List all build dependencies here, so they are installed before any compilation step in <code>run_commands</code>.</li>
 </ul>
 <h3 id="python-packages-pip">Python packages (pip)<a class="anchor" href="#python-packages-pip" aria-label="Link to this section"></a></h3>
-<p>The <code>python_packages</code> section installs Python packages:</p>
+<p>List Python packages under <code>python_packages</code>. You can pin versions, install from Git and request extras:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">python_packages</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Basic scientific stack</span><span class="w">
@@ -468,17 +454,17 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># With extras</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;matplotlib[all]&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;jupyter[notebook]&#34;</span></span></span></code></pre></div></div>
-<p><strong>Version Specifications:</strong></p>
+<p>The version syntax is pip&rsquo;s:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">python_packages</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;package&#34;</span><span class="w">           </span><span class="c"># Latest version</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;package==1.0.0&#34;</span><span class="w">    </span><span class="c"># Exact version</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;package&gt;=1.0.0&#34;</span><span class="w">    </span><span class="c"># Minimum version</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;package&gt;=1.0,&lt;2.0&#34;</span><span class="w"> </span><span class="c"># Version range</span></span></span></code></pre></div></div>
-<hr>
-<h2 id="custom-commands-run_commands">Custom commands (run_commands)<a class="anchor" href="#custom-commands-run_commands" aria-label="Link to this section"></a></h2>
-<p>The <code>run_commands</code> section executes bash commands during the build:</p>
+<h2 id="running-commands-run_commands">Running commands (run_commands)<a class="anchor" href="#running-commands-run_commands" aria-label="Link to this section"></a></h2>
+<p>Everything under <code>run_commands</code> runs in Bash during the build, in order.</p>
 <h3 id="simple-commands">Simple commands<a class="anchor" href="#simple-commands" aria-label="Link to this section"></a></h3>
+<p>One command per line:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">run_commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;echo &#39;Build starting...&#39;&#34;</span><span class="w">
@@ -486,7 +472,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;useradd -m rfuser&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;chmod 755 /opt/tools&#34;</span></span></span></code></pre></div></div>
 <h3 id="multi-line-commands">Multi-line commands<a class="anchor" href="#multi-line-commands" aria-label="Link to this section"></a></h3>
-<p>Use YAML&rsquo;s pipe (<code>|</code>) syntax for complex commands:</p>
+<p>For several steps that belong together, use YAML&rsquo;s pipe (<code>|</code>) syntax:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">run_commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="p">|</span><span class="sd">
@@ -496,8 +482,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="sd">    cd tool
 </span></span></span><span class="line"><span class="cl"><span class="sd">    make
 </span></span></span><span class="line"><span class="cl"><span class="sd">    make install</span></span></span></code></pre></div></div>
-<h3 id="using-helper-functions">Using helper functions<a class="anchor" href="#using-helper-functions" aria-label="Link to this section"></a></h3>
-<p>RF Swift provides powerful helper functions:</p>
+<h3 id="helper-functions">Helper functions<a class="anchor" href="#helper-functions" aria-label="Link to this section"></a></h3>
+<p>RF Swift&rsquo;s build helpers are available in every recipe. They print coloured messages, retry network steps, and clone and build CMake projects and GNU Radio out-of-tree modules:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">run_commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Colored output</span><span class="w">
@@ -525,11 +511,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">  
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Success message</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;goodecho &#39;Installation complete!&#39;&#34;</span></span></span></code></pre></div></div>
-<p>See the <a href="/docs/development/building-images/">Helper Functions Reference</a> for complete documentation.</p>
-<hr>
+<p>Every helper and its arguments are described in the <a href="/docs/development/building-images/">helper functions reference</a>.</p>
 <h2 id="complete-examples">Complete examples<a class="anchor" href="#complete-examples" aria-label="Link to this section"></a></h2>
-<h3 id="example-1-simple-sdr-image">Example 1: simple SDR image<a class="anchor" href="#example-1-simple-sdr-image" aria-label="Link to this section"></a></h3>
-<p>Basic SDR tools for learning and experimentation:</p>
+<h3 id="example-1-a-simple-sdr-image">Example 1: a simple SDR image<a class="anchor" href="#example-1-a-simple-sdr-image" aria-label="Link to this section"></a></h3>
+<p>Basic SDR tools for learning and experimenting:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;sdr-beginner:latest&#34;</span><span class="w">
@@ -546,10 +531,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">run_commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;echo &#39;SDR tools ready!&#39;&#34;</span></span></span></code></pre></div></div>
-<p>Build: <code>rfswift image build -r sdr-beginner.yaml</code></p>
-<hr>
-<h3 id="example-2-gnu-radio-development-environment">Example 2: GNU Radio development environment<a class="anchor" href="#example-2-gnu-radio-development-environment" aria-label="Link to this section"></a></h3>
-<p>Complete GNU Radio setup with OOT modules:</p>
+<p>Build it with <code>rfswift image build -r sdr-beginner.yaml</code>.</p>
+<h3 id="example-2-a-gnu-radio-development-environment">Example 2: a GNU Radio development environment<a class="anchor" href="#example-2-a-gnu-radio-development-environment" aria-label="Link to this section"></a></h3>
+<p>GNU Radio 3.10 built from source, with the gr-osmosdr out-of-tree module:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;gnuradio-dev:3.10&#34;</span><span class="w">
@@ -609,9 +593,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="sd">      &#39;gr_osmosdr_install&#39;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;goodecho &#39;GNU Radio environment ready!&#39;&#34;</span></span></span></code></pre></div></div>
-<hr>
-<h3 id="example-3-multi-sdr-hardware-support">Example 3: Multi-SDR hardware support<a class="anchor" href="#example-3-multi-sdr-hardware-support" aria-label="Link to this section"></a></h3>
-<p>Support for multiple SDR devices:</p>
+<h3 id="example-3-several-sdr-devices">Example 3: several SDR devices<a class="anchor" href="#example-3-several-sdr-devices" aria-label="Link to this section"></a></h3>
+<p>Drivers for RTL-SDR, HackRF, Airspy and LimeSDR, built from source:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;multi-sdr:latest&#34;</span><span class="w">
@@ -682,9 +665,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="sd">      &#39;limesdr_install&#39;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;goodecho &#39;All SDR devices supported!&#39;&#34;</span></span></span></code></pre></div></div>
-<hr>
 <h3 id="example-4-bluetooth-analysis-tools">Example 4: Bluetooth analysis tools<a class="anchor" href="#example-4-bluetooth-analysis-tools" aria-label="Link to this section"></a></h3>
-<p>Specialized Bluetooth security container:</p>
+<p>The BlueZ stack, Ubertooth and Python tools for Bluetooth work:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;bluetooth-tools:latest&#34;</span><span class="w">
@@ -725,9 +707,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;pip3install crackle&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;goodecho &#39;Bluetooth tools ready!&#39;&#34;</span></span></span></code></pre></div></div>
-<hr>
-<h3 id="example-5-rf-hacking-suite">Example 5: RF hacking suite<a class="anchor" href="#example-5-rf-hacking-suite" aria-label="Link to this section"></a></h3>
-<p>Complete RF security assessment toolkit:</p>
+<h3 id="example-5-an-rf-assessment-toolkit">Example 5: an RF assessment toolkit<a class="anchor" href="#example-5-an-rf-assessment-toolkit" aria-label="Link to this section"></a></h3>
+<p>SDR, analysis and YARD Stick One tools on top of the RF Swift core image:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;penthertz/rfswift_resolute:core&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;rf-hacking:latest&#34;</span><span class="w">
@@ -767,9 +748,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;mkdir -p /root/rf-projects&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;goodecho &#39;RF Hacking suite ready!&#39;&#34;</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="advanced-techniques">Advanced techniques<a class="anchor" href="#advanced-techniques" aria-label="Link to this section"></a></h2>
-<h3 id="multi-stage-builds-using-run_commands">Multi-stage builds (using run_commands)<a class="anchor" href="#multi-stage-builds-using-run_commands" aria-label="Link to this section"></a></h3>
+<h3 id="keeping-the-image-small">Keeping the image small<a class="anchor" href="#keeping-the-image-small" aria-label="Link to this section"></a></h3>
+<p>Build in <code>/tmp</code>, then delete sources and APT caches at the end:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;optimized-sdr:latest&#34;</span><span class="w">
@@ -796,7 +777,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;rm -rf /tmp/*&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;apt-get clean&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;rm -rf /var/lib/apt/lists/*&#34;</span></span></span></code></pre></div></div>
-<h3 id="conditional-builds">Conditional builds<a class="anchor" href="#conditional-builds" aria-label="Link to this section"></a></h3>
+<h3 id="different-steps-per-architecture">Different steps per architecture<a class="anchor" href="#different-steps-per-architecture" aria-label="Link to this section"></a></h3>
+<p>Test <code>uname -m</code> to run architecture-specific steps:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;arch-specific:latest&#34;</span><span class="w">
@@ -811,7 +793,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="sd">      colorecho &#34;Building for x86_64...&#34;
 </span></span></span><span class="line"><span class="cl"><span class="sd">      # x86-specific optimizations
 </span></span></span><span class="line"><span class="cl"><span class="sd">    fi</span></span></span></code></pre></div></div>
-<h3 id="version-pinning-for-reproducibility">Version pinning for reproducibility<a class="anchor" href="#version-pinning-for-reproducibility" aria-label="Link to this section"></a></h3>
+<h3 id="pinning-versions-for-reproducible-builds">Pinning versions for reproducible builds<a class="anchor" href="#pinning-versions-for-reproducible-builds" aria-label="Link to this section"></a></h3>
+<p>Pin APT and pip versions, and pass a commit to the build helper (fourth argument of <code>cmake_clone_and_build</code>):</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;reproducible-sdr:v1.0.0&#34;</span><span class="w">
@@ -826,15 +809,16 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;matplotlib==3.7.1&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">run_commands</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Pin specific git commits</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Pin a specific git commit (fourth argument)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="p">|</span><span class="sd">
 </span></span></span><span class="line"><span class="cl"><span class="sd">    cmake_clone_and_build \
 </span></span></span><span class="line"><span class="cl"><span class="sd">      &#39;https://github.com/osmocom/rtl-sdr.git&#39; \
 </span></span></span><span class="line"><span class="cl"><span class="sd">      &#39;build&#39; \
 </span></span></span><span class="line"><span class="cl"><span class="sd">      &#39;master&#39; \
-</span></span></span><span class="line"><span class="cl"><span class="sd">      &#39;a1b2c3d4e5f6&#39;  # Specific commit
+</span></span></span><span class="line"><span class="cl"><span class="sd">      &#39;a1b2c3d4e5f6&#39; \
 </span></span></span><span class="line"><span class="cl"><span class="sd">      &#39;rtlsdr_install&#39;</span></span></span></code></pre></div></div>
 <h3 id="environment-variables">Environment variables<a class="anchor" href="#environment-variables" aria-label="Link to this section"></a></h3>
+<p>Append <code>export</code> lines to the shell profile:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;custom-env:latest&#34;</span><span class="w">
@@ -844,9 +828,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;echo &#39;export PATH=/opt/tools/bin:$PATH&#39; &gt;&gt; /root/.bashrc&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;echo &#39;export LD_LIBRARY_PATH=/opt/tools/lib:$LD_LIBRARY_PATH&#39; &gt;&gt; /root/.bashrc&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;echo &#39;export PYTHONPATH=/opt/tools/python:$PYTHONPATH&#39; &gt;&gt; /root/.bashrc&#34;</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="building-your-recipe">Building your recipe<a class="anchor" href="#building-your-recipe" aria-label="Link to this section"></a></h2>
-<h3 id="basic-build">Basic build<a class="anchor" href="#basic-build" aria-label="Link to this section"></a></h3>
+<h3 id="build-commands">Build commands<a class="anchor" href="#build-commands" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Build with default settings</span>
 </span></span><span class="line"><span class="cl">rfswift image build -r my-recipe.yaml
@@ -856,7 +839,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Override tag from command line</span>
 </span></span><span class="line"><span class="cl">rfswift image build -r my-recipe.yaml -t custom-tag:latest</span></span></code></pre></div></div>
-<h3 id="build-options">Build options<a class="anchor" href="#build-options" aria-label="Link to this section"></a></h3>
+<h3 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h3>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift image build <span class="o">[</span>options<span class="o">]</span>
 </span></span><span class="line"><span class="cl">
@@ -865,19 +848,19 @@
 </span></span><span class="line"><span class="cl">  -t, --tag string       Override tag from recipe
 </span></span><span class="line"><span class="cl">  --no-cache            Build without using cache
 </span></span><span class="line"><span class="cl">  -h, --help            Help <span class="k">for</span> build command</span></span></code></pre></div></div>
-<h3 id="build-process">Build process<a class="anchor" href="#build-process" aria-label="Link to this section"></a></h3>
+<h3 id="what-happens-during-a-build">What happens during a build<a class="anchor" href="#what-happens-during-a-build" aria-label="Link to this section"></a></h3>
 <p>When you run <code>rfswift image build -r recipe.yaml</code>, RF Swift:</p>
 <ol>
-<li><strong>Validates</strong> the YAML structure</li>
-<li><strong>Generates</strong> an optimized Dockerfile</li>
-<li><strong>Prepares</strong> the build context</li>
-<li><strong>Executes</strong> the Docker build</li>
-<li><strong>Tags</strong> the resulting image</li>
-<li><strong>Cleans up</strong> temporary files</li>
+<li>checks the YAML structure;</li>
+<li>generates a Dockerfile from it;</li>
+<li>prepares the build context;</li>
+<li>runs the Docker build;</li>
+<li>tags the resulting image;</li>
+<li>removes its temporary files.</li>
 </ol>
-<hr>
-<h2 id="best-practices">Best practices<a class="anchor" href="#best-practices" aria-label="Link to this section"></a></h2>
-<h3 id="organization">Organization<a class="anchor" href="#organization" aria-label="Link to this section"></a></h3>
+<h2 id="good-practices">Good practices<a class="anchor" href="#good-practices" aria-label="Link to this section"></a></h2>
+<h3 id="keep-recipes-organised">Keep recipes organised<a class="anchor" href="#keep-recipes-organised" aria-label="Link to this section"></a></h3>
+<p>Group packages by purpose and comment each group:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Good: Organized and commented</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">base_image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ubuntu:24.04&#34;</span><span class="w">
@@ -907,7 +890,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">run_commands</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;colorecho &#39;Build starting...&#39;&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="s2">&#34;goodecho &#39;Build complete!&#39;&#34;</span></span></span></code></pre></div></div>
-<h3 id="version-control">Version control<a class="anchor" href="#version-control" aria-label="Link to this section"></a></h3>
+<h3 id="keep-recipes-in-git">Keep recipes in Git<a class="anchor" href="#keep-recipes-in-git" aria-label="Link to this section"></a></h3>
+<p>Version your recipes and tag releases, so a team can rebuild the same image later:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Store recipes in git</span>
 </span></span><span class="line"><span class="cl">git add recipes/
@@ -916,7 +900,8 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Share with team</span>
 </span></span><span class="line"><span class="cl">git push origin main --tags</span></span></code></pre></div></div>
-<h3 id="testing">Testing<a class="anchor" href="#testing" aria-label="Link to this section"></a></h3>
+<h3 id="test-before-you-share">Test before you share<a class="anchor" href="#test-before-you-share" aria-label="Link to this section"></a></h3>
+<p>Build under a test tag, create a lab from it and check the tools:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Build locally</span>
 </span></span><span class="line"><span class="cl">rfswift image build -r test-recipe.yaml -t test:dev
@@ -926,8 +911,8 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Verify tools work</span>
 </span></span><span class="line"><span class="cl">rfswift container shell -c test-container</span></span></code></pre></div></div>
-<h3 id="documentation">Documentation<a class="anchor" href="#documentation" aria-label="Link to this section"></a></h3>
-<p>Add comments to your recipes:</p>
+<h3 id="document-the-recipe">Document the recipe<a class="anchor" href="#document-the-recipe" aria-label="Link to this section"></a></h3>
+<p>A short header says what the recipe is for and what it was tested with:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># SDR Analysis Container v1.2</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Author: Your Name</span><span class="w">
@@ -946,10 +931,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">python_packages</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">numpy&gt;=1.24.0 </span><span class="w"> </span><span class="c"># Required for scipy</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">scipy&gt;=1.10.0 </span><span class="w"> </span><span class="c"># Signal processing</span></span></span></code></pre></div></div>
-<hr>
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-label="Link to this section"></a></h2>
-<h3 id="common-issues">Common issues<a class="anchor" href="#common-issues" aria-label="Link to this section"></a></h3>
-<p><strong>Issue: &ldquo;Package not found&rdquo;</strong></p>
+<h3 id="package-not-found">&ldquo;Package not found&rdquo;<a class="anchor" href="#package-not-found" aria-label="Link to this section"></a></h3>
+<p>The package name is wrong, or the package does not exist in the base image&rsquo;s repositories. Check the exact name for that distribution:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Problem: Package name incorrect or not available</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">packages</span><span class="p">:</span><span class="w">
@@ -958,7 +942,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Solution: Use correct package name</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">packages</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">rtl-sdr</span></span></span></code></pre></div></div>
-<p><strong>Issue: &ldquo;Python package install fails&rdquo;</strong></p>
+<h3 id="a-python-package-fails-to-install">A Python package fails to install<a class="anchor" href="#a-python-package-fails-to-install" aria-label="Link to this section"></a></h3>
+<p>It usually needs system libraries that are missing. Install them under <code>packages</code> first:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Problem: Missing system dependencies</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">python_packages</span><span class="p">:</span><span class="w">
@@ -971,7 +956,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">libpng-dev</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">python_packages</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span>- <span class="l">matplotlib</span></span></span></code></pre></div></div>
-<p><strong>Issue: &ldquo;Command not found in run_commands&rdquo;</strong></p>
+<h3 id="command-not-found-in-run_commands">&ldquo;Command not found&rdquo; in run_commands<a class="anchor" href="#command-not-found-in-run_commands" aria-label="Link to this section"></a></h3>
+<p>The helper functions are always available, so this is almost always a syntax error. Check the quoting and the line continuations:</p>
 <div class="code">
   <div class="code-bar"><span>yaml</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Problem: Helper functions not available</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">run_commands</span><span class="p">:</span><span class="w">
@@ -986,15 +972,16 @@
 </span></span></span><span class="line"><span class="cl"><span class="sd">      &#39;master&#39; \
 </span></span></span><span class="line"><span class="cl"><span class="sd">      &#39;&#39; \
 </span></span></span><span class="line"><span class="cl"><span class="sd">      &#39;install_name&#39;</span></span></span></code></pre></div></div>
-<h3 id="validation">Validation<a class="anchor" href="#validation" aria-label="Link to this section"></a></h3>
-<p>Before building, validate your YAML:</p>
+<h3 id="checking-a-recipe-before-a-long-build">Checking a recipe before a long build<a class="anchor" href="#checking-a-recipe-before-a-long-build" aria-label="Link to this section"></a></h3>
+<p>There is no dry-run flag yet. Check the YAML syntax, then build into a throwaway tag:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check YAML syntax</span>
 </span></span><span class="line"><span class="cl">python3 -c <span class="s2">&#34;import yaml; yaml.safe_load(open(&#39;recipe.yaml&#39;))&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># There is no dry-run flag yet: build into a throwaway tag to validate</span>
 </span></span><span class="line"><span class="cl">rfswift image build -r recipe.yaml -t recipe-check:test</span></span></code></pre></div></div>
-<h3 id="debugging-builds">Debugging builds<a class="anchor" href="#debugging-builds" aria-label="Link to this section"></a></h3>
+<h3 id="debugging-a-failing-build">Debugging a failing build<a class="anchor" href="#debugging-a-failing-build" aria-label="Link to this section"></a></h3>
+<p>Rebuild with full output, or try the recipe&rsquo;s commands by hand in a plain lab:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Build with verbose output</span>
 </span></span><span class="line"><span class="cl">docker build --progress<span class="o">=</span>plain -t test:debug .
@@ -1005,10 +992,8 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Interactive debugging</span>
 </span></span><span class="line"><span class="cl">rfswift container create -i ubuntu:24.04 -n debug
 </span></span><span class="line"><span class="cl"><span class="c1"># Manually test commands from recipe</span></span></span></code></pre></div></div>
-<hr>
-<h2 id="recipe-library">Recipe library<a class="anchor" href="#recipe-library" aria-label="Link to this section"></a></h2>
-<h3 id="sharing-recipes">Sharing recipes<a class="anchor" href="#sharing-recipes" aria-label="Link to this section"></a></h3>
-<p>Share your recipes with the community:</p>
+<h2 id="sharing-recipes">Sharing recipes<a class="anchor" href="#sharing-recipes" aria-label="Link to this section"></a></h2>
+<p>A small Git repository, organised by category, is enough to share recipes with a team or the community:</p>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a recipe repository</span>
 </span></span><span class="line"><span class="cl">mkdir rf-swift-recipes
@@ -1018,54 +1003,45 @@
 </span></span><span class="line"><span class="cl">mkdir -p sdr bluetooth wifi automotive
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Add README with usage instructions</span>
-</span></span><span class="line"><span class="cl">cat &gt; README.md &lt;&lt; <span class="s1">&#39;EOF&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># RF Swift Recipe Collection</span>
+</span></span><span class="line"><span class="cl">cat &gt; README.md <span class="s">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s"># RF Swift Recipe Collection
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">## SDR Recipes
+</span></span></span><span class="line"><span class="cl"><span class="s">- `sdr/rtlsdr-basic.yaml` - Basic RTL-SDR setup
+</span></span></span><span class="line"><span class="cl"><span class="s">- `sdr/multi-hardware.yaml` - Multiple SDR support
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">## Usage
+</span></span></span><span class="line"><span class="cl"><span class="s">```bash
+</span></span></span><span class="line"><span class="cl"><span class="s">rfswift image build -r sdr/rtlsdr-basic.yaml
+</span></span></span><span class="line"><span class="cl"><span class="s">```
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">## SDR Recipes</span>
-</span></span><span class="line"><span class="cl">- <span class="sb">`</span>sdr/rtlsdr-basic.yaml<span class="sb">`</span> - Basic RTL-SDR setup
-</span></span><span class="line"><span class="cl">- <span class="sb">`</span>sdr/multi-hardware.yaml<span class="sb">`</span> - Multiple SDR support
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">## Usage</span>
-</span></span><span class="line"><span class="cl"><span class="sb">```</span>bash
-</span></span><span class="line"><span class="cl">rfswift image build -r sdr/rtlsdr-basic.yaml</span></span></code></pre></div></div>
-<h1 id="share-on-github">Share on GitHub</h1>
-<p>git init
-git add .
-git commit -m &ldquo;Initial recipe collection&rdquo;
-git remote add origin <a href="https://github.com/yourusername/rf-swift-recipes.git" target="_blank" rel="noopener">https://github.com/yourusername/rf-swift-recipes.git</a>
-git push -u origin main</p>
-<div class="code">
-  <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>
-### Community recipes
-
-Browse community recipes:
-- [Official RF Swift Recipes](https://github.com/PentHertz/RF-Swift/blob/main/recipes)
-- Share your recipes on Discord
-- Contribute to the recipe library
-
----
-
-## Related documentation
-
+</span></span><span class="line"><span class="cl"><span class="c1"># Share on GitHub</span>
+</span></span><span class="line"><span class="cl">git init
+</span></span><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Initial recipe collection&#34;</span>
+</span></span><span class="line"><span class="cl">git remote add origin https://github.com/yourusername/rf-swift-recipes.git
+</span></span><span class="line"><span class="cl">git push -u origin main</span></span></code></pre></div></div>
+<p>Where to find and share recipes:</p>
+<ul>
+<li>the <a href="https://github.com/PentHertz/RF-Swift/blob/main/recipes" target="_blank" rel="noopener">official RF Swift recipes</a>;</li>
+<li>the <a href="https://github.com/PentHertz/RF-Swift-Recipes" target="_blank" rel="noopener">RF Swift recipe repository</a>, which accepts contributions;</li>
+<li>the <a href="https://discord.gg/NS3HayKrpA" target="_blank" rel="noopener">Discord</a> community.</li>
+</ul>
+<div class="admonition admonition-tip" role="note"><p>Start with a small recipe and grow it: build, test, then add the next tool.</p>
+</div>
+<h2 id="related-documentation">Related documentation<a class="anchor" href="#related-documentation" aria-label="Link to this section"></a></h2>
 <div class="doc-cards">
   <a class="doc-card" href="/docs/development/building-images/">
-    <span class="doc-card-title">Helper Functions</span><span class="doc-card-sub">Complete reference for all helper functions</span>
+    <span class="doc-card-title">Helper functions</span><span class="doc-card-sub">Every helper you can call from a recipe</span>
   </a>
-  <a class="doc-card" href="/docs/development/compiling-rfswift">
+  <a class="doc-card" href="/docs/development/compiling-rfswift/">
     <span class="doc-card-title">Compile RF Swift</span><span class="doc-card-sub">Build the RF Swift binary from source</span>
   </a>
-  <a class="doc-card" href="/docs/guide/list-of-images">
-    <span class="doc-card-title">Official Images</span><span class="doc-card-sub">Browse pre-built RF Swift images</span>
+  <a class="doc-card" href="/docs/guide/list-of-images/">
+    <span class="doc-card-title">Official images</span><span class="doc-card-sub">Browse the pre-built RF Swift images</span>
   </a>
 </div>
-
----
-
-<div class="admonition admonition-tip" role="note"><p><strong>Pro Tip:</strong> Start with a simple recipe and iterate. Build, test, refine. YAML recipes make experimentation fast and easy!</p>
-</div>
-
-<div class="admonition admonition-tip" role="note"><p><strong>Contribute:</strong> Share your recipes with the community! Submit them to the <a href="https://github.com/PentHertz/RF-Swift-Recipes" target="_blank" rel="noopener">RF Swift Recipe Repository</a> or share on <a href="https://discord.gg/NS3HayKrpA" target="_blank" rel="noopener">Discord</a>.</p>
-</div></code></pre></div>
 
     </div>
     <footer class="doc-foot">
@@ -1088,79 +1064,73 @@ Browse community recipes:
   <ul>
     <li><a href="#quick-start">Quick start</a>
       <ul>
-        <li><a href="#your-first-yaml-recipe">Your first YAML recipe</a></li>
+        <li><a href="#your-first-recipe">Your first recipe</a></li>
       </ul>
     </li>
-    <li><a href="#yaml-recipe-structure">YAML recipe structure</a>
-      <ul>
-        <li><a href="#complete-field-reference">Complete field reference</a></li>
-        <li><a href="#field-descriptions">Field descriptions</a></li>
-      </ul>
-    </li>
+    <li><a href="#recipe-fields">Recipe fields</a></li>
     <li><a href="#choosing-a-base-image">Choosing a base image</a>
       <ul>
-        <li><a href="#official-rf-swift-base-images">Official RF Swift base images</a></li>
+        <li><a href="#rf-swift-base-images">RF Swift base images</a></li>
         <li><a href="#standard-base-images">Standard base images</a></li>
-        <li><a href="#choosing-the-right-base">Choosing the right base</a></li>
+        <li><a href="#which-base-to-pick">Which base to pick</a></li>
       </ul>
     </li>
-    <li><a href="#package-management">Package management</a>
+    <li><a href="#installing-packages">Installing packages</a>
       <ul>
         <li><a href="#system-packages-apt">System packages (APT)</a></li>
         <li><a href="#python-packages-pip">Python packages (pip)</a></li>
       </ul>
     </li>
-    <li><a href="#custom-commands-run_commands">Custom commands (run_commands)</a>
+    <li><a href="#running-commands-run_commands">Running commands (run_commands)</a>
       <ul>
         <li><a href="#simple-commands">Simple commands</a></li>
         <li><a href="#multi-line-commands">Multi-line commands</a></li>
-        <li><a href="#using-helper-functions">Using helper functions</a></li>
+        <li><a href="#helper-functions">Helper functions</a></li>
       </ul>
     </li>
     <li><a href="#complete-examples">Complete examples</a>
       <ul>
-        <li><a href="#example-1-simple-sdr-image">Example 1: simple SDR image</a></li>
-        <li><a href="#example-2-gnu-radio-development-environment">Example 2: GNU Radio development environment</a></li>
-        <li><a href="#example-3-multi-sdr-hardware-support">Example 3: Multi-SDR hardware support</a></li>
+        <li><a href="#example-1-a-simple-sdr-image">Example 1: a simple SDR image</a></li>
+        <li><a href="#example-2-a-gnu-radio-development-environment">Example 2: a GNU Radio development environment</a></li>
+        <li><a href="#example-3-several-sdr-devices">Example 3: several SDR devices</a></li>
         <li><a href="#example-4-bluetooth-analysis-tools">Example 4: Bluetooth analysis tools</a></li>
-        <li><a href="#example-5-rf-hacking-suite">Example 5: RF hacking suite</a></li>
+        <li><a href="#example-5-an-rf-assessment-toolkit">Example 5: an RF assessment toolkit</a></li>
       </ul>
     </li>
     <li><a href="#advanced-techniques">Advanced techniques</a>
       <ul>
-        <li><a href="#multi-stage-builds-using-run_commands">Multi-stage builds (using run_commands)</a></li>
-        <li><a href="#conditional-builds">Conditional builds</a></li>
-        <li><a href="#version-pinning-for-reproducibility">Version pinning for reproducibility</a></li>
+        <li><a href="#keeping-the-image-small">Keeping the image small</a></li>
+        <li><a href="#different-steps-per-architecture">Different steps per architecture</a></li>
+        <li><a href="#pinning-versions-for-reproducible-builds">Pinning versions for reproducible builds</a></li>
         <li><a href="#environment-variables">Environment variables</a></li>
       </ul>
     </li>
     <li><a href="#building-your-recipe">Building your recipe</a>
       <ul>
-        <li><a href="#basic-build">Basic build</a></li>
-        <li><a href="#build-options">Build options</a></li>
-        <li><a href="#build-process">Build process</a></li>
+        <li><a href="#build-commands">Build commands</a></li>
+        <li><a href="#options">Options</a></li>
+        <li><a href="#what-happens-during-a-build">What happens during a build</a></li>
       </ul>
     </li>
-    <li><a href="#best-practices">Best practices</a>
+    <li><a href="#good-practices">Good practices</a>
       <ul>
-        <li><a href="#organization">Organization</a></li>
-        <li><a href="#version-control">Version control</a></li>
-        <li><a href="#testing">Testing</a></li>
-        <li><a href="#documentation">Documentation</a></li>
+        <li><a href="#keep-recipes-organised">Keep recipes organised</a></li>
+        <li><a href="#keep-recipes-in-git">Keep recipes in Git</a></li>
+        <li><a href="#test-before-you-share">Test before you share</a></li>
+        <li><a href="#document-the-recipe">Document the recipe</a></li>
       </ul>
     </li>
     <li><a href="#troubleshooting">Troubleshooting</a>
       <ul>
-        <li><a href="#common-issues">Common issues</a></li>
-        <li><a href="#validation">Validation</a></li>
-        <li><a href="#debugging-builds">Debugging builds</a></li>
+        <li><a href="#package-not-found">&ldquo;Package not found&rdquo;</a></li>
+        <li><a href="#a-python-package-fails-to-install">A Python package fails to install</a></li>
+        <li><a href="#command-not-found-in-run_commands">&ldquo;Command not found&rdquo; in run_commands</a></li>
+        <li><a href="#checking-a-recipe-before-a-long-build">Checking a recipe before a long build</a></li>
+        <li><a href="#debugging-a-failing-build">Debugging a failing build</a></li>
       </ul>
     </li>
-    <li><a href="#recipe-library">Recipe library</a>
-      <ul>
-        <li><a href="#sharing-recipes">Sharing recipes</a></li>
-      </ul>
-    </li>
+    <li><a href="#sharing-recipes">Sharing recipes</a></li>
+    <li><a href="#related-documentation">Related documentation</a></li>
   </ul>
 </nav>
   <a class="toc-top" href="#content">Back to top ↑</a>

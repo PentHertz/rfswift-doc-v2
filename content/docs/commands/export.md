@@ -7,218 +7,203 @@ description: "Export containers or images to archives."
 weight: 26
 ---
 
-{{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift image export`. The legacy form `rfswift export` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
-{{< /callout >}}
+`rfswift image export` saves a container or an image as a compressed `tar.gz` archive. Use it to back up your work, or to move a lab to another machine.
 
-Export containers or images to compressed archive files for backup or transfer.
+The most common use backs up a container:
+
+```bash
+rfswift image export container -c my_sdr_container -o sdr_backup.tar.gz
+```
+
+Bring an archive back with [`rfswift image import`](/docs/commands/import).
+
+{{< callout type="info" >}}
+`rfswift image export` is the v4 spelling. The older `rfswift export` still works, takes the same flags and prints a notice with the new name. See the [command tree](/docs/commands/#the-v4-command-tree).
+{{< /callout >}}
 
 ## Synopsis
 
-```bash
-# Export container
-rfswift image export container -c CONTAINER_NAME -o OUTPUT_FILE.tar.gz
+Export a container:
 
-# Export image
-rfswift image export image -i IMAGE_NAME -o OUTPUT_FILE.tar.gz
+```bash
+rfswift image export container -c CONTAINER_NAME -o OUTPUT_FILE.tar.gz
 ```
 
-The `export` command creates compressed tar.gz archives of containers or images, preserving all data, configuration, and metadata. This is the recommended method for creating portable backups.
+Export an image:
 
----
+```bash
+rfswift image export image -i IMAGE_NAME -o OUTPUT_FILE.tar.gz
+```
 
 ## Options
 
 ### Export container
 
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-c, --container STRING` | Container to export | Yes | `-c my_container` |
-| `-o, --output STRING` | Output filename | No | `-o backup.tar.gz` |
+| Flag | What it does | Required | Example |
+|------|--------------|----------|---------|
+| `-c, --container STRING` | The container to export | Yes | `-c my_container` |
+| `-o, --output STRING` | The output file | No | `-o backup.tar.gz` |
 
 ### Export image
 
-| Flag | Description | Required | Example |
-|------|-------------|----------|---------|
-| `-i, --images STRINGS` | Image(s) to export (can specify multiple) | Yes | `-i sdr_full` |
-| `-o, --output STRING` | Output filename | No | `-o backup.tar.gz` |
+| Flag | What it does | Required | Example |
+|------|--------------|----------|---------|
+| `-i, --images STRINGS` | The image or images to export | Yes | `-i sdr_full` |
+| `-o, --output STRING` | The output file | No | `-o backup.tar.gz` |
 
-{{< callout type="info" >}}
-**Auto-generated filenames**: If `-o` is omitted, filenames are generated automatically:
+{{< callout type="info" title="Default file names" >}}
+Without `-o`, the file name is generated for you:
 - **Container export**: `{container_name}-{YYYYMMDD}.tar.gz`
-- **Image export**: `{image_name}_converted.tar.gz` (with `/` and `:` replaced by `_`)
+- **Image export**: `{image_name}_converted.tar.gz`, with `/` and `:` replaced by `_`
 {{< /callout >}}
-
----
 
 ## Examples
 
 ### Export containers
 
-**Basic container export:**
+Export a container to a file:
+
 ```bash
 rfswift image export container -c my_sdr_container -o sdr_backup.tar.gz
 ```
 
-**Export with descriptive filename:**
+Include today's date in the file name:
+
 ```bash
 rfswift image export container -c client_assessment \
   -o client_assessment_$(date +%Y%m%d).tar.gz
 ```
 
-**Export to specific directory:**
+Save into a specific folder:
+
 ```bash
 rfswift image export container -c important_work \
   -o ~/backups/containers/important_work_backup.tar.gz
 ```
 
-**Export before removal:**
+Keep a final backup before you delete a container:
+
 ```bash
-# Create backup before deleting
 rfswift image export container -c old_container -o archives/old_container_final.tar.gz
 rfswift container rm -c old_container
 ```
 
 ### Export images
 
-**Basic image export:**
+Export an image to a file:
+
 ```bash
 rfswift image export image -i sdr_full -o sdr_full_image.tar.gz
 ```
 
-**Export custom image:**
+Export an image you built yourself:
+
 ```bash
 rfswift image export image -i my_custom_sdr:v1.0 -o custom_sdr_v1.tar.gz
 ```
-
----
 
 ## What gets exported
 
 ### Container export
 
-When exporting a container:
+A container export captures the container's filesystem only. Docker settings such as port bindings and network configuration are not included.
 
 | Content | Included? | Notes |
 |---------|-----------|-------|
-| Container filesystem | Yes | All files and modifications |
-| Installed packages | Yes | Everything in container |
-| Configuration files | Yes | Modified configs |
-| Running processes | No | Only filesystem |
-| Mounted volumes | No | Volume data not included |
-| Container metadata | ⚠️ Limited | Basic info only |
-| Network config | No | Not preserved |
+| Container filesystem | Yes | All files and changes |
+| Installed packages | Yes | Everything in the container |
+| Configuration files | Yes | Including the ones you changed |
+| Running processes | No | Only the filesystem |
+| Mounted volumes | No | Volume data is not included |
+| Container metadata | Limited | Basic information only |
+| Network configuration | No | Not preserved |
 | Port bindings | No | Not preserved |
 
-**Important:** Export captures filesystem only, not Docker metadata like port bindings or network configuration.
+{{< callout type="warning" title="Mounted folders are not included" >}}
+Folders mounted into the container, such as the workspace, stay on your computer and are not in the archive. Back them up separately with your usual file backup tools.
+{{< /callout >}}
 
 ### Image export
-
-When exporting an image:
 
 | Content | Included? | Notes |
 |---------|-----------|-------|
 | Image layers | Yes | All filesystem layers |
-| Image metadata | Yes | Tags, labels, etc. |
-| Build history | Yes | Layer history |
+| Image metadata | Yes | Tags, labels and so on |
+| Build history | Yes | The layer history |
 | Configuration | Yes | Default settings |
 
----
+## File sizes
 
-## File size considerations
+Archives are compressed as `tar.gz`, usually to about a third of the original size. These are rough examples; your sizes depend on the image and what you added to it. The official toolboxes are larger than these examples: `rfswift image remote` lists their sizes.
 
-### Typical export sizes
-
-| Container Type | Uncompressed | Compressed (tar.gz) | Compression Ratio |
-|---------------|--------------|---------------------|-------------------|
+| Container type | Uncompressed | Compressed (tar.gz) | Ratio |
+|---------------|--------------|---------------------|-------|
 | Minimal (base only) | 500 MB | 150-200 MB | ~3:1 |
 | SDR with tools | 2-3 GB | 700 MB - 1 GB | ~3:1 |
 | Full SDR stack | 5-8 GB | 1.5-2.5 GB | ~3:1 |
 | With large data | 20+ GB | 5-10 GB | ~2-3:1 |
 
-### Minimizing export size
+### Make the archive smaller
 
-**Before exporting, clean up:**
+Clean up inside the container before exporting. Open a shell in it:
+
 ```bash
 rfswift container shell -c my_container
+```
 
-# Remove package caches
+Inside the container, remove package caches, temporary files, logs and build tools you no longer need, then leave:
+
+```bash
 apt-get clean
 rm -rf /var/lib/apt/lists/*
-
-# Remove temporary files
 rm -rf /tmp/*
 rm -rf /root/.cache/*
-
-# Remove unnecessary logs
 truncate -s 0 /var/log/*.log
-
-# Remove development files if not needed
 apt-get remove -y build-essential
 apt-get autoremove -y
-
 exit
+```
 
-# Now export will be smaller
+Then export as usual:
+
+```bash
 rfswift image export container -c my_container -o clean_backup.tar.gz
 ```
 
----
+{{< callout type="tip" title="Keep regular backups" >}}
+For work you cannot lose, export on a schedule and keep copies in more than one place: locally, on a NAS and off-site.
+{{< /callout >}}
 
 ## Troubleshooting
 
-### Container/Image not found
+### “No such container/image”
 
-**Error:** `Error: No such container/image: name`
+The name does not match a container or image on this computer. List them and check the exact name:
 
-**Solutions:**
 ```bash
-# List containers
 rfswift container last
-
-# List images
 rfswift image local
 ```
 
-### Permission denied
+### “Permission denied” when writing the file
 
-**Error:** `Permission denied` when writing output file
+You cannot write to the output folder. Check its permissions, or create a folder you own:
 
-**Solutions:**
 ```bash
-# Check output directory permissions
 ls -ld ~/backups/
-
-# Create directory if needed
 mkdir -p ~/backups/containers
-
-# Set correct permissions
 chmod 755 ~/backups/containers
+```
 
-# Or use sudo
+To write to a system folder, use `sudo`:
+
+```bash
 sudo rfswift image export container -c container -o /backup/file.tar.gz
 ```
 
----
-
 ## Related commands
 
-- [`import`](/docs/commands/import) - Import exported containers/images
-- [`commit`](/docs/commands/commit) - Create images from containers
-- [`download`](/docs/commands/download) - Download images from registry
-- [`remove`](/docs/commands/remove) - Remove containers after export
-
-
----
-
-{{< callout >}}
-**Backup Strategy**: Export creates compressed, portable backups. For production environments, schedule regular automated exports to multiple locations (local, NAS, offsite).
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Volume Data Not Included**: Exports only include the container filesystem, not mounted volumes. Back up volume data separately using standard file backup tools.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Compression**: Export automatically compresses to tar.gz format, typically achieving 3:1 compression ratio. This saves significant storage space compared to uncompressed backups.
-{{< /callout >}}
+- [`import`](/docs/commands/import): import exported containers and images
+- [`commit`](/docs/commands/commit): turn a container into an image
+- [`download`](/docs/commands/download): save an image from the registry
+- [`remove`](/docs/commands/remove): remove containers after exporting them

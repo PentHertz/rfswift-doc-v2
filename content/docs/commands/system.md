@@ -7,7 +7,11 @@ description: "Housekeeping for RF Swift: doctor, cleanup, update, upgrade, log a
 weight: 90
 ---
 
-Housekeeping for RF Swift itself. Every subcommand is also available at the top level (`rfswift doctor`, `rfswift cleanup`, ...). Alias: `rfswift admin`.
+`rfswift system` groups the housekeeping commands for RF Swift itself: checking your computer, cleaning up, updating, recording sessions and writing reports. Every subcommand also works at the top level (`rfswift doctor`, `rfswift cleanup`, ...). The alias `rfswift admin` works too.
+
+```bash
+rfswift system doctor
+```
 
 ## Synopsis
 
@@ -20,20 +24,39 @@ rfswift system log start|stop|list|replay [...]
 rfswift system report generate -c NAME [-f markdown|html|pdf] [-o FILE] [-t TITLE]
 ```
 
-| Subcommand | Purpose | Page |
-|------------|---------|------|
-| `doctor` | Check the host: engines and their services, Docker access, host udev rules, Nix engine and its WSL 2 backend on Windows, the Nix jail, Lima VM, images, X11 and xhost, audio system and server, USB, config file, kernel modules, usbipd on Windows | [doctor](/docs/commands/doctor) |
-| `cleanup` | Remove old or unused containers and images by age, with a dry run | [cleanup](/docs/commands/cleanup) |
-| `update` | Update the RF Swift binary from the official releases. On a deb, rpm, pacman or Homebrew install it explains how to upgrade through the package instead of overwriting the packaged binary | [update](/docs/commands/update) |
-| `upgrade` | Re-create a container from a newer image, preserving listed directories (same as `container upgrade`) | [upgrade](/docs/commands/upgrade) |
-| `log` | Record and replay terminal sessions (asciinema, or `script` with `--use-script`) | [log](/docs/commands/log) |
-| `report` | Assessment report from a container and its workspace | [report](/docs/commands/report) |
+## Subcommands
+
+| Subcommand | What it does | Page |
+|------------|--------------|------|
+| `doctor` | Checks your computer: the engines and their services, Docker access, host udev rules, the Nix engine (and its WSL 2 backend on Windows), the Nix jail, the Lima VM, images, X11 and xhost, the audio system and server, USB, the config file, kernel modules, and usbipd on Windows | [doctor](/docs/commands/doctor) |
+| `cleanup` | Removes old or unused containers and images by age. A dry run shows what would go first | [cleanup](/docs/commands/cleanup) |
+| `update` | Updates the RF Swift binary from the official releases. On a deb, rpm, pacman or Homebrew install, it tells you how to upgrade through your package manager instead of overwriting the packaged binary | [update](/docs/commands/update) |
+| `upgrade` | Re-creates a container from a newer image and keeps the directories you list (same as `container upgrade`) | [upgrade](/docs/commands/upgrade) |
+| `log` | Records and replays terminal sessions (asciinema, or `script` with `--use-script`) | [log](/docs/commands/log) |
+| `report` | Builds an assessment report from a container and its workspace | [report](/docs/commands/report) |
 
 ## Examples
 
+Check that your computer is ready:
+
 ```bash
 rfswift system doctor
+```
+
+Preview which stopped containers older than 30 days would be removed:
+
+```bash
 rfswift system cleanup containers --stopped --older-than 30d --dry-run
+```
+
+Replay a recorded session at twice the speed:
+
+```bash
 rfswift system log replay -i session.cast -s 2.0
+```
+
+Write an HTML report for a container:
+
+```bash
 rfswift system report generate -c pentest_wifi -f html
 ```
