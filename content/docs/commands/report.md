@@ -254,7 +254,7 @@ The report generator:
 
 ---
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Tip**: Use `--record` with `rfswift container create` and `rfswift container shell` to automatically capture session recordings that will appear in the report.
 {{< /callout >}}
 

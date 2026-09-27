@@ -105,11 +105,11 @@ When you remove a container:
 
 | Data Location | Preserved? | Example |
 |--------------|------------|---------|
-| Container filesystem | ❌ **DELETED** | `/root/captures/data.bin` (inside container) |
-| Mounted volumes | ✅ **PRESERVED** | `~/captures:/root/captures` (host directory) |
-| Container configuration | ❌ **DELETED** | Network settings, capabilities, cgroups |
-| Container metadata | ❌ **DELETED** | Creation date, history, logs |
-| Docker images | ✅ **PRESERVED** | Source images remain available |
+| Container filesystem | **DELETED** | `/root/captures/data.bin` (inside container) |
+| Mounted volumes | **PRESERVED** | `~/captures:/root/captures` (host directory) |
+| Container configuration | **DELETED** | Network settings, capabilities, cgroups |
+| Container metadata | **DELETED** | Creation date, history, logs |
+| Docker images | **PRESERVED** | Source images remain available |
 
 **Important distinction:**
 ```bash
@@ -123,8 +123,8 @@ rfswift container create -i sdr_full -n my_container \
 
 # After remove:
 rfswift container rm -c my_container
-# ~/captures on host: Still exists ✅
-# /root/temp_work: Gone forever ❌
+# ~/captures on host: Still exists
+# /root/temp_work: Gone forever
 ```
 
 ### Configuration loss
@@ -329,10 +329,10 @@ rfswift image import container -i backup.tar.gz
 ```
 
 **If no backups:**
-- ❌ Container cannot be recovered
-- ❌ Data inside container is lost
-- ✅ Mounted volumes still exist
-- ✅ Can recreate container from original image
+- Container cannot be recovered
+- Data inside container is lost
+- Mounted volumes still exist
+- Can recreate container from original image
 
 **Prevention:**
 ```bash
@@ -615,11 +615,11 @@ docker system df
 
 ---
 
-{{< callout emoji="⚠️" type="warning" >}}
+{{< callout type="warning" >}}
 **Cannot Be Undone**: Container removal is permanent. All data inside the container filesystem is lost forever. Only mounted volumes are preserved. Always verify you're removing the correct container!
 {{< /callout >}}
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Before Removing Important Containers**: Always commit to an image first: `rfswift container commit -c container -i backup` then `rfswift container rm -c container`. This gives you a safety net!
 {{< /callout >}}
 

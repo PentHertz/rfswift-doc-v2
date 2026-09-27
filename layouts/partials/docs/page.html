@@ -6,18 +6,18 @@
   <div class="sidebar-backdrop" data-sidebar-close hidden></div>
   <article class="docs-main">
     <div class="docs-mobilebar">
-      <button class="btn btn-secondary btn-sm" type="button" data-sidebar-open aria-controls="docs-sidebar"><i class="ph ph-sidebar-simple"></i> Docs menu</button>
-      <button class="btn btn-ghost btn-sm" type="button" data-search-open><i class="ph ph-magnifying-glass"></i> Search</button>
+      <button class="btn btn-secondary btn-sm" type="button" data-sidebar-open aria-controls="docs-sidebar">Docs menu</button>
+      <button class="btn btn-secondary btn-sm" type="button" data-search-open>Search</button>
     </div>
     {{ partial "docs/breadcrumbs.html" . }}
     <header class="doc-head">
       <h1>{{ .Title }}</h1>
       {{- with .Description }}<p class="doc-lead">{{ . | markdownify }}</p>{{ end }}
-      <div class="doc-meta">
-        {{- partial "docs/level.html" . }}
-        {{- if gt .ReadingTime 0 }}<span><i class="ph ph-clock" aria-hidden="true"></i> {{ .ReadingTime }} min read</span>{{ end }}
-        {{- with .Lastmod }}{{ if gt .Year 2000 }}<span><i class="ph ph-calendar-blank" aria-hidden="true"></i> Updated {{ .Format "January 2, 2006" }}</span>{{ end }}{{ end }}
-      </div>
+      {{- $meta := slice }}
+      {{- with .Params.level }}{{ $meta = $meta | append (. | title) }}{{ end }}
+      {{- if gt .ReadingTime 0 }}{{ $meta = $meta | append (printf "%d min read" .ReadingTime) }}{{ end }}
+      {{- with .Lastmod }}{{ if gt .Year 2000 }}{{ $meta = $meta | append (printf "Updated %s" (.Format "January 2, 2006")) }}{{ end }}{{ end }}
+      {{- with $meta }}<p class="doc-meta">{{ delimit . " · " }}</p>{{ end }}
     </header>
     <div class="prose">
       {{ .Content }}
@@ -30,9 +30,9 @@
       {{- end }}
     </div>
     <footer class="doc-foot">
-      <a href="{{ site.Params.docsRepo }}/edit/{{ site.Params.docsBranch }}/content/{{ .File.Path }}"><i class="ph ph-pencil-simple"></i> Edit this page</a>
-      <a href="{{ site.Params.github }}/issues/new"><i class="ph ph-bug"></i> Report a problem</a>
-      <a href="{{ site.Params.discord }}"><i class="ph ph-discord-logo"></i> Ask on Discord</a>
+      <a href="{{ site.Params.docsRepo }}/edit/{{ site.Params.docsBranch }}/content/{{ .File.Path }}">Edit this page</a>
+      <a href="{{ site.Params.github }}/issues/new">Report a problem</a>
+      <a href="{{ site.Params.discord }}">Ask on Discord</a>
     </footer>
     {{ partial "docs/pager.html" . }}
   </article>

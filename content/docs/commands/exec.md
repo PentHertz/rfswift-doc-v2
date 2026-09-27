@@ -740,7 +740,7 @@ source ~/.zshrc
 
 ---
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Quick Tip**: Create a shell alias for faster access: `alias rfe='rfswift exec'` then just type `rfe` to enter your most recent container!
 {{< /callout >}}
 

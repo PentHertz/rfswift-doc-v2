@@ -388,7 +388,7 @@ rfswift log start --use-script
 
 ---
 
-{{< callout emoji="🎬" >}}
+{{< callout >}}
 **Perfect for Training**: The `log` command is ideal for creating training materials. Record once, share with your entire team. Students can replay at their own pace with speed control!
 {{< /callout >}}
 

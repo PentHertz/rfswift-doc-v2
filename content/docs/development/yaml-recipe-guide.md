@@ -86,12 +86,12 @@ context: "."                       # Build context directory (default: ".")
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `base_image` | String | ✅ Yes | Base Docker image (e.g., `ubuntu:24.04`) |
-| `tag` | String | ✅ Yes | Name and tag for resulting image |
-| `packages` | List | ⬜ No | APT/system packages to install |
-| `python_packages` | List | ⬜ No | Python packages to install via pip |
-| `run_commands` | List | ⬜ No | Custom bash commands to execute |
-| `context` | String | ⬜ No | Build context directory (default: `.`) |
+| `base_image` | String | Yes | Base Docker image (e.g., `ubuntu:24.04`) |
+| `tag` | String | Yes | Name and tag for resulting image |
+| `packages` | List | No | APT/system packages to install |
+| `python_packages` | List | No | Python packages to install via pip |
+| `run_commands` | List | No | Custom bash commands to execute |
+| `context` | String | No | Build context directory (default: `.`) |
 
 ---
 
@@ -136,23 +136,23 @@ base_image: "alpine:3.19"       # Warning: May lack some RF libraries
 ### Choosing the right base
 
 **Use Ubuntu 24.04 when:**
-- ✅ You want the latest packages and kernel support
-- ✅ Building general-purpose SDR containers
-- ✅ You need wide hardware compatibility
-- ✅ You're new to RF Swift development
+- You want the latest packages and kernel support
+- Building general-purpose SDR containers
+- You need wide hardware compatibility
+- You're new to RF Swift development
 
 **Use Ubuntu 22.04 when:**
-- ✅ You need proven stability
-- ✅ Working with enterprise environments
-- ✅ Long-term support is critical
+- You need proven stability
+- Working with enterprise environments
+- Long-term support is critical
 
 **Use Debian when:**
-- ✅ You prefer Debian's package stability
-- ✅ You need minimal overhead beyond Ubuntu
-- ✅ Working in Debian-based infrastructure
+- You prefer Debian's package stability
+- You need minimal overhead beyond Ubuntu
+- Working in Debian-based infrastructure
 
 **Use Alpine when:**
-- ✅ Image size is critical (<50MB base)
+- Image size is critical (<50MB base)
 - ⚠️ Warning: Limited RF library support, manual compilation often needed
 
 {{< callout type="warning" >}}
@@ -912,10 +912,10 @@ Browse community recipes:
 
 ---
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Pro Tip:** Start with a simple recipe and iterate. Build, test, refine. YAML recipes make experimentation fast and easy!
 {{< /callout >}}
 
-{{< callout emoji="🤝" >}}
+{{< callout >}}
 **Contribute:** Share your recipes with the community! Submit them to the [RF Swift Recipe Repository](https://github.com/PentHertz/RF-Swift-Recipes) or share on [Discord](https://discord.gg/NS3HayKrpA).
 {{< /callout >}}

@@ -10,7 +10,7 @@ of a beginner's way. Use the markdown notation ({{% %}}).
 */ -}}
 {{- $level := lower (.Get "level" | default "") -}}
 <details class="disclosure{{ with $level }} disclosure-{{ . }}{{ end }}"{{ if eq (.Get "open") "true" }} open{{ end }}>
-<summary><i class="ph ph-caret-right disclosure-caret" aria-hidden="true"></i><span>{{ .Get "title" | default "More details" }}</span>{{ with $level }}<span class="badge {{ if eq . "advanced" }}badge-high{{ else }}badge-success{{ end }}">{{ . | title }}</span>{{ end }}</summary>
+<summary><span>{{ .Get "title" | default "More details" }}</span>{{ with $level }}<span class="disclosure-level">{{ . | title }}</span>{{ end }}</summary>
 <div class="disclosure-body">
 
 {{ .Inner }}

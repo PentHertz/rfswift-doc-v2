@@ -4,6 +4,7 @@ Renders a CSV file as a table.
 @param 0  path of the CSV file, relative to the project root
 @param 1  delimiter (default ",")
 @param 2  "true" when the first row is a header (default "true")
+Status symbols in cells are shown as words (Yes / No / Limited).
 */ -}}
 {{- $csvFile := .Get 0 -}}
 {{- $delimiter := .Get 1 | default "," -}}
@@ -18,13 +19,13 @@ Renders a CSV file as a table.
     <thead><tr>{{ range index $csvContent 0 }}<th>{{ trim . " " }}</th>{{ end }}</tr></thead>
     <tbody>
       {{- range after 1 $csvContent }}
-      <tr>{{ range . }}<td>{{ trim . " " }}</td>{{ end }}</tr>
+      <tr>{{ range . }}{{ partial "csvcell.html" . }}{{ end }}</tr>
       {{- end }}
     </tbody>
     {{- else }}
     <tbody>
       {{- range $csvContent }}
-      <tr>{{ range . }}<td>{{ trim . " " }}</td>{{ end }}</tr>
+      <tr>{{ range . }}{{ partial "csvcell.html" . }}{{ end }}</tr>
       {{- end }}
     </tbody>
     {{- end }}

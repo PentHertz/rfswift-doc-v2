@@ -244,7 +244,7 @@ docker images | grep rfswift
 
 ---
 
-{{< callout emoji="📥" >}}
+{{< callout >}}
 **Always Use --pull**: For downloading latest versions, always include the `--pull` flag. Without it, RF Swift uses the locally cached image which may be outdated.
 {{< /callout >}}
 

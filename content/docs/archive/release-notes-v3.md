@@ -12,7 +12,7 @@ aliases:
 
 RF Swift v3.0.0 rebases the whole image collection on **Ubuntu 26.04 "Resolute"**, rebuilds the CLI on the new **Moby SDK**, and adds a set of images that take RF Swift beyond the radio layer and into full engagement territory.
 
-{{< callout emoji="⚡" >}}
+{{< callout >}}
 **In one line:** a hardware and RF security lab in seconds, from a ham shack on a Sunday afternoon to a full engagement on Monday morning.
 {{< /callout >}}
 

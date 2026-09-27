@@ -173,7 +173,7 @@ rfswift container shell -c container -e "update_rfscripts"
 
 ---
 
-{{< callout emoji="🔧" >}}
+{{< callout >}}
 **Automated Setup**: The `install` command uses predefined functions that handle dependencies, compilation, and configuration automatically. No need to manually compile or configure!
 {{< /callout >}}
 

@@ -1,16 +1,10 @@
 {{- $current := . -}}
 <div class="sidebar-inner">
-  <div class="sidebar-top">
-    <button class="search-trigger search-trigger-block" type="button" data-search-open><i class="ph ph-magnifying-glass"></i><span>Search docs</span><kbd>Ctrl K</kbd></button>
-    <div class="path-switch" role="group" aria-label="Choose your path">
-      <a href="{{ "/docs/quick-start/" | relURL }}" class="path-chip path-chip-beginner"><i class="ph ph-student"></i> I'm new</a>
-      <a href="{{ "/docs/commands/" | relURL }}" class="path-chip path-chip-advanced"><i class="ph ph-terminal-window"></i> Reference</a>
-    </div>
-  </div>
+  <button class="search-trigger search-trigger-block" type="button" data-search-open><span>Search the docs</span><kbd>Ctrl K</kbd></button>
   <nav class="sidebar-nav" aria-label="Documentation">
     {{- range $g := site.Data.docsnav }}
     <div class="sidebar-group">
-      <p class="sidebar-label"><i class="ph ph-{{ $g.icon | default "circle" }}" aria-hidden="true"></i>{{ $g.group }}</p>
+      <p class="sidebar-label">{{ $g.group }}</p>
       <ul>
         {{- range $it := $g.items }}
           {{- with $it.page }}
@@ -23,7 +17,7 @@
             {{- $inside := hasPrefix $current.RelPermalink .RelPermalink }}
             <li>
               <details class="sidebar-section"{{ if $inside }} open{{ end }}>
-                <summary><span>{{ $it.title | default .LinkTitle }}</span><i class="ph ph-caret-right" aria-hidden="true"></i></summary>
+                <summary>{{ $it.title | default .LinkTitle }}</summary>
                 <ul>
                   <li><a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $current.RelPermalink }} aria-current="page"{{ end }}>Overview</a></li>
                   {{- $prevGroup := "" }}
@@ -41,8 +35,5 @@
     </div>
     {{- end }}
   </nav>
-  <div class="sidebar-help">
-    <i class="ph ph-chats-circle" aria-hidden="true"></i>
-    <div><strong>Stuck?</strong> <span>Ask the community on <a href="{{ site.Params.discord }}">Discord</a>.</span></div>
-  </div>
+  <p class="sidebar-help small">Stuck? Ask on <a href="{{ site.Params.discord }}">Discord</a> or <a href="{{ site.Params.github }}/issues">open an issue</a>.</p>
 </div>

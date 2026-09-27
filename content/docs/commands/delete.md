@@ -119,11 +119,11 @@ When you delete an image:
 
 | Item | Deleted? | Impact |
 |------|----------|--------|
-| Image layers | ✅ Yes | Removed from disk |
-| Image metadata | ✅ Yes | Tags, labels removed |
-| Containers using image | ❌ No | Continue running |
-| Exported tar.gz files | ❌ No | Remain on disk |
-| Custom files you added | ✅ Yes | Gone from image |
+| Image layers | Yes | Removed from disk |
+| Image metadata | Yes | Tags, labels removed |
+| Containers using image | No | Continue running |
+| Exported tar.gz files | No | Remain on disk |
+| Custom files you added | Yes | Gone from image |
 
 ### Important notes
 
@@ -262,7 +262,7 @@ rfswift image rm -i a1b2c3d4e5f6
 
 ---
 
-{{< callout emoji="⚠️" >}}
+{{< callout >}}
 **Permanent Deletion**: Deleting an image is permanent. If you might need it later, use `export image` to create a backup first. You can always `import` it back if needed.
 {{< /callout >}}
 

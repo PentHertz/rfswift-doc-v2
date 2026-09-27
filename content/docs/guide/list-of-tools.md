@@ -11,10 +11,10 @@ This page lists the tools inside each RF Swift toolbox (container image). It is 
 
 - **Find a tool.** Long tables have a filter box above them: type part of a name to narrow the table down. To search the whole documentation at once, press <kbd>Ctrl</kbd> <kbd>K</kbd>.
 - **Read the status columns.**
-  - ✅ **Installed by default**: the tool is in the image when you pull or build it.
-  - ❌ **Install manually**: the image ships an installation function for it, which you run after creating your lab.
-  - ❓ **Limited support**: the tool may have architecture-specific issues.
-- **Add a tool marked ❌.** Create your lab, then run the function named in the **Installation function** column:
+  - **Yes**: the tool is installed by default: it is in the image when you pull or build it.
+  - **No**: install it manually: the image ships an installation function for it, which you run after creating your lab.
+  - **Limited**: the tool may have architecture-specific issues.
+- **Add a tool marked No.** Create your lab, then run the function named in the **Installation function** column:
 
   ```bash
   rfswift container install -c my_lab -i <installation_function_name>
@@ -533,7 +533,7 @@ Common manually-installed tools:
 - `pocketvna_sa_device` - PocketVNA software (x86_64 only)
 - `srsran5GSA_bladerf_soft_install` - 5G SA gNB fork with bladeRF support
 
-To find out what is available in a given image, check the **Installation function** column of the tables above. Every entry marked ❌ can be installed this way.
+To find out what is available in a given image, check the **Installation function** column of the tables above. Every entry marked No can be installed this way.
 
 {{< callout type="info" >}}
 **Check what actually built.** RF Swift images record install failures instead of aborting the whole build, so a tool listed as installed by default may still be missing if its build broke on your architecture. Every image carries its build report at `/var/lib/db/rfswift_build_report.tsv`. Inspect it from inside a running container:

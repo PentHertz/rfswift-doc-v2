@@ -101,14 +101,14 @@ When exporting a container:
 
 | Content | Included? | Notes |
 |---------|-----------|-------|
-| Container filesystem | ✅ Yes | All files and modifications |
-| Installed packages | ✅ Yes | Everything in container |
-| Configuration files | ✅ Yes | Modified configs |
-| Running processes | ❌ No | Only filesystem |
-| Mounted volumes | ❌ No | Volume data not included |
+| Container filesystem | Yes | All files and modifications |
+| Installed packages | Yes | Everything in container |
+| Configuration files | Yes | Modified configs |
+| Running processes | No | Only filesystem |
+| Mounted volumes | No | Volume data not included |
 | Container metadata | ⚠️ Limited | Basic info only |
-| Network config | ❌ No | Not preserved |
-| Port bindings | ❌ No | Not preserved |
+| Network config | No | Not preserved |
+| Port bindings | No | Not preserved |
 
 **Important:** Export captures filesystem only, not Docker metadata like port bindings or network configuration.
 
@@ -118,10 +118,10 @@ When exporting an image:
 
 | Content | Included? | Notes |
 |---------|-----------|-------|
-| Image layers | ✅ Yes | All filesystem layers |
-| Image metadata | ✅ Yes | Tags, labels, etc. |
-| Build history | ✅ Yes | Layer history |
-| Configuration | ✅ Yes | Default settings |
+| Image layers | Yes | All filesystem layers |
+| Image metadata | Yes | Tags, labels, etc. |
+| Build history | Yes | Layer history |
+| Configuration | Yes | Default settings |
 
 ---
 
@@ -211,7 +211,7 @@ sudo rfswift image export container -c container -o /backup/file.tar.gz
 
 ---
 
-{{< callout emoji="💾" >}}
+{{< callout >}}
 **Backup Strategy**: Export creates compressed, portable backups. For production environments, schedule regular automated exports to multiple locations (local, NAS, offsite).
 {{< /callout >}}
 

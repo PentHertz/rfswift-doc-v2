@@ -89,26 +89,26 @@ graph LR
 
 | Content | Preserved? | How |
 |---------|-----------|-----|
-| Directories in `-r` flag | ✅ Yes | Copied to new container |
-| Files in preserved dirs | ✅ Yes | Complete copy |
-| Other directories | ❌ No | Use new image defaults |
-| Container name | ✅ Yes | Inherited by new container |
-| Volume bindings | ✅ Yes | Automatically inherited |
-| Network settings | ✅ Yes | Automatically inherited |
-| Port bindings | ✅ Yes | Automatically inherited |
-| Device mappings | ✅ Yes | Automatically inherited |
-| Capabilities | ✅ Yes | Automatically inherited |
-| Cgroup rules | ✅ Yes | Automatically inherited |
-| Environment variables | ✅ Yes | Automatically inherited |
-| Privileged mode | ✅ Yes | Automatically inherited |
-| Seccomp profile | ✅ Yes | Automatically inherited |
+| Directories in `-r` flag | Yes | Copied to new container |
+| Files in preserved dirs | Yes | Complete copy |
+| Other directories | No | Use new image defaults |
+| Container name | Yes | Inherited by new container |
+| Volume bindings | Yes | Automatically inherited |
+| Network settings | Yes | Automatically inherited |
+| Port bindings | Yes | Automatically inherited |
+| Device mappings | Yes | Automatically inherited |
+| Capabilities | Yes | Automatically inherited |
+| Cgroup rules | Yes | Automatically inherited |
+| Environment variables | Yes | Automatically inherited |
+| Privileged mode | Yes | Automatically inherited |
+| Seccomp profile | Yes | Automatically inherited |
 
 The upgrade command now **automatically preserves** all host bindings, network settings, device mappings, capabilities, cgroup rules, and port bindings from the original container. A timestamped backup image is created before the old container is removed.
 
 ### What doesn't get preserved
 
-- ❌ Files outside of `-r` directories (new image defaults apply)
-- ❌ Running processes (container is restarted fresh)
+- Files outside of `-r` directories (new image defaults apply)
+- Running processes (container is restarted fresh)
 
 ---
 
@@ -218,7 +218,7 @@ rfswift container shell -c container
 
 ---
 
-{{< callout emoji="⬆️" >}}
+{{< callout >}}
 **Always Backup First**: Before upgrading, create a backup with `export container`. This allows easy rollback if the upgrade has issues. The old container is kept as `container_old` for verification.
 {{< /callout >}}
 

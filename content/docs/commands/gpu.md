@@ -13,7 +13,7 @@ weight: 44
 
 Enable GPU access in containers for hardware-accelerated workloads: CUDA/OpenCL computing, GPU-based signal processing, machine learning inference, and GUI rendering.
 
-{{< callout emoji="🔍" >}}
+{{< callout >}}
 **Auto-detection**: RF Swift automatically detects your GPU vendor (NVIDIA, AMD, or Intel) and configures the container accordingly. Just use `--gpus all` and RF Swift handles the rest.
 {{< /callout >}}
 
@@ -423,7 +423,7 @@ rfswift gpus add -c container
 
 ---
 
-{{< callout emoji="🎮" >}}
+{{< callout >}}
 **Quick Start (any GPU)**: `rfswift container create -n my_gpu -i penthertz/rfswift_resolute:sdr_full --gpus all`. RF Swift auto-detects NVIDIA, AMD, or Intel and configures the container accordingly.
 {{< /callout >}}
 

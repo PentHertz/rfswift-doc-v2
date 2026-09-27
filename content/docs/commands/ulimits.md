@@ -41,22 +41,22 @@ The `ulimits` command allows you to add, remove, or list resource limits on cont
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | ✅ Yes | `-c my_container` |
-| `-n, --name STRING` | Ulimit name | ✅ Yes | `-n rtprio` |
-| `-v, --value STRING` | Ulimit value | ✅ Yes | `-v 95` |
+| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
+| `-n, --name STRING` | Ulimit name | Yes | `-n rtprio` |
+| `-v, --value STRING` | Ulimit value | Yes | `-v 95` |
 
 ### ulimits rm
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | ✅ Yes | `-c my_container` |
-| `-n, --name STRING` | Ulimit name to remove | ✅ Yes | `-n rtprio` |
+| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
+| `-n, --name STRING` | Ulimit name to remove | Yes | `-n rtprio` |
 
 ### ulimits list
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | ✅ Yes | `-c my_container` |
+| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
 
 ---
 
@@ -211,7 +211,7 @@ rfswift ulimits add -c container -n rtprio -v 95
 
 ---
 
-{{< callout emoji="⚡" >}}
+{{< callout >}}
 **Quick Setup**: For RF work, use `rfswift realtime enable -c container` instead of setting individual ulimits. It configures rtprio, memlock, nice, and SYS_NICE capability automatically!
 {{< /callout >}}
 

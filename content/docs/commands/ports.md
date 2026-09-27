@@ -428,7 +428,7 @@ rfswift ports unbind -c container -b "8080:80/tcp"
 
 ---
 
-{{< callout emoji="🔌" >}}
+{{< callout >}}
 **Dynamic Port Mapping**: The `ports` command enables adding and removing port bindings without restarting containers. Perfect for development when you need to expose services on the fly!
 {{< /callout >}}
 

@@ -2,6 +2,6 @@
 {{- $labels := dict "bash" "bash" "sh" "shell" "shell" "shell" "zsh" "zsh" "console" "terminal" "powershell" "powershell" "ps1" "powershell" "pwsh" "powershell" "yaml" "yaml" "yml" "yaml" "ini" "ini" "toml" "toml" "json" "json" "go" "go" "python" "python" "dockerfile" "Dockerfile" "nix" "nix" "text" "output" "" "output" -}}
 {{- $label := index $labels $lang | default $lang -}}
 <div class="code">
-  <div class="code-bar"><span>{{ $label }}</span><button class="btn btn-ghost btn-sm" type="button" data-copy aria-label="Copy code"><i class="ph ph-copy"></i><span>Copy</span></button></div>
+  <div class="code-bar"><span>{{ $label }}</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div>
   {{- (transform.HighlightCodeBlock .).Wrapped -}}
 </div>

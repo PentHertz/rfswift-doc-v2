@@ -194,6 +194,6 @@ rfswift network create -n my_net
 
 ---
 
-{{< callout emoji="🔒" >}}
+{{< callout >}}
 **Network Isolation**: NAT networks provide true network isolation between container groups. Containers on different NAT networks cannot communicate with each other, making this ideal for multi-tenant pentesting setups.
 {{< /callout >}}

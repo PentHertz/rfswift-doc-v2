@@ -53,10 +53,10 @@ Each approach has its trade-offs. This table puts them side by side.
 | **Internet connectivity** | Configurable per container | System-wide configuration | System-wide configuration |
 | **Native option** | Nix engine: the same tools natively and pinned; lazy mode fetches each tool on first use; full environments roll back | Native by definition | Native by definition |
 | **Assessment workflow** | Standalone Workbench app (no editor or plugins): missions, recordings, findings, captures, reports | Separate tools | Separate tools |
-| **Remote lab** | mTLS remote agent drives a lab machine from your laptop | SSH and manual setup | SSH and manual setup |
+| **Remote lab** | mTLS remote agent drives a lab machine from your laptop | ⚠️ SSH and manual setup | ⚠️ SSH and manual setup |
 | **One tool only** | `rfswift env run sdr_light sdrpp` fetches that tool's closure and runs it | Install the distribution to get one tool | Install the distribution to get one tool |
 | **Disk for one tool** | The tool's closure, or a task-sized image for a job | A full system image, tens of GB | A full system image, tens of GB |
-| **Knowing what you run** | `rfswift audit` scans an image, a container or an environment for CVEs and attack surface | Distribution advisories only | No built-in audit |
+| **Knowing what you run** | `rfswift audit` scans an image, a container or an environment for CVEs and attack surface | ⚠️ Distribution advisories only | ⚠️ No built-in audit |
 
 *Pentest distributions* means Kali Linux, Pentoo, Parrot OS and similar security-focused operating systems.
 

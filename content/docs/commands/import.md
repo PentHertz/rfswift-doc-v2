@@ -173,14 +173,14 @@ When importing a container (from `export container`):
 
 | Content | Imported? | Notes |
 |---------|-----------|-------|
-| Container filesystem | ✅ Yes | Complete filesystem state |
-| Installed packages | ✅ Yes | All software |
-| Configuration files | ✅ Yes | All configs |
-| Created files | ✅ Yes | Data, scripts, logs |
-| Layer history | ❌ No | Flattened to single layer |
+| Container filesystem | Yes | Complete filesystem state |
+| Installed packages | Yes | All software |
+| Configuration files | Yes | All configs |
+| Created files | Yes | Data, scripts, logs |
+| Layer history | No | Flattened to single layer |
 | Container metadata | ⚠️ Limited | Basic info only |
-| Mounted volumes | ❌ No | Not included in export |
-| Running processes | ❌ No | Filesystem only |
+| Mounted volumes | No | Not included in export |
+| Running processes | No | Filesystem only |
 
 ### Image import
 
@@ -188,10 +188,10 @@ When importing an image (from `export image` or `download`):
 
 | Content | Imported? | Notes |
 |---------|-----------|-------|
-| Image layers | ✅ Yes | Complete layer history |
-| Image metadata | ✅ Yes | Tags, labels, config |
-| Build history | ✅ Yes | Layer creation history |
-| Default configuration | ✅ Yes | CMD, ENV, WORKDIR, etc. |
+| Image layers | Yes | Complete layer history |
+| Image metadata | Yes | Tags, labels, config |
+| Build history | Yes | Layer creation history |
+| Default configuration | Yes | CMD, ENV, WORKDIR, etc. |
 
 **Important:** Volume data is never included in exports/imports. Back up volumes separately.
 
@@ -301,7 +301,7 @@ newgrp docker
 
 ---
 
-{{< callout emoji="💾" >}}
+{{< callout >}}
 **Import Strategy**: Always verify archive integrity before importing with `tar -tzf file.tar.gz`. For production systems, test imports in a non-production environment first!
 {{< /callout >}}
 

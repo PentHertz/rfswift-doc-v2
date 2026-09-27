@@ -353,7 +353,7 @@ rfswift container shell -c container
 
 ---
 
-{{< callout emoji="🔐" >}}
+{{< callout >}}
 **Device Access Trinity**: For hardware device access, you need three things: (1) `bindings add -d` to expose the device, (2) `cgroups add` to grant permission, and (3) sometimes `capabilities add` for system privileges!
 {{< /callout >}}
 

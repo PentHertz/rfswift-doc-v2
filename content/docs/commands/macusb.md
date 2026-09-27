@@ -522,6 +522,6 @@ limactl stop rfswift && limactl start rfswift
 **macOS Only**: This command is exclusively for macOS hosts. On Linux, USB devices are directly accessible. On Windows, use [`winusb`](/docs/commands/winusb).
 {{< /callout >}}
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Remember**: Always use `rfswift --engine lima container create ...` when you need USB devices in your containers. Without `--engine lima`, containers run in Docker Desktop which has no USB access.
 {{< /callout >}}

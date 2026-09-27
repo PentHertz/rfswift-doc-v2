@@ -269,7 +269,7 @@ rfswift image export container -c important -o backup.tar.gz
 
 ---
 
-{{< callout emoji="🧹" >}}
+{{< callout >}}
 **Regular Maintenance**: Schedule regular cleanup with `rfswift cleanup all --older-than 7d --force` to prevent disk space issues. Daily or weekly cleanup keeps your system healthy!
 {{< /callout >}}
 

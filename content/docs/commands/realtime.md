@@ -50,7 +50,7 @@ When you enable realtime mode, RF Swift automatically configures:
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
-| `-c, --container STRING` | Container ID or name | ✅ Yes | `-c my_container` |
+| `-c, --container STRING` | Container ID or name | Yes | `-c my_container` |
 
 ---
 
@@ -268,7 +268,7 @@ Real-time scheduling works best with:
 
 ---
 
-{{< callout emoji="🚀" >}}
+{{< callout >}}
 **One Command Setup**: `rfswift realtime enable -c container` configures everything needed for optimal SDR performance. No need to understand ulimits or capabilities!
 {{< /callout >}}
 

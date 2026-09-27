@@ -43,10 +43,10 @@ The tables below list exactly what works where. The reasons behind each limitati
 |---|---|---|---|---|
 | **Architecture** | Client-server daemon | Daemonless | Docker in a QEMU VM | Native environments, no daemon |
 | **Root required** | Daemon as root | No (rootless by default) | No | No |
-| **Linux** | ✅ | ✅ | - | ✅ |
-| **Windows** | ✅ Docker Desktop (WSL 2) | ✅ Podman Desktop / WSL 2 | - | ✅ inside a WSL 2 distribution |
-| **macOS** | ✅ Docker Desktop (no USB) | ✅ `podman machine` (no USB) | ✅ USB passthrough, optional GPU VM | ✅ |
-| **SBCs (arm64, riscv64)** | ✅ | ✅ | - | ✅ (arm64) |
+| **Linux** | Yes | Yes | - | Yes |
+| **Windows** | Docker Desktop (WSL 2) | Podman Desktop / WSL 2 | - | Yes, inside a WSL 2 distribution |
+| **macOS** | Docker Desktop (no USB) | `podman machine` (no USB) | USB passthrough, optional GPU VM | Yes |
+| **SBCs (arm64, riscv64)** | Yes | Yes | - | Yes (arm64 only) |
 | **Best for** | Broad ecosystem | Security-focused, air-gapped, embedded | macOS with RF hardware | No container engine, closest to the hardware |
 
 RF Swift auto-detects the engine. Force one with `rfswift --engine docker|podman|lima|nix`, `RFSWIFT_ENGINE`, or `engine =` in `config.ini`. See [engine](/docs/commands/engine/) and the [Nix engine guide](/docs/guide/nix-engine/).
@@ -55,22 +55,22 @@ RF Swift auto-detects the engine. Force one with `rfswift --engine docker|podman
 
 | Platform | x86_64 / amd64 | arm64 | riscv64 |
 |----------|----------------|-------|---------|
-| Linux | ✅ Fully supported (deb, rpm, pacman, tarball, AppImage) | ✅ Fully supported | ✅ CLI and images (no Workbench) |
-| Windows 10/11 | ✅ Fully supported (installer bundle, MSI) | ✅ Supported (installer bundle, MSI) | ❌ |
-| macOS 13+ | ✅ Supported (universal binaries; Lima for USB) | ✅ Supported (Lima for USB, krunkit GPU VM on macOS 14+) | ❌ |
+| Linux | Fully supported (deb, rpm, pacman, tarball, AppImage) | Fully supported | CLI and images (no Workbench) |
+| Windows 10/11 | Fully supported (installer bundle, MSI) | Supported (installer bundle, MSI) | No |
+| macOS 13+ | Supported (universal binaries; Lima for USB) | Supported (Lima for USB, krunkit GPU VM on macOS 14+) | No |
 
 ### Tested single-board computers
 
 | SBC | Status | Engines | Comments |
 |-----|--------|---------|----------|
-| Raspberry Pi 5 | ✅ | Docker, Podman | Works with most tools |
-| Milk-V Jupiter | ✅ | Docker, Podman | Slower than a Raspberry Pi 5 |
-| Orange Pi RV2 | ✅ | Docker, Podman | Slower than the Milk-V Jupiter |
-| Milk-V Mars | ❌ | | Docker and Podman installation is problematic on its software stack |
-| UP Squared series | ✅ | Docker, Podman | |
-| NanoPi T6 | ✅ | Docker, Podman | |
-| Orange Pi 5 Ultra | ✅ | Docker, Podman | |
-| Radxa ROCK 5B+ | ✅ | Docker, Podman | |
+| Raspberry Pi 5 | Yes | Docker, Podman | Works with most tools |
+| Milk-V Jupiter | Yes | Docker, Podman | Slower than a Raspberry Pi 5 |
+| Orange Pi RV2 | Yes | Docker, Podman | Slower than the Milk-V Jupiter |
+| Milk-V Mars | No | | Docker and Podman installation is problematic on its software stack |
+| UP Squared series | Yes | Docker, Podman | |
+| NanoPi T6 | Yes | Docker, Podman | |
+| Orange Pi 5 Ultra | Yes | Docker, Podman | |
+| Radxa ROCK 5B+ | Yes | Docker, Podman | |
 
 {{< callout type="info" >}}
 On resource-constrained boards, **Podman** avoids a background daemon, and the **Nix engine** avoids image layers altogether.
@@ -80,19 +80,19 @@ On resource-constrained boards, **Podman** avoids a background daemon, and the *
 
 | Feature | Linux | Windows | macOS |
 |---------|-------|---------|-------|
-| Containers (Docker) | ✅ | ✅ Docker Desktop | ✅ Docker Desktop |
-| Containers (Podman) | ✅ rootless | ✅ WSL 2 / Podman Desktop | ✅ podman machine |
-| Native Nix environments | ✅ | ✅ inside WSL 2 | ✅ |
-| GUI tools | ✅ X11 | ✅ WSLg | ✅ XQuartz (EGL) or `--desktop` |
-| USB / SDR hardware in containers | ✅ mapped | ✅ usbipd-win into WSL 2 | ✅ Lima VM (not Docker Desktop) |
-| Serial hot-plug | ✅ Docker, rootful Podman | ✅ via usbipd | ❌ (attach to the VM) |
-| Audio | ✅ host PulseAudio / PipeWire | ✅ WSLg, no setup | ✅ host PulseAudio (Homebrew) |
-| GPU in containers | ✅ vendor runtime | ❓ limited | ✅ Vulkan compute in the krunkit VM (no USB) |
-| Nix `--isolate` jail | ✅ bubblewrap | ✅ inside WSL 2 | ✅ Seatbelt (no PID namespace) |
-| Workbench GUI | ✅ AppImage, native | ✅ | ✅ universal app |
-| Remote agent (host and client) | ✅ | ✅ | ✅ |
-| One-line installer | ✅ | ❌ (installer bundle instead) | ✅ |
-| Native packages | ✅ deb, rpm, pacman | ✅ MSI, bundle | ✅ Homebrew cask, DMG |
+| Containers (Docker) | Yes | Docker Desktop | Docker Desktop |
+| Containers (Podman) | Yes, rootless | WSL 2 / Podman Desktop | Yes, podman machine |
+| Native Nix environments | Yes | Yes, inside WSL 2 | Yes |
+| GUI tools | X11 | WSLg | XQuartz (EGL) or `--desktop` |
+| USB / SDR hardware in containers | Yes, mapped | Yes, usbipd-win into WSL 2 | Lima VM (not Docker Desktop) |
+| Serial hot-plug | Docker, rootful Podman | Yes, via usbipd | No (attach to the VM) |
+| Audio | Yes, host PulseAudio / PipeWire | WSLg, no setup | Yes, host PulseAudio (Homebrew) |
+| GPU in containers | Yes, vendor runtime | Limited | Vulkan compute in the krunkit VM (no USB) |
+| Nix `--isolate` jail | Yes, bubblewrap | Yes, inside WSL 2 | Seatbelt (no PID namespace) |
+| Workbench GUI | AppImage, native | Yes | Yes, universal app |
+| Remote agent (host and client) | Yes | Yes | Yes |
+| One-line installer | Yes | No (installer bundle instead) | Yes |
+| Native packages | deb, rpm, pacman | MSI, bundle | Homebrew cask, DMG |
 
 ## Next steps
 

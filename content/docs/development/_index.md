@@ -50,10 +50,10 @@ Build it with a single command:
 rfswift image build -r my-custom-image.yaml
 ```
 This approach makes it much easier to:
-- 🚀 **Quickly prototype** new image configurations
-- 📝 **Share recipes** with the community
-- 🔄 **Version control** your image definitions
-- 🛠️ **Customize** existing images without Dockerfile knowledge
+- **Quickly prototype** new image configurations
+- **Share recipes** with the community
+- **Version control** your image definitions
+- **Customize** existing images without Dockerfile knowledge
 See the [Building Custom Images](building-images) section for detailed information about the YAML recipe format and advanced features.
 
 ## Development environment setup
@@ -81,6 +81,6 @@ Join the RF Swift community to get help with development:
 - **Discord**: [Join our Discord server](https://discord.gg/NS3HayKrpA)
 - **GitHub Issues**: [Report bugs or request features](https://github.com/PentHertz/RF-Swift/issues)
 - **Documentation**: Refer to the [API Reference](https://github.com/PentHertz/RF-Swift/wiki/API-Reference) (coming soon)
-{{< callout emoji="🚧" >}}
+{{< callout >}}
 Additional development documentation is being actively created. We welcome contributions to the documentation, especially for specialized development scenarios and custom image recipes.
 {{< /callout >}}

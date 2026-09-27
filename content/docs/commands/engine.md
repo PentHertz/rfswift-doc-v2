@@ -499,6 +499,6 @@ rfswift engine lima reset --template ~/my-custom-lima.yaml
 
 ---
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Tip**: If you always use the same engine, you don't need `--engine` at all, because RF Swift auto-detects and uses whatever is available. The flag is only needed when both engines are installed and you want to force a specific one.
 {{< /callout >}}

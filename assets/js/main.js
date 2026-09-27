@@ -121,7 +121,7 @@
     if (rows.length < 15) return;
     const box = document.createElement('label');
     box.className = 'table-filter';
-    box.innerHTML = '<i class="ph ph-funnel-simple" aria-hidden="true"></i><input type="search" placeholder="Filter this table…" aria-label="Filter this table"><span></span>';
+    box.innerHTML = '<input type="search" placeholder="Filter this table…" aria-label="Filter this table"><span></span>';
     const input = box.querySelector('input');
     const count = box.querySelector('span');
     const update = () => {
@@ -242,7 +242,7 @@
     if (!q.trim()) {
       hits = suggestions.map(([t, u]) => ({ t, u }));
       results.innerHTML = '<div class="search-group">Popular pages</div>' + hits.map((h, i) =>
-        `<a class="search-hit" role="option" href="${h.u}" data-i="${i}"><i class="ph ph-arrow-right"></i><span class="search-hit-text"><span class="search-hit-title">${esc(h.t)}</span></span></a>`).join('');
+        `<a class="search-hit" role="option" href="${h.u}" data-i="${i}"><span class="search-hit-text"><span class="search-hit-title">${esc(h.t)}</span></span></a>`).join('');
       select(0);
       return;
     }
@@ -256,7 +256,7 @@
     results.innerHTML = list.map((r, i) => {
       const title = r.h ? `${mark(r.t, words)} <span>› ${mark(r.h, words)}</span>` : mark(r.t, words);
       const text = r.c ? snippet(r.c, words) : esc(r.g || '');
-      return `<a class="search-hit" role="option" href="${r.u}" data-i="${i}"><i class="ph ${r.h ? 'ph-hash' : 'ph-file-text'}"></i><span class="search-hit-text"><span class="search-hit-title">${title}</span><span class="search-hit-snippet">${text}</span></span></a>`;
+      return `<a class="search-hit" role="option" href="${r.u}" data-i="${i}"><span class="search-hit-text"><span class="search-hit-title">${title}</span><span class="search-hit-snippet">${text}</span></span></a>`;
     }).join('');
     select(0);
   }

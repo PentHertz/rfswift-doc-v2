@@ -1,0 +1,5 @@
+{{- /* One CSV table cell: status symbols become words. */ -}}
+{{- $c := trim . " " -}}
+{{- $words := dict "✅" "Yes" "✓" "Yes" "❌" "No" "✗" "No" "❓" "Limited" -}}
+{{- with index $words $c }}{{ $c = . }}{{ else }}{{ $c = replaceRE `^[✅✓]\s*` "" $c | replaceRE `^[❌✗]\s*` "No, " | replaceRE `[\x{2600}-\x{27BF}\x{1F000}-\x{1FAFF}]\x{FE0F}?\s*` "" }}{{ end -}}
+<td>{{ $c }}</td>

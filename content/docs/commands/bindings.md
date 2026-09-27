@@ -193,26 +193,26 @@ Podman processes bindings directly in user space (no daemon involved). In rootle
 | Feature | Runtime Bindings | Initial Mount (`run -b`) |
 |---------|------------------|--------------------------|
 | **When** | After creation | At creation |
-| **Restart needed** | ❌ No | N/A (during creation) |
-| **Modification** | ✅ Can add/remove | ❌ Fixed |
+| **Restart needed** | No | N/A (during creation) |
+| **Modification** | Can add/remove | Fixed |
 | **Performance** | Same | Same |
 | **Use case** | Dynamic needs | Known requirements |
-| **Engine support** | Docker ✅ Podman ✅ | Docker ✅ Podman ✅ |
+| **Engine support** | Docker  Podman | Docker  Podman |
 
 ### When to use each
 
 **Use runtime `bindings` when:**
-- ✅ Requirements change during work
-- ✅ Hot-plugging devices
-- ✅ Temporary data access
-- ✅ Testing different configurations
-- ✅ Adding forgotten mounts
+- Requirements change during work
+- Hot-plugging devices
+- Temporary data access
+- Testing different configurations
+- Adding forgotten mounts
 
 **Use initial `-b` flag when:**
-- ✅ Requirements known upfront
-- ✅ Permanent mounts needed
-- ✅ Creating container fresh
-- ✅ Documenting standard setup
+- Requirements known upfront
+- Permanent mounts needed
+- Creating container fresh
+- Documenting standard setup
 
 **Example:**
 ```bash
@@ -444,7 +444,7 @@ dmesg | tail -20
 
 ---
 
-{{< callout emoji="🔌" >}}
+{{< callout >}}
 **Hot-Plugging**: The `bindings` command enables hot-plugging devices and volumes without container restart. Perfect for SDR work where devices are frequently connected/disconnected!
 {{< /callout >}}
 

@@ -1,9 +1,9 @@
 {{- $loc := partial "docs/locate.html" . -}}
 <nav class="breadcrumbs" aria-label="Breadcrumb">
   <a href="{{ "/docs/" | relURL }}">Docs</a>
-  {{- with $loc.entry }}<i class="ph ph-caret-right" aria-hidden="true"></i><span>{{ .group }}</span>{{ end }}
+  {{- with $loc.entry }}<span class="sep" aria-hidden="true">/</span><span>{{ .group }}</span>{{ end }}
   {{- $group := "" }}{{ with $loc.entry }}{{ $group = .group }}{{ end }}
   {{- if and .Parent (ne .Parent.RelPermalink "/docs/") (ne .Parent.RelPermalink "/") (ne .Parent.RelPermalink .RelPermalink) (ne .Parent.RelPermalink "/docs/guide/") (ne .Parent.LinkTitle $group) }}
-  <i class="ph ph-caret-right" aria-hidden="true"></i><a href="{{ .Parent.RelPermalink }}">{{ .Parent.LinkTitle }}</a>
+  <span class="sep" aria-hidden="true">/</span><a href="{{ .Parent.RelPermalink }}">{{ .Parent.LinkTitle }}</a>
   {{- end }}
 </nav>

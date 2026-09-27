@@ -61,7 +61,7 @@ Balancing functionality with security lets you:
 | Privileged mode | `rfswift container create -u 1` | **High**: grants extensive privileges |
 | Default network | `rfswift container create -t host` | **Medium**: shares the host network stack |
 | Session recording | `rfswift container create --record` | **Data sensitivity**: may capture credentials and sensitive information |
-| Native Nix environment | `rfswift container create --engine nix` | Runs as your user with no container: use `--isolate` for tools you do not trust |
+| Native Nix environment | `rfswift container create --engine nix` | ⚠️ Runs as your user with no container: use `--isolate` for tools you do not trust |
 | Remote agent | `rfswift agent --bundle DIR` | A client certificate is full command execution: loopback plus VPN or SSH only. See [Remote agent hardening](/docs/security/remote-agent/) |
 | AI bridge | Workbench > Agent & MCP | Keep it read-only unless a task needs more; evidence is untrusted input. See [MCP best practices](/docs/security/mcp/) |
 | Docker group | `rfswift host docker-access` | Members of the `docker` group are root-equivalent |

@@ -63,28 +63,28 @@ When you run `rfswift update`:
 
 | Component | Updated? | Location |
 |-----------|----------|----------|
-| **RF Swift binary** | ✅ Yes | `/usr/local/bin/rfswift` |
-| **CLI tool** | ✅ Yes | Command-line interface |
-| **Helper scripts** | ✅ Yes | Internal utilities |
-| **Documentation** | ✅ Yes | Built-in help |
+| **RF Swift binary** | Yes | `/usr/local/bin/rfswift` |
+| **CLI tool** | Yes | Command-line interface |
+| **Helper scripts** | Yes | Internal utilities |
+| **Documentation** | Yes | Built-in help |
 
 ### NOT updated
 
 | Component | Updated? | How to Update |
 |-----------|----------|---------------|
-| **Docker images** | ❌ No | `rfswift image pull` |
-| **Containers** | ❌ No | `rfswift container upgrade` |
-| **User data** | ❌ No | Never modified |
-| **Configuration** | ❌ No | Preserved |
+| **Docker images** | No | `rfswift image pull` |
+| **Containers** | No | `rfswift container upgrade` |
+| **User data** | No | Never modified |
+| **Configuration** | No | Preserved |
 
 ### Update triggers
 
 **When to update:**
-- ✅ New features announced
-- ✅ Security updates released
-- ✅ Bug fixes available
-- ✅ Before starting new projects
-- ✅ Monthly maintenance
+- New features announced
+- Security updates released
+- Bug fixes available
+- Before starting new projects
+- Monthly maintenance
 
 **When to delay:**
 - ⚠️ During active critical work
@@ -175,7 +175,7 @@ rfswift container last
 
 ---
 
-{{< callout emoji="⬆️" >}}
+{{< callout >}}
 **Regular Updates**: Keep RF Swift updated for the latest features, bug fixes, and security improvements. Updates are automatic and safe - your containers and data are never modified!
 {{< /callout >}}
 

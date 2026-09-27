@@ -286,7 +286,7 @@ cp team-standard.yaml ~/.config/rfswift/profiles/
 
 ---
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Tip**: Create profiles for your most common setups (pentesting, SDR capture, hardware debug) and use `--profile` to skip repetitive configuration. Edit the YAML files directly for fine-tuning.
 {{< /callout >}}
 

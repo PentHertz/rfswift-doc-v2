@@ -97,22 +97,22 @@ rfswift container rename -n web_test -d web_staging
 ### What changes
 
 When you rename a container:
-- ✅ Container name changes
-- ✅ Container appears with new name in `rfswift container last` and `docker ps`
-- ✅ Docker internal references update
+- Container name changes
+- Container appears with new name in `rfswift container last` and `docker ps`
+- Docker internal references update
 
 ### What stays the same
 
 Everything else remains unchanged:
-- ✅ Container ID (unchanged)
-- ✅ All data inside container
-- ✅ Mounted volumes and bindings
-- ✅ Network configuration
-- ✅ Port mappings
-- ✅ Capabilities and cgroups
-- ✅ Container state (running/stopped)
-- ✅ Running processes (if container is running)
-- ✅ Creation date and history
+- Container ID (unchanged)
+- All data inside container
+- Mounted volumes and bindings
+- Network configuration
+- Port mappings
+- Capabilities and cgroups
+- Container state (running/stopped)
+- Running processes (if container is running)
+- Creation date and history
 
 **Example:**
 ```bash
@@ -238,7 +238,7 @@ rfswift container rename -n old_name -d new_name
 
 ---
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Naming Tip**: Use a consistent naming convention from the start. Format like `{purpose}_{project}_{date}` makes containers easy to identify and organize: `sdr_analysis_alpha_2024_01`
 {{< /callout >}}
 

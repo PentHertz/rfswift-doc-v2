@@ -241,18 +241,18 @@ Privileged Container (Least secure)
 ### When to use each
 
 **Use capabilities when:**
-- ✅ Need specific privileges only
-- ✅ Production environment
-- ✅ Security is important
-- ✅ Know exact requirements
-- ✅ Want minimal risk
+- Need specific privileges only
+- Production environment
+- Security is important
+- Know exact requirements
+- Want minimal risk
 
 **Use privileged mode when:**
-- ✅ Quick testing
-- ✅ Need many privileges
-- ✅ Development only
-- ✅ Unsure what's needed
-- ❌ Not for production
+- Quick testing
+- Need many privileges
+- Development only
+- Unsure what's needed
+- Not for production
 
 **Example comparison:**
 ```bash
@@ -435,7 +435,7 @@ rfswift capabilities rm -c container -p NET_ADMIN
 
 ---
 
-{{< callout emoji="🔒" >}}
+{{< callout >}}
 **Security First**: Capabilities provide fine-grained privilege control. Always start with an unprivileged container and add only the specific capabilities needed for your task!
 {{< /callout >}}
 

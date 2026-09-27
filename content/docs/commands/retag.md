@@ -320,7 +320,7 @@ rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
 
 ---
 
-{{< callout emoji="🏷️" >}}
+{{< callout >}}
 **No Disk Space Used**: Retagging creates a new reference to the same image data. Multiple tags for one image don't use extra disk space - they all point to the same layers!
 {{< /callout >}}
 

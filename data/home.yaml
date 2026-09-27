@@ -22,7 +22,6 @@ presented:
     - { name: "CyberOnBoard", year: "2025", url: "https://www.cyberonboard.org/en/content/sujetsscientifiques" }
 
 workbench:
-  kicker: "New · RF Swift Workbench"
   title: "Your whole assessment in one window"
   lead: "A desktop app for everyone who prefers clicking to typing. Create a mission, open terminals into your labs, take notes, log findings and captures, then export a branded report."
   standalone:
@@ -32,10 +31,10 @@ workbench:
     title: "Full toolboxes or lazy Nix environments"
     text: "Create a mission from a container image, or pick the Nix engine and tick “Lazy tools”: nothing is installed until you run a tool, then only that tool is fetched."
   features:
-    - { icon: "flag-banner", title: "Missions", text: "One place per engagement, with its own labs and files." }
-    - { icon: "terminal-window", title: "Recorded terminals", text: "Every session can be replayed later as evidence." }
-    - { icon: "notebook", title: "Notebook & findings", text: "Write notes and rate findings as you work." }
-    - { icon: "file-pdf", title: "Branded reports", text: "Turn captures and findings into a client-ready report." }
+    - { title: "Missions", text: "One place per engagement, with its own labs and files." }
+    - { title: "Recorded terminals", text: "Every session can be replayed later as evidence." }
+    - { title: "Notebook & findings", text: "Write notes and rate findings as you work." }
+    - { title: "Branded reports", text: "Turn captures and findings into a client-ready report." }
 
 what:
   title: "A ready-made radio lab that runs next to your system, not instead of it"
@@ -45,22 +44,56 @@ what:
     - { title: "Pick a toolbox", text: "Images are grouped by job: SDR, Wi-Fi, Bluetooth, telecom, automotive, hardware, reversing, Active Directory and more. Or stay light with a lazy Nix environment that fetches each tool the first time you use it." }
     - { title: "Plug in and listen", text: "Your SDR, audio and display are passed through automatically. Open SDR++, GQRX or GNU Radio and go." }
 
+showcase:
+  title: "Real hardware, ready to use"
+  text: "Plug your devices in and open the tools. The drivers and clients come built and tested in the toolbox: nothing to compile, no dependencies to chase, even on small everyday machines."
+  items:
+    - title: "FM radio with an RTL-SDR"
+      caption: "A broadcast FM station at 98.5 MHz in SDRangel from the sdr_full toolbox, on a GPD pocket laptop."
+      command: "rfswift container create -i sdr_full -n fm"
+      image: "images/home/gpd-sdrangel-rtlsdr-fm.jpg"
+      image_small: "images/home/gpd-sdrangel-rtlsdr-fm-800.jpg"
+      width: 1300
+      height: 975
+      full: 1300
+      alt: "A GPD pocket laptop running SDRangel with an RTL-SDR dongle plugged in, showing an FM station at 98.5 MHz, next to two RF Swift stickers."
+      link: { title: "Your first signal", url: "/docs/first-signal/" }
+    - title: "Proxmark5 and Proxmark3, side by side"
+      caption: "Both RFID tools in the same rfid lab on a pocket laptop, each on its own serial port."
+      command: "rfswift container create -i rfid -n badge"
+      image: "images/home/proxmark5-proxmark3-rfid.jpg"
+      image_small: "images/home/proxmark5-proxmark3-rfid-800.jpg"
+      width: 1600
+      height: 1205
+      full: 1600
+      alt: "A pocket laptop running RF Swift with two terminals side by side, one driving a Proxmark5 and one a Proxmark3, both plugged in over USB, next to the Proxmark5 Iceman Edition box."
+      link: { title: "Plug in devices", url: "/docs/guide/sharing-files/" }
+    - title: "A spectrum analyser on a Steam Deck"
+      caption: "A Harogic SAE-200 real-time spectrum analyser driven by SAStudio from the sdr_light toolbox, on a Steam Deck."
+      command: "rfswift container create -i sdr_light -n spectrum"
+      image: "images/home/steamdeck-harogic-sdr_light.jpg"
+      image_small: "images/home/steamdeck-harogic-sdr_light-800.jpg"
+      width: 1600
+      height: 1200
+      full: 1600
+      alt: "A Steam Deck on a stand running the Harogic SAStudio spectrum display and an RF Swift terminal, connected to a Harogic SAE-200 spectrum analyser."
+      link: { title: "Harogic setup", url: "/docs/guide/sharing-files/#specialized-hardware-harogic-spectrum-analyzers" }
+
 engines:
-  kicker: "Engines"
   title: "Full toolboxes, or only the tools you use"
   lead: "RF Swift drives four engines with the same commands and the same Workbench. Use a container image for a complete, tested toolbox, or Nix to install nothing you don't use. The installer sets up the one you pick."
   items:
-    - { icon: "cube", name: "Docker", where: "Linux · macOS · Windows", text: "The most common engine. Every lab is an isolated container, with the fullest USB, serial and realtime support on Linux.", best: "The usual setup, teams, Windows" }
-    - { icon: "shield-check", name: "Podman", where: "Linux · macOS · Windows", text: "Rootless and daemonless: labs run as you, with no admin rights and nothing running in the background.", best: "Shared, company or air-gapped machines, small boards" }
-    - { icon: "apple-logo", name: "Lima", where: "macOS", text: "Containers in a small Linux VM that receives your USB radios, with hot-plug. Optional GPU VM on Apple Silicon.", best: "Containers with USB radios on a Mac" }
-    - { icon: "snowflake", name: "Nix", where: "Linux · macOS · Windows", text: "No containers: tools installed natively and pinned. Lazy mode fetches each tool on first use. Direct USB and native sound.", best: "Staying light, macOS, lowest latency" }
+    - { name: "Docker", where: "Linux · macOS · Windows", text: "The most common engine. Every lab is an isolated container, with the fullest USB, serial and realtime support on Linux.", best: "The usual setup, teams, Windows" }
+    - { name: "Podman", where: "Linux · macOS · Windows", text: "Rootless and daemonless: labs run as you, with no admin rights and nothing running in the background.", best: "Shared, company or air-gapped machines, small boards" }
+    - { name: "Lima", where: "macOS", text: "Containers in a small Linux VM that receives your USB radios, with hot-plug. Optional GPU VM on Apple Silicon.", best: "Containers with USB radios on a Mac" }
+    - { name: "Nix", where: "Linux · macOS · Windows", text: "No containers: tools installed natively and pinned. Lazy mode fetches each tool on first use. Direct USB and native sound.", best: "Staying light, macOS, lowest latency" }
   light:
     title: "Stay light with lazy Nix environments"
     text: "In lazy mode nothing is installed up front. Each tool becomes a small launcher that fetches the real tool the first time you run it, then keeps it pinned for good."
     points:
-      - { icon: "feather", title: "Only what you run", text: "Type sdrpp and only SDR++ is fetched. Run inspectrum next and only that is added. Standard tools come prebuilt from the binary cache." }
-      - { icon: "push-pin", title: "Pinned, then instant", text: "The environment stays on the revision you created it from, so nothing rebuilds behind your back, and a fetched tool starts directly afterwards." }
-      - { icon: "desktop", title: "In the Workbench too", text: "Pick the Nix engine and tick “Lazy tools (build on first use)” when you create a mission." }
+      - { title: "Only what you run", text: "Type sdrpp and only SDR++ is fetched. Run inspectrum next and only that is added. Standard tools come prebuilt from the binary cache." }
+      - { title: "Pinned, then instant", text: "The environment stays on the revision you created it from, so nothing rebuilds behind your back, and a fetched tool starts directly afterwards." }
+      - { title: "In the Workbench too", text: "Pick the Nix engine and tick “Lazy tools (build on first use)” when you create a mission." }
     terminal:
       - { cmd: "rfswift container create --engine nix -i sdr_light -n radio --lazy" }
       - { note: "# nothing installed yet" }
@@ -77,15 +110,15 @@ engines:
 benefits:
   title: "Spend your time on the signal, not on the setup"
   items:
-    - { icon: "lightning", title: "Ready in minutes", text: "Skip days of compiling and dependency hunting. Hundreds of RF and hardware security tools come already built and tested together, and one command pulls the latest ones." }
-    - { icon: "package", title: "One program, no Python", text: "RF Swift itself is a single self-contained binary: no Python, no pip, no virtual environment to manage on your computer. The Workbench is a standalone desktop app." }
-    - { icon: "shield-check", title: "Keeps your computer clean", text: "No new OS, no dual boot, no reformatting. Every assessment runs in its own environment that you can throw away." }
-    - { icon: "plugs-connected", title: "Your hardware just works", text: "USB, audio and video forwarding with minimal configuration. HydraSDR, HackRF, USRP, bladeRF, Proxmark3 and many other devices are recognised out of the box." }
-    - { icon: "devices", title: "Same lab on every machine", text: "Linux, macOS or Windows, on x86_64, ARM64 or RISCV64. From a workstation to a Raspberry Pi or a Steam Deck." }
-    - { icon: "feather", title: "Stay light", text: "Full images in Docker, Podman or Lima when you want the whole toolbox, or lazy Nix environments where each tool is fetched the first time you run it." }
-    - { icon: "target", title: "Covers the whole target", text: "Radio is where it starts, not where it ends. Reversing, Active Directory, network and other assessment tools ship too, so one lab covers the entire target." }
-    - { icon: "broadcast", title: "Drive a lab from anywhere", text: "The remote agent is built into the same binary. Run it on a lab server or a small board next to the antenna, and control it from your laptop over mutual TLS." }
-    - { icon: "file-text", title: "From capture to report", text: "The standalone Workbench keeps missions, terminal recordings, notes, findings and captures together, then exports a branded report." }
+    - { title: "Ready in minutes", text: "Skip days of compiling and dependency hunting. Hundreds of RF and hardware security tools come already built and tested together, and one command pulls the latest ones." }
+    - { title: "One program, no Python", text: "RF Swift itself is a single self-contained binary: no Python, no pip, no virtual environment to manage on your computer. The Workbench is a standalone desktop app." }
+    - { title: "Keeps your computer clean", text: "No new OS, no dual boot, no reformatting. Every assessment runs in its own environment that you can throw away." }
+    - { title: "Your hardware just works", text: "USB, audio and video forwarding with minimal configuration. HydraSDR, HackRF, USRP, bladeRF, Proxmark3, Proxmark5 and many other devices are recognised out of the box." }
+    - { title: "Same lab on every machine", text: "Linux, macOS or Windows, on x86_64, ARM64 or RISCV64. From a workstation to a Raspberry Pi or a Steam Deck." }
+    - { title: "Stay light", text: "Full images in Docker, Podman or Lima when you want the whole toolbox, or lazy Nix environments where each tool is fetched the first time you run it." }
+    - { title: "Covers the whole target", text: "Radio is where it starts, not where it ends. Reversing, Active Directory, network and other assessment tools ship too, so one lab covers the entire target." }
+    - { title: "Drive a lab from anywhere", text: "The remote agent is built into the same binary. Run it on a lab server or a small board next to the antenna, and control it from your laptop over mutual TLS." }
+    - { title: "From capture to report", text: "The standalone Workbench keeps missions, terminal recordings, notes, findings and captures together, then exports a branded report." }
   compare:
     title: "Works with your distribution, not against it"
     lead: "Dedicated distributions and RF Swift solve different problems, and many people use both. RF Swift installs on Kali, Parrot, BlackArch or DragonOS like on any Linux and adds what they don't ship, without touching their packages. On a plain, freshly installed system, one command brings the whole tool set."
@@ -108,23 +141,21 @@ stats:
   - { value: "1 command", label: "to start a full lab" }
 
 products:
-  - { icon: "snowflake", title: "Nix engine", text: "Tools installed natively and pinned. In lazy mode each one is fetched the first time you run it. Excellent on macOS.", url: "/docs/guide/nix-engine/" }
-  - { icon: "broadcast", title: "Remote agent", text: "Built into the rfswift binary. Run it on a lab server or a small board near the antenna and drive it securely from your laptop.", url: "/docs/guide/remote-agent/" }
-  - { icon: "sparkle", title: "AI assistant (MCP)", text: "Let an assistant operate RF Swift through a controlled bridge.", url: "/docs/guide/ai-assistant/" }
-  - { icon: "stack", title: "Container images", text: "Toolboxes by domain, or build your own from YAML recipes.", url: "/docs/guide/list-of-images/" }
+  - { title: "Nix engine", text: "Tools installed natively and pinned. In lazy mode each one is fetched the first time you run it. Excellent on macOS.", url: "/docs/guide/nix-engine/" }
+  - { title: "Remote agent", text: "Built into the rfswift binary. Run it on a lab server or a small board near the antenna and drive it securely from your laptop.", url: "/docs/guide/remote-agent/" }
+  - { title: "AI assistant (MCP)", text: "Let an assistant operate RF Swift through a controlled bridge.", url: "/docs/guide/ai-assistant/" }
+  - { title: "Container images", text: "Toolboxes by domain, or build your own from YAML recipes.", url: "/docs/guide/list-of-images/" }
 
 install:
   - id: linux
     os: "linux"
     label: "Linux / macOS"
-    icon: "linux-logo"
     shell: "bash"
     cmd: 'curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh'
     note: "Then run rfswift. The script installs the CLI, the Workbench or both, and sets up Docker, Podman or Nix for you."
   - id: mac
     os: "mac"
     label: "macOS (Homebrew / DMG)"
-    icon: "apple-logo"
     shell: "zsh"
     cmd: |-
       # Homebrew: CLI and Workbench from the signed release
@@ -136,7 +167,6 @@ install:
   - id: windows
     os: "windows"
     label: "Windows"
-    icon: "windows-logo"
     shell: "powershell"
     cmd: |-
       $setup = (Invoke-RestMethod https://api.github.com/repos/PentHertz/RF-Swift/releases/latest).assets | Where-Object name -like 'RFSwift-Setup-*-x64.exe'

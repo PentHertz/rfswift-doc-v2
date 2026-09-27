@@ -401,7 +401,7 @@ docker builder prune
 
 ---
 
-{{< callout emoji="🔨" >}}
+{{< callout >}}
 **Recipe vs Dockerfile**: RF Swift recipes provide a simplified YAML format that's easier to read and maintain than Dockerfiles. They're perfect for building custom RF Swift variants without Dockerfile complexity!
 {{< /callout >}}
 

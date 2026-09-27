@@ -946,12 +946,12 @@ RUN cmake_clone_and_build [...]
 ## YAML vs Dockerfile: when to use each
 
 ### Use YAML recipes when:
-- ✅ You want simple, readable configurations
-- ✅ You're building standard SDR/RF tool containers
-- ✅ You need quick prototyping
-- ✅ You want automatic layer optimization
-- ✅ You're sharing configurations with the community
-- ✅ You need cross-platform builds automatically configured
+- You want simple, readable configurations
+- You're building standard SDR/RF tool containers
+- You need quick prototyping
+- You want automatic layer optimization
+- You're sharing configurations with the community
+- You need cross-platform builds automatically configured
 
 **Example:**
 ```yaml
@@ -968,11 +968,11 @@ run_commands:
 ```
 
 ### Use Dockerfiles when:
-- ⚙️ You need fine-grained control over build process
-- ⚙️ You're implementing complex multi-stage builds
-- ⚙️ You need custom base image configurations
-- ⚙️ You're integrating with existing Docker workflows
-- ⚙️ You need advanced Docker features (HEALTHCHECK, STOPSIGNAL, etc.)
+- You need fine-grained control over build process
+- You're implementing complex multi-stage builds
+- You need custom base image configurations
+- You're integrating with existing Docker workflows
+- You need advanced Docker features (HEALTHCHECK, STOPSIGNAL, etc.)
 
 **Example:**
 ```dockerfile
@@ -1102,6 +1102,6 @@ cmake_clone_and_build [...]
 
 ---
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Pro Tip**: All helper functions are defined in `images/scripts/common.sh`. You can extend them or create new ones for your specific needs!
 {{< /callout >}}

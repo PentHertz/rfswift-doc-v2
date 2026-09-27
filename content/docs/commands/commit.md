@@ -143,15 +143,15 @@ When you commit a container, the new image includes:
 
 | Content | Included? | Notes |
 |---------|-----------|-------|
-| Container filesystem changes | ✅ Yes | All modifications to files |
-| Installed packages | ✅ Yes | APT, pip, npm packages |
-| Configuration files | ✅ Yes | Modified configs in container |
-| Created files | ✅ Yes | Scripts, data files, logs |
+| Container filesystem changes | Yes | All modifications to files |
+| Installed packages | Yes | APT, pip, npm packages |
+| Configuration files | Yes | Modified configs in container |
+| Created files | Yes | Scripts, data files, logs |
 | Environment variables | ⚠️ Partial | Runtime vars not preserved |
-| Running processes | ❌ No | Only filesystem, not RAM |
-| Mounted volumes | ❌ No | Volume data not in image |
+| Running processes | No | Only filesystem, not RAM |
+| Mounted volumes | No | Volume data not in image |
 | Network configuration | ⚠️ Partial | Basic config only |
-| Port bindings | ❌ No | Must reconfigure on new container |
+| Port bindings | No | Must reconfigure on new container |
 
 **Example of what's saved:**
 ```bash
@@ -159,15 +159,15 @@ When you commit a container, the new image includes:
 rfswift container shell -c my_container
 
 # Changes that WILL be in committed image:
-apt-get install -y new-tool              # ✅ Saved
-pip3 install additional-package          # ✅ Saved
-echo "alias ll='ls -la'" >> ~/.bashrc   # ✅ Saved
-mkdir /root/my-scripts                   # ✅ Saved
-cp tool.py /usr/local/bin/              # ✅ Saved
+apt-get install -y new-tool              # Saved
+pip3 install additional-package          # Saved
+echo "alias ll='ls -la'" >> ~/.bashrc   # Saved
+mkdir /root/my-scripts                   # Saved
+cp tool.py /usr/local/bin/              # Saved
 
 # Changes that WON'T be in committed image:
-# Data in mounted volumes                # ❌ Not saved
-# Running processes                       # ❌ Not saved
+# Data in mounted volumes                # Not saved
+# Running processes                       # Not saved
 # Temporary /tmp files may not persist   # ⚠️ Depends
 
 exit
@@ -247,7 +247,7 @@ rfswift container commit -c container -i image:v1
 
 ---
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Pro Tip**: Before committing, clean up unnecessary files to keep image size small. Run `apt-get clean`, remove logs, and clear caches inside the container first! For portable backups, consider using `export` instead.
 {{< /callout >}}
 

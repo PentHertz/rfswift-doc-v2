@@ -105,7 +105,7 @@ rfswift container rm -c old_container
 
 ---
 
-{{< callout emoji="📋" >}}
+{{< callout >}}
 **Quick Overview**: `rfswift container last` is your first stop for seeing what containers exist. It shows all containers (running and stopped) with their essential information at a glance.
 {{< /callout >}}
 

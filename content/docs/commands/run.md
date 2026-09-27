@@ -1335,10 +1335,10 @@ rfswift container create -i sdr_full -n assessment \
 
 ---
 
-{{< callout emoji="⚡" >}}
+{{< callout >}}
 **SDR Performance**: Use `--realtime` flag for optimal SDR performance. It automatically configures rtprio, memlock, nice ulimits and SYS_NICE capability to eliminate buffer underruns!
 {{< /callout >}}
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Tip**: Use `rfswift container create --help` to see all options with their current default values from your config file.
 {{< /callout >}}

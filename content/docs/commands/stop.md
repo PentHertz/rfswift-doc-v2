@@ -100,12 +100,12 @@ rfswift container shell -c long_running_capture
 ### Data persistence
 
 When a container is stopped:
-- ✅ **Container filesystem**: All data inside the container is preserved
-- ✅ **Mounted volumes**: Data in mounted directories remains intact
-- ✅ **Container configuration**: All settings, bindings, and capabilities are preserved
-- ✅ **Network configuration**: Port bindings and network settings are saved
-- ❌ **Running processes**: All processes inside the container are terminated
-- ❌ **Memory state**: RAM contents are lost (not hibernated)
+- **Container filesystem**: All data inside the container is preserved
+- **Mounted volumes**: Data in mounted directories remains intact
+- **Container configuration**: All settings, bindings, and capabilities are preserved
+- **Network configuration**: Port bindings and network settings are saved
+- **Running processes**: All processes inside the container are terminated
+- **Memory state**: RAM contents are lost (not hibernated)
 
 **Example:**
 ```bash
@@ -150,13 +150,13 @@ docker ps -a | grep my_container
 ```
 
 **Container is:**
-- ✅ Still exists in Docker
-- ✅ Can be restarted
-- ✅ Can be committed to an image
-- ✅ Can be removed
-- ❌ Not consuming CPU
-- ❌ Not consuming RAM
-- ✅ Still consuming disk space
+- Still exists in Docker
+- Can be restarted
+- Can be committed to an image
+- Can be removed
+- Not consuming CPU
+- Not consuming RAM
+- Still consuming disk space
 
 ---
 
@@ -165,8 +165,8 @@ docker ps -a | grep my_container
 | Operation | `stop` | `exit` (from shell) |
 |-----------|--------|---------------------|
 | Initiated from | Host | Inside container |
-| Stops container | ✅ Always | ⚠️ Sometimes* |
-| Graceful shutdown | ✅ Yes | ⚠️ Depends |
+| Stops container | Always | ⚠️ Sometimes* |
+| Graceful shutdown | Yes | ⚠️ Depends |
 | Use when | Managing from host | Done with current session |
 
 {{< callout type="warning" >}}
@@ -375,7 +375,7 @@ rfswift container stop -c my_container
 
 ---
 
-{{< callout emoji="💡" >}}
+{{< callout >}}
 **Quick Tip**: Create a nightly cron job to stop idle RF Swift containers and free resources: `crontab -e` then add `0 2 * * * /path/to/stop_idle_containers.sh`
 {{< /callout >}}
 
