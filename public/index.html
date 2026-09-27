@@ -1,1288 +1,370 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr"><head>
+<!doctype html>
+<html lang="en-us">
+<head>
 	<meta name="generator" content="Hugo 0.147.0">
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="index, follow" />
-  <link rel="icon shortcut" href="/favicon.ico" sizes="32x32" />
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" id="favicon-svg" />
-<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
-<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-<link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
-<title>RF Swift</title>
-  <meta name="description" content="The epic RF companion for your assessments" /><link rel="canonical" href="https://rfswift.io/" itemprop="url" />
-
-<meta property="og:title" content="RF Swift">
-<meta
-  property="og:description"
-  content="
-    
-      The epic RF companion for your assessments
-    
-  ">
-<meta
-  property="og:type"
-  content="
-    website
-  ">
-<meta property="og:url" content="https://rfswift.io/">
-
-
-  <meta itemprop="name" content="RF Swift">
-  <meta itemprop="description" content="New: v4.0 &#34;Nucleus&#34; The epic RF companion ⚡ for HAMs and professionals Fast, efficient, and multi-platform toolbox for your RF &amp; hardware security assessments">
-  <meta itemprop="dateModified" content="2026-09-08T15:02:43+02:00">
-  <meta itemprop="wordCount" content="437">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="RF Swift">
-  <meta name="twitter:description" content="New: v4.0 &#34;Nucleus&#34; The epic RF companion ⚡ for HAMs and professionals Fast, efficient, and multi-platform toolbox for your RF &amp; hardware security assessments">
-
-    <link rel="preload" href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" as="style" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
-    <link href="/css/compiled/main.min.5b8b6abf9bc1c32156440cc364fcb1fd6fd9749e905be29ca38c36ae7dcfc4a1.css" rel="stylesheet" integrity="sha256-W4tqv5vBwyFWRAzDZPyx/W/ZdJ6QW&#43;Kco4w2rn3PxKE=" />
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RF Swift · The RF companion for everyone working on radio. Hundreds of</title>
+  <meta name="description" content="The RF companion for everyone working on radio. Hundreds of radio, hardware and security tools, ready in one command, on the computer you already have.">
+  <meta name="theme-color" content="#0b1416">
+  <link rel="canonical" href="https://rfswift.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RF Swift">
+  <meta property="og:description" content="The RF companion for everyone working on radio. Hundreds of radio, hardware and security tools, ready in one command, on the computer you already have.">
+  <meta property="og:url" content="https://rfswift.io/">
+  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@PentHertz">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
-  
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag("js", new Date());
-
-  gtag("config", "G-X1KH5KRN5B");
-</script>
-
-
-
-
-
-
-
-  <script>
-    
-
-    function setTheme(theme) {
-      document.documentElement.classList.remove("light", "dark");
-
-      if (theme !== "light" && theme !== "dark") {
-       theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      }
-
-      document.documentElement.classList.add(theme);
-      document.documentElement.style.colorScheme = theme;
-    }
-
-    setTheme("color-theme" in localStorage ? localStorage.getItem("color-theme") : 'system')
-
-  </script>
-
-  <script>
-    
-
-    if (localStorage.getItem('banner-closed')) {
-      document.documentElement.style.setProperty("--hextra-banner-height", "0px");
-      document.documentElement.classList.add("hextra-banner-hidden");
-    }
-  </script>
-
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.min.js"></script>
-<script>
-  window.addEventListener("load", () => {
-    quicklink.listen();
-  });
-</script></head>
-<body><div class="hextra-nav-container hx:sticky hx:top-0 hx:z-20 hx:w-full hx:bg-transparent hx:print:hidden">
-  <div
-    class="hextra-nav-container-blur hx:pointer-events-none hx:absolute hx:z-[-1] hx:h-full hx:w-full hx:bg-white hx:dark:bg-dark hx:shadow-[0_2px_4px_rgba(0,0,0,.02),0_1px_0_rgba(0,0,0,.06)] hx:contrast-more:shadow-[0_0_0_1px_#000] hx:dark:shadow-[0_-1px_0_rgba(255,255,255,.1)_inset] hx:contrast-more:dark:shadow-[0_0_0_1px_#fff]"
-  ></div>
-
-  <nav class="hextra-max-navbar-width hx:mx-auto hx:flex hx:items-center hx:justify-end hx:gap-2 hx:h-16 hx:px-6">
-    <a class="hx:flex hx:items-center hx:hover:opacity-75 hx:ltr:mr-auto hx:rtl:ml-auto" href="/">
-    <img class="hx:mr-2 hx:block hx:dark:hidden" src="/images/logo.svg" alt="Logo" height="20" width="20" />
-    <img class="hx:mr-2 hx:hidden hx:dark:block" src="/images/logo.svg" alt="Dark Logo" height="20" width="20" />
-    <span class="hx:mr-2 hx:font-extrabold hx:inline hx:select-none" title="RF Swift">RF Swift</span>
-</a>
-<a
-  title=""
-  href="/docs"
-  
-  class="hx:text-sm hx:contrast-more:text-gray-700 hx:contrast-more:dark:text-gray-100 hx:relative hx:-ml-2 hx:hidden hx:whitespace-nowrap hx:p-2 hx:md:inline-flex hx:items-center hx:gap-1 hx:text-gray-600 hx:hover:text-gray-800 hx:dark:text-gray-400 hx:dark:hover:text-gray-200"
-><span class="hx:text-center">Documentation</span>
-</a><div class="hextra-search-wrapper hx:relative hx:md:w-64">
-  <div class="hx:relative hx:flex hx:items-center hx:text-gray-900 hx:contrast-more:text-gray-800 hx:dark:text-gray-300 hx:contrast-more:dark:text-gray-300">
-    <input
-      placeholder="Search..."
-      class="hextra-search-input hx:focus:hextra-focus hx:block hx:w-full hx:appearance-none hx:rounded-lg hx:px-3 hx:py-2 hx:transition-colors hx:text-base hx:leading-tight hx:md:text-sm hx:bg-black/[.05] hx:dark:bg-gray-50/10 hx:focus:bg-white hx:dark:focus:bg-dark hx:placeholder:text-gray-500 hx:dark:placeholder:text-gray-400 hx:contrast-more:border hx:contrast-more:border-current"
-      type="search"
-      value=""
-      spellcheck="false"
-    />
-    <kbd
-      class="hx:absolute hx:my-1.5 hx:select-none hx:ltr:right-1.5 hx:rtl:left-1.5 hx:h-5 hx:rounded-sm hx:bg-white hx:px-1.5 hx:font-mono hx:text-[10px] hx:font-medium hx:text-gray-500 hx:border hx:border-gray-200 hx:dark:border-gray-100/20 hx:dark:bg-dark/50 hx:contrast-more:border-current hx:contrast-more:text-current hx:contrast-more:dark:border-current hx:items-center hx:gap-1 hx:transition-opacity hx:pointer-events-none hx:hidden hx:sm:flex"
-    >
-      CTRL K
-    </kbd>
-  </div>
-
-  <div>
-    <ul
-      class="hextra-search-results hextra-scrollbar hx:hidden hx:border hx:border-gray-200 hx:bg-white hx:text-gray-100 hx:dark:border-neutral-800 hx:dark:bg-neutral-900 hx:absolute hx:top-full hx:z-20 hx:mt-2 hx:overflow-auto hx:overscroll-contain hx:rounded-xl hx:py-2.5 hx:shadow-xl hx:max-h-[min(calc(50vh-11rem-env(safe-area-inset-bottom)),400px)] hx:md:max-h-[min(calc(100vh-5rem-env(safe-area-inset-bottom)),400px)] hx:inset-x-0 hx:ltr:md:left-auto hx:rtl:md:right-auto hx:contrast-more:border hx:contrast-more:border-gray-900 hx:contrast-more:dark:border-gray-50 hx:w-screen hx:min-h-[100px] hx:max-w-[min(calc(100vw-2rem),calc(100%+20rem))]"
-      style="transition: max-height 0.2s ease 0s;"
-    ></ul>
-  </div>
-</div>
-
-          <a class="hx:p-2 hx:text-current" target="_blank" rel="noreferrer" href="https://discord.gg/NS3HayKrpA" title="Discord"><svg height=24 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"></path></svg><span class="hx:sr-only">Discord</span>
-          </a>
-          <a class="hx:p-2 hx:text-current" target="_blank" rel="noreferrer" href="https://github.com/PentHertz/RF-Swift" title="GitHub"><svg height=24 fill="currentColor" viewBox="3 3 18 18">
-  <path d="M12 3C7.0275 3 3 7.12937 3 12.2276C3 16.3109 5.57625 19.7597 9.15374 20.9824C9.60374 21.0631 9.77249 20.7863 9.77249 20.5441C9.77249 20.3249 9.76125 19.5982 9.76125 18.8254C7.5 19.2522 6.915 18.2602 6.735 17.7412C6.63375 17.4759 6.19499 16.6569 5.8125 16.4378C5.4975 16.2647 5.0475 15.838 5.80124 15.8264C6.51 15.8149 7.01625 16.4954 7.18499 16.7723C7.99499 18.1679 9.28875 17.7758 9.80625 17.5335C9.885 16.9337 10.1212 16.53 10.38 16.2993C8.3775 16.0687 6.285 15.2728 6.285 11.7432C6.285 10.7397 6.63375 9.9092 7.20749 9.26326C7.1175 9.03257 6.8025 8.08674 7.2975 6.81794C7.2975 6.81794 8.05125 6.57571 9.77249 7.76377C10.4925 7.55615 11.2575 7.45234 12.0225 7.45234C12.7875 7.45234 13.5525 7.55615 14.2725 7.76377C15.9937 6.56418 16.7475 6.81794 16.7475 6.81794C17.2424 8.08674 16.9275 9.03257 16.8375 9.26326C17.4113 9.9092 17.76 10.7281 17.76 11.7432C17.76 15.2843 15.6563 16.0687 13.6537 16.2993C13.98 16.5877 14.2613 17.1414 14.2613 18.0065C14.2613 19.2407 14.25 20.2326 14.25 20.5441C14.25 20.7863 14.4188 21.0746 14.8688 20.9824C16.6554 20.364 18.2079 19.1866 19.3078 17.6162C20.4077 16.0457 20.9995 14.1611 21 12.2276C21 7.12937 16.9725 3 12 3Z"></path>
-</svg>
-<span class="hx:sr-only">GitHub</span>
-          </a>
-          <a class="hx:p-2 hx:text-current" target="_blank" rel="noreferrer" href="https://x.com/PentHertz" title="Twitter"><svg height=24 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg><span class="hx:sr-only">Twitter</span>
-          </a>
-          <a class="hx:p-2 hx:text-current" target="_blank" rel="noreferrer" href="https://www.youtube.com/c/Penthertz" title="YouTube"><svg height=24 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="currentColor" d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104l.022.26l.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105l-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006l-.087-.004l-.171-.007l-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103l.003-.052l.008-.104l.022-.26l.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007l.172-.006l.086-.003l.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/></svg><span class="hx:sr-only">YouTube</span>
-          </a><button type="button" aria-label="Menu" class="hextra-hamburger-menu hx:cursor-pointer hx:-mr-2 hx:rounded-sm hx:p-2 hx:active:bg-gray-400/20 hx:md:hidden"><svg height=24 fill="none" viewBox="0 0 24 24" stroke="currentColor"><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8H20"></path></g><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16H20"></path></g></svg></button>
+  <link rel="stylesheet" href="/css/main.min.de247fdea67b601d8e9432b754eb2a4572a41f760777635901f9f5a16cf54f0b.css" integrity="sha256-3iR/3qZ7YB2OlDK3VOsqRXKkH3YHd2NZAfn1oWz1Tws=">
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-X1KH5KRN5B');
+        }
+      </script>
+</head>
+<body class="is-home">
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href="/"><span class="logo logo--mask logo--accent" role="img" aria-label="RF Swift"></span><span>RF Swift</span></a>
+    <div class="nav-links" id="nav-links">
+        <a href="/#workbench">Workbench</a>
+        <a href="/#benefits">Why RF Swift</a>
+        <a href="/#learn">Learn</a>
+        <a href="/docs/">Docs</a>
+        <a href="/docs/commands/">Commands</a>
+    </div>
+    <div class="nav-end">
+      <button class="search-trigger" type="button" data-search-open aria-label="Search the docs"><span>Search</span><kbd>Ctrl K</kbd></button>
+      <a class="icon-link" href="https://github.com/PentHertz/RF-Swift" aria-label="RF Swift on GitHub" title="GitHub"><svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a class="icon-link" href="https://discord.gg/NS3HayKrpA" aria-label="RF Swift on Discord" title="Discord"><svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.11 13.11 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></a>
+      <a class="btn btn-primary btn-sm nav-install" href="/#install">Install</a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links" data-nav-toggle>Menu</button>
+    </div>
   </nav>
-</div>
+</header>
 
-  <div class='hx:mx-auto hx:flex hextra-max-page-width'>
-    <aside class="hextra-sidebar-container hx:flex hx:flex-col hx:print:hidden hx:md:top-16 hx:md:shrink-0 hx:md:w-64 hx:md:self-start hx:max-md:[transform:translate3d(0,-100%,0)] hx:md:hidden">
-  
-  <div class="hx:px-4 hx:pt-4 hx:md:hidden">
-    <div class="hextra-search-wrapper hx:relative hx:md:w-64">
-  <div class="hx:relative hx:flex hx:items-center hx:text-gray-900 hx:contrast-more:text-gray-800 hx:dark:text-gray-300 hx:contrast-more:dark:text-gray-300">
-    <input
-      placeholder="Search..."
-      class="hextra-search-input hx:focus:hextra-focus hx:block hx:w-full hx:appearance-none hx:rounded-lg hx:px-3 hx:py-2 hx:transition-colors hx:text-base hx:leading-tight hx:md:text-sm hx:bg-black/[.05] hx:dark:bg-gray-50/10 hx:focus:bg-white hx:dark:focus:bg-dark hx:placeholder:text-gray-500 hx:dark:placeholder:text-gray-400 hx:contrast-more:border hx:contrast-more:border-current"
-      type="search"
-      value=""
-      spellcheck="false"
-    />
-    <kbd
-      class="hx:absolute hx:my-1.5 hx:select-none hx:ltr:right-1.5 hx:rtl:left-1.5 hx:h-5 hx:rounded-sm hx:bg-white hx:px-1.5 hx:font-mono hx:text-[10px] hx:font-medium hx:text-gray-500 hx:border hx:border-gray-200 hx:dark:border-gray-100/20 hx:dark:bg-dark/50 hx:contrast-more:border-current hx:contrast-more:text-current hx:contrast-more:dark:border-current hx:items-center hx:gap-1 hx:transition-opacity hx:pointer-events-none hx:hidden hx:sm:flex"
-    >
-      CTRL K
-    </kbd>
-  </div>
+  <main id="content">
 
-  <div>
-    <ul
-      class="hextra-search-results hextra-scrollbar hx:hidden hx:border hx:border-gray-200 hx:bg-white hx:text-gray-100 hx:dark:border-neutral-800 hx:dark:bg-neutral-900 hx:absolute hx:top-full hx:z-20 hx:mt-2 hx:overflow-auto hx:overscroll-contain hx:rounded-xl hx:py-2.5 hx:shadow-xl hx:max-h-[min(calc(50vh-11rem-env(safe-area-inset-bottom)),400px)] hx:md:max-h-[min(calc(100vh-5rem-env(safe-area-inset-bottom)),400px)] hx:inset-x-0 hx:ltr:md:left-auto hx:rtl:md:right-auto hx:contrast-more:border hx:contrast-more:border-gray-900 hx:contrast-more:dark:border-gray-50 hx:w-screen hx:min-h-[100px] hx:max-w-[min(calc(100vw-2rem),calc(100%+20rem))]"
-      style="transition: max-height 0.2s ease 0s;"
-    ></ul>
-  </div>
-</div>
 
+<section id="top" class="hero">
+  <div class="wrap hero-grid">
+    <div class="stack-lg">
+      <a class="release-link" href="/docs/release-notes-v4/">v4.0 &#34;Nucleus&#34; is out →</a>
+      <h1>The RF companion for everyone working on radio</h1>
+      <p class="lead">Hundreds of radio, hardware and security tools, ready in one command on the computer you already have. From your first FM station to a full professional assessment.</p>
+      <div class="row">
+        <a class="btn btn-primary btn-lg" href="#install">Install RF Swift</a>
+        <a class="btn btn-secondary btn-lg" href="/docs/">New to RF? Start here</a>
+      </div>
+      <p class="platforms">Linux · macOS · Windows · x86_64 · ARM64 · RISCV64 · Docker · Podman · Lima · Nix</p>
+    </div>
+    <div class="terminal">
+      <div class="terminal-bar">rfswift — lab</div>
+      <div class="terminal-body">
+        
+          <div><span class="muted">$</span> rfswift container create -i sdr_full -n lab</div>
+          
+          
+          
+        
+          
+          <div class="muted">› Using image penthertz/rfswift_resolute:sdr_full</div>
+          
+          
+        
+          
+          
+          <div><span class="ok">✓</span> USB devices forwarded <span class="muted">HydraSDR, HackRF, USRP, bladeRF, Proxmark3</span></div>
+          
+        
+          
+          
+          <div><span class="ok">✓</span> Audio forwarded <span class="muted">PipeWire</span></div>
+          
+        
+          
+          
+          <div><span class="ok">✓</span> Display forwarded <span class="muted">X11</span></div>
+          
+        
+          
+          
+          <div><span class="ok">✓</span> Workspace mounted <span class="muted">~/rfswift-workspace/lab</span></div>
+          
+        
+          
+          
+          
+          <div class="term-done">Start hacking!</div>
+        
+        <div class="prompt"><span class="prompt-user">root@lab</span>:~# sdrpp<span class="cursor"></span></div>
+      </div>
+    </div>
   </div>
-  <div class="hextra-scrollbar hx:overflow-y-auto hx:overflow-x-hidden hx:p-4 hx:grow hx:md:h-[calc(100vh-var(--navbar-height)-var(--menu-height))]">
-    <ul class="hx:flex hx:flex-col hx:gap-1 hx:md:hidden">
+</section>
+
+
+<section class="presented" aria-label="Background">
+  <div class="wrap presented-row">
+    <a class="presented-by" href="https://penthertz.com/" target="_blank" rel="noopener">Built and used by Penthertz on its professional engagements</a>
+    <p class="presented-list"><span class="muted">Presented at</span>
+      <a href="https://www.blackhat.com/eu-24/arsenal/schedule/index.html#rf-swift-a-swifty-toolbox-for-all-wireless-assessments-41157" target="_blank" rel="noopener">Black Hat Arsenal Europe 2024</a><span class="muted" aria-hidden="true">·</span><a href="https://spectrum-conference.org/24/schedule" target="_blank" rel="noopener">Spectrum 2024</a><span class="muted" aria-hidden="true">·</span><a href="https://fosdem.org/2025/schedule/event/fosdem-2025-4301-rf-swift-a-swifty-toolbox-for-all-wireless-assessments/" target="_blank" rel="noopener">FOSDEM 2025</a><span class="muted" aria-hidden="true">·</span><a href="https://www.cyberonboard.org/en/content/sujetsscientifiques" target="_blank" rel="noopener">CyberOnBoard 2025</a>
+    </p>
+  </div>
+</section>
+
+
+<section id="workbench" class="band">
+  <div class="wrap section stack-xl">
+    <div class="split">
+      <h2 class="h2-lg">Your whole assessment in one window</h2>
+      <p class="secondary">A desktop app for everyone who prefers clicking to typing. Create a mission, open terminals into your labs, take notes, log findings and captures, then export a branded report.</p>
+    </div>
+    <div class="notes">
+      <div class="note"><strong>Completely standalone</strong><p>A native desktop app, not an editor add-on. No VS Code, no IDE, no plugins, no browser extension. It ships with RF Swift and runs on Linux, macOS and Windows.</p></div>
+      <div class="note"><strong>Full toolboxes or lazy Nix environments</strong><p>Create a mission from a container image, or pick the Nix engine and tick “Lazy tools”: nothing is installed until you run a tool, then only that tool is fetched.</p></div>
+    </div>
+    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/LBUJcKiZVgM" title="RF Swift Workbench demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
+    <dl class="facts">
+      <div><dt>Missions</dt><dd>One place per engagement, with its own labs and files.</dd></div><div><dt>Recorded terminals</dt><dd>Every session can be replayed later as evidence.</dd></div><div><dt>Notebook &amp; findings</dt><dd>Write notes and rate findings as you work.</dd></div><div><dt>Branded reports</dt><dd>Turn captures and findings into a client-ready report.</dd></div>
+    </dl>
+    <div class="row">
+      <a class="btn btn-primary btn-lg" href="/docs/guide/workbench/">Explore the Workbench</a>
+      <a class="btn btn-secondary btn-lg" href="#install">Install it</a>
+    </div>
+  </div>
+</section>
+
+<section id="what" class="band">
+  <div class="wrap section">
+    <div class="intro"><h2>A ready-made radio lab that runs next to your system, not instead of it</h2><p class="secondary">Radio tools are hard to install: each one needs its own drivers, libraries and versions, and they often break each other. RF Swift ships them pre-installed in isolated environments. You pick a toolbox, plug in your radio, and start working. When you&#39;re done, your computer is exactly as it was. Already on Kali, Parrot or DragonOS? Keep it: RF Swift adds to it. On a plain, freshly installed system, one command brings the whole tool set.</p></div>
+    <ol class="steps">
+      <li><span class="num">1</span><h3>Install once</h3><p class="secondary">One installer sets up RF Swift and the engine it needs. No manual Docker setup.</p></li><li><span class="num">2</span><h3>Pick a toolbox</h3><p class="secondary">Images are grouped by job: SDR, Wi-Fi, Bluetooth, telecom, automotive, hardware, reversing, Active Directory and more. Or stay light with a lazy Nix environment that fetches each tool the first time you use it.</p></li><li><span class="num">3</span><h3>Plug in and listen</h3><p class="secondary">Your SDR, audio and display are passed through automatically. Open SDR&#43;&#43;, GQRX or GNU Radio and go.</p></li>
+    </ol>
+  </div>
+</section>
+
+
+<section id="in-the-field" class="band">
+  <div class="wrap section stack-xl">
+    <div class="intro intro-flush"><h2>Real hardware, ready to use</h2><p class="secondary">Plug your devices in and open the tools. The drivers and clients come built and tested in the toolbox: nothing to compile, no dependencies to chase, even on small everyday machines.</p></div>
+    <div class="showcase-grid">
       
+      <figure class="showcase-item">
+        <img src="/images/home/gpd-sdrangel-rtlsdr-fm.jpg" srcset="/images/home/gpd-sdrangel-rtlsdr-fm-800.jpg 800w, /images/home/gpd-sdrangel-rtlsdr-fm.jpg 1300w" sizes="(min-width:1100px) 370px, (min-width:760px) 50vw, 100vw" width="1300" height="975" alt="A GPD pocket laptop running SDRangel with an RTL-SDR dongle plugged in, showing an FM station at 98.5 MHz, next to two RF Swift stickers." loading="lazy" decoding="async">
+        <figcaption>
+          <strong>FM radio with an RTL-SDR</strong>
+          <span class="secondary">A broadcast FM station at 98.5 MHz in SDRangel from the sdr_full toolbox, on a GPD pocket laptop.</span>
+          <code class="showcase-cmd"><span class="muted">$</span> rfswift container create -i sdr_full -n fm</code>
+          <a class="small" href="/docs/first-signal/">Your first signal →</a>
+        </figcaption>
+      </figure>
       
-          <li class=""><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/"
-    
-  >Documentation
-        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
-    </a><div class="hx:ltr:pr-0 hx:overflow-hidden">
-        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/supports/"
-    
-  >⚙️ Requirements &amp; supported platforms
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/release-notes-v3/"
-    
-  >🆕 What&#39;s new in v3.0.0 &#34;Resonance&#34;
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/release-notes-v4/"
-    
-  >🆕 What&#39;s new in v4.0 &#34;Nucleus&#34;
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/comparisons/"
-    
-  >Comparisons with dedicated distributions
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/getting-started/"
-    
-  >Getting Started
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/quick-start/"
-    
-  >🚀 Quick Start
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/"
-    
-  >📖 Guide
-        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
-    </a>
-              <div class="hx:ltr:pr-0 hx:overflow-hidden">
-        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/running-rf-swift/"
-    
-  >Running RF Swift
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/list-of-images/"
-    
-  >Container Images
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/container-management/"
-    
-  >Dynamic Container Management
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/list-of-tools/"
-    
-  >Included Tools
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/nix-engine/"
-    
-  >Nix engine (native environments)
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/configurations/"
-    
-  >Configurations
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/installing-software/"
-    
-  >📦 Installing software
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/host-actions/"
-    
-  >Host Actions
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/sharing-files/"
-    
-  >Sharing Files &amp; Devices
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/vpn/"
-    
-  >VPN Inside Containers
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/caches/"
-    
-  >⚡ Caches and fast delivery
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/podman/"
-    
-  >Using Podman
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/qubes-os/"
-    
-  >QubesOS
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/windows/"
-    
-  >Windows
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/workbench/"
-    
-  >RF Swift Workbench (GUI)
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/ai-assistant/"
-    
-  >AI assistant (MCP)
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/remote-agent/"
-    
-  >Remote agent
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/guide/limitations/"
-    
-  >Known limits
-    </a>
-              
-            </li></ul>
-      </div>
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/development/"
-    
-  >🧑‍🍳 Development
-        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
-    </a>
-              <div class="hx:ltr:pr-0 hx:overflow-hidden">
-        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/development/compiling-rfswift/"
-    
-  >Compiling RF Swift from Source
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/development/yaml-recipe-guide/"
-    
-  >YAML Recipe Guide
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/development/building-images/"
-    
-  >Helper Functions Reference
-    </a>
-              
-            </li></ul>
-      </div>
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/security/"
-    
-  >🛡️ Security
-        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
-    </a>
-              <div class="hx:ltr:pr-0 hx:overflow-hidden">
-        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/security/guide_lines/"
-    
-  >Security guidelines
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/security/audit/"
-    
-  >Audits and hardened deployment
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/security/remote-agent/"
-    
-  >Remote agent hardening
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/security/mcp/"
-    
-  >AI bridge (MCP) best practices
-    </a>
-              
-            </li></ul>
-      </div>
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/container_scripts/"
-    
-  >🛠️ Container Scripts
-        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
-    </a>
-              <div class="hx:ltr:pr-0 hx:overflow-hidden">
-        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/container_scripts/avahi_inside_container/"
-    
-  >Avahi Container Start Script
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/container_scripts/libresdr_swap_firmware/"
-    
-  >LibreSDR FPGA Swap Utility
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/container_scripts/rfswift_install/"
-    
-  >RF Scripts Update Utility
-    </a>
-              
-            </li></ul>
-      </div>
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/"
-    
-  >📘 Commands
-        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
-    </a>
-              <div class="hx:ltr:pr-0 hx:overflow-hidden">
-        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/container/"
-    
-  >container
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/run/"
-    
-  >run
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/exec/"
-    
-  >exec
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/profile/"
-    
-  >profile
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/stop/"
-    
-  >stop
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/remove/"
-    
-  >remove
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/rename/"
-    
-  >rename
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/commit/"
-    
-  >commit
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/export/"
-    
-  >export
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/import/"
-    
-  >import
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/download/"
-    
-  >download
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/image/"
-    
-  >image
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/upgrade/"
-    
-  >upgrade
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/build/"
-    
-  >build
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/images/"
-    
-  >images
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/delete/"
-    
-  >delete
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/retag/"
-    
-  >retag
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/bindings/"
-    
-  >bindings
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/capabilities/"
-    
-  >capabilities
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/cgroups/"
-    
-  >cgroups
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/gpu/"
-    
-  >gpus
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/network/"
-    
-  >network
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/ports/"
-    
-  >ports
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/cleanup/"
-    
-  >cleanup
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/env/"
-    
-  >env
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/last/"
-    
-  >last
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/config/"
-    
-  >config
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/log/"
-    
-  >log
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/host/"
-    
-  >host
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/update/"
-    
-  >update
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/completion/"
-    
-  >completion
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/install/"
-    
-  >install
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/ulimits/"
-    
-  >ulimits
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/realtime/"
-    
-  >realtime
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/winusb/"
-    
-  >winusb
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/macusb/"
-    
-  >macusb
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/report/"
-    
-  >report
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/usb/"
-    
-  >usb
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/audit/"
-    
-  >audit
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/agent/"
-    
-  >agent
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/system/"
-    
-  >system
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/doctor/"
-    
-  >doctor
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/commands/engine/"
-    
-  >engine
-    </a>
-              
-            </li></ul>
-      </div>
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/air-gapped-installation/"
-    
-  >📵 Air-Gapped Installation
-    </a>
-              
-            </li><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/archive/"
-    
-  >📜 Archive
-        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
-    </a>
-              <div class="hx:ltr:pr-0 hx:overflow-hidden">
-        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
-    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
-    href="/docs/archive/release-notes-v3/"
-    
-  >What&#39;s new in v3.0.0 &#34;Resonance&#34;
-    </a>
-              
-            </li></ul>
-      </div>
-            </li></ul>
-      </div></li>
-    </ul>
-
+      <figure class="showcase-item">
+        <img src="/images/home/proxmark5-proxmark3-rfid.jpg" srcset="/images/home/proxmark5-proxmark3-rfid-800.jpg 800w, /images/home/proxmark5-proxmark3-rfid.jpg 1600w" sizes="(min-width:1100px) 370px, (min-width:760px) 50vw, 100vw" width="1600" height="1205" alt="A pocket laptop running RF Swift with two terminals side by side, one driving a Proxmark5 and one a Proxmark3, both plugged in over USB, next to the Proxmark5 Iceman Edition box." loading="lazy" decoding="async">
+        <figcaption>
+          <strong>Proxmark5 and Proxmark3, side by side</strong>
+          <span class="secondary">Both RFID tools in the same rfid lab on a pocket laptop, each on its own serial port.</span>
+          <code class="showcase-cmd"><span class="muted">$</span> rfswift container create -i rfid -n badge</code>
+          <a class="small" href="/docs/guide/sharing-files/">Plug in devices →</a>
+        </figcaption>
+      </figure>
+      
+      <figure class="showcase-item">
+        <img src="/images/home/steamdeck-harogic-sdr_light.jpg" srcset="/images/home/steamdeck-harogic-sdr_light-800.jpg 800w, /images/home/steamdeck-harogic-sdr_light.jpg 1600w" sizes="(min-width:1100px) 370px, (min-width:760px) 50vw, 100vw" width="1600" height="1200" alt="A Steam Deck on a stand running the Harogic SAStudio spectrum display and an RF Swift terminal, connected to a Harogic SAE-200 spectrum analyser." loading="lazy" decoding="async">
+        <figcaption>
+          <strong>A spectrum analyser on a Steam Deck</strong>
+          <span class="secondary">A Harogic SAE-200 real-time spectrum analyser driven by SAStudio from the sdr_light toolbox, on a Steam Deck.</span>
+          <code class="showcase-cmd"><span class="muted">$</span> rfswift container create -i sdr_light -n spectrum</code>
+          <a class="small" href="/docs/guide/sharing-files/#specialized-hardware-harogic-spectrum-analyzers">Harogic setup →</a>
+        </figcaption>
+      </figure>
+      
     </div>
-  
-  
-    <div class="hx:md:hidden  hx:sticky hx:bottom-0 hx:max-h-(--menu-height) hx:bg-white hx:dark:bg-dark hx:mx-4 hx:py-4 hx:shadow-[0_-12px_16px_#fff] hx:flex hx:items-center hx:gap-2 hx:border-gray-200 hx:dark:border-neutral-800 hx:dark:shadow-[0_-12px_16px_#111] hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:shadow-none hx:border-t" data-toggle-animation="show"><div class="hx:flex hx:grow hx:flex-col"><div class="hx:flex hx:justify-items-start hx:group" data-theme="light">
-  <button
-    title="Change theme"
-    data-state="closed"
-    data-location="bottom"
-    class="hextra-theme-toggle hx:cursor-pointer hx:rounded-md hx:text-left hx:font-medium hx:h-7 hx:px-2 hx:text-xs hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:font-medium hx:text-gray-600 hx:transition-colors hx:dark:text-gray-400 hx:grow"
-    type="button"
-    aria-label="Change theme"
-  >
-    <div class="hx:flex hx:items-center hx:gap-2 hx:capitalize"><svg height=12 class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden">Light</span><svg height=12 class="hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><span class="hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden">Dark</span><svg height=12 class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor">
-  <path d="M 11.996094,2 C 6.4986225,2.0192368 2.03125,6.5024993 2.03125,12 c 0,5.497501 4.4673725,9.980763 9.964844,10 H 12 12.0039 c 5.497471,-0.01924 9.964844,-4.502499 9.964844,-10 0,-5.4975007 -4.467373,-9.9807632 -9.964844,-10 H 12 Z M 12,4 c 4.417218,0.017598 7.96875,3.5822356 7.96875,8 0,4.417764 -3.551532,7.982402 -7.96875,8 z" />
-</svg>
-<span class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden">System</span></div>
-  </button>
-  <ul
-    class="hextra-theme-toggle-options hx:hidden hx:z-20 hx:max-h-64 hx:overflow-auto hx:rounded-md hx:ring-1 hx:ring-black/5 hx:bg-white hx:py-1 hx:text-sm hx:shadow-lg hx:dark:ring-white/20 hx:dark:bg-neutral-800"
-    style="position: fixed; inset: auto auto 0px 0px; margin: 0px; min-width: 100px;"
-    data-theme="light"
-  >
-    <li class="hx:flex hx:flex-col">
-      <p
-        data-item="light"
-        class="hx:text-gray-800 hx:dark:text-gray-100 hx:hover:bg-primary-50 hx:hover:text-primary-600 hx:hover:dark:bg-primary-500/10 hx:hover:dark:text-primary-600 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9"
-      >
-        Light
-         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
-      </p>
-    </li>
-    <li class="hx:flex hx:flex-col">
-      <p
-        data-item="dark"
-        class="hx:text-gray-800 hx:dark:text-gray-100 hx:hover:bg-primary-50 hx:hover:text-primary-600 hx:hover:dark:bg-primary-500/10 hx:hover:dark:text-primary-600 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9"
-      >
-        Dark
-         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
-      </p>
-    </li>
-    <li class="hx:flex hx:flex-col">
-      <p
-        data-item="system"
-        class="hx:text-gray-800 hx:dark:text-gray-100 hx:hover:bg-primary-50 hx:hover:text-primary-600 hx:hover:dark:bg-primary-500/10 hx:hover:dark:text-primary-600 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9"
-      >
-        System
-         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
-      </p>
-    </li>
-  </ul>
-</div></div></div></aside>
-    <div class="hx:w-full hx:break-words hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:pb-8 hx:pt-8 hx:md:pt-12 hx:pl-[max(env(safe-area-inset-left),1.5rem)] hx:pr-[max(env(safe-area-inset-left),1.5rem)]">
-      <div class="hx:flex hx:flex-col hx:items-start">
-        <a
-  href="docs/release-notes-v4"
-  class=" not-prose hx:inline-flex hx:items-center hx:rounded-full hx:gap-2 hx:px-3 hx:py-1 hx:text-xs hx:text-gray-600 hx:dark:text-gray-400 hx:bg-gray-100 hx:dark:bg-neutral-800 hx:border-gray-200 hx:dark:border-neutral-800 hx:border hx:hover:border-gray-400 hx:dark:hover:text-gray-50 hx:dark:hover:border-gray-600 hx:transition-all hx:ease-in hx:duration-200"
-  
-  >
-    <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-primary-400"></div>
-  <span>New: v4.0 "Nucleus"</span>
-  <span class="hx:inline-block hx:align-text-bottom hextra-icon"><svg height=14 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
-
-</a>
-
-<div class="hx:mt-6 hx:mb-6">
-<h1
-  class="not-prose hx:text-4xl hx:font-bold hx:leading-none hx:tracking-tighter hx:md:text-5xl hx:py-2 hx:bg-clip-text hx:text-transparent hx:bg-gradient-to-r hx:from-gray-900 hx:to-gray-600 hx:dark:from-gray-100 hx:dark:to-gray-400"
-  
->
-  The epic RF companion ⚡  <br class="hx:sm:block hx:hidden" />for HAMs and professionals
-</h1>
-
-</div>
-<div class="hx:mb-12">
-<p
-  class="not-prose hx:text-xl hx:text-gray-600 hx:dark:text-gray-400 hx:sm:text-xl"
-  
->
-  Fast, efficient, and multi-platform <br class="hx:sm:block hx:hidden" /> toolbox for your RF &amp; hardware security assessments
-</p>
-
-</div>
-<div class="hx:mb-6">
-<a
-  href="docs"
-  class="not-prose hx:font-medium hx:cursor-pointer hx:px-6 hx:py-3 hx:rounded-full hx:text-center hx:text-white hx:inline-block hx:bg-primary-600 hx:hover:bg-primary-700 hx:focus:outline-hidden hx:focus:ring-4 hx:focus:ring-primary-300 hx:dark:bg-primary-600 hx:dark:hover:bg-primary-700 hx:dark:focus:ring-primary-800 hx:transition-all hx:ease-in hx:duration-200"
-  
-  >Get Started</a>
-
-<a
-  href="https://github.com/PentHertz/RF-Swift/releases"
-  class="not-prose hx:font-medium hx:cursor-pointer hx:px-6 hx:py-3 hx:rounded-full hx:text-center hx:text-white hx:inline-block hx:bg-primary-600 hx:hover:bg-primary-700 hx:focus:outline-hidden hx:focus:ring-4 hx:focus:ring-primary-300 hx:dark:bg-primary-600 hx:dark:hover:bg-primary-700 hx:dark:focus:ring-primary-800 hx:transition-all hx:ease-in hx:duration-200"
-  
-  target="_blank" rel="noreferrer">Download Latest Release 📦</a>
-
-</div>
-<div class="hx:mt-6 hx:mb-12 hx:px-4 hx:sm:px-6 hx:md:px-8 hx:lg:px-12 max-w-screen-lg mx-auto">
-  <h2 class="hx:text-3xl hx:font-bold hx:mb-4">Easy Installation</h2>
-  <p class="hx:mb-6">Get RF Swift up and running in a minute: a one-line installer on Linux and macOS, a signed disk image on macOS, and a one-click installer on Windows. No technical expertise required.</p>
-<div class="hextra-scrollbar hx:overflow-x-auto hx:overflow-y-hidden hx:overscroll-x-contain">
-  <div class="hx:mt-4 hx:flex hx:w-max hx:min-w-full hx:border-b hx:border-gray-200 hx:pb-px hx:dark:border-neutral-800"><button
-        class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
-        role="tab"
-        type="button"
-        aria-controls="tabs-panel-0" aria-selected="true"  tabindex="0"  data-state="selected">Linux / macOS (script)</button><button
-        class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
-        role="tab"
-        type="button"
-        aria-controls="tabs-panel-1">macOS (DMG)</button><button
-        class="hextra-tabs-toggle hx:cursor-pointer hx:data-[state=selected]:border-primary-500 hx:data-[state=selected]:text-primary-600 hx:data-[state=selected]:dark:border-primary-500 hx:data-[state=selected]:dark:text-primary-600 hx:mr-2 hx:rounded-t hx:p-2 hx:font-medium hx:leading-5 hx:transition-colors hx:-mb-0.5 hx:select-none hx:border-b-2 hx:border-transparent hx:text-gray-600 hx:hover:border-gray-200 hx:hover:text-black hx:dark:text-gray-200 hx:dark:hover:border-neutral-800 hx:dark:hover:text-white"
-        role="tab"
-        type="button"
-        aria-controls="tabs-panel-2">Windows (installer)</button></div>
-</div>
-<div>
-  <div
-  class="hextra-tabs-panel hx:rounded-sm hx:pt-6 hx:hidden hx:data-[state=selected]:block"
-  id="tabs-panel-0"
-  role="tabpanel" tabindex="0"  data-state="selected" ><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -fsSL <span class="s2">&#34;https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh&#34;</span> <span class="p">|</span> sh</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>Then run <code>rfswift</code>. The script installs the CLI, the Workbench or both, and sets up Docker, Podman or Nix for you.</p></div>
-  <div
-  class="hextra-tabs-panel hx:rounded-sm hx:pt-6 hx:hidden hx:data-[state=selected]:block"
-  id="tabs-panel-1"
-  role="tabpanel"><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Homebrew: CLI and Workbench from the signed release</span>
-</span></span><span class="line"><span class="cl">brew install --cask penthertz/rfswift/rfswift
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># or the signed and notarized disk image</span>
-</span></span><span class="line"><span class="cl">curl -LO https://github.com/PentHertz/RF-Swift/releases/latest/download/rfswift_Darwin_universal.dmg <span class="o">&amp;&amp;</span> open rfswift_Darwin_universal.dmg</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>In the disk image, drag the Workbench to Applications and run <strong>Install RF Swift CLI</strong> next to it. The same image is on the <a href="https://github.com/PentHertz/RF-Swift/releases"target="_blank" rel="noopener">releases page</a>.</p></div>
-  <div
-  class="hextra-tabs-panel hx:rounded-sm hx:pt-6 hx:hidden hx:data-[state=selected]:block"
-  id="tabs-panel-2"
-  role="tabpanel"><div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
-
-<div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Fetch the latest installer (x64 here, arm64 exists too) and run it</span>
-</span></span><span class="line"><span class="cl"><span class="nv">$setup</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">https</span><span class="err">:</span><span class="p">//</span><span class="n">api</span><span class="p">.</span><span class="py">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">repos</span><span class="p">/</span><span class="n">PentHertz</span><span class="p">/</span><span class="nb">RF-Swift</span><span class="p">/</span><span class="n">releases</span><span class="p">/</span><span class="n">latest</span><span class="p">).</span><span class="py">assets</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="n">name</span> <span class="o">-like</span> <span class="s1">&#39;RFSwift-Setup-*-x64.exe&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">Invoke-WebRequest</span> <span class="nv">$setup</span><span class="p">.</span><span class="py">browser_download_url</span> <span class="n">-OutFile</span> <span class="nb">RFSwift-Setup</span><span class="p">.</span><span class="n">exe</span><span class="p">;</span> <span class="p">.\</span><span class="nb">RFSwift-Setup</span><span class="p">.</span><span class="n">exe</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
-  <button
-    class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
-    title="Copy code"
-  >
-    <div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4"></div>
-<div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4"></div>
-  </button>
-</div>
-</div>
-<p>Or download it by hand from the <a href="https://github.com/PentHertz/RF-Swift/releases"target="_blank" rel="noopener">releases page</a>. One UAC prompt installs WSL 2, USB passthrough, the container engine of your choice or Nix, and RF Swift with its Start Menu entries.</p></div>
-</div>
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/vDInlPsriUg?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
-    </div>
-
-<div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
-  <div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2"><svg height=1.2em class="hx:inline-block hx:align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-
-  <div class="hx:w-full hx:min-w-0 hx:leading-7">
-    <div class="hx:mt-6 hx:leading-7 hx:first:mt-0">Every download is verified against the release SHA-256 manifest, with an optional Sigstore build-provenance check. Native packages (deb, rpm, pacman, Homebrew cask, MSI) and all the details are in <a href="docs/getting-started">Getting Started</a>.</div>
   </div>
-</div>
-
-</div>
-<div class="hx:mt-6"></div>
-<div
-  class="hextra-feature-grid hx:grid hx:sm:max-lg:grid-cols-2 hx:max-sm:grid-cols-1 hx:gap-4 hx:w-full not-prose"
-  style="--hextra-feature-grid-cols: 3; "
->
-  
-  <a
-    
-    style="background: radial-gradient(ellipse at 50% 80%,rgba(194,97,254,0.15),hsla(0,0%,100%,0));"
-    class="hx:aspect-auto hx:md:aspect-[1.1/1] hx:max-md:min-h-[340px] hextra-feature-card not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl hx:border hx:border-gray-200 hx:hover:border-gray-300 hx:dark:border-neutral-800 hx:dark:hover:border-neutral-700 hx:before:pointer-events-none hx:before:absolute hx:before:inset-0 hx:before:bg-glass-gradient"
-  >
-    <div class="hx:relative hx:w-full hx:p-6">
-      <h3 class="hx:text-2xl hx:font-medium hx:leading-6 hx:mb-2 hx:flex hx:items-center">
-        <span>Fast and Full-featured</span>
-      </h3>
-      <p class="hx:text-gray-500 hx:dark:text-gray-400 hx:text-sm hx:leading-6">Access hundreds of radio frequency and hardware security tools with just a few commands.</p>
-    </div><img src="images/docs/imagesrf.png" class="hx:absolute hx:max-w-none hx:top-[40%] hx:left-[24px] hx:w-[180%] hx:sm:w-[110%] hx:dark:opacity-80" alt="Fast and Full-featured" /></a>
-
-  
-  <a
-    
-    style="background: radial-gradient(ellipse at 50% 80%,rgba(142,53,74,0.15),hsla(0,0%,100%,0));"
-    class="hx:aspect-auto hx:md:aspect-[1.1/1] hx:max-lg:min-h-[340px] hextra-feature-card not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl hx:border hx:border-gray-200 hx:hover:border-gray-300 hx:dark:border-neutral-800 hx:dark:hover:border-neutral-700 hx:before:pointer-events-none hx:before:absolute hx:before:inset-0 hx:before:bg-glass-gradient"
-  >
-    <div class="hx:relative hx:w-full hx:p-6">
-      <h3 class="hx:text-2xl hx:font-medium hx:leading-6 hx:mb-2 hx:flex hx:items-center">
-        <span>Containers or native environments</span>
-      </h3>
-      <p class="hx:text-gray-500 hx:dark:text-gray-400 hx:text-sm hx:leading-6">Run the tool sets in Docker, Podman or Lima containers, or natively with the Nix engine: pinned, reproducible, and closest to your hardware.</p>
-    </div><img src="images/docs/sdrangel.png" class="hx:absolute hx:max-w-none hx:top-[40%] hx:left-[24px] hx:w-[180%] hx:sm:w-[110%] hx:dark:opacity-80" alt="Containers or native environments" /></a>
-
-  
-  <a
-    
-    style="background: radial-gradient(ellipse at 50% 80%,rgba(221,210,59,0.15),hsla(0,0%,100%,0));"
-    class="hx:aspect-auto hx:md:aspect-[1.1/1] hx:max-md:min-h-[340px] hextra-feature-card not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl hx:border hx:border-gray-200 hx:hover:border-gray-300 hx:dark:border-neutral-800 hx:dark:hover:border-neutral-700 hx:before:pointer-events-none hx:before:absolute hx:before:inset-0 hx:before:bg-glass-gradient"
-  >
-    <div class="hx:relative hx:w-full hx:p-6">
-      <h3 class="hx:text-2xl hx:font-medium hx:leading-6 hx:mb-2 hx:flex hx:items-center">
-        <span>Multi-platform &amp; Multi-architecture</span>
-      </h3>
-      <p class="hx:text-gray-500 hx:dark:text-gray-400 hx:text-sm hx:leading-6">Run on Linux, Windows, or macOS without reformatting your computer. Supports x86_64, ARM64, and RISCV64.</p>
-    </div><img src="images/docs/onsteamdeck.jpg" class="hx:absolute hx:max-w-none hx:top-[40%] hx:left-[24px] hx:w-[180%] hx:sm:w-[110%] hx:dark:opacity-80" alt="Multi-platform &amp; Multi-architecture" /></a>
-
-  
-  <a
-    
-    
-    class=" hextra-feature-card not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl hx:border hx:border-gray-200 hx:hover:border-gray-300 hx:dark:border-neutral-800 hx:dark:hover:border-neutral-700 hx:before:pointer-events-none hx:before:absolute hx:before:inset-0 hx:before:bg-glass-gradient"
-  >
-    <div class="hx:relative hx:w-full hx:p-6">
-      <h3 class="hx:text-2xl hx:font-medium hx:leading-6 hx:mb-2 hx:flex hx:items-center">
-        <span class="hx:pr-2"><svg height=1.5rem xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
-        <span>Save Time &amp; Resources</span>
-      </h3>
-      <p class="hx:text-gray-500 hx:dark:text-gray-400 hx:text-sm hx:leading-6">Create dedicated environments for your assessments with simple commands, eliminating lengthy setup processes.</p>
-    </div></a>
-
-  
-  <a
-    
-    
-    class=" hextra-feature-card not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl hx:border hx:border-gray-200 hx:hover:border-gray-300 hx:dark:border-neutral-800 hx:dark:hover:border-neutral-700 hx:before:pointer-events-none hx:before:absolute hx:before:inset-0 hx:before:bg-glass-gradient"
-  >
-    <div class="hx:relative hx:w-full hx:p-6">
-      <h3 class="hx:text-2xl hx:font-medium hx:leading-6 hx:mb-2 hx:flex hx:items-center">
-        <span class="hx:pr-2"><svg height=1.5rem xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg></span>
-        <span>Customize Your Environment</span>
-      </h3>
-      <p class="hx:text-gray-500 hx:dark:text-gray-400 hx:text-sm hx:leading-6">Create your own optimized images with our helper scripts and Dockerfiles. Build environments that fit your specific needs.</p>
-    </div></a>
-
-  
-  <a
-    
-    
-    class=" hextra-feature-card not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl hx:border hx:border-gray-200 hx:hover:border-gray-300 hx:dark:border-neutral-800 hx:dark:hover:border-neutral-700 hx:before:pointer-events-none hx:before:absolute hx:before:inset-0 hx:before:bg-glass-gradient"
-  >
-    <div class="hx:relative hx:w-full hx:p-6">
-      <h3 class="hx:text-2xl hx:font-medium hx:leading-6 hx:mb-2 hx:flex hx:items-center">
-        <span class="hx:pr-2"><svg height=1.5rem xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg></span>
-        <span>Always Updated</span>
-      </h3>
-      <p class="hx:text-gray-500 hx:dark:text-gray-400 hx:text-sm hx:leading-6">Stay current with the latest tools through our streamlined update process. No more dependency conflicts or outdated packages.</p>
-    </div></a>
-
-  
-  <a
-    
-    
-    class=" hextra-feature-card not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl hx:border hx:border-gray-200 hx:hover:border-gray-300 hx:dark:border-neutral-800 hx:dark:hover:border-neutral-700 hx:before:pointer-events-none hx:before:absolute hx:before:inset-0 hx:before:bg-glass-gradient"
-  >
-    <div class="hx:relative hx:w-full hx:p-6">
-      <h3 class="hx:text-2xl hx:font-medium hx:leading-6 hx:mb-2 hx:flex hx:items-center">
-        <span class="hx:pr-2"><svg height=1.5rem xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg></span>
-        <span>Hardware Integration</span>
-      </h3>
-      <p class="hx:text-gray-500 hx:dark:text-gray-400 hx:text-sm hx:leading-6">Seamless USB, audio, and video forwarding for SDRs and other RF hardware devices with minimal configuration.</p>
-    </div></a>
-
-  
-  <a
-    
-    
-    class=" hextra-feature-card not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl hx:border hx:border-gray-200 hx:hover:border-gray-300 hx:dark:border-neutral-800 hx:dark:hover:border-neutral-700 hx:before:pointer-events-none hx:before:absolute hx:before:inset-0 hx:before:bg-glass-gradient"
-  >
-    <div class="hx:relative hx:w-full hx:p-6">
-      <h3 class="hx:text-2xl hx:font-medium hx:leading-6 hx:mb-2 hx:flex hx:items-center">
-        <span class="hx:pr-2"><svg height=1.5rem xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg></span>
-        <span>Portable Testing Lab</span>
-      </h3>
-      <p class="hx:text-gray-500 hx:dark:text-gray-400 hx:text-sm hx:leading-6">Turn any computer into a complete RF testing lab in minutes, and drive a remote lab machine securely with the RF Swift agent.</p>
-    </div></a>
-
-  
-  <a
-    
-    
-    class=" hextra-feature-card not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl hx:border hx:border-gray-200 hx:hover:border-gray-300 hx:dark:border-neutral-800 hx:dark:hover:border-neutral-700 hx:before:pointer-events-none hx:before:absolute hx:before:inset-0 hx:before:bg-glass-gradient"
-  >
-    <div class="hx:relative hx:w-full hx:p-6">
-      <h3 class="hx:text-2xl hx:font-medium hx:leading-6 hx:mb-2 hx:flex hx:items-center">
-        <span class="hx:pr-2"><svg height=1.5rem xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></span>
-        <span>Workbench GUI</span>
-      </h3>
-      <p class="hx:text-gray-500 hx:dark:text-gray-400 hx:text-sm hx:leading-6">Missions, terminals with recordings, notebook, findings, captures and branded reports in one desktop app.</p>
-    </div></a>
-
-  
-  <a
-    
-    
-    class=" hextra-feature-card not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl hx:border hx:border-gray-200 hx:hover:border-gray-300 hx:dark:border-neutral-800 hx:dark:hover:border-neutral-700 hx:before:pointer-events-none hx:before:absolute hx:before:inset-0 hx:before:bg-glass-gradient"
-  >
-    <div class="hx:relative hx:w-full hx:p-6">
-      <h3 class="hx:text-2xl hx:font-medium hx:leading-6 hx:mb-2 hx:flex hx:items-center">
-        <span class="hx:pr-2"><svg height=1.5rem xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg></span>
-        <span>Community Driven</span>
-      </h3>
-      <p class="hx:text-gray-500 hx:dark:text-gray-400 hx:text-sm hx:leading-6">Join a growing community of RF enthusiasts and security professionals. Share custom images and workflows.</p>
-    </div></a>
+</section>
 
 
-</div>
+
+<section id="engines" class="band">
+  <div class="wrap section stack-xl">
+    <div class="intro intro-flush"><h2>Full toolboxes, or only the tools you use</h2><p class="secondary">RF Swift drives four engines with the same commands and the same Workbench. Use a container image for a complete, tested toolbox, or Nix to install nothing you don&#39;t use. The installer sets up the one you pick.</p></div>
+    <div class="engines">
+      <a class="engine" href="/docs/engines/#docker"><h3>Docker</h3><p class="muted small">Linux · macOS · Windows</p><p class="secondary small">The most common engine. Every lab is an isolated container, with the fullest USB, serial and realtime support on Linux.</p><p class="engine-best small"><span class="muted">Best for:</span> The usual setup, teams, Windows</p></a><a class="engine" href="/docs/engines/#podman"><h3>Podman</h3><p class="muted small">Linux · macOS · Windows</p><p class="secondary small">Rootless and daemonless: labs run as you, with no admin rights and nothing running in the background.</p><p class="engine-best small"><span class="muted">Best for:</span> Shared, company or air-gapped machines, small boards</p></a><a class="engine" href="/docs/engines/#lima"><h3>Lima</h3><p class="muted small">macOS</p><p class="secondary small">Containers in a small Linux VM that receives your USB radios, with hot-plug. Optional GPU VM on Apple Silicon.</p><p class="engine-best small"><span class="muted">Best for:</span> Containers with USB radios on a Mac</p></a><a class="engine" href="/docs/engines/#nix"><h3>Nix</h3><p class="muted small">Linux · macOS · Windows</p><p class="secondary small">No containers: tools installed natively and pinned. Lazy mode fetches each tool on first use. Direct USB and native sound.</p><p class="engine-best small"><span class="muted">Best for:</span> Staying light, macOS, lowest latency</p></a>
+    </div>
+    
+    <div class="light-grid">
+      <div class="stack-lg">
+        <div class="stack-md"><h3 class="h3-lg">Stay light with lazy Nix environments</h3><p class="secondary">In lazy mode nothing is installed up front. Each tool becomes a small launcher that fetches the real tool the first time you run it, then keeps it pinned for good.</p></div>
+        <dl class="facts facts-stack"><div><dt>Only what you run</dt><dd>Type sdrpp and only SDR&#43;&#43; is fetched. Run inspectrum next and only that is added. Standard tools come prebuilt from the binary cache.</dd></div><div><dt>Pinned, then instant</dt><dd>The environment stays on the revision you created it from, so nothing rebuilds behind your back, and a fetched tool starts directly afterwards.</dd></div><div><dt>In the Workbench too</dt><dd>Pick the Nix engine and tick “Lazy tools (build on first use)” when you create a mission.</dd></div></dl>
+      </div>
+      <div class="terminal">
+        <div class="terminal-bar">rfswift — lazy Nix environment</div>
+        <div class="terminal-body">
+          <div><span class="muted">$</span> rfswift container create --engine nix -i sdr_light -n radio --lazy</div><div class="muted term-note"># nothing installed yet</div><div><span class="muted">$</span> sdrpp</div><div class="muted term-note"># first run: only SDR&#43;&#43; is fetched, pinned and started</div><div><span class="muted">$</span> inspectrum capture.iq</div><div class="muted term-note"># then only inspectrum is added</div><div><span class="muted">$</span> rfswift env run sdr_light sdrpp</div><div class="muted term-note"># or run one tool without creating anything</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="note note-wide"><strong>Especially good on a Mac</strong><p>With Nix, the tools run natively on macOS: your USB radio opens directly, sound plays natively and OpenGL needs no setup, with no Linux VM in between. Add <code>--isolate</code> to run them inside Apple&rsquo;s built-in Seatbelt sandbox. Need containers instead? Lima brings USB radios to them, and Docker Desktop or Podman cover everything else.</p></div>
+    <div class="row"><a class="btn btn-primary btn-lg" href="/docs/guide/nix-engine/">How lazy Nix environments work</a><a class="btn btn-secondary btn-lg" href="/docs/engines/">Which engine should I pick?</a></div>
+  </div>
+</section>
 
 
+<section id="benefits" class="band">
+  <div class="wrap section">
+    <div class="intro"><h2>Spend your time on the signal, not on the setup</h2></div>
+    <dl class="benefits">
+      <div><dt>Ready in minutes</dt><dd>Skip days of compiling and dependency hunting. Hundreds of RF and hardware security tools come already built and tested together, and one command pulls the latest ones.</dd></div><div><dt>One program, no Python</dt><dd>RF Swift itself is a single self-contained binary: no Python, no pip, no virtual environment to manage on your computer. The Workbench is a standalone desktop app.</dd></div><div><dt>Keeps your computer clean</dt><dd>No new OS, no dual boot, no reformatting. Every assessment runs in its own environment that you can throw away.</dd></div><div><dt>Your hardware just works</dt><dd>USB, audio and video forwarding with minimal configuration. HydraSDR, HackRF, USRP, bladeRF, Proxmark3, Proxmark5 and many other devices are recognised out of the box.</dd></div><div><dt>Same lab on every machine</dt><dd>Linux, macOS or Windows, on x86_64, ARM64 or RISCV64. From a workstation to a Raspberry Pi or a Steam Deck.</dd></div><div><dt>Stay light</dt><dd>Full images in Docker, Podman or Lima when you want the whole toolbox, or lazy Nix environments where each tool is fetched the first time you run it.</dd></div><div><dt>Covers the whole target</dt><dd>Radio is where it starts, not where it ends. Reversing, Active Directory, network and other assessment tools ship too, so one lab covers the entire target.</dd></div><div><dt>Drive a lab from anywhere</dt><dd>The remote agent is built into the same binary. Run it on a lab server or a small board next to the antenna, and control it from your laptop over mutual TLS.</dd></div><div><dt>From capture to report</dt><dd>The standalone Workbench keeps missions, terminal recordings, notes, findings and captures together, then exports a branded report.</dd></div>
+    </dl>
+    
+    <div class="stack-lg compare">
+      <div class="stack-sm"><h3>Works with your distribution, not against it</h3><p class="secondary compare-lead">Dedicated distributions and RF Swift solve different problems, and many people use both. RF Swift installs on Kali, Parrot, BlackArch or DragonOS like on any Linux and adds what they don&#39;t ship, without touching their packages. On a plain, freshly installed system, one command brings the whole tool set.</p></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>A dedicated distribution</th><th>RF Swift</th></tr></thead>
+        <tbody><tr><td class="secondary">Getting started</td><td>Everything is there after one install</td><td>One command on the system you already use</td></tr><tr><td class="secondary">Kernel and drivers</td><td>Integrated and tested with the system</td><td>Uses your computer&#39;s kernel</td></tr><tr><td class="secondary">Hardware access</td><td>Direct, by default</td><td>Passed through for you, or direct with Nix</td></tr><tr><td class="secondary">Environments</td><td>One shared system</td><td>One environment per job, easy to throw away</td></tr><tr><td class="secondary">Platforms</td><td>Mostly x86_64 Linux</td><td>Linux, macOS, Windows · x86_64, ARM64, RISC-V64</td></tr><tr><td class="secondary">Installing tools</td><td>The whole toolset at once</td><td>A toolbox per job, or single tools with lazy Nix</td></tr><tr><td class="secondary">Reproducibility</td><td>Depends on local changes</td><td>Versioned images, pinned Nix environments</td></tr></tbody>
+      </table></div>
+      <a href="/docs/comparisons/">How to use them together →</a>
+    </div>
+    
+  </div>
+</section>
+
+<section class="stats band"><div class="wrap stats-grid">
+  <div><strong>Hundreds</strong><span>of RF, hardware and security tools</span></div><div><strong>3 OSes</strong><span>Linux, macOS, Windows</span></div><div><strong>4 engines</strong><span>Docker, Podman, Lima, Nix</span></div><div><strong>3 CPUs</strong><span>x86_64, ARM64, RISCV64</span></div><div><strong>1 command</strong><span>to start a full lab</span></div>
+</div></section>
+
+<section id="products" class="band">
+  <div class="wrap section">
+    <div class="intro"><h2>Use the parts you need</h2><p class="secondary">Start with the Workbench if you prefer windows and buttons, or the CLI if you live in a terminal. Both drive the same environments.</p></div>
+    <div class="link-list">
+      <a href="/docs/guide/nix-engine/"><strong>Nix engine</strong><span class="secondary">Tools installed natively and pinned. In lazy mode each one is fetched the first time you run it. Excellent on macOS.</span></a><a href="/docs/guide/remote-agent/"><strong>Remote agent</strong><span class="secondary">Built into the rfswift binary. Run it on a lab server or a small board near the antenna and drive it securely from your laptop.</span></a><a href="/docs/guide/ai-assistant/"><strong>AI assistant (MCP)</strong><span class="secondary">Let an assistant operate RF Swift through a controlled bridge.</span></a><a href="/docs/guide/list-of-images/"><strong>Container images</strong><span class="secondary">Toolboxes by domain, or build your own from YAML recipes.</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="install" class="band">
+  <div class="wrap section install">
+    <div class="stack-md">
+      <h2>Up and running in a minute</h2>
+      <p class="secondary">Pick your system, paste one line. The installer sets up the CLI, the Workbench or both, plus Docker, Podman or Nix.</p>
+      <p class="muted small">Every download is verified against the release SHA-256 manifest, with optional Sigstore build-provenance.</p>
+      <div class="row small"><a href="/docs/getting-started/">Native packages</a><a href="/docs/air-gapped-installation/">Air-gapped install</a><a href="https://github.com/PentHertz/RF-Swift/releases">All releases</a></div>
+    </div>
+    <div class="stack-md" data-tabs>
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" aria-selected="true" data-tab="linux" data-os="linux">Linux / macOS</button><button type="button" role="tab" aria-selected="false" data-tab="mac" data-os="mac">macOS (Homebrew / DMG)</button><button type="button" role="tab" aria-selected="false" data-tab="windows" data-os="windows">Windows</button>
+      </div>
+      
+      <div class="tab-panel" data-panel="linux">
+        <div class="code"><div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy command"><span>Copy</span></button></div><pre><code>curl -fsSL &#34;https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh&#34; | sh</code></pre></div>
+        <p class="secondary small">Then run rfswift. The script installs the CLI, the Workbench or both, and sets up Docker, Podman or Nix for you.</p>
+      </div>
+      
+      <div class="tab-panel" data-panel="mac" hidden>
+        <div class="code"><div class="code-bar"><span>zsh</span><button class="copy-btn" type="button" data-copy aria-label="Copy command"><span>Copy</span></button></div><pre><code># Homebrew: CLI and Workbench from the signed release
+brew install --cask penthertz/rfswift/rfswift
+
+# or the signed and notarized disk image
+curl -LO https://github.com/PentHertz/RF-Swift/releases/latest/download/rfswift_Darwin_universal.dmg &amp;&amp; open rfswift_Darwin_universal.dmg</code></pre></div>
+        <p class="secondary small">In the disk image, drag the Workbench to Applications and run Install RF Swift CLI next to it. For USB radios on a Mac, use the Lima engine for containers or the Nix engine to run tools natively.</p>
+      </div>
+      
+      <div class="tab-panel" data-panel="windows" hidden>
+        <div class="code"><div class="code-bar"><span>powershell</span><button class="copy-btn" type="button" data-copy aria-label="Copy command"><span>Copy</span></button></div><pre><code>$setup = (Invoke-RestMethod https://api.github.com/repos/PentHertz/RF-Swift/releases/latest).assets | Where-Object name -like &#39;RFSwift-Setup-*-x64.exe&#39;
+Invoke-WebRequest $setup.browser_download_url -OutFile RFSwift-Setup.exe; .\RFSwift-Setup.exe</code></pre></div>
+        <p class="secondary small">One UAC prompt installs WSL 2, USB passthrough, the container engine of your choice or Nix, and RF Swift with its Start Menu entries.</p>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<section id="learn" class="band">
+  <div class="wrap section">
+    <div class="intro"><h2>Pick your path</h2></div>
+    <div class="paths">
+      <div class="path">
+        <div class="stack-sm"><p class="muted small">Beginner</p><h3 class="h3-lg">I'm new to RF</h3><p class="secondary">No radio or container experience needed. Follow these in order.</p></div>
+        <ol class="path-list"><li><a href="/docs/concepts/"><span class="num">1</span><span><span>Learn the key ideas</span><span class="muted small">Toolbox, lab, workspace: 5 minutes, no jargon</span></span></a></li><li><a href="/docs/supports/"><span class="num">2</span><span><span>Check your computer is supported</span><span class="muted small">Requirements and platforms</span></span></a></li><li><a href="/docs/engines/"><span class="num">3</span><span><span>Choose your engine</span><span class="muted small">Docker, Podman, Lima or Nix: what each is good at</span></span></a></li><li><a href="/docs/quick-start/"><span class="num">4</span><span><span>Install and open your first lab</span><span class="muted small">Quick start</span></span></a></li><li><a href="/docs/first-signal/"><span class="num">5</span><span><span>Listen to your first signal</span><span class="muted small">A hands-on tutorial with an RTL-SDR</span></span></a></li><li><a href="/docs/guide/workbench/"><span class="num">6</span><span><span>Tour the Workbench</span><span class="muted small">The graphical way to use RF Swift</span></span></a></li><li><a href="/docs/guide/list-of-images/"><span class="num">7</span><span><span>Pick the right toolbox</span><span class="muted small">Which image for which job</span></span></a></li></ol>
+      </div>
+      <div class="path">
+        <div class="stack-sm"><p class="muted small">Advanced</p><h3 class="h3-lg">I know what I'm doing</h3><p class="secondary">Reference material, engines, hardening and building your own images.</p></div>
+        <div class="adv-grid"><div class="stack-sm"><p class="adv-group">Reference</p><a href="/docs/commands/">All commands</a><a href="/docs/commands/run/">Container create options</a><a href="/docs/guide/configurations/">Configurations</a><a href="/docs/guide/container-management/">Dynamic container management</a><a href="/docs/guide/limitations/">Known limits</a></div><div class="stack-sm"><p class="adv-group">Engines &amp; platforms</p><a href="/docs/guide/nix-engine/">Nix engine (lazy mode)</a><a href="/docs/guide/podman/">Podman</a><a href="/docs/guide/qubes-os/">QubesOS</a><a href="/docs/guide/vpn/">VPN inside containers</a></div><div class="stack-sm"><p class="adv-group">Build</p><a href="/docs/development/yaml-recipe-guide/">YAML recipes</a><a href="/docs/development/building-images/">Helper functions</a><a href="/docs/development/compiling-rfswift/">Compile from source</a></div><div class="stack-sm"><p class="adv-group">Security</p><a href="/docs/security/audit/">Hardened deployment</a><a href="/docs/security/remote-agent/">Agent hardening</a><a href="/docs/security/mcp/">MCP best practices</a></div></div>
       </div>
     </div>
   </div>
+</section>
 
-      <footer class="hextra-footer hx:bg-gray-100 hx:pb-[env(safe-area-inset-bottom)] hx:dark:bg-neutral-900 hx:print:bg-transparent"><div class="hx:mx-auto hx:flex hx:gap-2 hx:py-2 hx:px-4 hextra-max-footer-width"><div class="hx:flex hx:justify-items-start hx:group" data-theme="light">
-  <button
-    title="Change theme"
-    data-state="closed"
-    data-location="bottom"
-    class="hextra-theme-toggle hx:cursor-pointer hx:rounded-md hx:text-left hx:font-medium hx:h-7 hx:px-2 hx:text-xs hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:font-medium hx:text-gray-600 hx:transition-colors hx:dark:text-gray-400 hx:grow"
-    type="button"
-    aria-label="Change theme"
-  >
-    <div class="hx:flex hx:items-center hx:gap-2 hx:capitalize"><svg height=12 class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden">Light</span><svg height=12 class="hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><span class="hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden">Dark</span><svg height=12 class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor">
-  <path d="M 11.996094,2 C 6.4986225,2.0192368 2.03125,6.5024993 2.03125,12 c 0,5.497501 4.4673725,9.980763 9.964844,10 H 12 12.0039 c 5.497471,-0.01924 9.964844,-4.502499 9.964844,-10 0,-5.4975007 -4.467373,-9.9807632 -9.964844,-10 H 12 Z M 12,4 c 4.417218,0.017598 7.96875,3.5822356 7.96875,8 0,4.417764 -3.551532,7.982402 -7.96875,8 z" />
-</svg>
-<span class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden">System</span></div>
-  </button>
-  <ul
-    class="hextra-theme-toggle-options hx:hidden hx:z-20 hx:max-h-64 hx:overflow-auto hx:rounded-md hx:ring-1 hx:ring-black/5 hx:bg-white hx:py-1 hx:text-sm hx:shadow-lg hx:dark:ring-white/20 hx:dark:bg-neutral-800"
-    style="position: fixed; inset: auto auto 0px 0px; margin: 0px; min-width: 100px;"
-    data-theme="light"
-  >
-    <li class="hx:flex hx:flex-col">
-      <p
-        data-item="light"
-        class="hx:text-gray-800 hx:dark:text-gray-100 hx:hover:bg-primary-50 hx:hover:text-primary-600 hx:hover:dark:bg-primary-500/10 hx:hover:dark:text-primary-600 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9"
-      >
-        Light
-         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
-      </p>
-    </li>
-    <li class="hx:flex hx:flex-col">
-      <p
-        data-item="dark"
-        class="hx:text-gray-800 hx:dark:text-gray-100 hx:hover:bg-primary-50 hx:hover:text-primary-600 hx:hover:dark:bg-primary-500/10 hx:hover:dark:text-primary-600 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9"
-      >
-        Dark
-         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
-      </p>
-    </li>
-    <li class="hx:flex hx:flex-col">
-      <p
-        data-item="system"
-        class="hx:text-gray-800 hx:dark:text-gray-100 hx:hover:bg-primary-50 hx:hover:text-primary-600 hx:hover:dark:bg-primary-500/10 hx:hover:dark:text-primary-600 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9"
-      >
-        System
-         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
-      </p>
-    </li>
-  </ul>
-</div></div><hr class="hx:border-gray-200 hx:dark:border-neutral-800" /><div class="hextra-custom-footer hextra-max-footer-width hx:pl-[max(env(safe-area-inset-left),1.5rem)] hx:pr-[max(env(safe-area-inset-right),1.5rem)] hx:text-gray-600 hx:dark:text-gray-400"></div><div
-      class="hextra-max-footer-width hx:mx-auto hx:flex hx:justify-center hx:py-12 hx:pl-[max(env(safe-area-inset-left),1.5rem)] hx:pr-[max(env(safe-area-inset-right),1.5rem)] hx:text-gray-600 hx:dark:text-gray-400 hx:md:justify-start"
-    >
-      <div class="hx:flex hx:w-full hx:flex-col hx:items-center hx:sm:items-start"><div class="hx:font-semibold"><a class="hx:flex hx:text-sm hx:items-center hx:gap-1 hx:text-current" target="_blank" rel="noopener noreferrer" title="Hextra GitHub Homepage" href="https://github.com/imfing/hextra">
-    <span>Powered by Hextra<svg height=1em class="hx:inline-block hx:ltr:ml-1 hx:rtl:mr-1 hx:align-[-2.5px]" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="m 105.50024,22.224647 c -9.59169,-5.537563 -21.40871,-5.537563 -31.000093,0 L 39.054693,42.689119 C 29.463353,48.226675 23.55484,58.460531 23.55484,69.535642 v 40.928918 c 0,11.07542 5.908513,21.3092 15.499853,26.84652 l 35.445453,20.46446 c 9.591313,5.53732 21.408404,5.53732 31.000094,0 l 35.44507,-20.46446 c 9.59131,-5.53732 15.49985,-15.7711 15.49985,-26.84652 V 69.535642 c 0,-11.075111 -5.90854,-21.308967 -15.49985,-26.846523 z M 34.112797,85.737639 c -1.384445,2.397827 -1.384445,5.352099 0,7.749927 l 24.781554,42.922974 c 1.38437,2.39783 3.942853,3.87496 6.711592,3.87496 h 49.563107 c 2.76905,0 5.3273,-1.47713 6.71144,-3.87496 l 24.78194,-42.922974 c 1.38414,-2.397828 1.38414,-5.3521 0,-7.749927 L 121.88049,42.814746 c -1.38414,-2.397828 -3.94239,-3.874964 -6.71144,-3.874964 H 65.605944 c -2.768739,0 -5.327223,1.477059 -6.711592,3.874964 z" style="stroke-width:0.774993" /></svg></span>
-  </a></div><div class="hx:mt-6 hx:text-xs">© 2026 RF Swift</div></div>
-    </div></footer>
-    
-    <script defer src="/js/main.min.1fba8b463c3976277e140a710568addd3b581bff53843fb50ebbec6340f19ac2.js" integrity="sha256-H7qLRjw5did&#43;FApxBWit3TtYG/9ThD&#43;1DrvsY0DxmsI="></script>
-<script defer src="/js/flexsearch.433e941a8a573ebb9931fc16fc75266ab6b93f569ac2fb4f3dc66882e0416f4c.js" integrity="sha256-Qz6UGopXPruZMfwW/HUmara5P1aawvtPPcZoguBBb0w=" crossorigin="anonymous"></script>
-        <script defer src="/en.search.min.3d7b6ffb50e2cafaf5eae5b57ea40addb8ee727d0ad8a7f24bddc88ab7f7941f.js" integrity="sha256-PXtv&#43;1Diyvr16uW1fqQK3bjucn0K2KfyS93Iirf3lB8="></script>
-  </body>
+<section class="band">
+  <div class="wrap section faq">
+    <div class="stack-md"><h2>Common questions</h2><p class="secondary">More answers in the <a href="/docs/faq/">FAQ &amp; troubleshooting</a> page. Still stuck? Ask on <a href="https://discord.gg/NS3HayKrpA">Discord</a>.</p></div>
+    <div class="faq-list"><details open><summary>Do I need to know Docker or Linux?</summary><div class="secondary">No. The installer sets up the container engine for you, and the Workbench lets you create and open environments without typing commands.</div></details><details><summary>Should I use the CLI or the Workbench?</summary><div class="secondary">Either. They manage the same environments. The Workbench adds missions, notes, findings and reports; the CLI is best for scripting and remote machines.</div></details><details><summary>Does the Workbench need VS Code or another editor?</summary><div class="secondary">No. The Workbench is a completely standalone desktop app: no VS Code, no IDE, no plugins, no browser extension. It installs with RF Swift and needs nothing else.</div></details><details><summary>Do I have to download a whole toolbox image?</summary><div class="secondary">No. A Nix environment in lazy mode installs nothing up front: each tool is fetched the first time you run it, then pinned. Use <code>--lazy</code> on the command line or tick <strong>Lazy tools</strong> in the Workbench. To try a single tool without creating anything: <code>rfswift env run sdr_light sdrpp</code>.</div></details><details><summary>Does it work on Windows and macOS?</summary><div class="secondary">Yes. On Windows, one installer sets up WSL 2, USB passthrough and the engine. On macOS, use Homebrew or the signed disk image, then pick your engine: Docker Desktop or Podman for containers, Lima when containers need your USB radio, or Nix to run the tools natively. See <a href="/docs/guide/limitations/">known limits</a> for hardware specifics.</div></details><details><summary>Does it replace Kali, Parrot or DragonOS?</summary><div class="secondary">No, and it isn&rsquo;t meant to. RF Swift runs on the system you already use, those distributions included, and adds tools next to them without touching their packages. Each job simply gets its own environment. <a href="/docs/comparisons/">How they compare</a>.</div></details><details><summary>Do I need Python or other dependencies?</summary><div class="secondary">No. RF Swift is a single self-contained binary: no Python, pip or virtual environment to manage. The installer adds the engine you choose (Docker, Podman, Lima or Nix) and the few host tools labs need for display and sound.</div></details><details><summary>Can I control a lab machine remotely?</summary><div class="secondary">Yes. The remote agent is built into the same binary. Run it on a lab server or a small board next to your antennas, then drive it from the Workbench on your laptop over mutual TLS. See <a href="/docs/guide/remote-agent/">Remote agent</a>.</div></details><details><summary>Can I use it without internet access?</summary><div class="secondary">Yes. Follow the <a href="/docs/air-gapped-installation/">air-gapped installation</a> guide to export images and install them offline.</div></details></div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap section close">
+    <div class="stack-sm"><h2>Join the community</h2><p class="secondary">Radio amateurs, researchers and security professionals sharing custom images and workflows.</p></div>
+    <div class="row"><a class="btn btn-primary btn-lg" href="https://discord.gg/NS3HayKrpA"><svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.11 13.11 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg> Discord</a><a class="btn btn-secondary btn-lg" href="https://github.com/PentHertz/RF-Swift"><svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg> GitHub</a></div>
+  </div>
+</section>
+</main>
+  <footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-about">
+      <a class="brand" href="/"><span class="logo logo--mask logo--accent" role="img" aria-label="RF Swift"></span><span>RF Swift</span></a>
+      <p class="muted small">The RF companion for everyone working on radio: hundreds of radio, hardware and security tools, on Linux, macOS and Windows.</p>
+      <p class="small footer-built">Built by <a href="https://penthertz.com/">Penthertz</a></p>
+      <div class="footer-social">
+        <a class="icon-link" href="https://github.com/PentHertz/RF-Swift" aria-label="GitHub" title="GitHub"><svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        <a class="icon-link" href="https://discord.gg/NS3HayKrpA" aria-label="Discord" title="Discord"><svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.11 13.11 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></a>
+        <a class="icon-link" href="https://x.com/PentHertz" aria-label="X" title="X"><svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a>
+        <a class="icon-link" href="https://www.youtube.com/c/Penthertz" aria-label="YouTube" title="YouTube"><svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col"><p class="footer-title">Product</p><a href="https://github.com/PentHertz/RF-Swift/releases">Download</a><a href="/docs/guide/workbench/">Workbench</a><a href="/docs/commands/">CLI reference</a><a href="/docs/release-notes-v4/">What's new</a></div>
+    <div class="footer-col"><p class="footer-title">Resources</p><a href="/docs/quick-start/">Quick start</a><a href="/docs/first-signal/">Your first signal</a><a href="/docs/engines/">Choose your engine</a><a href="/docs/faq/">FAQ</a></div>
+    <div class="footer-col"><p class="footer-title">Project</p><a href="https://github.com/PentHertz/RF-Swift">Source code</a><a href="https://github.com/PentHertz/RF-Swift/issues">Issues</a><a href="/docs/security/">Security</a><a href="https://penthertz.com/">Penthertz</a></div>
+  </div>
+  <div class="wrap copyright">© 2026 Penthertz · RF Swift</div>
+</footer>
+
+  <div class="search-dialog" id="search-dialog" role="dialog" aria-modal="true" aria-label="Search the documentation" hidden>
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field">
+      <input type="search" id="search-input" placeholder="Search the docs: install, HackRF, Wi-Fi, Nix, ports…" autocomplete="off" spellcheck="false" aria-controls="search-results" aria-describedby="search-help">
+      <button class="search-close" type="button" data-search-close aria-label="Close search"><kbd>Esc</kbd></button>
+    </div>
+    <div class="search-results" id="search-results" role="listbox"></div>
+    <div class="search-help muted small" id="search-help">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> to move</span><span><kbd>Enter</kbd> to open</span><span><kbd>Esc</kbd> to close</span>
+    </div>
+  </div>
+</div>
+
+  
+  <script src="/js/main.min.e2c19ddfc8606cb69fac719551777207ce21c41ba6f918c8a62d5d9f09d55e88.js" integrity="sha256-4sGd38hgbLafrHGVUXdyB84hxBum&#43;RjIpi1dnwnVXog=" data-search-index="/search-index.json" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.min.js" defer></script>
+  <script>window.addEventListener("load", () => { if (window.quicklink) quicklink.listen({ origins: [location.hostname] }); });</script>
+</body>
 </html>
