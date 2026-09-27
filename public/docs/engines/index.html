@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Choose your engine · RF Swift</title>
+  <meta name="description" content="Docker, Podman, Lima or Nix: what each engine is good at, what it can&#39;t do, and which one fits your computer.">
+  <meta name="theme-color" content="#0b1416">
+  <link rel="canonical" href="https://rfswift.io/docs/engines/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Choose your engine · RF Swift">
+  <meta property="og:description" content="Docker, Podman, Lima or Nix: what each engine is good at, what it can&#39;t do, and which one fits your computer.">
+  <meta property="og:url" content="https://rfswift.io/docs/engines/">
+  <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@PentHertz">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" defer></script>
+  
+  <link rel="stylesheet" href="/css/main.min.8b2df99c1cf10996b2f98279a6b9399e88b3023eec8233dfa06e82afdca06b51.css" integrity="sha256-iy35nBzxCZay&#43;YJ5prk5noizAj7sgjPfoG6Cr9yga1E=">
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KH5KRN5B"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-X1KH5KRN5B');
+        }
+      </script>
+</head>
+<body class="is-docs">
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+  <nav class="wrap nav nav-wide" aria-label="Main">
+    <a class="brand" href="/"><span class="logo logo--mask logo--accent" role="img" aria-label="RF Swift"></span><span>RF Swift</span></a>
+    <div class="nav-links" id="nav-links">
+        <a href="/#workbench">Workbench</a>
+        <a href="/#benefits">Why RF Swift</a>
+        <a href="/#learn">Learn</a>
+        <a href="/docs/" aria-current="page">Docs</a>
+        <a href="/docs/commands/">Commands</a>
+    </div>
+    <div class="nav-end">
+      <button class="search-trigger" type="button" data-search-open aria-label="Search the docs">
+        <i class="ph ph-magnifying-glass"></i><span>Search docs</span><kbd>Ctrl K</kbd>
+      </button>
+      <a class="icon-link" href="https://github.com/PentHertz/RF-Swift" aria-label="GitHub"><i class="ph ph-github-logo"></i></a>
+      <a class="icon-link" href="https://discord.gg/NS3HayKrpA" aria-label="Discord"><i class="ph ph-discord-logo"></i></a>
+      <a class="btn btn-primary nav-install" href="/#install">Install</a>
+      <button class="icon-link nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links" data-nav-toggle><i class="ph ph-list"></i></button>
+    </div>
+  </nav>
+</header>
+
+  <main id="content"><div class="docs-shell">
+  <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation navigation">
+    <div class="sidebar-inner">
+  <div class="sidebar-top">
+    <button class="search-trigger search-trigger-block" type="button" data-search-open><i class="ph ph-magnifying-glass"></i><span>Search docs</span><kbd>Ctrl K</kbd></button>
+    <div class="path-switch" role="group" aria-label="Choose your path">
+      <a href="/docs/quick-start/" class="path-chip path-chip-beginner"><i class="ph ph-student"></i> I'm new</a>
+      <a href="/docs/commands/" class="path-chip path-chip-advanced"><i class="ph ph-terminal-window"></i> Reference</a>
+    </div>
+  </div>
+  <nav class="sidebar-nav" aria-label="Documentation">
+    <div class="sidebar-group">
+      <p class="sidebar-label"><i class="ph ph-rocket-launch" aria-hidden="true"></i>Start here</p>
+      <ul>
+            <li><a href="/docs/">What is RF Swift?</a></li>
+            <li><a href="/docs/concepts/">Key ideas in 5 minutes</a></li>
+            <li><a href="/docs/supports/">Will it run on my computer?</a></li>
+            <li><a href="/docs/engines/" aria-current="page">Choose your engine</a></li>
+            <li><a href="/docs/getting-started/">Install RF Swift</a></li>
+            <li><a href="/docs/quick-start/">Quick start</a></li>
+            <li><a href="/docs/first-signal/">Tutorial: your first signal</a></li>
+            <li><a href="/docs/faq/">FAQ &amp; troubleshooting</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-group">
+      <p class="sidebar-label"><i class="ph ph-compass" aria-hidden="true"></i>Everyday use</p>
+      <ul>
+            <li><a href="/docs/guide/">Guide overview</a></li>
+            <li><a href="/docs/guide/workbench/">Workbench (desktop app)</a></li>
+            <li><a href="/docs/guide/list-of-images/">Choose a toolbox</a></li>
+            <li><a href="/docs/guide/list-of-tools/">Included tools</a></li>
+            <li><a href="/docs/guide/sharing-files/">Files &amp; devices</a></li>
+            <li><a href="/docs/guide/running-rf-swift/">Daily workflow</a></li>
+            <li><a href="/docs/guide/container-management/">Change a container later</a></li>
+            <li><a href="/docs/guide/installing-software/">Add more software</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-group">
+      <p class="sidebar-label"><i class="ph ph-devices" aria-hidden="true"></i>Platforms &amp; engines</p>
+      <ul>
+            <li><a href="/docs/guide/windows/">Windows</a></li>
+            <li><a href="/docs/guide/podman/">Podman</a></li>
+            <li><a href="/docs/guide/nix-engine/">Nix engine (no containers)</a></li>
+            <li><a href="/docs/guide/qubes-os/">QubesOS</a></li>
+            <li><a href="/docs/air-gapped-installation/">Offline / air-gapped install</a></li>
+            <li><a href="/docs/guide/limitations/">Known limits</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-group">
+      <p class="sidebar-label"><i class="ph ph-graduation-cap" aria-hidden="true"></i>Advanced</p>
+      <ul>
+            <li><a href="/docs/guide/configurations/">Configuration file &amp; profiles</a></li>
+            <li><a href="/docs/guide/host-actions/">Host actions</a></li>
+            <li><a href="/docs/guide/caches/">Caches &amp; fast delivery</a></li>
+            <li><a href="/docs/guide/remote-agent/">Remote agent</a></li>
+            <li><a href="/docs/guide/ai-assistant/">AI assistant (MCP)</a></li>
+            <li><a href="/docs/guide/vpn/">VPN inside containers</a></li>
+            <li>
+              <details class="sidebar-section">
+                <summary><span>Container scripts</span><i class="ph ph-caret-right" aria-hidden="true"></i></summary>
+                <ul>
+                  <li><a href="/docs/container_scripts/">Overview</a></li>
+                  <li><a href="/docs/container_scripts/avahi_inside_container/">Avahi start script</a></li>
+                  <li><a href="/docs/container_scripts/libresdr_swap_firmware/">LibreSDR FPGA swap</a></li>
+                  <li><a href="/docs/container_scripts/rfswift_install/">RF scripts update</a></li>
+                </ul>
+              </details>
+            </li>
+      </ul>
+    </div>
+    <div class="sidebar-group">
+      <p class="sidebar-label"><i class="ph ph-book-open" aria-hidden="true"></i>Reference</p>
+      <ul>
+            <li>
+              <details class="sidebar-section">
+                <summary><span>Command reference</span><i class="ph ph-caret-right" aria-hidden="true"></i></summary>
+                <ul>
+                  <li><a href="/docs/commands/">Overview</a></li><li class="sidebar-sublabel">Containers</li>
+                  <li><a href="/docs/commands/container/">container</a></li>
+                  <li><a href="/docs/commands/run/">container create</a></li>
+                  <li><a href="/docs/commands/exec/">container shell</a></li>
+                  <li><a href="/docs/commands/last/">container last</a></li>
+                  <li><a href="/docs/commands/install/">container install</a></li>
+                  <li><a href="/docs/commands/stop/">container stop</a></li>
+                  <li><a href="/docs/commands/remove/">container rm</a></li>
+                  <li><a href="/docs/commands/rename/">container rename</a></li>
+                  <li><a href="/docs/commands/commit/">container commit</a></li>
+                  <li><a href="/docs/commands/upgrade/">container upgrade</a></li>
+                  <li><a href="/docs/commands/profile/">profile</a></li><li class="sidebar-sublabel">Images</li>
+                  <li><a href="/docs/commands/image/">image</a></li>
+                  <li><a href="/docs/commands/images/">image pull / local / remote</a></li>
+                  <li><a href="/docs/commands/build/">image build</a></li>
+                  <li><a href="/docs/commands/delete/">image rm</a></li>
+                  <li><a href="/docs/commands/retag/">image tag</a></li>
+                  <li><a href="/docs/commands/download/">image download</a></li>
+                  <li><a href="/docs/commands/export/">image export</a></li>
+                  <li><a href="/docs/commands/import/">image import</a></li><li class="sidebar-sublabel">Nix environments</li>
+                  <li><a href="/docs/commands/env/">env (Nix)</a></li><li class="sidebar-sublabel">Runtime configuration</li>
+                  <li><a href="/docs/commands/config/">config</a></li>
+                  <li><a href="/docs/commands/bindings/">config bindings</a></li>
+                  <li><a href="/docs/commands/capabilities/">config capabilities</a></li>
+                  <li><a href="/docs/commands/cgroups/">config cgroups</a></li>
+                  <li><a href="/docs/commands/gpu/">config gpus</a></li>
+                  <li><a href="/docs/commands/ports/">config ports</a></li>
+                  <li><a href="/docs/commands/ulimits/">config ulimits</a></li>
+                  <li><a href="/docs/commands/realtime/">realtime</a></li><li class="sidebar-sublabel">Networking</li>
+                  <li><a href="/docs/commands/network/">network</a></li><li class="sidebar-sublabel">Host &amp; devices</li>
+                  <li><a href="/docs/commands/host/">host</a></li>
+                  <li><a href="/docs/commands/usb/">usb</a></li>
+                  <li><a href="/docs/commands/macusb/">usb on macOS (macusb)</a></li>
+                  <li><a href="/docs/commands/winusb/">usb on Windows (winusb)</a></li>
+                  <li><a href="/docs/commands/engine/">engine</a></li><li class="sidebar-sublabel">Security</li>
+                  <li><a href="/docs/commands/audit/">audit</a></li>
+                  <li><a href="/docs/commands/report/">report</a></li><li class="sidebar-sublabel">Remote access</li>
+                  <li><a href="/docs/commands/agent/">agent</a></li><li class="sidebar-sublabel">System</li>
+                  <li><a href="/docs/commands/system/">system</a></li>
+                  <li><a href="/docs/commands/doctor/">doctor</a></li>
+                  <li><a href="/docs/commands/cleanup/">cleanup</a></li>
+                  <li><a href="/docs/commands/update/">update</a></li>
+                  <li><a href="/docs/commands/log/">log</a></li>
+                  <li><a href="/docs/commands/completion/">completion</a></li>
+                </ul>
+              </details>
+            </li>
+      </ul>
+    </div>
+    <div class="sidebar-group">
+      <p class="sidebar-label"><i class="ph ph-shield-check" aria-hidden="true"></i>Security</p>
+      <ul>
+            <li>
+              <details class="sidebar-section">
+                <summary><span>Security overview</span><i class="ph ph-caret-right" aria-hidden="true"></i></summary>
+                <ul>
+                  <li><a href="/docs/security/">Overview</a></li>
+                  <li><a href="/docs/security/guide_lines/">Security guidelines</a></li>
+                  <li><a href="/docs/security/audit/">Audits and hardened deployment</a></li>
+                  <li><a href="/docs/security/remote-agent/">Remote agent hardening</a></li>
+                  <li><a href="/docs/security/mcp/">MCP best practices</a></li>
+                </ul>
+              </details>
+            </li>
+      </ul>
+    </div>
+    <div class="sidebar-group">
+      <p class="sidebar-label"><i class="ph ph-wrench" aria-hidden="true"></i>Build &amp; contribute</p>
+      <ul>
+            <li>
+              <details class="sidebar-section">
+                <summary><span>Development</span><i class="ph ph-caret-right" aria-hidden="true"></i></summary>
+                <ul>
+                  <li><a href="/docs/development/">Overview</a></li>
+                  <li><a href="/docs/development/compiling-rfswift/">Compile from source</a></li>
+                  <li><a href="/docs/development/yaml-recipe-guide/">YAML recipe guide</a></li>
+                  <li><a href="/docs/development/building-images/">Helper functions reference</a></li>
+                </ul>
+              </details>
+            </li>
+      </ul>
+    </div>
+    <div class="sidebar-group">
+      <p class="sidebar-label"><i class="ph ph-info" aria-hidden="true"></i>About</p>
+      <ul>
+            <li><a href="/docs/release-notes-v4/">What&#39;s new in v4.0</a></li>
+            <li><a href="/docs/comparisons/">RF Swift and your distribution</a></li>
+            <li>
+              <details class="sidebar-section">
+                <summary><span>Archive</span><i class="ph ph-caret-right" aria-hidden="true"></i></summary>
+                <ul>
+                  <li><a href="/docs/archive/">Overview</a></li>
+                  <li><a href="/docs/archive/release-notes-v3/">What&#39;s new in v3.0.0 &#34;Resonance&#34;</a></li>
+                </ul>
+              </details>
+            </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="sidebar-help">
+    <i class="ph ph-chats-circle" aria-hidden="true"></i>
+    <div><strong>Stuck?</strong> <span>Ask the community on <a href="https://discord.gg/NS3HayKrpA">Discord</a>.</span></div>
+  </div>
+</div>
+
+  </aside>
+  <div class="sidebar-backdrop" data-sidebar-close hidden></div>
+  <article class="docs-main">
+    <div class="docs-mobilebar">
+      <button class="btn btn-secondary btn-sm" type="button" data-sidebar-open aria-controls="docs-sidebar"><i class="ph ph-sidebar-simple"></i> Docs menu</button>
+      <button class="btn btn-ghost btn-sm" type="button" data-search-open><i class="ph ph-magnifying-glass"></i> Search</button>
+    </div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="/docs/">Docs</a><i class="ph ph-caret-right" aria-hidden="true"></i><span>Start here</span>
+</nav>
+
+    <header class="doc-head">
+      <h1>Choose your engine</h1><p class="doc-lead">Docker, Podman, Lima or Nix: what each engine is good at, what it can&rsquo;t do, and which one fits your computer.</p>
+      <div class="doc-meta">
+  <span class="badge badge-success"><i class="ph ph-student" aria-hidden="true"></i> Beginner</span>
+<span><i class="ph ph-clock" aria-hidden="true"></i> 7 min read</span><span><i class="ph ph-calendar-blank" aria-hidden="true"></i> Updated September 27, 2026</span>
+      </div>
+    </header>
+    <div class="prose">
+      <p>An <strong>engine</strong> is the program that actually runs your labs. RF Swift works with four of them: <strong>Docker</strong>, <strong>Podman</strong>, <strong>Lima</strong> and <strong>Nix</strong>. They all use the same <code>rfswift</code> commands, the same toolboxes and the same <a href="/docs/guide/workbench/">Workbench</a>, so what you learn with one works with the others.</p>
+<div class="admonition admonition-beginner" role="note">
+  <i class="ph ph-student admonition-icon" aria-hidden="true"></i>
+  <div class="admonition-body"><p class="admonition-title">Not sure? You can skip this page.</p><p>The installer detects what you have and suggests an engine. Keep its suggestion to start: you can install another engine later, run several side by side, and switch with one flag.</p>
+</div>
+</div>
+<h2 id="the-quick-answer">The quick answer<a class="anchor" href="#the-quick-answer" aria-label="Link to this section"></a></h2>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Your situation</th>
+      <th>Pick</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Linux desktop, you want the most common setup</td>
+      <td><strong>Docker</strong></td>
+    </tr>
+    <tr>
+      <td>Shared or company machine, no admin rights wanted, air-gapped network, or a small board</td>
+      <td><strong>Podman</strong></td>
+    </tr>
+    <tr>
+      <td>Mac, you want native tools with direct access to your USB radio</td>
+      <td><strong>Nix</strong></td>
+    </tr>
+    <tr>
+      <td>Mac, you want containers and your USB radio</td>
+      <td><strong>Lima</strong></td>
+    </tr>
+    <tr>
+      <td>Mac or Windows, no radio needed</td>
+      <td><strong>Docker Desktop</strong> or <strong>Podman</strong></td>
+    </tr>
+    <tr>
+      <td>Windows, with a radio</td>
+      <td><strong>Docker Desktop</strong> or <strong>Podman Desktop</strong> (USB goes through usbipd-win), or <strong>Nix</strong> inside WSL 2</td>
+    </tr>
+    <tr>
+      <td>Little disk space, or you only need a few tools</td>
+      <td><strong>Nix</strong> in lazy mode</td>
+    </tr>
+    <tr>
+      <td>You want to keep Kali, Parrot or DragonOS exactly as it is</td>
+      <td><strong>Nix</strong> (or rootless Podman)</td>
+    </tr>
+    <tr>
+      <td>A team that must run the exact same toolbox everywhere</td>
+      <td><strong>Docker</strong> or <strong>Podman</strong> (same image, same digest on every machine)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h2 id="the-four-engines">The four engines<a class="anchor" href="#the-four-engines" aria-label="Link to this section"></a></h2>
+<h3 id="docker">Docker: the common choice<a class="anchor" href="#docker" aria-label="Link to this section"></a></h3>
+<p><strong>In one sentence:</strong> the most widely used container engine, on every operating system.</p>
+<p><strong>Why pick it</strong></p>
+<ul>
+<li>The broadest ecosystem, and the default on most machines: Docker Engine on Linux, Docker Desktop on macOS and Windows.</li>
+<li>Every lab is an isolated container: nothing you install in it touches your system or your other labs.</li>
+<li>The most complete hardware support on Linux: USB radios, serial ports that can be plugged in after the lab was created (hot-plug), device rules and realtime settings for SDR work.</li>
+<li>A toolbox is an image with a fixed digest, so a colleague pulling the same image gets exactly the same tools.</li>
+</ul>
+<p><strong>Good to know</strong></p>
+<ul>
+<li>On Linux the Docker service runs as root. Give your user access once with <code>rfswift host docker-access</code> (no logout needed). Members of the <code>docker</code> group are effectively root on the machine.</li>
+<li>Docker Desktop on macOS can&rsquo;t pass USB devices to a lab. For radios on a Mac, use Lima or Nix.</li>
+<li>On Windows, labs run inside WSL 2 and radios are forwarded with <code>rfswift usb attach</code> (usbipd-win).</li>
+</ul>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="btn btn-ghost btn-sm" type="button" data-copy aria-label="Copy code"><i class="ph ph-copy"></i><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create -i sdr_light -n radio</span></span></code></pre></div></div>
+<h3 id="podman">Podman: rootless and daemonless<a class="anchor" href="#podman" aria-label="Link to this section"></a></h3>
+<p><strong>In one sentence:</strong> a Docker-compatible engine that runs without a background service and without admin rights.</p>
+<p><strong>Why pick it</strong></p>
+<ul>
+<li><strong>Rootless by default</strong>: your labs run as you, not as root. A good fit for shared machines, company laptops and security-focused setups.</li>
+<li><strong>No daemon</strong>: nothing runs in the background when you&rsquo;re not using it. That also helps on small boards with little memory.</li>
+<li>Well suited to air-gapped and embedded environments.</li>
+<li>The same images as Docker: toolboxes work identically on both.</li>
+</ul>
+<p><strong>Good to know</strong></p>
+<ul>
+<li>Run <code>rfswift host udev</code> once so your user may open the radio hardware, and set up the subordinate ID ranges Podman needs (the <a href="/docs/quick-start/">Quick start</a> shows the commands).</li>
+<li>Rootless Podman can&rsquo;t create device rules: serial ports must be plugged in before you create the lab, and realtime limits can&rsquo;t exceed your host&rsquo;s limits. Rootful Podman behaves like Docker here.</li>
+<li>On macOS (<code>podman machine</code>) there is no USB passthrough, as with Docker Desktop.</li>
+</ul>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="btn btn-ghost btn-sm" type="button" data-copy aria-label="Copy code"><i class="ph ph-copy"></i><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift --engine podman container create -i sdr_light -n radio</span></span></code></pre></div></div>
+<p>More in <a href="/docs/guide/podman/">Using Podman</a>.</p>
+<h3 id="lima">Lima: containers with USB on a Mac<a class="anchor" href="#lima" aria-label="Link to this section"></a></h3>
+<p><strong>In one sentence:</strong> on macOS, Lima runs your containers in a small Linux virtual machine that can receive your USB radios.</p>
+<p><strong>Why pick it</strong></p>
+<ul>
+<li>The way to use <strong>containers with RF hardware on a Mac</strong>: USB devices are attached to the VM on demand, and hot-plug works.</li>
+<li>RF Swift creates the VM on first use and manages its lifecycle for you.</li>
+<li>Adjustable resources: <code>rfswift engine lima set</code> changes the VM&rsquo;s CPUs, memory and disk.</li>
+<li>On Apple Silicon with macOS 14 or later, an optional GPU VM (<code>--gpu</code>) gives Vulkan compute to GPU tools.</li>
+</ul>
+<p><strong>Good to know</strong></p>
+<ul>
+<li>Install it once with <code>brew install qemu lima</code>.</li>
+<li>A device must be attached to the VM before a lab can use it: <code>rfswift usb attach</code> shows a picker, <code>rfswift usb detach</code> gives the device back to macOS.</li>
+<li>The GPU VM and the USB VM are separate: the GPU one has no USB.</li>
+<li>Graphical tools open through XQuartz with software rendering.</li>
+</ul>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="btn btn-ghost btn-sm" type="button" data-copy aria-label="Copy code"><i class="ph ph-copy"></i><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift usb attach
+</span></span><span class="line"><span class="cl">rfswift --engine lima container create -i sdr_light -n radio</span></span></code></pre></div></div>
+<p>More in <a href="/docs/commands/usb/">usb</a> and <a href="/docs/commands/engine/">engine</a>.</p>
+<h3 id="nix">Nix: native tools, no containers<a class="anchor" href="#nix" aria-label="Link to this section"></a></h3>
+<p><strong>In one sentence:</strong> the same toolboxes installed natively on your computer, as your user, pinned to exact versions.</p>
+<p><strong>Why pick it</strong></p>
+<ul>
+<li><strong>The lightest option.</strong> In lazy mode (<code>--lazy</code>, or <strong>Lazy tools</strong> in the Workbench) nothing is installed up front: each tool is fetched the first time you run it, then pinned. <code>rfswift env run sdr_light sdrpp</code> runs a single tool without creating anything.</li>
+<li><strong>Closest to the hardware.</strong> On Linux and macOS there is no container and no VM in between: USB radios open directly, sound plays natively, graphical tools get a working OpenGL runtime, and GPUs use their native drivers.</li>
+<li><strong>Excellent on macOS.</strong> Tools run natively on your Mac with direct USB access and no Linux VM, and <code>--isolate</code> uses Apple&rsquo;s built-in Seatbelt sandbox.</li>
+<li><strong>Reproducible and safe to update.</strong> An environment is pinned to the revision it was created from; full (non-lazy) environments update transactionally and can roll back.</li>
+<li><strong>No container engine needed</strong>, and it never touches your distribution&rsquo;s packages: ideal for adding RF tools to Kali, Parrot or DragonOS.</li>
+<li>Environments share one store on disk, and an environment moves to another machine as a single <code>.rfenv</code> archive.</li>
+</ul>
+<p><strong>Good to know</strong></p>
+<ul>
+<li>There is no isolation by default: tools run as your user. Add <code>--isolate</code> for a jail that hides your home and the host files (bubblewrap on Linux, Seatbelt on macOS). On Ubuntu 24.04 and later, run <code>rfswift host isolate</code> once first.</li>
+<li>Not every tool from the container images is packaged for Nix yet; missing ones are listed per environment.</li>
+<li>On Linux, run <code>rfswift host udev</code> once so your user may open radio hardware. On Windows, Nix runs inside a WSL 2 distribution that <code>rfswift env wsl setup</code> (or the installer) prepares.</li>
+<li>It needs Nix installed; the RF Swift installer offers to do it.</li>
+</ul>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="btn btn-ghost btn-sm" type="button" data-copy aria-label="Copy code"><i class="ph ph-copy"></i><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container create --engine nix -i sdr_light -n radio --lazy</span></span></code></pre></div></div>
+<p>More in <a href="/docs/guide/nix-engine/">Nix engine</a>.</p>
+<h2 id="at-a-glance">At a glance<a class="anchor" href="#at-a-glance" aria-label="Link to this section"></a></h2>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Docker</th>
+      <th>Podman</th>
+      <th>Lima</th>
+      <th>Nix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Runs on</strong></td>
+      <td>Linux, macOS, Windows</td>
+      <td>Linux, macOS, Windows</td>
+      <td>macOS</td>
+      <td>Linux, macOS, Windows (inside WSL 2)</td>
+    </tr>
+    <tr>
+      <td><strong>Admin rights</strong></td>
+      <td>The service runs as root</td>
+      <td>Not needed (rootless)</td>
+      <td>Not needed</td>
+      <td>Not needed</td>
+    </tr>
+    <tr>
+      <td><strong>Isolation</strong></td>
+      <td>Container</td>
+      <td>Container, as your user</td>
+      <td>Container inside a VM</td>
+      <td>None by default, optional <code>--isolate</code> jail</td>
+    </tr>
+    <tr>
+      <td><strong>USB radios</strong></td>
+      <td>Linux; Windows via usbipd; not on macOS</td>
+      <td>Linux; Windows via usbipd; not on macOS</td>
+      <td>Yes, attached to the VM</td>
+      <td>Direct on Linux and macOS; Windows via usbipd</td>
+    </tr>
+    <tr>
+      <td><strong>Graphics and sound</strong></td>
+      <td>Forwarded from the host</td>
+      <td>Forwarded from the host</td>
+      <td>Forwarded through the VM</td>
+      <td>Native (WSLg on Windows)</td>
+    </tr>
+    <tr>
+      <td><strong>Disk</strong></td>
+      <td>Images of several GB, shared layers</td>
+      <td>Same as Docker</td>
+      <td>Same, inside the VM</td>
+      <td>Only the tools you use (lazy), shared store</td>
+    </tr>
+    <tr>
+      <td><strong>Best for</strong></td>
+      <td>The common setup, teams, Windows</td>
+      <td>Security-focused, shared or air-gapped machines, small boards</td>
+      <td>Containers with USB radios on a Mac</td>
+      <td>Staying light, macOS, lowest latency to hardware</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>The full list of constraints per engine is in <a href="/docs/guide/limitations/#engines-at-a-glance">Known limits</a>.</p>
+<h2 id="use-several-switch-any-time">Use several, switch any time<a class="anchor" href="#use-several-switch-any-time" aria-label="Link to this section"></a></h2>
+<p>Engines can live side by side on the same computer, and the Workbench lists the labs of every engine together. RF Swift picks an engine in this order:</p>
+<ol>
+<li>the <code>--engine</code> flag: <code>rfswift --engine nix container create ...</code></li>
+<li>the <code>RFSWIFT_ENGINE</code> environment variable, for a whole terminal session</li>
+<li><code>engine =</code> under <code>[general]</code> in <code>config.ini</code>, to make it permanent</li>
+<li>otherwise it detects what is installed (Docker, Podman, Lima)</li>
+</ol>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="btn btn-ghost btn-sm" type="button" data-copy aria-label="Copy code"><i class="ph ph-copy"></i><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift doctor     <span class="c1"># shows which engines are installed and working</span></span></span></code></pre></div></div>
+<div class="doc-cards">
+  <a class="card card-link doc-card" href="/docs/getting-started/"><i class="ph ph-download-simple icon" aria-hidden="true"></i>
+    <span class="doc-card-title">Install RF Swift <span class="badge badge-success">Beginner</span></span><span class="doc-card-sub">The installer sets up the engine you pick</span>
+  </a>
+  <a class="card card-link doc-card" href="/docs/guide/nix-engine/"><i class="ph ph-snowflake icon" aria-hidden="true"></i>
+    <span class="doc-card-title">Nix engine</span><span class="doc-card-sub">Lazy mode, isolation, updates and rollback</span>
+  </a>
+  <a class="card card-link doc-card" href="/docs/guide/podman/"><i class="ph ph-shield-check icon" aria-hidden="true"></i>
+    <span class="doc-card-title">Using Podman</span><span class="doc-card-sub">Rootless setup and its limits</span>
+  </a>
+  <a class="card card-link doc-card" href="/docs/guide/limitations/"><i class="ph ph-warning icon" aria-hidden="true"></i>
+    <span class="doc-card-title">Known limits <span class="badge badge-high">Advanced</span></span><span class="doc-card-sub">What each engine can&rsquo;t do, per platform</span>
+  </a>
+</div>
+
+    </div>
+    <footer class="doc-foot">
+      <a href="https://github.com/PentHertz/rfswift-doc-v2/edit/main/content/docs/engines.md"><i class="ph ph-pencil-simple"></i> Edit this page</a>
+      <a href="https://github.com/PentHertz/RF-Swift/issues/new"><i class="ph ph-bug"></i> Report a problem</a>
+      <a href="https://discord.gg/NS3HayKrpA"><i class="ph ph-discord-logo"></i> Ask on Discord</a>
+    </footer>
+    
+<nav class="pager" aria-label="Previous and next pages">
+  <a class="pager-link pager-prev" href="/docs/supports/"><span class="label"><i class="ph ph-arrow-left"></i> Previous</span><span class="pager-title">Will it run on my computer?</span></a>
+  <a class="pager-link pager-next" href="/docs/getting-started/"><span class="label">Next <i class="ph ph-arrow-right"></i></span><span class="pager-title">Install RF Swift</span></a>
+</nav>
+
+  </article>
+  <aside class="docs-toc" aria-label="On this page">
+    
+<div class="toc">
+  <p class="label">On this page</p>
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-quick-answer">The quick answer</a></li>
+    <li><a href="#the-four-engines">The four engines</a>
+      <ul>
+        <li><a href="#docker">Docker: the common choice</a></li>
+        <li><a href="#podman">Podman: rootless and daemonless</a></li>
+        <li><a href="#lima">Lima: containers with USB on a Mac</a></li>
+        <li><a href="#nix">Nix: native tools, no containers</a></li>
+      </ul>
+    </li>
+    <li><a href="#at-a-glance">At a glance</a></li>
+    <li><a href="#use-several-switch-any-time">Use several, switch any time</a></li>
+  </ul>
+</nav>
+  <a class="toc-top" href="#content"><i class="ph ph-arrow-up"></i> Back to top</a>
+</div>
+
+  </aside>
+</div>
+</main>
+  <footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="stack-sm">
+      <div class="brand"><span class="logo logo--mask logo--accent" role="img" aria-label="RF Swift"></span><span>RF Swift</span></div>
+      <span class="muted">by <a href="https://penthertz.com/">Penthertz</a></span>
+      <span class="muted small">Presented at Black Hat Arsenal, FOSDEM, Spectrum and CyberOnBoard.</span>
+    </div>
+    <div class="stack-sm"><span class="label">Start</span><a href="/docs/">What is RF Swift?</a><a href="/docs/getting-started/">Install</a><a href="/docs/quick-start/">Quick start</a><a href="/docs/first-signal/">Your first signal</a><a href="/docs/faq/">FAQ &amp; troubleshooting</a></div>
+    <div class="stack-sm"><span class="label">Products</span><a href="/docs/guide/workbench/">Workbench</a><a href="/docs/commands/">CLI</a><a href="/docs/guide/nix-engine/">Nix engine</a><a href="/docs/guide/remote-agent/">Remote agent</a><a href="/docs/guide/ai-assistant/">AI assistant (MCP)</a></div>
+    <div class="stack-sm"><span class="label">Community</span><a href="https://discord.gg/NS3HayKrpA">Discord</a><a href="https://github.com/PentHertz/RF-Swift">GitHub</a><a href="https://x.com/PentHertz">X / Twitter</a><a href="https://www.youtube.com/c/Penthertz">YouTube</a><a href="https://github.com/PentHertz/RF-Swift/issues">Report an issue</a></div>
+  </div>
+  <div class="wrap copyright">© 2026 RF Swift · Penthertz</div>
+</footer>
+
+  <div class="search-dialog" id="search-dialog" role="dialog" aria-modal="true" aria-label="Search the documentation" hidden>
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field">
+      <i class="ph ph-magnifying-glass"></i>
+      <input type="search" id="search-input" placeholder="Search the docs: install, HackRF, Wi-Fi, Nix, ports…" autocomplete="off" spellcheck="false" aria-controls="search-results" aria-describedby="search-help">
+      <button class="btn btn-ghost btn-sm" type="button" data-search-close aria-label="Close search"><kbd>Esc</kbd></button>
+    </div>
+    <div class="search-results" id="search-results" role="listbox"></div>
+    <div class="search-help muted small" id="search-help">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> to move</span><span><kbd>Enter</kbd> to open</span><span><kbd>Esc</kbd> to close</span>
+    </div>
+  </div>
+</div>
+
+  
+  <script src="/js/main.min.73cfa271fe4de7553263418657500e155bebfe7d9e71ebe4b06660b8876c9765.js" integrity="sha256-c8&#43;icf5N51UyY0GGV1AOFVvr/n2ecevksGZguIdsl2U=" data-search-index="/search-index.json" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.min.js" defer></script>
+  <script>window.addEventListener("load", () => { if (window.quicklink) quicklink.listen({ origins: [location.hostname] }); });</script>
+</body>
+</html>
