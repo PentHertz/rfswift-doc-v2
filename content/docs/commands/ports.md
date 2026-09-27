@@ -1,11 +1,11 @@
 ---
-title: ports
-weight: 19
-prev: /docs/commands/gpu
-next: /docs/commands/network
+title: "rfswift config ports"
+linkTitle: "config ports"
+navGroup: "Runtime configuration"
+level: reference
+description: "Expose and publish ports on an existing container."
+weight: 45
 ---
-
-# rfswift ports
 
 {{< callout type="info" >}}
 **RF Swift v4**: this group lives under the `config` parent as `rfswift config ports` and remains available as `rfswift ports`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
@@ -81,9 +81,9 @@ Remove a port binding from a container.
 
 ---
 
-## Port Binding Format
+## Port binding format
 
-### Binding Syntax
+### Binding syntax
 
 Port bindings follow this format:
 
@@ -97,7 +97,7 @@ Port bindings follow this format:
 - **container_port**: Port inside container
 - **protocol**: `tcp` or `udp`
 
-### Binding Examples
+### Binding examples
 
 **Basic TCP port:**
 ```bash
@@ -130,7 +130,7 @@ Port bindings follow this format:
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Expose a port:**
 ```bash
@@ -152,18 +152,18 @@ rfswift ports unbind -c web_server -b "8080:80/tcp"
 rfswift ports unexpose -c web_server -p "80/tcp"
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Web server on custom port:**
 ```bash
 # Start container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n web_service
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n web_service
 
 # Add web server port
 rfswift ports bind -c web_service -b "8080:80/tcp"
 
 # Start web server
-rfswift exec -c web_service
+rfswift container shell -c web_service
 python3 -m http.server 80
 exit
 
@@ -173,7 +173,7 @@ exit
 **Multiple service ports:**
 ```bash
 # API server container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n api_server
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n api_server
 
 # Bind HTTP and HTTPS
 rfswift ports bind -c api_server -b "8080:80/tcp"
@@ -191,13 +191,13 @@ rfswift ports expose -c api_server -p "9090/tcp"
 **UDP service:**
 ```bash
 # Network analysis container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n netflow
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n netflow
 
 # Add UDP port for netflow
 rfswift ports bind -c netflow -b "2055:2055/udp"
 
 # Start netflow collector
-rfswift exec -c netflow
+rfswift container shell -c netflow
 nfcapd -p 2055
 exit
 ```
@@ -205,7 +205,7 @@ exit
 **Development server:**
 ```bash
 # Development container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n dev_env
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n dev_env
 
 # Add development ports
 rfswift ports bind -c dev_env -b "3000:3000/tcp"  # React dev server
@@ -216,7 +216,7 @@ rfswift ports bind -c dev_env -b "35729:35729/tcp" # LiveReload
 **Temporary port for testing:**
 ```bash
 # Test container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n test_service
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n test_service
 
 # Bind port temporarily
 rfswift ports bind -c test_service -b "9999:80/tcp"
@@ -239,9 +239,9 @@ rfswift ports bind -c service -b "8081:80/tcp"
 
 ---
 
-## Common Port Numbers
+## Common port numbers
 
-### Standard Ports
+### Standard ports
 
 | Service | Port | Protocol | Use Case |
 |---------|------|----------|----------|
@@ -256,7 +256,7 @@ rfswift ports bind -c service -b "8081:80/tcp"
 | **Redis** | 6379 | TCP | Cache/database |
 | **MongoDB** | 27017 | TCP | Database |
 
-### Development Ports
+### Development ports
 
 | Service | Port | Use Case |
 |---------|------|----------|
@@ -269,7 +269,7 @@ rfswift ports bind -c service -b "8081:80/tcp"
 | **Webpack** | 8080 | Webpack dev server |
 | **Vite** | 5173 | Vite dev server |
 
-### RF Swift Common Ports
+### RF Swift common ports
 
 | Service | Port | Use Case |
 |---------|------|----------|
@@ -281,9 +281,9 @@ rfswift ports bind -c service -b "8081:80/tcp"
 
 ---
 
-## Security Considerations
+## Security considerations
 
-### Binding to Specific IPs
+### Binding to specific IPs
 
 **Public access (default):**
 ```bash
@@ -305,7 +305,7 @@ rfswift ports bind -c service -b "127.0.0.1:8080:80/tcp"
 rfswift ports bind -c service -b "192.168.1.100:8080:80/tcp"
 ```
 
-### Port Range Restrictions
+### Port range restrictions
 
 **Safe port ranges:**
 ```bash
@@ -328,7 +328,7 @@ rfswift ports bind -c service -b "8080:80/tcp"  # Good
 
 ## Troubleshooting
 
-### Port Already in Use
+### Port already in use
 
 **Error:** `port is already allocated`
 
@@ -348,7 +348,7 @@ sudo systemctl stop service-using-8080
 rfswift ports bind -c service -b "8080:80/tcp"
 ```
 
-### Cannot Bind to Port
+### Cannot bind to port
 
 **Problem:** Binding fails without clear error
 
@@ -368,14 +368,14 @@ sudo iptables -L -n | grep 8080
 sudo ufw status
 ```
 
-### Service Not Accessible
+### Service not accessible
 
 **Problem:** Port bound but service not accessible
 
 **Solutions:**
 ```bash
 # Check binding was successful in the summary & test from inside container first
-rfswift exec -c container
+rfswift container shell -c container
 curl localhost:80
 exit
 
@@ -390,7 +390,7 @@ sudo iptables -L -n
 sudo ufw status
 ```
 
-### Wrong Protocol
+### Wrong protocol
 
 **Problem:** Service works with TCP but not UDP (or vice versa)
 
@@ -404,7 +404,7 @@ rfswift ports bind -c service -b "53:53/tcp"
 rfswift ports bind -c service -b "53:53/udp"
 ```
 
-### Port Unbind Fails
+### Port unbind fails
 
 **Problem:** Cannot remove port binding
 
@@ -419,7 +419,7 @@ rfswift ports unbind -c container -b "8080:80/tcp"
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`run`](/docs/commands/run) - Create containers with initial port bindings
 - [`exec`](/docs/commands/exec) - Access container to test services

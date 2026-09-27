@@ -1,0 +1,6 @@
+{{- /* One panel of a tabs shortcode. @example {{< tab >}}content{{< /tab >}} */ -}}
+{{- $default := int (.Parent.Get "defaultIndex" | default "0") -}}
+<div class="doc-tab-panel" role="tabpanel" data-panel="{{ .Ordinal }}"{{ if ne .Ordinal $default }} hidden{{ end }}>
+  {{- .InnerDeindent | strings.TrimSpace | .Page.RenderString (dict "display" "block") -}}
+</div>
+{{- /* Drop trailing newlines */ -}}

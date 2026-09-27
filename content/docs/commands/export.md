@@ -1,14 +1,14 @@
 ---
-title: export
-weight: 7
-prev: /docs/commands/commit
-next: /docs/commands/import
+title: "rfswift image export"
+linkTitle: "image export"
+navGroup: "Images"
+level: reference
+description: "Export containers or images to archives."
+weight: 26
 ---
 
-# rfswift export
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift image export`. The legacy form `rfswift export` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift image export`. The legacy form `rfswift export` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Export containers or images to compressed archive files for backup or transfer.
@@ -17,10 +17,10 @@ Export containers or images to compressed archive files for backup or transfer.
 
 ```bash
 # Export container
-rfswift export container -c CONTAINER_NAME -o OUTPUT_FILE.tar.gz
+rfswift image export container -c CONTAINER_NAME -o OUTPUT_FILE.tar.gz
 
 # Export image
-rfswift export image -i IMAGE_NAME -o OUTPUT_FILE.tar.gz
+rfswift image export image -i IMAGE_NAME -o OUTPUT_FILE.tar.gz
 ```
 
 The `export` command creates compressed tar.gz archives of containers or images, preserving all data, configuration, and metadata. This is the recommended method for creating portable backups.
@@ -29,14 +29,14 @@ The `export` command creates compressed tar.gz archives of containers or images,
 
 ## Options
 
-### Export Container
+### Export container
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
 | `-c, --container STRING` | Container to export | Yes | `-c my_container` |
 | `-o, --output STRING` | Output filename | No | `-o backup.tar.gz` |
 
-### Export Image
+### Export image
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
@@ -53,49 +53,49 @@ The `export` command creates compressed tar.gz archives of containers or images,
 
 ## Examples
 
-### Export Containers
+### Export containers
 
 **Basic container export:**
 ```bash
-rfswift export container -c my_sdr_container -o sdr_backup.tar.gz
+rfswift image export container -c my_sdr_container -o sdr_backup.tar.gz
 ```
 
 **Export with descriptive filename:**
 ```bash
-rfswift export container -c client_assessment \
+rfswift image export container -c client_assessment \
   -o client_assessment_$(date +%Y%m%d).tar.gz
 ```
 
 **Export to specific directory:**
 ```bash
-rfswift export container -c important_work \
+rfswift image export container -c important_work \
   -o ~/backups/containers/important_work_backup.tar.gz
 ```
 
 **Export before removal:**
 ```bash
 # Create backup before deleting
-rfswift export container -c old_container -o archives/old_container_final.tar.gz
-rfswift remove -c old_container
+rfswift image export container -c old_container -o archives/old_container_final.tar.gz
+rfswift container rm -c old_container
 ```
 
-### Export Images
+### Export images
 
 **Basic image export:**
 ```bash
-rfswift export image -i sdr_full -o sdr_full_image.tar.gz
+rfswift image export image -i sdr_full -o sdr_full_image.tar.gz
 ```
 
 **Export custom image:**
 ```bash
-rfswift export image -i my_custom_sdr:v1.0 -o custom_sdr_v1.tar.gz
+rfswift image export image -i my_custom_sdr:v1.0 -o custom_sdr_v1.tar.gz
 ```
 
 ---
 
-## What Gets Exported
+## What gets exported
 
-### Container Export
+### Container export
 
 When exporting a container:
 
@@ -112,7 +112,7 @@ When exporting a container:
 
 **Important:** Export captures filesystem only, not Docker metadata like port bindings or network configuration.
 
-### Image Export
+### Image export
 
 When exporting an image:
 
@@ -125,9 +125,9 @@ When exporting an image:
 
 ---
 
-## File Size Considerations
+## File size considerations
 
-### Typical Export Sizes
+### Typical export sizes
 
 | Container Type | Uncompressed | Compressed (tar.gz) | Compression Ratio |
 |---------------|--------------|---------------------|-------------------|
@@ -136,11 +136,11 @@ When exporting an image:
 | Full SDR stack | 5-8 GB | 1.5-2.5 GB | ~3:1 |
 | With large data | 20+ GB | 5-10 GB | ~2-3:1 |
 
-### Minimizing Export Size
+### Minimizing export size
 
 **Before exporting, clean up:**
 ```bash
-rfswift exec -c my_container
+rfswift container shell -c my_container
 
 # Remove package caches
 apt-get clean
@@ -160,27 +160,27 @@ apt-get autoremove -y
 exit
 
 # Now export will be smaller
-rfswift export container -c my_container -o clean_backup.tar.gz
+rfswift image export container -c my_container -o clean_backup.tar.gz
 ```
 
 ---
 
 ## Troubleshooting
 
-### Container/Image Not Found
+### Container/Image not found
 
 **Error:** `Error: No such container/image: name`
 
 **Solutions:**
 ```bash
 # List containers
-rfswift last
+rfswift container last
 
 # List images
-rfswift images local
+rfswift image local
 ```
 
-### Permission Denied
+### Permission denied
 
 **Error:** `Permission denied` when writing output file
 
@@ -196,12 +196,12 @@ mkdir -p ~/backups/containers
 chmod 755 ~/backups/containers
 
 # Or use sudo
-sudo rfswift export container -c container -o /backup/file.tar.gz
+sudo rfswift image export container -c container -o /backup/file.tar.gz
 ```
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`import`](/docs/commands/import) - Import exported containers/images
 - [`commit`](/docs/commands/commit) - Create images from containers

@@ -1,0 +1,4 @@
+{{- $dest := .Destination -}}
+{{- $external := and (or (hasPrefix $dest "http://") (hasPrefix $dest "https://")) (not (hasPrefix $dest site.BaseURL)) -}}
+<a href="{{ $dest | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} target="_blank" rel="noopener"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- /* Drop trailing newlines */ -}}

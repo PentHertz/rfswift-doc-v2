@@ -1,11 +1,11 @@
 ---
-title: gpus
-weight: 18
-prev: /docs/commands/cgroups
-next: /docs/commands/ports
+title: "rfswift config gpus"
+linkTitle: "config gpus"
+navGroup: "Runtime configuration"
+level: reference
+description: "Give an existing container access to GPUs."
+weight: 44
 ---
-
-# GPU Passthrough
 
 {{< callout type="info" >}}
 **RF Swift v4**: this group lives under the `config` parent as `rfswift config gpus` and remains available as `rfswift gpus`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
@@ -17,7 +17,7 @@ Enable GPU access in containers for hardware-accelerated workloads: CUDA/OpenCL 
 **Auto-detection**: RF Swift automatically detects your GPU vendor (NVIDIA, AMD, or Intel) and configures the container accordingly. Just use `--gpus all` and RF Swift handles the rest.
 {{< /callout >}}
 
-## How It Works
+## How it works
 
 When you use `--gpus all` or select "GPU passthrough" in the wizard, RF Swift:
 
@@ -38,7 +38,7 @@ When you use `--gpus all` or select "GPU passthrough" in the wizard, RF Swift:
 
 ```bash
 # Create container with GPU (auto-detects vendor)
-rfswift run -i IMAGE -n NAME --gpus all
+rfswift container create -i IMAGE -n NAME --gpus all
 
 # Add GPU to existing container
 rfswift gpus add -c CONTAINER [-g SPECIFIER]
@@ -96,18 +96,18 @@ You need the GPU drivers and runtime installed on the **host**, not inside the c
    docker run --rm --gpus all nvidia/cuda:12.0-base nvidia-smi
    ```
 
-### NVIDIA Examples
+### NVIDIA examples
 
 ```bash
 # Verify inside container
-rfswift exec -c gpu_sdr -e "nvidia-smi"
+rfswift container shell -c gpu_sdr -e "nvidia-smi"
 
 # Specific GPU in multi-GPU system (NVIDIA only)
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_gpu --gpus 0
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n ml_gpu --gpus 1
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdr_gpu --gpus 0
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n ml_gpu --gpus 1
 
 # CUDA / PyTorch verification
-rfswift exec -c gpu_sdr
+rfswift container shell -c gpu_sdr
 python3 -c "import torch; print(f'CUDA: {torch.cuda.is_available()}, Device: {torch.cuda.get_device_name(0)}')"
 ```
 
@@ -150,13 +150,13 @@ With auto-detection, just use `--gpus all` and RF Swift handles the rest:
 
 ```bash
 # Create container (auto-detects AMD and adds /dev/kfd + /dev/dri + cgroup)
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n rocm_sdr --gpus all
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n rocm_sdr --gpus all
 
 # Add GPU to existing container
 rfswift gpus add -c sdr_work
 
 # Verify inside container
-rfswift exec -c rocm_sdr
+rfswift container shell -c rocm_sdr
 rocm-smi                          # List GPUs
 rocminfo                          # Detailed GPU info
 clinfo                            # OpenCL info
@@ -180,18 +180,18 @@ rfswift cgroups add -c sdr_work -r "c 226:* rwm"
 ### ROCm with PyTorch
 
 ```bash
-rfswift exec -c rocm_sdr
+rfswift container shell -c rocm_sdr
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0
 python3 -c "import torch; print(f'HIP available: {torch.cuda.is_available()}, Device: {torch.cuda.get_device_name(0)}')"
 ```
 
-### Specific GPU Selection
+### Specific GPU selection
 
 On multi-GPU AMD systems, control which GPUs are visible:
 
 ```bash
 # Inside the container, use HIP_VISIBLE_DEVICES
-rfswift exec -c rocm_sdr
+rfswift container shell -c rocm_sdr
 export HIP_VISIBLE_DEVICES=0       # First GPU only
 export HIP_VISIBLE_DEVICES=0,1     # First two GPUs
 rocm-smi                           # Shows only selected GPUs
@@ -201,7 +201,7 @@ Or expose only specific render nodes:
 
 ```bash
 # Only first GPU
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n rocm_gpu0 \
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n rocm_gpu0 \
   -s /dev/kfd:/dev/kfd,/dev/dri/renderD128:/dev/dri/renderD128 \
   -g "c 226:* rwm"
 ```
@@ -248,13 +248,13 @@ When RF Swift detects an Intel GPU (vendor `0x8086`), `--gpus all` automatically
 
 ```bash
 # Create container (auto-detects Intel and adds /dev/dri + cgroup)
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n intel_sdr --gpus all
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n intel_sdr --gpus all
 
 # Add GPU to existing container
 rfswift gpus add -c sdr_work
 
 # Verify inside container
-rfswift exec -c intel_sdr
+rfswift container shell -c intel_sdr
 clinfo | grep "Device Name"       # OpenCL devices
 vainfo                             # Video acceleration info
 intel_gpu_top                      # GPU utilization (if intel-gpu-tools installed)
@@ -269,7 +269,7 @@ rfswift cgroups add -c sdr_work -r "c 226:* rwm"
 ### Intel with oneAPI
 
 ```bash
-rfswift exec -c intel_sdr
+rfswift container shell -c intel_sdr
 pip3 install intel-extension-for-pytorch
 python3 -c "import intel_extension_for_pytorch as ipex; print('Intel GPU available')"
 ```
@@ -285,7 +285,7 @@ gpus: all
 
 ---
 
-## Quick Comparison
+## Quick comparison
 
 All three vendors use the same `--gpus all` flag, and RF Swift auto-detects and configures accordingly:
 
@@ -300,7 +300,7 @@ All three vendors use the same `--gpus all` flag, and RF Swift auto-detects and 
 
 ---
 
-## Engine Compatibility
+## Engine compatibility
 
 | Engine | NVIDIA | AMD/Intel |
 |--------|--------|-----------|
@@ -326,7 +326,7 @@ nvidia-ctk cdi list  # verify
 Works the same as Docker, since device bindings and cgroup rules are standard Linux features:
 
 ```bash
-rfswift --engine podman run -i penthertz/rfswift_resolute:sdr_full -n rocm_sdr \
+rfswift --engine podman container create -i penthertz/rfswift_resolute:sdr_full -n rocm_sdr \
   -s /dev/kfd:/dev/kfd,/dev/dri:/dev/dri \
   -g "c 226:* rwm"
 ```
@@ -349,7 +349,7 @@ sudo systemctl restart docker
 docker run --rm --gpus all nvidia/cuda:12.0-base nvidia-smi
 ```
 
-### AMD: "Permission denied" on /dev/kfd
+### AMD: "permission denied" on /dev/kfd
 
 **Problem:** ROCm commands fail with permission errors
 
@@ -367,14 +367,14 @@ groups  # should include render, video
 # May need to run container as root or match GIDs
 ```
 
-### AMD: "No GPU agent found"
+### AMD: "no GPU agent found"
 
 **Problem:** `rocminfo` shows no GPU agents
 
 **Solution:**
 ```bash
 # Verify devices are bound into container
-rfswift exec -c container -e "ls -l /dev/kfd /dev/dri/"
+rfswift container shell -c container -e "ls -l /dev/kfd /dev/dri/"
 
 # If missing, add bindings
 rfswift bindings add -d -c container -s /dev/kfd -t /dev/kfd
@@ -384,14 +384,14 @@ rfswift bindings add -d -c container -s /dev/dri -t /dev/dri
 rocm-smi
 ```
 
-### Intel: "No OpenCL devices found"
+### Intel: "no OpenCL devices found"
 
 **Problem:** `clinfo` shows no devices
 
 **Solution:**
 ```bash
 # Check DRI is bound
-rfswift exec -c container -e "ls -l /dev/dri/"
+rfswift container shell -c container -e "ls -l /dev/dri/"
 
 # If missing
 rfswift bindings add -d -c container -s /dev/dri -t /dev/dri
@@ -401,7 +401,7 @@ rfswift cgroups add -c container -r "c 226:* rwm"
 apt-get install -y intel-opencl-icd
 ```
 
-### GPU Works in Docker But Not RF Swift
+### GPU works in Docker but not RF Swift
 
 ```bash
 # Check the GPU request the engine recorded
@@ -413,7 +413,7 @@ rfswift gpus add -c container
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`cgroups`](/docs/commands/cgroups) - Device access rules
 - [`bindings`](/docs/commands/bindings) - Device bindings
@@ -424,7 +424,7 @@ rfswift gpus add -c container
 ---
 
 {{< callout emoji="🎮" >}}
-**Quick Start (any GPU)**: `rfswift run -n my_gpu -i penthertz/rfswift_resolute:sdr_full --gpus all`. RF Swift auto-detects NVIDIA, AMD, or Intel and configures the container accordingly.
+**Quick Start (any GPU)**: `rfswift container create -n my_gpu -i penthertz/rfswift_resolute:sdr_full --gpus all`. RF Swift auto-detects NVIDIA, AMD, or Intel and configures the container accordingly.
 {{< /callout >}}
 
 {{< callout type="warning" >}}

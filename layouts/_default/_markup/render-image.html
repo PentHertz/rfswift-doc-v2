@@ -1,0 +1,6 @@
+{{- $src := .Destination -}}
+{{- if .IsBlock -}}
+<figure class="figure"><img src="{{ $src | safeURL }}" alt="{{ .PlainText }}" loading="lazy" decoding="async">{{ with .Title }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>
+{{- else -}}
+<img src="{{ $src | safeURL }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">
+{{- end -}}

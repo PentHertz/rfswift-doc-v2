@@ -1,19 +1,27 @@
 ---
-title: VPN Inside Containers
+title: "VPN inside containers"
+level: advanced
+description: "Connect a lab to WireGuard, OpenVPN, Tailscale or Netbird from inside the container, without touching your host network."
 weight: 6
-prev: /docs/guide/sharing-files
-next: /docs/guide/list-of-images
 ---
 
-# VPN Inside Containers
+RF Swift can start a VPN client **inside a container** when it starts. Your tools can then reach remote networks, Tailscale or Netbird mesh peers, or a corporate VPN, while your host network stays exactly as it is.
 
-Connect your RF Swift containers to VPN networks for remote access, mesh networking, and secure tunneling.
+**In short**
 
-## Overview
+- Add `--vpn TYPE[:ARGUMENT]` to `rfswift container create` (or to `rfswift container shell` for an existing lab).
+- **Tailscale** and **Netbird** work without privileged mode, through a local proxy.
+- **WireGuard** and **OpenVPN** need privileged mode (`-u 1`).
 
-RF Swift supports launching VPN clients **inside containers** at startup, allowing your containerized tools to reach remote networks, Tailscale/Netbird mesh peers, or corporate VPNs, all without modifying your host network.
+```bash
+rfswift container create -i sdr_full -n my_sdr --vpn tailscale
+```
 
-### Supported VPN Providers
+{{< callout type="info" >}}
+The examples use the v4 commands `rfswift container create` and `rfswift container shell`. The older spellings `rfswift run` and `rfswift exec` still work with the same flags.
+{{< /callout >}}
+
+## Supported VPN providers
 
 | Provider | Type | Config required | Interactive login | Privileged required |
 |----------|------|-----------------|-------------------|---------------------|
@@ -22,48 +30,44 @@ RF Swift supports launching VPN clients **inside containers** at startup, allowi
 | **Tailscale** | Mesh | Optional auth key | Yes (login URL) | No (userspace mode) |
 | **Netbird** | Mesh | Optional setup key | Yes (login URL) | No (netstack mode) |
 
----
+## Quick start
 
-## Quick Start
-
-### Tailscale (interactive login)
-
+{{< tabs items="Tailscale,Netbird,WireGuard,OpenVPN" >}}
+  {{< tab >}}
 ```bash
-rfswift run -i sdr_full -n my_sdr --vpn tailscale
+rfswift container create -i sdr_full -n my_sdr --vpn tailscale
 ```
 
-RF Swift will:
-1. Start the Tailscale daemon inside the container
-2. Print a login URL that you open in your browser to authenticate
-3. Once authenticated, drop you into the shell with Tailscale connected
+RF Swift then:
 
-### WireGuard (config file)
-
+1. starts the Tailscale daemon inside the container;
+2. prints a login URL that you open in your browser to authenticate;
+3. once you're authenticated, drops you into the shell with Tailscale connected.
+  {{< /tab >}}
+  {{< tab >}}
 ```bash
-rfswift run -i sdr_full -n my_sdr \
+rfswift container create -i sdr_full -n my_sdr --vpn netbird
+```
+
+A login URL is printed: open it in your browser to authenticate.
+  {{< /tab >}}
+  {{< tab >}}
+```bash
+rfswift container create -i sdr_full -n my_sdr \
   --vpn wireguard:./wg0.conf \
   -u 1
 ```
-
-### OpenVPN (config file)
-
+  {{< /tab >}}
+  {{< tab >}}
 ```bash
-rfswift run -i sdr_full -n my_sdr \
+rfswift container create -i sdr_full -n my_sdr \
   --vpn openvpn:./client.ovpn \
   -u 1
 ```
+  {{< /tab >}}
+{{< /tabs >}}
 
-### Netbird (interactive login)
-
-```bash
-rfswift run -i sdr_full -n my_sdr --vpn netbird
-```
-
----
-
-## The `--vpn` Flag
-
-### Syntax
+## The `--vpn` flag
 
 ```bash
 --vpn TYPE[:ARGUMENT]
@@ -76,32 +80,33 @@ rfswift run -i sdr_full -n my_sdr --vpn netbird
 | `tailscale` | Auth key (optional) | `--vpn tailscale` or `--vpn tailscale:tskey-auth-xxx` |
 | `netbird` | Setup key (optional) | `--vpn netbird` or `--vpn netbird:nb-setup-xxx` |
 
-The `--vpn` flag is available on both `run` and `exec` commands:
+The flag works when you create a lab and when you enter an existing one:
 
 ```bash
-# Start VPN when creating a new container
-rfswift run -i sdr_full -n my_sdr --vpn tailscale
+# Start the VPN when creating a new container
+rfswift container create -i sdr_full -n my_sdr --vpn tailscale
 
-# Start VPN when entering an existing container
-rfswift exec -c my_sdr --vpn tailscale
+# Start the VPN when entering an existing container
+rfswift container shell -c my_sdr --vpn tailscale
 ```
 
----
+## Privileged vs non-privileged mode
 
-## Privileged vs Non-Privileged Mode
+What the VPN can do depends on whether the container runs in privileged mode.
 
-VPN behavior depends on whether the container runs in privileged mode:
+| | Privileged (`-u 1`) | Non-privileged (default) |
+|---|---|---|
+| **VPN types** | All four | Tailscale and Netbird only |
+| **Network interface** | Real TUN/TAP interface, visible in `ip addr` | None (not visible in `ip addr`) |
+| **TCP/UDP** | Direct | Through a SOCKS5/HTTP proxy |
+| **Ping (ICMP)** | Works | Does not work |
 
-### Privileged Mode (`-u 1`)
+### Privileged mode (`-u 1`)
 
-Full kernel-level networking:
-- Real TUN/TAP interface visible in `ip addr`
-- Ping works
-- Incoming connections from VPN peers work
-- All VPN types supported
+Full kernel-level networking: a real interface, ping, and incoming connections from VPN peers all work.
 
 ```bash
-rfswift run -i sdr_full -n my_sdr -u 1 --vpn tailscale
+rfswift container create -i sdr_full -n my_sdr -u 1 --vpn tailscale
 ```
 
 ```
@@ -114,23 +119,20 @@ $ ping 100.68.119.76
 PING 100.68.119.76: 64 bytes from 100.68.119.76: icmp_seq=0 ttl=64 time=12.3 ms
 ```
 
-### Non-Privileged Mode (default)
+### Non-privileged mode (default)
 
-Userspace networking (Tailscale and Netbird only):
-- No kernel interface (not visible in `ip addr`)
-- TCP/UDP works via SOCKS5/HTTP proxy
-- Ping (ICMP) does not work
-- WireGuard and OpenVPN are **not supported**, and a warning is displayed
+Userspace networking, for Tailscale and Netbird only. WireGuard and OpenVPN are **not supported** here, and RF Swift shows a warning.
 
 {{< tabs items="Tailscale,Netbird" >}}
   {{< tab >}}
 ```bash
-rfswift run -i sdr_full -n my_sdr --vpn tailscale
+rfswift container create -i sdr_full -n my_sdr --vpn tailscale
 ```
 
 Tailscale runs in userspace mode with:
-- **SOCKS5 proxy** on `localhost:1055`
-- **HTTP proxy** on `localhost:1080`
+
+- a **SOCKS5 proxy** on `localhost:1055`;
+- an **HTTP proxy** on `localhost:1080`.
 
 ```bash
 # Check status
@@ -149,11 +151,10 @@ ssh -o ProxyCommand="nc -x localhost:1055 %h %p" user@100.68.119.76
   {{< /tab >}}
   {{< tab >}}
 ```bash
-rfswift run -i sdr_full -n my_sdr --vpn netbird
+rfswift container create -i sdr_full -n my_sdr --vpn netbird
 ```
 
-Netbird runs in netstack mode with:
-- **SOCKS5 proxy** on `localhost:1080`
+Netbird runs in netstack mode with a **SOCKS5 proxy** on `localhost:1080`.
 
 ```bash
 # Check status
@@ -168,37 +169,34 @@ export ALL_PROXY=socks5://localhost:1080
   {{< /tab >}}
 {{< /tabs >}}
 
-{{< callout type="warning" >}}
-**WireGuard and OpenVPN require privileged mode.** They create kernel-level TUN interfaces and manipulate iptables, which is not possible in unprivileged Docker containers. Use `-u 1` when running with these VPN types.
+{{< callout type="warning" title="WireGuard and OpenVPN require privileged mode" >}}
+They create kernel-level TUN interfaces and manipulate iptables, which is not possible in unprivileged Docker containers. Use `-u 1` with these VPN types.
 {{< /callout >}}
 
----
-
-## Detailed Provider Setup
+## Provider setup in detail
 
 ### WireGuard
 
-**Prerequisites:**
-- WireGuard config file (`.conf`)
-- Privileged mode (`-u 1`)
+**You need** a WireGuard config file (`.conf`) and privileged mode (`-u 1`).
 
 ```bash
 # Basic usage
-rfswift run -i sdr_full -n wg_container \
+rfswift container create -i sdr_full -n wg_container \
   -u 1 \
   --vpn wireguard:./wg0.conf
 
 # With bridge network
-rfswift run -i sdr_full -n wg_container \
+rfswift container create -i sdr_full -n wg_container \
   -u 1 \
   -t bridge \
   --vpn wireguard:/path/to/wg0.conf
 ```
 
 RF Swift automatically:
-- Mounts the config file to `/etc/wireguard/wg0.conf` inside the container
-- Adds `NET_RAW` capability and `/dev/net/tun` device
-- Runs `wg-quick up wg0` after container start
+
+- mounts the config file to `/etc/wireguard/wg0.conf` inside the container;
+- adds the `NET_RAW` capability and the `/dev/net/tun` device;
+- runs `wg-quick up wg0` after the container starts.
 
 ```bash
 # Verify inside container
@@ -208,20 +206,19 @@ ip addr show wg0
 
 ### OpenVPN
 
-**Prerequisites:**
-- OpenVPN config file (`.ovpn`)
-- Privileged mode (`-u 1`)
+**You need** an OpenVPN config file (`.ovpn`) and privileged mode (`-u 1`).
 
 ```bash
-rfswift run -i sdr_full -n ovpn_container \
+rfswift container create -i sdr_full -n ovpn_container \
   -u 1 \
   --vpn openvpn:./client.ovpn
 ```
 
 RF Swift automatically:
-- Mounts the config file to `/etc/openvpn/client.ovpn`
-- Adds `NET_RAW` capability and `/dev/net/tun` device
-- Runs `openvpn --config /etc/openvpn/client.ovpn --daemon`
+
+- mounts the config file to `/etc/openvpn/client.ovpn`;
+- adds the `NET_RAW` capability and the `/dev/net/tun` device;
+- runs `openvpn --config /etc/openvpn/client.ovpn --daemon`.
 
 ```bash
 # Verify inside container
@@ -230,18 +227,16 @@ ip addr show tun0
 
 ### Tailscale
 
-**Interactive login (no pre-generated key):**
+**Interactive login** (no pre-generated key): a login URL is printed. Open it in your browser to authenticate; once approved, the shell session starts.
 
 ```bash
-rfswift run -i sdr_full -n ts_container --vpn tailscale
+rfswift container create -i sdr_full -n ts_container --vpn tailscale
 ```
 
-A login URL will be printed. Open it in your browser to authenticate. Once approved, the shell session starts.
-
-**Headless with auth key:**
+**Headless, with an auth key**:
 
 ```bash
-rfswift run -i sdr_full -n ts_container \
+rfswift container create -i sdr_full -n ts_container \
   --vpn tailscale:tskey-auth-xxxxxxxxxxxx
 ```
 
@@ -255,69 +250,59 @@ tailscale ip
 
 ### Netbird
 
-**Interactive login:**
+**Interactive login**: a login URL is printed. Authenticate in your browser.
 
 ```bash
-rfswift run -i sdr_full -n nb_container --vpn netbird
+rfswift container create -i sdr_full -n nb_container --vpn netbird
 ```
 
-A login URL will be printed. Authenticate in your browser.
-
-**Headless with setup key:**
+**Headless, with a setup key** (generate it in the Netbird dashboard):
 
 ```bash
-rfswift run -i sdr_full -n nb_container \
+rfswift container create -i sdr_full -n nb_container \
   --vpn netbird:nb-setup-xxxxxxxxxxxx
 ```
-
-Generate setup keys in the Netbird dashboard.
 
 ```bash
 # Verify inside container
 netbird status
 ```
 
----
+## Starting a VPN in an existing container
 
-## VPN with `exec`
-
-You can start a VPN when entering an **existing** container:
+You can start a VPN when entering a container that already exists:
 
 ```bash
 # Enter container with Tailscale
-rfswift exec -c my_sdr --vpn tailscale
+rfswift container shell -c my_sdr --vpn tailscale
 
 # Enter container with WireGuard (container must have been created with -u 1)
-rfswift exec -c my_sdr --vpn wireguard:./wg0.conf
+rfswift container shell -c my_sdr --vpn wireguard:./wg0.conf
 ```
 
 {{< callout type="info" >}}
-When using `--vpn` with `exec`, the VPN starts inside the already-running container via `docker exec`. For WireGuard/OpenVPN, the container must have been created with the necessary capabilities and devices (e.g., via `--vpn` or `-u 1` during `run`).
+With `container shell`, the VPN starts inside the already-running container via `docker exec`. For WireGuard and OpenVPN, the container must have been created with the necessary capabilities and devices (for example via `--vpn` or `-u 1` at creation).
 {{< /callout >}}
 
----
+## VPN in the interactive wizard
 
-## VPN in the Interactive Wizard
+When you run `rfswift container create` without flags, the interactive wizard includes a VPN option in the feature toggles:
 
-When running `rfswift run` without flags, the interactive wizard includes a VPN option in the feature toggles:
+1. Select **VPN** in the feature multi-select.
+2. Choose a VPN type (WireGuard, OpenVPN, Tailscale, Netbird).
+3. Enter the config file path or auth key (leave it empty for interactive login).
 
-1. Select **VPN** in the feature multi-select
-2. Choose a VPN type (WireGuard, OpenVPN, Tailscale, Netbird)
-3. Enter the config file path or auth key (leave empty for interactive login)
+The wizard prints the equivalent CLI command, so you can reproduce the setup later.
 
-The wizard generates the equivalent CLI command for reproducibility.
+## Real-world scenarios
 
----
+### Remote SDR access via Tailscale
 
-## Real-World Scenarios
-
-### Remote SDR Access via Tailscale
-
-Access an SDR dongle on a remote machine through Tailscale:
+Reach an SDR dongle on a remote machine through Tailscale:
 
 ```bash
 # On the remote machine (has SDR dongle)
-rfswift run -i sdr_full -n remote_sdr \
+rfswift container create -i sdr_full -n remote_sdr \
   -u 1 \
   --vpn tailscale \
   -s /dev/bus/usb:/dev/bus/usb \
@@ -325,76 +310,75 @@ rfswift run -i sdr_full -n remote_sdr \
   --desktop --desktop-config "http:0.0.0.0:6080"
 ```
 
-Then from any Tailscale peer, open `http://100.x.x.x:6080` to access the SDR desktop.
+Then, from any Tailscale peer, open `http://100.x.x.x:6080` to reach the SDR desktop.
 
-### Corporate VPN for Signal Intelligence
+### Corporate VPN for signal intelligence
 
 Connect to a corporate network to reach internal spectrum analyzers:
 
 ```bash
-rfswift run -i sdr_full -n corp_assessment \
+rfswift container create -i sdr_full -n corp_assessment \
   -u 1 \
   --vpn openvpn:./corp-vpn.ovpn \
   -t bridge \
   --record
 ```
 
-### Mesh Network Lab
+### Mesh network lab
 
-Connect multiple containers across different machines via Tailscale:
+Connect containers on different machines through Tailscale:
 
 ```bash
 # Machine A: SDR capture
-rfswift run -i sdr_full -n capture_node \
+rfswift container create -i sdr_full -n capture_node \
   --vpn tailscale:tskey-auth-xxx \
   -s /dev/bus/usb:/dev/bus/usb
 
 # Machine B: Analysis
-rfswift run -i sdr_full -n analysis_node \
+rfswift container create -i sdr_full -n analysis_node \
   --vpn tailscale:tskey-auth-yyy
 ```
 
-Both containers can communicate over the Tailscale mesh.
-
----
+Both containers can then talk to each other over the Tailscale mesh.
 
 ## Troubleshooting
 
-### VPN Tool Not Found
+### VPN tool not found
 
 **Error:** `failed to start Tailscale daemon: executable file not found in $PATH`
 
-**Solution:** The container image doesn't have the VPN tools installed. Rebuild the image with VPN support:
+**Fix:** the container image doesn't have the VPN tools installed. VPN tools are included in `corebuild` images built after v2.0.0. For older images, install them manually inside the container:
 
 ```bash
-# VPN tools are included in corebuild images built after v2.0.0
-# For older images, install manually inside the container:
-rfswift exec -c my_container
+rfswift container shell -c my_container
 apt update && curl -fsSL https://tailscale.com/install.sh | sh
 ```
 
-### WireGuard/OpenVPN Fails in Non-Privileged Mode
+### WireGuard or OpenVPN fails in non-privileged mode
 
-**Error/Warning:** `wireguard requires privileged mode for kernel TUN/iptables access`
+**Warning:** `wireguard requires privileged mode for kernel TUN/iptables access`
 
-**Solution:** Use privileged mode:
+**Fix:** use privileged mode:
+
 ```bash
-rfswift run -i sdr_full -n my_sdr -u 1 --vpn wireguard:./wg0.conf
+rfswift container create -i sdr_full -n my_sdr -u 1 --vpn wireguard:./wg0.conf
 ```
 
-### Tailscale Daemon Not Ready
+### Tailscale daemon not ready
 
 **Error:** `tailscaled did not become ready after 15 seconds`
 
-**Solution:** Check the daemon log inside the container:
+**Fix:** check the daemon log inside the container:
+
 ```bash
-rfswift exec -c my_container
+rfswift container shell -c my_container
 cat /tmp/tailscaled.log
 ```
 
-### Can't Ping Tailscale/Netbird Peers (Non-Privileged)
+### Can't ping Tailscale or Netbird peers (non-privileged)
 
-**Expected behavior.** In non-privileged mode, only TCP/UDP works via the proxy. Use:
+**This is expected.** In non-privileged mode only TCP/UDP works, through the proxy:
+
 ```bash
 # Instead of: ping 100.x.x.x
 curl --socks5 localhost:1055 http://100.x.x.x:port
@@ -402,20 +386,18 @@ curl --socks5 localhost:1055 http://100.x.x.x:port
 
 For full ICMP support, use privileged mode (`-u 1`).
 
----
+## Good to know
 
-## Related Commands
-
-- [`run`](/docs/commands/run) - Create containers with `--vpn` flag
-- [`exec`](/docs/commands/exec) - Enter containers with `--vpn` flag
-- [`engine`](/docs/commands/engine) - Container engine selection
-
----
-
-{{< callout emoji="🔒" >}}
-**Security Tip**: Prefer Tailscale or Netbird for mesh networking, because they work without privileged mode and don't require exposing ports. Use WireGuard/OpenVPN for site-to-site tunnels where privileged mode is acceptable.
+{{< callout type="tip" title="Security tip" >}}
+Prefer Tailscale or Netbird for mesh networking: they work without privileged mode and don't require exposing ports. Use WireGuard or OpenVPN for site-to-site tunnels where privileged mode is acceptable.
 {{< /callout >}}
 
-{{< callout type="info" >}}
-**Container Images**: VPN tools (WireGuard, OpenVPN, Tailscale, Netbird) are pre-installed in all RF Swift `corebuild` images from v2.0.0 onwards.
+{{< callout type="info" title="Container images" >}}
+VPN tools (WireGuard, OpenVPN, Tailscale, Netbird) are pre-installed in all RF Swift `corebuild` images from v2.0.0 onwards.
 {{< /callout >}}
+
+## Related commands
+
+- [`container create`](/docs/commands/run/): create containers with the `--vpn` flag
+- [`container shell`](/docs/commands/exec/): enter containers with the `--vpn` flag
+- [`engine`](/docs/commands/engine/): container engine selection

@@ -1,0 +1,10 @@
+{{- /*
+Privacy-friendly YouTube embed (youtube-nocookie.com).
+
+@param id     video ID (or the first positional parameter)
+@param title  accessible title
+
+@example {{< youtube id="LBUJcKiZVgM" title="RF Swift Workbench tour" >}}
+*/ -}}
+{{- $id := .Get "id" | default (.Get 0) -}}
+<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/{{ $id }}" title="{{ .Get "title" | default "YouTube video" }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>

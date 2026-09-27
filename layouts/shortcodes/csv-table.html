@@ -1,0 +1,33 @@
+{{- /*
+Renders a CSV file as a table.
+
+@param 0  path of the CSV file, relative to the project root
+@param 1  delimiter (default ",")
+@param 2  "true" when the first row is a header (default "true")
+*/ -}}
+{{- $csvFile := .Get 0 -}}
+{{- $delimiter := .Get 1 | default "," -}}
+{{- $hasHeader := .Get 2 | default "true" -}}
+{{- $csvContent := readFile $csvFile | transform.Unmarshal (dict "delimiter" $delimiter) -}}
+{{- if not $csvContent }}
+  {{- errorf "csv-table: %q is empty or missing (%s)" $csvFile .Position -}}
+{{- else }}
+<div class="table-wrap">
+  <table class="csv-table">
+    {{- if eq $hasHeader "true" }}
+    <thead><tr>{{ range index $csvContent 0 }}<th>{{ trim . " " }}</th>{{ end }}</tr></thead>
+    <tbody>
+      {{- range after 1 $csvContent }}
+      <tr>{{ range . }}<td>{{ trim . " " }}</td>{{ end }}</tr>
+      {{- end }}
+    </tbody>
+    {{- else }}
+    <tbody>
+      {{- range $csvContent }}
+      <tr>{{ range . }}<td>{{ trim . " " }}</td>{{ end }}</tr>
+      {{- end }}
+    </tbody>
+    {{- end }}
+  </table>
+</div>
+{{- end }}

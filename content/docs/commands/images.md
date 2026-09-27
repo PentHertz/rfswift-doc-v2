@@ -1,11 +1,11 @@
 ---
-title: images
-weight: 12
-prev: /docs/commands/build
-next: /docs/commands/delete
+title: "rfswift image local / remote / pull / versions"
+linkTitle: "image pull / local / remote"
+navGroup: "Images"
+level: reference
+description: "List local images, browse the official registry, pull images and track their versions."
+weight: 21
 ---
-
-# rfswift image local / remote / pull / versions
 
 List local images, browse the official registry, pull images and track their versions.
 
@@ -107,10 +107,10 @@ rfswift image versions [-f FILTER]
 **Example:**
 ```bash
 # List versions for all images
-rfswift images versions
+rfswift image versions
 
 # List versions for a specific image
-rfswift images versions -f wifi
+rfswift image versions -f wifi
 ```
 
 **Example output:**
@@ -128,15 +128,15 @@ rfswift images versions -f wifi
 
 ---
 
-## 🆕 Version Management (v0.7.0+)
+## Version management (v0.7.0+)
 
 Starting with RF Swift v0.7.0, images now support **proper versioning** to help you track and manage different image releases.
 
-### Viewing Available Versions
+### Viewing available versions
 
 ```bash
 # List remote images with all available versions
-rfswift images remote -v
+rfswift image remote -v
 ```
 
 **Example output:**
@@ -150,17 +150,17 @@ rfswift images remote -v
 ├──────────────────────┼────────────────────┼─────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
 ```
 
-### Pulling Specific Versions
+### Pulling specific versions
 
 ```bash
 # Pull latest version (default)
-rfswift images pull -i sdr_full
+rfswift image pull -i sdr_full
 
 # Pull specific version
-rfswift images pull -i sdr_full -V 0.1.1
+rfswift image pull -i sdr_full -V 0.1.1
 ```
 
-### Version Comparison
+### Version comparison
 
 ```bash
   📦 RF Swift Images                                                                                                            
@@ -175,14 +175,14 @@ rfswift images pull -i sdr_full -V 0.1.1
 
 ## Troubleshooting
 
-### No Images Listed Locally
+### No images listed locally
 
 **Problem:** `images local` shows no RF Swift images
 
 **Solutions:**
 ```bash
 # Pull your first image
-rfswift images pull -i sdr_full
+rfswift image pull -i sdr_full
 
 # Check all Docker images (not just RF Swift)
 docker images
@@ -191,7 +191,7 @@ docker images
 docker ps
 ```
 
-### Remote Registry Not Accessible
+### Remote registry not accessible
 
 **Problem:** `images remote` fails or shows no images
 
@@ -209,7 +209,7 @@ docker search penthertz/rfswift_resolute
 # Check if behind proxy/firewall
 ```
 
-### Pull Fails
+### Pull fails
 
 **Error:** `unable to retrieve auth token: invalid username/password`
 
@@ -220,7 +220,7 @@ The engine presents a stored `docker login` or `podman login` for Docker Hub tha
 **Solutions:**
 ```bash
 # Check image name spelling
-rfswift images remote -v  # Verify exact name and version
+rfswift image remote -v  # Verify exact name and version
 
 # Try with docker directly
 docker pull penthertz/rfswift_resolute:sdr_full
@@ -232,23 +232,23 @@ df -h
 ping registry.hub.docker.com
 ```
 
-### Version Not Found
+### Version not found
 
 **Error:** `Version not found` or `Tag not found`
 
 **Solutions:**
 ```bash
 # List all available versions
-rfswift images remote -v
+rfswift image remote -v
 
 # Verify the version exists
 # Use the exact version string shown in the list
 
 # Pull with correct version format
-rfswift images pull -i wifi v0.1.0
+rfswift image pull -i wifi v0.1.0
 ```
 
-### Authentication Required
+### Authentication required
 
 **Problem:** Private registry requires login
 
@@ -258,16 +258,16 @@ rfswift images pull -i wifi v0.1.0
 docker login registry.example.com
 
 # Then pull
-rfswift images pull -i registry.example.com/image:tag
+rfswift image pull -i registry.example.com/image:tag
 
 # For Docker Hub private images
 docker login
-rfswift images pull -i myuser/private-image:tag
+rfswift image pull -i myuser/private-image:tag
 ```
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`build`](/docs/commands/build) - Build custom images
 - [`download`](/docs/commands/download) - Download images to files

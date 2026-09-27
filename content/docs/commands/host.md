@@ -1,11 +1,11 @@
 ---
-title: host
-weight: 22
-prev: /docs/commands/log
-next: /docs/commands/usb
+title: "rfswift host"
+linkTitle: "host"
+navGroup: "Host & devices"
+level: reference
+description: "Prepare the host: udev rules, Docker access, the Nix jail and the audio server."
+weight: 60
 ---
-
-# rfswift host
 
 Configure the host for containers and native environments: the udev rules that let your user open RF hardware, Docker socket access without logging out, the Nix jail prerequisites, cleanup of stray device directories, and the host audio server for container sound.
 

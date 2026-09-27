@@ -1,11 +1,11 @@
 ---
-title: image
-weight: 10
-prev: /docs/commands/upgrade
-next: /docs/commands/images
+title: "rfswift image"
+linkTitle: "image"
+navGroup: "Images"
+level: reference
+description: "List, pull, audit, build, tag, export and import container images."
+weight: 20
 ---
-
-# rfswift image
 
 Manage container images: list what is local or published, pull, audit for vulnerabilities, build from a recipe, tag, and move images or containers around as archives. This is the canonical v4 group; `rfswift images ...`, `rfswift build`, `rfswift delete`, `rfswift retag`, `rfswift download`, `rfswift export` and `rfswift import` still work and print a notice.
 

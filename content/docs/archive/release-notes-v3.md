@@ -1,14 +1,10 @@
 ---
 title: What's new in v3.0.0 "Resonance"
+description: "Archived release notes for RF Swift v3.0.0 \"Resonance\": the Ubuntu 26.04 rebase and the ad, android and osint images."
 weight: 1
-prev: /docs/archive
 aliases:
   - /docs/release-notes-v3/
-cascade:
-  type: docs
 ---
-
-# RF Swift v3.0.0 "Resonance"
 
 {{< callout type="info" >}}
 **Archived.** v3.0.0 has been superseded by v4.0 "Nucleus" (current release v4.0.2). The images described here are still the ones RF Swift ships; the commands use the v3 spellings, which v4 keeps as legacy aliases. See [What's new in v4.0](/docs/release-notes-v4).
@@ -20,7 +16,7 @@ RF Swift v3.0.0 rebases the whole image collection on **Ubuntu 26.04 "Resolute"*
 **In one line:** a hardware and RF security lab in seconds, from a ham shack on a Sunday afternoon to a full engagement on Monday morning.
 {{< /callout >}}
 
-## 📦 New base: Ubuntu Noble -> Resolute (26.04)
+## New base: Ubuntu Noble -> Resolute (26.04)
 
 Every official image now builds on `ubuntu:26.04`. The published repository moved accordingly:
 
@@ -56,7 +52,7 @@ The result: 50+ GNU Radio out-of-tree modules still build on 26.04.
 Images no longer abort when a single tool fails to build. Failures are recorded in `/var/lib/db/rfswift_build_report.tsv` inside each image, so you can see exactly what landed in your build and reinstall anything missing with `rfswift install`.
 {{< /callout >}}
 
-## ⚙️ Rebuilt CLI
+## Rebuilt CLI
 
 `rfswift` now drives containers through the **new Moby SDK** (`github.com/moby/moby/api` + `github.com/moby/moby/client`) instead of the legacy Docker Go client, and every Go dependency is current.
 
@@ -66,7 +62,7 @@ Engine choice is still yours and is auto-detected at startup, or forced with `--
 - **Podman**: rootless and daemonless ([guide](/docs/guide/podman))
 - **Lima**: how RF Swift gets real USB passthrough for SDR dongles on macOS, plus an optional GPU VM ([`rfswift engine lima`](/docs/commands/engine))
 
-## 📡 Telecom: 5G SA now runs on OCUDU
+## Telecom: 5G SA now runs on OCUDU
 
 The 5G SA CU/DU stack installed in the `telecom_5G` images is now [**OCUDU**](https://gitlab.com/ocudu/ocudu) instead of srsRAN Project. It still provides the `gnb` binary and builds into `/telecom/5G/ocudu`, so existing configurations carry over, and `srsran5GSA_soft_install` is kept as an alias.
 
@@ -74,7 +70,7 @@ The 5G SA CU/DU stack installed in the `telecom_5G` images is now [**OCUDU**](ht
 
 2G to 5G, still one pull. See [Telecommunications](/docs/guide/list-of-tools#telecommunications) for the full inventory.
 
-## ⚡ GNU Radio 4, testable in seconds
+## GNU Radio 4, testable in seconds
 
 Curious about GNU Radio 4 but not willing to wreck the GNU Radio 3.10 environment you actually work in? There is now a dedicated image:
 
@@ -88,7 +84,7 @@ GR4 (4.0.0-RC2) is built from source into `/opt/gnuradio4` with its own Python 3
 GNU Radio 4 is a **release candidate**. Expect API churn. This image is for evaluating GR4, not for production work. Not yet available on RISC-V64.
 {{< /callout >}}
 
-## 🧰 New images for full engagements
+## New images for full engagements
 
 Radio work rarely stops at the radio. Three new images cover what comes after:
 
@@ -100,7 +96,7 @@ Radio work rarely stops at the radio. Three new images cover what comes after:
 
 All three build on all supported architectures. See [Included Tools](/docs/guide/list-of-tools) for the complete per-image tables.
 
-## 🔧 New tools in existing images
+## New tools in existing images
 
 - **Reversing** gained a proper SAST/DAST set. **Trivy** (vulnerabilities, misconfigurations, secrets, SBOM) and **Sighthound** (tree-sitter taint-flow scanner with SARIF output) join Semgrep, Joern, cppcheck, honggfuzz, AFL and the Clang static analyzer
 - **Bluetooth** gained **Caeruleus** (single-binary BLE assessment workflow with JSON output) and **BlueSploit**, alongside the **WhisperPair** exploit for CVE-2025-36911
@@ -108,7 +104,7 @@ All three build on all supported architectures. See [Included Tools](/docs/guide
 - **Network** gained Sniffnet, NetWatch, Hetty, HExHTTP, SSRFmap, GraphQLmap, betterleaks, SecLists and more
 - **Hardware** gained the Sipeed SLogic PulseView build, plus `findus` (PicoGlitcher) and `rd6006` support
 
-## 🏗️ Multi-architecture
+## Multi-architecture
 
 Everything above ships on **x86_64**, **ARM64** and **RISC-V64**, with the exception of `sdr_gnuradio4` (amd64 and arm64 for now) and the GPU-accelerated SDR variants (amd64 only).
 
@@ -137,7 +133,7 @@ Everything above ships on **x86_64**, **ARM64** and **RISC-V64**, with the excep
    cat /var/lib/db/rfswift_build_report.tsv
    ```
 
-## Next Steps
+## Next steps
 
 {{< cards >}}
   {{< card link="/docs/guide/list-of-images" title="Container Images" icon="document-text" subtitle="The full image catalogue, including the new ad, android, osint and sdr_gnuradio4 images." >}}

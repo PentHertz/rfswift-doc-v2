@@ -1,30 +1,27 @@
 ---
-title: Avahi Container Start Script
+title: "Avahi container start script"
+linkTitle: "Avahi start script"
+level: advanced
+description: "Start Avahi inside a container for mDNS service discovery, for example to find a PlutoSDR."
 weight: 6
-prev: /docs/container_scripts/rfswift_install
-next: /docs/container_scripts/libresdr_swap_firmware
-cascade:
-  type: docs
 ---
-
-# Using the Avahi Container Start Script
 
 ## Overview
 
 The `avahicontainer_start` script is a utility included in RF Swift containers to enable service discovery through Avahi. This script is particularly useful when working with PlutoSDR and other devices that rely on zeroconf/mDNS discovery.
 
-## Script Details
+## Script details
 
 The `avahicontainer_start` script in `/usr/sbin` initializes the D-Bus daemon and Avahi service within a container:
 
-### What This Script Does
+### What this script does
 
 1. **Create D-Bus Directory**: Creates the `/var/run/dbus` directory if it doesn't exist
 2. **Start D-Bus Daemon**: Launches the D-Bus system daemon in the background
 3. **Wait Period**: Pauses for 2 seconds to ensure D-Bus is fully initialized
 4. **Start Avahi Daemon**: Launches the Avahi daemon in daemon mode (`-D`)
 
-## When to Use This Script
+## When to use this script
 
 Use the `avahicontainer_start` script when:
 
@@ -32,9 +29,9 @@ Use the `avahicontainer_start` script when:
 - Running tools that require mDNS (multicast DNS) or service discovery
 - Encountering "Avahi daemon not running" or similar errors
 
-## Using the Script
+## Using the script
 
-### Manual Execution
+### Manual execution
 
 To manually start Avahi in a running container:
 
@@ -43,7 +40,7 @@ To manually start Avahi in a running container:
 avahicontainer_start
 ```
 
-### Verifying It's Working
+### Verifying it's working
 
 After running the script, you can verify that Avahi is properly running:
 
@@ -55,7 +52,7 @@ ps aux | grep avahi
 avahi-browse -a
 ```
 
-### PlutoSDR Example
+### PlutoSDR example
 
 When working with PlutoSDR, you can use this script to enable automatic discovery:
 
@@ -76,7 +73,7 @@ iio_info -s
 
 ## Troubleshooting
 
-### Common Issues
+### Common issues
 
 If the script doesn't solve your service discovery issues:
 
@@ -98,17 +95,17 @@ If the script doesn't solve your service discovery issues:
    sudo systemctl stop avahi-daemon
    ```
 
-## Advanced Usage
+## Advanced usage
 
 ### Auto-Starting Avahi
 
 To automatically start Avahi when running a container:
 
 ```bash
-rfswift run -i sdr_full -n pluto_container -e "avahicontainer_start && /bin/bash"
+rfswift container create -i sdr_full -n pluto_container -e "avahicontainer_start && /bin/bash"
 ```
 
-### Custom Service Files
+### Custom service files
 
 You can add custom Avahi service files to advertise specific services:
 

@@ -1,86 +1,116 @@
 ---
-linkTitle: 🛡️ Security
-title: RF Swift Security Guidelines
-prev: /docs/guide
-next: /docs/security/guide_lines
+linkTitle: "Security"
+title: "Security overview"
+level: advanced
+description: "How to use RF Swift safely: isolation, privileges, session recordings and where to report issues."
 weight: 9
 ---
-# 🛡️ RF Swift Security Guidelines
-Security is a critical consideration when using RF Swift, as containerized environments often require special permissions to access hardware devices and network interfaces. This section provides comprehensive guidance on securing your RF Swift deployments while maintaining full functionality.
-## Why Security Matters for RF Swift
-Radio frequency and hardware security work inherently requires elevated privileges. Balancing functionality with security is essential to:
-- 🔒 Protect your host system from container exploits
-- 🛡️ Prevent lateral movement if a container is compromised
-- 🔍 Maintain isolation between different testing environments
-- 🧰 Allow tools to function correctly with minimum necessary privileges
-- 📹 Safeguard sensitive data in session recordings
-- 🖥️ Secure remote desktop connections exposed on the network
-## Key Security Areas
+
+Radio and hardware security work often needs special permissions: access to USB devices, network interfaces, sometimes privileged mode. This section shows how to keep those permissions as small as possible while everything still works, and how to handle the sensitive data an assessment produces.
+
+**In short**
+
+- Start labs **unprivileged** (the default) and add only the capabilities and devices a tool needs.
+- Keep remote desktops on localhost, or protect them with a password and SSL.
+- Run `rfswift audit` on an image, container or environment before an engagement.
+- Use a Nix environment with `--isolate` for tools you don't trust.
+- Treat session recordings like penetration-test reports: they can contain credentials.
+
+## Why it matters
+
+Balancing functionality with security lets you:
+
+- protect your host system from container exploits;
+- prevent lateral movement if a container is compromised;
+- keep different testing environments isolated from each other;
+- let tools work with the minimum privileges they need;
+- safeguard sensitive data in session recordings;
+- secure remote desktop connections exposed on the network.
+
+## Key security areas
+
 {{< cards >}}
-  {{< card link="guide_lines" title="Security Guidelines" icon="shield-check" subtitle="Essential security practices for RF Swift" >}}
-  {{< card link="audit" title="Audits and hardened deployment" icon="search" subtitle="rfswift audit, the project's security baseline, deployment rules" >}}
-  {{< card link="remote-agent" title="Remote agent hardening" icon="wifi" subtitle="Deploying an exposed agent: network, keys, vault, service, rotation" >}}
-  {{< card link="mcp" title="AI bridge (MCP) best practices" icon="chat" subtitle="Permissions, evidence trust, data sent to vendors, review" >}}
-  {{< card link="/docs/guide/nix-engine#isolation-the---isolate-jail" title="Nix isolation jail" icon="cube" subtitle="bubblewrap and Seatbelt for native environments" >}}
+  {{< card link="/docs/security/guide_lines/" title="Security guidelines" icon="shield-check" subtitle="Essential practices: privileges, capabilities, networks, desktops, recordings" >}}
+  {{< card link="/docs/security/audit/" title="Audits and hardened deployment" icon="magnifying-glass" subtitle="rfswift audit, the project's security baseline, deployment rules" >}}
+  {{< card link="/docs/security/remote-agent/" title="Remote agent hardening" icon="broadcast" subtitle="Deploying an exposed agent: network, keys, vault, service, rotation" >}}
+  {{< card link="/docs/security/mcp/" title="AI bridge (MCP) best practices" icon="chat-circle-dots" subtitle="Permissions, evidence trust, data sent to vendors, review" >}}
+  {{< card link="/docs/guide/nix-engine/#isolation-the---isolate-jail" title="Nix isolation jail" icon="cube" subtitle="bubblewrap and Seatbelt for native environments" >}}
 {{< /cards >}}
-## Security Quick Reference
-| Setting | Command | Security Impact |
-|---------|---------|----------------|
-| Unprivileged Mode | `rfswift container create -u 0` | ✅ Recommended: Reduces container privileges |
-| Minimal Capabilities | `rfswift container create -a NET_ADMIN` | ✅ Recommended: Only add required capabilities |
-| Network Isolation | `rfswift container create -t bridge` | ✅ Recommended: Isolates container network |
-| Device Restrictions | `rfswift container create -g "c 189:* rwm"` | ✅ Recommended: Limit device access |
-| Desktop on localhost | `rfswift container create --desktop` | ✅ Safe: Only reachable from host |
-| Desktop with password + SSL | `--desktop-pass "pw" --desktop-ssl` | ✅ Recommended: Encrypted and authenticated |
-| Desktop without password on network | `--desktop-config "http:0.0.0.0:6080"` | ⚠️ Critical Risk: Unauthenticated remote access |
-| Disable X11 for desktop | `rfswift container create --desktop --no-x11` | ✅ Recommended: Removes X11 socket exposure |
-| Session Recording | `rfswift container create --record` | ⚠️ Data Sensitivity: May capture credentials and sensitive information |
-| Privileged Mode | `rfswift container create -u 1` | ⚠️ High Risk: Grants extensive privileges |
-| Default Network | `rfswift container create -t host` | ⚠️ Medium Risk: Shares host network stack |
-| Audit a container, image or environment | `rfswift audit NAME` | ✅ Recommended: Shows the attack surface and CVEs before an engagement |
-| Native Nix environment | `rfswift container create --engine nix` | ⚠️ Runs as your user with no container: use `--isolate` for tools you do not trust |
-| Nix jail | `rfswift container create --engine nix --isolate` | ✅ Recommended: Hides your home and the host filesystem, keeps devices |
-| Remote agent | `rfswift agent --bundle DIR` | ⚠️ A client certificate is full command execution: loopback plus VPN or SSH only, see [Remote agent hardening](/docs/security/remote-agent) |
-| AI bridge | Workbench > Agent & MCP | ⚠️ Read-only unless a task needs more; evidence is untrusted input, see [MCP best practices](/docs/security/mcp) |
-| Docker group | `rfswift host docker-access` | ⚠️ Members of the docker group are root-equivalent |
-## Container Security Philosophy
-With RF Swift you can also adopt a security philosophy of:
-1. **Principle of Least Privilege**: Containers start with minimal privileges
-2. **Dynamic Enhancement**: Add capabilities only when needed
-3. **Separation of Concerns**: Use dedicated containers for different tasks
-4. **Defense in Depth**: Multiple security layers working together
-5. **Data Protection**: Secure handling of session recordings and sensitive data
-## Session Recording Security
-RF Swift's session recording feature provides valuable documentation capabilities, but recordings may contain sensitive information that requires careful handling.
 
-### What Gets Recorded
-Session recordings capture everything displayed in your terminal, including:
-- ✅ Commands and their outputs
-- ✅ Tool execution results
-- ✅ System information and configuration details
-- ⚠️ **Credentials** entered in plaintext
-- ⚠️ **API keys** and tokens
-- ⚠️ **Target system information**
-- ⚠️ **Exploit code** and techniques
-- ⚠️ **Network traffic analysis** results
+## Quick reference
 
-### Recording Security Best Practices
+### Recommended settings
 
-**Storage and Access Control:**
+| Setting | Command | Why |
+|---------|---------|-----|
+| Unprivileged mode | `rfswift container create -u 0` | Reduces container privileges (the default) |
+| Minimal capabilities | `rfswift container create -a NET_ADMIN` | Add only the capabilities a tool requires |
+| Network isolation | `rfswift container create -t bridge` | Isolates the container's network |
+| Device restrictions | `rfswift container create -g "c 189:* rwm"` | Limits device access |
+| Desktop on localhost | `rfswift container create --desktop` | Safe: only reachable from the host |
+| Desktop with password and SSL | `--desktop-pass "pw" --desktop-ssl` | Encrypted and authenticated |
+| Disable X11 for the desktop | `rfswift container create --desktop --no-x11` | Removes the X11 socket exposure |
+| Audit before an engagement | `rfswift audit NAME` | Shows the attack surface and CVEs of a container, image or environment |
+| Nix jail | `rfswift container create --engine nix --isolate` | Hides your home and the host filesystem, keeps devices |
+
+### Settings that need care
+
+| Setting | Command | Risk |
+|---------|---------|------|
+| Desktop without password on the network | `--desktop-config "http:0.0.0.0:6080"` | **Critical**: unauthenticated remote access |
+| Privileged mode | `rfswift container create -u 1` | **High**: grants extensive privileges |
+| Default network | `rfswift container create -t host` | **Medium**: shares the host network stack |
+| Session recording | `rfswift container create --record` | **Data sensitivity**: may capture credentials and sensitive information |
+| Native Nix environment | `rfswift container create --engine nix` | Runs as your user with no container: use `--isolate` for tools you do not trust |
+| Remote agent | `rfswift agent --bundle DIR` | A client certificate is full command execution: loopback plus VPN or SSH only. See [Remote agent hardening](/docs/security/remote-agent/) |
+| AI bridge | Workbench > Agent & MCP | Keep it read-only unless a task needs more; evidence is untrusted input. See [MCP best practices](/docs/security/mcp/) |
+| Docker group | `rfswift host docker-access` | Members of the `docker` group are root-equivalent |
+
+## Container security philosophy
+
+With RF Swift you can adopt five simple principles:
+
+1. **Least privilege**: containers start with minimal privileges.
+2. **Dynamic enhancement**: add capabilities only when needed.
+3. **Separation of concerns**: use dedicated containers for different tasks.
+4. **Defense in depth**: several security layers working together.
+5. **Data protection**: handle session recordings and sensitive data securely.
+
+## Session recording security
+
+Session recordings are valuable documentation, but they may contain sensitive information that needs careful handling.
+
+### What gets recorded
+
+Everything displayed in your terminal:
+
+| Everyday output | Sensitive: handle with care |
+|---|---|
+| Commands and their outputs | **Credentials** entered in plaintext |
+| Tool execution results | **API keys** and tokens |
+| System information and configuration details | **Target system information** |
+| | **Exploit code** and techniques |
+| | **Network traffic analysis** results |
+
+### Best practices for recordings
+
+**Store them in protected directories**
+
 ```bash
 # Store recordings in protected directories
 mkdir -p ~/assessments/recordings
 chmod 700 ~/assessments/recordings
 
 # Record to protected location
-rfswift run -i sdr_full -n assessment --record \
+rfswift container create -i sdr_full -n assessment --record \
   --record-output ~/assessments/recordings/client-session.cast
 
 # Set appropriate permissions
 chmod 600 ~/assessments/recordings/client-session.cast
 ```
 
-**Avoid Recording Sensitive Operations:**
+**Pause the recording for sensitive operations**
+
 ```bash
 # For sensitive credential entry, pause recording
 rfswift log stop
@@ -92,7 +122,8 @@ rfswift log stop
 rfswift log start -o continued-session.cast
 ```
 
-**Sanitization Before Sharing:**
+**Sanitize before sharing**
+
 ```bash
 # Review recordings before sharing
 rfswift log replay -i session.cast
@@ -104,7 +135,8 @@ rfswift log replay -i session.cast
 # like asciinema.org without thorough sanitization
 ```
 
-**Encryption for Long-term Storage:**
+**Encrypt for long-term storage**
+
 ```bash
 # Encrypt recordings for archival
 gpg --encrypt --recipient your@email.com session.cast
@@ -113,57 +145,48 @@ gpg --encrypt --recipient your@email.com session.cast
 gpg --decrypt session.cast.gpg > session.cast
 ```
 
-### Recording Data Handling Policy
+### A data-handling policy for recordings
 
-Organizations using RF Swift should establish clear policies:
+Organizations using RF Swift should set clear rules for:
 
-1. **Retention**: Define how long recordings are kept
-2. **Storage**: Specify secure storage locations
-3. **Access**: Control who can view recordings
-4. **Sharing**: Establish approval processes for sharing
-5. **Disposal**: Secure deletion when no longer needed
+1. **Retention**: how long recordings are kept.
+2. **Storage**: where recordings may be stored securely.
+3. **Access**: who can view recordings.
+4. **Sharing**: the approval process for sharing.
+5. **Disposal**: secure deletion when recordings are no longer needed.
 
-{{< callout type="warning" >}}
-**Critical Security Warning**: Session recordings may contain enough information to compromise assessed systems. Treat recordings with the same security level as penetration testing reports and ensure they are:
-- Stored on encrypted filesystems
-- Protected with appropriate access controls
-- Never committed to version control systems
-- Sanitized before sharing with third parties
+{{< callout type="warning" title="Recordings can compromise the systems you assessed" >}}
+Treat recordings with the same security level as penetration-testing reports. Make sure they are:
+
+- stored on encrypted filesystems;
+- protected with appropriate access controls;
+- never committed to version control systems;
+- sanitized before sharing with third parties.
 {{< /callout >}}
 
-### Recording in Compliance Frameworks
+{{% details title="Recordings in compliance frameworks (PCI DSS, GDPR, SOC 2)" %}}
 
-For regulated environments:
+**PCI DSS**
 
-**PCI DSS Considerations:**
-- Recordings containing cardholder data must be encrypted
-- Access to recordings must be logged and audited
-- Recordings must be included in data retention policies
+- Recordings containing cardholder data must be encrypted.
+- Access to recordings must be logged and audited.
+- Recordings must be included in data retention policies.
 
-**GDPR Considerations:**
-- Recordings may contain personal data
-- Data subjects have rights to access and deletion
-- Document recording purposes in privacy policies
+**GDPR**
 
-**SOC 2 Considerations:**
-- Recordings can demonstrate security controls
-- Access to recordings must be monitored
-- Include recordings in information security policies
+- Recordings may contain personal data.
+- Data subjects have rights to access and deletion.
+- Document recording purposes in privacy policies.
 
-## Best Practices at a Glance
-- 🔍 **Audit Permissions**: Regularly review container privileges
-- 🔄 **Update Regularly**: Keep RF Swift and images updated
-- 🧩 **Separate Workloads**: Use dedicated containers for each assessment
-- 🚪 **Remove When Done**: Delete containers that are no longer needed
-- 🔒 **Monitor Usage**: Watch for unusual container behavior
-- 🖥️ **Secure Desktops**: Always use `--desktop-pass` and `--desktop-ssl` when exposing VNC on the network
-- 📹 **Secure Recordings**: Protect session recordings like sensitive assessment data
-- 🗑️ **Clean Up**: Delete recordings when they are no longer needed
-- 🔐 **Encrypt Storage**: Use encrypted filesystems for recording storage
+**SOC 2**
 
-## Secure Recording Workflow Example
+- Recordings can demonstrate security controls.
+- Access to recordings must be monitored.
+- Include recordings in information security policies.
 
-Here's a complete secure workflow for using RF Swift with recording:
+{{% /details %}}
+
+### A secure recording workflow, end to end
 
 ```bash
 # 1. Create encrypted storage for recordings
@@ -174,7 +197,7 @@ mkdir -p ~/secure-assessments
 chmod 700 ~/secure-assessments
 
 # 3. Run assessment with recording
-rfswift run -i penthertz/rfswift_resolute:sdr -n client-assessment \
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n client-assessment \
   -u 0 \
   -t bridge \
   -a NET_ADMIN \
@@ -197,12 +220,26 @@ gpg --encrypt --recipient security@company.com \
 shred -vfz -n 3 ~/secure-assessments/client-2024-01-12.cast
 ```
 
-## Reporting Security Issues
-If you discover a security vulnerability in RF Swift, please report it responsibly:
-1. **Contact the maintainers** privately through [penthertz.com](https://penthertz.com/) for anything exploitable
-2. **Open a GitHub issue** marked "Security Concern" for hardening suggestions
-3. **Join our Discord** for security discussions
+## Best practices at a glance
 
-{{< callout emoji="⚠️" >}}
-Remember that security is a balance. RF Swift needs certain privileges to function correctly, especially when working with hardware devices. Follow these guidelines to maintain that balance safely while protecting sensitive data in recordings and assessments.
+- **Audit permissions**: regularly review container privileges.
+- **Update regularly**: keep RF Swift and images up to date.
+- **Separate workloads**: use a dedicated container for each assessment.
+- **Remove when done**: delete containers that are no longer needed.
+- **Monitor usage**: watch for unusual container behavior.
+- **Secure desktops**: always use `--desktop-pass` and `--desktop-ssl` when exposing VNC on the network.
+- **Secure recordings**: protect session recordings like sensitive assessment data.
+- **Clean up**: delete recordings when they are no longer needed.
+- **Encrypt storage**: use encrypted filesystems for recording storage.
+
+## Reporting security issues
+
+If you discover a security vulnerability in RF Swift, please report it responsibly:
+
+1. **Contact the maintainers** privately through [penthertz.com](https://penthertz.com/) for anything exploitable.
+2. **Open a GitHub issue** marked "Security Concern" for hardening suggestions.
+3. **Join our [Discord](https://discord.gg/NS3HayKrpA)** for security discussions.
+
+{{< callout type="info" title="Security is a balance" >}}
+RF Swift needs certain privileges to work, especially with hardware devices. Follow these guidelines to keep that balance safely while protecting sensitive data in recordings and assessments.
 {{< /callout >}}

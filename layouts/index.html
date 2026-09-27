@@ -1,0 +1,179 @@
+{{ define "main" }}
+{{ $d := site.Data.home }}
+
+<section id="top" class="hero glow-right">
+  <div class="wrap hero-grid">
+    <div class="stack-lg">
+      <a class="pill" href="{{ site.Params.releaseURL | relURL }}"><span>New</span>{{ site.Params.releaseLabel }} <i class="ph ph-arrow-right"></i></a>
+      <h1>{{ $d.hero.title }}</h1>
+      <p class="lead">{{ $d.hero.lead }}</p>
+      <div class="row">
+        <a class="btn btn-primary btn-lg" href="#install">Install RF Swift</a>
+        <a class="btn btn-ghost btn-lg" href="{{ "/docs/" | relURL }}">New to RF? Start here <i class="ph ph-arrow-right"></i></a>
+      </div>
+      <div class="platforms">{{ range $d.hero.platforms }}<span>{{ . }}</span>{{ end }}</div>
+    </div>
+    <div class="terminal">
+      <div class="terminal-bar"><i></i><i></i><i></i><span>rfswift — lab</span></div>
+      <div class="terminal-body">
+        {{ range $d.hero.terminal }}
+          {{ with .cmd }}<div><span class="muted">$</span> {{ . }}</div>{{ end }}
+          {{ with .muted }}<div class="muted">{{ . }}</div>{{ end }}
+          {{ if .ok }}<div><span class="ok">✓</span> {{ .ok }} <span class="muted">{{ .detail }}</span></div>{{ end }}
+          {{ with .done }}<div class="term-done"><i class="ph ph-rocket-launch" aria-hidden="true"></i> {{ . }}</div>{{ end }}
+        {{ end }}
+        <div class="prompt"><span class="accent">root@lab</span>:~# sdrpp<span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ with $d.presented }}
+<section class="presented" aria-label="Conferences">
+  <div class="wrap presented-row">
+    {{ with .builtby }}<a class="presented-by" href="{{ $d.presented.builtbyurl }}" target="_blank" rel="noopener"><i class="ph ph-seal-check"></i> {{ . }}</a>{{ end }}
+    <div class="presented-list">
+      <span class="label">{{ .title }}</span>
+      {{ range .items }}<a href="{{ .url }}" target="_blank" rel="noopener">{{ .name }} <span class="muted">{{ .year }}</span></a>{{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+<section id="workbench" class="band glow-top">
+  <div class="wrap stack-xl">
+    <div class="split">
+      <div class="stack-md"><span class="kicker">{{ $d.workbench.kicker }}</span><h2 class="h2-lg">{{ $d.workbench.title }}</h2></div>
+      <p class="secondary">{{ $d.workbench.lead }}</p>
+    </div>
+    <div class="callouts">
+      <div class="callout"><i class="ph ph-package"></i><div><strong>{{ $d.workbench.standalone.title }}</strong><span>{{ $d.workbench.standalone.text }}</span></div></div>
+      {{ with $d.workbench.light }}<div class="callout"><i class="ph ph-feather"></i><div><strong>{{ .title }}</strong><span>{{ .text }}</span></div></div>{{ end }}
+    </div>
+    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/{{ site.Params.workbenchVideo }}" title="RF Swift Workbench demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
+    <div class="grid-4">
+      {{ range $d.workbench.features }}<div class="stack-sm"><i class="ph ph-{{ .icon }} icon"></i><h3 class="h3-sm">{{ .title }}</h3><p class="secondary small">{{ .text }}</p></div>{{ end }}
+    </div>
+    <div class="row">
+      <a class="btn btn-primary btn-lg" href="{{ "/docs/guide/workbench/" | relURL }}">Explore the Workbench</a>
+      <a class="btn btn-ghost btn-lg" href="#install">Install it</a>
+    </div>
+  </div>
+</section>
+
+<section id="what" class="wrap section">
+  <div class="intro"><span class="kicker">What is RF Swift?</span><h2>{{ $d.what.title }}</h2><p class="secondary">{{ $d.what.text }}</p></div>
+  <ol class="steps">
+    {{ range $i, $s := $d.what.steps }}<li class="card"><span class="num">{{ printf "%02d" (add $i 1) }}</span><h3>{{ $s.title }}</h3><p class="secondary">{{ $s.text }}</p></li>{{ end }}
+  </ol>
+</section>
+
+{{ with $d.engines }}
+<section id="engines" class="band glow-left">
+  <div class="wrap section stack-xl">
+    <div class="intro intro-flush"><span class="kicker">{{ .kicker }}</span><h2>{{ .title }}</h2><p class="secondary">{{ .lead }}</p></div>
+    <div class="grid-4 engines">
+      {{ range .items }}<a class="card card-link engine" href="{{ "/docs/engines/" | relURL }}#{{ lower .name }}"><i class="ph ph-{{ .icon }} icon"></i><h3 class="h3-sm">{{ .name }}</h3><span class="label">{{ .where }}</span><p class="secondary small">{{ .text }}</p>{{ with .best }}<p class="engine-best small"><span>Best for</span>{{ . }}</p>{{ end }}</a>{{ end }}
+    </div>
+    {{ with .light }}
+    <div class="light-grid">
+      <div class="stack-lg">
+        <div class="stack-md"><h3 class="h3-lg">{{ .title }}</h3><p class="secondary">{{ .text }}</p></div>
+        <ul class="light-points">{{ range .points }}<li><i class="ph ph-{{ .icon }} icon"></i><div><h4>{{ .title }}</h4><p class="secondary small">{{ .text }}</p></div></li>{{ end }}</ul>
+      </div>
+      <div class="terminal">
+        <div class="terminal-bar"><i></i><i></i><i></i><span>rfswift — lazy Nix environment</span></div>
+        <div class="terminal-body">
+          {{ range .terminal }}{{ with .cmd }}<div><span class="muted">$</span> {{ . }}</div>{{ end }}{{ with .note }}<div class="muted term-note">{{ . }}</div>{{ end }}{{ end }}
+        </div>
+      </div>
+    </div>
+    {{ end }}
+    {{ with .mac }}<div class="callout callout-wide"><i class="ph ph-apple-logo"></i><div><strong>{{ .title }}</strong><span>{{ .text | markdownify }}</span></div></div>{{ end }}
+    <div class="row"><a class="btn btn-primary btn-lg" href="{{ "/docs/guide/nix-engine/" | relURL }}">How lazy Nix environments work</a><a class="btn btn-ghost btn-lg" href="{{ "/docs/engines/" | relURL }}">Which engine should I pick?</a></div>
+  </div>
+</section>
+{{ end }}
+
+<section id="benefits" class="band fade-down">
+  <div class="wrap section">
+    <div class="intro"><span class="kicker">Why RF Swift</span><h2>{{ $d.benefits.title }}</h2></div>
+    <div class="benefits">
+      {{ range $d.benefits.items }}<div><i class="ph ph-{{ .icon }} icon"></i><h3>{{ .title }}</h3><p class="secondary">{{ .text }}</p></div>{{ end }}
+    </div>
+    {{ with $d.benefits.compare }}
+    <div class="stack-lg compare">
+      <div class="stack-sm"><h3>{{ .title }}</h3><p class="secondary compare-lead">{{ .lead }}</p></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>{{ .distro }}</th><th>{{ .rfswift }}</th></tr></thead>
+        <tbody>{{ range $d.benefits.comparison }}<tr><td class="secondary">{{ .row }}</td><td>{{ .distro }}</td><td>{{ .rfswift }}</td></tr>{{ end }}</tbody>
+      </table></div>
+      <a href="{{ "/docs/comparisons/" | relURL }}">How to use them together →</a>
+    </div>
+    {{ end }}
+  </div>
+  </div>
+</section>
+
+<section class="stats"><div class="wrap stats-grid">
+  {{ range $d.stats }}<div><strong>{{ .value }}</strong><span>{{ .label }}</span></div>{{ end }}
+</div></section>
+
+<section id="products" class="wrap section">
+  <div class="intro"><span class="kicker">The toolkit</span><h2>Use the parts you need</h2><p class="secondary">Start with the Workbench if you prefer windows and buttons, or the CLI if you live in a terminal. Both drive the same environments.</p></div>
+  <div class="grid-4">
+    {{ range $d.products }}<a class="card card-link" href="{{ .url | relURL }}"><i class="ph ph-{{ .icon }} icon"></i><h3 class="h3-sm">{{ .title }}</h3><p class="secondary small">{{ .text }}</p></a>{{ end }}
+  </div>
+</section>
+
+<section id="install" class="band glow-left">
+  <div class="wrap section install">
+    <div class="stack-md">
+      <span class="kicker">Install</span>
+      <h2>Up and running in a minute</h2>
+      <p class="secondary">Pick your system, paste one line. The installer sets up the CLI, the Workbench or both, plus Docker, Podman or Nix.</p>
+      <p class="muted small verify"><i class="ph ph-seal-check ok"></i>Every download is verified against the release SHA-256 manifest, with optional Sigstore build-provenance.</p>
+      <div class="row small"><a href="{{ "/docs/getting-started/" | relURL }}">Native packages</a><a href="{{ "/docs/air-gapped-installation/" | relURL }}">Air-gapped install</a><a href="{{ site.Params.github }}/releases">All releases</a></div>
+    </div>
+    <div class="stack-md" data-tabs>
+      <div class="tabs" role="tablist">
+        {{ range $i, $t := $d.install }}<button type="button" role="tab" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" data-tab="{{ $t.id }}" data-os="{{ $t.os }}"><i class="ph ph-{{ $t.icon }}"></i> {{ $t.label }}</button>{{ end }}
+      </div>
+      {{ range $i, $t := $d.install }}
+      <div class="tab-panel" data-panel="{{ $t.id }}"{{ if ne $i 0 }} hidden{{ end }}>
+        <div class="code"><div class="code-bar"><span>{{ $t.shell }}</span><button class="btn btn-ghost btn-sm" type="button" data-copy aria-label="Copy command"><i class="ph ph-copy"></i><span>Copy</span></button></div><pre><code>{{ $t.cmd }}</code></pre></div>
+        <p class="secondary small">{{ $t.note }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<section id="learn" class="wrap section">
+  <div class="intro"><span class="kicker">Learn</span><h2>Pick your path</h2></div>
+  <div class="paths">
+    <div class="card card-lg stack-lg">
+      <div class="stack-sm"><span class="badge badge-success">Beginner</span><h3 class="h3-lg">I'm new to RF</h3><p class="secondary">No radio or container experience needed. Follow these in order.</p></div>
+      <ol class="path-list">{{ range $i, $l := $d.learn.beginner }}<li><a href="{{ $l.url | relURL }}"><span class="num">{{ add $i 1 }}</span><span><span>{{ $l.title }}</span><span class="muted small">{{ $l.sub }}</span></span></a></li>{{ end }}</ol>
+    </div>
+    <div class="card card-lg card-alt stack-lg">
+      <div class="stack-sm"><span class="badge badge-high">Advanced</span><h3 class="h3-lg">I know what I'm doing</h3><p class="secondary">Reference material, engines, hardening and building your own images.</p></div>
+      <div class="adv-grid">{{ range $d.learn.advanced }}<div class="stack-sm"><span class="label">{{ .group }}</span>{{ range .links }}<a href="{{ .url | relURL }}">{{ .title }}</a>{{ end }}</div>{{ end }}</div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap section faq">
+    <div class="stack-md"><span class="kicker">FAQ</span><h2>Common questions</h2><p class="secondary">More answers in the <a href="{{ "/docs/faq/" | relURL }}">FAQ &amp; troubleshooting</a> page. Still stuck? Ask on <a href="{{ site.Params.discord }}">Discord</a>.</p></div>
+    <div class="faq-list">{{ range $i, $f := $d.faq }}<details{{ if eq $i 0 }} open{{ end }}><summary>{{ $f.q }}<i class="ph ph-plus"></i></summary><div class="secondary">{{ $f.a | markdownify }}</div></details>{{ end }}</div>
+  </div>
+</section>
+
+<section class="wrap close-section">
+  <div class="close">
+    <div class="stack-sm"><h2>Join the community</h2><p class="secondary">Radio amateurs, researchers and security professionals sharing custom images and workflows.</p></div>
+    <div class="row"><a class="btn btn-primary btn-lg" href="{{ site.Params.discord }}"><i class="ph ph-discord-logo"></i> Discord</a><a class="btn btn-secondary btn-lg" href="{{ site.Params.github }}"><i class="ph ph-github-logo"></i> Star on GitHub</a></div>
+  </div>
+</section>
+{{ end }}

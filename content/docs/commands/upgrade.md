@@ -1,11 +1,11 @@
 ---
-title: upgrade
+title: "rfswift container upgrade"
+linkTitle: "container upgrade"
+navGroup: "Containers"
+level: reference
+description: "Re-create a container from a newer (or another) image while keeping the directories you list."
 weight: 10
-prev: /docs/commands/download
-next: /docs/commands/build
 ---
-
-# rfswift upgrade
 
 {{< callout type="info" >}}
 **RF Swift v4 canonical spelling**: `rfswift container upgrade`. The legacy form `rfswift upgrade` and the short alias `rfswift system upgrade` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
@@ -16,7 +16,7 @@ Upgrade containers to newer image versions while preserving selected data direct
 ## Synopsis
 
 ```bash
-rfswift upgrade -c CONTAINER_NAME [-i IMAGE_NAME] [-r REPOSITORIES]
+rfswift container upgrade -c CONTAINER_NAME [-i IMAGE_NAME] [-r REPOSITORIES]
 ```
 
 The `upgrade` command follows this pattern: pull new image -> create new container -> copy preserved directories -> inherit original container name. This enables seamless version upgrades while maintaining important data.
@@ -35,35 +35,35 @@ The `upgrade` command follows this pattern: pull new image -> create new contain
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Upgrade to latest version:**
 ```bash
-rfswift upgrade -c my_container
+rfswift container upgrade -c my_container
 ```
 
 **Upgrade to specific version:**
 ```bash
-rfswift upgrade -c sdr_work -i penthertz/rfswift_resolute:sdr_full
+rfswift container upgrade -c sdr_work -i penthertz/rfswift_resolute:sdr_full
 ```
 
 **Upgrade with preserved directories:**
 ```bash
-rfswift upgrade -c analysis_work \
+rfswift container upgrade -c analysis_work \
   -i penthertz/rfswift_resolute:sdr_full \
   -r /root/scripts,/root/captures,/opt/tools
 ```
 
 **Downgrade to previous version:**
 ```bash
-rfswift upgrade -c production -i penthertz/rfswift_resolute:sdr_full_0.0.7
+rfswift container upgrade -c production -i penthertz/rfswift_resolute:sdr_full_0.0.7
 ```
 
 ---
 
-## How Upgrade Works
+## How upgrade works
 
-### Upgrade Process
+### Upgrade process
 
 The upgrade command follows this sequence:
 
@@ -85,7 +85,7 @@ graph LR
     C -->|Inherit Name| E[New Container with Original Name]
 ```
 
-### What Gets Preserved
+### What gets preserved
 
 | Content | Preserved? | How |
 |---------|-----------|-----|
@@ -105,7 +105,7 @@ graph LR
 
 The upgrade command now **automatically preserves** all host bindings, network settings, device mappings, capabilities, cgroup rules, and port bindings from the original container. A timestamped backup image is created before the old container is removed.
 
-### What Doesn't Get Preserved
+### What doesn't get preserved
 
 - ❌ Files outside of `-r` directories (new image defaults apply)
 - ❌ Running processes (container is restarted fresh)
@@ -114,17 +114,17 @@ The upgrade command now **automatically preserves** all host bindings, network s
 
 ## Troubleshooting
 
-### Container Not Found
+### Container not found
 
 **Error:** `Error: No such container: container_name`
 
 **Solutions:**
 ```bash
 # List containers
-rfswift last
+rfswift container last
 ```
 
-### Image Pull Failed
+### Image pull failed
 
 **Error:** `Error pulling image`
 
@@ -137,41 +137,41 @@ ping registry.hub.docker.com
 docker pull penthertz/rfswift_resolute:sdr_full
 
 # Retry upgrade
-rfswift upgrade -c container -i penthertz/rfswift_resolute:sdr_full
+rfswift container upgrade -c container -i penthertz/rfswift_resolute:sdr_full
 ```
 
-### Preserved Directory Not Found
+### Preserved directory not found
 
 **Error:** `Directory /root/nonexistent not found in source container`
 
 **Solutions:**
 ```bash
 # Check what directories exist
-rfswift exec -c old_container
+rfswift container shell -c old_container
 ls -la /root/
 exit
 
 # Adjust -r flag to existing directories only
-rfswift upgrade -c container -r /root/existing,/opt/tools
+rfswift container upgrade -c container -r /root/existing,/opt/tools
 ```
 
-### Old Container Still Running
+### Old container still running
 
 **Problem:** Upgrade completes but old container still active
 
 **Solution:**
 ```bash
 # Stop old container manually
-rfswift stop -c container_old
+rfswift container stop -c container_old
 
 # Verify new container is running
 docker ps | grep container
 
 # Remove old container when satisfied
-rfswift remove -c container_old
+rfswift container rm -c container_old
 ```
 
-### Configuration Lost After Upgrade
+### Configuration lost after upgrade
 
 **Problem:** Network/volume/device settings missing after upgrade
 
@@ -189,25 +189,25 @@ rfswift cgroups add -c container -r "c 189:* rwm"
 rfswift ports bind -c container -b "8080:8080/tcp"
 ```
 
-### Rollback Failed
+### Rollback failed
 
 **Problem:** Can't restore old container after bad upgrade
 
 **Solution:**
 ```bash
 # If you have backup
-rfswift import container -i backup.tar.gz -n container_restored
-rfswift run -i container_restored -n container
+rfswift image import container -i backup.tar.gz -n container_restored
+rfswift container create -i container_restored -n container
 
 # If old container still exists
-rfswift remove -c container  # Remove bad new container
-rfswift rename -n container_old -d container
-rfswift exec -c container
+rfswift container rm -c container  # Remove bad new container
+rfswift container rename -n container_old -d container
+rfswift container shell -c container
 ```
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`run`](/docs/commands/run) - Create new containers
 - [`commit`](/docs/commands/commit) - Save container state before upgrade

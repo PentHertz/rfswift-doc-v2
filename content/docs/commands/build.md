@@ -1,14 +1,14 @@
 ---
-title: build
-weight: 11
-prev: /docs/commands/upgrade
-next: /docs/commands/images
+title: "rfswift image build"
+linkTitle: "image build"
+navGroup: "Images"
+level: reference
+description: "Build a container image from a YAML recipe."
+weight: 22
 ---
 
-# rfswift build
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift image build`. The legacy form `rfswift build` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift image build`. The legacy form `rfswift build` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Build custom Docker images from simplified YAML recipe files.
@@ -16,7 +16,7 @@ Build custom Docker images from simplified YAML recipe files.
 ## Synopsis
 
 ```bash
-rfswift build [-r RECIPE_FILE] [-t TAG] [--no-cache]
+rfswift image build [-r RECIPE_FILE] [-t TAG] [--no-cache]
 ```
 
 The `build` command creates Docker images using RF Swift's simplified YAML recipe format. This provides an easier alternative to Dockerfiles for building custom RF Swift images with specific tools and configurations.
@@ -35,29 +35,29 @@ The `build` command creates Docker images using RF Swift's simplified YAML recip
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Build from default recipe:**
 ```bash
-rfswift build
+rfswift image build
 ```
 
 **Build from specific recipe:**
 ```bash
-rfswift build -r custom-sdr-recipe.yaml
+rfswift image build -r custom-sdr-recipe.yaml
 ```
 
 **Build with custom tag:**
 ```bash
-rfswift build -r my-recipe.yaml -t my_image:test
+rfswift image build -r my-recipe.yaml -t my_image:test
 ```
 
 **Build without cache:**
 ```bash
-rfswift build -r recipe.yaml --no-cache
+rfswift image build -r recipe.yaml --no-cache
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Create custom SDR environment:**
 ```bash
@@ -76,14 +76,14 @@ scripts:
 EOF
 
 # Build
-rfswift build -r sdr-custom.yaml
+rfswift image build -r sdr-custom.yaml
 ```
 
 ---
 
-## Recipe File Format
+## Recipe file format
 
-### Basic Structure
+### Basic structure
 
 ```yaml
 # Image metadata
@@ -121,7 +121,7 @@ scripts:
 workdir: /root/workspace
 ```
 
-### Complete Example
+### Complete example
 
 ```yaml
 name: advanced_sdr_setup
@@ -173,9 +173,9 @@ workdir: /root/workspace
 
 ---
 
-## Recipe Sections
+## Recipe sections
 
-### name (Required)
+### name (required)
 
 Image name for documentation purposes.
 
@@ -183,7 +183,7 @@ Image name for documentation purposes.
 name: my_custom_sdr
 ```
 
-### tag (Required)
+### tag (required)
 
 Docker image tag (repository:tag format).
 
@@ -193,10 +193,10 @@ tag: my_custom_sdr:v1.0
 
 Can be overridden with `-t` flag:
 ```bash
-rfswift build -r recipe.yaml -t override_tag:v2
+rfswift image build -r recipe.yaml -t override_tag:v2
 ```
 
-### base (Required)
+### base (required)
 
 Base image to build from. Usually an RF Swift image.
 
@@ -211,7 +211,7 @@ Common base images:
 - `penthertz/rfswift_resolute:wifi` - WiFi tools
 - `penthertz/rfswift_resolute:hardware` - Hardware security tools
 
-### packages (Optional)
+### packages (optional)
 
 APT packages to install.
 
@@ -223,7 +223,7 @@ packages:
  - python3-pip
 ```
 
-### environment (Optional)
+### environment (optional)
 
 Environment variables to set.
 
@@ -234,7 +234,7 @@ environment:
  - DEBUG=1
 ```
 
-### files (Optional)
+### files (optional)
 
 Files to copy into the image.
 
@@ -252,7 +252,7 @@ files:
 - `src`: Relative to recipe file location
 - `dest`: Absolute path in container
 
-### commands (Optional)
+### commands (optional)
 
 Commands to run during build.
 
@@ -264,7 +264,7 @@ commands:
  - make -C /opt/repo install
 ```
 
-### scripts (Optional)
+### scripts (optional)
 
 Cleanup scripts run at the end of the build.
 
@@ -276,7 +276,7 @@ scripts:
  - history -c
 ```
 
-### workdir (Optional)
+### workdir (optional)
 
 Default working directory for the image.
 
@@ -288,7 +288,7 @@ workdir: /root/projects
 
 ## Troubleshooting
 
-### Recipe File Not Found
+### Recipe file not found
 
 **Error:** `Error: recipe file not found`
 
@@ -298,13 +298,13 @@ workdir: /root/projects
 ls -l rfswift-recipe.yaml
 
 # Use absolute path
-rfswift build -r /full/path/to/recipe.yaml
+rfswift image build -r /full/path/to/recipe.yaml
 
 # Check current directory
 pwd
 ```
 
-### Invalid Recipe Format
+### Invalid recipe format
 
 **Error:** `Error parsing recipe: invalid YAML`
 
@@ -322,23 +322,23 @@ cat -A recipe.yaml | grep "^I"
 # - Tabs instead of spaces
 ```
 
-### Base Image Not Found
+### Base image not found
 
 **Error:** `Error: base image not found`
 
 **Solutions:**
 ```bash
 # Pull base image first
-rfswift images pull penthertz/rfswift_resolute:sdr_full
+rfswift image pull penthertz/rfswift_resolute:sdr_full
 
 # Check available images
-rfswift images local
+rfswift image local
 
 # Verify base image name in recipe
 grep "^base:" recipe.yaml
 ```
 
-### Package Installation Failed
+### Package installation failed
 
 **Error:** `E: Unable to locate package`
 
@@ -357,7 +357,7 @@ commands:
 apt-cache search package-name
 ```
 
-### File Copy Failed
+### File copy failed
 
 **Error:** `COPY failed: stat /src/file: no such file or directory`
 
@@ -375,14 +375,14 @@ files:
 tree .
 ```
 
-### Build Cache Issues
+### Build cache issues
 
 **Problem:** Build not reflecting changes
 
 **Solution:**
 ```bash
 # Force rebuild without cache
-rfswift build -r recipe.yaml --no-cache
+rfswift image build -r recipe.yaml --no-cache
 
 # Clear Docker build cache
 docker builder prune
@@ -390,7 +390,7 @@ docker builder prune
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`run`](/docs/commands/run) - Run containers from built images
 - [`commit`](/docs/commands/commit) - Save modified containers as images

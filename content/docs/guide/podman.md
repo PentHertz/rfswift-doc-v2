@@ -1,19 +1,27 @@
 ---
-title: Using Podman
+title: "Using Podman"
+linkTitle: "Podman"
+level: intermediate
+description: "Run RF Swift with rootless, daemonless Podman: why you'd pick it, how to set it up, and what rootless mode changes."
 weight: 7
-prev: /docs/guide/vpn
-next: /docs/guide/qubes-os
 ---
 
-# Using RF Swift with Podman
+Podman is a container engine that runs **without a background service and without root rights**. RF Swift supports it as a full alternative to Docker: the same toolboxes, the same commands and the same Workbench. RF Swift detects Podman automatically and adapts to its rootless mode for you.
 
-RF Swift supports Podman as an alternative to Docker, enabling rootless and daemonless container workflows.
+## Why pick Podman
 
-## Overview
+- **Rootless by default**: your labs run as you, not as root. Even if a container escape occurred, the attacker would only get unprivileged user access, not root.
+- **No daemon**: nothing runs in the background when you are not using it, which also helps on small boards with little memory.
+- **Good for sensitive setups**: shared or company machines, security-focused environments, and air-gapped networks.
+- **Open source everywhere**: on Windows, Podman Desktop is the open-source alternative to Docker Desktop.
 
-Podman is a daemonless container engine that can run containers without root privileges. RF Swift auto-detects Podman and adapts its behavior for rootless compatibility.
+{{< callout type="tip" >}}
+For most RF work, rootless Podman is enough. You only need `sudo` for USB hot-plug (plugging a device in while the lab runs) or for WireGuard/OpenVPN VPNs.
+{{< /callout >}}
 
-### Docker vs Podman at a Glance
+Comparing all four engines: [Choose your engine](/docs/engines/).
+
+### Docker and Podman at a glance
 
 | Feature | Docker | Podman |
 |---------|--------|--------|
@@ -25,11 +33,9 @@ Podman is a daemonless container engine that can run containers without root pri
 | USB hotplug | With cgroup rules | Limited in rootless |
 | Networking | Host/bridge | slirp4netns/pasta |
 
----
+## Getting started
 
-## Getting Started with Podman
-
-### Installation
+### 1. Install Podman
 
 {{< tabs items="Ubuntu/Debian,Fedora,Arch,macOS" >}}
   {{< tab >}}
@@ -53,10 +59,12 @@ brew install podman
 podman machine init
 podman machine start
 ```
+
+On macOS, Podman runs in a VM (`podman machine`) that cannot receive USB devices. For radios on a Mac, use the Lima or Nix engine: see [Choose your engine](/docs/engines/).
   {{< /tab >}}
 {{< /tabs >}}
 
-### Configuration
+### 2. One-time setup (Linux)
 
 ```bash
 # Ensure subordinate UID/GID ranges are configured
@@ -71,228 +79,201 @@ sudo loginctl enable-linger $USER
 
 # Configure default registry to avoid prompts
 echo 'unqualified-search-registries = ["docker.io"]' | sudo tee -a /etc/containers/registries.conf
+
+# Let your user open RF hardware (rules inside a container are never evaluated)
+rfswift host udev
 ```
 
-### Using RF Swift with Podman
+### 3. Create a lab
 
 ```bash
 # Auto-detected (if Podman is the only engine)
-rfswift run -i sdr_full -n my_sdr
+rfswift container create -i sdr_full -n my_sdr
 
 # Explicit engine selection (if both Docker and Podman are installed)
-rfswift --engine podman run -i sdr_full -n my_sdr
+rfswift --engine podman container create -i sdr_full -n my_sdr
 ```
 
----
+The legacy spelling `rfswift run` still works.
 
-## Rootless Mode
+## Rootless mode
 
-By default, Podman runs rootless, so no `sudo` is required. RF Swift automatically adapts:
+By default Podman runs rootless, so no `sudo` is required. RF Swift adapts automatically and tells you, before creating anything, what it had to adjust.
 
-### What Works in Rootless Mode
+| Works rootless | Needs root or privileged mode |
+|---|---|
+| Container creation and management | Device cgroup rules (USB hotplug) |
+| Image pulling and building | Some device nodes (`/dev/tty`, `/dev/console`, `/dev/vhci`, `/dev/uinput`) |
+| Volume bindings (user-accessible paths) | WireGuard/OpenVPN VPN |
+| X11 forwarding | Full TUN/TAP networking |
+| Audio (PulseAudio/PipeWire) | Raw hardware access |
+| Session recording | |
+| Remote desktop (VNC/noVNC) | |
+| Network modes (slirp4netns/pasta) | |
+| Tailscale/Netbird VPN (userspace mode) | |
 
-- Container creation and management
-- Image pulling and building
-- Volume bindings (user-accessible paths)
-- X11 forwarding
-- Audio (PulseAudio/PipeWire)
-- Session recording
-- Remote desktop (VNC/noVNC)
-- Network modes (slirp4netns/pasta)
-- Tailscale/Netbird VPN (userspace mode)
+### What RF Swift adjusts for you
 
-### What Requires Root or Privileged Mode
+- **Host udev rules**: rootless Podman runs containers as your user, so a USB device is only reachable once the host grants you access. `rfswift host udev` installs RF Swift's rules (group `plugdev`, seat ACL); rules inside a container are never evaluated.
+- **Your groups are kept**: with the crun runtime, `dialout` and `plugdev` follow you into the container, so a device you may open on the host is usable inside.
+- **Inaccessible devices are dropped**: root-only device nodes are left out, while devices that remain accessible (for example `/dev/bus/usb`, `/dev/snd`, `/dev/dri`) are kept.
 
-- Device cgroup rules (USB hotplug)
-- Some device nodes (`/dev/tty`, `/dev/console`, `/dev/vhci`, `/dev/uinput`)
-- WireGuard/OpenVPN VPN
-- Full TUN/TAP networking
-- Raw hardware access
+  ```
+  [!] Dropping 5 inaccessible device(s) for rootless mode:
+   - /dev/vhci
+   - /dev/console
+   - /dev/tty0
+   - /dev/tty1
+   - /dev/uinput
+  ```
 
-### Automatic Device Filtering
+- **Cgroup device rules are dropped with a warning**, since rootless Podman doesn't support them:
 
-RF Swift automatically drops devices that can't be mapped in rootless mode:
+  ```
+  [!] Rootless Podman does not support device cgroup rules.
+  [!] Rules that will be dropped: c 189:* rwm, c 166:* rwm, ...
+  [i] Device hotplug (USB, SDR dongles) may not work without cgroup rules.
+  [i] To use cgroup rules, run RF Swift with sudo.
+  ```
 
-```
-[!] Dropping 5 inaccessible device(s) for rootless mode:
- - /dev/vhci
- - /dev/console
- - /dev/tty0
- - /dev/tty1
- - /dev/uinput
-```
+- **Realtime ulimits** above your host hard limits are skipped instead of failing the start.
+- **Serial ports** must be present at creation (no `mknod`, no cgroup rules); the hot-plug works on rootful Podman and Docker.
+- **Configuration changes** (`rfswift config ...`) commit the container and re-create it, since Podman has no editable store; one snapshot image per change remains.
+- **Images**: `rfswift image pull` works the same; use `docker.io/penthertz/rfswift_resolute:...` or set `unqualified-search-registries` to avoid the short-name prompt.
+- **Audit**: `rfswift image audit` runs trivy as a container through Podman when no host trivy is installed.
 
-Devices that remain accessible (e.g., `/dev/bus/usb`, `/dev/snd`, `/dev/dri`) are kept.
+`rfswift container create` and the Workbench list what will be dropped before creation.
 
-### Cgroup Rules
-
-Rootless Podman doesn't support device cgroup rules. RF Swift detects this and prompts:
-
-```
-[!] Rootless Podman does not support device cgroup rules.
-[!] Rules that will be dropped: c 189:* rwm, c 166:* rwm, ...
-[i] Device hotplug (USB, SDR dongles) may not work without cgroup rules.
-[i] To use cgroup rules, run RF Swift with sudo.
-```
-
-{{< callout type="info" >}}
-**Devices still work**: you can use USB devices that are plugged in before container start. What doesn't work without cgroup rules is **hotplug** (plugging/unplugging devices while the container is running).
+{{< callout type="info" title="Your devices still work" >}}
+You can use USB devices that are plugged in before the container starts. What doesn't work without cgroup rules is **hotplug**: plugging or unplugging devices while the container is running.
 {{< /callout >}}
 
----
+## Running with root (Podman + sudo)
 
-## Running with Root (Podman + sudo)
-
-For full hardware access, run Podman with `sudo`:
+For full hardware access, run Podman with `sudo`. This gives you the same capabilities as Docker with root, including cgroup rules and full device access:
 
 ```bash
-# Full hardware support with sudo
-sudo rfswift --engine podman run -i sdr_full -n my_sdr \
+sudo rfswift --engine podman container create -i sdr_full -n my_sdr \
   -s /dev/bus/usb:/dev/bus/usb \
   -g "c 189:* rwm"
 ```
 
-This gives you the same capabilities as Docker with root, including cgroup rules and full device access.
+## VPN with Podman
 
----
-
-## Podman and VPN
-
-### Tailscale/Netbird (Rootless)
-
-Mesh VPNs work in rootless Podman using userspace networking:
+**Tailscale and Netbird work rootless**, using userspace networking:
 
 ```bash
-rfswift --engine podman run -i sdr_full -n my_sdr --vpn tailscale
+rfswift --engine podman container create -i sdr_full -n my_sdr --vpn tailscale
 ```
 
-### WireGuard/OpenVPN (Requires Root)
-
-Tunnel VPNs need privileged mode:
+**WireGuard and OpenVPN need root** and privileged mode, because they create a tunnel:
 
 ```bash
-sudo rfswift --engine podman run -i sdr_full -n my_sdr \
+sudo rfswift --engine podman container create -i sdr_full -n my_sdr \
   -u 1 \
   --vpn wireguard:./wg0.conf
 ```
 
----
-
-## Podman-Specific Commands
-
-### Image Registry
-
-Podman may prompt for a registry when using short image names. RF Swift normalizes image names automatically, but you can also use full names:
-
-```bash
-# Short name (RF Swift resolves it)
-rfswift --engine podman run -i sdr_full -n my_sdr
-
-# Full name (no resolution needed)
-rfswift --engine podman run -i docker.io/penthertz/rfswift_resolute:sdr_full -n my_sdr
-```
-
-### Container Management
-
-All RF Swift commands work with Podman:
-
-```bash
-# List containers
-rfswift --engine podman last
-
-# Enter container
-rfswift --engine podman exec -c my_sdr
-
-# Stop container
-rfswift --engine podman stop -c my_sdr
-
-# Remove container
-rfswift --engine podman remove -c my_sdr
-
-# Export/import
-rfswift --engine podman export container -c my_sdr -o backup.tar.gz
-rfswift --engine podman import container -i backup.tar.gz
-```
-
----
+More in [VPN inside containers](/docs/guide/vpn/).
 
 ## Networking
-
-### Rootless Networking
 
 Rootless Podman uses `slirp4netns` or `pasta` for networking instead of a real bridge:
 
 ```bash
 # Host network (default), works with slirp4netns
-rfswift --engine podman run -i sdr_full -n my_sdr
+rfswift --engine podman container create -i sdr_full -n my_sdr
 
 # Bridge network
-rfswift --engine podman run -i sdr_full -n my_sdr -t bridge
+rfswift --engine podman container create -i sdr_full -n my_sdr -t bridge
 
 # Port forwarding with bridge
-rfswift --engine podman run -i sdr_full -n my_sdr \
+rfswift --engine podman container create -i sdr_full -n my_sdr \
   -t bridge \
   -w 8080:80/tcp
 ```
 
 {{< callout type="info" >}}
-Port forwarding works in rootless mode but only for ports above 1024. To bind to low ports (e.g., 80, 443), use `sudo` or configure `sysctl net.ipv4.ip_unprivileged_port_start=0`.
+Port forwarding works in rootless mode, but only for ports above 1024. To bind to low ports (for example 80 or 443), use `sudo` or configure `sysctl net.ipv4.ip_unprivileged_port_start=0`.
 {{< /callout >}}
 
-### Remote Desktop with Podman
+**Remote desktop with Podman:**
 
 ```bash
-rfswift --engine podman run -i sdr_full -n sdr_desktop \
+rfswift --engine podman container create -i sdr_full -n sdr_desktop \
   --desktop \
   --desktop-config "http:0.0.0.0:6080" \
   --desktop-pass "mypassword"
 ```
 
----
+## Managing labs and images
 
-## Common Workflows
+All RF Swift commands work with Podman:
 
-### Rootless SDR Analysis
+```bash
+rfswift --engine podman container last                  # list containers
+rfswift --engine podman container shell -c my_sdr       # enter a container
+rfswift --engine podman container stop -c my_sdr        # stop it
+rfswift --engine podman container rm -c my_sdr          # remove it
+
+# Export/import
+rfswift --engine podman image export container -c my_sdr -o backup.tar.gz
+rfswift --engine podman image import container -i backup.tar.gz
+```
+
+**Image names**: Podman may prompt for a registry when it sees a short image name. RF Swift normalizes image names automatically, but you can also use full names:
+
+```bash
+# Short name (RF Swift resolves it)
+rfswift --engine podman container create -i sdr_full -n my_sdr
+
+# Full name (no resolution needed)
+rfswift --engine podman container create -i docker.io/penthertz/rfswift_resolute:sdr_full -n my_sdr
+```
+
+## Common workflows
+
+### Rootless SDR analysis
 
 ```bash
 # Pull image
-rfswift --engine podman images pull -i sdr_full
+rfswift --engine podman image pull -i sdr_full
 
 # Create container (rootless)
-rfswift --engine podman run -i sdr_full -n analysis \
+rfswift --engine podman container create -i sdr_full -n analysis \
   -b ~/captures:/root/captures \
   -s /dev/bus/usb:/dev/bus/usb
 
 # Enter later
-rfswift --engine podman exec -c analysis
+rfswift --engine podman container shell -c analysis
 ```
 
-### Full Hardware Setup (with sudo)
+### Full hardware setup (with sudo)
 
 ```bash
-sudo rfswift --engine podman run -i sdr_full -n hw_work \
+sudo rfswift --engine podman container create -i sdr_full -n hw_work \
   -s /dev/bus/usb:/dev/bus/usb \
   -g "c 189:* rwm,c 166:* rwm" \
   --realtime \
   -b ~/captures:/root/captures
 ```
 
-### Air-Gapped Environment
+### Air-gapped environment
 
 Podman is ideal for air-gapped systems since it has no daemon:
 
 ```bash
 # On connected machine: export image
-rfswift --engine podman export image -i sdr_full -o sdr_full.tar.gz
+rfswift --engine podman image export image -i sdr_full -o sdr_full.tar.gz
 
 # Transfer to air-gapped machine (USB, etc.)
 
 # On air-gapped machine: import and run
-rfswift --engine podman import image -i sdr_full.tar.gz
-rfswift --engine podman run -i sdr_full -n offline_work -t none
+rfswift --engine podman image import image -i sdr_full.tar.gz
+rfswift --engine podman container create -i sdr_full -n offline_work -t none
 ```
 
----
+See also [Air-gapped installation](/docs/air-gapped-installation/).
 
 ## Troubleshooting
 
@@ -300,42 +281,39 @@ rfswift --engine podman run -i sdr_full -n offline_work -t none
 
 **Error:** `error during container init: error creating device nodes: create device inode /dev/tty: no such device or address`
 
-**Cause:** Rootless Podman can't create certain device nodes.
+**Cause:** rootless Podman can't create certain device nodes.
 
-**Solution:** RF Swift automatically filters these. If you see this error, update to the latest RF Swift version. As a workaround, remove problematic devices:
+**Solution:** RF Swift filters these automatically; if you see this error, update to the latest RF Swift version. As a workaround, avoid mapping tty devices:
+
 ```bash
-# RF Swift handles this automatically, but you can also avoid the issue by not mapping tty devices
-rfswift --engine podman run -i sdr_full -n my_sdr -s /dev/bus/usb:/dev/bus/usb
+rfswift --engine podman container create -i sdr_full -n my_sdr -s /dev/bus/usb:/dev/bus/usb
 ```
 
 ### "Rootless Podman does not support device cgroup rules"
 
-**Not an error**, just informational. Your container will still work; only USB hotplug is affected. Plug in devices before starting the container.
-
-To get full cgroup support:
-```bash
-sudo rfswift --engine podman run ...
-```
-
-### Containers Not Visible Across Engines
-
-Containers created with Docker are invisible to Podman and vice versa:
+**Not an error**, just information. Your container still works; only USB hotplug is affected. Plug in devices before starting the container. For full cgroup support:
 
 ```bash
-# Created with Docker? Use Docker to access it
-rfswift --engine docker exec -c my_container
-
-# Created with Podman? Use Podman
-rfswift --engine podman exec -c my_container
+sudo rfswift --engine podman container create ...
 ```
 
-### Images Not Found After Pulling with sudo
+### Containers not visible across engines
 
-**Problem:** You pulled an image with `sudo podman pull` but RF Swift can't find it when running rootless.
+Containers created with Docker are invisible to Podman, and the other way round. Use the engine that created them:
 
-**Explanation:** Podman stores images separately for root and rootless users. An image pulled with `sudo` is stored in the root image store, which is invisible to rootless Podman by default.
+```bash
+rfswift --engine docker container shell -c my_container   # created with Docker
+rfswift --engine podman container shell -c my_container   # created with Podman
+```
+
+### Images not found after pulling with sudo
+
+**Problem:** you pulled an image with `sudo podman pull`, but RF Swift can't find it when running rootless.
+
+**Why:** Podman stores images separately for root and rootless users. An image pulled with `sudo` goes to the root image store, which rootless Podman doesn't see by default.
 
 **Solutions:**
+
 ```bash
 # Option 1: Pull without sudo (rootless)
 podman pull penthertz/rfswift_resolute:sdr_full
@@ -349,18 +327,18 @@ podman pull penthertz/rfswift_resolute:sdr_full
 
 RF Swift includes an `ImageInspectCompat` layer that automatically resolves image names across both local and remote registries, handling Podman's short-name resolution transparently.
 
-### Image Pull Prompts
+### Podman asks which registry to use
 
-**Problem:** Podman asks which registry to use
+Configure default registries:
 
-**Solution:** Configure default registries:
 ```bash
 echo 'unqualified-search-registries = ["docker.io"]' | sudo tee -a /etc/containers/registries.conf
 ```
 
-### Permission Denied on /dev/bus/usb
+### Permission denied on /dev/bus/usb
 
-**Solution:** Add your user to the correct groups:
+Install RF Swift's udev rules with `rfswift host udev`, or add your user to the right group:
+
 ```bash
 sudo usermod -aG plugdev $USER
 newgrp plugdev
@@ -368,32 +346,11 @@ newgrp plugdev
 
 Or use `sudo` for full access.
 
----
-
 ## Related
 
-- [`engine`](/docs/commands/engine) - Container engine selection and comparison
-- [`run`](/docs/commands/run) - Create and run containers
-- [VPN Inside Containers](/docs/guide/vpn) - VPN support with Podman
-- [Getting Started](/docs/getting-started) - Installation and setup
-- [Air-Gapped Installation](/docs/air-gapped-installation) - Offline deployment
-
----
-
-{{< callout emoji="🔒" >}}
-**Security Advantage**: Podman's rootless mode provides better isolation than Docker. Even if a container escape occurs, the attacker only has unprivileged user access, not root.
-{{< /callout >}}
-
-{{< callout emoji="💡" >}}
-**Tip**: For most RF work, rootless Podman is sufficient. Only use `sudo` when you need USB hotplug or WireGuard/OpenVPN VPN.
-{{< /callout >}}
-
-## What changed in v4 for Podman users
-
-- **Host udev rules**: rootless Podman runs containers as your user, so a USB device is only reachable once the host grants you access. `rfswift host udev` installs RF Swift's rules (group `plugdev`, seat ACL); rules inside a container are never evaluated.
-- **Your groups are kept**: with the crun runtime, `dialout` and `plugdev` follow you into the container, so a device you may open on the host is usable inside.
-- **Automatic adjustments**: cgroup device rules are dropped with a warning, root-only device nodes (`/dev/console`, `/dev/tty*`, `/dev/vhci`, `/dev/uinput`) are left out, and realtime ulimits above your host hard limits are skipped instead of failing the start. `rfswift container create` and the Workbench list what will be dropped before creation.
-- **Serial ports** must be present at creation under rootless Podman (no `mknod`, no cgroup rules); the hot-plug works on rootful Podman and Docker.
-- **Configuration changes** (`rfswift config ...`) commit the container and re-create it, since Podman has no editable store; one snapshot image per change remains.
-- **Images**: `rfswift image pull` works the same; use `docker.io/penthertz/rfswift_resolute:...` or set `unqualified-search-registries` to avoid the short-name prompt.
-- **Audit**: `rfswift image audit` runs trivy as a container through Podman when no host trivy is installed.
+- [Choose your engine](/docs/engines/): Podman compared with Docker, Lima and Nix
+- [`engine`](/docs/commands/engine/): engine selection and comparison
+- [`container create`](/docs/commands/run/): create and run containers
+- [VPN inside containers](/docs/guide/vpn/): VPN support with Podman
+- [Install RF Swift](/docs/getting-started/): installation and setup
+- [Air-gapped installation](/docs/air-gapped-installation/): offline deployment

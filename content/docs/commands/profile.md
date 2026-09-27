@@ -1,11 +1,11 @@
 ---
-title: profile
-weight: 2
-prev: /docs/commands/run
-next: /docs/commands/exec
+title: "rfswift profile"
+linkTitle: "profile"
+navGroup: "Containers"
+level: reference
+description: "Manage profiles: YAML presets for quick container creation."
+weight: 11
 ---
-
-# rfswift profile
 
 Manage container profiles, the YAML presets used for quick container creation.
 
@@ -15,10 +15,10 @@ Manage container profiles, the YAML presets used for quick container creation.
 rfswift profile [subcommand] [options]
 ```
 
-Profiles bundle image, network mode, features (desktop, realtime, privileged), device mappings, capabilities, cgroup rules, and port bindings into a single named preset. Instead of typing long `rfswift run` commands, you can create a profile once and reuse it.
+Profiles bundle image, network mode, features (desktop, realtime, privileged), device mappings, capabilities, cgroup rules, and port bindings into a single named preset. Instead of typing long `rfswift container create` commands, you can create a profile once and reuse it.
 
 {{< callout type="info" >}}
-**Quick Start**: Run `rfswift profile init` to generate default profiles, then use them with `rfswift run --profile sdr-full -n my_container`.
+**Quick Start**: Run `rfswift profile init` to generate default profiles, then use them with `rfswift container create --profile sdr-full -n my_container`.
 {{< /callout >}}
 
 ---
@@ -35,7 +35,7 @@ Profiles bundle image, network mode, features (desktop, realtime, privileged), d
 
 ---
 
-## Profile Storage
+## Profile storage
 
 Profiles are stored as individual YAML files in a platform-specific directory:
 
@@ -61,7 +61,7 @@ Each profile is a standalone `.yaml` file that you can edit, copy, or share.
 
 ---
 
-## Profile Format
+## Profile format
 
 A profile YAML file contains:
 
@@ -85,7 +85,7 @@ gpus: ""
 vpn: ""
 ```
 
-### Profile Fields
+### Profile fields
 
 | Field | Type | Description | Example |
 |-------|------|-------------|---------|
@@ -111,7 +111,7 @@ vpn: ""
 
 ## Examples
 
-### Initialize Default Profiles
+### Initialize default profiles
 
 Generate the built-in starter profiles:
 
@@ -145,7 +145,7 @@ To overwrite existing profiles:
 rfswift profile init --force
 ```
 
-### List Profiles
+### List profiles
 
 ```bash
 rfswift profile list
@@ -153,7 +153,7 @@ rfswift profile list
 
 Displays a table with name, description, image, network mode, and enabled features for all profiles.
 
-### Show Profile Details
+### Show profile details
 
 ```bash
 # By name
@@ -163,9 +163,9 @@ rfswift profile show sdr-full
 rfswift profile show
 ```
 
-Shows the full configuration and the equivalent `rfswift run` CLI command.
+Shows the full configuration and the equivalent `rfswift container create` CLI command.
 
-### Create a Profile Interactively
+### Create a profile interactively
 
 ```bash
 rfswift profile create
@@ -187,7 +187,7 @@ Launches a step-by-step wizard to create a new profile:
 
 The profile is saved as a YAML file that you can further edit manually.
 
-### Delete a Profile
+### Delete a profile
 
 ```bash
 # By name
@@ -197,7 +197,7 @@ rfswift profile delete wifi
 rfswift profile delete
 ```
 
-### Edit a Profile Manually
+### Edit a profile manually
 
 Profiles are plain YAML files, so you can edit them with any text editor:
 
@@ -211,36 +211,36 @@ nano ~/Library/Application\ Support/rfswift/profiles/sdr-full.yaml
 
 ---
 
-## Using Profiles with `rfswift run`
+## Using profiles with `rfswift container create`
 
-### Basic Usage
+### Basic usage
 
 Use a profile with the `--profile` flag:
 
 ```bash
-rfswift run --profile sdr-full -n my_sdr
+rfswift container create --profile sdr-full -n my_sdr
 ```
 
 This applies all the profile's settings (image, network, features, devices, etc.) and creates the container.
 
-### Profile + CLI Overrides
+### Profile + CLI overrides
 
 CLI flags override profile values, so you can customize on the fly:
 
 ```bash
 # Use wifi profile but with a different image
-rfswift run --profile wifi -n my_wifi -i penthertz/rfswift_resolute:sdr_full
+rfswift container create --profile wifi -n my_wifi -i penthertz/rfswift_resolute:sdr_full
 
 # Use sdr-full profile but in NAT mode
-rfswift run --profile sdr-full -n isolated_sdr -t nat
+rfswift container create --profile sdr-full -n isolated_sdr -t nat
 
 # Use headless profile but add realtime
-rfswift run --profile headless -n headless_rt --realtime
+rfswift container create --profile headless -n headless_rt --realtime
 ```
 
-### Profile in the Interactive Wizard
+### Profile in the interactive wizard
 
-When you run `rfswift run` without `-i` and `-n`, the wizard offers profile selection as the first step:
+When you run `rfswift container create` without `-i` and `-n`, the wizard offers profile selection as the first step:
 
 ```
 ? Start from a profile?
@@ -264,7 +264,7 @@ After selecting a profile, you're asked:
 
 ---
 
-## Sharing Profiles
+## Sharing profiles
 
 Since profiles are plain YAML files, sharing is straightforward:
 
@@ -278,7 +278,7 @@ cp team-standard.yaml ~/.config/rfswift/profiles/
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`run`](/docs/commands/run) - Create containers (supports `--profile` flag)
 - [Configurations](/docs/guide/configurations) - Global configuration file

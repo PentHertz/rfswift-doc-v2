@@ -1,20 +1,16 @@
 ---
-title: Container Scripts
-linkTitle: 🛠️ Container Scripts
+title: "Container scripts"
+linkTitle: "Container Scripts"
+level: advanced
+description: "Helper scripts shipped inside RF Swift containers."
 weight: 10
-prev: /docs/guide
-next: /docs/container_scripts/avahi_inside_container
-cascade:
-  type: docs
 ---
-
-# RF Swift Container Scripts
 
 ## Overview
 
 RF Swift provides several utility scripts that simplify common tasks inside containers. These scripts enable advanced functionality, streamline configuration, and help you get the most out of your RF and hardware tools.
 
-## Available Scripts
+## Available scripts
 
 {{< cards >}}
   {{< card link="avahi_inside_container" title="Avahi Container Script" icon="wifi" subtitle="Enable service discovery for PlutoSDR and network devices" >}}
@@ -22,7 +18,7 @@ RF Swift provides several utility scripts that simplify common tasks inside cont
   {{< card link="rfswift_install" title="RF Scripts Updater" icon="refresh" subtitle="Keep your RF Swift scripts updated with the latest versions" >}}
 {{< /cards >}}
 
-## Why Container Scripts?
+## Why container scripts?
 
 Container scripts extend RF Swift's capabilities by:
 
@@ -31,7 +27,7 @@ Container scripts extend RF Swift's capabilities by:
 3. **Maintaining Updates**: Keep tools and utilities current with minimal effort
 4. **Enabling Advanced Features**: Access capabilities not available in standard configurations
 
-## Using Container Scripts
+## Using container scripts
 
 All container scripts are automatically installed in RF Swift containers and available in the system PATH. You can execute them directly from any directory inside the container:
 
@@ -46,13 +42,13 @@ update_rfscripts
 libresdr_swapfpga
 ```
 
-## Script Categories
+## Script categories
 
-### Service Enablement
+### Service enablement
 Scripts that activate or configure services inside containers:
 - **[Avahi Container Script](avahi_inside_container)**: Enables mDNS service discovery
 
-### Hardware Enhancement
+### Hardware enhancement
 Scripts that modify or optimize hardware functionality:
 - **[LibreSDR Firmware Swap](libresdr_swap_firmware)**: Enhances USRP devices with improved firmware
 
@@ -69,6 +65,6 @@ If you encounter issues with container scripts:
 - Verify you have the necessary permissions for the operation
 - Consult the specific script documentation for troubleshooting guidance
 
-## Next Steps
+## Next steps
 
 Explore each script's dedicated documentation for detailed usage instructions, examples, and technical details.

@@ -1,13 +1,9 @@
 ---
-title: Remote agent hardening
+title: "Remote agent hardening"
+level: advanced
+description: "Expose the remote agent safely: certificates, network exposure and operations."
 weight: 7
-prev: /docs/security/audit
-next: /docs/security/mcp
-cascade:
-  type: docs
 ---
-
-# 📡 Exposing the remote agent safely
 
 `rfswift agent` turns a lab machine into a server that a Workbench can drive. A client certificate signed by the agent's CA is **full command execution as the agent's user** on that machine: creating privileged containers, mounting host directories into them, opening terminals, pulling images. Treat the agent like SSH with a shared root key, and deploy it with the same care. This page is the checklist; the [remote agent guide](/docs/guide/remote-agent) explains the mechanics and the [audit](/docs/security/audit) records what was verified in the code.
 

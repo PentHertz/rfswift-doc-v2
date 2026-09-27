@@ -1,0 +1,28 @@
+{{- /*
+The docs sidebar (data/docsnav.yaml) flattened into reading order.
+Returns a slice of dicts: { page, title, group }.
+Call it with partialCached "docs/nav-flat.html" . "docsnav".
+*/ -}}
+{{- $entries := slice -}}
+{{- range $g := site.Data.docsnav -}}
+  {{- range $it := $g.items -}}
+    {{- with $it.page -}}
+      {{- with site.GetPage . -}}
+        {{- $entries = $entries | append (dict "page" . "title" ($it.title | default .LinkTitle) "group" $g.group) -}}
+      {{- else -}}
+        {{- warnf "docsnav: page %q not found" . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $it.section -}}
+      {{- with site.GetPage . -}}
+        {{- $entries = $entries | append (dict "page" . "title" ($it.title | default .LinkTitle) "group" $g.group) -}}
+        {{- range .Pages.ByWeight -}}
+          {{- $entries = $entries | append (dict "page" . "title" .LinkTitle "group" $g.group) -}}
+        {{- end -}}
+      {{- else -}}
+        {{- warnf "docsnav: section %q not found" . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $entries -}}

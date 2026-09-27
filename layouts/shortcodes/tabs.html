@@ -1,0 +1,28 @@
+{{- /*
+Tabbed content. Tabs whose label names an OS (Linux, macOS, Windows) open
+automatically for readers on that OS, and choosing a tab selects the tab with
+the same label everywhere on the page.
+
+@param items         comma-separated tab labels (required)
+@param defaultIndex  tab shown first (default 0)
+
+@example {{< tabs items="Linux,macOS,Windows" >}}{{< tab >}}...{{< /tab >}}{{< /tabs >}}
+*/ -}}
+{{- if not (.Get "items") }}{{ errorf "tabs shortcode: 'items' is required (%s)" .Position }}{{ end -}}
+{{- $items := split (.Get "items") "," -}}
+{{- $default := int (.Get "defaultIndex" | default "0") -}}
+<div class="doc-tabs" data-tabs>
+  <div class="tabs" role="tablist">
+    {{- range $i, $item := $items }}
+      {{- $label := trim $item " " }}
+      {{- $l := lower $label }}
+      {{- $os := slice }}
+      {{- if in $l "linux" }}{{ $os = $os | append "linux" }}{{ end }}
+      {{- if in $l "macos" }}{{ $os = $os | append "mac" }}{{ end }}
+      {{- if in $l "windows" }}{{ $os = $os | append "windows" }}{{ end }}
+      <button type="button" role="tab" data-tab="{{ $i }}" data-label="{{ $l }}"{{ with $os }} data-os="{{ delimit . " " }}"{{ end }} aria-selected="{{ if eq $i $default }}true{{ else }}false{{ end }}">{{ $label }}</button>
+    {{- end }}
+  </div>
+  {{- .Inner -}}
+</div>
+{{- /* Drop trailing newlines */ -}}

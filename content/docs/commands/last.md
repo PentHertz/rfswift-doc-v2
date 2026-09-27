@@ -1,14 +1,14 @@
 ---
-title: last
-weight: 20
-prev: /docs/commands/network
-next: /docs/commands/cleanup
+title: "rfswift container last"
+linkTitle: "container last"
+navGroup: "Containers"
+level: reference
+description: "List the containers RF Swift created, most recent first."
+weight: 4
 ---
 
-# rfswift last
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift container last`. The legacy form `rfswift last` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift container last`. The legacy form `rfswift last` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 List all RF Swift containers with their status and information.
@@ -16,7 +16,7 @@ List all RF Swift containers with their status and information.
 ## Synopsis
 
 ```bash
-rfswift last
+rfswift container last
 ```
 
 The `last` command provides a quick overview of all RF Swift containers on the system, showing their names, status, images, creation time, and other details. This is your go-to command for checking what containers exist.
@@ -31,11 +31,11 @@ The `last` command takes no options and displays all containers.
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **List all containers:**
 ```bash
-rfswift last
+rfswift container last
 ```
 
 **Example output:**
@@ -46,7 +46,7 @@ b2c3d4e5f6g7   bluetooth_1    penthertz/rfswift_resolute:bluetooth  Up 1 day    
 c3d4e5f6g7h8   analysis       penthertz/rfswift_resolute:sdr_full   Exited      1 week ago     
 ```
 
-### Understanding Output
+### Understanding output
 
 **Output columns:**
 - **CONTAINER ID**: Short container ID
@@ -65,37 +65,37 @@ c3d4e5f6g7h8   analysis       penthertz/rfswift_resolute:sdr_full   Exited      
 
 ---
 
-## Use Cases
+## Use cases
 
-### Quick Container Check
+### Quick container check
 
 ```bash
 # Check what containers exist
-rfswift last
+rfswift container last
 
 # Find specific container
-rfswift last | grep sdr_work
+rfswift container last | grep sdr_work
 
 # Count total containers
-rfswift last | tail -n +2 | wc -l
+rfswift container last | tail -n +2 | wc -l
 ```
 
-### Clean Up Old Containers
+### Clean up old containers
 
 ```bash
 # List containers
-rfswift last
+rfswift container last
 
 # Identify old unused ones
-rfswift last | grep "Exited"
+rfswift container last | grep "Exited"
 
 # Remove specific container
-rfswift remove -c old_container
+rfswift container rm -c old_container
 ```
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`run`](/docs/commands/run) - Create new containers
 - [`remove`](/docs/commands/remove) - Remove containers
@@ -106,7 +106,7 @@ rfswift remove -c old_container
 ---
 
 {{< callout emoji="📋" >}}
-**Quick Overview**: `rfswift last` is your first stop for seeing what containers exist. It shows all containers (running and stopped) with their essential information at a glance.
+**Quick Overview**: `rfswift container last` is your first stop for seeing what containers exist. It shows all containers (running and stopped) with their essential information at a glance.
 {{< /callout >}}
 
 {{< callout type="warning" >}}
@@ -114,5 +114,5 @@ rfswift remove -c old_container
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**All Containers Shown**: `rfswift last` shows both running AND stopped containers (equivalent to `docker ps -a`). Use `grep "Up"` to see only running ones, or `grep "Exited"` for stopped ones.
+**All Containers Shown**: `rfswift container last` shows both running AND stopped containers (equivalent to `docker ps -a`). Use `grep "Up"` to see only running ones, or `grep "Exited"` for stopped ones.
 {{< /callout >}}

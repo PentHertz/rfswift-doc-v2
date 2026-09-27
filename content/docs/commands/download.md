@@ -1,14 +1,14 @@
 ---
-title: download
-weight: 9
-prev: /docs/commands/import
-next: /docs/commands/upgrade
+title: "rfswift image download"
+linkTitle: "image download"
+navGroup: "Images"
+level: reference
+description: "Save an image to a compressed archive, for example to move it to an offline machine."
+weight: 25
 ---
 
-# rfswift download
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift image download`. The legacy form `rfswift download` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift image download`. The legacy form `rfswift download` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Download Docker images from registries and save them as compressed archives for offline use.
@@ -16,7 +16,7 @@ Download Docker images from registries and save them as compressed archives for 
 ## Synopsis
 
 ```bash
-rfswift download -i IMAGE_NAME -o OUTPUT_FILE.tar.gz [--pull]
+rfswift image download -i IMAGE_NAME -o OUTPUT_FILE.tar.gz [--pull]
 ```
 
 The `download` command pulls Docker images from registries (Docker Hub, private registries) and saves them locally as compressed tar.gz files. This enables offline distribution, air-gapped installations, and image archival.
@@ -39,41 +39,41 @@ The `download` command pulls Docker images from registries (Docker Hub, private 
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Download RF Swift image:**
 ```bash
-rfswift download -i penthertz/rfswift_resolute:sdr_full -o rfswift-sdr-full.tar.gz
+rfswift image download -i penthertz/rfswift_resolute:sdr_full -o rfswift-sdr-full.tar.gz
 ```
 
 **Download with automatic pull:**
 ```bash
-rfswift download -i penthertz/rfswift_resolute:sdr_full -o sdr_full.tar.gz --pull
+rfswift image download -i penthertz/rfswift_resolute:sdr_full -o sdr_full.tar.gz --pull
 ```
 
 **Download specific version:**
 ```bash
-rfswift download -i penthertz/rfswift_resolute:bluetooth -o bluetooth-tools-v2025.tar.gz
+rfswift image download -i penthertz/rfswift_resolute:bluetooth -o bluetooth-tools-v2025.tar.gz
 ```
 
 **Download to specific directory:**
 ```bash
-rfswift download -i penthertz/rfswift_resolute:wifi \
+rfswift image download -i penthertz/rfswift_resolute:wifi \
   -o ~/offline-images/wifi-tools-$(date +%Y%m%d).tar.gz
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Prepare offline installation media:**
 ```bash
 # Download all required RF Swift images
-rfswift download -i penthertz/rfswift_resolute:sdr_full \
+rfswift image download -i penthertz/rfswift_resolute:sdr_full \
   -o /media/usb/rfswift-sdr-full.tar.gz --pull
 
-rfswift download -i penthertz/rfswift_resolute:bluetooth \
+rfswift image download -i penthertz/rfswift_resolute:bluetooth \
   -o /media/usb/rfswift-bluetooth.tar.gz --pull
 
-rfswift download -i penthertz/rfswift_resolute:wifi \
+rfswift image download -i penthertz/rfswift_resolute:wifi \
   -o /media/usb/rfswift-wifi.tar.gz --pull
 
 # Create README for offline users
@@ -81,8 +81,8 @@ cat > /media/usb/README.txt << 'EOF'
 RF Swift Offline Installation
 
 To install:
-1. Import images: rfswift import image -i rfswift-*.tar.gz
-2. Run container: rfswift run -i penthertz/rfswift_resolute:sdr_full -n workspace
+1. Import images: rfswift image import image -i rfswift-*.tar.gz
+2. Run container: rfswift container create -i penthertz/rfswift_resolute:sdr_full -n workspace
 EOF
 ```
 
@@ -93,10 +93,10 @@ OFFLINE_DIR=~/offline-bundle
 mkdir -p "$OFFLINE_DIR"
 
 # Download latest images
-rfswift download -i penthertz/rfswift_resolute:sdr_full \
+rfswift image download -i penthertz/rfswift_resolute:sdr_full \
   -o "$OFFLINE_DIR/sdr_full_$(date +%Y%m%d).tar.gz" --pull
 
-rfswift download -i penthertz/rfswift_resolute:hardware \
+rfswift image download -i penthertz/rfswift_resolute:hardware \
   -o "$OFFLINE_DIR/hardware_$(date +%Y%m%d).tar.gz" --pull
 
 # Create checksum file
@@ -109,7 +109,7 @@ sha256sum *.tar.gz > checksums.sha256
 **Version archival:**
 ```bash
 # Archive specific version before upgrade
-rfswift download -i penthertz/rfswift_resolute:sdr_full \
+rfswift image download -i penthertz/rfswift_resolute:sdr_full \
   -o archives/rfswift-sdr-full-v0.6.5.tar.gz
 
 # Document version
@@ -121,20 +121,20 @@ echo "RF Swift SDR Full v0.6.5 - Archived $(date)" \
 
 ## Troubleshooting
 
-### Image Not Found in Registry
+### Image not found in registry
 
 **Error:** `Error: image not found: penthertz/rfswift_resolute:unknown_tag`
 
 **Solutions:**
 ```bash
 # List available images
-rfswift images remote
+rfswift image remote
 
 # Verify spelling
-rfswift download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz
+rfswift image download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz
 ```
 
-### Network Connection Failed
+### Network connection failed
 
 **Error:** `Error: connection timeout` or `network unreachable`
 
@@ -155,7 +155,7 @@ export HTTPS_PROXY=http://proxy:port
 ```
 
 
-### Permission Denied
+### Permission denied
 
 **Error:** `permission denied` writing output file
 
@@ -169,13 +169,13 @@ mkdir -p ~/downloads
 chmod 755 ~/downloads
 
 # Use absolute path
-rfswift download -i image -o ~/downloads/image.tar.gz
+rfswift image download -i image -o ~/downloads/image.tar.gz
 
 # Or use sudo
-sudo rfswift download -i image -o /opt/images/image.tar.gz
+sudo rfswift image download -i image -o /opt/images/image.tar.gz
 ```
 
-### Download Interrupted
+### Download interrupted
 
 **Problem:** Download stopped mid-way
 
@@ -188,15 +188,15 @@ ls -lh output.tar.gz
 rm output.tar.gz
 
 # Retry download
-rfswift download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz --pull
+rfswift image download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz --pull
 
 # For unstable connections, use screen/tmux
 screen -S download
-rfswift download -i image -o output.tar.gz --pull
+rfswift image download -i image -o output.tar.gz --pull
 # Ctrl+A, D to detach
 ```
 
-### Authentication Required
+### Authentication required
 
 **Error:** `authentication required` for private registry
 
@@ -207,27 +207,27 @@ docker login registry.example.com
 # Enter username and password
 
 # Then download
-rfswift download -i registry.example.com/image:tag -o output.tar.gz
+rfswift image download -i registry.example.com/image:tag -o output.tar.gz
 
 # For Docker Hub private repos
 docker login
-rfswift download -i myuser/private-image:tag -o output.tar.gz
+rfswift image download -i myuser/private-image:tag -o output.tar.gz
 ```
 
-### Pull Flag Not Working
+### Pull flag not working
 
 **Problem:** `--pull` doesn't seem to work
 
 **Solutions:**
 ```bash
 # Verify flag syntax (no equals sign)
-rfswift download -i image -o output.tar.gz --pull
+rfswift image download -i image -o output.tar.gz --pull
 
 # Not: --pull=true
 
 # Manually pull first if needed
 docker pull penthertz/rfswift_resolute:sdr_full
-rfswift download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz
+rfswift image download -i penthertz/rfswift_resolute:sdr_full -o output.tar.gz
 
 # Check image exists after pull
 docker images | grep rfswift
@@ -235,7 +235,7 @@ docker images | grep rfswift
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`export`](/docs/commands/export) - Export local images/containers to tar.gz
 - [`import`](/docs/commands/import) - Import downloaded archives

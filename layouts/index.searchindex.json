@@ -1,0 +1,33 @@
+{{- /*
+Search index for the docs: one record per page intro and per H2 section.
+Fields: t = page title, u = URL (with #anchor), h = section heading,
+        g = sidebar group, c = plain text, l = level.
+*/ -}}
+{{- $nav := partialCached "docs/nav-flat.html" . "docsnav" -}}
+{{- $groups := dict -}}
+{{- range $nav }}{{ $groups = merge $groups (dict .page.RelPermalink .group) }}{{ end -}}
+{{- $records := slice -}}
+{{- range where site.Pages "Type" "docs" -}}
+  {{- $page := . -}}
+  {{- $title := .Title -}}
+  {{- $group := index $groups .RelPermalink | default "Docs" -}}
+  {{- $level := .Params.level | default "" -}}
+  {{- $html := replaceRE `(?s)<div class="code-bar">.*?</button></div>` "" .Content -}}
+  {{- $html = replaceRE `(?s)<div class="tabs" role="tablist">.*?</div>` "" $html -}}
+  {{- $html = replaceRE `</(td|th|li|p|h3|h4|pre|tr|summary|figcaption)>` " </$1>" $html -}}
+  {{- $parts := split $html "<h2 " -}}
+  {{- range $i, $part := $parts -}}
+    {{- if eq $i 0 -}}
+      {{- $text := printf "%s %s" ($page.Description | default "") $part | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
+      {{- $records = $records | append (dict "t" $title "u" $page.RelPermalink "h" "" "g" $group "c" $text "l" $level) -}}
+    {{- else -}}
+      {{- $id := "" -}}
+      {{- with findRESubmatch `^id="([^"]+)"` $part 1 }}{{ $id = index (index . 0) 1 }}{{ end -}}
+      {{- $head := "" -}}
+      {{- with findRESubmatch `(?s)^[^>]*>(.*?)</h2>` $part 1 }}{{ $head = index (index . 0) 1 | plainify | htmlUnescape | strings.TrimSpace }}{{ end -}}
+      {{- $body := replaceRE `(?s)^[^>]*>.*?</h2>` "" $part | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
+      {{- $records = $records | append (dict "t" $title "u" (printf "%s#%s" $page.RelPermalink $id) "h" $head "g" $group "c" $body "l" $level) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $records | jsonify -}}

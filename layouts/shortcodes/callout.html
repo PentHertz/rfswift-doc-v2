@@ -1,0 +1,23 @@
+{{- /*
+A highlighted note.
+
+@param type   info | tip | warning | error | important | beginner (default: tip)
+@param emoji  optional emoji (mapped to an icon in data/icons.yaml)
+@param icon   optional Phosphor icon name
+@param title  optional bold title
+
+@example {{< callout type="info" title="Good to know" >}}Content{{< /callout >}}
+*/ -}}
+{{- $type := .Get "type" | default "tip" -}}
+{{- $defaults := dict "tip" "lightbulb" "default" "lightbulb" "info" "info" "warning" "warning" "error" "x-circle" "important" "star" "beginner" "student" -}}
+{{- $icon := .Get "icon" | default (index $defaults $type) | default "lightbulb" -}}
+{{- with .Get "emoji" }}{{ $icon = partial "icon.html" . }}{{ end -}}
+{{- $title := .Get "title" -}}
+<div class="admonition admonition-{{ $type }}" role="note">
+  <i class="ph ph-{{ $icon }} admonition-icon" aria-hidden="true"></i>
+  <div class="admonition-body">
+    {{- with $title }}<p class="admonition-title">{{ . }}</p>{{ end -}}
+    {{- .InnerDeindent | strings.TrimSpace | .Page.RenderString (dict "display" "block") -}}
+  </div>
+</div>
+{{- /* Drop trailing newlines */ -}}

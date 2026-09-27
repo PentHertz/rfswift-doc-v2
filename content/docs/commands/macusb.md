@@ -1,10 +1,11 @@
 ---
-title: macusb
-weight: 29
-prev: /docs/commands/winusb
+title: "rfswift macusb"
+linkTitle: "usb on macOS (macusb)"
+navGroup: "Host & devices"
+level: reference
+description: "macOS USB passthrough through the Lima VM, now reached through rfswift usb."
+weight: 62
 ---
-
-# rfswift macusb
 
 {{< callout type="info" >}}
 **RF Swift v4**: the cross-platform front door is `rfswift usb` (`rfswift usb list|attach|detach|status|vm-devices`), which dispatches to this backend. `rfswift macusb` remains available. See [usb](/docs/commands/usb).
@@ -39,7 +40,7 @@ This command is **macOS only**. On Linux, USB devices are directly accessible vi
 
 ---
 
-## How It Works
+## How it works
 
 ```mermaid
 graph LR
@@ -126,7 +127,7 @@ Check the full USB passthrough setup:
 
 ---
 
-### Global Options
+### Global options
 
 | Flag | Description | Default | Example |
 |------|-------------|---------|---------|
@@ -136,7 +137,7 @@ Check the full USB passthrough setup:
 
 ## Examples
 
-### Complete SDR Workflow on macOS
+### Complete SDR workflow on macOS
 
 ```bash
 # 1. Check that Lima is ready
@@ -155,7 +156,7 @@ rfswift macusb attach --vid 0x1d50 --pid 0x604b
 rfswift macusb vm-devices
 
 # 5. Run container via Lima's Docker (where USB device lives)
-rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_light -n sdr_work
+rfswift --engine lima container create -i penthertz/rfswift_resolute:sdr_light -n sdr_work
 
 # 6. Inside the container, the device is accessible
 # $ hackrf_info
@@ -165,7 +166,7 @@ rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_light -n sdr_work
 rfswift macusb detach --vid 0x1d50 --pid 0x604b
 ```
 
-### Attaching Multiple Devices
+### Attaching multiple devices
 
 ```bash
 # Attach RTL-SDR and HackRF
@@ -173,16 +174,16 @@ rfswift macusb attach --vid 0x0bda --pid 0x2838
 rfswift macusb attach --vid 0x1d50 --pid 0x604b
 
 # Run container with both devices available
-rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_full -n multi_sdr
+rfswift --engine lima container create -i penthertz/rfswift_resolute:sdr_full -n multi_sdr
 ```
 
-### Using a Custom Lima Instance
+### Using a custom Lima instance
 
 ```bash
 # All macusb commands support --instance for non-default VMs
 rfswift macusb list --instance my_custom_vm
 rfswift macusb attach --vid 0x1d50 --pid 0x604b --instance my_custom_vm
-rfswift --engine lima run -i sdr_light -n my_work
+rfswift --engine lima container create -i sdr_light -n my_work
 ```
 
 ---
@@ -202,13 +203,13 @@ rfswift --engine lima run -i sdr_light -n my_work
 QEMU is the virtualization backend that Lima uses to run the Linux VM. Lima manages the VM lifecycle, QEMU provides the actual emulation with USB hot-plug support via QMP.
 {{< /callout >}}
 
-### First-Time Setup
+### First-Time setup
 
 RF Swift **automatically manages the Lima VM**, so there is no manual setup to do. On first use, RF Swift creates, provisions, and starts the VM transparently:
 
 ```bash
 # Just run it, RF Swift handles everything automatically
-rfswift --engine lima run -i penthertz/rfswift_resolute:sdr_light -n my_sdr
+rfswift --engine lima container create -i penthertz/rfswift_resolute:sdr_light -n my_sdr
 # -> "Lima instance 'rfswift' not found. Creating it..."
 # -> Creates VM, installs Docker + USB tools + udev rules
 # -> Starts VM and waits for Docker to be ready
@@ -232,7 +233,7 @@ The auto-created VM is fully provisioned with:
 - Bluetooth stack (`bluez`, `btusb`, `rfcomm`, `vhci-hcd`)
 - Udev rules for all common SDR/RF devices (HackRF, RTL-SDR, USRP, BladeRF, Airspy, PlutoSDR, LimeSDR, etc.)
 
-### Supported RF Devices
+### Supported RF devices
 
 The Lima VM comes pre-configured with udev rules for:
 
@@ -255,7 +256,7 @@ The Lima VM comes pre-configured with udev rules for:
 
 The Lima VM is configured via a YAML file. RF Swift ships a default template at `lima/rfswift.yaml`, and once created, the instance config lives at `~/.lima/rfswift/lima.yaml`.
 
-### Editing the Configuration
+### Editing the configuration
 
 ```bash
 # Before creating the VM, edit the template
@@ -271,11 +272,11 @@ limactl stop rfswift && limactl start rfswift
 After editing `~/.lima/rfswift/lima.yaml`, you must stop and start the VM for changes to take effect. Changes to `provision` scripts only run on first creation, so use `limactl shell rfswift` to run commands in an existing VM.
 {{< /callout >}}
 
-### Configuration Reference
+### Configuration reference
 
 Here are the key settings you can tune:
 
-#### VM Resources
+#### VM resources
 
 Increase CPUs, memory, or disk for heavier workloads (e.g., srsRAN 5G, large IQ captures):
 
@@ -285,7 +286,7 @@ memory: "16GiB"  # default: 8GiB
 disk: "200GiB"   # default: 100GiB
 ```
 
-#### VM Backend
+#### VM backend
 
 **Must be `qemu`** for USB passthrough. Do not change to `vz`:
 
@@ -293,7 +294,7 @@ disk: "200GiB"   # default: 100GiB
 vmType: qemu     # required, Apple Virtualization (vz) has no USB support
 ```
 
-#### Host Directory Mounts
+#### Host directory mounts
 
 Add extra host directories accessible inside the VM:
 
@@ -309,7 +310,7 @@ mounts:
     mountPoint: "/captures"
 ```
 
-#### Port Forwarding
+#### Port forwarding
 
 Forward additional ports from the VM to the macOS host:
 
@@ -332,7 +333,7 @@ portForwards:
     hostPort: 8888
 ```
 
-#### Guest OS Image
+#### Guest OS image
 
 Change the base Linux image (default is Ubuntu 24.04):
 
@@ -352,7 +353,7 @@ dns:
  - 8.8.4.4
 ```
 
-### Adding Custom Udev Rules
+### Adding custom udev rules
 
 If you have RF hardware not covered by the defaults, add udev rules in the `provision` section or directly inside the running VM:
 
@@ -374,7 +375,7 @@ limactl shell rfswift -- sudo bash -c '
 
 Replace `xxxx` and `yyyy` with your device's vendor and product IDs (find them with `rfswift macusb list`).
 
-### Adding Custom Kernel Modules
+### Adding custom kernel modules
 
 The default template loads common USB serial modules. To add more:
 
@@ -387,7 +388,7 @@ limactl shell rfswift -- sudo bash -c \
   'echo "<module_name>" >> /etc/modules-load.d/rfswift.conf'
 ```
 
-### Installing Additional Packages
+### Installing additional packages
 
 Need extra tools inside the VM (outside of containers)?
 
@@ -395,7 +396,7 @@ Need extra tools inside the VM (outside of containers)?
 limactl shell rfswift -- sudo apt install -y <package_name>
 ```
 
-### Recreating the VM from Scratch
+### Recreating the VM from scratch
 
 If the VM becomes misconfigured, use the built-in reset command:
 
@@ -424,7 +425,7 @@ Deleting the VM does **not** delete your workspace files (`~/rfswift-workspace/`
 
 For non-destructive reconfiguration (e.g., changing CPU/memory/ports), use [`rfswift engine lima reconfig`](/docs/commands/engine/#engine-lima-reconfig) instead, which preserves the VM filesystem.
 
-### Using a Custom Template Location
+### Using a custom template location
 
 RF Swift searches for the Lima template in these locations (in order):
 
@@ -446,7 +447,7 @@ RF Swift will use this template when auto-creating the VM on first `--engine lim
 
 ## Troubleshooting
 
-### Lima Not Installed
+### Lima not installed
 
 **Problem:** `macusb` commands fail because Lima is not installed
 
@@ -455,7 +456,7 @@ RF Swift will use this template when auto-creating the VM on first `--engine lim
 brew install lima qemu
 ```
 
-### QMP Socket Not Found
+### QMP socket not found
 
 **Problem:** `macusb status` reports no QMP socket
 
@@ -472,20 +473,20 @@ limactl create --name rfswift lima/rfswift.yaml
 limactl start rfswift
 ```
 
-### Device Not Visible in Container
+### Device not visible in container
 
 **Problem:** Device attached via `macusb attach` but not visible in the container
 
 **Solution:** Make sure you're using `--engine lima`:
 ```bash
 # Wrong: runs in Docker Desktop (no USB access)
-rfswift run -i sdr_light -n my_sdr
+rfswift container create -i sdr_light -n my_sdr
 
 # Correct: runs in Lima's Docker (USB devices visible)
-rfswift --engine lima run -i sdr_light -n my_sdr
+rfswift --engine lima container create -i sdr_light -n my_sdr
 ```
 
-### Attach Fails with Permission Error
+### Attach fails with permission error
 
 **Problem:** `macusb attach` returns a QMP error
 
@@ -503,7 +504,7 @@ limactl stop rfswift && limactl start rfswift
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`--engine`](/docs/commands/engine) - Select container engine (use `--engine lima` for USB)
 - [`winusb`](/docs/commands/winusb) - USB management on Windows/WSL2
@@ -522,5 +523,5 @@ limactl stop rfswift && limactl start rfswift
 {{< /callout >}}
 
 {{< callout emoji="💡" >}}
-**Remember**: Always use `rfswift --engine lima run ...` when you need USB devices in your containers. Without `--engine lima`, containers run in Docker Desktop which has no USB access.
+**Remember**: Always use `rfswift --engine lima container create ...` when you need USB devices in your containers. Without `--engine lima`, containers run in Docker Desktop which has no USB access.
 {{< /callout >}}

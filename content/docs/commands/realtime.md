@@ -1,10 +1,11 @@
 ---
-title: realtime
-weight: 27
-prev: /docs/commands/ulimits
+title: "rfswift realtime"
+linkTitle: "realtime"
+navGroup: "Runtime configuration"
+level: reference
+description: "Enable or disable realtime mode for better SDR performance."
+weight: 47
 ---
-
-# rfswift realtime
 
 Enable or disable realtime mode for optimal SDR performance.
 
@@ -20,7 +21,7 @@ The `realtime` command provides a one-command solution to configure containers f
 
 ---
 
-## What Realtime Mode Configures
+## What realtime mode configures
 
 When you enable realtime mode, RF Swift automatically configures:
 
@@ -55,7 +56,7 @@ When you enable realtime mode, RF Swift automatically configures:
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Enable realtime mode:**
 ```bash
@@ -72,7 +73,7 @@ rfswift realtime status -c sdr_work
 rfswift realtime disable -c sdr_work
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Fix SDR buffer underruns:**
 ```bash
@@ -80,39 +81,39 @@ rfswift realtime disable -c sdr_work
 rfswift realtime enable -c sdr_container
 
 # Verify it's working
-rfswift exec -c sdr_container -e "ulimit -r"
+rfswift container shell -c sdr_container -e "ulimit -r"
 # Output: 95
 
 # Now run your SDR application with real-time priority
-rfswift exec -c sdr_container
+rfswift container shell -c sdr_container
 chrt -f 50 hackrf_transfer -r samples.bin -f 433920000 -s 8000000
 ```
 
 **Create new container with realtime mode:**
 ```bash
 # Use --realtime flag during creation
-rfswift run -n sdr_realtime -i penthertz/rfswift_resolute:sdr_full --realtime
+rfswift container create -n sdr_realtime -i penthertz/rfswift_resolute:sdr_full --realtime
 
 # Container is ready for low-latency SDR work
-rfswift exec -c sdr_realtime
+rfswift container shell -c sdr_realtime
 ```
 
 **Professional RF testing setup:**
 ```bash
 # Create optimized container
-rfswift run -n rf_pentest -i penthertz/rfswift_resolute:rfid --realtime
+rfswift container create -n rf_pentest -i penthertz/rfswift_resolute:rfid --realtime
 
 # Verify configuration
 rfswift realtime status -c rf_pentest
 
 # Run time-critical captures
-rfswift exec -c rf_pentest
+rfswift container shell -c rf_pentest
 chrt -f 70 proxmark3 /dev/ttyACM0
 ```
 
 **Using real-time scheduling inside container:**
 ```bash
-rfswift exec -c sdr_container
+rfswift container shell -c sdr_container
 
 # Run with FIFO real-time scheduling (priority 1-99)
 chrt -f 50 rtl_sdr -f 433920000 -s 2048000 output.bin
@@ -129,9 +130,9 @@ chrt -p $$
 
 ---
 
-## When to Use Realtime Mode
+## When to use realtime mode
 
-### ✅ Enable Realtime Mode For:
+### Enable realtime mode for:
 
 - **High sample rate captures** - Prevents dropped samples at high bandwidths
 - **Real-time signal processing** - GNU Radio flowgraphs, SDR++, GQRX
@@ -140,7 +141,7 @@ chrt -p $$
 - **Professional pentesting** - When reliability is critical
 - **Live demonstrations** - Avoid embarrassing buffer underruns
 
-### ❌ Not Necessary For:
+### Not necessary for:
 
 - **Offline analysis** - Inspectrum, signal analysis of recorded files
 - **Low sample rates** - Simple FM reception, slow protocols
@@ -148,7 +149,7 @@ chrt -p $$
 
 ---
 
-## Alternative: Host-Level Configuration
+## Alternative: Host-Level configuration
 
 Instead of per-container settings, you can configure Docker daemon defaults:
 
@@ -174,7 +175,7 @@ This applies realtime ulimits to **all** containers on the host automatically.
 
 ## Troubleshooting
 
-### Realtime Mode Not Working
+### Realtime mode not working
 
 **Problem:** Still experiencing buffer underruns after enabling realtime mode
 
@@ -184,18 +185,18 @@ This applies realtime ulimits to **all** containers on the host automatically.
 rfswift realtime status -c container
 
 # Check ulimits inside container
-rfswift exec -c container -e "ulimit -r && ulimit -l"
+rfswift container shell -c container -e "ulimit -r && ulimit -l"
 # Should show: 95 and unlimited
 
 # Ensure you're actually using real-time scheduling
-rfswift exec -c container
+rfswift container shell -c container
 chrt -f 50 your_sdr_command  # Must use chrt!
 
 # Check if host kernel supports real-time
 uname -a  # Should not be a -virtual or -cloud kernel
 ```
 
-### Permission Denied
+### Permission denied
 
 **Problem:** `Operation not permitted` when using `chrt`
 
@@ -205,7 +206,7 @@ uname -a  # Should not be a -virtual or -cloud kernel
 rfswift realtime enable -c container
 
 # Verify SYS_NICE capability
-rfswift exec -c container -e "grep Cap /proc/self/status"
+rfswift container shell -c container -e "grep Cap /proc/self/status"
 
 # If using rootless Docker, also set host ulimits
 # Edit /etc/security/limits.conf:
@@ -213,7 +214,7 @@ rfswift exec -c container -e "grep Cap /proc/self/status"
 # your_user - memlock unlimited
 ```
 
-### Container Won't Start After Enable
+### Container won't start after enable
 
 **Problem:** Container fails to start after enabling realtime mode
 
@@ -227,21 +228,21 @@ rfswift realtime disable -c container
 rfswift realtime enable -c container
 
 # If persists, recreate container
-rfswift run -n new_container -i image_name --realtime
+rfswift container create -n new_container -i image_name --realtime
 ```
 
 ---
 
-## Technical Details
+## Technical details
 
-### How It Works
+### How it works
 
 1. **Container inspection** - RF Swift reads current container configuration
 2. **Configuration update** - Adds SYS_NICE capability and ulimits
 3. **Container recreation** - Stops, removes, and recreates container with new settings
 4. **Verification** - Container starts with realtime configuration
 
-### Ulimit Values Explained
+### Ulimit values explained
 
 | Ulimit | Value | Meaning |
 |--------|-------|---------|
@@ -249,7 +250,7 @@ rfswift run -n new_container -i image_name --realtime
 | memlock=-1 | Unlimited | No limit on locked memory (prevents swapping) |
 | nice=40 | Range adjustment | Allows nice -20 to +19 (40-20=20 range) |
 
-### Kernel Requirements
+### Kernel requirements
 
 Real-time scheduling works best with:
 - **Standard kernels** (not -virtual or -cloud variants)
@@ -258,7 +259,7 @@ Real-time scheduling works best with:
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`ulimits`](/docs/commands/ulimits) - Fine-grained ulimit control
 - [`capabilities`](/docs/commands/capabilities) - Manage container capabilities
@@ -272,9 +273,9 @@ Real-time scheduling works best with:
 {{< /callout >}}
 
 {{< callout type="warning" >}}
-**Container Recreation**: Enabling/disabling realtime mode recreates the container. Commit important changes first with `rfswift commit`!
+**Container Recreation**: Enabling/disabling realtime mode recreates the container. Commit important changes first with `rfswift container commit`!
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**New Containers**: Use `rfswift run -n name -i image --realtime` to create containers with realtime mode already enabled!
+**New Containers**: Use `rfswift container create -n name -i image --realtime` to create containers with realtime mode already enabled!
 {{< /callout >}}

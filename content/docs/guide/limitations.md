@@ -1,15 +1,20 @@
 ---
-title: Known limits
+title: "Known limits"
+level: intermediate
+description: "What each platform and engine cannot do, and why, so you can pick the right setup before an engagement."
 weight: 13
-prev: /docs/guide/remote-agent
-next: /docs/guide/vpn
-cascade:
-  type: docs
 ---
 
-# Known limits and platform constraints
+RF Swift runs on three operating systems, with four engines, and inside virtual machines on two of them. Most combinations do everything you need, but some cannot. This page lists those constraints in one place, so you can pick the right setup **before** an engagement rather than discover them during one.
 
-RF Swift runs on three operating systems, four engines and inside VMs on two of them. Some combinations cannot do everything. This page collects the constraints in one place, engine by engine, so you can pick the right setup before an engagement.
+**The short version:**
+
+- **USB radios on a Mac**: use the Nix engine (native tools, direct USB) or Lima (containers). Docker Desktop and Podman on macOS can't pass USB devices through.
+- **USB radios on Windows**: forward them into WSL 2 with `rfswift usb attach`.
+- **Rootless Podman**: plug serial devices in before creating the lab; no hot-plug, and realtime limits are capped by your host.
+- **Nix engine**: no isolation unless you add `--isolate`, and not every image tool is packaged yet.
+
+New to engines? Start with [Choose your engine](/docs/engines/).
 
 {{< callout type="info" >}}
 `rfswift doctor` reports most of these for your host, and the pre-creation checks of `rfswift container create` and the Workbench name the devices an engine cannot map before anything is created.
@@ -17,11 +22,13 @@ RF Swift runs on three operating systems, four engines and inside VMs on two of 
 
 ## Engines at a glance
 
+What each engine can do on each system. "Rootful" means the engine runs as root; "rootless" means it runs as your user.
+
 | | Docker | Podman | Lima (macOS) | Nix |
 |---|---|---|---|---|
 | Runs on | Linux, macOS (Desktop), Windows (Desktop, WSL 2) | Linux, macOS (machine), Windows (Desktop, WSL 2) | macOS | Linux, macOS, Windows (inside WSL 2) |
 | Isolation | Container | Container, user namespace when rootless | Container inside a VM | None by default; `--isolate` jail |
-| USB devices | Linux: mapped. Windows: usbipd into WSL 2. macOS: **no** | Linux: mapped (rootless needs host udev rules). Windows: usbipd. macOS: **no** | Yes, hot-plug into the VM | Direct (host udev rules needed) |
+| USB devices | Linux: mapped. Windows: usbipd into WSL 2. macOS: **no** | Linux: mapped (rootless needs host udev rules). Windows: usbipd. macOS: **no** | Yes, hot-plug into the VM | Direct (on Linux, host udev rules needed; on Windows, usbipd into WSL 2) |
 | Serial hot-plug | Yes | Rootful only | No (VM) | Not needed |
 | cgroup device rules | Yes | Rootful only | Yes (in VM) | Not applicable |
 | Realtime ulimits | Yes | Rootless: only up to your host hard limits | Yes | Host limits |
@@ -31,7 +38,9 @@ RF Swift runs on three operating systems, four engines and inside VMs on two of 
 
 ## USB and devices
 
-- **macOS with Docker Desktop, OrbStack or Podman machine**: no USB, serial, audio or GPU passthrough into the VM. Use `--engine lima` for hardware; the device check points there.
+Radios and other USB hardware have to cross from your computer into the lab. How that works depends on the engine and the operating system:
+
+- **macOS with Docker Desktop, OrbStack or Podman machine**: no USB, serial, audio or GPU passthrough into the VM. Use `--engine lima` for hardware in containers (the device check points there), or the Nix engine, which runs the tools natively on macOS.
 - **Lima on macOS**: a device must be attached to the VM (`rfswift usb attach`) and is absent from the VM otherwise; the pre-creation check lists such devices. USB and GPU need different VM backends on Apple Silicon: the QEMU VM (`--engine lima`) has USB, the krunkit VM (`--gpu`, instance `rfswift-gpu`) has Vulkan compute and **no** USB. They are separate instances with separate images and containers.
 - **Windows**: containers run in the WSL 2 VM, which cannot see the host USB bus; forward devices with usbipd-win (`rfswift usb attach`). Sharing a device the first time needs one administrator approval per device; attach and detach never do. A forwarded device is visible to every WSL 2 distribution.
 - **Inside a container** a USB device is reachable only when `/dev/bus/usb` is mapped **and** `c 189:* rwm` is allowed. A bind mount alone lists the nodes but cannot open them. Privileged mode is not required.
@@ -42,12 +51,16 @@ RF Swift runs on three operating systems, four engines and inside VMs on two of 
 
 ## Display and audio
 
+Graphical tools and sound are forwarded from the lab to your desktop. A few platform details apply:
+
 - **macOS**: windows open through XQuartz. XQuartz's GLX gives Mesa no usable OpenGL context, so RF Swift makes containers create contexts through EGL (`RFSWIFT_GL_PLATFORM=egl`, honoured by Qt, SDL and a preloaded GLFW shim). Rendering is software (llvmpipe). Images built before this change keep failing with `GLX: Failed to create context`; `--desktop` (noVNC) is the alternative there.
 - **Windows**: display and sound come from WSLg (`DISPLAY=:0`, `PULSE_SERVER=unix:/mnt/wslg/PulseServer`); there is no PulseAudio for Windows and `rfswift host audio enable` only checks WSLg. If `rfswift doctor` cannot find the WSLg sockets, run `wsl --update` then `wsl --shutdown`. A GUI tool that shows only a taskbar icon needs `rfswift env wsl display-reset` (or restarts automatically).
 - **Linux and macOS**: container audio needs the host audio server's TCP module; `container create`, the Workbench and `rfswift host audio enable` load it, `host audio unload` removes it. The Nix engine plays sound natively.
 - **SSH-forwarded X11** sessions get the active Xauthority cookie mounted read-only; local sessions rely on `xhost` local ACLs.
 
 ## Nix engine
+
+The Nix engine runs tools natively, which removes most device and display plumbing. What it doesn't do:
 
 - **Windows**: Nix has no Windows port; the engine runs inside a WSL 2 distribution that RF Swift provisions. Environments and workspaces live inside it; Windows paths given to `--workspace`, `env export`, `env import` and `--flake` are translated to `/mnt/<drive>` (slower). Docker Desktop's and Podman's utility distributions are never used. Rendering is llvmpipe (Xwayland has no DRI3). Space freed by `env gc` reaches the Windows drive only once the WSL virtual disk is sparse or compacted.
 - **Isolation**: `--isolate` is Linux (bubblewrap) and macOS (Seatbelt) only. On macOS there is no PID/IPC namespace and no private `/tmp`; paths are not remapped (no `/workspace`). On Linux the workspace is remapped to `/workspace`. Ubuntu 24.04+ needs `rfswift host isolate` once (AppArmor-profiled bubblewrap); a Debian kernel with `kernel.unprivileged_userns_clone=0` gets its own hint. The jail keeps the network and the display: it hides files and processes, it is not a full security sandbox.
@@ -58,7 +71,7 @@ RF Swift runs on three operating systems, four engines and inside VMs on two of 
 
 ## Remote-agent mode
 
-The full list is in the [remote agent guide](/docs/guide/remote-agent#limits-of-remote-agent-mode). In short:
+When the Workbench drives a lab machine through `rfswift agent`, some things behave differently. The full list is in the [remote agent guide](/docs/guide/remote-agent#limits-of-remote-agent-mode). In short:
 
 - A valid client certificate is full command execution as the agent's user: no roles, revocation or rate limiting. Requests are logged with the client fingerprint. Loopback plus VPN or SSH tunnel is the supported deployment; see [Remote agent hardening](/docs/security/remote-agent).
 - The agent must run as the user whose vault holds the key passwords; services under another account cannot start it.
@@ -71,6 +84,8 @@ The full list is in the [remote agent guide](/docs/guide/remote-agent#limits-of-
 
 ## Workbench
 
+The desktop app shares the engines' limits above and adds a few of its own:
+
 - One mission is one target (a container or a Nix environment). Nix environments have no start/stop lifecycle; their commands run through the console.
 - Environment CVE audits are never promoted into mission findings automatically, and are excluded from finding totals and PwnDoc exports.
 - Secret values live in the OS credential vault only and are excluded from project exports, findings, reports and evidence indexes.
@@ -80,6 +95,8 @@ The full list is in the [remote agent guide](/docs/guide/remote-agent#limits-of-
 
 ## Installer and packages
 
+Things to know before installing on a locked-down or unusual machine:
+
 - The one-line installer needs a way to get root for the system steps (sudo or a root shell). On a stock Debian the first user is not in `sudo`; the script offers the Debian wiki fix or runs from `su -`. A user-local tarball install works without root.
 - Native packages are used on the stable channel by default (deb, rpm, pacman, Homebrew cask); `RFSWIFT_PKG_FORMAT=tarball` forces the tarball. A packaged `rfswift` is upgraded with the package, and `rfswift update` says so instead of overwriting it.
 - The Workbench AppImage is offered for Linux x86-64; native Workbench archives exist for Linux x86-64 and arm64, macOS universal, and Windows x64 and arm64.
@@ -88,6 +105,8 @@ The full list is in the [remote agent guide](/docs/guide/remote-agent#limits-of-
 - Docker Desktop requires a paid subscription in larger organisations; the Windows bundle offers Podman Desktop as the open-source alternative.
 
 ## Architecture support
+
+Which processors are covered, per operating system:
 
 - Linux: x86_64, arm64, riscv64 for the CLI and the images (`sdr_gnuradio4` and the GPU-accelerated SDR variants are amd64 or amd64/arm64 only).
 - macOS: universal CLI and Workbench; Lima USB passthrough on Apple Silicon and Intel, the krunkit GPU VM on Apple Silicon with macOS 14+.

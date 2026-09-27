@@ -1,12 +1,10 @@
 ---
-title: AI bridge (MCP) best practices
+title: "AI bridge (MCP) best practices"
+linkTitle: "MCP best practices"
+level: advanced
+description: "Use coding agents on a mission without handing them the keys."
 weight: 8
-prev: /docs/security/remote-agent
-cascade:
-  type: docs
 ---
-
-# 🤖 Using coding agents on a mission without handing them the keys
 
 The Workbench can connect an external coding-agent CLI (Codex, Claude Code, Kimi Code, GLM) to one mission through a local MCP server. Two things are being trusted when you do that: the **agent vendor** with whatever you send it, and the **evidence** the agent reads, which may have been written by the system you are assessing. This page lists what the bridge enforces and how to use it without leaking data or letting an injected instruction act on your behalf. The mechanics are in the [AI assistant guide](/docs/guide/ai-assistant).
 

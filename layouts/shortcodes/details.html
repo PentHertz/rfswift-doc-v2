@@ -1,0 +1,19 @@
+{{- /*
+A collapsible block, closed by default. Use it to keep advanced material out
+of a beginner's way. Use the markdown notation ({{% %}}).
+
+@param title  summary line (default "More details")
+@param level  optional: "advanced" or "beginner" adds a badge
+@param open   "true" to start expanded
+
+@example {{% details title="All the flags" level="advanced" %}}...{{% /details %}}
+*/ -}}
+{{- $level := lower (.Get "level" | default "") -}}
+<details class="disclosure{{ with $level }} disclosure-{{ . }}{{ end }}"{{ if eq (.Get "open") "true" }} open{{ end }}>
+<summary><i class="ph ph-caret-right disclosure-caret" aria-hidden="true"></i><span>{{ .Get "title" | default "More details" }}</span>{{ with $level }}<span class="badge {{ if eq . "advanced" }}badge-high{{ else }}badge-success{{ end }}">{{ . | title }}</span>{{ end }}</summary>
+<div class="disclosure-body">
+
+{{ .Inner }}
+
+</div>
+</details>

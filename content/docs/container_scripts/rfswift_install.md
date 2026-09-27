@@ -1,19 +1,16 @@
 ---
-title: RF Scripts Update Utility
+title: "RF scripts update utility"
+linkTitle: "RF scripts update"
+level: advanced
+description: "Keep the RF Swift scripts inside a container in sync with the latest versions."
 weight: 8
-prev: /docs/container_scripts
-next: /docs/container_scripts/avahi_inside_container
-cascade:
-  type: docs
 ---
-
-# RF Scripts Update Utility
 
 ## Overview
 
 The `update_rfscripts` utility is a tool that keeps your local RF Swift scripts synchronized with the latest versions from the official repository. This ensures you always have access to the most recent tools, fixes, and improvements without manually downloading and managing script files.
 
-## What This Utility Does
+## What this utility does
 
 The utility performs several operations to update your local scripts directory:
 
@@ -23,7 +20,7 @@ The utility performs several operations to update your local scripts directory:
 4. **Sets proper permissions** on the scripts to make them executable
 5. **Cleans up** any temporary files used during the update process
 
-## When to Use This Utility
+## When to use this utility
 
 Use the `update_rfscripts` utility:
 
@@ -32,9 +29,9 @@ Use the `update_rfscripts` utility:
 - If you suspect your scripts might be outdated
 - Before starting a new RF assessment to ensure you have the latest capabilities
 
-## Using the Utility
+## Using the utility
 
-### Running the Utility
+### Running the utility
 
 To update your RF scripts, simply run:
 
@@ -44,7 +41,7 @@ update_rfscripts
 
 No root privileges are required, as the scripts are installed to your user's home directory.
 
-### What to Expect
+### What to expect
 
 When you run the utility, you'll see a series of colored messages indicating the progress:
 
@@ -72,9 +69,9 @@ Cleaning up temporary files
 Update completed successfully.
 ```
 
-## Script Location and Usage
+## Script location and usage
 
-### Where Scripts Are Installed
+### Where scripts are installed
 
 The utility installs all scripts to the `scripts` directory in your home folder:
 
@@ -82,7 +79,7 @@ The utility installs all scripts to the `scripts` directory in your home folder:
 ~/scripts/
 ```
 
-### Using the Updated Scripts
+### Using the updated scripts
 
 After updating, you can use the scripts directly from your home directory. For example:
 
@@ -95,16 +92,16 @@ echo 'export PATH="$HOME/scripts:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-## Technical Details
+## Technical details
 
-### Repository Source
+### Repository source
 
 The scripts are downloaded from the official RF Swift images repository:
 ```
 https://github.com/PentHertz/RF-Swift-images
 ```
 
-### Update Process
+### Update process
 
 The utility uses a four-step process:
 
@@ -113,7 +110,7 @@ The utility uses a four-step process:
 3. **Synchronization**: Uses `rsync` with the `--delete` option to ensure your local directory exactly matches the repository
 4. **Finalization**: Sets executable permissions and cleans up temporary files
 
-### File Handling
+### File handling
 
 The utility uses `rsync` with the following options:
 - `-a`: Archive mode (preserves permissions, timestamps, etc.)
@@ -124,7 +121,7 @@ The utility uses `rsync` with the following options:
 
 If you need to modify the default behavior of the script updater:
 
-### Changing the Target Directory
+### Changing the target directory
 
 Edit the `update_rfscripts` file to change the `TARGET_DIR` variable:
 
@@ -136,7 +133,7 @@ TARGET_DIR="$(pwd)/scripts"
 TARGET_DIR="/opt/rfswift/scripts"
 ```
 
-### Preserving Local Modifications
+### Preserving local modifications
 
 If you've made local changes to scripts that you want to keep, remove the `--delete` option from the rsync command:
 
@@ -150,7 +147,7 @@ rsync -av "$TEMP_DIR/" "$TARGET_DIR/"
 
 ## Troubleshooting
 
-### Common Issues
+### Common issues
 
 **Network Connection Errors**
 - Ensure you have a working internet connection
@@ -172,8 +169,8 @@ rsync -av "$TEMP_DIR/" "$TARGET_DIR/"
   chmod +x ~/scripts/*.sh
   ```
 
-## Related Documentation
+## Related documentation
 
 - [RF Swift Utilities](/docs/container_scripts)
 - [Custom Script Development](/docs/development/yaml-recipe-guide)
-- [Troubleshooting](/docs/getting-started#troubleshooting)
+- [Troubleshooting](/docs/faq/)

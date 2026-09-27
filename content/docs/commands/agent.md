@@ -1,11 +1,11 @@
 ---
-title: agent
-weight: 60
-prev: /docs/commands/audit
-next: /docs/commands/system
+title: "rfswift agent"
+linkTitle: "agent"
+navGroup: "Remote access"
+level: reference
+description: "Serve a lab machine's engines to authenticated remote clients over mutual TLS."
+weight: 80
 ---
-
-# rfswift agent
 
 Serve the engines of a machine (Docker, Podman, Lima, Nix) to authenticated remote clients. Typical use: a lab machine holds the SDR, RFID, serial or GPU hardware; the [Workbench](/docs/guide/workbench) on your laptop drives it through the agent. Alias: `rfswift remote`.
 

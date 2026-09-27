@@ -1,11 +1,11 @@
 ---
-title: bindings
-weight: 15
-prev: /docs/commands/retag
-next: /docs/commands/capabilities
+title: "rfswift config bindings"
+linkTitle: "config bindings"
+navGroup: "Runtime configuration"
+level: reference
+description: "Add or remove devices and bind mounts on an existing container."
+weight: 41
 ---
-
-# rfswift bindings
 
 {{< callout type="info" >}}
 **RF Swift v4**: this group lives under the `config` parent as `rfswift config bindings` and remains available as `rfswift bindings`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
@@ -73,7 +73,7 @@ If source is omitted, source equals target.
 
 ## Examples
 
-### Volume Bindings
+### Volume bindings
 
 **Add volume mount:**
 ```bash
@@ -103,7 +103,7 @@ rfswift bindings rm -c my_container \
   -t /root/captures
 ```
 
-### Device Bindings
+### Device bindings
 
 **Add USB device:**
 ```bash
@@ -132,9 +132,9 @@ rfswift bindings add -d -c analysis \
 
 ---
 
-## How Bindings Work
+## How bindings work
 
-### Dynamic Mounting
+### Dynamic mounting
 
 When you add a binding to a running container:
 
@@ -150,7 +150,7 @@ graph LR
     C -->|Read/Write| A
 ```
 
-### Volume vs Device Bindings
+### Volume vs device bindings
 
 **Volume Bindings (without `-d`):**
 - Mount host directories into container
@@ -186,7 +186,7 @@ Podman processes bindings directly in user space (no daemon involved). In rootle
 
 ---
 
-## Bindings vs Initial Mount
+## Bindings vs initial mount
 
 ### Comparison
 
@@ -199,7 +199,7 @@ Podman processes bindings directly in user space (no daemon involved). In rootle
 | **Use case** | Dynamic needs | Known requirements |
 | **Engine support** | Docker ✅ Podman ✅ | Docker ✅ Podman ✅ |
 
-### When to Use Each
+### When to use each
 
 **Use runtime `bindings` when:**
 - ✅ Requirements change during work
@@ -217,7 +217,7 @@ Podman processes bindings directly in user space (no daemon involved). In rootle
 **Example:**
 ```bash
 # Initial mount at creation
-rfswift run -i sdr_full -n work \
+rfswift container create -i sdr_full -n work \
   -b /pathto/scripts:/root/scripts
 
 # Later add more dynamically
@@ -231,7 +231,7 @@ rfswift bindings add -d -c work -s /dev/bus/usb -t /dev/bus/usb
 
 ## Troubleshooting
 
-### Binding Not Visible in Container
+### Binding not visible in container
 
 **Problem:** Added binding but can't see it in container
 
@@ -244,7 +244,7 @@ rfswift bindings add -d -c work -s /dev/bus/usb -t /dev/bus/usb
 docker inspect container | grep -A5 Binds
 
 # Try accessing directly
-rfswift exec -c container
+rfswift container shell -c container
 ls -la /path/to/binding
 exit
 
@@ -259,7 +259,7 @@ rfswift bindings add -c container -s source -t target
 podman inspect container | grep -A5 Binds
 
 # Try accessing directly
-rfswift exec -c container
+rfswift container shell -c container
 ls -la /path/to/binding
 exit
 
@@ -270,7 +270,7 @@ rfswift bindings add -c container -s source -t target
   {{< /tab >}}
 {{< /tabs >}}
 
-### Device Access Denied
+### Device access denied
 
 **Problem:** Device binding added but access denied in container
 
@@ -323,7 +323,7 @@ cat /sys/fs/cgroup/user.slice/user-$(id -u).slice/user@$(id -u).service/cgroup.c
   {{< /tab >}}
 {{< /tabs >}}
 
-### Permission Denied on Volume
+### Permission denied on volume
 
 **Problem:** Can't write to mounted volume
 
@@ -362,7 +362,7 @@ rfswift bindings add -c container \
   {{< /tab >}}
 {{< /tabs >}}
 
-### Source Path Not Found
+### Source path not found
 
 **Error:** `source path does not exist`
 
@@ -380,7 +380,7 @@ rfswift bindings add -c container \
   -t /root/data
 ```
 
-### Cannot Remove Binding
+### Cannot remove binding
 
 **Problem:** `rm` command fails
 
@@ -415,7 +415,7 @@ rfswift bindings rm -c container \
   {{< /tab >}}
 {{< /tabs >}}
 
-### Device Not Found
+### Device not found
 
 **Problem:** Device doesn't exist at specified path
 
@@ -434,7 +434,7 @@ dmesg | tail -20
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`run`](/docs/commands/run) - Create containers with initial bindings
 - [`engine`](/docs/commands/engine) - Select container engine (Docker/Podman)

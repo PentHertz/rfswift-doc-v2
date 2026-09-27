@@ -1,11 +1,8 @@
 ---
-title: 📜 Archive
+title: "Archive"
+description: "Release notes and pages about earlier RF Swift versions."
 weight: 90
-cascade:
-  type: docs
 ---
-
-# Archive
 
 Release notes and pages about earlier RF Swift versions. They stay here for reference; the current release is described in [What's new in v4.0 "Nucleus"](/docs/release-notes-v4).
 

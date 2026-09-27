@@ -1,14 +1,14 @@
 ---
-title: cleanup
-weight: 20
-prev: /docs/commands/last
-next: /docs/commands/log
+title: "rfswift cleanup"
+linkTitle: "cleanup"
+navGroup: "System"
+level: reference
+description: "Remove old containers and images to reclaim disk space."
+weight: 92
 ---
 
-# rfswift cleanup
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift system cleanup`. The legacy form `rfswift cleanup` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift system cleanup`. The legacy form `rfswift cleanup` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Clean up containers and images to free disk space.
@@ -33,7 +33,7 @@ The `cleanup` command removes old or unused containers and images based on age f
 
 ---
 
-## Common Options
+## Common options
 
 These options are available on **all** subcommands (`all`, `containers`, `images`):
 
@@ -45,7 +45,7 @@ These options are available on **all** subcommands (`all`, `containers`, `images
 
 The `--older-than` flag accepts durations such as `24h`, `7d`, `1m`, and `1y`.
 
-## Subcommand-Specific Options
+## Subcommand-Specific options
 
 ### containers
 
@@ -64,7 +64,7 @@ The `--older-than` flag accepts durations such as `24h`, `7d`, `1m`, and `1y`.
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Clean both containers and images:**
 ```bash
@@ -91,7 +91,7 @@ rfswift cleanup containers
 rfswift cleanup images
 ```
 
-### Filtering by Age
+### Filtering by age
 
 **Remove containers older than 7 days:**
 ```bash
@@ -108,7 +108,7 @@ rfswift cleanup images --older-than 1m
 rfswift cleanup all --older-than 24h --force
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Weekly maintenance:**
 ```bash
@@ -125,7 +125,7 @@ rfswift cleanup images --dangling --force
 rfswift cleanup all --force
 
 # Then pull new images
-rfswift images pull -i penthertz/rfswift_resolute:sdr_full
+rfswift image pull -i penthertz/rfswift_resolute:sdr_full
 ```
 
 **Emergency disk space recovery:**
@@ -154,9 +154,9 @@ rfswift cleanup all --force
 
 ---
 
-## Cleanup Strategies
+## Cleanup strategies
 
-### Conservative Strategy
+### Conservative strategy
 
 Remove only stopped containers and dangling images:
 
@@ -170,7 +170,7 @@ rfswift cleanup images --dangling --force
 - Careful disk management
 - Preserving development environments
 
-### Balanced Strategy
+### Balanced strategy
 
 Remove older unused resources:
 
@@ -183,7 +183,7 @@ rfswift cleanup all --older-than 7d --force
 - Development systems
 - General cleanup
 
-### Aggressive Strategy
+### Aggressive strategy
 
 Remove everything unused:
 
@@ -200,7 +200,7 @@ rfswift cleanup all --force
 
 ## Troubleshooting
 
-### Cleanup Not Freeing Space
+### Cleanup not freeing space
 
 **Problem:** Ran cleanup but disk usage still high
 
@@ -222,7 +222,7 @@ du -sh /var/lib/docker/*
 truncate -s 0 /var/lib/docker/containers/*/*-json.log
 ```
 
-### Permission Denied
+### Permission denied
 
 **Problem:** Cleanup fails with permission errors
 
@@ -239,7 +239,7 @@ newgrp docker
 rfswift cleanup all --force
 ```
 
-### Important Container Removed
+### Important container removed
 
 **Problem:** Accidentally removed needed container
 
@@ -249,18 +249,18 @@ rfswift cleanup all --force
 ls ~/docker-backups/
 
 # Restore from export
-rfswift import container -i backup.tar.gz -n restored_container
+rfswift image import container -i backup.tar.gz -n restored_container
 
 # Recreate from image if no backup
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n recreated_container
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n recreated_container
 
 # Lesson: Always export important containers before cleanup
-rfswift export container -c important -o backup.tar.gz
+rfswift image export container -c important -o backup.tar.gz
 ```
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`last`](/docs/commands/last) - List containers before cleanup
 - [`remove`](/docs/commands/remove) - Remove specific containers

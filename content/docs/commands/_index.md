@@ -1,28 +1,45 @@
 ---
-linkTitle: 📘 Commands
-title: RF Swift Command Reference
-next: /docs/commands/container
-prev: /docs/container_scripts/
+linkTitle: "Commands"
+title: "Command reference"
+level: reference
+description: "Every rfswift command with its syntax, options and examples, grouped by what it manages."
 weight: 11
-cascade:
-  type: docs
 ---
 
-# RF Swift Command Reference
+Every `rfswift` command has its own page with syntax, options and examples. You don't need to read this reference to get started: the [Quick start](/docs/quick-start/) covers the handful of commands most people use every day.
 
-Complete reference for the `rfswift` command line. Each command has its own page with syntax, options and examples.
-
-{{< callout type="info" >}}
-**Quick Help**: `rfswift --help` shows the grouped overview, `rfswift [command] --help` the details of one command. The Linux packages also ship man pages (`man rfswift-container-create`) and bash, zsh and fish completions.
+{{< callout type="beginner" title="New to the command line?" >}}
+You never have to remember flags. Most commands open an interactive picker when something is missing: `rfswift container create` with no options starts a guided wizard, and `rfswift container shell` with no name lets you pick a container from a list. Prefer windows and buttons? The [Workbench](/docs/guide/workbench/) does the same things without typing.
 {{< /callout >}}
 
-{{< callout emoji="🧙" >}}
-**Interactive Mode**: most commands open a TUI picker when a required flag is missing in a terminal. `rfswift container create` without `-i` and `-n` launches the guided wizard, `rfswift container shell` without `-c` shows a container picker, and `rfswift env update` without a name opens the update wizard. Everything degrades to plain flags when scripting or piping.
-{{< /callout >}}
+## The 10 commands you'll use most
 
----
+| You want to… | Command |
+|---|---|
+| Check that your computer is ready | `rfswift doctor` |
+| Create a lab (guided) | `rfswift container create` |
+| Create a lab from a toolbox | `rfswift container create -i sdr_light -n mylab` |
+| Go back into a lab | `rfswift container shell -c mylab` |
+| See your labs | `rfswift container last` |
+| Download a toolbox | `rfswift image pull -i sdr_full` |
+| See which toolboxes exist | `rfswift image remote` |
+| Add a device to an existing lab | `rfswift config bindings add -c mylab -d -t /dev/ttyUSB0` |
+| Stop or delete a lab | `rfswift container stop -c mylab` / `rfswift container rm -c mylab` |
+| Update RF Swift | `rfswift update` |
 
-## 🗂️ The v4 command tree
+## Getting help in the terminal
+
+```bash
+rfswift --help                      # grouped overview
+rfswift container create --help     # one command
+rfswift config bindings add --help  # a subcommand
+man rfswift-env-update              # Linux packages ship man pages
+rfswift completion zsh --install    # tab completion
+```
+
+Most commands open a TUI picker when a required flag is missing in a terminal: `rfswift container create` without `-i` and `-n` launches the guided wizard, `rfswift container shell` without `-c` shows a container picker, and `rfswift env update` without a name opens the update wizard. Everything falls back to plain flags when scripting or piping.
+
+## The v4 command tree
 
 RF Swift v4.0 "Nucleus" reorganised the CLI around **resources**. The old flat commands (`rfswift run`, `rfswift exec`, `rfswift images pull`, `rfswift nix install`, ...) all still work and print a notice pointing at the new spelling, so existing scripts and muscle memory are safe.
 
@@ -44,7 +61,7 @@ rfswift
 └── system      doctor | cleanup | update | upgrade | log | report
 ```
 
-### Canonical and legacy spellings
+{{% details title="Old command names (v3 and earlier) and their v4 equivalents" %}}
 
 | Canonical (v4) | Legacy (still works) | Short aliases |
 |---|---|---|
@@ -65,9 +82,9 @@ rfswift
 
 The runtime-configuration groups (`bindings`, `capabilities`, `cgroups`, `gpus`, `ports`, `ulimits`) and the maintenance commands (`doctor`, `cleanup`, `update`, `log`, `report`) exist both at the top level and under their `config` / `system` parent. Neither form is deprecated.
 
----
+{{% /details %}}
 
-## 🔌 Global flags
+## Global flags
 
 | Flag | Description |
 |------|-------------|
@@ -89,11 +106,9 @@ export RFSWIFT_ENGINE=podman
 
 The ASCII banner is printed on interactive terminals only. It is skipped when stdout is a pipe (scripts, `--json` consumers) and when `RFSWIFT_NO_BANNER` is set.
 
----
+## Command groups
 
-## 📋 Command groups
-
-### 🐳 Containers
+### Containers
 
 {{< cards >}}
   {{< card link="container" title="container" icon="cube" subtitle="Create, enter, stop, remove, rename, commit and upgrade containers" >}}
@@ -109,7 +124,7 @@ The ASCII banner is printed on interactive terminals only. It is skipped when st
   {{< card link="upgrade" title="container upgrade" icon="arrow-up" subtitle="Move a container to a new image" >}}
 {{< /cards >}}
 
-### 🖼️ Images and portability
+### Images and portability
 
 {{< cards >}}
   {{< card link="image" title="image" icon="photograph" subtitle="List, pull, audit, build, tag, export and import images" >}}
@@ -122,14 +137,14 @@ The ASCII banner is printed on interactive terminals only. It is skipped when st
   {{< card link="import" title="image import" icon="upload" subtitle="Import containers or images" >}}
 {{< /cards >}}
 
-### ❄️ Native Nix environments
+### Native Nix environments
 
 {{< cards >}}
   {{< card link="env" title="env" icon="sparkles" subtitle="Create, enter, update, roll back, audit and export native Nix environments" >}}
   {{< card link="/docs/guide/nix-engine" title="Nix engine guide" icon="book-open" subtitle="How the native engine works, isolation, GPU, udev, Windows" >}}
 {{< /cards >}}
 
-### ⚙️ Runtime configuration
+### Runtime configuration
 
 {{< cards >}}
   {{< card link="config" title="config" icon="adjustments" subtitle="Change devices, mounts, capabilities, cgroups, GPUs, ports and ulimits of an existing container" >}}
@@ -142,13 +157,13 @@ The ASCII banner is printed on interactive terminals only. It is skipped when st
   {{< card link="realtime" title="realtime" icon="lightning-bolt" subtitle="One-command realtime mode for SDR work" >}}
 {{< /cards >}}
 
-### 🌐 Networking
+### Networking
 
 {{< cards >}}
   {{< card link="network" title="network" icon="globe-alt" subtitle="Managed NAT networks for container isolation" >}}
 {{< /cards >}}
 
-### 🔌 Devices and host
+### Devices and host
 
 {{< cards >}}
   {{< card link="host" title="host" icon="desktop-computer" subtitle="Host setup: udev rules, Docker access, Nix jail, audio server" >}}
@@ -158,21 +173,21 @@ The ASCII banner is printed on interactive terminals only. It is skipped when st
   {{< card link="engine" title="engine" icon="cog" subtitle="Engine selection, Lima VM management" >}}
 {{< /cards >}}
 
-### 🛡️ Security
+### Security
 
 {{< cards >}}
   {{< card link="audit" title="audit" icon="shield-check" subtitle="Vulnerability and attack-surface audit of environments, images and containers" >}}
   {{< card link="report" title="report" icon="document-report" subtitle="Assessment reports from a container and its workspace" >}}
 {{< /cards >}}
 
-### 📡 Remote access
+### Remote access
 
 {{< cards >}}
   {{< card link="agent" title="agent" icon="wifi" subtitle="Serve the engines of a lab machine to authenticated remote clients (mTLS)" >}}
   {{< card link="/docs/guide/remote-agent" title="Remote agent guide" icon="book-open" subtitle="Setup, credential files, Workbench connection, limits" >}}
 {{< /cards >}}
 
-### 🔧 System and maintenance
+### System and maintenance
 
 {{< cards >}}
   {{< card link="system" title="system" icon="cog" subtitle="doctor, cleanup, update, upgrade, log and report under one parent" >}}
@@ -183,9 +198,7 @@ The ASCII banner is printed on interactive terminals only. It is skipped when st
   {{< card link="completion" title="completion" icon="code" subtitle="Shell completion scripts" >}}
 {{< /cards >}}
 
----
-
-## 🚀 Quick reference
+## Quick reference
 
 | Command | Purpose |
 |---------|---------|
@@ -221,21 +234,3 @@ The ASCII banner is printed on interactive terminals only. It is skipped when st
 | `rfswift report generate -c NAME -f html` | HTML assessment report |
 | `rfswift engine lima status` | Lima VM status (macOS) |
 | `rfswift update` | Update RF Swift (or tells you to use your package manager) |
-
----
-
-## 🆘 Getting help
-
-```bash
-rfswift --help                      # grouped overview
-rfswift container create --help     # one command
-rfswift config bindings add --help  # a subcommand
-man rfswift-env-update              # Linux packages ship man pages
-rfswift completion zsh --install    # completions
-```
-
----
-
-{{< callout emoji="💡" >}}
-**New to RF Swift?** Start with the [Quick Start Guide](/docs/quick-start/) before diving into command details.
-{{< /callout >}}

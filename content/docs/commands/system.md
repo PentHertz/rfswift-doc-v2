@@ -1,11 +1,11 @@
 ---
-title: system
-weight: 70
-prev: /docs/commands/agent
-next: /docs/commands/doctor
+title: "rfswift system"
+linkTitle: "system"
+navGroup: "System"
+level: reference
+description: "Housekeeping for RF Swift: doctor, cleanup, update, upgrade, log and report."
+weight: 90
 ---
-
-# rfswift system
 
 Housekeeping for RF Swift itself. Every subcommand is also available at the top level (`rfswift doctor`, `rfswift cleanup`, ...). Alias: `rfswift admin`.
 

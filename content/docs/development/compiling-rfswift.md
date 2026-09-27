@@ -1,13 +1,10 @@
 ---
-title: Compiling RF Swift from Source
+title: "Compiling RF Swift from source"
+linkTitle: "Compile from source"
+level: advanced
+description: "Build the rfswift CLI and the Workbench from source."
 weight: 1
-prev: /docs/development
-next: /docs/development/building-images
-cascade:
-  type: docs
 ---
-
-# Building RF Swift from Source
 
 RF Swift is two Go programs in one repository: the lean `rfswift` CLI/TUI (which also contains the remote agent) and the `rfswift-workbench` desktop GUI. This guide builds both, for your machine or for another architecture.
 

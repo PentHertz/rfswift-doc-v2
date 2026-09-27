@@ -1,12 +1,9 @@
 ---
-title: Helper Functions Reference
+title: "Helper functions reference"
+level: advanced
+description: "The Bash helper functions used by the RF Swift image build system."
 weight: 3
-prev: /docs/development/yaml-recipe-guide
-cascade:
-  type: docs
 ---
-
-# RF Swift Helper Functions Reference
 
 This page documents the Bash helper functions used in the RF Swift container build system. These utilities simplify logging, dependency management, source code builds, and network operations.
 
@@ -18,7 +15,7 @@ Most helpers implement retry logic and consistent logging to ensure resilience a
 
 ---
 
-## 🎨 Output & Logging Functions
+## Output & logging functions
 
 These functions provide consistent, colored output for different message types during container builds.
 
@@ -116,7 +113,7 @@ fi
 
 ---
 
-## 📦 Package Installation Helpers
+## Package installation helpers
 
 ### `installfromnet <command>`
 
@@ -338,7 +335,7 @@ make -j$(nproc)
 
 ---
 
-## 🐍 Python Package Management
+## Python package management
 
 ### `pip3install <args>`
 
@@ -446,7 +443,7 @@ pip3install "numpy==1.24.0" "scipy==1.10.0"
 
 ---
 
-## 🧬 Git and Source Management
+## Git and source management
 
 ### `gitinstall <repo-url> <method> <branch>`
 
@@ -772,7 +769,7 @@ grclone_and_build \
 
 ---
 
-## 🧠 Complete Function Reference Table
+## Complete function reference table
 
 | Category | Function | Retry Logic | Logging | Exit on Error |
 |----------|----------|-------------|---------|---------------|
@@ -790,9 +787,9 @@ grclone_and_build \
 
 ---
 
-## 💡 Best Practices
+## Best practices
 
-### Complete Build Workflow - YAML Recipe
+### Complete build workflow - YAML recipe
 
 ```yaml
 # hackrf-tools.yaml - Complete HackRF installation
@@ -821,10 +818,10 @@ run_commands:
 
 Build it with:
 ```bash
-rfswift build -r hackrf-tools.yaml
+rfswift image build -r hackrf-tools.yaml
 ```
 
-### Complete Build Workflow - Bash Script
+### Complete build workflow - Bash script
 
 ```bash
 # Complete installation workflow
@@ -848,7 +845,7 @@ cmake_clone_and_build \
 goodecho "HackRF installation complete!"
 ```
 
-### Error Handling
+### Error handling
 
 ```bash
 # Check prerequisites before proceeding
@@ -862,7 +859,7 @@ if ! pip3install optional-package 2>/dev/null; then
 fi
 ```
 
-### YAML Recipe Integration (Recommended)
+### YAML recipe integration (recommended)
 
 The easiest way to use helper functions is through YAML recipes:
 
@@ -882,10 +879,10 @@ run_commands:
 
 Build with:
 ```bash
-rfswift build -r my-image.yaml
+rfswift image build -r my-image.yaml
 ```
 
-### Dockerfile Integration (Traditional)
+### Dockerfile integration (traditional)
 
 For advanced users who prefer Dockerfiles:
 
@@ -907,7 +904,7 @@ RUN chmod +x /tmp/common.sh && \
     rm -rf /tmp/*
 ```
 
-### Layer Optimization
+### Layer optimization
 
 **YAML (Automatic Optimization):**
 ```yaml
@@ -946,9 +943,9 @@ RUN cmake_clone_and_build [...]
 
 ---
 
-## 📋 YAML vs Dockerfile: When to Use Each
+## YAML vs Dockerfile: when to use each
 
-### Use YAML Recipes When:
+### Use YAML recipes when:
 - ✅ You want simple, readable configurations
 - ✅ You're building standard SDR/RF tool containers
 - ✅ You need quick prototyping
@@ -970,7 +967,7 @@ run_commands:
  - "echo 'Build complete!'"
 ```
 
-### Use Dockerfiles When:
+### Use Dockerfiles when:
 - ⚙️ You need fine-grained control over build process
 - ⚙️ You're implementing complex multi-stage builds
 - ⚙️ You need custom base image configurations
@@ -992,9 +989,9 @@ COPY --from=builder /usr/local /usr/local
 
 ---
 
-## 🔧 Advanced Usage
+## Advanced usage
 
-### Custom Retry Logic
+### Custom retry logic
 
 ```bash
 # Wrap any command with custom retry logic
@@ -1018,7 +1015,7 @@ retry_custom() {
 retry_custom "wget https://unstable-mirror.example.com/file.tar.gz"
 ```
 
-### Conditional Builds
+### Conditional builds
 
 ```bash
 # Build different components based on architecture
@@ -1043,7 +1040,7 @@ else
 fi
 ```
 
-### Metadata Queries
+### Metadata queries
 
 ```bash
 # List all installed GitHub repositories
@@ -1058,7 +1055,7 @@ awk -F'|' '/rtlsdr_install/ {print $3}' /var/lib/db/rfswift_github.lst
 
 ---
 
-## 📚 Related Documentation
+## Related documentation
 
 {{< cards >}}
   {{< card link="/docs/development/building-images" title="Build Custom Images" icon="cube" subtitle="Use these helpers in your YAML recipes and Dockerfiles" >}}
@@ -1068,9 +1065,9 @@ awk -F'|' '/rtlsdr_install/ {print $3}' /var/lib/db/rfswift_github.lst
 
 ---
 
-## 🆘 Troubleshooting
+## Troubleshooting
 
-### Common Issues
+### Common issues
 
 **Issue: "Command failed after 5 attempts"**
 ```bash

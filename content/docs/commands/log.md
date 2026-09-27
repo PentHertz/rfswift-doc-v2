@@ -1,14 +1,14 @@
 ---
-title: log
-weight: 21
-prev: /docs/commands/cleanup
-next: /docs/commands/host
+title: "rfswift log"
+linkTitle: "log"
+navGroup: "System"
+level: reference
+description: "Record and replay terminal sessions."
+weight: 94
 ---
 
-# rfswift log
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift system log`. The legacy form `rfswift log` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift system log`. The legacy form `rfswift log` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Record and replay terminal sessions for documentation and training.
@@ -104,7 +104,7 @@ Session Recordings
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Start recording:**
 ```bash
@@ -150,7 +150,7 @@ rfswift log list
 rfswift log list --dir ~/rfswift-tutorials
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Create a tutorial:**
 ```bash
@@ -158,8 +158,8 @@ rfswift log list --dir ~/rfswift-tutorials
 rfswift log start -o sdr-tutorial-basics.cast
 
 # Perform tutorial steps
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n tutorial
-rfswift exec -c tutorial
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n tutorial
+rfswift container shell -c tutorial
 rtl_test -t
 # ... demonstrate features ...
 exit
@@ -177,7 +177,7 @@ rfswift log replay -i sdr-tutorial-basics.cast
 rfswift log start -o bug-report-issue-123.cast
 
 # Reproduce the issue
-rfswift exec -c production
+rfswift container shell -c production
 # ... reproduce bug ...
 exit
 
@@ -189,9 +189,9 @@ rfswift log stop
 
 ---
 
-## Recording Format
+## Recording format
 
-### Asciinema Format (.cast)
+### Asciinema format (.cast)
 
 By default, RF Swift uses asciinema format, which records:
 - Terminal output with timing information
@@ -208,11 +208,11 @@ By default, RF Swift uses asciinema format, which records:
 **Example .cast file:**
 ```json
 {"version": 2, "width": 120, "height": 30, "timestamp": 1704981234}
-[0.123456, "o", "$ rfswift run -i sdr_full -n demo\r\n"]
+[0.123456, "o", "$ rfswift container create -i sdr_full -n demo\r\n"]
 [1.234567, "o", "Container started: demo\r\n"]
 ```
 
-### Script Format (Fallback)
+### Script format (fallback)
 
 When asciinema is not available, RF Swift falls back to the `script` command:
 
@@ -223,9 +223,9 @@ rfswift log start --use-script -o session.txt
 
 ---
 
-## Playback Control
+## Playback control
 
-### Speed Control
+### Speed control
 
 ```bash
 # Normal speed (1.0x)
@@ -244,7 +244,7 @@ rfswift log replay -i session.cast -s 0.5
 rfswift log replay -i session.cast -s 0.25
 ```
 
-### Interactive Playback
+### Interactive playback
 
 If using asciinema format, you can use asciinema player for interactive control:
 
@@ -263,9 +263,9 @@ asciinema play session.cast
 
 ---
 
-## Sharing Recordings
+## Sharing recordings
 
-### Web Embedding (Asciinema)
+### Web embedding (asciinema)
 
 ```bash
 # Upload to asciinema.org
@@ -289,7 +289,7 @@ scp *.cast webserver:/var/www/tutorials/
 
 ### Distribution
 
-```bash
+````bash
 # Create distribution package
 mkdir -p rfswift-training-package
 cp ~/recordings/*.cast rfswift-training-package/
@@ -314,12 +314,13 @@ tar czf rfswift-training.tar.gz rfswift-training-package/
 
 # Distribute
 # Share rfswift-training.tar.gz with team
+````
 
 ---
 
 ## Troubleshooting
 
-### Recording Not Starting
+### Recording not starting
 
 **Problem:** `rfswift log start` fails
 
@@ -338,7 +339,7 @@ brew install asciinema      # macOS
 rfswift log start --use-script
 ```
 
-### Recording File Not Found
+### Recording file not found
 
 **Problem:** Cannot find recorded file
 
@@ -357,7 +358,7 @@ rfswift log list --dir ~
 find ~ -name "*.cast" -mtime -1  # Last 24 hours
 ```
 
-### Replay Not Working
+### Replay not working
 
 **Problem:** Cannot replay session
 
@@ -378,7 +379,7 @@ rfswift log start --use-script
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`report`](/docs/commands/report) - Generate assessment reports (includes recordings automatically)
 - [`exec`](/docs/commands/exec) - Execute commands that can be recorded

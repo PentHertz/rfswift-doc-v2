@@ -1,0 +1,23 @@
+<header class="site-header">
+  <nav class="wrap nav{{ if eq .Type "docs" }} nav-wide{{ end }}" aria-label="Main">
+    <a class="brand" href="{{ "/" | relURL }}">{{ partial "logo.html" . }}<span>RF Swift</span></a>
+    <div class="nav-links" id="nav-links">
+      {{- $current := . }}
+      {{- range site.Menus.main }}
+        {{- $active := false }}
+        {{- if and (eq .URL "/docs/") (eq $current.Type "docs") (not (hasPrefix $current.RelPermalink "/docs/commands/")) }}{{ $active = true }}{{ end }}
+        {{- if and (eq .URL "/docs/commands/") (hasPrefix $current.RelPermalink "/docs/commands/") }}{{ $active = true }}{{ end }}
+        <a href="{{ .URL | relURL }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{- end }}
+    </div>
+    <div class="nav-end">
+      <button class="search-trigger" type="button" data-search-open aria-label="Search the docs">
+        <i class="ph ph-magnifying-glass"></i><span>Search docs</span><kbd>Ctrl K</kbd>
+      </button>
+      <a class="icon-link" href="{{ site.Params.github }}" aria-label="GitHub"><i class="ph ph-github-logo"></i></a>
+      <a class="icon-link" href="{{ site.Params.discord }}" aria-label="Discord"><i class="ph ph-discord-logo"></i></a>
+      <a class="btn btn-primary nav-install" href="{{ "/#install" | relURL }}">Install</a>
+      <button class="icon-link nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links" data-nav-toggle><i class="ph ph-list"></i></button>
+    </div>
+  </nav>
+</header>

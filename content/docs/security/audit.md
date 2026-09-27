@@ -1,13 +1,9 @@
 ---
-title: Audits and hardened deployment
+title: "Audits and hardened deployment"
+level: advanced
+description: "RF Swift's built-in vulnerability and attack-surface audits, and the hardened deployment baseline."
 weight: 6
-prev: /docs/security/guide_lines
-next: /docs/security/remote-agent
-cascade:
-  type: docs
 ---
-
-# 🔍 Security audits and the hardened deployment baseline
 
 RF Swift v4 ships its own vulnerability and attack-surface audits, and the project publishes a dated security review of its own code. This page summarises both and gives the deployment baseline for sensitive environments.
 

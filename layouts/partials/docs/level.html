@@ -1,0 +1,7 @@
+{{- /* Level badge from front matter: beginner | intermediate | advanced | reference */ -}}
+{{- with .Params.level }}
+  {{- $l := lower . }}
+  {{- $cls := dict "beginner" "badge-success" "intermediate" "badge-warning" "advanced" "badge-high" "reference" "badge-accent" }}
+  {{- $icons := dict "beginner" "student" "intermediate" "compass" "advanced" "graduation-cap" "reference" "book-open" }}
+  <span class="badge {{ index $cls $l | default "badge-accent" }}"><i class="ph ph-{{ index $icons $l | default "tag" }}" aria-hidden="true"></i> {{ $l | title }}</span>
+{{- end }}

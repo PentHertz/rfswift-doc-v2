@@ -1,14 +1,14 @@
 ---
-title: retag
-weight: 14
-prev: /docs/commands/delete
-next: /docs/commands/bindings
+title: "rfswift image tag"
+linkTitle: "image tag"
+navGroup: "Images"
+level: reference
+description: "Rename an image tag."
+weight: 24
 ---
 
-# rfswift retag
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift image tag`. The legacy form `rfswift retag` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift image tag`. The legacy form `rfswift retag` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Create new tags for existing Docker images or rename image tags.
@@ -16,7 +16,7 @@ Create new tags for existing Docker images or rename image tags.
 ## Synopsis
 
 ```bash
-rfswift retag -i IMAGE_REFERENCE -t NEW_TAG
+rfswift image tag -i IMAGE_REFERENCE -t NEW_TAG
 ```
 
 The `retag` command creates a new tag for an existing Docker image. This is useful for organizing images, creating aliases, marking versions, or preparing images for distribution.
@@ -38,58 +38,58 @@ The `retag` command creates a new tag for an existing Docker image. This is usef
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Create new tag for existing image:**
 ```bash
-rfswift retag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
+rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
 ```
 
 **Create alias for convenience:**
 ```bash
-rfswift retag -i penthertz/rfswift_resolute:sdr_full -t sdr:latest
+rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr:latest
 ```
 
 **Mark as production:**
 ```bash
-rfswift retag -i my_custom_image:test -t my_custom_image:production
+rfswift image tag -i my_custom_image:test -t my_custom_image:production
 ```
 
 **Version tagging:**
 ```bash
-rfswift retag -i my_image:latest -t my_image:v1.0.0
+rfswift image tag -i my_image:latest -t my_image:v1.0.0
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Environment-based tagging:**
 ```bash
 # Pull image
-rfswift images pull -i penthertz/rfswift_resolute:sdr_full
+rfswift image pull -i penthertz/rfswift_resolute:sdr_full
 
 # Create environment-specific tags
-rfswift retag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:development
-rfswift retag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:staging
-rfswift retag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:production
+rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:development
+rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:staging
+rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t sdr_work:production
 ```
 
 **Version management:**
 ```bash
 # Tag current version
-rfswift retag -i my_custom_sdr:latest -t my_custom_sdr:v1.2.0
+rfswift image tag -i my_custom_sdr:latest -t my_custom_sdr:v1.2.0
 
 # Keep latest tag updated
-rfswift retag -i my_custom_sdr:v1.2.0 -t my_custom_sdr:latest
+rfswift image tag -i my_custom_sdr:v1.2.0 -t my_custom_sdr:latest
 
 # Create stable release tag
-rfswift retag -i my_custom_sdr:v1.2.0 -t my_custom_sdr:stable
+rfswift image tag -i my_custom_sdr:v1.2.0 -t my_custom_sdr:stable
 ```
 
 ---
 
-## How Retag Works
+## How retag works
 
-### Tag Creation Process
+### Tag creation process
 
 When you retag an image:
 
@@ -112,7 +112,7 @@ docker images
 # penthertz/rfswift_resolute:sdr_full  a1b2c3d4e5f6  2.5GB
 
 # Create new tag
-rfswift retag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:work
+rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:work
 
 # Both tags exist, pointing to same image
 docker images
@@ -123,9 +123,9 @@ docker images
 
 ---
 
-## Retag vs Rename
+## Retag vs rename
 
-### Key Differences
+### Key differences
 
 | Feature | `retag` | `rename` |
 |---------|---------|----------|
@@ -137,9 +137,9 @@ docker images
 
 ---
 
-## Tag Naming Conventions
+## Tag naming conventions
 
-### Recommended Patterns
+### Recommended patterns
 
 **Version-based:**
 ```bash
@@ -186,7 +186,7 @@ my_image:2026.01_dev
 my_image:v1_experimental
 ```
 
-### Tag Best Practices
+### Tag best practices
 
 **Good tag names:**
 ```bash
@@ -219,26 +219,26 @@ new
 
 ## Troubleshooting
 
-### Source Image Not Found
+### Source image not found
 
 **Error:** `Error: No such image: source:tag`
 
 **Solutions:**
 ```bash
 # List available images
-rfswift images local
+rfswift image local
 
 # Check exact image name
 docker images | grep image_name
 
 # Pull if needed
-rfswift images pull -i penthertz/rfswift_resolute:sdr_full
+rfswift image pull -i penthertz/rfswift_resolute:sdr_full
 
 # Then retag
-rfswift retag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
+rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
 ```
 
-### Invalid Tag Format
+### Invalid tag format
 
 **Error:** `invalid reference format`
 
@@ -246,54 +246,54 @@ rfswift retag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
 ```bash
 # Check tag format (no spaces, special chars)
 # Good
-rfswift retag -i image:old -t image:new
+rfswift image tag -i image:old -t image:new
 
 # Bad
-rfswift retag -i image:old -t "image with spaces:new"
-rfswift retag -i image:old -t "image:new tag"
+rfswift image tag -i image:old -t "image with spaces:new"
+rfswift image tag -i image:old -t "image:new tag"
 
 # Use underscores or hyphens
-rfswift retag -i image:old -t image_new:v1
-rfswift retag -i image:old -t image-new:v1
+rfswift image tag -i image:old -t image_new:v1
+rfswift image tag -i image:old -t image-new:v1
 ```
 
-### Tag Already Exists
+### Tag already exists
 
 **Problem:** Tag already points to different image
 
 **Solution:**
 ```bash
 # Check existing tag
-rfswift images local
+rfswift image local
 
 # Remove old tag first
-rfswift delete old_image:new_tag
+rfswift image rm old_image:new_tag
 
 # Then create new tag
-rfswift retag -i source:tag -t new_tag:version
+rfswift image tag -i source:tag -t new_tag:version
 
 # Or: Tag overwrites automatically with same ID
-rfswift retag -i source:tag -t existing:tag
+rfswift image tag -i source:tag -t existing:tag
 ```
 
-### Permission Denied
+### Permission denied
 
 **Error:** `Permission denied`
 
 **Solutions:**
 ```bash
 # Use sudo
-sudo rfswift retag -i source:tag -t new:tag
+sudo rfswift image tag -i source:tag -t new:tag
 
 # Or add user to docker group
 sudo usermod -aG docker $USER
 newgrp docker
 
 # Then retry
-rfswift retag -i source:tag -t new:tag
+rfswift image tag -i source:tag -t new:tag
 ```
 
-### Cannot Retag While Container Running
+### Cannot retag while container running
 
 **Problem:** Want to retag image being used by container
 
@@ -304,13 +304,13 @@ rfswift retag -i source:tag -t new:tag
 
 # Container continues using the image it was started with
 # New tag just provides another reference to same image
-rfswift retag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
+rfswift image tag -i penthertz/rfswift_resolute:sdr_full -t my_sdr:v1
 # Running containers using penthertz/rfswift_resolute:sdr_full are unaffected
 ```
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`images`](/docs/commands/images) - List and manage images
 - [`rename`](/docs/commands/rename) - Rename containers

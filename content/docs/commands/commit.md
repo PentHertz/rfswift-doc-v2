@@ -1,14 +1,14 @@
 ---
-title: commit
-weight: 6
-prev: /docs/commands/rename
-next: /docs/commands/bindings
+title: "rfswift container commit"
+linkTitle: "container commit"
+navGroup: "Containers"
+level: reference
+description: "Save a container's current state as a new image."
+weight: 9
 ---
 
-# rfswift commit
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift container commit`. The legacy form `rfswift commit` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift container commit`. The legacy form `rfswift commit` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Save a container's current state as a new Docker image.
@@ -16,7 +16,7 @@ Save a container's current state as a new Docker image.
 ## Synopsis
 
 ```bash
-rfswift commit -c CONTAINER_NAME -i NEW_IMAGE_NAME
+rfswift container commit -c CONTAINER_NAME -i NEW_IMAGE_NAME
 ```
 
 The `commit` command creates a new Docker image from a container's current state, capturing all changes made to the filesystem. This is useful for preserving work, creating backups, or sharing customized environments.
@@ -38,67 +38,67 @@ The `commit` command creates a new Docker image from a container's current state
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Create backup image:**
 ```bash
-rfswift commit -c my_sdr_work -i my_sdr_backup
+rfswift container commit -c my_sdr_work -i my_sdr_backup
 ```
 
 **With version tag:**
 ```bash
-rfswift commit -c assessment -i assessment_backup:v1.0
+rfswift container commit -c assessment -i assessment_backup:v1.0
 ```
 
 **Before removing container:**
 ```bash
 # Save state first
-rfswift commit -c temp_container -i saved_state
+rfswift container commit -c temp_container -i saved_state
 
 # Safe to remove now
-rfswift remove -c temp_container
+rfswift container rm -c temp_container
 
 # Can recreate later
-rfswift run -i saved_state -n restored_container
+rfswift container create -i saved_state -n restored_container
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Save configured environment:**
 ```bash
 # Spent hours configuring tools
-rfswift exec -c sdr_work
+rfswift container shell -c sdr_work
 # ... install additional tools, configure settings ...
 exit
 
 # Save all that work
-rfswift commit -c sdr_work -i sdr_configured:2024_01
+rfswift container commit -c sdr_work -i sdr_configured:2024_01
 ```
 
 **Create project snapshot:**
 ```bash
 # End of assessment phase
-rfswift commit -c client_assessment -i client_assessment_phase1:final
+rfswift container commit -c client_assessment -i client_assessment_phase1:final
 
 # Continue to phase 2
-rfswift exec -c client_assessment
+rfswift container shell -c client_assessment
 # ... more work ...
 exit
 
 # Save phase 2
-rfswift commit -c client_assessment -i client_assessment_phase2:final
+rfswift container commit -c client_assessment -i client_assessment_phase2:final
 ```
 
 **Share custom environment with team:**
 ```bash
 # Create customized environment
-rfswift commit -c my_setup -i team_sdr_environment:v1
+rfswift container commit -c my_setup -i team_sdr_environment:v1
 
 # Export container for sharing
-rfswift export container -c team_sdr_environment:v1 -o sdr_backup.tar.gz
+rfswift image export container -c team_sdr_environment:v1 -o sdr_backup.tar.gz
 
 # Export image for sharing
-rfswift export image -i imagetoexport -o sdr_backup.tar.gz
+rfswift image export image -i imagetoexport -o sdr_backup.tar.gz
 
 # Team members import
 docker import 
@@ -107,37 +107,37 @@ docker import
 **Before major changes:**
 ```bash
 # Checkpoint before risky operation
-rfswift commit -c production_monitor -i production_monitor_backup:pre_upgrade
+rfswift container commit -c production_monitor -i production_monitor_backup:pre_upgrade
 
 # Try upgrade
-rfswift exec -c production_monitor
+rfswift container shell -c production_monitor
 # ... attempt upgrade ...
 # ... something breaks ...
 exit
 
 # Restore from backup
-rfswift remove -c production_monitor
-rfswift run -i production_monitor_backup:pre_upgrade -n production_monitor
+rfswift container rm -c production_monitor
+rfswift container create -i production_monitor_backup:pre_upgrade -n production_monitor
 ```
 
 **Create versioned snapshots:**
 ```bash
 # Daily snapshots during project
-rfswift commit -c research_container -i research_project:day_1
+rfswift container commit -c research_container -i research_project:day_1
 # ... work ...
-rfswift commit -c research_container -i research_project:day_2
+rfswift container commit -c research_container -i research_project:day_2
 # ... work ...
-rfswift commit -c research_container -i research_project:day_3
+rfswift container commit -c research_container -i research_project:day_3
 
 # Can return to any day's state
-rfswift run -i research_project:day_2 -n restore_day_2
+rfswift container create -i research_project:day_2 -n restore_day_2
 ```
 
 ---
 
-## What Gets Committed
+## What gets committed
 
-### Captured in Image
+### Captured in image
 
 When you commit a container, the new image includes:
 
@@ -156,7 +156,7 @@ When you commit a container, the new image includes:
 **Example of what's saved:**
 ```bash
 # Inside container
-rfswift exec -c my_container
+rfswift container shell -c my_container
 
 # Changes that WILL be in committed image:
 apt-get install -y new-tool              # ✅ Saved
@@ -172,70 +172,70 @@ cp tool.py /usr/local/bin/              # ✅ Saved
 
 exit
 
-rfswift commit -c my_container -i my_configured_image
+rfswift container commit -c my_container -i my_configured_image
 ```
 
-### Mounted Volumes
+### Mounted volumes
 
 **Important:** Mounted volume data is NOT included in committed images:
 
 ```bash
 # Create container with volume
-rfswift run -i sdr_full -n capture_work \
+rfswift container create -i sdr_full -n capture_work \
   -b ~/captures:/root/captures
 
 # Inside container
-rfswift exec -c capture_work
+rfswift container shell -c capture_work
 # Files in /root/captures are on host (~/captures)
 # Files in /root/other are in container filesystem
 exit
 
 # Commit
-rfswift commit -c capture_work -i capture_backup
+rfswift container commit -c capture_work -i capture_backup
 
 # New container from committed image
-rfswift run -i capture_backup -n restored
-rfswift exec -c restored
+rfswift container create -i capture_backup -n restored
+rfswift container shell -c restored
 ls /root/captures  # Empty! (no volume mounted)
 ls /root/other     # Present! (was in container filesystem)
 exit
 
 # Need to mount volume again
-rfswift remove -c restored
-rfswift run -i capture_backup -n restored -b ~/captures:/root/captures
+rfswift container rm -c restored
+rfswift container create -i capture_backup -n restored -b ~/captures:/root/captures
 ```
 
 ---
 
 ## Troubleshooting
 
-### Container Not Found
+### Container not found
 
 **Error:** `Error: No such container: container_name`
 
 **Solutions:**
 ```bash
 # List containers
-rfswift last
+rfswift container last
 ```
 
-### Image Name Already Exists
+### Image name already exists
 
 **Error:** `Error: Conflict: Tag already exists`
 
 **Solutions:**
 ```bash
 # Option 1: Use different tag
-rfswift commit -c container -i image:v2
+rfswift container commit -c container -i image:v2
 
 # Option 2: Remove old image first
-rfswift remove -c container
-rfswift commit -c container -i image:v1
+rfswift container rm -c container
+rfswift container commit -c container -i image:v1
 ```
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`run`](/docs/commands/run) - Create containers from committed images
 - [`export`](/docs/commands/export) - Alternative backup method (creates tar.gz)

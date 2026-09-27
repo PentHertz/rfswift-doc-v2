@@ -1,11 +1,11 @@
 ---
-title: usb
-weight: 40
-prev: /docs/commands/host
-next: /docs/commands/audit
+title: "rfswift usb"
+linkTitle: "usb"
+navGroup: "Host & devices"
+level: reference
+description: "Attach and detach USB devices on macOS (Lima) and Windows (usbipd-win)."
+weight: 61
 ---
-
-# rfswift usb
 
 Attach and detach USB devices for RF Swift containers and Nix environments on the two platforms whose containers run inside a VM. `rfswift usb` is the cross-platform front door: on macOS it drives the Lima VM's USB hot-plug, on Windows it drives usbipd-win into WSL 2. On Linux there is no attach step; devices are mapped when the container is created.
 

@@ -1,11 +1,11 @@
 ---
-title: env
-weight: 20
-prev: /docs/commands/import
-next: /docs/commands/config
+title: "rfswift env"
+linkTitle: "env (Nix)"
+navGroup: "Nix environments"
+level: reference
+description: "Create, enter, update, roll back, audit and export native Nix environments."
+weight: 30
 ---
-
-# rfswift env
 
 Create and manage **native Nix environments**: the same RF Swift tool sets as the container images (`sdr_light`, `rfid`, `wifi`, ...), installed on the host as reproducible, pinned Nix closures, without a daemon or a container boundary. `rfswift nix ...` is the legacy spelling and still works.
 

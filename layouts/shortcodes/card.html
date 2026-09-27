@@ -1,0 +1,22 @@
+{{- /*
+A link card, used inside {{< cards >}}.
+
+@param link      URL (absolute, site-absolute or relative to the page)
+@param title     card title
+@param icon      Phosphor or heroicons name (see data/icons.yaml)
+@param subtitle  one line of text
+@param tag       optional badge text: "Beginner" and "Advanced" get their colours
+*/ -}}
+{{- $link := .Get "link" -}}
+{{- $external := hasPrefix $link "http" -}}
+{{- $href := cond (hasPrefix $link "/") ($link | relURL) $link -}}
+{{- $icon := partial "icon.html" (.Get "icon") -}}
+{{- $tag := .Get "tag" -}}
+{{- $tagClass := "badge-accent" -}}
+{{- if eq (lower $tag) "beginner" }}{{ $tagClass = "badge-success" }}{{ else if eq (lower $tag) "advanced" }}{{ $tagClass = "badge-high" }}{{ end -}}
+<a class="card card-link doc-card" href="{{ $href }}"{{ if $external }} target="_blank" rel="noopener"{{ end }}>
+  {{- with $icon }}<i class="ph ph-{{ . }} icon" aria-hidden="true"></i>{{ end }}
+  <span class="doc-card-title">{{ .Get "title" }}{{ with $tag }} <span class="badge {{ $tagClass }}">{{ . }}</span>{{ end }}</span>
+  {{- with .Get "subtitle" }}<span class="doc-card-sub">{{ . | markdownify }}</span>{{ end }}
+</a>
+{{- /* Drop trailing newlines */ -}}

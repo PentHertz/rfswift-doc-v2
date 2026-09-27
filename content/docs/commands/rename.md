@@ -1,14 +1,14 @@
 ---
-title: rename
-weight: 5
-prev: /docs/commands/remove
-next: /docs/commands/commit
+title: "rfswift container rename"
+linkTitle: "container rename"
+navGroup: "Containers"
+level: reference
+description: "Rename a container."
+weight: 8
 ---
 
-# rfswift rename
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift container rename`. The legacy form `rfswift rename` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift container rename`. The legacy form `rfswift rename` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Change a container's name to a new identifier.
@@ -16,7 +16,7 @@ Change a container's name to a new identifier.
 ## Synopsis
 
 ```bash
-rfswift rename -n OLD_NAME -d NEW_NAME
+rfswift container rename -n OLD_NAME -d NEW_NAME
 ```
 
 The `rename` command changes a container's name without affecting its data, configuration, or state. This is useful for organizing containers, fixing naming mistakes, or adapting to new naming conventions.
@@ -38,70 +38,70 @@ The `rename` command changes a container's name without affecting its data, conf
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Simple rename:**
 ```bash
-rfswift rename -n old_container -d new_container
+rfswift container rename -n old_container -d new_container
 ```
 
 **Fix a typo:**
 ```bash
-rfswift rename -n sdr_containr -d sdr_container
+rfswift container rename -n sdr_containr -d sdr_container
 ```
 
 **More descriptive name:**
 ```bash
-rfswift rename -n test -d sdr_spectrum_analysis_2024_01
+rfswift container rename -n test -d sdr_spectrum_analysis_2024_01
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Add date to container name:**
 ```bash
-rfswift rename -n client_assessment -d client_assessment_2024_01_12
+rfswift container rename -n client_assessment -d client_assessment_2024_01_12
 ```
 
 **Organize by project:**
 ```bash
-rfswift rename -n wifi_tools -d project_alpha_wifi_scanner
+rfswift container rename -n wifi_tools -d project_alpha_wifi_scanner
 ```
 
 **Change naming convention:**
 ```bash
 # Old convention: type_number
-rfswift rename -n sdr_1 -d rtlsdr_spectrum_analyzer
+rfswift container rename -n sdr_1 -d rtlsdr_spectrum_analyzer
 
 # New convention: purpose_date
-rfswift rename -n test_container -d frequency_scan_2024_jan
+rfswift container rename -n test_container -d frequency_scan_2024_jan
 ```
 
 **Clarify purpose:**
 ```bash
-rfswift rename -n container1 -d bluetooth_le_scanner_building_a
+rfswift container rename -n container1 -d bluetooth_le_scanner_building_a
 ```
 
 **Stage-based naming:**
 ```bash
 # Development to production
-rfswift rename -n api_server_dev -d api_server_prod
+rfswift container rename -n api_server_dev -d api_server_prod
 
 # Testing to staging
-rfswift rename -n web_test -d web_staging
+rfswift container rename -n web_test -d web_staging
 ```
 
 ---
 
-## What Happens During Rename
+## What happens during rename
 
-### What Changes
+### What changes
 
 When you rename a container:
 - ✅ Container name changes
-- ✅ Container appears with new name in `rfswift last` and `docker ps`
+- ✅ Container appears with new name in `rfswift container last` and `docker ps`
 - ✅ Docker internal references update
 
-### What Stays the Same
+### What stays the same
 
 Everything else remains unchanged:
 - ✅ Container ID (unchanged)
@@ -121,7 +121,7 @@ docker ps
 # CONTAINER ID   NAME           IMAGE            CREATED
 # a1b2c3d4e5f6   old_name       rfswift:sdr      2 hours ago
 
-rfswift rename -n old_name -d new_name
+rfswift container rename -n old_name -d new_name
 
 # After rename
 docker ps
@@ -130,7 +130,7 @@ docker ps
 # Same ID, new name, same creation time
 ```
 
-### Container State During Rename
+### Container state during rename
 
 The rename operation works on both:
 - **Running containers**: Continue running without interruption
@@ -142,7 +142,7 @@ The rename operation works on both:
 docker ps | grep web_server
 
 # Rename while running
-rfswift rename -n web_server -d api_backend
+rfswift container rename -n web_server -d api_backend
 
 # Still running with new name
 docker ps | grep api_backend
@@ -153,7 +153,7 @@ docker ps | grep api_backend
 
 ## Troubleshooting
 
-### New Name Already Exists
+### New name already exists
 
 **Error:** `Error: Conflict. The container name "..." is already in use`
 
@@ -163,28 +163,28 @@ docker ps | grep api_backend
 docker ps -a | grep new_name
 
 # Option 1: Choose different name
-rfswift rename -n old_name -d alternative_name
+rfswift container rename -n old_name -d alternative_name
 
 # Option 2: Remove/rename conflicting container first
-rfswift rename -n new_name -d new_name_backup
-rfswift rename -n old_name -d new_name
+rfswift container rename -n new_name -d new_name_backup
+rfswift container rename -n old_name -d new_name
 
 # Option 3: Remove conflicting container
-rfswift remove -c new_name
-rfswift rename -n old_name -d new_name
+rfswift container rm -c new_name
+rfswift container rename -n old_name -d new_name
 ```
 
-### Source Container Not Found
+### Source container not found
 
 **Error:** `Error: No such container: old_name`
 
 **Solutions:**
 ```bash
 # List all containers
-rfswift last
+rfswift container last
 ```
 
-### Invalid Container Name
+### Invalid container name
 
 **Error:** `Invalid container name`
 
@@ -197,38 +197,38 @@ rfswift last
 **Solutions:**
 ```bash
 # Remove spaces
-rfswift rename -n old -d my_new_container  # Not "my new container"
+rfswift container rename -n old -d my_new_container  # Not "my new container"
 
 # Remove special characters
-rfswift rename -n old -d my_container  # Not "my-container!"
+rfswift container rename -n old -d my_container  # Not "my-container!"
 
 # Don't start with hyphen
-rfswift rename -n old -d my_container  # Not "-my-container"
+rfswift container rename -n old -d my_container  # Not "-my-container"
 
 # Use lowercase and underscores
-rfswift rename -n old -d my_sdr_container_2024
+rfswift container rename -n old -d my_sdr_container_2024
 ```
 
-### Permission Denied
+### Permission denied
 
 **Error:** `Permission denied` or `Cannot connect to Docker daemon`
 
 **Solutions:**
 ```bash
 # Use sudo on Linux
-sudo rfswift rename -n old_name -d new_name
+sudo rfswift container rename -n old_name -d new_name
 
 # Or add user to docker group
 sudo usermod -aG docker $USER
 newgrp docker
 
 # Then try again
-rfswift rename -n old_name -d new_name
+rfswift container rename -n old_name -d new_name
 ```
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`run`](/docs/commands/run) - Create containers with proper names from the start
 - [`last`](/docs/commands/last) - View container names

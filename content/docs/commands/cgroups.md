@@ -1,11 +1,11 @@
 ---
-title: cgroups
-weight: 17
-prev: /docs/commands/capabilities
-next: /docs/commands/gpu
+title: "rfswift config cgroups"
+linkTitle: "config cgroups"
+navGroup: "Runtime configuration"
+level: reference
+description: "Manage the cgroup device rules of an existing container."
+weight: 43
 ---
-
-# rfswift cgroups
 
 {{< callout type="info" >}}
 **RF Swift v4**: this group lives under the `config` parent as `rfswift config cgroups` and remains available as `rfswift cgroups`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
@@ -53,9 +53,9 @@ Remove a cgroup device rule from a container.
 
 ---
 
-## Understanding Cgroup Rules
+## Understanding cgroup rules
 
-### Rule Format
+### Rule format
 
 Cgroup device rules follow this format:
 
@@ -69,7 +69,7 @@ Cgroup device rules follow this format:
 - **minor**: Device minor number or `*` for all  
 - **permissions**: `r` (read), `w` (write), `m` (mknod)
 
-### Common Device Major Numbers
+### Common device major numbers
 
 | Device Type | Major Number | Examples |
 |-------------|--------------|----------|
@@ -81,7 +81,7 @@ Cgroup device rules follow this format:
 | **Sound** | 116 | /dev/snd/* (audio) |
 | **Input** | 13 | /dev/input/* (keyboards, mice) |
 
-### Rule Examples
+### Rule examples
 
 **USB devices (most SDRs):**
 ```bash
@@ -121,7 +121,7 @@ Cgroup device rules follow this format:
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Add USB device access:**
 ```bash
@@ -140,12 +140,12 @@ rfswift cgroups add -c analysis -r "c 180:* rwm"
 rfswift cgroups rm -c container -r "c 189:* rwm"
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **USB based SDRs setup:**
 ```bash
 # Create container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdrtest
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdrtest
 
 # Add device binding
 rfswift bindings add -d -c sdrtest -s /dev/bus/usb -t /dev/bus/usb
@@ -154,7 +154,7 @@ rfswift bindings add -d -c sdrtest -s /dev/bus/usb -t /dev/bus/usb
 rfswift cgroups add -c sdrtest -r "c 189:* rwm"
 
 # Test access (e.g with RTL-SDR)
-rfswift exec -c sdrtest
+rfswift container shell -c sdrtest
 rtl_test -t
 exit
 ```
@@ -162,7 +162,7 @@ exit
 **USB serial device:**
 ```bash
 # Container for serial work
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n serial_work
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n serial_work
 
 # Add serial device
 rfswift bindings add -d -c serial_work -s /dev/ttyUSB0 -t /dev/ttyUSB0
@@ -172,16 +172,16 @@ rfswift cgroups add -c serial_work -r "c 188:* rwm"
 rfswift cgroups add -c serial_work -r "c 4:* rwm"
 
 # Access serial
-rfswift exec -c serial_work
+rfswift container shell -c serial_work
 screen /dev/ttyUSB0 115200
 exit
 ```
 
 ---
 
-## Device Access Workflow
+## Device access workflow
 
-### Complete Device Access Setup
+### Complete device access setup
 
 To access a hardware device from a container, you need three things:
 
@@ -200,7 +200,7 @@ graph TD
 ```
 ---
 
-## Finding Device Major Numbers
+## Finding device major numbers
 
 ### Using ls -l
 
@@ -241,7 +241,7 @@ cat /sys/class/tty/ttyUSB0/dev
 
 ## Troubleshooting
 
-### Permission Denied After Adding Rule
+### Permission denied after adding rule
 
 **Problem:** Device still shows permission denied
 
@@ -251,7 +251,7 @@ cat /sys/class/tty/ttyUSB0/dev
 docker inspect container | grep -A10 Devices
 
 # Verify device binding exists
-rfswift exec -c container
+rfswift container shell -c container
 ls -l /dev/device
 exit
 
@@ -271,7 +271,7 @@ rfswift cgroups add -c container -r "c 188:* rwm"
 rfswift cgroups add -c container -r "c 180:* rwm"
 ```
 
-### Wrong Major Number
+### Wrong major number
 
 **Problem:** Rule added but device still not accessible
 
@@ -289,7 +289,7 @@ stat -c "%t:%T" /dev/device_name
 rfswift cgroups add -c container -r "c 189:* rwm"
 ```
 
-### Device Not Visible in Container
+### Device not visible in container
 
 **Problem:** Cgroup rule added but device doesn't exist in container
 
@@ -305,7 +305,7 @@ rfswift bindings add -d -c container \
 rfswift cgroups add -c container -r "c 189:* rwm"
 ```
 
-### Wildcard Not Working
+### Wildcard not working
 
 **Problem:** `c 189:*` doesn't grant access to all devices
 
@@ -324,7 +324,7 @@ ls -l /dev/device
 rfswift cgroups add -c container -r "c 189:5 rwm"
 ```
 
-### Cannot Remove Rule
+### Cannot remove rule
 
 **Problem:** Remove command fails or rule persists
 
@@ -338,13 +338,13 @@ docker inspect container | grep -A10 Devices
 
 # May need to restart container for removal
 # (as last resort)
-rfswift stop -c container
-rfswift exec -c container
+rfswift container stop -c container
+rfswift container shell -c container
 ```
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`bindings`](/docs/commands/bindings) - Add device bindings (required first)
 - [`capabilities`](/docs/commands/capabilities) - Add capabilities (sometimes needed)

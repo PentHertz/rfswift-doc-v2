@@ -1,11 +1,11 @@
 ---
-title: ulimits
-weight: 26
-prev: /docs/commands/install
-next: /docs/commands/realtime
+title: "rfswift config ulimits"
+linkTitle: "config ulimits"
+navGroup: "Runtime configuration"
+level: reference
+description: "Set resource limits (ulimits) on an existing container."
+weight: 46
 ---
-
-# rfswift ulimits
 
 {{< callout type="info" >}}
 **RF Swift v4**: this group lives under the `config` parent as `rfswift config ulimits` and remains available as `rfswift ulimits`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
@@ -60,7 +60,7 @@ The `ulimits` command allows you to add, remove, or list resource limits on cont
 
 ---
 
-## Common Ulimit Names
+## Common ulimit names
 
 | Name | Description | SDR Use Case |
 |------|-------------|--------------|
@@ -72,7 +72,7 @@ The `ulimits` command allows you to add, remove, or list resource limits on cont
 
 ---
 
-## Value Format
+## Value format
 
 Ulimit values can be specified in two formats:
 
@@ -86,7 +86,7 @@ Ulimit values can be specified in two formats:
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Add rtprio ulimit for real-time scheduling:**
 ```bash
@@ -113,7 +113,7 @@ rfswift ulimits list -c sdr_work
 rfswift ulimits rm -c sdr_work -n rtprio
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Optimize container for SDR work:**
 ```bash
@@ -135,14 +135,14 @@ rfswift ulimits list -c sdr_container
 rfswift ulimits add -c sdr_container -n rtprio -v 95
 
 # Verify inside container
-rfswift exec -c sdr_container -e "ulimit -r"
+rfswift container shell -c sdr_container -e "ulimit -r"
 # Should output: 95
 ```
 
 **Use real-time scheduling inside container:**
 ```bash
 # After setting rtprio ulimit
-rfswift exec -c sdr_container
+rfswift container shell -c sdr_container
 
 # Inside container, run SDR tool with real-time priority
 chrt -f 50 rtl_sdr -f 433920000 -s 2048000 - | ...
@@ -155,7 +155,7 @@ nice -n -10 gqrx
 
 ## Troubleshooting
 
-### Ulimit Not Taking Effect
+### Ulimit not taking effect
 
 **Problem:** Ulimit set but not working inside container
 
@@ -165,7 +165,7 @@ nice -n -10 gqrx
 rfswift ulimits list -c container
 
 # Check inside container
-rfswift exec -c container -e "ulimit -a"
+rfswift container shell -c container -e "ulimit -a"
 
 # For rtprio, also need SYS_NICE capability
 rfswift capabilities add -c container -p SYS_NICE
@@ -174,7 +174,7 @@ rfswift capabilities add -c container -p SYS_NICE
 rfswift realtime enable -c container
 ```
 
-### Permission Denied with chrt
+### Permission denied with chrt
 
 **Problem:** `chrt: failed to set pid 0's policy: Operation not permitted`
 
@@ -188,13 +188,13 @@ rfswift capabilities add -c container -p SYS_NICE
 rfswift realtime enable -c container
 ```
 
-### Container Recreation
+### Container recreation
 
 **Note:** Modifying ulimits requires container recreation. The container will be stopped, removed, and recreated with the new settings. Your data in mounted volumes is preserved, but uncommitted changes inside the container may be lost.
 
 ```bash
 # Commit important changes before modifying ulimits
-rfswift commit -c container -i my_image:backup
+rfswift container commit -c container -i my_image:backup
 
 # Then modify ulimits
 rfswift ulimits add -c container -n rtprio -v 95
@@ -202,7 +202,7 @@ rfswift ulimits add -c container -n rtprio -v 95
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`realtime`](/docs/commands/realtime) - Quick setup for all SDR-related ulimits
 - [`capabilities`](/docs/commands/capabilities) - Manage container capabilities
@@ -216,7 +216,7 @@ rfswift ulimits add -c container -n rtprio -v 95
 {{< /callout >}}
 
 {{< callout type="warning" >}}
-**Container Restart**: Changing ulimits requires recreating the container. Commit your work first with `rfswift commit` if you have uncommitted changes!
+**Container Restart**: Changing ulimits requires recreating the container. Commit your work first with `rfswift container commit` if you have uncommitted changes!
 {{< /callout >}}
 
 {{< callout type="info" >}}

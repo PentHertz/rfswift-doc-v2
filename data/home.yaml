@@ -1,0 +1,198 @@
+hero:
+  title: "The RF companion for everyone working on radio"
+  lead: "Hundreds of radio, hardware and security tools, ready in one command on the computer you already have. From your first FM station to a full professional assessment."
+  platforms: ["Linux", "macOS", "Windows", "x86_64 · ARM64 · RISCV64", "Docker · Podman · Lima · Nix"]
+  terminal:
+    - { cmd: "rfswift container create -i sdr_full -n lab" }
+    - { muted: "› Using image penthertz/rfswift_resolute:sdr_full" }
+    - { ok: "USB devices forwarded", detail: "HydraSDR, HackRF, USRP, bladeRF, Proxmark3" }
+    - { ok: "Audio forwarded", detail: "PipeWire" }
+    - { ok: "Display forwarded", detail: "X11" }
+    - { ok: "Workspace mounted", detail: "~/rfswift-workspace/lab" }
+    - { done: "Start hacking!" }
+
+presented:
+  builtby: "Built and used by Penthertz on its professional engagements"
+  builtbyurl: "https://penthertz.com/"
+  title: "Presented at"
+  items:
+    - { name: "Black Hat Arsenal Europe", year: "2024", url: "https://www.blackhat.com/eu-24/arsenal/schedule/index.html#rf-swift-a-swifty-toolbox-for-all-wireless-assessments-41157" }
+    - { name: "Spectrum", year: "2024", url: "https://spectrum-conference.org/24/schedule" }
+    - { name: "FOSDEM", year: "2025", url: "https://fosdem.org/2025/schedule/event/fosdem-2025-4301-rf-swift-a-swifty-toolbox-for-all-wireless-assessments/" }
+    - { name: "CyberOnBoard", year: "2025", url: "https://www.cyberonboard.org/en/content/sujetsscientifiques" }
+
+workbench:
+  kicker: "New · RF Swift Workbench"
+  title: "Your whole assessment in one window"
+  lead: "A desktop app for everyone who prefers clicking to typing. Create a mission, open terminals into your labs, take notes, log findings and captures, then export a branded report."
+  standalone:
+    title: "Completely standalone"
+    text: "A native desktop app, not an editor add-on. No VS Code, no IDE, no plugins, no browser extension. It ships with RF Swift and runs on Linux, macOS and Windows."
+  light:
+    title: "Full toolboxes or lazy Nix environments"
+    text: "Create a mission from a container image, or pick the Nix engine and tick “Lazy tools”: nothing is installed until you run a tool, then only that tool is fetched."
+  features:
+    - { icon: "flag-banner", title: "Missions", text: "One place per engagement, with its own labs and files." }
+    - { icon: "terminal-window", title: "Recorded terminals", text: "Every session can be replayed later as evidence." }
+    - { icon: "notebook", title: "Notebook & findings", text: "Write notes and rate findings as you work." }
+    - { icon: "file-pdf", title: "Branded reports", text: "Turn captures and findings into a client-ready report." }
+
+what:
+  title: "A ready-made radio lab that runs next to your system, not instead of it"
+  text: "Radio tools are hard to install: each one needs its own drivers, libraries and versions, and they often break each other. RF Swift ships them pre-installed in isolated environments. You pick a toolbox, plug in your radio, and start working. When you're done, your computer is exactly as it was. Already on Kali, Parrot or DragonOS? Keep it: RF Swift adds to it. On a plain, freshly installed system, one command brings the whole tool set."
+  steps:
+    - { title: "Install once", text: "One installer sets up RF Swift and the engine it needs. No manual Docker setup." }
+    - { title: "Pick a toolbox", text: "Images are grouped by job: SDR, Wi-Fi, Bluetooth, telecom, automotive, hardware, reversing, Active Directory and more. Or stay light with a lazy Nix environment that fetches each tool the first time you use it." }
+    - { title: "Plug in and listen", text: "Your SDR, audio and display are passed through automatically. Open SDR++, GQRX or GNU Radio and go." }
+
+engines:
+  kicker: "Engines"
+  title: "Full toolboxes, or only the tools you use"
+  lead: "RF Swift drives four engines with the same commands and the same Workbench. Use a container image for a complete, tested toolbox, or Nix to install nothing you don't use. The installer sets up the one you pick."
+  items:
+    - { icon: "cube", name: "Docker", where: "Linux · macOS · Windows", text: "The most common engine. Every lab is an isolated container, with the fullest USB, serial and realtime support on Linux.", best: "The usual setup, teams, Windows" }
+    - { icon: "shield-check", name: "Podman", where: "Linux · macOS · Windows", text: "Rootless and daemonless: labs run as you, with no admin rights and nothing running in the background.", best: "Shared, company or air-gapped machines, small boards" }
+    - { icon: "apple-logo", name: "Lima", where: "macOS", text: "Containers in a small Linux VM that receives your USB radios, with hot-plug. Optional GPU VM on Apple Silicon.", best: "Containers with USB radios on a Mac" }
+    - { icon: "snowflake", name: "Nix", where: "Linux · macOS · Windows", text: "No containers: tools installed natively and pinned. Lazy mode fetches each tool on first use. Direct USB and native sound.", best: "Staying light, macOS, lowest latency" }
+  light:
+    title: "Stay light with lazy Nix environments"
+    text: "In lazy mode nothing is installed up front. Each tool becomes a small launcher that fetches the real tool the first time you run it, then keeps it pinned for good."
+    points:
+      - { icon: "feather", title: "Only what you run", text: "Type sdrpp and only SDR++ is fetched. Run inspectrum next and only that is added. Standard tools come prebuilt from the binary cache." }
+      - { icon: "push-pin", title: "Pinned, then instant", text: "The environment stays on the revision you created it from, so nothing rebuilds behind your back, and a fetched tool starts directly afterwards." }
+      - { icon: "desktop", title: "In the Workbench too", text: "Pick the Nix engine and tick “Lazy tools (build on first use)” when you create a mission." }
+    terminal:
+      - { cmd: "rfswift container create --engine nix -i sdr_light -n radio --lazy" }
+      - { note: "# nothing installed yet" }
+      - { cmd: "sdrpp" }
+      - { note: "# first run: only SDR++ is fetched, pinned and started" }
+      - { cmd: "inspectrum capture.iq" }
+      - { note: "# then only inspectrum is added" }
+      - { cmd: "rfswift env run sdr_light sdrpp" }
+      - { note: "# or run one tool without creating anything" }
+  mac:
+    title: "Especially good on a Mac"
+    text: "With Nix, the tools run natively on macOS: your USB radio opens directly, sound plays natively and OpenGL needs no setup, with no Linux VM in between. Add `--isolate` to run them inside Apple's built-in Seatbelt sandbox. Need containers instead? Lima brings USB radios to them, and Docker Desktop or Podman cover everything else."
+
+benefits:
+  title: "Spend your time on the signal, not on the setup"
+  items:
+    - { icon: "lightning", title: "Ready in minutes", text: "Skip days of compiling and dependency hunting. Hundreds of RF and hardware security tools come already built and tested together, and one command pulls the latest ones." }
+    - { icon: "package", title: "One program, no Python", text: "RF Swift itself is a single self-contained binary: no Python, no pip, no virtual environment to manage on your computer. The Workbench is a standalone desktop app." }
+    - { icon: "shield-check", title: "Keeps your computer clean", text: "No new OS, no dual boot, no reformatting. Every assessment runs in its own environment that you can throw away." }
+    - { icon: "plugs-connected", title: "Your hardware just works", text: "USB, audio and video forwarding with minimal configuration. HydraSDR, HackRF, USRP, bladeRF, Proxmark3 and many other devices are recognised out of the box." }
+    - { icon: "devices", title: "Same lab on every machine", text: "Linux, macOS or Windows, on x86_64, ARM64 or RISCV64. From a workstation to a Raspberry Pi or a Steam Deck." }
+    - { icon: "feather", title: "Stay light", text: "Full images in Docker, Podman or Lima when you want the whole toolbox, or lazy Nix environments where each tool is fetched the first time you run it." }
+    - { icon: "target", title: "Covers the whole target", text: "Radio is where it starts, not where it ends. Reversing, Active Directory, network and other assessment tools ship too, so one lab covers the entire target." }
+    - { icon: "broadcast", title: "Drive a lab from anywhere", text: "The remote agent is built into the same binary. Run it on a lab server or a small board next to the antenna, and control it from your laptop over mutual TLS." }
+    - { icon: "file-text", title: "From capture to report", text: "The standalone Workbench keeps missions, terminal recordings, notes, findings and captures together, then exports a branded report." }
+  compare:
+    title: "Works with your distribution, not against it"
+    lead: "Dedicated distributions and RF Swift solve different problems, and many people use both. RF Swift installs on Kali, Parrot, BlackArch or DragonOS like on any Linux and adds what they don't ship, without touching their packages. On a plain, freshly installed system, one command brings the whole tool set."
+    distro: "A dedicated distribution"
+    rfswift: "RF Swift"
+  comparison:
+    - { row: "Getting started", distro: "Everything is there after one install", rfswift: "One command on the system you already use" }
+    - { row: "Kernel and drivers", distro: "Integrated and tested with the system", rfswift: "Uses your computer's kernel" }
+    - { row: "Hardware access", distro: "Direct, by default", rfswift: "Passed through for you, or direct with Nix" }
+    - { row: "Environments", distro: "One shared system", rfswift: "One environment per job, easy to throw away" }
+    - { row: "Platforms", distro: "Mostly x86_64 Linux", rfswift: "Linux, macOS, Windows · x86_64, ARM64, RISC-V64" }
+    - { row: "Installing tools", distro: "The whole toolset at once", rfswift: "A toolbox per job, or single tools with lazy Nix" }
+    - { row: "Reproducibility", distro: "Depends on local changes", rfswift: "Versioned images, pinned Nix environments" }
+
+stats:
+  - { value: "Hundreds", label: "of RF, hardware and security tools" }
+  - { value: "3 OSes", label: "Linux, macOS, Windows" }
+  - { value: "4 engines", label: "Docker, Podman, Lima, Nix" }
+  - { value: "3 CPUs", label: "x86_64, ARM64, RISCV64" }
+  - { value: "1 command", label: "to start a full lab" }
+
+products:
+  - { icon: "snowflake", title: "Nix engine", text: "Tools installed natively and pinned. In lazy mode each one is fetched the first time you run it. Excellent on macOS.", url: "/docs/guide/nix-engine/" }
+  - { icon: "broadcast", title: "Remote agent", text: "Built into the rfswift binary. Run it on a lab server or a small board near the antenna and drive it securely from your laptop.", url: "/docs/guide/remote-agent/" }
+  - { icon: "sparkle", title: "AI assistant (MCP)", text: "Let an assistant operate RF Swift through a controlled bridge.", url: "/docs/guide/ai-assistant/" }
+  - { icon: "stack", title: "Container images", text: "Toolboxes by domain, or build your own from YAML recipes.", url: "/docs/guide/list-of-images/" }
+
+install:
+  - id: linux
+    os: "linux"
+    label: "Linux / macOS"
+    icon: "linux-logo"
+    shell: "bash"
+    cmd: 'curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh'
+    note: "Then run rfswift. The script installs the CLI, the Workbench or both, and sets up Docker, Podman or Nix for you."
+  - id: mac
+    os: "mac"
+    label: "macOS (Homebrew / DMG)"
+    icon: "apple-logo"
+    shell: "zsh"
+    cmd: |-
+      # Homebrew: CLI and Workbench from the signed release
+      brew install --cask penthertz/rfswift/rfswift
+
+      # or the signed and notarized disk image
+      curl -LO https://github.com/PentHertz/RF-Swift/releases/latest/download/rfswift_Darwin_universal.dmg && open rfswift_Darwin_universal.dmg
+    note: "In the disk image, drag the Workbench to Applications and run Install RF Swift CLI next to it. For USB radios on a Mac, use the Lima engine for containers or the Nix engine to run tools natively."
+  - id: windows
+    os: "windows"
+    label: "Windows"
+    icon: "windows-logo"
+    shell: "powershell"
+    cmd: |-
+      $setup = (Invoke-RestMethod https://api.github.com/repos/PentHertz/RF-Swift/releases/latest).assets | Where-Object name -like 'RFSwift-Setup-*-x64.exe'
+      Invoke-WebRequest $setup.browser_download_url -OutFile RFSwift-Setup.exe; .\RFSwift-Setup.exe
+    note: "One UAC prompt installs WSL 2, USB passthrough, the container engine of your choice or Nix, and RF Swift with its Start Menu entries."
+
+learn:
+  beginner:
+    - { title: "Learn the key ideas", sub: "Toolbox, lab, workspace: 5 minutes, no jargon", url: "/docs/concepts/" }
+    - { title: "Check your computer is supported", sub: "Requirements and platforms", url: "/docs/supports/" }
+    - { title: "Choose your engine", sub: "Docker, Podman, Lima or Nix: what each is good at", url: "/docs/engines/" }
+    - { title: "Install and open your first lab", sub: "Quick start", url: "/docs/quick-start/" }
+    - { title: "Listen to your first signal", sub: "A hands-on tutorial with an RTL-SDR", url: "/docs/first-signal/" }
+    - { title: "Tour the Workbench", sub: "The graphical way to use RF Swift", url: "/docs/guide/workbench/" }
+    - { title: "Pick the right toolbox", sub: "Which image for which job", url: "/docs/guide/list-of-images/" }
+  advanced:
+    - group: "Reference"
+      links:
+        - { title: "All commands", url: "/docs/commands/" }
+        - { title: "Container create options", url: "/docs/commands/run/" }
+        - { title: "Configurations", url: "/docs/guide/configurations/" }
+        - { title: "Dynamic container management", url: "/docs/guide/container-management/" }
+        - { title: "Known limits", url: "/docs/guide/limitations/" }
+    - group: "Engines & platforms"
+      links:
+        - { title: "Nix engine (lazy mode)", url: "/docs/guide/nix-engine/" }
+        - { title: "Podman", url: "/docs/guide/podman/" }
+        - { title: "QubesOS", url: "/docs/guide/qubes-os/" }
+        - { title: "VPN inside containers", url: "/docs/guide/vpn/" }
+    - group: "Build"
+      links:
+        - { title: "YAML recipes", url: "/docs/development/yaml-recipe-guide/" }
+        - { title: "Helper functions", url: "/docs/development/building-images/" }
+        - { title: "Compile from source", url: "/docs/development/compiling-rfswift/" }
+    - group: "Security"
+      links:
+        - { title: "Hardened deployment", url: "/docs/security/audit/" }
+        - { title: "Agent hardening", url: "/docs/security/remote-agent/" }
+        - { title: "MCP best practices", url: "/docs/security/mcp/" }
+
+faq:
+  - q: "Do I need to know Docker or Linux?"
+    a: "No. The installer sets up the container engine for you, and the Workbench lets you create and open environments without typing commands."
+  - q: "Should I use the CLI or the Workbench?"
+    a: "Either. They manage the same environments. The Workbench adds missions, notes, findings and reports; the CLI is best for scripting and remote machines."
+  - q: "Does the Workbench need VS Code or another editor?"
+    a: "No. The Workbench is a completely standalone desktop app: no VS Code, no IDE, no plugins, no browser extension. It installs with RF Swift and needs nothing else."
+  - q: "Do I have to download a whole toolbox image?"
+    a: "No. A Nix environment in lazy mode installs nothing up front: each tool is fetched the first time you run it, then pinned. Use `--lazy` on the command line or tick **Lazy tools** in the Workbench. To try a single tool without creating anything: `rfswift env run sdr_light sdrpp`."
+  - q: "Does it work on Windows and macOS?"
+    a: "Yes. On Windows, one installer sets up WSL 2, USB passthrough and the engine. On macOS, use Homebrew or the signed disk image, then pick your engine: Docker Desktop or Podman for containers, Lima when containers need your USB radio, or Nix to run the tools natively. See [known limits](/docs/guide/limitations/) for hardware specifics."
+  - q: "Does it replace Kali, Parrot or DragonOS?"
+    a: "No, and it isn't meant to. RF Swift runs on the system you already use, those distributions included, and adds tools next to them without touching their packages. Each job simply gets its own environment. [How they compare](/docs/comparisons/)."
+  - q: "Do I need Python or other dependencies?"
+    a: "No. RF Swift is a single self-contained binary: no Python, pip or virtual environment to manage. The installer adds the engine you choose (Docker, Podman, Lima or Nix) and the few host tools labs need for display and sound."
+  - q: "Can I control a lab machine remotely?"
+    a: "Yes. The remote agent is built into the same binary. Run it on a lab server or a small board next to your antennas, then drive it from the Workbench on your laptop over mutual TLS. See [Remote agent](/docs/guide/remote-agent/)."
+  - q: "Can I use it without internet access?"
+    a: "Yes. Follow the [air-gapped installation](/docs/air-gapped-installation/) guide to export images and install them offline."

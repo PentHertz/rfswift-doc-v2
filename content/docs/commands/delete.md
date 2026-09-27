@@ -1,14 +1,14 @@
 ---
-title: delete
-weight: 13
-prev: /docs/commands/images
-next: /docs/commands/retag
+title: "rfswift image rm"
+linkTitle: "image rm"
+navGroup: "Images"
+level: reference
+description: "Delete a local image."
+weight: 23
 ---
 
-# rfswift delete
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift image rm`. The legacy form `rfswift delete` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift image rm`. The legacy form `rfswift delete` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Delete Docker images from the local system to free disk space.
@@ -16,7 +16,7 @@ Delete Docker images from the local system to free disk space.
 ## Synopsis
 
 ```bash
-rfswift delete -i IMAGE_ID_OR_TAG
+rfswift image rm -i IMAGE_ID_OR_TAG
 ```
 
 The `delete` command removes Docker images from your local system. This is useful for freeing disk space, removing old versions, or cleaning up after testing.
@@ -37,46 +37,46 @@ The `delete` command removes Docker images from your local system. This is usefu
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Delete by tag:**
 ```bash
-rfswift delete -i penthertz/rfswift_resolute:old_version
+rfswift image rm -i penthertz/rfswift_resolute:old_version
 ```
 
 **Delete by image ID:**
 ```bash
-rfswift delete -i a1b2c3d4e5f6
+rfswift image rm -i a1b2c3d4e5f6
 ```
 
 **Delete custom built image:**
 ```bash
-rfswift delete -i my_custom_sdr:v1.0
+rfswift image rm -i my_custom_sdr:v1.0
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Clean up old versions:**
 ```bash
 # Check what you have
-rfswift images local
+rfswift image local
 
 # Delete old version
-rfswift delete -i penthertz/rfswift_resolute:tag
+rfswift image rm -i penthertz/rfswift_resolute:tag
 
 # Verify deletion
-rfswift images local
+rfswift image local
 ```
 
 **Remove test images:**
 ```bash
 # After testing
-rfswift delete -i test_image:experimental
+rfswift image rm -i test_image:experimental
 
 # Remove multiple test images
-rfswift delete -i test_build:v1
-rfswift delete -i test_build:v2
-rfswift delete -i test_build:v3
+rfswift image rm -i test_build:v1
+rfswift image rm -i test_build:v2
+rfswift image rm -i test_build:v3
 ```
 
 **Free disk space:**
@@ -85,7 +85,7 @@ rfswift delete -i test_build:v3
 docker system df
 
 # Delete large unused images
-rfswift delete -i penthertz/rfswift_resolute:sdr_full_old
+rfswift image rm -i penthertz/rfswift_resolute:sdr_full_old
 
 # Check space recovered
 docker system df
@@ -94,26 +94,26 @@ docker system df
 **Remove failed builds:**
 ```bash
 # Build failed, leaving dangling image
-rfswift delete -i failed_build:latest
+rfswift image rm -i failed_build:latest
 
 # Or delete by ID
-rfswift delete -i a1b2c3d4e5f6
+rfswift image rm -i a1b2c3d4e5f6
 ```
 
 **Cleanup after upgrade:**
 ```bash
 # After upgrading containers, remove old image
-rfswift upgrade -c my_container -i new_image:v2
+rfswift container upgrade -c my_container -i new_image:v2
 
 # Delete old image
-rfswift delete -i old_image:v1
+rfswift image rm -i old_image:v1
 ```
 
 ---
 
-## What Gets Deleted
+## What gets deleted
 
-### Image Deletion Impact
+### Image deletion impact
 
 When you delete an image:
 
@@ -125,12 +125,12 @@ When you delete an image:
 | Exported tar.gz files | ❌ No | Remain on disk |
 | Custom files you added | ✅ Yes | Gone from image |
 
-### Important Notes
+### Important notes
 
 **Images in use cannot be deleted:**
 ```bash
 # This will fail if containers are using the image
-rfswift delete -i penthertz/rfswift_resolute:sdr_full
+rfswift image rm -i penthertz/rfswift_resolute:sdr_full
 
 # Error: image is being used by running container
 ```
@@ -138,18 +138,18 @@ rfswift delete -i penthertz/rfswift_resolute:sdr_full
 **Solution: Stop/remove containers first:**
 ```bash
 # Stop containers using the image
-rfswift stop -c container_using_image
+rfswift container stop -c container_using_image
 
 # Remove containers
-rfswift remove -c container_using_image
+rfswift container rm -c container_using_image
 
 # Now delete image
-rfswift delete -i penthertz/rfswift_resolute:old_version
+rfswift image rm -i penthertz/rfswift_resolute:old_version
 ```
 
 ---
 
-## Delete vs Remove
+## Delete vs remove
 
 ### Comparison
 
@@ -162,7 +162,7 @@ rfswift delete -i penthertz/rfswift_resolute:old_version
 
 ## Troubleshooting
 
-### Image In Use
+### Image in use
 
 **Error:** `Error: image is being used by running container`
 
@@ -180,10 +180,10 @@ docker ps -a --filter ancestor="image:tag" --format "{{.Names}}" | \
 xargs -r docker rm
 
 # Now delete image
-rfswift delete -i image:tag
+rfswift image rm -i image:tag
 ```
 
-### Image Has Dependent Child Images
+### Image has dependent child images
 
 **Error:** `Error: image has dependent child images`
 
@@ -195,49 +195,49 @@ docker rmi -f image:tag
 # Or delete child images first
 docker images --filter "since=image:tag" --format "{{.Repository}}:{{.Tag}}" | \
 while read child; do
-    rfswift delete -i "$child"
+    rfswift image rm -i "$child"
 done
 
 # Then delete parent
-rfswift delete -i image:tag
+rfswift image rm -i image:tag
 ```
 
-### Image Not Found
+### Image not found
 
 **Error:** `Error: No such image: image:tag`
 
 **Solutions:**
 ```bash
 # Check exact image name
-rfswift images local
+rfswift image local
 
 # Check image ID
 docker images
 
 # Use correct format
-rfswift delete -i penthertz/rfswift_resolute:sdr_full
+rfswift image rm -i penthertz/rfswift_resolute:sdr_full
 # Or by ID
-rfswift delete -i a1b2c3d4e5f6
+rfswift image rm -i a1b2c3d4e5f6
 ```
 
-### Permission Denied
+### Permission denied
 
 **Error:** `Permission denied`
 
 **Solutions:**
 ```bash
 # Use sudo
-sudo rfswift delete -i image:tag
+sudo rfswift image rm -i image:tag
 
 # Or add user to docker group
 sudo usermod -aG docker $USER
 newgrp docker
 
 # Then retry
-rfswift delete -i image:tag
+rfswift image rm -i image:tag
 ```
 
-### Tag Refers to Multiple Images
+### Tag refers to multiple images
 
 **Problem:** Same tag on different images
 
@@ -247,12 +247,12 @@ rfswift delete -i image:tag
 docker images
 
 # Delete by specific ID
-rfswift delete -i a1b2c3d4e5f6
+rfswift image rm -i a1b2c3d4e5f6
 ```
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`images`](/docs/commands/images) - List and manage images
 - [`remove`](/docs/commands/remove) - Remove containers

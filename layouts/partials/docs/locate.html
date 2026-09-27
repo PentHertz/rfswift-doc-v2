@@ -1,0 +1,11 @@
+{{- /* Finds the current page in the flattened nav. Returns { index, entry, prev, next } (index -1 when absent). */ -}}
+{{- $nav := partialCached "docs/nav-flat.html" . "docsnav" -}}
+{{- $res := dict "index" -1 -}}
+{{- range $i, $e := $nav -}}
+  {{- if and (eq (index $res "index") -1) (eq $e.page.RelPermalink $.RelPermalink) -}}
+    {{- $res = dict "index" $i "entry" $e -}}
+    {{- if gt $i 0 }}{{ $res = merge $res (dict "prev" (index $nav (sub $i 1))) }}{{ end -}}
+    {{- if lt (add $i 1) (len $nav) }}{{ $res = merge $res (dict "next" (index $nav (add $i 1))) }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $res -}}

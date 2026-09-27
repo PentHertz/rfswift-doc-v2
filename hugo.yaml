@@ -1,130 +1,84 @@
 # Configuration
 baseURL: "https://rfswift.io/"
 title: "RF Swift"
+languageCode: "en-us"
 
 enableRobotsTXT: true
 enableGitInfo: true
-# enableEmoji: false
 hasCJKLanguage: true
 
 services:
   googleAnalytics:
     ID: G-X1KH5KRN5B
 
-outputs:
-  home: [HTML]
-  page: [HTML]
-  section: [HTML, RSS]
-
-defaultContentLanguage: en
-languages:
-  en:
-    languageName: English
-    weight: 1
-    title: RF Swift
-
 module:
   hugoVersion:
     extended: true
     min: "0.147.0"
 
-  imports:
-    - path: github.com/imfing/hextra
+# The home page also emits the search index used by the docs search box.
+outputFormats:
+  SearchIndex:
+    mediaType: application/json
+    baseName: search-index
+    isPlainText: true
+    notAlternative: true
+
+outputs:
+  home: [HTML, SearchIndex]
+  page: [HTML]
+  section: [HTML]
+
+taxonomies: {}
 
 markup:
   goldmark:
     renderer:
       unsafe: true
+    parser:
+      attribute:
+        block: true
+      wrapStandAloneImageWithinParagraph: false
   highlight:
     noClasses: false
+    guessSyntax: false
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
 
 enableInlineShortcodes: true
 
 menu:
   main:
-    - identifier: documentation
-      name: Documentation
-      pageRef: /docs
+    - name: Workbench
+      url: /#workbench
       weight: 1
-    - name: Search
+    - name: Why RF Swift
+      url: /#benefits
+      weight: 2
+    - name: Learn
+      url: /#learn
+      weight: 3
+    - name: Docs
+      url: /docs/
+      weight: 4
+    - name: Commands
+      url: /docs/commands/
       weight: 5
-      params:
-        type: search
-    - name: GitHub
-      weight: 6
-      url: "https://github.com/PentHertz/RF-Swift"
-      params:
-        icon: github
-    - name: Discord
-      weight: 6
-      url: "https://discord.gg/NS3HayKrpA"
-      params:
-        icon: discord
-    - name: Twitter
-      weight: 7
-      url: "https://x.com/PentHertz"
-      params:
-        icon: x-twitter
-    - name: YouTube
-      weight: 8
-      url: "https://www.youtube.com/c/Penthertz"
-      params:
-        icon: youtube
 
 params:
-  description: The epic RF companion for your assessments
-
-  navbar:
-    displayTitle: true
-    displayLogo: true
-    logo:
-      path: images/logo.svg
-      dark: images/logo.svg
-      # width: 40
-      # height: 20
-      # link: /
-    width: wide
-
-  page:
-    # full (100%), wide (90rem), normal (1280px)
-    width: normal
-
-  theme:
-    # light | dark | system
-    default: system
-    displayToggle: true
-
-  footer:
-    enable: true
-    displayCopyright: true
-    displayPoweredBy: true
-    width: normal
-    
-  highlight:
-    copy:
-      enable: true
-      # hover | always
-      display: hover
-
-  displayUpdatedDate: true
-  dateFormat: "January 2, 2006"
-
-  # Search
-  # flexsearch is enabled by default
-  search:
-    enable: true
-    type: flexsearch
-
-    flexsearch:
-      # index page by: content | summary | heading | title
-      index: content
-      # full | forward | reverse | strict
-      # https://github.com/nextapps-de/flexsearch/#tokenizer-prefix-search
-      tokenize: forward
-
-  blog:
-    list:
-      displayTags: true
-      # date | lastmod | publishDate | title | weight
-      sortBy: date
-      sortOrder: desc # or "asc"
+  description: "The RF companion for everyone working on radio. Hundreds of radio, hardware and security tools, ready in one command, on the computer you already have."
+  releaseLabel: 'v4.0 "Nucleus" is out'
+  releaseURL: /docs/release-notes-v4/
+  # Logo colour: "original" | "accent" (teal) | "light" | "muted" | "custom" (set --logo-color in main.css)
+  logoStyle: accent
+  # YouTube video IDs (embedded through youtube-nocookie.com)
+  workbenchVideo: "LBUJcKiZVgM"
+  demoVideo: "vDInlPsriUg"
+  discord: "https://discord.gg/NS3HayKrpA"
+  github: "https://github.com/PentHertz/RF-Swift"
+  twitter: "https://x.com/PentHertz"
+  youtube: "https://www.youtube.com/c/Penthertz"
+  # Used by the "Edit this page" link at the bottom of every docs page
+  docsRepo: "https://github.com/PentHertz/rfswift-doc-v2"
+  docsBranch: "main"

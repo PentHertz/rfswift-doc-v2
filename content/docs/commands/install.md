@@ -1,11 +1,11 @@
 ---
-title: install
-weight: 25
-prev: /docs/commands/completion
-next: /docs/commands/ulimits
+title: "rfswift container install"
+linkTitle: "container install"
+navGroup: "Containers"
+level: reference
+description: "Install extra tools in a container with its install functions, or in a Nix environment."
+weight: 5
 ---
-
-# rfswift container install
 
 Install extra tools in a container with the install functions its image ships, or in a Nix environment with the guided package installer.
 
@@ -40,51 +40,51 @@ Every RF Swift image carries `/root/scripts` with install functions for tools th
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Install SDR++ software:**
 ```bash
-rfswift install -c work -i sdrpp_soft_install
+rfswift container install -c work -i sdrpp_soft_install
 ```
 
 **Install GNU Radio modules:**
 ```bash
-rfswift install -c sdr_work -i gnuradio_modules_install
+rfswift container install -c sdr_work -i gnuradio_modules_install
 ```
 
 **Install wireless tools:**
 ```bash
-rfswift install -c wifi_analysis -i wireless_tools_install
+rfswift container install -c wifi_analysis -i wireless_tools_install
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Setup new SDR container:**
 ```bash
 # Create container
-rfswift run -i penthertz/rfswift_resolute:sdr_light -n sdr_custom
+rfswift container create -i penthertz/rfswift_resolute:sdr_light -n sdr_custom
 
 # Install additional tools
-rfswift install -c sdr_custom -i sdrpp_soft_install
-rfswift install -c sdr_custom -i hackrf_tools_install
-rfswift install -c sdr_custom -i rtlsdr_tools_install
+rfswift container install -c sdr_custom -i sdrpp_soft_install
+rfswift container install -c sdr_custom -i hackrf_tools_install
+rfswift container install -c sdr_custom -i rtlsdr_tools_install
 
 # Container now has custom toolset
-rfswift exec -c sdr_custom
+rfswift container shell -c sdr_custom
 ```
 
 **Add missing tool:**
 ```bash
 # Working in container, need additional tool
-rfswift exec -c analysis
+rfswift container shell -c analysis
 # Realize you need inspectrum
 exit
 
 # Install from host
-rfswift install -c analysis -i inspectrum_install
+rfswift container install -c analysis -i inspectrum_install
 
 # Tool now available
-rfswift exec -c analysis
+rfswift container shell -c analysis
 inspectrum
 ```
 
@@ -100,56 +100,56 @@ TOOLS=(
 
 for tool in "${TOOLS[@]}"; do
     echo "Installing: $tool"
-    rfswift install -c sdr_full -i "$tool"
+    rfswift container install -c sdr_full -i "$tool"
 done
 ```
 
 **Custom toolchain setup:**
 ```bash
 # Create specialized container
-rfswift run -i penthertz/rfswift_resolute:base -n custom_rf
+rfswift container create -i penthertz/rfswift_resolute:base -n custom_rf
 
 # Install specific tools
-rfswift install -c custom_rf -i gnuradio_install
-rfswift install -c custom_rf -i hackrf_tools_install
-rfswift install -c custom_rf -i limesuite_install
+rfswift container install -c custom_rf -i gnuradio_install
+rfswift container install -c custom_rf -i hackrf_tools_install
+rfswift container install -c custom_rf -i limesuite_install
 
 # Commit as custom image
-rfswift commit -c custom_rf -i my_custom_toolchain:v1
+rfswift container commit -c custom_rf -i my_custom_toolchain:v1
 ```
 
 ---
 
 ## Troubleshooting
 
-### Installation Failed
+### Installation failed
 
 **Problem:** Installation function fails
 
 **Solutions:**
 ```bash
 # Check container is running
-rfswift last | grep container_name
+rfswift container last | grep container_name
 
 # Check internet connectivity in container
-rfswift exec -c container -e "ping -c 3 google.com"
+rfswift container shell -c container -e "ping -c 3 google.com"
 
 # Check disk space
-rfswift exec -c container -e "df -h"
+rfswift container shell -c container -e "df -h"
 
 # Try with more verbose output
-rfswift exec -c container
+rfswift container shell -c container
 # Run installation command manually to see errors
 exit
 
 # Update package lists first
-rfswift exec -c container -e "apt-get update"
+rfswift container shell -c container -e "apt-get update"
 
 # Then retry install
-rfswift install -c container -i function_name
+rfswift container install -c container -i function_name
 ```
 
-### Function Not Found
+### Function not found
 
 **Problem:** Installation function doesn't exist
 
@@ -164,7 +164,7 @@ rfswift container shell -c container -e "update_rfscripts"
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`exec`](/docs/commands/exec) - Execute commands after installation
 - [`commit`](/docs/commands/commit) - Save container after installations
@@ -182,5 +182,5 @@ rfswift container shell -c container -e "update_rfscripts"
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**Commit After Installing**: After installing tools, commit your container with `rfswift commit` to preserve your work. Otherwise, changes are lost if the container is removed!
+**Commit After Installing**: After installing tools, commit your container with `rfswift container commit` to preserve your work. Otherwise, changes are lost if the container is removed!
 {{< /callout >}}

@@ -1,0 +1,10 @@
+{{- if gt (len .Fragments.Headings) 0 }}
+{{- $count := 0 }}{{ range .Fragments.HeadingsMap }}{{ if and (ge .Level 2) (le .Level 3) }}{{ $count = add $count 1 }}{{ end }}{{ end }}
+{{- if gt $count 1 }}
+<div class="toc">
+  <p class="label">On this page</p>
+  {{ .TableOfContents }}
+  <a class="toc-top" href="#content"><i class="ph ph-arrow-up"></i> Back to top</a>
+</div>
+{{- end }}
+{{- end }}

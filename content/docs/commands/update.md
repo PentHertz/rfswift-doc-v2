@@ -1,18 +1,18 @@
 ---
-title: update
-weight: 23
-prev: /docs/commands/host
-next: /docs/commands/completion
+title: "rfswift update"
+linkTitle: "update"
+navGroup: "System"
+level: reference
+description: "Update the RF Swift binary, or learn how when it came from a package manager."
+weight: 93
 ---
-
-# rfswift update
 
 {{< callout type="warning" >}}
 **Packaged installs**: on a deb, rpm, pacman or Homebrew install, `rfswift update` explains how to upgrade through the package manager instead of overwriting the packaged binary (which desynced the package database and was reverted by the next package upgrade). Re-running `get_rfswift.sh` also upgrades a packaged install.
 {{< /callout >}}
 
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift system update`. The legacy form `rfswift update` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift system update`. The legacy form `rfswift update` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Update RF Swift to the latest version from the official Penthertz repository.
@@ -35,7 +35,7 @@ The `update` command takes no options.
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Update to latest version:**
 ```bash
@@ -55,9 +55,9 @@ RF Swift updated to v3.0.0
 
 ---
 
-## What Gets Updated
+## What gets updated
 
-### Updated Components
+### Updated components
 
 When you run `rfswift update`:
 
@@ -68,16 +68,16 @@ When you run `rfswift update`:
 | **Helper scripts** | ✅ Yes | Internal utilities |
 | **Documentation** | ✅ Yes | Built-in help |
 
-### NOT Updated
+### NOT updated
 
 | Component | Updated? | How to Update |
 |-----------|----------|---------------|
-| **Docker images** | ❌ No | `rfswift images pull` |
-| **Containers** | ❌ No | `rfswift upgrade` |
+| **Docker images** | ❌ No | `rfswift image pull` |
+| **Containers** | ❌ No | `rfswift container upgrade` |
 | **User data** | ❌ No | Never modified |
 | **Configuration** | ❌ No | Preserved |
 
-### Update Triggers
+### Update triggers
 
 **When to update:**
 - ✅ New features announced
@@ -95,7 +95,7 @@ When you run `rfswift update`:
 
 ## Troubleshooting
 
-### Update Failed
+### Update failed
 
 **Problem:** Update command fails
 
@@ -133,7 +133,7 @@ rfswift --version
 curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
 
-### Download Failed
+### Download failed
 
 **Problem:** Cannot download new version
 
@@ -148,7 +148,7 @@ curl -I https://github.com
 sudo rfswift update
 ```
 
-### Binary Corrupted
+### Binary corrupted
 
 **Problem:** Update succeeded but binary doesn't work
 
@@ -162,12 +162,12 @@ curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main
 
 # Verify
 rfswift --version
-rfswift last
+rfswift container last
 ```
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`images`](/docs/commands/images) - Update Docker images separately
 - [`upgrade`](/docs/commands/upgrade) - Upgrade containers to new images
@@ -180,7 +180,7 @@ rfswift last
 {{< /callout >}}
 
 {{< callout type="warning" >}}
-**Binary Only**: The `update` command only updates the RF Swift CLI tool, not Docker images or containers. Use `rfswift images pull` to update images and `rfswift upgrade` to upgrade containers.
+**Binary Only**: The `update` command only updates the RF Swift CLI tool, not Docker images or containers. Use `rfswift image pull` to update images and `rfswift container upgrade` to upgrade containers.
 {{< /callout >}}
 
 {{< callout type="info" >}}

@@ -1,11 +1,11 @@
 ---
-title: container
+title: "rfswift container"
+linkTitle: "container"
+navGroup: "Containers"
+level: reference
+description: "Create, enter, stop, remove, rename, commit and upgrade containers."
 weight: 1
-prev: /docs/commands
-next: /docs/commands/run
 ---
-
-# rfswift container
 
 Create and manage RF Swift containers. This is the canonical v4 group for everything that used to live at the top level (`run`, `exec`, `stop`, `remove`, ...).
 

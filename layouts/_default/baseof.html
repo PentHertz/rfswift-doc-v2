@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="{{ site.LanguageCode }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ site.Title }} · {{ site.Params.description | truncate 60 "" }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+  {{- $desc := site.Params.description }}
+  {{- with .Description }}{{ $desc = . }}{{ else }}{{ if and .IsPage .Summary }}{{ $desc = .Summary | plainify | htmlUnescape | truncate 160 }}{{ end }}{{ end }}
+  <meta name="description" content="{{ $desc }}">
+  <meta name="theme-color" content="#0b1416">
+  <link rel="canonical" href="{{ .Permalink }}">
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}">
+  <meta property="og:description" content="{{ $desc }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:image" content="{{ "images/docs/imagesrf.png" | absURL }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@PentHertz">
+  <link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="any">
+  <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+  <link rel="manifest" href="{{ "site.webmanifest" | relURL }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" defer></script>
+  {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+  {{- if hugo.IsProduction }}{{ template "_internal/google_analytics.html" . }}{{ end }}
+</head>
+<body class="{{ if .IsHome }}is-home{{ else if eq .Type "docs" }}is-docs{{ end }}">
+  <a class="skip-link" href="#content">Skip to content</a>
+  {{ partial "header.html" . }}
+  <main id="content">{{ block "main" . }}{{ end }}</main>
+  {{ partial "footer.html" . }}
+  {{ partial "search.html" . }}
+  {{ $js := resources.Get "js/main.js" | minify | fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" data-search-index="{{ "search-index.json" | relURL }}" defer></script>
+  {{- if .Store.Get "hasMermaid" }}
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      fontFamily: "Inter, system-ui, sans-serif",
+      themeVariables: {
+        darkMode: true,
+        background: "#0b1416",
+        primaryColor: "#0f2e31",
+        primaryTextColor: "#e6f0f0",
+        primaryBorderColor: "#18c2c9",
+        secondaryColor: "#101d20",
+        secondaryTextColor: "#e6f0f0",
+        secondaryBorderColor: "#1e3034",
+        tertiaryColor: "#0d181a",
+        tertiaryTextColor: "#e6f0f0",
+        tertiaryBorderColor: "#1e3034",
+        lineColor: "#6b8288",
+        textColor: "#e6f0f0",
+        mainBkg: "#0f2e31",
+        nodeBorder: "#18c2c9",
+        clusterBkg: "#0d181a",
+        clusterBorder: "#1e3034",
+        edgeLabelBackground: "#101d20",
+        actorBkg: "#0f2e31",
+        actorBorder: "#18c2c9",
+        actorTextColor: "#e6f0f0",
+        signalColor: "#9fb4b8",
+        signalTextColor: "#e6f0f0",
+        noteBkgColor: "#241f10",
+        noteTextColor: "#e6f0f0",
+        noteBorderColor: "#e0b64a"
+      }
+    });
+  </script>
+  {{- end }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.min.js" defer></script>
+  <script>window.addEventListener("load", () => { if (window.quicklink) quicklink.listen({ origins: [location.hostname] }); });</script>
+</body>
+</html>

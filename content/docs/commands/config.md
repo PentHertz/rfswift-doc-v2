@@ -1,11 +1,11 @@
 ---
-title: config
-weight: 21
-prev: /docs/commands/env
-next: /docs/commands/bindings
+title: "rfswift config"
+linkTitle: "config"
+navGroup: "Runtime configuration"
+level: reference
+description: "Change the devices, mounts, capabilities, cgroups, GPUs, ports and ulimits of an existing container."
+weight: 40
 ---
-
-# rfswift config
 
 Change the runtime configuration of an **existing** container: devices and bind mounts, Linux capabilities, cgroup device rules, GPU requests, exposed and published ports, ulimits, and the serial hot-plug. Alias: `rfswift cfg`. Each group is also available at the top level (`rfswift ports bind ...`), and neither form is deprecated.
 

@@ -1,13 +1,14 @@
 ---
-title: report
-weight: 30
-prev: /docs/commands/macusb
+title: "rfswift report"
+linkTitle: "report"
+navGroup: "Security"
+level: reference
+description: "Generate assessment reports from a container and its workspace."
+weight: 71
 ---
 
-# rfswift report
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift system report`. The legacy form `rfswift report` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift system report`. The legacy form `rfswift report` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Generate structured assessment reports from container sessions.
@@ -53,11 +54,11 @@ When `-c` is omitted in an interactive terminal, a container picker is shown.
 
 ---
 
-## Report Contents
+## Report contents
 
 Each generated report contains the following sections:
 
-### 1. Container Summary
+### 1. Container summary
 
 | Field | Source |
 |-------|--------|
@@ -67,19 +68,19 @@ Each generated report contains the following sections:
 | Creation date & age | Container metadata |
 | Workspace path | Volume bindings |
 
-### 2. Environment Configuration
+### 2. Environment configuration
 
 Full container configuration: network mode, privileged mode, device mappings, Linux capabilities, cgroup rules, ulimits, and volume bindings.
 
-### 3. Session Recordings
+### 3. Session recordings
 
 Inventories all `.cast` (asciinema) and `rfswift-*.log` (script) files found in the workspace directory and current working directory. Includes file size and date.
 
-### 4. Shell History
+### 4. Shell history
 
 Extracted from the container's `/root/.bash_history` or `/root/.zsh_history`. Shows all commands run inside the container during the assessment.
 
-### 5. Workspace Artifacts
+### 5. Workspace artifacts
 
 Full file inventory of the workspace directory with smart categorization:
 
@@ -91,13 +92,13 @@ Full file inventory of the workspace directory with smart categorization:
 | **script** | `.py`, `.sh`, `.grc` |
 | **image** | `.png`, `.jpg`, `.svg`, `.pdf` |
 
-### 6. Notes Section
+### 6. Notes section
 
 An editable section for assessor findings, observations, and conclusions.
 
 ---
 
-## Output Formats
+## Output formats
 
 {{< tabs items="Markdown,HTML,PDF" >}}
   {{< tab >}}
@@ -155,11 +156,11 @@ If neither tool is installed, RF Swift generates an HTML file instead and shows 
 
 ## Examples
 
-### Basic Assessment Report
+### Basic assessment report
 
 ```bash
 # Run an SDR assessment
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n hackrf_assessment --record
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n hackrf_assessment --record
 
 # ... do your work inside the container ...
 # hackrf_info
@@ -170,7 +171,7 @@ rfswift run -i penthertz/rfswift_resolute:sdr_full -n hackrf_assessment --record
 rfswift report generate -c hackrf_assessment --format html -o hackrf-report.html
 ```
 
-### Report with Custom Title
+### Report with custom title
 
 ```bash
 rfswift report generate -c client_pentest \
@@ -179,18 +180,18 @@ rfswift report generate -c client_pentest \
   -o client-x-wireless-assessment.pdf
 ```
 
-### Interactive Mode
+### Interactive mode
 
 ```bash
 # No flags: picks container from a list, generates Markdown
 rfswift report generate
 ```
 
-### Typical Professional Workflow
+### Typical professional workflow
 
 ```bash
 # 1. Create container with workspace and recording
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n pentest_wifi --record
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n pentest_wifi --record
 
 # 2. All captures go to ~/rfswift-workspace/pentest_wifi/
 #    Inside the container, /workspace is the shared directory
@@ -213,7 +214,7 @@ rfswift report generate -c pentest_wifi \
 
 ---
 
-## How It Works
+## How it works
 
 ```mermaid
 graph TD
@@ -244,7 +245,7 @@ The report generator:
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`run`](/docs/commands/run) - Create containers (use `--record` to capture sessions)
 - [`log`](/docs/commands/log) - Record and replay terminal sessions
@@ -254,7 +255,7 @@ The report generator:
 ---
 
 {{< callout emoji="💡" >}}
-**Tip**: Use `--record` with `rfswift run` and `rfswift exec` to automatically capture session recordings that will appear in the report.
+**Tip**: Use `--record` with `rfswift container create` and `rfswift container shell` to automatically capture session recordings that will appear in the report.
 {{< /callout >}}
 
 {{< callout type="info" >}}

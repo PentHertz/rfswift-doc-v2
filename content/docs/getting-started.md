@@ -1,44 +1,136 @@
 ---
-title: Getting Started
+title: Install RF Swift
+linkTitle: Install
+description: One installer per system sets up RF Swift and the engine it needs. Pick your system below; it takes about five minutes.
+level: beginner
 weight: 5
-next: /docs/quick-start
-prev: /docs/comparisons
-cascade:
-  type: docs
 ---
 
-# Getting Started with RF Swift 🚀
+The recommended way for each system is shown first. You can accept the installer's defaults, and change any choice later. The current release is **v4.0.2**.
 
-This guide covers installation on Linux, macOS and Windows, what the installer sets up for you, and the few host steps that are left to you on purpose.
+{{< callout type="beginner" title="Before you start" >}}
+Check that your computer is supported: [Will it run on my computer?](/docs/supports/) Unsure what an "engine" is? [Key ideas](/docs/concepts/#engine) explains it in one paragraph. You can accept the installer's defaults.
+{{< /callout >}}
 
-The current release is **v4.0.2**. Linux and macOS have a one-line install script; every platform also has native installers on the [releases page](https://github.com/PentHertz/RF-Swift/releases): deb, rpm and pacman packages and a Workbench AppImage for Linux, a Homebrew cask and a signed DMG for macOS, and a one-click bundle or an MSI for Windows. Pick the tab that matches your machine.
+## Install
 
-## Installation
-
-{{< tabs items="Linux / macOS (one line),Linux packages,macOS (DMG / Homebrew),Windows (installer)" >}}
+{{< tabs items="Linux,macOS,Windows" >}}
   {{< tab >}}
+**1. Open a terminal and paste this line:**
+
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
 
-or with wget:
+**2. Answer a few questions.** The defaults are fine for most people. The installer asks:
+
+- which **release channel** to use: stable (recommended) or the development prerelease;
+- **what to install**: the `rfswift` command line, the Workbench desktop app, or both;
+- **how to install it**: a native package (deb, rpm or pacman) when your system allows it, otherwise a folder of your choice;
+- which **engine** to install if you have none: Docker, Podman, both, or skip;
+- whether to add **Nix** for the native engine, and its isolation helper;
+- whether to install the **udev rules** that let your user open radio hardware, and set up Docker access, display and sound.
+
+Every download is checked against the release's SHA-256 manifest before it is used.
+
+**3. Run `rfswift`.** The first time, it offers to create its configuration file with the default values. Answer `y`.
+  {{< /tab >}}
+  {{< tab >}}
+**The disk image: no terminal needed.**
+
+1. Download `rfswift_Darwin_universal.dmg` from the [releases page](https://github.com/PentHertz/RF-Swift/releases/latest) (it works on Intel and Apple Silicon Macs).
+2. Open it and drag **rfswift-workbench.app** to Applications.
+3. Double-click **Install RF Swift CLI** next to it: it copies the `rfswift` command to `/usr/local/bin`.
+4. Double-click **RF Swift Setup**: it installs and selects your container engine.
+5. Open the Workbench from Applications, or type `rfswift` in a terminal.
+
+Everything in the image is signed and notarized by Apple, so macOS opens it without a warning.
+
+**Prefer Homebrew?** This installs the same signed command line and Workbench, then picks your engine:
+
+```bash
+brew install --cask penthertz/rfswift/rfswift
+curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/main/scripts/setup-macos.sh" | bash
+```
+
+The one-line Linux installer works on macOS too.
+
+{{< callout type="info" title="Radios and graphical tools on a Mac" >}}
+- **USB radios**: Docker Desktop and Podman on macOS can't pass USB devices to a lab. Two good options: the **Nix** engine, which runs the tools natively with direct USB access (see [Nix engine](/docs/guide/nix-engine/)), or the **Lima** engine for containers: `brew install qemu lima`. See [usb](/docs/commands/usb/) and [engine](/docs/commands/engine/).
+- **Graphical tools** such as SDR++ need XQuartz; the `scripts/setup-xquartz-macos.sh` script of the RF Swift repository configures it.
+{{< /callout >}}
+  {{< /tab >}}
+  {{< tab >}}
+**The installer bundle: one click, one administrator prompt.**
+
+1. Download `RFSwift-Setup-<version>-x64.exe` (or `-arm64.exe` on an ARM PC) from the [releases page](https://github.com/PentHertz/RF-Swift/releases/latest). Or fetch it from PowerShell:
+
+   ```powershell
+   $setup = (Invoke-RestMethod https://api.github.com/repos/PentHertz/RF-Swift/releases/latest).assets | Where-Object name -like 'RFSwift-Setup-*-x64.exe'
+   Invoke-WebRequest $setup.browser_download_url -OutFile RFSwift-Setup.exe; .\RFSwift-Setup.exe
+   ```
+
+2. Run it and tick what you want. The defaults suit most people:
+   - **WSL 2 with WSLg**: the Linux layer of Windows where your labs run, with display and sound;
+   - **usbipd-win**: forwards your USB radios to the labs;
+   - **a container engine**: Docker Desktop (default), Podman Desktop, "I already have one", or "No container engine, Nix only";
+   - optionally **Nix in WSL 2** for the native engine.
+
+   Everything installs under a single administrator (UAC) prompt.
+3. Open **RF Swift Console** or **RF Swift Workbench** from the Start Menu, or type `rfswift` in any terminal.
+
+Docker Desktop needs a paid subscription in larger organisations; Podman Desktop is the open-source alternative and works just as well. Managed deployments (MSI, silent install): see [Windows](/docs/guide/windows/).
+  {{< /tab >}}
+{{< /tabs >}}
+
+## Check that it worked
+
+```bash
+rfswift --version
+rfswift doctor
+```
+
+`rfswift --version` prints the installed version. `rfswift doctor` checks your system: the engines, USB, display, sound, the configuration file and more. **Each failing line names the command that fixes it.**
+
+{{< callout type="tip" title="On a Linux desktop" >}}
+Run `rfswift host setup` once. It walks you through the optional host steps (udev rules for radio hardware, installing an engine, Nix, Docker access, the Nix isolation jail) and asks before each one.
+
+If Docker says "permission denied", run `rfswift host docker-access`: it gives your user access right away, with no logout. Members of the `docker` group are root-equivalent on the host.
+{{< /callout >}}
+
+{{< callout type="info" title="Already on Kali, Parrot, BlackArch or DragonOS?" >}}
+Keep it. RF Swift installs inside the distribution like on any Linux (Kali gets its own `docker.io` package). The Nix engine adds pinned per-engagement environments, single tools on demand and the `--isolate` jail without touching the distribution's packages: `rfswift host setup --engine none --nix yes`, then `rfswift env run sdr_light sdrpp`. See [Keep your distribution, add RF Swift](/docs/comparisons/#complete-the-distribution-you-already-run).
+{{< /callout >}}
+
+## What's next
+
+{{< cards >}}
+  {{< card link="/docs/quick-start/" title="Quick start" icon="rocket-launch" subtitle="Download a toolbox and open your first lab." tag="Beginner" >}}
+  {{< card link="/docs/first-signal/" title="Tutorial: your first signal" icon="broadcast" subtitle="Plug in an SDR and listen to a real transmission." tag="Beginner" >}}
+  {{< card link="/docs/guide/workbench/" title="Tour the Workbench" icon="desktop" subtitle="The graphical way to use RF Swift." tag="Beginner" >}}
+{{< /cards >}}
+
+## Advanced installation
+
+You don't need this section for a normal install. It covers unattended installs, native packages, choosing and setting up an engine yourself, and verifying downloads.
+
+### Review the script before running it
+
+{{< callout type="warning" >}}
+Piping a script into a shell runs it without review. To stay in control, download `get_rfswift.sh` from the official repository, read it, and run the local copy; or use the native packages below. See [Security](/docs/security/audit/) for the trust model.
+{{< /callout >}}
+
+The script also works with `wget`:
 
 ```bash
 wget -qO- "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 ```
 
-The installer asks a handful of questions and does the rest:
+On Debian, where the first user is not in `sudo`, the installer offers the fix or runs from a root shell (`su -`). With a recent, logged-in GitHub CLI it also offers to check the Sigstore build-provenance attestation.
 
-1. **Release channel**: stable, or the development prerelease.
-2. **What to install**: the `rfswift` CLI/TUI, the Workbench GUI, or both. On Linux the Workbench comes as a portable AppImage or a smaller native build.
-3. **Install method**: the native package (deb, rpm, pacman; the signed Homebrew cask on macOS) when a package manager and root are available, else a tarball in a directory of your choice.
-4. **Container engine** when none is found: Docker, Podman, both, Lima (macOS, USB passthrough), or skip.
-5. **Nix** for the native engine, and **bubblewrap** for its `--isolate` jail (the sandbox is tested on every run).
-6. **udev rules** for RF hardware (Linux), then Docker session access, `xhost` and `pactl`.
+### Unattended installation
 
-Every download is verified against the release SHA-256 manifest; with a recent, logged-in GitHub CLI it also offers to check the Sigstore build-provenance attestation. On Debian, where the first user is not in `sudo`, the installer offers the fix or runs from a root shell (`su -`).
-
-Answer everything up front for automation:
+Every installer question can be answered up front with an environment variable:
 
 | Variable | Values |
 |----------|--------|
@@ -54,11 +146,10 @@ Answer everything up front for automation:
 RFSWIFT_CHANNEL=stable RFSWIFT_INSTALL=both RFSWIFT_ENGINE=podman RFSWIFT_NIX=1 RFSWIFT_UDEV=1 sh get_rfswift.sh
 ```
 
-{{< callout type="warning" >}}
-Review a script before piping it into a shell. Download `get_rfswift.sh` from the official repository, read it, and run the local copy; or use the native packages below. See [Security](/docs/security/audit) for the trust model.
-{{< /callout >}}
-  {{< /tab >}}
-  {{< tab >}}
+On Linux the Workbench comes as a portable AppImage or a smaller native build. On macOS the script can also install Lima for USB passthrough.
+
+### Native Linux packages
+
 Two packages ship with every release on the [releases page](https://github.com/PentHertz/RF-Swift/releases): `rfswift` (CLI/TUI, man pages, bash/zsh/fish completions) and `rfswift-workbench` (desktop GUI). They pull in `xhost` and `pactl`, the two host tools every container needs; `bubblewrap` and a container engine are recommended.
 
 ```bash
@@ -76,34 +167,9 @@ rfswift host docker-access   # docker group + socket ACL, effective without logg
 rfswift host isolate         # Nix jail on Ubuntu 24.04+: bubblewrap and its AppArmor profile
 ```
 
-The wizard also offers to install Docker and/or Podman from your distribution, or Nix. A packaged `rfswift` is upgraded with the next package; `rfswift update` says so instead of overwriting it. The installer removes the copies an earlier tarball install left in `/usr/local/bin` or `~/.rfswift/bin` when you agree.
-  {{< /tab >}}
-  {{< tab >}}
-**The DMG, no terminal needed.** Download `rfswift_Darwin_universal.dmg` from the [releases page](https://github.com/PentHertz/RF-Swift/releases), open it and drag `rfswift-workbench.app` to Applications. Two helpers sit next to it: **Install RF Swift CLI** copies `rfswift` to `/usr/local/bin`, and **RF Swift Setup** installs and picks your container engine. Everything in the image is Developer ID signed and notarized, so Gatekeeper opens it without a warning.
+The wizard also offers to install Docker and/or Podman from your distribution, or Nix. A packaged `rfswift` is upgraded with the next package; `rfswift update` says so instead of overwriting it. The installer removes the copies an earlier tarball install left in `/usr/local/bin` or `~/.rfswift/bin` when you agree. Details: [host](/docs/commands/host/).
 
-**Homebrew** does the same from the terminal:
-
-```bash
-brew install --cask penthertz/rfswift/rfswift
-curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/main/scripts/setup-macos.sh" | bash
-```
-
-The cask installs the CLI and the Workbench from the signed release; the setup script picks your engine. The one-line installer of the first tab works on macOS too.
-
-For USB hardware install Lima (`brew install qemu lima`); for GUI tools install XQuartz (`scripts/setup-xquartz-macos.sh` configures it). See [engine](/docs/commands/engine) and [usb](/docs/commands/usb).
-  {{< /tab >}}
-  {{< tab >}}
-Download `RFSwift-Setup-<version>-x64.exe` (or `-arm64`) from the [releases page](https://github.com/PentHertz/RF-Swift/releases) and run it. Under a single UAC prompt it installs what you tick: WSL 2 with WSLg, usbipd-win for USB passthrough, Docker Desktop or Podman Desktop (or none for a Nix-only setup), optionally Nix inside WSL 2, and RF Swift with its Start Menu entries. `RFSwift-<version>-<arch>.msi` installs RF Swift alone for managed deployments.
-
-Then open **RF Swift Console** or **RF Swift Workbench** from the Start Menu, or type `rfswift` in any terminal. Details, silent switches and the trust model: [Windows](/docs/guide/windows).
-  {{< /tab >}}
-{{< /tabs >}}
-
-{{< callout emoji="🐉" >}}
-**Already on Kali, Parrot, BlackArch or DragonOS?** Keep it. RF Swift installs inside the distribution like on any Linux (Kali gets its own `docker.io` package), and the Nix engine adds pinned per-engagement environments, single tools on demand and the `--isolate` jail without touching the distribution's packages: `rfswift host setup --engine none --nix yes`, then `rfswift env run sdr_light sdrpp`. See [Keep your distribution, add RF Swift](/docs/comparisons#complete-the-distribution-you-already-run).
-{{< /callout >}}
-
-## Choosing an engine
+### Choosing an engine
 
 | | Docker | Podman | Lima | Nix |
 |---|---|---|---|---|
@@ -112,9 +178,9 @@ Then open **RF Swift Console** or **RF Swift Workbench** from the Start Menu, or
 | **USB hardware** | Linux; Windows via usbipd | Linux (host udev rules); Windows via usbipd | macOS hot-plug | Direct |
 | **Best for** | Broad ecosystem, Windows and macOS | Security-focused, air-gapped, shared machines | macOS with RF hardware | Laptops without a container engine, lowest latency to hardware, GPU |
 
-RF Swift auto-detects Docker, Podman and Lima. Override with `--engine`, `RFSWIFT_ENGINE`, or `engine =` in `config.ini`. All engines can coexist and the Workbench lists their targets side by side. See [engine](/docs/commands/engine), [Using Podman](/docs/guide/podman) and [Nix engine](/docs/guide/nix-engine).
+The benefits and trade-offs of each, in plain words: [Choose your engine](/docs/engines/). RF Swift auto-detects Docker, Podman and Lima. Override with `--engine`, `RFSWIFT_ENGINE`, or `engine =` in `config.ini`. All engines can coexist and the Workbench lists their targets side by side. See [engine](/docs/commands/engine/), [Podman](/docs/guide/podman/) and [Nix engine](/docs/guide/nix-engine/).
 
-### Engine setup by hand
+### Setting up an engine by hand
 
 {{< tabs items="Docker,Podman,Nix" >}}
   {{< tab >}}
@@ -146,19 +212,11 @@ sh <(curl -L https://nixos.org/nix/install) --daemon        # or: rfswift host s
 rfswift container create --engine nix                       # wizard
 ```
 
-On Windows: `rfswift env wsl setup`. Details in the [Nix engine guide](/docs/guide/nix-engine).
+On Windows: `rfswift env wsl setup`. Details in the [Nix engine guide](/docs/guide/nix-engine/).
   {{< /tab >}}
 {{< /tabs >}}
 
-## Check the host
-
-```bash
-rfswift doctor
-```
-
-The doctor lists every engine and its service, Docker access, the host udev rules, the Nix engine (and its WSL 2 backend on Windows), the Nix jail, the Lima VM, images, X11 and `xhost`, the audio server, USB devices, the config file and kernel modules. Each failing row names the command that fixes it.
-
-## Verifying downloads
+### Verifying downloads
 
 ```bash
 gh attestation verify rfswift_Linux_x86_64.tar.gz --repo PentHertz/RF-Swift
@@ -166,15 +224,9 @@ gh attestation verify rfswift_Linux_x86_64.tar.gz --repo PentHertz/RF-Swift
 
 Every release asset carries a Sigstore build-provenance attestation proving it was built by the official release workflow from a specific commit. The installer runs this check when a recent, logged-in `gh` is available and always verifies the SHA-256 manifest.
 
-## Next steps
+### Troubleshooting the installation
 
-{{< cards >}}
-  {{< card link="/docs/quick-start" title="Quick Start" icon="document-text" subtitle="Pull an image and run your first container or environment" >}}
-  {{< card link="/docs/guide/workbench" title="Workbench" icon="desktop-computer" subtitle="The assessment GUI" >}}
-  {{< card link="/docs/development" title="Developing and contributing" icon="document-text" subtitle="Compile the binaries, build images, contribute" >}}
-{{< /cards >}}
-
-## Troubleshooting
+More answers in [FAQ & troubleshooting](/docs/faq/).
 
 1. Run `rfswift doctor`; it points at the missing piece.
 2. Check the [GitHub issues](https://github.com/PentHertz/RF-Swift/issues) for known problems, and join the [Discord](https://discord.gg/NS3HayKrpA).

@@ -1,0 +1,7 @@
+{{- /* Returns a Phosphor icon name for a content icon name or emoji. */ -}}
+{{- $name := . | default "" -}}
+{{- $map := site.Data.icons -}}
+{{- $out := $name -}}
+{{- with index $map.names $name }}{{ $out = . }}{{ end -}}
+{{- with index $map.emoji $name }}{{ $out = . }}{{ end -}}
+{{- return $out -}}

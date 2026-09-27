@@ -1,11 +1,11 @@
 ---
-title: completion
-weight: 24
-prev: /docs/commands/update
-next: /docs/commands/install
+title: "rfswift completion"
+linkTitle: "completion"
+navGroup: "System"
+level: reference
+description: "Generate and install shell completion for bash, zsh and fish."
+weight: 95
 ---
-
-# rfswift completion
 
 {{< callout type="info" >}}
 `rfswift completion bash|zsh|fish --install` writes the script into the platform's completion directory for you; the Linux packages install bash, zsh and fish completions already. Completions cover the whole v4 tree, including `rfswift env install` package names.
@@ -32,7 +32,7 @@ The `completion` command generates and installs tab-completion scripts for your 
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Auto-detect and install:**
 ```bash
@@ -59,7 +59,7 @@ rfswift completion powershell
 
 ---
 
-## Installation Locations
+## Installation locations
 
 ### Bash
 
@@ -131,9 +131,9 @@ echo $PROFILE
 
 ---
 
-## How Completion Works
+## How completion works
 
-### What Gets Completed
+### What gets completed
 
 **Commands:**
 ```bash
@@ -143,29 +143,29 @@ rfswift <Tab>
 
 **Subcommands:**
 ```bash
-rfswift images <Tab>
+rfswift image <Tab>
 # Shows: local, remote, pull
 ```
 
 **Flags:**
 ```bash
-rfswift run -<Tab>
+rfswift container create -<Tab>
 # Shows: -i, -n, -b, -p, -d, etc.
 ```
 
 **Container names:**
 ```bash
-rfswift exec -c <Tab>
+rfswift container shell -c <Tab>
 # Shows: container1, container2, container3, etc.
 ```
 
 **Image names:**
 ```bash
-rfswift run -i <Tab>
+rfswift container create -i <Tab>
 # Shows: penthertz/rfswift_resolute:sdr_full, penthertz/rfswift_resolute:wifi, etc.
 ```
 
-### Completion Features
+### Completion features
 
 **Smart completion:**
 - Only shows relevant options for current context
@@ -177,7 +177,7 @@ rfswift run -i <Tab>
 
 ## Troubleshooting
 
-### Completion Not Working
+### Completion not working
 
 **Problem:** Tab completion doesn't work
 
@@ -230,7 +230,7 @@ fish_update_completions
 exec fish
 ```
 
-### Permission Denied
+### Permission denied
 
 **Problem:** Cannot write completion file
 
@@ -247,7 +247,7 @@ rfswift completion bash
 sudo rfswift completion bash
 ```
 
-### Old Completions Cached
+### Old completions cached
 
 **Problem:** Completions show old commands
 
@@ -293,7 +293,7 @@ rfswift completion fish
 exec fish
 ```
 
-### Completions Conflict
+### Completions conflict
 
 **Problem:** Completions conflict with other tools
 
@@ -310,7 +310,7 @@ rm /path/to/conflicting/completion
 rfswift completion
 ```
 
-### Shell Not Detected
+### Shell not detected
 
 **Problem:** Auto-detection fails
 
@@ -326,7 +326,7 @@ rfswift completion
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`update`](/docs/commands/update) - Update RF Swift (refresh completions after)
 - [`install`](/docs/commands/install) - Install function scripts

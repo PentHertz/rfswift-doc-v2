@@ -1,48 +1,60 @@
 ---
-title: 📵 Air-Gapped Installation
+title: "Air-gapped installation"
+linkTitle: "Air-gapped install"
+level: advanced
+description: "Install and run RF Swift on machines with no internet access: prepare everything online, transfer it, install offline."
 weight: 20
-cascade:
-  type: docs
 ---
 
-# Air-Gapped Installation Guide
+This guide installs RF Swift on a machine with **no internet access**: secure facilities, classified networks, critical infrastructure, or simply a lab machine that must stay offline. You prepare everything on a connected computer, carry it over, and install it offline. After that, RF Swift works completely offline with the `-q` (disconnected mode) flag.
 
-Complete guide for installing and running RF Swift in air-gapped, offline, or isolated environments where internet access is restricted or prohibited.
+**The four phases:**
 
-{{< callout type="warning" >}}
-**Security Note**: Air-gapped installations are common in secure facilities, classified networks, and critical infrastructure environments. This guide ensures RF Swift works completely offline after initial setup.
+1. **Prepare online**: download the engine, the RF Swift binary, the images and the X11 utilities.
+2. **Transfer**: carry the package over an approved channel and verify its checksums.
+3. **Install offline**: run the install script, or install each piece by hand.
+4. **Configure and use**: make disconnected mode the default and test a container.
+
+{{< callout type="warning" title="Plan ahead" >}}
+Download more images than you think you'll need. In secure facilities, coming back for another component usually means another approval cycle.
 {{< /callout >}}
-
----
 
 ## Overview
 
-Air-gapped installation requires downloading all components while online, then transferring them to the isolated system. RF Swift fully supports offline operation using the `-q` (disconnected mode) flag.
+### Two routes: containers or Nix
 
-### What You'll Need
+| | Containers (Docker or Podman) | Nix environments |
+|---|---|---|
+| **What you carry** | The engine, the RF Swift binary, image archives (`rfswift image download`) | The RF Swift binary and `.rfenv` archives (`rfswift env export`) |
+| **Target needs** | A container engine | Nix installed |
+| **On the target** | `rfswift image import image -i <file>` | `rfswift env import <file>.rfenv` |
+
+**The Nix route, without a container engine**: an air-gapped machine with Nix installed can run native environments from `.rfenv` archives. Export on the online machine with `rfswift env export mysdr -o mysdr.rfenv` (the closure and the workspace travel together) and import with `rfswift env import mysdr.rfenv`. The Workbench exports the same archives from a mission's right-click menu.
+
+The rest of this page follows the container route with Docker. Podman has no daemon, which suits air-gapped systems well: see [Using Podman](/docs/guide/podman/#air-gapped-environment).
+
+### What you'll need
 
 **Downloaded while online:**
+
 - Docker static binaries (or Podman from the distribution's repositories)
 - The RF Swift binary (static, `rfswift_Linux_<arch>.tar.gz`) or the native package (`.deb`, `.rpm`, `.pkg.tar.zst`), which also brings `xhost` and `pactl` as dependencies
 - Container images (`rfswift image download`), or Nix environments (`rfswift env export`)
 - X11 utilities (for GUI applications)
 
-{{< callout type="info" >}}
-**Nix engine without a container engine**: an air-gapped machine with Nix installed can run native environments from `.rfenv` archives. Export on the online machine with `rfswift env export mysdr -o mysdr.rfenv` (the closure and the workspace travel together) and import with `rfswift env import mysdr.rfenv`. The Workbench exports the same archives from a mission's right-click menu.
-{{< /callout >}}
+**Target system:**
 
-**Target system requirements:**
-- A Linux system - Debian or Ubuntu recommended
+- A Linux system; Debian or Ubuntu recommended
 - x86_64, RISCV64 or ARM64 architecture
-- Storage for Docker images (5-20 GB depending on images)
+- Storage for the images (5-20 GB depending on the images)
 
----
+## Phase 1: online preparation
 
-## Phase 1: Online Preparation
+{{% steps %}}
 
-### Step 1: Download Docker
+### Download Docker
 
-Download Docker static binaries from the official repository:
+Download the Docker static binaries from the official repository:
 
 ```bash
 # On a system with internet access
@@ -58,47 +70,43 @@ wget https://download.docker.com/linux/static/stable/aarch64/docker-29.1.4.tgz
 ls -lh docker-*.tgz
 ```
 
-{{< callout type="info" >}}
-Look for latest binaries directly on the official website: `https://download.docker.com/linux/static/stable`.
-{{< /callout >}}
+Look for the latest binaries directly on the official website: `https://download.docker.com/linux/static/stable`.
 
+### Download the RF Swift binary
 
-### Step 2: Download RF Swift Binary
+Download the RF Swift static binary from the GitHub releases:
 
-Download the latest RF Swift static binary from GitHub releases:
-
+{{< tabs items="x86_64,ARM64,RISCV64" >}}
+  {{< tab >}}
 ```bash
-# Download latest release for x86_64
 wget https://github.com/PentHertz/RF-Swift/releases/download/v4.0.2/rfswift_Linux_x86_64.tar.gz
-
 tar -zvxf rfswift_Linux_x86_64.tar.gz
-
-# Make executable
 chmod +x rfswift
-
-# Verify
 ./rfswift --version
 ```
-
-**For ARM64 systems:**
+  {{< /tab >}}
+  {{< tab >}}
 ```bash
 wget https://github.com/PentHertz/RF-Swift/releases/download/v4.0.2/rfswift_Linux_arm64.tar.gz
 tar -zvxf rfswift_Linux_arm64.tar.gz
 chmod +x rfswift
 ```
-
-**For RISCV64 systems:**
+  {{< /tab >}}
+  {{< tab >}}
 ```bash
 wget https://github.com/PentHertz/RF-Swift/releases/download/v4.0.2/rfswift_Linux_riscv64.tar.gz
 tar -zvxf rfswift_Linux_riscv64.tar.gz
 chmod +x rfswift
 ```
+  {{< /tab >}}
+{{< /tabs >}}
 
-### Step 3: Download X11 Utilities (for GUI)
+### Download the X11 utilities (for GUI tools)
 
-For systems that need GUI applications (GQRX, SDR++, URH, etc.):
+Needed for graphical applications such as GQRX, SDR++ or URH:
 
-**Debian/Ubuntu:**
+{{< tabs items="Debian/Ubuntu,RHEL/CentOS,Alpine" >}}
+  {{< tab >}}
 ```bash
 # Download xhost and dependencies
 apt-get download xhost x11-xserver-utils libx11-6 libxau6 libxdmcp6 libxcb1
@@ -108,54 +116,50 @@ mkdir -p airgap-debs
 cd airgap-debs
 apt-get download $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances xhost x11-xserver-utils | grep "^\w" | sort -u)
 ```
-
-**RHEL/CentOS:**
+  {{< /tab >}}
+  {{< tab >}}
 ```bash
 yumdownloader --resolve xorg-x11-server-utils libX11
 ```
-
-**Alpine:**
+  {{< /tab >}}
+  {{< tab >}}
 ```bash
 apk fetch --recursive xhost xauth
 ```
+  {{< /tab >}}
+{{< /tabs >}}
 
-### Step 4: Prepare Docker Images
+### Prepare the images
 
-You have two options for Docker images:
-
-#### Option A: Official Images (Using download feature)
+**Option A: official images**, saved with the download command (install Docker and RF Swift temporarily on the online system, or use an existing installation):
 
 ```bash
-# Install Docker and RF Swift temporarily on the online system
-# (or use existing installation)
+rfswift image download -i penthertz/rfswift_resolute:sdr_full -o rfswift_sdr_full.tar.gz
+rfswift image download -i penthertz/rfswift_resolute:telecom -o rfswift_telecom.tar.gz
+rfswift image download -i penthertz/rfswift_resolute:wifi -o rfswift_wifi.tar.gz
+rfswift image download -i penthertz/rfswift_resolute:automotive -o rfswift_automotive.tar.gz
 
-# Download RF Swift images with custom output names
-rfswift download -i penthertz/rfswift_resolute:sdr_full -o rfswift_sdr_full.tar.gz
-rfswift download -i penthertz/rfswift_resolute:telecom -o rfswift_telecom.tar.gz
-rfswift download -i penthertz/rfswift_resolute:wifi -o rfswift_wifi.tar.gz
-rfswift download -i penthertz/rfswift_resolute:automotive -o rfswift_automotive.tar.gz
-
-# Images are saved with custom names as specified with -o flag
+# Images are saved with the names given to -o
 ls -lh *.tar.gz
 ```
 
-#### Option B: Custom Images (Using export)
+**Option B: your own containers and images**, saved with export:
 
-**Exporting with RF Swift:**
 ```bash
-# Export container as tarball
-rfswift export container -c my_work_container -o work_env.tar.gz
+# Export a container as a tarball
+rfswift image export container -c my_work_container -o work_env.tar.gz
 
-# Export image
-rfswift export image my_custom:latest -o custom_image.tar.gz
+# Export an image
+rfswift image export image -i my_custom:latest -o custom_image.tar.gz
 ```
 
-### Step 5: Create Transfer Package
+The older spellings (`rfswift download`, `rfswift export`, `rfswift import`) still work.
 
-Organize everything for transfer:
+### Create the transfer package
+
+Put everything in one directory, with an install script and a README:
 
 ```bash
-# Create transfer directory
 mkdir -p ~/rfswift-airgap-package
 cd ~/rfswift-airgap-package
 
@@ -164,7 +168,11 @@ cp ~/airgap-prep/docker-*.tgz .
 cp ~/airgap-prep/rfswift .
 cp ~/airgap-prep/*.tar.gz .
 cp -r ~/airgap-prep/airgap-debs .
+```
 
+{{% details title="The install-airgap.sh script and README (create them in the package directory)" %}}
+
+```bash
 # Create installation script
 cat > install-airgap.sh << 'EOF'
 #!/bin/bash
@@ -266,12 +274,12 @@ echo "✓ Images loaded"
 echo "[5/5] Verifying installation..."
 docker --version
 rfswift --version
-rfswift -q images local
+rfswift -q image local
 
 echo ""
 echo "=== Installation Complete ==="
 echo ""
-echo "Run: rfswift -q run -i penthertz/rfswift_resolute:sdr_full -n test"
+echo "Run: rfswift -q container create -i penthertz/rfswift_resolute:sdr_full -n test"
 echo "(Use -q flag for disconnected mode)"
 EOF
 
@@ -305,7 +313,9 @@ echo "✓ Transfer package ready: $(pwd)"
 ls -lh
 ```
 
-### Step 6: Calculate Transfer Size
+{{% /details %}}
+
+### Check the size and create checksums
 
 ```bash
 # Check total size
@@ -316,15 +326,17 @@ cd ~/rfswift-airgap-package
 sha256sum * > SHA256SUMS
 ```
 
----
+{{% /steps %}}
 
-## Phase 2: Transfer to Air-Gapped System
+## Phase 2: transfer to the air-gapped system
 
-Transfer the package using approved methods:
+Transfer the package with an approved method:
 
-- **USB Drive**: Copy to USB
-- **Secure File Transfer**: Use transfer system
-- **Approved Network Transfer**: If limited connectivity allowed
+- **USB drive**: copy it to a USB drive.
+- **Secure file transfer**: use your organisation's transfer system.
+- **Approved network transfer**: if limited connectivity is allowed.
+
+Then verify the checksums on the destination:
 
 ```bash
 # Example: USB transfer
@@ -335,27 +347,20 @@ cd /media/usb/rfswift-airgap-package
 sha256sum -c SHA256SUMS
 ```
 
----
+## Phase 3: air-gapped installation
 
-## Phase 3: Air-Gapped Installation
-
-### Automated Installation
-
-On the air-gapped system:
+**Automated**: on the air-gapped system, run the script from the package:
 
 ```bash
-# Extract transfer package
 cd /path/to/rfswift-airgap-package
-
-# Run installation script
 sudo ./install-airgap.sh
 ```
 
-### Manual Installation
+**Manual**: if you prefer to install each piece yourself, follow these steps:
 
-If you prefer manual installation:
+{{% steps %}}
 
-#### 1. Install Docker
+### Install Docker
 
 ```bash
 # Extract Docker binaries (uses wildcard to match any version)
@@ -397,18 +402,15 @@ sudo systemctl start docker
 docker --version
 ```
 
-#### 2. Install RF Swift
+### Install RF Swift
 
 ```bash
-# Install binary
 sudo cp rfswift /usr/local/bin/
 sudo chmod +x /usr/local/bin/rfswift
-
-# Verify
 rfswift --version
 ```
 
-#### 3. Install X11 Utilities
+### Install the X11 utilities
 
 ```bash
 # For Debian/Ubuntu
@@ -421,32 +423,33 @@ sudo dpkg -i xhost*.deb x11-xserver-utils*.deb
 which xhost
 ```
 
-#### 4. Load Docker Images
+### Load the images
 
-**Method 1: Using rfswift import (for images downloaded with custom names)**
+Images saved with `image download` (custom file names):
+
 ```bash
-# Import images with custom filenames from download command
-rfswift import image -i rfswift_sdr_full.tar.gz
-rfswift import image -i rfswift_telecom.tar.gz
-rfswift import image -i rfswift_wifi.tar.gz
-rfswift import image -i rfswift_automotive.tar.gz
+rfswift image import image -i rfswift_sdr_full.tar.gz
+rfswift image import image -i rfswift_telecom.tar.gz
+rfswift image import image -i rfswift_wifi.tar.gz
+rfswift image import image -i rfswift_automotive.tar.gz
 
 # Verify
-rfswift -q images local
+rfswift -q image local
 ```
 
-**Method 3: Import exported containers**
+Containers saved with `image export container`:
+
 ```bash
-rfswift import container -i work_env.tar.gz -n restored_work:tag
+rfswift image import container -i work_env.tar.gz -n restored_work:tag
 ```
 
----
+{{% /steps %}}
 
-## Phase 4: Configuration & Usage
+## Phase 4: configuration and usage
 
-### Configure for Air-Gapped Operation
+### Make disconnected mode the default
 
-#### 1. Set Disconnected Mode by Default
+Always use `-q` in air-gapped environments: it disables update checks and every other network query.
 
 ```bash
 # Create alias
@@ -461,7 +464,7 @@ EOF
 sudo chmod +x /usr/local/bin/rfswift-airgap
 ```
 
-#### 2. Configure X11 for GUI
+### Configure X11 for GUI tools
 
 ```bash
 # Allow local connections
@@ -474,34 +477,20 @@ echo 'xhost +local:' >> ~/.xinitrc
 xhost +SI:localuser:$(whoami)
 ```
 
-#### 3. Verify Installation
+### Verify the installation
 
 ```bash
-# Test disconnected mode
-rfswift -q last
-
-# List available images
-rfswift -q images local
-
-# Create test container
-rfswift -q run -i penthertz/rfswift_resolute:sdr_full -n airgap_test
-
-# Test GUI (if X11 configured)
-rfswift -q exec -c airgap_test -e "xclock"
-
-# Cleanup test
-rfswift -q remove -c airgap_test
+rfswift -q container last                                      # test disconnected mode
+rfswift -q image local                                         # list available images
+rfswift -q container create -i penthertz/rfswift_resolute:sdr_full -n airgap_test
+rfswift -q container shell -c airgap_test -e "xclock"         # test GUI (if X11 is configured)
+rfswift -q container rm -c airgap_test                         # clean up
 ```
-
----
 
 ## Troubleshooting
 
-### Docker Won't Start
+### Docker won't start
 
-**Problem**: Docker daemon fails to start
-
-**Solutions:**
 ```bash
 # Check Docker daemon logs
 sudo journalctl -u docker -n 50
@@ -521,11 +510,8 @@ sudo modprobe br_netfilter
 sudo systemctl restart docker
 ```
 
-### GUI Applications Don't Work
+### GUI applications don't start
 
-**Problem**: X11 applications fail to start
-
-**Solutions:**
 ```bash
 # Verify X11 is running
 echo $DISPLAY
@@ -540,17 +526,14 @@ xhost +local:docker
 ls -la /tmp/.X11-unix/
 
 # Test X11 in container
-rfswift -q exec -c test -e "echo \$DISPLAY"
+rfswift -q container shell -c test -e "echo \$DISPLAY"
 
 # Check X11 forwarding
-rfswift -q exec -c test -e "xdpyinfo" | head -5
+rfswift -q container shell -c test -e "xdpyinfo" | head -5
 ```
 
-### Images Won't Load
+### Images won't load
 
-**Problem**: Cannot import Docker images
-
-**Solutions:**
 ```bash
 # Verify file integrity
 sha256sum image.tar.gz
@@ -570,11 +553,8 @@ df -h /var/lib/docker
 rfswift -q system cleanup all
 ```
 
-### Permission Denied
+### Permission denied on devices or files
 
-**Problem**: Cannot access devices or files
-
-**Solutions:**
 ```bash
 # Add user to docker group
 sudo usermod -aG docker $USER
@@ -584,18 +564,15 @@ newgrp docker
 sudo chmod 666 /dev/ttyUSB0
 
 # Use bindings for device access
-rfswift -q bindings add -c container -d -t /dev/ttyUSB0
+rfswift -q config bindings add -c container -d -t /dev/ttyUSB0
 
 # Add necessary capabilities
 rfswift -q config capabilities add -c container -p NET_ADMIN
 rfswift -q config capabilities add -c container -p SYS_ADMIN
 ```
 
-### Network Checks Hanging
+### Commands hang waiting for the network
 
-**Problem**: Commands hang waiting for network
-
-**Solutions:**
 ```bash
 # Always use -q flag
 rfswift -q [command]
@@ -604,7 +581,7 @@ rfswift -q [command]
 alias rfswift='rfswift -q'
 
 # Check if accidentally using network
-strace rfswift last 2>&1 | grep connect
+strace rfswift container last 2>&1 | grep connect
 
 # Disable Docker DNS
 sudo tee /etc/docker/daemon.json > /dev/null << EOF
@@ -615,25 +592,15 @@ EOF
 sudo systemctl restart docker
 ```
 
----
+## Good practice
 
-## Related Documentation
+- **Verify checksums** of every downloaded component, and use `-q` so that no network call is made in classified environments.
+- **Plan regular update cycles**: air-gapped systems can't update themselves, so bring new packages in through approved channels on a schedule.
 
-- [Requirements & Supported Platforms](/docs/supports)
-- [Quick Start](/docs/quick-start)
-- [Command Reference](/docs/commands)
-- [Security Guidelines](/docs/security)
+## Related
 
----
-
-{{< callout emoji="🔒" >}}
-**Security First**: Always verify checksums of downloaded components. Use the `-q` flag to ensure no network calls in classified environments.
-{{< /callout >}}
-
-{{< callout type="warning" >}}
-**Plan Ahead**: Download more images than you think you'll need. Returning for additional components requires another approval cycle in secure facilities.
-{{< /callout >}}
-
-{{< callout type="info" >}}
-**Stay Updated**: While air-gapped systems can't auto-update, plan regular update cycles where new packages are brought in through approved channels.
-{{< /callout >}}
+- [Will it run on my computer?](/docs/supports/)
+- [Choose your engine](/docs/engines/)
+- [Quick start](/docs/quick-start/)
+- [Command reference](/docs/commands/)
+- [Security](/docs/security/)

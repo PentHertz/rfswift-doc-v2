@@ -1,11 +1,11 @@
 ---
-title: doctor
-weight: 85
-cascade:
-  type: docs
+title: "rfswift doctor"
+linkTitle: "doctor"
+navGroup: "System"
+level: reference
+description: "Diagnose the host: engines, Nix, USB, display, audio, udev rules and the jail."
+weight: 91
 ---
-
-# doctor
 
 Diagnose the host for RF Swift. `rfswift doctor` (also `rfswift system doctor`) checks every engine, the display, audio, devices, the Nix engine and the host prerequisites, and tells you which command fixes what is wrong.
 

@@ -1,21 +1,27 @@
 ---
-title: 🆕 What's new in v4.0 "Nucleus"
+title: "What's new in v4.0 \"Nucleus\""
+linkTitle: "What's new in v4.0"
+description: "The Nix engine, the Workbench, the remote agent, a resource-first CLI, built-in audits and native installers."
 weight: 3
-next: /docs/comparisons
-prev: /docs/supports
-cascade:
-  type: docs
 ---
-
-# RF Swift v4.0 "Nucleus"
 
 RF Swift v4.0 (current release: **v4.0.2**) is the biggest change since the project started. It adds a native **Nix engine** that runs the tool sets without containers, a desktop **Workbench** for assessments, a secure **remote agent** to drive a lab machine from your laptop, a resource-first CLI, built-in security audits, native packages and installers for the three operating systems, and a long list of hardware fixes.
 
-{{< callout emoji="⚡" >}}
-**In one line:** the same RF and hardware lab, now as containers **or** native environments, on your machine **or** on a remote one, from the terminal **or** from a GUI.
+{{< callout type="info" title="In one line" >}}
+The same RF and hardware lab, now as containers **or** native environments, on your machine **or** on a remote one, from the terminal **or** from a GUI.
 {{< /callout >}}
 
-## ❄️ Nix engine: native environments
+**Highlights**
+
+- [Nix engine](#nix-engine-native-environments): the tool sets without containers, pinned, with an on-demand (lazy) mode.
+- [Workbench](#rf-swift-workbench): a standalone desktop app for missions, findings and reports.
+- [Remote agent](#remote-agent): drive a lab machine from your laptop over mutual TLS.
+- [Resource-first CLI](#resource-first-cli): `container`, `image`, `env`, `config`... Every old command still works.
+- [Security built in](#security-built-in): `rfswift audit`, verified downloads, a hardened baseline.
+- Native installers and packages for [Linux](#linux-packages-and-host-setup), [Windows](#windows) and [macOS](#macos), plus [hardware fixes](#hardware-fixes-that-matter-in-the-field).
+- [Upgrading from v3.x](#upgrading-from-v3x) takes a few minutes.
+
+## Nix engine: native environments
 
 `--engine nix` installs an RF Swift tool set straight onto the host as a reproducible, pinned Nix environment. No daemon, no container boundary: USB radios, audio and the GPU work with zero device plumbing.
 
@@ -36,43 +42,69 @@ rfswift env rollback mysdr
 
 Guide: [Nix engine](/docs/guide/nix-engine). Reference: [env](/docs/commands/env).
 
-## 🖥️ RF Swift Workbench
+## RF Swift Workbench
 
-A desktop GUI (Linux, macOS, Windows) that turns targets into **missions**: one container or Nix environment per assessment, with dockable panels for the Notebook, Console (terminals with asciinema recordings), Config & network, Findings (pwndoc-compatible), Captures with an artifact decoder and an offline CyberChef, Secrets in the OS vault, and an optional coding-agent terminal (Codex, Claude Code, Kimi Code, GLM) bridged over a mission-scoped MCP server. Missions are created with the same options as the CLI (profiles, templates, devices, USB passthrough, Nix version picker, live build progress), configured afterwards, audited, exported as projects or archives, and reported.
+A standalone desktop app (Linux, macOS, Windows) that turns targets into **missions**: one container or Nix environment per assessment. Nothing else to install: no editor, no plugins.
+
+Each mission has dockable panels:
+
+- **Notebook**, **Console** (terminals with asciinema recordings) and **Config & network**;
+- **Findings** (pwndoc-compatible) and **Captures**, with an artifact decoder and an offline CyberChef;
+- **Secrets** in the OS vault;
+- an optional **coding-agent terminal** (Codex, Claude Code, Kimi Code, GLM) bridged over a mission-scoped MCP server.
+
+Missions are created with the same options as the CLI (profiles, templates, devices, USB passthrough, Nix version picker, live build progress), configured afterwards, audited, exported as projects or archives, and reported.
 
 Guide: [Workbench](/docs/guide/workbench), [AI assistant](/docs/guide/ai-assistant).
 
-## 📡 Remote agent
+## Remote agent
 
-`rfswift agent` serves a machine's engines to authenticated clients over TLS 1.3 with mandatory mutual TLS, pinned server certificates, encrypted private keys whose passwords live in the OS vault, and neutral certificate subjects. `certs client`, `certs export` and `certs import` move credentials between machines as passphrase-protected files. The Workbench connects, lists every engine of the lab host, creates and configures missions there with live progress, opens terminals, audits, pulls images, reclaims space and registers remote artifacts as evidence.
+`rfswift agent` serves a machine's engines to authenticated clients:
+
+- TLS 1.3 with mandatory mutual TLS and pinned server certificates;
+- encrypted private keys whose passwords live in the OS vault, and neutral certificate subjects;
+- `certs client`, `certs export` and `certs import` move credentials between machines as passphrase-protected files.
+
+The Workbench connects, lists every engine of the lab host, creates and configures missions there with live progress, opens terminals, audits, pulls images, reclaims space and registers remote artifacts as evidence.
 
 Guide: [Remote agent](/docs/guide/remote-agent). Reference: [agent](/docs/commands/agent).
 
-## 🧭 Resource-first CLI
+## Resource-first CLI
 
 `rfswift --help` is now grouped (Containers, Images, Native Nix environments, Runtime configuration, Networking, Devices, Security, Remote access, System). The canonical commands are `rfswift container ...`, `rfswift image ...`, `rfswift env ...`, `rfswift config ...`, `rfswift system ...`, `rfswift host ...`, `rfswift usb ...`, `rfswift audit`, `rfswift agent`. **Every previous command keeps working** and prints a notice pointing at its new spelling. Man pages and completions ship with the Linux packages. See the [command reference](/docs/commands).
 
-## 🛡️ Security built in
+## Security built in
 
 - `rfswift audit <target>` auto-detects a Nix environment (vulnix, syft, grype, osv-scanner, integrity, provenance, hygiene), a container image (trivy, grype) or a container (attack surface: privileges, host namespaces, sensitive mounts, capabilities, seccomp/AppArmor, devices, exposed ports, CVEs, attack-enabling binaries), with `json`, `html` and `pdf` reports and a `--fail-on` gate.
 - The installer verifies every file's SHA-256 against the release manifest, rejects unsafe archive members, and offers Sigstore build-provenance verification; releases carry attestations, the macOS image is Developer ID signed and notarized, Windows artifacts are Authenticode-signed when the secrets are configured.
 - A dated security ground truth and hardened deployment baseline: [Security](/docs/security).
 
-## 🐧 Linux packages and host setup
+## Linux packages and host setup
 
-`rfswift` (CLI, man pages, completions) and `rfswift-workbench` ship as deb, rpm and pacman packages and pull in `xhost` and `pactl`. The host steps a package must not decide for you are asked for: `rfswift host setup` (udev rules for RF hardware, Docker and/or Podman from the distribution, Nix, Docker socket access without logging out, the Nix jail), or the single steps `host udev`, `host docker-access`, `host isolate`. `rfswift update` respects packaged installs. Rootless Podman keeps your groups inside containers. The installer gained stable and development channels, CLI/Workbench/both, native or AppImage Workbench, and environment variables for unattended runs.
+- `rfswift` (CLI, man pages, completions) and `rfswift-workbench` ship as deb, rpm and pacman packages and pull in `xhost` and `pactl`.
+- The host steps a package must not decide for you are asked for: `rfswift host setup` (udev rules for RF hardware, Docker and/or Podman from the distribution, Nix, Docker socket access without logging out, the Nix jail), or the single steps `host udev`, `host docker-access`, `host isolate`.
+- `rfswift update` respects packaged installs.
+- Rootless Podman keeps your groups inside containers.
+- The installer gained stable and development channels, CLI/Workbench/both, native or AppImage Workbench, and environment variables for unattended runs.
 
-## 🪟 Windows
+## Windows
 
-A one-click **installer bundle** (`RFSwift-Setup-<version>-<arch>.exe`, x64 and arm64) installs WSL 2 with WSLg, usbipd-win, Docker Desktop or Podman Desktop (or none, "Nix only"), optionally Nix in WSL 2, and RF Swift itself under a single UAC prompt; an MSI for enterprise deployment. USB passthrough was rebuilt on usbipd-win with least privilege (`rfswift usb list|attach|detach|bind|unbind|status|vm-devices`, one UAC prompt per device to share, unprivileged attach), sound and display come from WSLg with no PulseAudio install, and the remote agent and interactive terminals work on Windows through ConPTY.
+- A one-click **installer bundle** (`RFSwift-Setup-<version>-<arch>.exe`, x64 and arm64) installs WSL 2 with WSLg, usbipd-win, Docker Desktop or Podman Desktop (or none, "Nix only"), optionally Nix in WSL 2, and RF Swift itself under a single UAC prompt. An MSI covers enterprise deployment.
+- USB passthrough was rebuilt on usbipd-win with least privilege (`rfswift usb list|attach|detach|bind|unbind|status|vm-devices`, one UAC prompt per device to share, unprivileged attach).
+- Sound and display come from WSLg, with no PulseAudio install.
+- The remote agent and interactive terminals work on Windows through ConPTY.
 
 Guide: [Windows](/docs/guide/windows).
 
-## 🍎 macOS
+## macOS
 
-Homebrew cask and a signed, notarized DMG with app-bundle launchers; XQuartz OpenGL fixed for SDR++ and every GLFW, Qt and SDL tool by creating contexts through EGL; Lima USB passthrough with `rfswift usb` and automatic VM lifecycle, `rfswift engine lima set` for CPU, memory and disk; an opt-in krunkit VM for Vulkan GPU compute (`--gpu`); the Seatbelt `--isolate` jail for Nix environments.
+- A Homebrew cask and a signed, notarized DMG with app-bundle launchers.
+- XQuartz OpenGL fixed for SDR++ and every GLFW, Qt and SDL tool, by creating contexts through EGL.
+- Lima USB passthrough with `rfswift usb` and automatic VM lifecycle; `rfswift engine lima set` for CPU, memory and disk.
+- An opt-in krunkit VM for Vulkan GPU compute (`--gpu`).
+- The Nix engine runs natively on macOS, with the Seatbelt `--isolate` jail for Nix environments.
 
-## 🔌 Hardware fixes that matter in the field
+## Hardware fixes that matter in the field
 
 - **Serial hot-plug**: `/dev/ttyACM*`, `/dev/ttyUSB*` and `/dev/ttyAMA*` ports are attached on demand on Docker and rootful Podman; a reader plugged in after creation works at the next shell. `rfswift config serial-hotplug on|off` switches it per container.
 - Pre-creation **device checks** list the devices an engine cannot map on this host, with the reason, and a **USB reachability** check says exactly what a container needs to open a device (mapping plus `c 189:* rwm`, no privileged mode).
@@ -92,8 +124,8 @@ Homebrew cask and a signed, notarized DMG with app-bundle launchers; XQuartz Ope
 ## Next steps
 
 {{< cards >}}
-  {{< card link="/docs/guide/nix-engine" title="Nix engine" icon="sparkles" subtitle="Native, pinned tool environments" >}}
-  {{< card link="/docs/guide/workbench" title="Workbench" icon="desktop-computer" subtitle="The assessment GUI" >}}
-  {{< card link="/docs/guide/remote-agent" title="Remote agent" icon="wifi" subtitle="Drive a lab machine securely" >}}
-  {{< card link="/docs/commands" title="Command reference" icon="book-open" subtitle="The v4 command tree" >}}
+  {{< card link="/docs/guide/nix-engine/" title="Nix engine" icon="snowflake" subtitle="Native, pinned tool environments, with a lazy mode" >}}
+  {{< card link="/docs/guide/workbench/" title="Workbench" icon="desktop" subtitle="The standalone assessment app" >}}
+  {{< card link="/docs/guide/remote-agent/" title="Remote agent" icon="broadcast" subtitle="Drive a lab machine securely" >}}
+  {{< card link="/docs/commands/" title="Command reference" icon="book-open" subtitle="The v4 command tree" >}}
 {{< /cards >}}

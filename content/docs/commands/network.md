@@ -1,11 +1,11 @@
 ---
-title: network
-weight: 19
-prev: /docs/commands/ports
-next: /docs/commands/last
+title: "rfswift network"
+linkTitle: "network"
+navGroup: "Networking"
+level: reference
+description: "Create and manage NAT networks to isolate containers from each other."
+weight: 50
 ---
-
-# rfswift network
 
 Manage RF Swift NAT networks for per-container network isolation.
 
@@ -28,7 +28,7 @@ rfswift network cleanup
 The `network` command manages RF Swift NAT networks. These are isolated bridge networks with their own subnets, used when containers are created with `-t nat` network mode. Multiple containers can share the same NAT network to communicate with each other while remaining isolated from other networks.
 
 {{< callout type="info" >}}
-**Automatic Management**: NAT networks are typically created automatically when you use `-t nat` with `rfswift run`. These commands give you manual control for advanced setups.
+**Automatic Management**: NAT networks are typically created automatically when you use `-t nat` with `rfswift container create`. These commands give you manual control for advanced setups.
 {{< /callout >}}
 
 ---
@@ -90,7 +90,7 @@ rfswift network cleanup
 
 ## Examples
 
-### Create an Isolated Lab Network
+### Create an isolated lab network
 
 ```bash
 # Create a network for pentesting
@@ -100,20 +100,20 @@ rfswift network create -n pentest_lab
 rfswift network create -n pentest_lab --subnet 172.30.10.0/24
 ```
 
-### Run Containers on the Same Network
+### Run containers on the same network
 
 ```bash
 # Create the network
 rfswift network create -n my_lab
 
 # Run containers that share the network
-rfswift run -i sdr_full -n sdr_node -t nat:rfswift_nat_my_lab
-rfswift run -i wifi -n wifi_node -t nat:rfswift_nat_my_lab
+rfswift container create -i sdr_full -n sdr_node -t nat:rfswift_nat_my_lab
+rfswift container create -i wifi -n wifi_node -t nat:rfswift_nat_my_lab
 
 # Both containers can communicate on the same subnet
 ```
 
-### List and Clean Up
+### List and clean up
 
 ```bash
 # See all NAT networks
@@ -126,31 +126,31 @@ rfswift network remove -n pentest_lab
 rfswift network cleanup
 ```
 
-### Using NAT Mode with rfswift run
+### Using NAT mode with rfswift run
 
 NAT networks are most commonly created implicitly via the `-t nat` flag:
 
 ```bash
 # Auto-creates an isolated NAT network for this container
-rfswift run -i sdr_full -n my_sdr -t nat
+rfswift container create -i sdr_full -n my_sdr -t nat
 
 # Join an existing network by name
-rfswift run -i wifi -n wifi_tools -t nat:rfswift_nat_my_sdr
+rfswift container create -i wifi -n wifi_tools -t nat:rfswift_nat_my_sdr
 ```
 
 ---
 
-## Network Naming
+## Network naming
 
-RF Swift NAT networks follow the naming convention `rfswift_nat_<name>` and are labeled with `org.rfswift.nat` for identification. When using `-t nat` in `rfswift run`, the network name is derived from the container name.
+RF Swift NAT networks follow the naming convention `rfswift_nat_<name>` and are labeled with `org.rfswift.nat` for identification. When using `-t nat` in `rfswift container create`, the network name is derived from the container name.
 
 ---
 
 ## Troubleshooting
 
-### Network Not Found
+### Network not found
 
-**Problem:** `rfswift run -t nat:rfswift_nat_foo` fails because the network doesn't exist
+**Problem:** `rfswift container create -t nat:rfswift_nat_foo` fails because the network doesn't exist
 
 **Solution:**
 ```bash
@@ -158,10 +158,10 @@ RF Swift NAT networks follow the naming convention `rfswift_nat_<name>` and are 
 rfswift network create -n foo
 
 # Or use -t nat (without a name) to auto-create
-rfswift run -i sdr_full -n my_sdr -t nat
+rfswift container create -i sdr_full -n my_sdr -t nat
 ```
 
-### Orphaned Networks
+### Orphaned networks
 
 **Problem:** Networks remain after containers are deleted
 
@@ -171,7 +171,7 @@ rfswift run -i sdr_full -n my_sdr -t nat
 rfswift network cleanup
 ```
 
-### Subnet Conflict
+### Subnet conflict
 
 **Problem:** Network creation fails due to subnet overlap
 
@@ -186,7 +186,7 @@ rfswift network create -n my_net
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`run`](/docs/commands/run) - Create containers with `-t nat` network mode
 - [`ports`](/docs/commands/ports) - Manage port bindings for containers on NAT networks

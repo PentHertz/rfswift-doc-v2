@@ -1,11 +1,11 @@
 ---
-title: audit
-weight: 50
-prev: /docs/commands/usb
-next: /docs/commands/agent
+title: "rfswift audit"
+linkTitle: "audit"
+navGroup: "Security"
+level: reference
+description: "Audit a Nix environment, a container image or a container for vulnerabilities and attack surface."
+weight: 70
 ---
-
-# rfswift audit
 
 Audit the security posture of a Nix environment, a container image, or a running container. `rfswift audit` auto-detects the target type; `rfswift env audit` and `rfswift image audit` are the dedicated forms.
 

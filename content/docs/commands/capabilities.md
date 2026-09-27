@@ -1,11 +1,11 @@
 ---
-title: capabilities
-weight: 16
-prev: /docs/commands/bindings
-next: /docs/commands/cgroups
+title: "rfswift config capabilities"
+linkTitle: "config capabilities"
+navGroup: "Runtime configuration"
+level: reference
+description: "Add or remove Linux capabilities on an existing container."
+weight: 42
 ---
-
-# rfswift capabilities
 
 {{< callout type="info" >}}
 **RF Swift v4**: this group lives under the `config` parent as `rfswift config capabilities` and remains available as `rfswift capabilities`; both spellings are current. On Linux Docker the change is applied in place after one `sudo` prompt; on Podman the container is committed and re-created. Add `--recreate` to force the commit-and-recreate path. Either way the container restarts. See [config](/docs/commands/config).
@@ -53,9 +53,9 @@ Remove a Linux capability from a container.
 
 ---
 
-## Common Capabilities
+## Common capabilities
 
-### Network Capabilities
+### Network capabilities
 
 **NET_ADMIN**
 - **Purpose**: Network administration (interfaces, routes, iptables)
@@ -72,7 +72,7 @@ Remove a Linux capability from a container.
 - **Use case**: Running services on standard ports
 - **Risk**: Low - just port binding
 
-### System Capabilities
+### System capabilities
 
 **SYS_PTRACE**
 - **Purpose**: Trace processes with ptrace
@@ -89,7 +89,7 @@ Remove a Linux capability from a container.
 - **Use case**: Custom kernel module work
 - **Risk**: Critical - full kernel access
 
-### File Capabilities
+### File capabilities
 
 **DAC_OVERRIDE**
 - **Purpose**: Bypass file permission checks
@@ -110,7 +110,7 @@ Remove a Linux capability from a container.
 
 ## Examples
 
-### Basic Usage
+### Basic usage
 
 **Add network admin capability:**
 ```bash
@@ -132,12 +132,12 @@ rfswift capabilities add -c debug_session -p SYS_PTRACE
 rfswift capabilities rm -c container -p NET_ADMIN
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **WiFi monitoring mode:**
 ```bash
 # Create container
-rfswift run -i penthertz/rfswift_resolute:wifi -n wifi_mon
+rfswift container create -i penthertz/rfswift_resolute:wifi -n wifi_mon
 
 # Add capabilities for WiFi monitoring
 rfswift capabilities add -c wifi_mon -p NET_ADMIN
@@ -147,7 +147,7 @@ rfswift capabilities add -c wifi_mon -p NET_RAW
 rfswift bindings add -d -c wifi_mon -s /dev/wlan0 -t /dev/wlan0
 
 # Now can set monitor mode
-rfswift exec -c wifi_mon
+rfswift container shell -c wifi_mon
 airmon-ng start wlan0
 exit
 ```
@@ -155,14 +155,14 @@ exit
 **Packet capture and analysis:**
 ```bash
 # Network analysis container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n netcap
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n netcap
 
 # Add packet capture capabilities
 rfswift capabilities add -c netcap -p NET_ADMIN
 rfswift capabilities add -c netcap -p NET_RAW
 
 # Run tcpdump
-rfswift exec -c netcap
+rfswift container shell -c netcap
 tcpdump -i eth0 -w capture.pcap
 exit
 ```
@@ -170,13 +170,13 @@ exit
 **Debugging application:**
 ```bash
 # Development container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n debug
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n debug
 
 # Add debugging capability
 rfswift capabilities add -c debug -p SYS_PTRACE
 
 # Debug with GDB
-rfswift exec -c debug
+rfswift container shell -c debug
 gdb -p <pid>
 exit
 ```
@@ -184,13 +184,13 @@ exit
 **Running services on privileged ports:**
 ```bash
 # Web server container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n web
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n web
 
 # Add capability to bind port 80
 rfswift capabilities add -c web -p NET_BIND_SERVICE
 
 # Run web server on port 80
-rfswift exec -c web
+rfswift container shell -c web
 python3 -m http.server 80
 exit
 ```
@@ -198,14 +198,14 @@ exit
 **Network reconfiguration:**
 ```bash
 # SDR with network tools
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n sdr_net
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n sdr_net
 
 # Add network capabilities
 rfswift capabilities add -c sdr_net -p NET_ADMIN
 rfswift capabilities add -c sdr_net -p NET_RAW
 
 # Configure network
-rfswift exec -c sdr_net
+rfswift container shell -c sdr_net
 ip link set dev eth0 mtu 9000
 ip route add 192.168.1.0/24 via 192.168.1.1
 exit
@@ -213,7 +213,7 @@ exit
 
 ---
 
-## Capabilities vs Privileged Mode
+## Capabilities vs privileged mode
 
 ### Comparison
 
@@ -226,7 +226,7 @@ exit
 | **Flexibility** | Add as needed | Fixed at creation |
 | **Best for** | Production | Testing/development |
 
-### Security Hierarchy
+### Security hierarchy
 
 ```
 Unprivileged Container (Safest)
@@ -238,7 +238,7 @@ Container with Many Capabilities (Less secure)
 Privileged Container (Least secure)
 ```
 
-### When to Use Each
+### When to use each
 
 **Use capabilities when:**
 - ✅ Need specific privileges only
@@ -257,19 +257,19 @@ Privileged Container (Least secure)
 **Example comparison:**
 ```bash
 # Privileged mode (not recommended)
-rfswift run -i sdr_full -n work -u 1
+rfswift container create -i sdr_full -n work -u 1
 
 # Better: Specific capabilities
-rfswift run -i sdr_full -n work
+rfswift container create -i sdr_full -n work
 rfswift capabilities add -c work -p NET_ADMIN
 rfswift capabilities add -c work -p NET_RAW
 ```
 
 ---
 
-## Capability Combinations
+## Capability combinations
 
-### Common Combinations
+### Common combinations
 
 **WiFi Security Testing:**
 ```bash
@@ -303,9 +303,9 @@ rfswift capabilities add -c analysis -p NET_ADMIN
 
 ---
 
-## Security Considerations
+## Security considerations
 
-### Capability Risk Levels
+### Capability risk levels
 
 **Low Risk:**
 - NET_BIND_SERVICE
@@ -330,7 +330,7 @@ rfswift capabilities add -c analysis -p NET_ADMIN
 
 ## Troubleshooting
 
-### Operation Not Permitted
+### Operation not permitted
 
 **Problem:** Command fails with "Operation not permitted"
 
@@ -350,7 +350,7 @@ rfswift capabilities add -c container -p SYS_PTRACE
 rfswift capabilities add -c container -p NET_BIND_SERVICE
 ```
 
-### Capability Not Taking Effect
+### Capability not taking effect
 
 **Problem:** Added capability but operation still fails
 
@@ -360,7 +360,7 @@ rfswift capabilities add -c container -p NET_BIND_SERVICE
 docker inspect container | grep -A5 CapAdd
 
 # Try restarting process in container
-rfswift exec -c container
+rfswift container shell -c container
 # ... restart application ...
 
 # Some operations need multiple capabilities
@@ -371,7 +371,7 @@ rfswift capabilities add -c container -p NET_RAW
 rfswift cgroups add -c container -r "c 189:* rwm"
 ```
 
-### Invalid Capability Name
+### Invalid capability name
 
 **Error:** `invalid capability name`
 
@@ -389,7 +389,7 @@ rfswift capabilities add -c work -p net_admin
 # DAC_OVERRIDE, DAC_READ_SEARCH, CHOWN
 ```
 
-### Permission Denied Error Persists
+### Permission denied error persists
 
 **Problem:** Capability added but still permission denied
 
@@ -401,13 +401,13 @@ rfswift capabilities add -c work -p NET_RAW
 
 # Or may need privileged mode for this specific operation
 # (as last resort)
-rfswift run -i image -n work -u 1
+rfswift container create -i image -n work -u 1
 
 # Check kernel security modules (SELinux, AppArmor)
 # May be blocking regardless of capabilities
 ```
 
-### Cannot Remove Capability
+### Cannot remove capability
 
 **Problem:** Remove command fails
 
@@ -426,7 +426,7 @@ rfswift capabilities rm -c container -p NET_ADMIN
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`bindings`](/docs/commands/bindings) - Add device/volume bindings
 - [`cgroups`](/docs/commands/cgroups) - Manage device access

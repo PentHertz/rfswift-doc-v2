@@ -1,11 +1,11 @@
 ---
-title: winusb
-weight: 28
-prev: /docs/commands/ulimits
-next: /docs/commands/macusb
+title: "rfswift winusb"
+linkTitle: "usb on Windows (winusb)"
+navGroup: "Host & devices"
+level: reference
+description: "Windows USB passthrough through usbipd-win, now reached through rfswift usb."
+weight: 63
 ---
-
-# rfswift winusb
 
 USB passthrough on Windows: forward host USB devices (SDR dongles, HackRF, Proxmark, serial adapters) into the WSL 2 virtual machine where Docker Desktop, Podman and the Nix engine run. Built on [usbipd-win](https://github.com/dorssel/usbipd-win) with the least privilege the tool allows.
 

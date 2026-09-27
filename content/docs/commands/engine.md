@@ -1,11 +1,11 @@
 ---
-title: engine
-weight: 0
-prev: /docs/commands
-next: /docs/commands/run
+title: "rfswift --engine and rfswift engine"
+linkTitle: "engine"
+navGroup: "Host & devices"
+level: reference
+description: "Choose the engine RF Swift uses, and manage the Lima VM on macOS."
+weight: 64
 ---
-
-# rfswift --engine and rfswift engine
 
 Select the engine used by RF Swift, and manage the Lima VM on macOS.
 
@@ -37,7 +37,7 @@ engine = podman
 
 ---
 
-## Auto-Detection Behavior
+## Auto-Detection behavior
 
 When `--engine` is **not specified**, RF Swift automatically detects the available container engine at startup using the following priority:
 
@@ -54,17 +54,17 @@ When both Docker and Podman are installed, RF Swift defaults to whichever engine
 
 ```bash
 # Force Docker
-rfswift --engine docker run -i sdr_full -n my_container
+rfswift --engine docker container create -i sdr_full -n my_container
 
 # Force Podman
-rfswift --engine podman run -i sdr_full -n my_container
+rfswift --engine podman container create -i sdr_full -n my_container
 ```
   {{< /tab >}}
   {{< tab >}}
 Docker is used automatically. No `--engine` flag needed.
 
 ```bash
-rfswift run -i sdr_full -n my_container
+rfswift container create -i sdr_full -n my_container
 # -> uses Docker
 ```
   {{< /tab >}}
@@ -72,7 +72,7 @@ rfswift run -i sdr_full -n my_container
 Podman is used automatically. No `--engine` flag needed.
 
 ```bash
-rfswift run -i sdr_full -n my_container
+rfswift container create -i sdr_full -n my_container
 # -> uses Podman
 ```
 
@@ -93,26 +93,26 @@ RF Swift reports that no container engine is available. When the Nix engine is s
 
 ```bash
 # Pull image with Docker
-rfswift --engine docker images pull -i sdr_full
+rfswift --engine docker image pull -i sdr_full
 
 # Run container with Docker
-rfswift --engine docker run -i sdr_full -n my_sdr
+rfswift --engine docker container create -i sdr_full -n my_sdr
 
 # List containers managed by Docker
-rfswift --engine docker last
+rfswift --engine docker container last
 ```
 
 ### Force Podman
 
 ```bash
 # Pull image with Podman
-rfswift --engine podman images pull -i sdr_full
+rfswift --engine podman image pull -i sdr_full
 
 # Run rootless container with Podman
-rfswift --engine podman run -i sdr_full -n rootless_sdr
+rfswift --engine podman container create -i sdr_full -n rootless_sdr
 
 # List containers managed by Podman
-rfswift --engine podman last
+rfswift --engine podman container last
 ```
 
 ### Force Lima (macOS USB passthrough)
@@ -122,10 +122,10 @@ rfswift --engine podman last
 rfswift macusb attach --vid 0x1d50 --pid 0x604b
 
 # Run container via Lima's Docker (USB devices visible)
-rfswift --engine lima run -i sdr_full -n usb_sdr
+rfswift --engine lima container create -i sdr_full -n usb_sdr
 
 # List containers in Lima
-rfswift --engine lima last
+rfswift --engine lima container last
 
 # When done, detach device
 rfswift macusb detach --vid 0x1d50 --pid 0x604b
@@ -135,18 +135,18 @@ rfswift macusb detach --vid 0x1d50 --pid 0x604b
 Lima auto-creates and starts the QEMU VM on first use. No manual `limactl` setup needed.
 {{< /callout >}}
 
-### Mixed Workflows
+### Mixed workflows
 
 If both engines are installed, you can maintain separate environments:
 
 ```bash
 # Docker for privileged hardware work
-rfswift --engine docker run -i sdr_full -n docker_sdr \
+rfswift --engine docker container create -i sdr_full -n docker_sdr \
   -u 1 \
   -s /dev/bus/usb:/dev/bus/usb
 
 # Podman for rootless analysis
-rfswift --engine podman run -i reversing -n podman_analysis \
+rfswift --engine podman container create -i reversing -n podman_analysis \
   -u 0 \
   -t none \
   -b ~/samples:/root/samples:ro
@@ -158,7 +158,7 @@ Containers created with one engine are **not visible** to the other. A container
 
 ---
 
-## Engine Comparison
+## Engine comparison
 
 | | Docker | Podman | Lima |
 |---|---|---|---|
@@ -179,9 +179,9 @@ The fourth engine, **Nix**, is not a container engine: it installs the tool sets
 
 ---
 
-## Podman-Specific Notes
+## Podman-Specific notes
 
-### Rootless Configuration
+### Rootless configuration
 
 Podman runs rootless by default. Ensure your system is configured:
 
@@ -200,16 +200,16 @@ sudo loginctl enable-linger $USER
 systemctl --user enable --now podman.socket
 ```
 
-### Image Registry
+### Image registry
 
 Podman may prompt for a registry when using short image names:
 
 ```bash
 # Full name (no prompt)
-rfswift --engine podman images pull -i docker.io/penthertz/rfswift_resolute:sdr_full
+rfswift --engine podman image pull -i docker.io/penthertz/rfswift_resolute:sdr_full
 
 # Short name (may prompt for registry selection)
-rfswift --engine podman images pull -i sdr_full
+rfswift --engine podman image pull -i sdr_full
 ```
 
 To avoid prompts, configure default registries in `/etc/containers/registries.conf`:
@@ -218,27 +218,27 @@ To avoid prompts, configure default registries in `/etc/containers/registries.co
 unqualified-search-registries = ["docker.io"]
 ```
 
-### Privileged Mode Differences
+### Privileged mode differences
 
 In rootless Podman, `-u 1` (privileged) grants privileges **within the user namespace**, which is still more restricted than Docker's privileged mode:
 
 ```bash
 # Docker privileged = full host root access
-rfswift --engine docker run -i sdr_full -n docker_priv -u 1
+rfswift --engine docker container create -i sdr_full -n docker_priv -u 1
 
 # Podman privileged = root within user namespace (safer)
-rfswift --engine podman run -i sdr_full -n podman_priv -u 1
+rfswift --engine podman container create -i sdr_full -n podman_priv -u 1
 ```
 
-### Cgroup Compatibility
+### Cgroup compatibility
 
 RF Swift auto-detects cgroup v1 and v2 and configures device access rules accordingly. No manual configuration is needed.
 
 ---
 
-## Docker-Specific Notes
+## Docker-Specific notes
 
-### Daemon Requirement
+### Daemon requirement
 
 Docker requires its daemon to be running:
 
@@ -253,7 +253,7 @@ sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
-### Group Membership
+### Group membership
 
 To run Docker without `sudo`:
 
@@ -266,7 +266,7 @@ newgrp docker
 
 ## Troubleshooting
 
-### Engine Not Found
+### Engine not found
 
 **Error:** `No container engine found`
 
@@ -282,23 +282,23 @@ sudo dnf install podman     # Fedora
 curl -fsSL https://get.docker.com | sudo sh  # Docker
 ```
 
-### Wrong Engine Detected
+### Wrong engine detected
 
 **Problem:** RF Swift picks Docker when you want Podman (or vice versa)
 
 **Solution:**
 ```bash
 # Explicit override
-rfswift --engine podman run -i sdr_full -n my_container
+rfswift --engine podman container create -i sdr_full -n my_container
 ```
 
-### podman-docker Shim Detected as Docker
+### podman-docker shim detected as Docker
 
 **Problem:** `podman-docker` package makes `docker` command available but it's actually Podman
 
 **Solution:** RF Swift handles this automatically. It checks `docker --version` output for the word "podman" and correctly identifies the engine. No action needed.
 
-### Containers Not Visible Across Engines
+### Containers not visible across engines
 
 **Problem:** Created a container with Docker but can't see it with Podman
 
@@ -306,15 +306,15 @@ rfswift --engine podman run -i sdr_full -n my_container
 
 ```bash
 # If created with Docker
-rfswift --engine docker exec -c my_container
+rfswift --engine docker container shell -c my_container
 
 # If created with Podman
-rfswift --engine podman exec -c my_container
+rfswift --engine podman container shell -c my_container
 ```
 
 ---
 
-## Environment Variables
+## Environment variables
 
 | Variable | Description | Default |
 |----------|-------------|---------|
@@ -324,7 +324,7 @@ rfswift --engine podman exec -c my_container
 ```bash
 # Use Lima engine via environment variable
 export RFSWIFT_ENGINE=lima
-rfswift run -i sdr_full -n my_sdr
+rfswift container create -i sdr_full -n my_sdr
 
 # Use a custom Lima instance name
 export RFSWIFT_LIMA_INSTANCE=my_custom_vm
@@ -351,7 +351,7 @@ Manage the Lima QEMU VM lifecycle on macOS. These commands give you direct contr
 **macOS only**: The `engine lima` subcommands are only available on macOS.
 {{< /callout >}}
 
-### Automatic VM Lifecycle Management
+### Automatic VM lifecycle management
 
 RF Swift now **automatically manages the Lima VM**, so you never need to run `limactl` yourself. When you run any command with `--engine lima`, RF Swift transparently handles the full VM lifecycle:
 
@@ -363,18 +363,18 @@ RF Swift now **automatically manages the Lima VM**, so you never need to run `li
 
 ```bash
 # First run: RF Swift creates the VM, installs Docker + USB tools, starts everything
-rfswift --engine lima run -i sdr_full -n my_sdr
+rfswift --engine lima container create -i sdr_full -n my_sdr
 # -> "Lima instance 'rfswift' not found. Creating it..."
 # -> "Lima instance 'rfswift' created and started"
 # -> Container runs normally
 
 # Second run: the VM already exists, RF Swift just starts it if stopped
-rfswift --engine lima run -i sdr_full -n another_sdr
+rfswift --engine lima container create -i sdr_full -n another_sdr
 # -> "Starting Lima instance 'rfswift'..."
 # -> Container runs normally
 
 # VM already running, so this runs immediately with no extra steps
-rfswift --engine lima exec -c my_sdr
+rfswift --engine lima container shell -c my_sdr
 ```
 
 The auto-created VM is fully provisioned with:
@@ -385,7 +385,7 @@ The auto-created VM is fully provisioned with:
 - Udev rules for 100+ RF/USB devices (HackRF, RTL-SDR, USRP, BladeRF, Airspy, PlutoSDR, LimeSDR, etc.)
 
 {{< callout type="info" >}}
-**Zero-configuration USB workflow on macOS**: Just plug in your SDR, run `rfswift --engine lima run ...`, and the VM is created, started and ready, all automatically.
+**Zero-configuration USB workflow on macOS**: Just plug in your SDR, run `rfswift --engine lima container create ...`, and the VM is created, started and ready, all automatically.
 {{< /callout >}}
 
 ### engine lima status

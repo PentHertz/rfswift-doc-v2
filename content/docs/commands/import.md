@@ -1,14 +1,14 @@
 ---
-title: import
-weight: 8
-prev: /docs/commands/export
-next: /docs/commands/download
+title: "rfswift image import"
+linkTitle: "image import"
+navGroup: "Images"
+level: reference
+description: "Import containers or images from archives."
+weight: 27
 ---
 
-# rfswift import
-
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift image import`. The legacy form `rfswift import` still work and print a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift image import`. The legacy form `rfswift import` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 Import containers or images from compressed archive files.
@@ -17,34 +17,34 @@ Import containers or images from compressed archive files.
 
 ```bash
 # Import container filesystem as image
-rfswift import container [-i INPUT_FILE.tar.gz] [-n IMAGE_NAME]
-rfswift import container [FILE]
+rfswift image import container [-i INPUT_FILE.tar.gz] [-n IMAGE_NAME]
+rfswift image import container [FILE]
 
 # Import Docker image(s)
-rfswift import image [-i INPUT_FILE.tar.gz]
-rfswift import image [FILE]
+rfswift image import image [-i INPUT_FILE.tar.gz]
+rfswift image import image [FILE]
 ```
 
 The `import` command restores containers and images from tar.gz archives created by the `export` or `download` commands, enabling backup restoration and system migration.
 
 **Positional argument**: Both subcommands accept the file path as a positional argument instead of the `-i` flag:
 ```bash
-rfswift import container /path/to/backup.tar.gz
-rfswift import image /path/to/image.tar.gz
+rfswift image import container /path/to/backup.tar.gz
+rfswift image import image /path/to/image.tar.gz
 ```
 
 ---
 
 ## Options
 
-### Import Container
+### Import container
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
 | `-i, --input STRING` | Input tar.gz file path | No* | `-i backup.tar.gz` |
 | `-n, --name STRING` | Name for the imported image | No* | `-n myimage:tag` |
 
-### Import Image
+### Import image
 
 | Flag | Description | Required | Example |
 |------|-------------|----------|---------|
@@ -62,112 +62,112 @@ rfswift import image /path/to/image.tar.gz
 
 ## Examples
 
-### Import Containers
+### Import containers
 
 **Basic container import:**
 ```bash
-rfswift import container -i sdr_backup.tar.gz -n sdr_restored:v1
+rfswift image import container -i sdr_backup.tar.gz -n sdr_restored:v1
 ```
 
 **Import with descriptive tag:**
 ```bash
-rfswift import container -i client_assessment_20250112.tar.gz \
+rfswift image import container -i client_assessment_20250112.tar.gz \
   -n client_assessment_restored:2025_01_12
 ```
 
 **Import and immediately run:**
 ```bash
 # Import
-rfswift import container -i backup.tar.gz -n my_container_restored
+rfswift image import container -i backup.tar.gz -n my_container_restored
 
 # Run new container from imported image
-rfswift run -i my_container_restored -n my_container
+rfswift container create -i my_container_restored -n my_container
 ```
 
-### Import Images
+### Import images
 
 **Basic image import:**
 ```bash
-rfswift import image -i sdr_full_image.tar.gz
+rfswift image import image -i sdr_full_image.tar.gz
 ```
 
 **Import multiple images:**
 ```bash
 # This imports all images contained in the archive
-rfswift import image -i rfswift_images_bundle.tar.gz
+rfswift image import image -i rfswift_images_bundle.tar.gz
 ```
 
 **Import downloaded RF Swift image:**
 ```bash
-rfswift import image -i rfswift-sdr-full-20250112.tar.gz
+rfswift image import image -i rfswift-sdr-full-20250112.tar.gz
 ```
 
-### Real-World Scenarios
+### Real-World scenarios
 
 **Disaster recovery:**
 ```bash
 # On backup system, import critical containers
-rfswift import container -i /backup/dr/production_monitor_20250112.tar.gz \
+rfswift image import container -i /backup/dr/production_monitor_20250112.tar.gz \
   -n production_monitor_restored
 
 # Start restored container
-rfswift run -i production_monitor_restored -n production_monitor
+rfswift container create -i production_monitor_restored -n production_monitor
 
 # Verify functionality
-rfswift exec -c production_monitor
+rfswift container shell -c production_monitor
 ```
 
 **System migration:**
 ```bash
 # On new system after receiving transfer
-rfswift import container -i sdr_work_transfer.tar.gz \
+rfswift image import container -i sdr_work_transfer.tar.gz \
   -n sdr_work_migrated:v1
 
 # Run with same name as original
-rfswift run -i sdr_work_migrated:v1 -n sdr_work \
+rfswift container create -i sdr_work_migrated:v1 -n sdr_work \
   -b ~/captures:/root/captures
 
 # Resume work
-rfswift exec -c sdr_work
+rfswift container shell -c sdr_work
 ```
 
 **Offline installation:**
 ```bash
 # Import RF Swift images on air-gapped system
-rfswift import image -i rfswift-images-offline-bundle.tar.gz
+rfswift image import image -i rfswift-images-offline-bundle.tar.gz
 
 # List imported images
-rfswift images local
+rfswift image local
 
 # Run container
-rfswift run -i penthertz/rfswift_resolute:sdr_full -n offline_work
+rfswift container create -i penthertz/rfswift_resolute:sdr_full -n offline_work
 ```
 
 **Team distribution:**
 ```bash
 # Each team member imports training environment
-rfswift import image -i sdr_course_2024_q1.tar.gz
+rfswift image import image -i sdr_course_2024_q1.tar.gz
 
 # Run personal workspace
-rfswift run -i sdr_course_2024_q1 -n student_workspace
+rfswift container create -i sdr_course_2024_q1 -n student_workspace
 ```
 
 **Project restoration:**
 ```bash
 # Import archived project
-rfswift import container -i archives/client_2024_01_container.tar.gz \
+rfswift image import container -i archives/client_2024_01_container.tar.gz \
   -n client_project_archive:2024_01
 
 # Run for review
-rfswift run -i client_project_archive:2024_01 -n project_review \
+rfswift container create -i client_project_archive:2024_01 -n project_review \
   -b ~/pathto/review:/root/work
 ```
 
 ---
 
-## What Gets Imported
+## What gets imported
 
-### Container Import
+### Container import
 
 When importing a container (from `export container`):
 
@@ -182,7 +182,7 @@ When importing a container (from `export container`):
 | Mounted volumes | ❌ No | Not included in export |
 | Running processes | ❌ No | Filesystem only |
 
-### Image Import
+### Image import
 
 When importing an image (from `export image` or `download`):
 
@@ -197,9 +197,9 @@ When importing an image (from `export image` or `download`):
 
 ---
 
-## Common Workflows
+## Common workflows
 
-### Disaster Recovery Workflow
+### Disaster recovery workflow
 
 ```bash
 # === Scenario: Production system failed ===
@@ -208,14 +208,14 @@ When importing an image (from `export image` or `download`):
 scp backup-server:/backups/production_20250112.tar.gz /tmp/
 
 # 2. Import container
-rfswift import container -i /tmp/production_20250112.tar.gz \
+rfswift image import container -i /tmp/production_20250112.tar.gz \
   -n production_restored:emergency
 
 # 3. Restore volumes from separate backup
 tar xzf /tmp/production_volumes_20250112.tar.gz -C ~/
 
 # 4. Run restored container with volumes
-rfswift run -i production_restored:emergency -n production \
+rfswift container create -i production_restored:emergency -n production \
   -b ~/production-data:/root/data \
   -t bridge \
   -w 8080:80/tcp
@@ -224,23 +224,23 @@ rfswift run -i production_restored:emergency -n production \
 curl http://localhost:8080/health
 ```
 
-### Cross-Platform Migration
+### Cross-Platform migration
 
 ```bash
 # === From Development Laptop to Production Server ===
 
 # On development laptop (macOS/Windows)
-rfswift export container -c sdr_dev -o sdr_dev_export.tar.gz
+rfswift image export container -c sdr_dev -o sdr_dev_export.tar.gz
 
 # Transfer to production server (Linux)
 scp sdr_dev_export.tar.gz prod-server:/tmp/
 
 # On production server
-rfswift import container -i /tmp/sdr_dev_export.tar.gz \
+rfswift image import container -i /tmp/sdr_dev_export.tar.gz \
   -n sdr_production:v1.0
 
 # Run with production configuration
-rfswift run -i sdr_production:v1.0 -n sdr_prod \
+rfswift container create -i sdr_production:v1.0 -n sdr_prod \
   -b /data/captures:/root/captures \
   -s /dev/device:/dev/device \
   -g "c 189:* rwm" \
@@ -251,24 +251,24 @@ rfswift run -i sdr_production:v1.0 -n sdr_prod \
 
 ## Troubleshooting
 
-### Image Name Already Exists
+### Image name already exists
 
 **Error:** `Error: image name already in use`
 
 **Solutions:**
 ```bash
 # Option 1: Use different name
-rfswift import container -i backup.tar.gz -n restored_alternative:v1
+rfswift image import container -i backup.tar.gz -n restored_alternative:v1
 
 # Option 2: Remove existing image first
 docker rmi existing_image:tag
-rfswift import container -i backup.tar.gz -n existing_image:tag
+rfswift image import container -i backup.tar.gz -n existing_image:tag
 
 # Option 3: Add version tag
-rfswift import container -i backup.tar.gz -n existing_image:v2
+rfswift image import container -i backup.tar.gz -n existing_image:v2
 ```
 
-### Permission Denied
+### Permission denied
 
 **Error:** `Permission denied` reading archive
 
@@ -281,7 +281,7 @@ ls -l backup.tar.gz
 chmod 644 backup.tar.gz
 
 # Or use sudo
-sudo rfswift import container -i backup.tar.gz -n restored:v1
+sudo rfswift image import container -i backup.tar.gz -n restored:v1
 
 # Or add user to docker group
 sudo usermod -aG docker $USER
@@ -290,7 +290,7 @@ newgrp docker
 
 ---
 
-## Related Commands
+## Related commands
 
 - [`export`](/docs/commands/export) - Create archives to import
 - [`download`](/docs/commands/download) - Download images for offline import

@@ -1,0 +1,48 @@
+{{- $current := . -}}
+<div class="sidebar-inner">
+  <div class="sidebar-top">
+    <button class="search-trigger search-trigger-block" type="button" data-search-open><i class="ph ph-magnifying-glass"></i><span>Search docs</span><kbd>Ctrl K</kbd></button>
+    <div class="path-switch" role="group" aria-label="Choose your path">
+      <a href="{{ "/docs/quick-start/" | relURL }}" class="path-chip path-chip-beginner"><i class="ph ph-student"></i> I'm new</a>
+      <a href="{{ "/docs/commands/" | relURL }}" class="path-chip path-chip-advanced"><i class="ph ph-terminal-window"></i> Reference</a>
+    </div>
+  </div>
+  <nav class="sidebar-nav" aria-label="Documentation">
+    {{- range $g := site.Data.docsnav }}
+    <div class="sidebar-group">
+      <p class="sidebar-label"><i class="ph ph-{{ $g.icon | default "circle" }}" aria-hidden="true"></i>{{ $g.group }}</p>
+      <ul>
+        {{- range $it := $g.items }}
+          {{- with $it.page }}
+            {{- with site.GetPage . }}
+            <li><a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $current.RelPermalink }} aria-current="page"{{ end }}>{{ $it.title | default .LinkTitle }}</a></li>
+            {{- end }}
+          {{- end }}
+          {{- with $it.section }}
+            {{- with site.GetPage . }}
+            {{- $inside := hasPrefix $current.RelPermalink .RelPermalink }}
+            <li>
+              <details class="sidebar-section"{{ if $inside }} open{{ end }}>
+                <summary><span>{{ $it.title | default .LinkTitle }}</span><i class="ph ph-caret-right" aria-hidden="true"></i></summary>
+                <ul>
+                  <li><a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $current.RelPermalink }} aria-current="page"{{ end }}>Overview</a></li>
+                  {{- $prevGroup := "" }}
+                  {{- range .Pages.ByWeight }}
+                  {{- with .Params.navGroup }}{{ if ne . $prevGroup }}<li class="sidebar-sublabel">{{ . }}</li>{{ $prevGroup = . }}{{ end }}{{ end }}
+                  <li><a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $current.RelPermalink }} aria-current="page"{{ end }}>{{ .LinkTitle }}</a></li>
+                  {{- end }}
+                </ul>
+              </details>
+            </li>
+            {{- end }}
+          {{- end }}
+        {{- end }}
+      </ul>
+    </div>
+    {{- end }}
+  </nav>
+  <div class="sidebar-help">
+    <i class="ph ph-chats-circle" aria-hidden="true"></i>
+    <div><strong>Stuck?</strong> <span>Ask the community on <a href="{{ site.Params.discord }}">Discord</a>.</span></div>
+  </div>
+</div>
