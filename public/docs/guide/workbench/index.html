@@ -244,7 +244,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>RF Swift Workbench</h1><p class="doc-lead">A desktop app for Linux, macOS and Windows that turns each lab into a mission, with terminals, notes, findings, captures and reports in one window.</p><p class="doc-meta">Beginner · 21 min read · Updated September 27, 2026</p>
+      <h1>RF Swift Workbench</h1><p class="doc-lead">A desktop app for Linux, macOS and Windows that turns each lab into a mission, with terminals, notes, findings, captures and reports in one window.</p><p class="doc-meta">Beginner · 22 min read · Updated November 22, 2026</p>
     </header>
     <div class="prose">
       <p>The Workbench is the desktop companion of the <code>rfswift</code> command line. It turns every RF Swift container or native Nix environment into a <strong>mission</strong>. Each mission gets its own terminals, notebook, findings, captures and report, so one window takes you from &ldquo;plug in the SDR&rdquo; to &ldquo;hand over the report&rdquo;.</p>
@@ -335,7 +335,7 @@
     </tr>
     <tr>
       <td><strong>Agent</strong></td>
-      <td>Codex, Claude Code, Kimi Code or GLM connected to the mission through a local, permission-gated MCP bridge; RF Swift never calls a model API itself</td>
+      <td>Codex, Claude Code, Kimi Code, GLM, OpenCode or Mistral Vibe connected to the mission through a local, permission-gated MCP bridge; RF Swift never calls a model API itself</td>
     </tr>
     <tr>
       <td><strong>Security posture</strong></td>
@@ -400,7 +400,7 @@
 <ul>
 <li>Name and Title.</li>
 <li>Engine: Nix, Docker, Podman, and Lima on macOS.</li>
-<li>Environment / image, with a hint that resolves short names.</li>
+<li>Environment / image, with a hint that resolves short names. For Docker, Podman and Lima missions it suggests the official images published on Docker Hub for your architecture (the list <code>rfswift image remote</code> shows; from the agent host when a remote agent is connected). The list is cached for 6 hours (<code>~/.cache/rfswift</code> on Linux, <code>~/Library/Caches/rfswift</code> on macOS, <code>%LocalAppData%\rfswift</code> on Windows); <strong>Refresh list</strong> fetches it again, and the last list is still offered offline.</li>
 <li>Workspace path (optional): empty for the automatic <code>~/rfswift-workspace/&lt;name&gt;</code>, &ldquo;none&rdquo; to disable.</li>
 <li>A live line about USB reachability and the devices the engine cannot map on this host.</li>
 </ul>
@@ -477,6 +477,7 @@
 </li>
 <li><strong>Recording</strong>: &ldquo;Record on connect&rdquo;, or <strong>Start REC</strong> / <strong>Stop REC</strong> at any time for segments, to <code>&lt;mission&gt;/recordings/</code> or a folder you choose. Recordings are asciinema <code>.cast</code> files; the <strong>Recordings</strong> drawer plays, renames and adds them to the note, and <strong>Use as AI evidence</strong> registers a copy for the mission&rsquo;s agent.</li>
 <li><strong>AI tool tabs</strong> appear automatically when the connected coding agent runs a command through MCP: read-only, showing the command, its output and the result, so nothing mixes with your own shell.</li>
+<li><strong>Zoom</strong>: Ctrl + / Ctrl - / Ctrl 0 (Cmd on macOS), Ctrl + mouse wheel, a trackpad pinch, or the right-click menu. One size (8 to 32 px) applies to every terminal and is remembered.</li>
 <li><strong>Copy and paste</strong>: Cmd+C / Cmd+V on macOS, Ctrl+Shift+C / Ctrl+Shift+V elsewhere. Right-click for Copy, Paste, Select all and, on macOS, &ldquo;Option as Meta&rdquo;; Option with the arrow keys moves by word. Links in the output open in the browser.</li>
 <li>A Nix mission whose jail cannot start (Ubuntu 24.04+ AppArmor) is offered the fix (&ldquo;Enable isolation for this mission?&rdquo;) behind a polkit prompt, then reconnects.</li>
 </ul>
@@ -539,9 +540,10 @@
 <p>The optional coding-agent bridge. In <strong>Agent &amp; MCP</strong> (the &ldquo;Agent&rdquo; button or <strong>Configure</strong> in the panel):</p>
 <ol>
 <li>Enable the bridge.</li>
-<li>Pick Codex CLI, Claude Code, Kimi Code or GLM CLI (the dialog says which are installed).</li>
+<li>Pick Codex CLI, Claude Code, Kimi Code, GLM CLI, OpenCode or Mistral Vibe (the dialog says which are installed).</li>
 <li>Choose the permissions: read only, &ldquo;Allow updating notes and findings&rdquo;, &ldquo;Allow executing commands inside the selected mission&rdquo;, and the client&rsquo;s own YOLO mode with its warning.</li>
 </ol>
+<p>If a CLI is installed where the Workbench does not look, set its <strong>program path</strong> in Agent settings (<strong>Browse&hellip;</strong> shows hidden folders such as <code>.nvm</code>). Without one, the search covers your <code>PATH</code> plus nvm and fnm Node versions, pnpm, yarn, deno and mise.</p>
 <p><strong>Connect</strong> writes the client&rsquo;s configuration under the mission&rsquo;s <code>agent-workspace/</code>, performs a real MCP handshake, and starts the client&rsquo;s TUI in the panel; the prompt box pastes text into it. Everything the agent reads is labelled untrusted evidence, and everything it runs shows up in the Console. Details: <a href="/docs/guide/ai-assistant/">AI assistant</a>.</p>
 <h2 id="managing-a-mission">Managing a mission<a class="anchor" href="#managing-a-mission" aria-label="Link to this section"></a></h2>
 <p>Right-click a mission card in the left rail to open the mission menu.</p>
@@ -630,6 +632,7 @@
 <li>On Linux Docker the change is applied in place after one polkit prompt (the Workbench re-runs itself as root for that step).</li>
 <li>Tick &ldquo;Re-create the container instead of rewriting its Docker files&rdquo; to commit and re-create without a prompt, which is always the way on Podman.</li>
 <li>A change that cannot work is refused before any prompt. Serial ports are attached on demand and reported as such.</li>
+<li>A progress bar shows the current step (stopping the container, rewriting its configuration, restarting the engine, starting it again) while the change runs.</li>
 </ul>
 <h2 id="security-posture-and-audits">Security posture and audits<a class="anchor" href="#security-posture-and-audits" aria-label="Link to this section"></a></h2>
 <p>The <strong>Tool environment security</strong> card on the Config &amp; network panel runs the same scanners as <a href="/docs/commands/audit/">rfswift audit</a>:</p>
@@ -661,6 +664,8 @@
 <li><strong>Host audio</strong> with Enable and Disable (Linux; audio also on macOS).</li>
 </ul>
 </li>
+<li><strong>Qubes OS</strong> (in a qube): the <code>rfswift host qubes</code> checks, with a <strong>Set up for Qubes</strong> button that applies <code>rfswift host qubes setup</code> through polkit.</li>
+<li><strong>Updates</strong>: the doctor shows when a newer RF Swift release exists and can install it; a download is installed only after its GitHub digest and Sigstore build provenance (RF Swift&rsquo;s release workflow) are verified.</li>
 <li><strong>The Nix block</strong>: native, in WSL 2 (with &ldquo;Set up Nix in WSL 2&rdquo; and &ldquo;Reset WSLg display&rdquo; on Windows) or on the agent host, &ldquo;Collect garbage&rdquo;, and the workspace root.</li>
 </ul>
 <p>While you are connected to a remote agent, the doctor describes the agent host: every engine with its state, the containers the agent can list (and why it cannot use one), and whether Nix is installed there. &ldquo;Reclaim space&rdquo; and &ldquo;Collect garbage&rdquo; also run there. Host fixes and the Lima VM stay local.</p>
