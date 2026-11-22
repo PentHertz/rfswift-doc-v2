@@ -97,7 +97,7 @@ The [Nix engine guide](/docs/guide/nix-engine/) covers on-demand builds, isolati
 
 | | Container image | Install function in a container | Nix environment |
 |---|---|---|---|
-| **What you get** | A task-sized image with its tools preinstalled (`sdr_light`, `rfid`, `wifi_full`, ...) | One more tool fetched or compiled inside a running container | A native, pinned tool set, one package more, or one single tool |
+| **What you get** | A task-sized image with its tools preinstalled (`sdr_light`, `rfid`, `wifi`, ...) | One more tool fetched or compiled inside a running container | A native, pinned tool set, one package more, or one single tool |
 | **Command** | `rfswift container create -i sdr_light -n radio` | `rfswift container install -c radio -i sdrpp_soft_install` | `rfswift container create --engine nix -i sdr_light -n radio`, `rfswift env install sdrpp --env radio`, `rfswift env run sdr_light sdrpp` |
 | **Disk** | The image; images of the same family share their base layers | The container's writable layer | Only the closure of what you asked for, shared between environments |
 | **Persistence** | The image, as long as you keep it | The container; `container commit` turns it into an image | The environment; an eager environment's generations let `env rollback` undo an update |

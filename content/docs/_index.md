@@ -160,4 +160,4 @@ RF Swift handles everything from creation and entry to pulling images or buildin
 
 ## Questions or feedback?
 
-RF Swift is in active development. Check the [FAQ & troubleshooting](/docs/faq/) page, ask on [Discord](https://discord.gg/NS3HayKrpA), or [open an issue](https://github.com/PentHertz/RF-Swift/issues). What changed in the current release (v4.0.2) is in [What's new in v4.0](/docs/release-notes-v4/).
+RF Swift is in active development. Check the [FAQ & troubleshooting](/docs/faq/) page, ask on [Discord](https://discord.gg/NS3HayKrpA), or [open an issue](https://github.com/PentHertz/RF-Swift/issues). What changed in the current release (v4.1.1) is in [What's new in v4](/docs/release-notes-v4/).

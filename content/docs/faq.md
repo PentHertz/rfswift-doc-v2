@@ -129,6 +129,16 @@ which -a rfswift
 
 The installer offers to remove the old copies in `/usr/local/bin/rfswift` and `~/.rfswift/bin`.
 
+### "RF Swift's configuration ... is not owned by you"
+
+An earlier `sudo rfswift` run created files in your configuration directory (`~/.config/rfswift` on Linux) as root, so RF Swift cannot save settings, profiles or the package setup answer there. Give the directory back to your user with the command the warning prints:
+
+```bash
+sudo chown -R "$(id -u):$(id -g)" ~/.config/rfswift
+```
+
+Current releases create the files they write under `sudo` as your user, so this only happens with directories left by older runs.
+
 ### My RTL-SDR is busy or not found (Linux)
 
 Linux may have claimed the dongle for digital TV (DVB-T). Block that driver on your computer, then restart it:

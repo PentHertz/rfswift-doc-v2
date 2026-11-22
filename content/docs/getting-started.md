@@ -6,7 +6,7 @@ level: beginner
 weight: 5
 ---
 
-The recommended way for each system is shown first. You can accept the installer's defaults, and change any choice later. The current release is **v4.0.2**.
+The recommended way for each system is shown first. You can accept the installer's defaults, and change any choice later. The current release is **v4.1.1**.
 
 {{< callout type="beginner" title="Before you start" >}}
 Check that your computer is supported: [Will it run on my computer?](/docs/supports/) Unsure what an "engine" is? [Key ideas](/docs/concepts/#engine) explains it in one paragraph. You can accept the installer's defaults.

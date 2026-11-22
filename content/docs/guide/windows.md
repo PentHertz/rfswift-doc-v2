@@ -53,9 +53,9 @@ Two installers ship with each release, for `x64` and `arm64`:
 
 ```powershell
 # MSI only, unattended
-msiexec /i RFSwift-4.0.2-x64.msi /qn /norestart
-msiexec /i RFSwift-4.0.2-x64.msi /qn ADDLOCAL=CliFeature       # CLI only
-msiexec /i RFSwift-4.0.2-x64.msi /qn /l*v rfswift-install.log  # with a log
+msiexec /i RFSwift-4.1.1-x64.msi /qn /norestart
+msiexec /i RFSwift-4.1.1-x64.msi /qn ADDLOCAL=CliFeature       # CLI only
+msiexec /i RFSwift-4.1.1-x64.msi /qn /l*v rfswift-install.log  # with a log
 ```
 
 Feature IDs are `CliFeature` and `WorkbenchFeature`; the MSI installs to `%ProgramFiles%\RF Swift`.

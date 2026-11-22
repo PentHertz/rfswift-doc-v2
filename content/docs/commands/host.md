@@ -3,7 +3,7 @@ title: "rfswift host"
 linkTitle: "host"
 navGroup: "Host & devices"
 level: reference
-description: "Prepare the host: udev rules, Docker access, the Nix jail and the audio server."
+description: "Prepare the host: udev rules, Docker access, the Nix jail, the audio server and Qubes OS."
 weight: 60
 ---
 
@@ -13,7 +13,8 @@ weight: 60
 - Docker access without logging out;
 - what the Nix `--isolate` jail needs;
 - cleanup of stray device directories;
-- the audio server that gives containers sound.
+- the audio server that gives containers sound;
+- the Qubes OS integration (USB from sys-usb, persistent engines, rootful Podman without sudo).
 
 On a fresh Linux desktop, start with the guided setup:
 
@@ -29,6 +30,8 @@ rfswift host udev [--list] [--remove] [--json] [-y]
 rfswift host docker-access [--status] [--json] [-y]
 rfswift host isolate [--status] [--sysctl] [--json] [-y]
 rfswift host devclean [--list] [-y]
+rfswift host qubes [--json]
+rfswift host qubes setup [-y] [--dry-run] [--no-...]
 rfswift host audio enable [-s tcp:127.0.0.1:34567]
 rfswift host audio unload
 ```
@@ -130,6 +133,46 @@ rfswift host devclean          # list, then offer to remove
 rfswift host devclean --list   # only list
 rfswift host devclean --yes    # remove without asking
 ```
+
+## host qubes (Qubes OS)
+
+In a Qubes OS qube, USB devices come from sys-usb, so `/dev/bus/usb` only exists once a first device is attached, and a template-based AppVM loses `/etc` and the rootful engines' images at every restart. `rfswift host qubes` shows what is in the way; `rfswift host qubes setup` fixes it in one root script that it prints before asking. Outside Qubes OS both say there is nothing to do.
+
+```bash
+rfswift host qubes                   # show the state and what the setup would do
+rfswift host qubes --json            # the same, as JSON
+rfswift host qubes setup             # show the script, ask, apply
+rfswift host qubes setup --dry-run   # only print the script
+rfswift host qubes setup --yes --no-podman-socket
+```
+
+The setup:
+
+- loads `vhci-hcd` at every start, so `/dev/bus/usb` exists and containers can be created before a device is attached;
+- keeps `/var/lib/containers`, `/var/lib/docker` and `/nix` across restarts (bind-dirs);
+- makes the rootful Podman socket usable by your user and sets `podman_mode = rootful`, so RF Swift and the Workbench run as you, without sudo, with rootful device access (skipped where root needs a password);
+- with Docker installed, starts `docker.socket` at boot and gives you the socket (docker group plus an ACL), without restarting a running daemon;
+- runs the Nix profile's own daemon when a Determinate Nix in the template is not visible from the AppVM;
+- blacklists the DVB-T driver that claims RTL2832U dongles (`dvb_usb_rtl28xxu`);
+- gives root-owned workspace folders back to you and drops `/dev/dri` (no GPU in a qube) from the default devices.
+
+In an AppVM it writes `/rw/config/qubes-bind-dirs.d/50_rfswift.conf` and `/rw/config/rc.local.d/50-rfswift.rc` (delete them to undo); in a TemplateVM or StandaloneVM it writes `/etc` directly.
+
+| Flag (`setup`) | Effect |
+|---|---|
+| `-y, --yes` | Apply without asking |
+| `--dry-run` | Only print what would run |
+| `--podman-socket` | Grant the rootful Podman socket even where root needs a password |
+| `--no-podman-socket` | Leave the rootful Podman socket root-only (keep using sudo for USB work) |
+| `--group NAME` | Group that owns the rootful Podman socket (default: your primary group) |
+| `--no-docker-group` | Do not give you access to the Docker socket |
+| `--no-docker-start` | Do not start Docker's socket at boot |
+| `--no-persist` | Do not keep the rootful engines' storage across restarts |
+| `--no-vhci` | Do not load `vhci-hcd` at boot |
+| `--no-workspace` | Leave root-owned workspace folders as they are |
+| `--no-rtl-blacklist` | Keep the DVB-T driver for RTL2832U dongles (TV use); native tools then cannot open them |
+
+`rfswift doctor` shows the same checks, and the Workbench's Engine doctor has a **Set up for Qubes** button. The [Qubes OS guide](/docs/guide/qubes-os/) explains the whole workflow.
 
 ## host audio (Linux, macOS)
 

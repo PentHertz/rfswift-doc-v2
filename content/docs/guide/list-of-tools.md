@@ -107,7 +107,7 @@ These modules extend GNU Radio's capabilities for specific protocols and signal 
 {{< callout type="warning" >}}
 **Known Issues:**
 - **gr-ccsds**: Currently broken due to strtod_l dependency issues
-- **deep-tempest**: Available in separate `sdr_deeptempest_beta` image due to specific dependencies
+- **deep-tempest**: Available in the separate `deeptempest` image due to specific dependencies (see [Deep Tempest](#deep-tempest))
 - **gr-fosphor**: Only included in GPU-enabled builds (requires OpenCL/CUDA)
 - **gr-signal-hound**: Requires manual installation (architecture-specific)
 {{< /callout >}}
@@ -126,24 +126,47 @@ These modules extend GNU Radio's capabilities for specific protocols and signal 
 {{< /callout >}}
 
 ### GNU Radio 4.0
-The `sdr_gnuradio4` image builds **GNU Radio 4.0 (RC2)** from source *alongside* the GNU Radio 3.10 already present in `sdr_light`. GR4 is a separate C++23 codebase with its own headers, namespace and prefix, so nothing about your existing 3.10 flowgraphs changes:
+The `sdr_gnuradio4` image builds **GNU Radio 4.0** from source *alongside* the GNU Radio 3.10 already present in `sdr_light`, together with **GR4 Studio** and the GR4 control plane. It uses the newest release of the official [`gnuradio/gnuradio4`](https://github.com/gnuradio/gnuradio4) repository, currently **4.0.0-RC3**. GR4 is a separate C++23 codebase with its own headers, namespace and prefix, so nothing about your existing 3.10 flowgraphs changes:
 
 ```bash
-rfswift container create -i penthertz/rfswift_resolute:sdr_gnuradio4 -n gr4
+rfswift container create -i sdr_gnuradio4 -n gr4
 ```
 
 {{< csv-table "content/docs/guide/tools_for_gnuradio4.csv" >}}
 
+**Run GR4 Studio in your browser.** This is the easiest way from a container:
+
+```bash
+gr4-studio-web        # then open http://localhost:8080 on the host
+```
+
+It listens on `127.0.0.1:8080`. RF Swift's default host networking makes that reachable from your browser and nowhere else. The control plane behind it stays on a private loopback port. With another network mode, run `GR4_STUDIO_WEB_BIND=0.0.0.0 gr4-studio-web` and publish the port on the host's loopback only (`-w "127.0.0.1:8080:8080/tcp"`, see [ports](/docs/commands/ports/)). For the desktop app, run `gr4-studio` with display forwarding.
+
 {{< callout type="info" >}}
 **How GR4 is isolated:**
-- Built into `/opt/gnuradio4`, exposed through `/etc/profile.d/gnuradio4.sh` (which prepends `/opt/gnuradio4/install/bin` and `/opt/gnuradio4/build/bin` to `PATH`)
-- Ships its own **Python 3.12 virtual environment** at `/opt/gnuradio4/venv` for the embedded `PythonBlock` interpreter, so it never touches the system Python (3.14 on Resolute) or GNU Radio 3.10's bindings
+- Installed under `/opt/gnuradio4/install`. Login shells load its environment from `/etc/profile.d/gnuradio4.sh`; in any other shell run `. /opt/gnuradio4/env.sh`
 - The apt GNU Radio 3.10 remains the default `gnuradio-companion` in the image
+- The image build runs upstream's own checks against the installed GR4: an out-of-tree program is built against the SDK, and the control plane must list the block catalog. A failure shows up in the build report (`/var/lib/db/rfswift_build_report.tsv`)
+- Full usage, including building your own GR4 code: [GNU Radio 4 guide](https://github.com/PentHertz/RF-Swift-images/blob/main/docs/gnuradio4.md)
 {{< /callout >}}
 
 {{< callout type="warning" >}}
-**GNU Radio 4 is a release candidate.** It is experimental, its install tooling is still maturing upstream, and the build is heavy and template-intensive. Expect API churn. This image is for evaluating GR4, not for production flowgraphs. Not yet available on RISC-V64.
+**GNU Radio 4 is a release candidate.** Expect API churn: this image is for evaluating GR4, not for production flowgraphs. **Studio has no login** and can start flowgraphs, including ones that transmit with an attached SDR. Keep it on localhost or on networks you trust. Not yet available on RISC-V64; Studio needs amd64 or arm64.
 {{< /callout >}}
+
+### SDR hacks
+
+The `sdr_hacks` image builds on `sdr_light` and turns hardware that was never sold as an SDR into one: MediaTek Wi-Fi dongles and routers, ESP32 boards and the Semtech LR2021.
+
+{{< csv-table "content/docs/guide/tools_for_sdr_hacks.csv" >}}
+
+{{< callout type="warning" >}}
+**Some hacks need the host.** Mtk79ICAP's kernel modules and patched firmware must be built and loaded on the host, not in the container. The ESP32 and LR2021 projects need their firmware flashed first; `esptool` is included for that.
+{{< /callout >}}
+
+### Deep Tempest
+
+The `deeptempest` image is dedicated to [Deep-TEMPEST](https://github.com/emidan19/deep-tempest): it reconstructs video from the electromagnetic emanations of a display cable, using GNU Radio and a deep-learning model. It carries GNU Radio 3.10, the SoapySDR modules (including PlutoSDR), gr-guiextra and the deep-tempest blocks with their pre-compiled example flowgraphs.
 
 ### RFID
 
@@ -184,8 +207,9 @@ Without this capability, many Bluetooth tools will fail with permission errors w
 {{< callout type="info" >}}
 **Python Virtual Environments:**
 Some Bluetooth tools run in isolated Python environments:
-- **Mirage**: Uses Python 3.10 venv at `/opt/mirage-env/`, accessed via wrapper script at `/usr/sbin/mirage`
-- **Bluing**: Uses Python 3.10 venv at `/rftools/bluetooth/bluing/`, run with `bluing_run` script
+- **Mirage**: Python 3.10 venv at `/opt/mirage-env/`, run with `mirage`. scapy is held at 2.5.0 there, because newer scapy renamed HCI commands that Mirage's BLE code uses
+- **Bluing**: Python 3.10 venv at `/rftools/bluetooth/bluing/`, run with `bluing`
+- Both get Python 3.10 from `uv` on every architecture
 
 **New in v3.0.0:** **Caeruleus**, a single Go binary covering the whole BLE assessment workflow on BlueZ (scan, GATT enumeration, read/write/notify, fuzzing and structured assessment with JSON/JSONL output), and **BlueSploit**, a Bluetooth exploitation framework. Both sit next to the existing **WhisperPair** exploit for CVE-2025-36911.
 
@@ -303,6 +327,25 @@ Open5GS requires MongoDB for subscriber database. The container includes:
 To start all Open5GS components: `Open5Gs_deployall`
 {{< /callout >}}
 
+#### 5G with OpenAirInterface
+
+The `telecom_5G_oai` image (on top of `telecom_utils`) pairs the OpenAirInterface 5G RAN with the Open5GS core:
+
+{{< csv-table "content/docs/guide/tools_for_telecom_5g_oai.csv" >}}
+
+{{< callout type="info" >}}
+OAI's own `build_oai -I` dependency step refuses Ubuntu 26.04, so RF Swift reproduces it with the apt packages and the asn1c and SIMDE commits that OAI pins. The soft modems and sample configurations are under `/telecom/5G/openairinterface5g/` (`targets/PROJECTS/GENERIC-NR-5GC/CONF/`).
+{{< /callout >}}
+
+#### LTE sniffing
+
+The `telecom_ltesniffer` image (on top of `telecom_utils`) carries LTESniffer, which decodes LTE downlink and uplink control traffic passively:
+
+{{< csv-table "content/docs/guide/tools_for_telecom_ltesniffer.csv" >}}
+
+{{< callout type="warning" >}}
+Capturing cellular traffic is regulated in most countries. Only sniff networks you own or are authorized to test.
+{{< /callout >}}
 
 ### Automotive
 
@@ -339,7 +382,7 @@ Beyond the disassemblers and unpackers, the image carries a full SAST/fuzzing se
 **Tool Locations:**
 - `/reverse/` - Reverse engineering tools and projects
 - Ghidra at `/reverse/ghidra_X.X.X_PUBLIC/`
-- ImHex: x86_64 uses .deb, ARM64 uses AppImage extraction
+- ImHex: extracted from its AppImage on every architecture (there is no Ubuntu 26.04 package), linked as `imhex`
 {{< /callout >}}
 
 ### Network
@@ -355,6 +398,15 @@ The `network` image contains general network analysis and security tools:
 - **Kismet**: Wireless/Bluetooth packet capture and analysis
 - **Caido**: Modern web security testing platform
 - **Burp Suite Community**: Multi-architecture support (JAR fallback for non-x86_64)
+{{< /callout >}}
+
+{{< callout type="warning" title="Exploit PoCs and collections: authorized testing only" >}}
+- **Recent-CVE proof-of-concept repositories** live under `/opt/network/exploits/`: SIP2Shell, the CVE-2026-123007 NGINX HTTP/2 PoC and the nginx2root lab suite. Each is pinned to a commit that was reviewed for code aimed at the operator: install hooks, data exfiltration, obfuscation. None of them run at build time.
+- **php2shell** and **brotli2crash** crash their targets, so they are **opt-in**: install them with `rfswift container install -c <lab> -i php2shell_soft_install` (or `brotli2crash_soft_install`).
+- **Exploit-DB/searchsploit, commix and RouterSploit** track upstream. Refresh them with `searchsploit -u` or `git pull`.
+- **`poc-lookup CVE-…`** searches an offline index of public PoC repositories. The repositories it lists are **unvetted**: review their code before running anything from them.
+
+Details: [exploit PoCs guide](https://github.com/PentHertz/RF-Swift-images/blob/main/docs/network-exploit-pocs.md).
 {{< /callout >}}
 
 ### Active directory
@@ -435,6 +487,40 @@ The `hardware` image focuses on general hardware security testing and analysis:
 - OpenOCD with extensive debug probe support
 {{< /callout >}}
 
+### AI agents
+
+The `llm` image (on top of `corebuild`, amd64 and arm64) gathers AI coding agents, shared security skill packs for all of them, and agent-side analysis tools. REA and Craft Anything are already registered with every agent as MCP servers.
+
+{{< csv-table "content/docs/guide/tools_for_llm.csv" >}}
+
+{{< callout type="info" title="Keep your sign-ins" >}}
+Each agent keeps its credentials in the container's home directory. Bind those directories from the host so a new container finds them:
+
+```bash
+rfswift container create -i llm -n agents \
+  -b ~/.rfswift-llm/claude:/root/.claude,~/.rfswift-llm/codex:/root/.codex,~/.rfswift-llm/vibe:/root/.vibe
+```
+
+Then sign in once: `claude` then `/login`, `codex login`, `opencode auth login`, `vibe --setup` or `hermes setup` (or set the matching API key variable). An empty host directory hides what the image put there (enabled skills, MCP registrations): copy the directory out of a fresh container first. `llm-skills list` shows the skill packs and `llm-skills enable` turns more on. The full guide is in the [llm image documentation](https://github.com/PentHertz/RF-Swift-images/blob/main/docs/llm.md).
+{{< /callout >}}
+
+{{< callout type="warning" >}}
+**Strix** starts a sandbox container per scan, so it needs the host's Docker socket (`-b /var/run/docker.sock:/var/run/docker.sock`), which gives the container control of the host's Docker. **ARTEMIS** is opt-in (`rfswift container install -c agents -i artemis_redteam_soft_install`), and its sub-agents run commands inside the container itself. Point either one only at targets you are authorized to test.
+{{< /callout >}}
+
+### ARTEX
+
+The `artex` image runs [ARTEX](https://github.com/BaaRai/ARTEX), an autonomous, agent-driven web-security testing platform. It has a Go backend with a web UI, a recording proxy, and a bundled recon toolchain (nmap, nuclei, httpx, katana, ffuf, dalfox, sqlmap, bbot, Playwright). PostgreSQL is included and started by hand, the way the Open5GS image works:
+
+```bash
+rfswift container create -i penthertz/rfswiftdev_resolute:artex -n artex
+# inside the container
+artex-postgres      # initialise (first time) and start the database
+artex-start         # start ARTEX and print the one-time setup token
+```
+
+Then open `http://localhost:8787/setup`. ARTEX tracks the upstream `main` branch and is published to the development registry only (see [Choose a toolbox](/docs/guide/list-of-images/)). It is AGPL-3.0 with authorized-use-only terms from its maintainers.
+
 ## Native Nix environments
 
 The same categories exist as native environments for the [Nix engine](/docs/guide/nix-engine), defined in [RF-Swift-nix](https://github.com/PentHertz/RF-Swift-nix). `rfswift env catalog` lists them on your machine, `rfswift env tools <name>` shows what one carries, and `rfswift env run <environment> <tool>` runs a single tool without creating anything. This table comes from the catalog (RF-Swift-nix 4.0.0):
@@ -446,15 +532,19 @@ The same categories exist as native environments for the [Nix engine](/docs/guid
 | `automotive` | Automotive | 13 | Automotive / CAN bus: can-utils, SavvyCAN, gallia and CAN analysis tooling. |
 | `bluetooth` | Bluetooth | 29 | Bluetooth Classic + BLE: BlueZ stack, Ubertooth, and Python BLE tooling, on the SDR device layer. |
 | `cyberether` | SDR | 11 | CyberEther: heterogeneous SDR signal visualisation (Vulkan), with the SoapySDR device stack. |
+| `cyberether_release` | SDR | 47 | CyberEther from upstream's prebuilt release (no compilation; also on aarch64 Linux and macOS), with the SoapySDR device stack. |
 | `hardware` | Hardware | 29 | Hardware hacking: avrdude, sigrok/PulseView, OpenOCD, flashrom, openFPGALoader, esptool, dfu-util. |
 | `network` | Network | 126 | General network & web pentest: nmap, Wireshark, Metasploit, bettercap, Kismet, hashcat/john, sqlmap and more. |
 | `osint` | OSINT | 24 | OSINT: theHarvester, sherlock, recon-ng, subfinder, exiftool and reconnaissance tools. |
 | `reversing` | Reversing | 46 | Reverse engineering & firmware analysis: Ghidra, rizin/Cutter, radare2, binwalk, AFL++, semgrep, ImHex. |
 | `rfid` | RFID | 23 | RFID / NFC toolkit: Proxmark3 (Iceman), libnfc, MIFARE crackers and NFC utilities. |
 | `sdr_full` | SDR | 78 | Full SDR arsenal: sdr_light plus SDRangel, SatDump, SigDigger, GQRX and many GNU Radio OOT modules available in nixpkgs. |
+| `sdr_hacks` | SDR | 108 | sdr_light plus repurposed chips as SDRs: MediaTek Wi-Fi dongles and routers (BirriaSDR, Mtk79ICAP, W1700K), ESP32 radios (ESP-SDR, SoapyESPSDR) and the Semtech LR2021. |
 | `sdr_light` | SDR | 59 | Light SDR set: GNU Radio, everyday SDR apps and the full device/driver layer (sdrsa_devices). |
 | `telecom` | Telecom | 50 | Mobile telecom 2G-5G: Osmocom stack, srsRAN, Open5GS, UERANSIM, YATE and SDR. |
 | `telecom_5g_bladerf` | Telecom | 26 | 5G SA on a bladeRF: srsRAN Project bladeRF fork with its SoapyBladeRF variant, Open5GS core, and the telecom utility set (telecom_5G_bladerf image). |
+| `telecom_5g_oai` | Telecom | 60 | 5G SA with OpenAirInterface: OAI gNB and nrUE soft-modems over UHD (USRP), Open5GS core, and the telecom utility set (telecom_5G_oai image). |
+| `telecom_ltesniffer` | Telecom | 58 | Passive LTE downlink/uplink sniffing with LTESniffer on a USRP, plus the telecom utility set (telecom_ltesniffer image). |
 | `wifi` | WiFi | 45 | Wi-Fi audit suite: aircrack-ng, hcxtools, WPS/WPA3 attacks and rogue-AP frameworks, on top of the network toolkit. |
 
 Packages are nixpkgs attribute names (`python3Packages.impacket`, `gnuradioPackages.gr-osmosdr`), which is also what `rfswift env install` and `rfswift env search --nixpkgs` accept, so a tool the catalog does not carry is one `env install` away. The catalog records the packages that do not build on an architecture, and the environment ships without them there. See [Installing software](/docs/guide/installing-software) for how this compares with the images.

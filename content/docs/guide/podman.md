@@ -148,6 +148,32 @@ By default Podman runs rootless, so no `sudo` is required. RF Swift adapts autom
 You can use USB devices that are plugged in before the container starts. What doesn't work without cgroup rules is **hotplug**: plugging or unplugging devices while the container is running.
 {{< /callout >}}
 
+## Rootful Podman without sudo
+
+Rootless Podman cannot honour device cgroup rules, root-only device nodes or realtime limits, which SDR and USB hardware often need. Running RF Swift with `sudo` gets them, but then the lab runs in root's session (no audio server, root's home). On Linux, `podman_mode = rootful` gives you both: RF Swift and the Workbench keep running as you (your audio, X11, home, workspaces and configuration), and drive the **system** Podman service through its socket, so containers get rootful device access.
+
+```ini
+[general]
+podman_mode = rootful   # auto (default) | rootless | rootful
+```
+
+or for one shell: `export RFSWIFT_PODMAN_MODE=rootful`. The system socket must be running and usable by your user:
+
+```bash
+sudo systemctl enable --now podman.socket
+# then give your group access, e.g. a podman.socket drop-in with SocketGroup=<your group>
+```
+
+If it is not, RF Swift says what is missing. On Qubes OS, `rfswift host qubes setup` does all of this for you (see [Qubes OS](/docs/guide/qubes-os/)).
+
+{{< callout type="warning" >}}
+Access to the rootful Podman socket is **root-equivalent**, like membership of the `docker` group. Grant it only to users you would give root to.
+{{< /callout >}}
+
+## SELinux hosts (Fedora, RHEL...)
+
+On a host with SELinux enforcing, a container's processes run as `container_t` and cannot read a bind-mounted workspace, the X11 socket or the USB nodes. RF Swift therefore creates its unprivileged containers (Docker and Podman) with `label=disable`, as toolbox and distrobox do; namespaces, capabilities and seccomp still isolate them. To keep SELinux separation, set `selinux_label = keep` in `[container]` (or `RFSWIFT_SELINUX_LABEL=keep`); those containers then cannot use their workspace, the display or the devices. `rfswift doctor` shows which applies.
+
 ## Running with root (Podman + sudo)
 
 For full hardware access, run Podman with `sudo`. This gives you the same capabilities as Docker with root, including cgroup rules and full device access:

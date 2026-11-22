@@ -6,7 +6,7 @@ description: "Use a coding agent on a mission without leaking data or letting in
 weight: 8
 ---
 
-The Workbench can connect an external coding-agent CLI (Codex, Claude Code, Kimi Code, GLM) to one mission, through a local MCP server. When you do, you trust two things:
+The Workbench can connect an external coding-agent CLI (Codex, Claude Code, Kimi Code, GLM, OpenCode, Mistral Vibe) to one mission, through a local MCP server. When you do, you trust two things:
 
 - **the agent vendor**, with everything you send it;
 - **the evidence** the agent reads, which may have been written by the system you are assessing.

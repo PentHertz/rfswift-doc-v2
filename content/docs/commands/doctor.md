@@ -26,7 +26,7 @@ rfswift system doctor
 | **Engine service** | The daemon or VM is running and reachable, with its version |
 | **Docker permissions** | Your user can talk to the Docker socket (group membership and the session ACL); fix: `rfswift host docker-access` |
 | **Host udev rules** | RF Swift's rules are installed and current, your user is in `plugdev`; fix: `rfswift host udev` |
-| **Nix engine** | Nix is installed with flakes; on Windows, the WSL 2 distribution that hosts it, the Linux `rfswift` inside and version skew |
+| **Nix engine** | Nix is installed and its store answers (`nix store info`: a multi-user install whose daemon cannot start is reported, with the reason); on Windows, the WSL 2 distribution that hosts it, the Linux `rfswift` inside and version skew |
 | **Nix jail (--isolate)** | bubblewrap is present and may create a user namespace (AppArmor profile on Ubuntu 24.04+); fix: `rfswift host isolate` |
 | **Lima VM** (macOS) | Instance state, QMP socket for USB passthrough, Docker socket |
 | **RF Swift images** | Images pulled locally |
@@ -37,6 +37,8 @@ rfswift system doctor
 | **USB devices** | `/dev/bus/usb` present; on Windows the usbipd-win version with connected, shared and attached counts and the default WSL 2 distribution |
 | **Config file** | Exists with safe permissions |
 | **Kernel modules** | USB, sound, Bluetooth, Wi-Fi modules loaded (Linux) |
+| **SELinux** (Linux, enforcing only) | Whether RF Swift containers get `label=disable`, or run confined because `[container] selinux_label = keep` |
+| **Qubes OS** (in a qube only) | The `rfswift host qubes` checks (USB from sys-usb, persistent engine storage, rootful Podman access, free space on the private volume...) and how many setup steps are left; fix: `rfswift host qubes setup` |
 
 ## Status icons
 

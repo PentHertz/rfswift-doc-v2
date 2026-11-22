@@ -3,45 +3,68 @@ title: "rfswift update"
 linkTitle: "update"
 navGroup: "System"
 level: reference
-description: "Update the RF Swift binary, or learn how when it came from a package manager."
+description: "Update RF Swift the way it was installed (package manager, Homebrew or binary), with SHA-256 verification."
 weight: 93
 ---
 
 `rfswift update` updates RF Swift itself to the latest release from the official Penthertz repository. It only updates the program: your toolbox images, your labs and your data stay as they are.
 
 ```bash
-rfswift update
+rfswift update           # show what changes, ask, then update
+rfswift update --check   # only report whether an update exists
+rfswift update --yes     # update without asking (scripts)
 ```
 
-{{< callout type="warning" >}}
-**Installed from a package?** On a deb, rpm, pacman or Homebrew install, `rfswift update` tells you how to upgrade through your package manager instead of overwriting the packaged binary. (Overwriting it put the package database out of sync, and the next package upgrade reverted it.) Running `get_rfswift.sh` again also upgrades a packaged install.
-{{< /callout >}}
+The update follows the way RF Swift was installed:
+
+| Installed as | How `rfswift update` updates it |
+|---|---|
+| Debian package | Downloads the release's `.deb` for your architecture and installs it with `apt-get` (or `dpkg`), through `sudo` |
+| RPM package | Downloads the release's `.rpm` and installs it with `dnf`, `yum` or `zypper`, through `sudo` |
+| Arch package | Downloads the release's `.pkg.tar.zst` and installs it with `pacman`, through `sudo` |
+| Homebrew cask | Runs `brew upgrade --cask rfswift` |
+| Standalone binary | Replaces the binary in place, with `sudo` when its directory is not writable (e.g. `/usr/local/bin`) |
+| Windows installer | Points you to the new installer |
+
+Every download is checked against the release's SHA-256 checksums before anything is installed; a file that does not match, or is not listed, is refused. After installing, RF Swift runs `rfswift --version` to confirm the new version, and warns when another `rfswift` earlier in your `PATH` would still start the old one.
 
 {{< callout type="info" >}}
-**RF Swift v4 canonical spelling**: `rfswift system update`. The legacy form `rfswift update` still works and prints a notice pointing at the new name. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
+**RF Swift v4 canonical spelling**: `rfswift system update`. The legacy form `rfswift update` still works. Flags are identical. See the [command tree](/docs/commands/#the-v4-command-tree).
 {{< /callout >}}
 
 ## Synopsis
 
 ```bash
-rfswift update
+rfswift update [--check] [-y]
 ```
 
-It takes no options. It downloads and installs the latest version of RF Swift and all its components, and keeps a backup of the current version.
+| Flag | Description |
+|---|---|
+| `--check` | Only report whether a newer release exists and how it would be installed; change nothing |
+| `-y, --yes` | Update without asking (for scripts) |
+
+Without a flag, RF Swift shows what it will do, then asks one Yes/No question.
 
 ## Example
 
-The output looks like this (the version numbers are only an example):
+The output looks like this (versions and paths are only an example):
 
 ```
-Checking for updates...
-Current version: v2.1.0
-Latest version: v3.0.0
-Downloading update...
-Installing RF Swift v3.0.0...
-✓ Update successful!
-RF Swift updated to v3.0.0
+╭─ Update available ───────────────────────────────────────────╮
+│ rfswift 4.0.5 → 4.1.1                                         │
+│ Installed as: Debian package at /usr/bin/rfswift              │
+│ Release notes: https://github.com/PentHertz/RF-Swift/releases │
+╰───────────────────────────────────────────────────────────────╯
+The update will:
+    1. download rfswift_4.1.1_amd64.deb and check its SHA-256 against the release checksums
+    2. install it: sudo apt-get install -y ./rfswift_4.1.1_amd64.deb
+Update rfswift 4.0.5 → 4.1.1? [Y/n] y
+SHA-256 verified: rfswift_4.1.1_amd64.deb
+Running: sudo apt-get install -y ./rfswift_4.1.1_amd64.deb
+rfswift updated: 4.0.5 → 4.1.1
 ```
+
+Other commands also tell you when a release is out, with what to run: `RF Swift 4.1.1 is available (you have 4.0.5). Update with: rfswift update`.
 
 ## What gets updated
 
@@ -110,10 +133,9 @@ sudo rfswift update
 
 ### The update finished, but `rfswift` no longer works
 
-Put the backup back, or reinstall. Then check that it works:
+Reinstall with the installer, or download the previous release from [GitHub releases](https://github.com/PentHertz/RF-Swift/releases). Then check that it works:
 
 ```bash
-sudo mv /usr/local/bin/rfswift.old /usr/local/bin/rfswift
 curl -fsSL "https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh" | sh
 
 rfswift --version
@@ -123,7 +145,7 @@ rfswift container last
 ## Good to know
 
 - Updates never touch your containers or your data.
-- The update keeps a backup of the previous version at `/usr/local/bin/rfswift.old`, so you can roll back.
+- A standalone binary is replaced atomically (the new one is written next to it, then renamed over it), so a failed update never leaves a half-written `rfswift`. On Windows the previous binary is kept as `rfswift.exe.old` until the next update.
 - To update toolboxes, use `rfswift image pull`; to move a lab to a newer toolbox, use `rfswift container upgrade`.
 
 ## Related

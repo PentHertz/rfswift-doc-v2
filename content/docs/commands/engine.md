@@ -21,6 +21,7 @@ rfswift --engine podman container create -i sdr_full -n my_lab
 rfswift --engine ENGINE [command] [options]      # docker, podman, lima, nix, auto
 rfswift --gpu [command] [options]                 # macOS Apple Silicon: the krunkit GPU VM (implies --engine lima)
 rfswift engine                                    # which engine is active, and why
+rfswift engine set auto|docker|podman|lima|nix    # set (or clear) the default engine
 rfswift engine lima status|set|reconfig|reset     # macOS
 ```
 
@@ -40,12 +41,21 @@ rfswift engine lima status|set|reconfig|reset     # macOS
 | `--engine STRING` | Engine for this command | `auto` (default), `docker`, `podman`, `lima`, `nix` |
 | `--gpu` | macOS Apple Silicon: use the GPU-accelerated Lima VM (krunkit, Vulkan through Venus and MoltenVK). It is a separate instance, `rfswift-gpu`, with GPU compute but **no** USB passthrough | |
 
-To make an engine the default without typing `--engine` every time, set it in `config.ini`:
+To make an engine the default without typing `--engine` every time, use `rfswift engine set`:
+
+```bash
+rfswift engine set podman   # default engine from now on (--engine still overrides it)
+rfswift engine set auto     # clear it: auto-detect, and ask in the run wizard
+```
+
+It writes `engine =` in the `[general]` section of `config.ini`, which you can also edit by hand:
 
 ```ini
 [general]
 engine = podman
 ```
+
+When several engines are installed and none is set, the `rfswift container create` wizard first asks which one to use, and offers to keep the choice as the default.
 
 ## How RF Swift picks an engine
 

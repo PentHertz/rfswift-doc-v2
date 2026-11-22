@@ -76,7 +76,7 @@ Missions are grouped into **projects**, one per engagement. You start in the `de
 | **Findings** | pwndoc-style vulnerabilities with CVSS v3.1 calculator, priorities, retest status, proof of concept with images; import and export as pwndoc JSON |
 | **Captures** | Import evidence, inventory the live workspace, register artifacts as AI-readable evidence, decode bytes with a native decoder stack or an offline CyberChef, read MIFARE Classic and Ultralight dumps |
 | **Secrets** | Credentials collected during the assessment, stored in the OS vault only, excluded from every export |
-| **Agent** | Codex, Claude Code, Kimi Code or GLM connected to the mission through a local, permission-gated MCP bridge; RF Swift never calls a model API itself |
+| **Agent** | Codex, Claude Code, Kimi Code, GLM, OpenCode or Mistral Vibe connected to the mission through a local, permission-gated MCP bridge; RF Swift never calls a model API itself |
 | **Security posture** | The same scanners as `rfswift audit`, with a progress view, detailed CVE records and an AI-grounded review |
 | **Reports** | Branded Markdown, HTML and PDF reports, pwndoc export and import |
 | **Engine doctor** | Every engine's state, space reclaim, Lima VM lifecycle and settings, udev rules, Docker access, the Nix jail, host audio, Nix in WSL 2, WSLg display reset |
@@ -135,7 +135,7 @@ Press **New mission**. The **Create mission** dialog is the GUI twin of `rfswift
 
 - Name and Title.
 - Engine: Nix, Docker, Podman, and Lima on macOS.
-- Environment / image, with a hint that resolves short names.
+- Environment / image, with a hint that resolves short names. For Docker, Podman and Lima missions it suggests the official images published on Docker Hub for your architecture (the list `rfswift image remote` shows; from the agent host when a remote agent is connected). The list is cached for 6 hours (`~/.cache/rfswift` on Linux, `~/Library/Caches/rfswift` on macOS, `%LocalAppData%\rfswift` on Windows); **Refresh list** fetches it again, and the last list is still offered offline.
 - Workspace path (optional): empty for the automatic `~/rfswift-workspace/<name>`, "none" to disable.
 - A live line about USB reachability and the devices the engine cannot map on this host.
 
@@ -198,6 +198,7 @@ Through a remote agent the same dialog shows the same progress: the build or the
   - On a Windows Nix mission the shell runs in the WSL 2 distribution.
 - **Recording**: "Record on connect", or **Start REC** / **Stop REC** at any time for segments, to `<mission>/recordings/` or a folder you choose. Recordings are asciinema `.cast` files; the **Recordings** drawer plays, renames and adds them to the note, and **Use as AI evidence** registers a copy for the mission's agent.
 - **AI tool tabs** appear automatically when the connected coding agent runs a command through MCP: read-only, showing the command, its output and the result, so nothing mixes with your own shell.
+- **Zoom**: Ctrl + / Ctrl - / Ctrl 0 (Cmd on macOS), Ctrl + mouse wheel, a trackpad pinch, or the right-click menu. One size (8 to 32 px) applies to every terminal and is remembered.
 - **Copy and paste**: Cmd+C / Cmd+V on macOS, Ctrl+Shift+C / Ctrl+Shift+V elsewhere. Right-click for Copy, Paste, Select all and, on macOS, "Option as Meta"; Option with the arrow keys moves by word. Links in the output open in the browser.
 - A Nix mission whose jail cannot start (Ubuntu 24.04+ AppArmor) is offered the fix ("Enable isolation for this mission?") behind a polkit prompt, then reconnects.
 
@@ -257,8 +258,10 @@ Credentials found during the assessment (passwords, tokens, API keys, private ke
 The optional coding-agent bridge. In **Agent & MCP** (the "Agent" button or **Configure** in the panel):
 
 1. Enable the bridge.
-2. Pick Codex CLI, Claude Code, Kimi Code or GLM CLI (the dialog says which are installed).
+2. Pick Codex CLI, Claude Code, Kimi Code, GLM CLI, OpenCode or Mistral Vibe (the dialog says which are installed).
 3. Choose the permissions: read only, "Allow updating notes and findings", "Allow executing commands inside the selected mission", and the client's own YOLO mode with its warning.
+
+If a CLI is installed where the Workbench does not look, set its **program path** in Agent settings (**Browse...** shows hidden folders such as `.nvm`). Without one, the search covers your `PATH` plus nvm and fnm Node versions, pnpm, yarn, deno and mise.
 
 **Connect** writes the client's configuration under the mission's `agent-workspace/`, performs a real MCP handshake, and starts the client's TUI in the panel; the prompt box pastes text into it. Everything the agent reads is labelled untrusted evidence, and everything it runs shows up in the Console. Details: [AI assistant](/docs/guide/ai-assistant/).
 
@@ -298,6 +301,7 @@ How the change is applied:
 - On Linux Docker the change is applied in place after one polkit prompt (the Workbench re-runs itself as root for that step).
 - Tick "Re-create the container instead of rewriting its Docker files" to commit and re-create without a prompt, which is always the way on Podman.
 - A change that cannot work is refused before any prompt. Serial ports are attached on demand and reported as such.
+- A progress bar shows the current step (stopping the container, rewriting its configuration, restarting the engine, starting it again) while the change runs.
 
 ## Security posture and audits
 
@@ -332,6 +336,8 @@ The rail's **Engine doctor** is `rfswift doctor` with buttons:
   - **Stray device directories** cleanup;
   - the **Nix jail** with "Install bubblewrap" or "Enable sandbox";
   - **Host audio** with Enable and Disable (Linux; audio also on macOS).
+- **Qubes OS** (in a qube): the `rfswift host qubes` checks, with a **Set up for Qubes** button that applies `rfswift host qubes setup` through polkit.
+- **Updates**: the doctor shows when a newer RF Swift release exists and can install it; a download is installed only after its GitHub digest and Sigstore build provenance (RF Swift's release workflow) are verified.
 - **The Nix block**: native, in WSL 2 (with "Set up Nix in WSL 2" and "Reset WSLg display" on Windows) or on the agent host, "Collect garbage", and the workspace root.
 
 While you are connected to a remote agent, the doctor describes the agent host: every engine with its state, the containers the agent can list (and why it cannot use one), and whether Nix is installed there. "Reclaim space" and "Collect garbage" also run there. Host fixes and the Lima VM stay local.

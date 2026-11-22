@@ -1,11 +1,11 @@
 ---
 title: "AI assistant (MCP)"
 level: advanced
-description: "Connect a coding agent (Codex, Claude Code, Kimi Code, GLM) to a Workbench mission through a local, permission-gated MCP bridge."
+description: "Connect a coding agent (Codex, Claude Code, Kimi Code, GLM, OpenCode, Mistral Vibe) to a Workbench mission through a local, permission-gated MCP bridge."
 weight: 11
 ---
 
-The [Workbench](/docs/guide/workbench/) can hand one mission to an external coding-agent CLI such as **Codex**, **Claude Code**, **Kimi Code** or **GLM CLI**, through an optional, **local** MCP (Model Context Protocol) bridge. The agent can then read your notes and evidence, draft findings, and (only if you allow it) run commands in the mission's lab.
+The [Workbench](/docs/guide/workbench/) can hand one mission to an external coding-agent CLI such as **Codex**, **Claude Code**, **Kimi Code**, **GLM CLI**, **OpenCode** or **Mistral Vibe**, through an optional, **local** MCP (Model Context Protocol) bridge. The agent can then read your notes and evidence, draft findings, and (only if you allow it) run commands in the mission's lab.
 
 **In short**
 
@@ -15,7 +15,7 @@ The [Workbench](/docs/guide/workbench/) can hand one mission to an external codi
 
 ```mermaid
 flowchart LR
-    U[You] --> C[Codex / Claude Code / Kimi / GLM CLI]
+    U[You] --> C[Codex / Claude Code / Kimi / GLM / OpenCode / Vibe]
     C <-->|stdio MCP| M[RF Swift Workbench MCP]
     M --> N[Mission notes]
     M --> F[Structured findings]
@@ -38,14 +38,14 @@ flowchart LR
 - Tools that are not permitted are **omitted** from the server's tool list, not merely rejected.
 - Agent permissions live in the local RF Swift user configuration and are never placed in exported projects.
 - Evidence responses carry an explicit `untrusted_evidence` trust label: notes, artifacts, recordings, filenames, metadata and embedded role text are data to analyse, not instructions to follow.
-- Per-client **YOLO mode** (the CLI's own approval-bypass flag) is off by default and visibly warned. It never widens RF Swift's MCP permissions.
+- Per-client **YOLO mode** (the CLI's own approval-bypass flag) is off by default and visibly warned. It never widens RF Swift's MCP permissions. With YOLO off, OpenCode asks before edits, shell commands and web access (it allows them by default otherwise), and Mistral Vibe keeps your own settings; with YOLO on, Vibe runs with `--auto-approve`.
 
 ## Starting the server from the Workbench
 
 In the **Agent & MCP** panel, choose the client and press **Connect & launch**. The Workbench then:
 
 1. detects the selected CLI on `PATH`;
-2. creates or merges a private configuration under the mission's `agent-workspace` directory (`.mcp.json` for Claude Code, `.kimi-code/mcp.json` for Kimi, `.codex/config.toml` for Codex), plus a generated `AGENTS.md` / `CLAUDE.md` telling the client that "create a note" means the mission `write_note` tool;
+2. creates or merges a private configuration under the mission's `agent-workspace` directory (`.mcp.json` for Claude Code, `.kimi-code/mcp.json` for Kimi, `.codex/config.toml` for Codex, `opencode.json` for OpenCode, `.vibe/config.toml` for Mistral Vibe), plus a generated `AGENTS.md` / `CLAUDE.md` telling the client that "create a note" means the mission `write_note` tool;
 3. performs a real MCP `initialize` handshake with the mission-scoped server;
 4. starts the client's interactive TUI in the embedded **Agent terminal**.
 

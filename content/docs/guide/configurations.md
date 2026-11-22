@@ -59,6 +59,7 @@ On first run RF Swift asks whether to create the file with the shipped defaults.
 imagename = myrfswift:latest
 repotag = penthertz/rfswift_resolute
 engine = auto
+podman_mode = auto
 
 [container]
 shell = /bin/zsh
@@ -98,7 +99,8 @@ The device defaults depend on the operating system the file was created on.
 |-----|-------------|---------|
 | `imagename` | Image used when `container create` has no `-i` | `myrfswift:latest` |
 | `repotag` | Repository prepended to short image names | `penthertz/rfswift_resolute` |
-| `engine` | Default engine when neither `--engine` nor `RFSWIFT_ENGINE` is set: `auto`, `docker`, `podman`, `lima`, `nix`. Which one to pick: [Choose your engine](/docs/engines/) | `nix` |
+| `engine` | Default engine when neither `--engine` nor `RFSWIFT_ENGINE` is set: `auto`, `docker`, `podman`, `lima`, `nix`. Which one to pick: [Choose your engine](/docs/engines/) Set it with `rfswift engine set` | `nix` |
+| `podman_mode` | Which Podman service a non-root RF Swift drives on Linux: `auto` (rootless for a user, rootful for root), `rootless`, or `rootful` (the system service through its socket: rootful device access without `sudo`, see [Podman](/docs/guide/podman/#rootful-podman-without-sudo)). `RFSWIFT_PODMAN_MODE` overrides it | `rootful` |
 
 {{< callout type="info" >}}
 Official images are built on Ubuntu 26.04 "Resolute" and published under `penthertz/rfswift_resolute`. Set `repotag = penthertz/rfswift_noble` to fall back to the Ubuntu 24.04 images, or point it at a mirror or your own registry.
@@ -125,6 +127,7 @@ Official images are built on Ubuntu 26.04 "Resolute" and published under `penthe
 | `caps` | Capabilities added to every container | `NET_ADMIN,SYS_PTRACE` |
 | `seccomp` | Seccomp profile | `/path/to/profile.json` |
 | `cgroups` | Device cgroup rules | `c 189:* rwm,c 166:* rwm` |
+| `selinux_label` | On a host with SELinux enforcing, RF Swift creates unprivileged containers with `label=disable` so they can use their workspace, the X11 socket and USB nodes. `keep` leaves SELinux separation on (the containers then cannot read those). `RFSWIFT_SELINUX_LABEL` overrides it | `keep` |
 
 ### `[audio]`, `[desktop]` and `[nix]`
 
@@ -175,6 +178,8 @@ See [profile](/docs/commands/profile/).
 |----------|--------|
 | `RFSWIFT_ENGINE` | Engine (`docker`, `podman`, `lima`, `nix`); overrides the config file, `--engine` wins |
 | `RFSWIFT_LIMA_INSTANCE` | Lima instance name (default `rfswift`; `--gpu` uses `rfswift-gpu`) |
+| `RFSWIFT_PODMAN_MODE` | Podman service on Linux: `auto`, `rootless` or `rootful`; overrides `[general] podman_mode` |
+| `RFSWIFT_SELINUX_LABEL` | `keep` keeps SELinux separation for RF Swift containers; overrides `[container] selinux_label` |
 | `RFSWIFT_NO_BANNER` | Skip the ASCII banner (it is already skipped when stdout is not a terminal) |
 | `RFSWIFT_NIX_FLAKE` | Flake reference or local path of RF-Swift-nix |
 | `RFSWIFT_NIX_HOME` | State directory of the Nix engine (default `~/.rfswift/nix`) |

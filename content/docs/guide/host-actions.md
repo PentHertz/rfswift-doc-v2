@@ -199,12 +199,11 @@ Full reference: [usb](/docs/commands/usb/) and [winusb](/docs/commands/winusb/).
 
 {{% details title="Legacy winusb commands (earlier versions)" %}}
 
-`rfswift winusb ...` remains available; `rfswift usb ...` is the v4 front door and runs these commands on Windows. Earlier versions of this guide documented the following, run from an administrator PowerShell:
+`rfswift winusb ...` remains available (`list`, `attach`, `detach`, `bind`, `unbind`, `status`, `vm-devices`); `rfswift usb ...` is the v4 front door and runs these commands on Windows. Earlier versions of this guide documented the following, run from an administrator PowerShell (the old `attach-all-sdrs` subcommand no longer exists):
 
 ```powershell
 rfswift winusb list
 rfswift winusb attach -i 1-2          # 1-2 is the BusID from the list
-rfswift winusb attach-all-sdrs        # detect common SDRs by vendor/product ID and attach them all
 rfswift winusb detach -i 1-2
 ```
 

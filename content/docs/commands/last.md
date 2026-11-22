@@ -19,7 +19,9 @@ rfswift container last
 
 ## Options
 
-The command takes no options: it always lists every container.
+| Flag | Description |
+|---|---|
+| `-f, --filter` | Show only the containers whose image, name or ID contains this text (case-insensitive) |
 
 ## Examples
 
@@ -28,6 +30,12 @@ The command takes no options: it always lists every container.
 #### List all containers
 ```bash
 rfswift container last
+```
+
+#### Only some containers
+```bash
+rfswift container last -f sdr_full     # containers created from an sdr_full image
+rfswift container last -f bluetooth_1  # by name (or part of the container ID)
 ```
 
 #### Example output
@@ -66,7 +74,7 @@ c3d4e5f6g7h8   analysis       penthertz/rfswift_resolute:sdr_full   Exited      
 rfswift container last
 
 # Find specific container
-rfswift container last | grep sdr_work
+rfswift container last -f sdr_work
 
 # Count total containers
 rfswift container last | tail -n +2 | wc -l
@@ -94,5 +102,5 @@ rfswift container rm -c old_container
 - [`system cleanup`](/docs/commands/cleanup/): remove old containers and images by age
 
 {{< callout type="info" >}}
-**Filtering**: the list always includes running and stopped containers (like `docker ps -a`), with no filter options. Pipe it through `grep` instead: `grep "Up"` for running containers, `grep "Exited"` for stopped ones, or use `docker ps` for more advanced filters.
+**Filtering**: the list always includes running and stopped containers (like `docker ps -a`). `-f` narrows it by image, name or ID; to filter by state, pipe it through `grep` (`grep "Up"` for running containers, `grep "Exited"` for stopped ones).
 {{< /callout >}}

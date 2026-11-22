@@ -5,7 +5,7 @@ description: "The Nix engine, the Workbench, the remote agent, a resource-first 
 weight: 3
 ---
 
-RF Swift v4.0 (current release: **v4.0.2**) is the biggest change since the project started. It adds:
+RF Swift v4.0 is the biggest change since the project started. The current release is **v4.1.1**; what the releases after v4.0.2 added is in [Updates since v4.0.2](#updates-since-v402). v4.0 adds:
 
 - a native **Nix engine** that runs the tool sets without containers;
 - a desktop **Workbench** for assessments;
@@ -27,6 +27,39 @@ The same RF and hardware lab, now as containers **or** native environments, on y
 - [Security built in](#security-built-in): `rfswift audit`, verified downloads, a hardened baseline.
 - Native installers and packages for [Linux](#linux-packages-and-host-setup), [Windows](#windows) and [macOS](#macos), plus [hardware fixes](#hardware-fixes-that-matter-in-the-field).
 - [Upgrading from v3.x](#upgrading-from-v3x) takes a few minutes.
+
+## Updates since v4.0.2
+
+Update with `rfswift update` (see [update](/docs/commands/update/)). Newest first.
+
+### v4.1.1: Qubes OS, rootful Podman, SELinux and a safer update
+
+- **Qubes OS.** `rfswift host qubes` checks a qube for RF Swift, and `rfswift host qubes setup` fixes what it finds in one root script that it prints first: the virtual USB bus for devices attached from sys-usb, persistent engine storage and Nix store across AppVM restarts, rootful Podman and Docker access for the user, a working Nix daemon for a Determinate Nix template, and the RTL-SDR DVB-T driver blacklisted. `rfswift doctor` and the Workbench (**Set up for Qubes**) show the same checks. See [Qubes OS](/docs/guide/qubes-os/).
+- **Rootful Podman without sudo.** `podman_mode = rootful` in `[general]` (or `RFSWIFT_PODMAN_MODE`) drives the system Podman service through its socket, for rootful device access while audio, X11, home and workspaces stay yours. See [Podman](/docs/guide/podman/).
+- **SELinux.** On an enforcing host, unprivileged containers are created with `label=disable` so they can read their workspace, the X11 socket and USB nodes. `[container] selinux_label = keep` (or `RFSWIFT_SELINUX_LABEL=keep`) opts out.
+- **`rfswift update`** now updates the way RF Swift was installed (deb/rpm/pacman package through the system package manager, `brew upgrade --cask`, or the binary in place), after one Yes/No question, and verifies every download against the release's SHA-256 checksums. `--yes` skips the question, `--check` only looks.
+- **USB hot-plug** with `rfswift run`/`container create`: device trees such as `/dev/bus/usb` are bind-mounted, so a dongle plugged in or forwarded later appears in the running container.
+- **Audio under sudo** and after a reboot: `sudo rfswift run|exec` talks to your audio session, and `rfswift exec` reloads the audio server's TCP module when it is missing.
+
+### v4.0.5: Workbench polish
+
+- The image field of the create dialog suggests the images published on Docker Hub for your architecture (cached for 6 hours; **Refresh list** fetches it again).
+- Agent settings take a program path for each coding-agent CLI, with **Browse…**, and the search now covers nvm, fnm, pnpm, yarn, deno and mise.
+- Terminal zoom (Ctrl + / Ctrl - / Ctrl 0, Ctrl + wheel, pinch), and a progress bar while a container's configuration changes.
+- `rfswift config bindings add -d` accepts a directory such as `/dev/bus/usb`.
+
+### v4.0.4: new Nix environments and agents
+
+- Nix catalog: `sdr_hacks` (repurposed chips as SDRs), `cyberether_release`, `telecom_5g_oai` (5G SA with OpenAirInterface) and `telecom_ltesniffer`.
+- The Workbench hosts **OpenCode** and **Mistral Vibe** in missions, next to the other AI assistants.
+- The `sdr_hacks` image is listed with the other toolboxes.
+
+### v4.0.3: engine choice and Workbench updates
+
+- When several engines are installed and none is set, the `rfswift run` wizard asks which one to use and can keep it. `rfswift engine set <auto|docker|podman|lima|nix>` sets it directly.
+- The Workbench's Engine doctor shows a newer release and installs it after verifying its GitHub digest and Sigstore build provenance.
+- A warning, with the fix, when `~/.config/rfswift` belongs to root after a `sudo rfswift` run.
+- X11 fixes for GUI tools after a reboot (MIT-SHM, "Authorization required").
 
 ## Nix engine: native environments
 

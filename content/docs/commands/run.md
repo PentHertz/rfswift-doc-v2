@@ -899,6 +899,8 @@ rfswift container create
 
 The wizard guides you through the following steps:
 
+- **Engine** (only when several engines are installed and none is chosen) -- When Docker, Podman, the Lima VM or Nix are installed side by side and no engine was set (`--engine`, `--gpu`, `RFSWIFT_ENGINE` or `[general] engine`), the wizard first asks which one to use, and can keep the answer as the default. Picking Nix continues with a native environment instead of a container. Change or clear the default later with `rfswift engine set <auto|docker|podman|lima|nix>` (see [engine](/docs/commands/engine/)).
+
 0. **Profile Selection** (if profiles are available) -- Choose a profile to pre-fill settings, or select "No profile" for manual configuration. If a profile is selected, you're asked whether to **use it as-is** (fast path: only asks for container name) or **customize** all settings with profile values pre-filled.
 
 1. **Image Selection** -- If a profile was selected, its image appears first with all local images available as alternatives, plus "Other (enter manually)". Without a profile, shows a scrollable picker of local images.

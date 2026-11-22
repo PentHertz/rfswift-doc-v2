@@ -24,9 +24,10 @@ Find your job in the left column. The name on the right is what you type after `
 |---|---|
 | Software-defined radio, everyday use | `sdr_light` |
 | Software-defined radio, the complete set | `sdr_full` |
-| Trying GNU Radio 4.0 next to GNU Radio 3.10 | `sdr_gnuradio4` |
+| GNU Radio 4.0 and GR4 Studio, next to GNU Radio 3.10 | `sdr_gnuradio4` |
+| Repurposed chips as SDRs (Wi-Fi dongles, routers, ESP32, LR2021) | `sdr_hacks` |
 | Electromagnetic emanation analysis | `deeptempest` |
-| Wi-Fi | `wifi_basic`, `wifi_full`, or `wifi` (Wi-Fi tools on top of `sdr_light`) |
+| Wi-Fi | `wifi` (Wi-Fi tools on top of `network`) |
 | Bluetooth Classic and Low Energy | `bluetooth` |
 | RFID and NFC | `rfid` |
 | Cellular networks, shared utilities | `telecom_utils` |
@@ -35,6 +36,8 @@ Find your job in the left column. The name on the right is what you type after `
 | Cellular 5G standalone | `telecom_5G` (`telecom_5G_bladerf` for bladeRF) |
 | Cellular 4G to 5G, combined | `telecom_4Gto5G` |
 | Cellular 5G training, extended | `telecom_5G_train` |
+| Cellular 5G with OpenAirInterface | `telecom_5G_oai` |
+| Passive LTE sniffing | `telecom_ltesniffer` |
 | Vehicles | `automotive` |
 | Hardware security | `hardware` |
 | Reverse engineering, firmware analysis, static code review | `reversing` |
@@ -42,6 +45,12 @@ Find your job in the left column. The name on the right is what you type after `
 | Active Directory engagements | `ad` |
 | Android applications and devices | `android` |
 | Open-source intelligence | `osint` |
+| AI coding agents with security skills | `llm` |
+| Agent-driven web application testing | `artex` (development registry, see below) |
+
+{{< callout type="info" title="ARTEX lives in the development registry" >}}
+`artex` is built on demand from the upstream ARTEX project rather than from the RF Swift image chain, so it is published to `penthertz/rfswiftdev_resolute` only. Use the full name: `rfswift container create -i penthertz/rfswiftdev_resolute:artex -n artex`. Inside, `artex-postgres` starts the database and `artex-start` starts ARTEX; then open `http://localhost:8787/setup`. Use it only against systems you are authorized to test.
+{{< /callout >}}
 
 {{< callout type="info" title="GPU variants" >}}
 On x86_64, `sdr_light` and `sdr_full` also come with Intel or NVIDIA GPU drivers and gr-fosphor: `sdr_light_intelgpu`, `sdr_light_nvidiagpu`, `sdr_full_intelgpu`, `sdr_full_nvidiagpu`. Use them only if you want GPU acceleration.
@@ -124,8 +133,8 @@ Short names such as `sdr_full` expand to `penthertz/rfswift_resolute:sdr_full` t
 
 | Category | Description | Images |
 |----------|-------------|--------|
-| **SDR** | Software-defined radio tools | `sdr_light`, `sdr_full`, `sdr_light_intelgpu`, `sdr_full_nvidiagpu`, `deeptempest`, `sdr_gnuradio4` |
-| **Telecom** | Mobile network analysis | `telecom_utils`, `telecom_2Gto3G`, `telecom_4G_5GNSA`, `telecom_5G`, `telecom_5G_bladerf`, `telecom_4Gto5G`, `telecom_5G_train` |
+| **SDR** | Software-defined radio tools | `sdr_light`, `sdr_full`, `sdr_light_intelgpu`, `sdr_full_nvidiagpu`, `deeptempest`, `sdr_gnuradio4`, `sdr_hacks` |
+| **Telecom** | Mobile network analysis | `telecom_utils`, `telecom_2Gto3G`, `telecom_4G_5GNSA`, `telecom_5G`, `telecom_5G_bladerf`, `telecom_4Gto5G`, `telecom_5G_train`, `telecom_5G_oai`, `telecom_ltesniffer` |
 | **Short-range** | Bluetooth, Wi-Fi and RFID | `bluetooth`, `wifi`, `rfid` |
 | **Hardware** | Hardware security tools | `hardware`, `reversing` |
 | **Automotive** | Vehicle communications | `automotive` |
@@ -133,6 +142,7 @@ Short names such as `sdr_full` expand to `penthertz/rfswift_resolute:sdr_full` t
 | **Active Directory** | Windows domain engagements | `ad` |
 | **Mobile** | Android application and device assessment | `android` |
 | **OSINT** | Open-source intelligence and reconnaissance | `osint` |
+| **AI agents** | Coding agents, shared security skills and agent-driven testing | `llm`, `artex` |
 | **Base images** | Foundation for other images | `corebuild`, `sdrsa_devices`, `sdrsa_devices_antsdr`, `sdrsa_devices_rtlsdrv4` |
 
 {{< callout type="info" title="Added in v3.0.0 Resonance" >}}
@@ -159,11 +169,11 @@ graph LR;
     B[sdrsa_devices]-->DT[deeptempest];
     A-->OS[osint];
     A-->AN[android];
-    S[network]-->WB[wifi_basic];
-    WB-->WF[wifi_full];
+    A-->LLM[llm];
+    S[network]-->J[wifi];
     S[network]-->AD[ad];
-    H-->J[wifi];
     H-->G4[sdr_gnuradio4];
+    H-->SH[sdr_hacks];
     H-->K[sdr_full];
     H-->H2[sdr_light_intelgpu];
     H-->H3[sdr_light_nvidiagpu];
@@ -174,8 +184,12 @@ graph LR;
     L-->O[telecom_5G];
     L-->O2[telecom_5G_bladerf];
     L-->P[telecom_4Gto5G];
+    L-->OAI[telecom_5G_oai];
+    L-->LS[telecom_ltesniffer];
     N-->P2[telecom_5G_train];
 ```
+
+`artex` is not in this tree: it adds PostgreSQL on top of an image built from the upstream ARTEX project.
 
 This hierarchy gives you:
 

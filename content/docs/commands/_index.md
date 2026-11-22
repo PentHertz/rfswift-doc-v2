@@ -51,13 +51,13 @@ rfswift
 │               update | rebuild | rollback | generations | audit | gc | gl | udev | versions | wsl (Windows)
 ├── config      bindings | capabilities | cgroups | gpus | ports | ulimits | serial-hotplug
 ├── network     create | list | remove | cleanup
-├── host        setup | udev | docker-access | isolate | devclean | audio
+├── host        setup | udev | docker-access | isolate | devclean | qubes [setup] | audio
 ├── usb         list | attach | detach | status | vm-devices (+ bind | unbind on Windows)
 ├── audit       <environment | image | container>
 ├── agent       (serve) | certs init | certs client | certs export | certs import
 ├── profile     list | show | create | init | delete
 ├── realtime    enable | disable | status
-├── engine      lima status | set | reconfig | reset (macOS)
+├── engine      set | lima status | set | reconfig | reset (macOS)
 └── system      doctor | cleanup | update | upgrade | log | report
 ```
 
@@ -224,6 +224,8 @@ The ASCII banner only appears in an interactive terminal. It is skipped when the
 | `rfswift host setup` | udev rules, engine install, Nix, Docker access, jail |
 | `rfswift host udev` | RF Swift's udev rules (rootless Podman, Nix) |
 | `rfswift host docker-access` | docker group + socket ACL, no logout |
+| `rfswift host qubes setup` | Qubes OS: USB from sys-usb, persistent engines, rootful Podman without sudo |
+| `rfswift engine set podman` | Default engine (`auto` clears it) |
 | `rfswift host audio enable` | Host audio server for containers (Linux, macOS) |
 | `rfswift usb attach` | Forward a USB device (macOS Lima, Windows usbipd) |
 | `rfswift agent certs init --dir DIR --host HOST` | Generate remote-agent certificates |
