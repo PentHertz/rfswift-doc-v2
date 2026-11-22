@@ -244,7 +244,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Host actions</h1><p class="doc-lead">The few things RF Swift sets up on your own computer: Linux host setup, sound from your labs, and USB devices on Linux, Windows and macOS.</p><p class="doc-meta">Advanced · 7 min read · Updated September 27, 2026</p>
+      <h1>Host actions</h1><p class="doc-lead">The few things RF Swift sets up on your own computer: Linux host setup, sound from your labs, and USB devices on Linux, Windows and macOS.</p><p class="doc-meta">Advanced · 7 min read · Updated November 22, 2026</p>
     </header>
     <div class="prose">
       <p>A few things happen on your own computer (the <strong>host</strong>), outside any lab: letting your user open radio hardware, bringing the sound of your labs to your speakers, and forwarding USB devices on Windows and macOS. Most of them are one-time steps, and the installer already offers them.</p>
@@ -420,11 +420,10 @@ Flags:
 <details class="disclosure">
 <summary><span>Legacy winusb commands (earlier versions)</span></summary>
 <div class="disclosure-body">
-<p><code>rfswift winusb ...</code> remains available; <code>rfswift usb ...</code> is the v4 front door and runs these commands on Windows. Earlier versions of this guide documented the following, run from an administrator PowerShell:</p>
+<p><code>rfswift winusb ...</code> remains available (<code>list</code>, <code>attach</code>, <code>detach</code>, <code>bind</code>, <code>unbind</code>, <code>status</code>, <code>vm-devices</code>); <code>rfswift usb ...</code> is the v4 front door and runs these commands on Windows. Earlier versions of this guide documented the following, run from an administrator PowerShell (the old <code>attach-all-sdrs</code> subcommand no longer exists):</p>
 <div class="code">
 <div class="code-bar"><span>powershell</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">rfswift</span> <span class="n">winusb</span> <span class="n">list</span>
 </span></span><span class="line"><span class="cl"><span class="n">rfswift</span> <span class="n">winusb</span> <span class="n">attach</span> <span class="n">-i</span> <span class="mf">1</span><span class="p">-</span><span class="mf">2</span>          <span class="c"># 1-2 is the BusID from the list</span>
-</span></span><span class="line"><span class="cl"><span class="n">rfswift</span> <span class="n">winusb</span> <span class="nb">attach-all</span><span class="n">-sdrs</span>        <span class="c"># detect common SDRs by vendor/product ID and attach them all</span>
 </span></span><span class="line"><span class="cl"><span class="n">rfswift</span> <span class="n">winusb</span> <span class="n">detach</span> <span class="n">-i</span> <span class="mf">1</span><span class="p">-</span><span class="mf">2</span></span></span></code></pre></div></div>
 <p>Example <code>list</code> output:</p>
 <div class="code">

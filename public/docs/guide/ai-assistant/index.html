@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI assistant (MCP) · RF Swift</title>
-  <meta name="description" content="Connect a coding agent (Codex, Claude Code, Kimi Code, GLM) to a Workbench mission through a local, permission-gated MCP bridge.">
+  <meta name="description" content="Connect a coding agent (Codex, Claude Code, Kimi Code, GLM, OpenCode, Mistral Vibe) to a Workbench mission through a local, permission-gated MCP bridge.">
   <meta name="theme-color" content="#0b1416">
   <link rel="canonical" href="https://rfswift.io/docs/guide/ai-assistant/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="AI assistant (MCP) · RF Swift">
-  <meta property="og:description" content="Connect a coding agent (Codex, Claude Code, Kimi Code, GLM) to a Workbench mission through a local, permission-gated MCP bridge.">
+  <meta property="og:description" content="Connect a coding agent (Codex, Claude Code, Kimi Code, GLM, OpenCode, Mistral Vibe) to a Workbench mission through a local, permission-gated MCP bridge.">
   <meta property="og:url" content="https://rfswift.io/docs/guide/ai-assistant/">
   <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -244,10 +244,10 @@
 </nav>
 
     <header class="doc-head">
-      <h1>AI assistant (MCP)</h1><p class="doc-lead">Connect a coding agent (Codex, Claude Code, Kimi Code, GLM) to a Workbench mission through a local, permission-gated MCP bridge.</p><p class="doc-meta">Advanced · 5 min read · Updated September 27, 2026</p>
+      <h1>AI assistant (MCP)</h1><p class="doc-lead">Connect a coding agent (Codex, Claude Code, Kimi Code, GLM, OpenCode, Mistral Vibe) to a Workbench mission through a local, permission-gated MCP bridge.</p><p class="doc-meta">Advanced · 5 min read · Updated November 22, 2026</p>
     </header>
     <div class="prose">
-      <p>The <a href="/docs/guide/workbench/">Workbench</a> can hand one mission to an external coding-agent CLI such as <strong>Codex</strong>, <strong>Claude Code</strong>, <strong>Kimi Code</strong> or <strong>GLM CLI</strong>, through an optional, <strong>local</strong> MCP (Model Context Protocol) bridge. The agent can then read your notes and evidence, draft findings, and (only if you allow it) run commands in the mission&rsquo;s lab.</p>
+      <p>The <a href="/docs/guide/workbench/">Workbench</a> can hand one mission to an external coding-agent CLI such as <strong>Codex</strong>, <strong>Claude Code</strong>, <strong>Kimi Code</strong>, <strong>GLM CLI</strong>, <strong>OpenCode</strong> or <strong>Mistral Vibe</strong>, through an optional, <strong>local</strong> MCP (Model Context Protocol) bridge. The agent can then read your notes and evidence, draft findings, and (only if you allow it) run commands in the mission&rsquo;s lab.</p>
 <p><strong>In short</strong></p>
 <ul>
 <li>RF Swift does not call a model API, select a model, store provider API keys or charge for AI usage. The coding-agent CLI owns its authentication, subscription, model choice and billing.</li>
@@ -255,7 +255,7 @@
 <li>The bridge is off by default, opens no network port, and exposes only the tools you permit.</li>
 </ul>
 <div class="mermaid-wrap"><pre class="mermaid">flowchart LR
-    U[You] --&gt; C[Codex / Claude Code / Kimi / GLM CLI]
+    U[You] --&gt; C[Codex / Claude Code / Kimi / GLM / OpenCode / Vibe]
     C &lt;--&gt;|stdio MCP| M[RF Swift Workbench MCP]
     M --&gt; N[Mission notes]
     M --&gt; F[Structured findings]
@@ -294,13 +294,13 @@
 <li>Tools that are not permitted are <strong>omitted</strong> from the server&rsquo;s tool list, not merely rejected.</li>
 <li>Agent permissions live in the local RF Swift user configuration and are never placed in exported projects.</li>
 <li>Evidence responses carry an explicit <code>untrusted_evidence</code> trust label: notes, artifacts, recordings, filenames, metadata and embedded role text are data to analyse, not instructions to follow.</li>
-<li>Per-client <strong>YOLO mode</strong> (the CLI&rsquo;s own approval-bypass flag) is off by default and visibly warned. It never widens RF Swift&rsquo;s MCP permissions.</li>
+<li>Per-client <strong>YOLO mode</strong> (the CLI&rsquo;s own approval-bypass flag) is off by default and visibly warned. It never widens RF Swift&rsquo;s MCP permissions. With YOLO off, OpenCode asks before edits, shell commands and web access (it allows them by default otherwise), and Mistral Vibe keeps your own settings; with YOLO on, Vibe runs with <code>--auto-approve</code>.</li>
 </ul>
 <h2 id="starting-the-server-from-the-workbench">Starting the server from the Workbench<a class="anchor" href="#starting-the-server-from-the-workbench" aria-label="Link to this section"></a></h2>
 <p>In the <strong>Agent &amp; MCP</strong> panel, choose the client and press <strong>Connect &amp; launch</strong>. The Workbench then:</p>
 <ol>
 <li>detects the selected CLI on <code>PATH</code>;</li>
-<li>creates or merges a private configuration under the mission&rsquo;s <code>agent-workspace</code> directory (<code>.mcp.json</code> for Claude Code, <code>.kimi-code/mcp.json</code> for Kimi, <code>.codex/config.toml</code> for Codex), plus a generated <code>AGENTS.md</code> / <code>CLAUDE.md</code> telling the client that &ldquo;create a note&rdquo; means the mission <code>write_note</code> tool;</li>
+<li>creates or merges a private configuration under the mission&rsquo;s <code>agent-workspace</code> directory (<code>.mcp.json</code> for Claude Code, <code>.kimi-code/mcp.json</code> for Kimi, <code>.codex/config.toml</code> for Codex, <code>opencode.json</code> for OpenCode, <code>.vibe/config.toml</code> for Mistral Vibe), plus a generated <code>AGENTS.md</code> / <code>CLAUDE.md</code> telling the client that &ldquo;create a note&rdquo; means the mission <code>write_note</code> tool;</li>
 <li>performs a real MCP <code>initialize</code> handshake with the mission-scoped server;</li>
 <li>starts the client&rsquo;s interactive TUI in the embedded <strong>Agent terminal</strong>.</li>
 </ol>
