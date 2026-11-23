@@ -156,12 +156,24 @@ It listens on `127.0.0.1:8080`. RF Swift's default host networking makes that re
 
 ### SDR hacks
 
-The `sdr_hacks` image builds on `sdr_light` and turns hardware that was never sold as an SDR into one: MediaTek Wi-Fi dongles and routers, ESP32 boards and the Semtech LR2021.
+The `sdr_hacks` image builds on `sdr_light` and turns hardware that was never sold as an SDR into one: MediaTek Wi-Fi dongles and routers, ESP32 boards and the Semtech LR2021. It also carries alternative SDR firmware: fpv_capture turns an AntSDR E200 or E310 into an analog FPV video scanner.
 
 {{< csv-table "content/docs/guide/tools_for_sdr_hacks.csv" >}}
 
 {{< callout type="warning" >}}
 **Some hacks need the host.** Mtk79ICAP's kernel modules and patched firmware must be built and loaded on the host, not in the container. The ESP32 and LR2021 projects need their firmware flashed first; `esptool` is included for that.
+{{< /callout >}}
+
+{{< callout type="info" >}}
+**AntSDR FPV scanner (fpv_capture).** Copy the boot files for your board to the root of the SD card's FAT32 boot partition, then boot the SDR from the SD card:
+
+```sh
+cp /rftools/sdr/fpv_capture/bootfiles/e200/* /media/<sd-boot-partition>/   # or bootfiles/e310
+```
+
+Give the host `192.168.1.100/24` on the Ethernet link and open `http://192.168.1.10/` to scan and lock frequencies. The board's SSH login is `root` / `root`, so keep it on an isolated link. To record frames from the container, run `fpv-receive --url http://192.168.1.10 --lock-mhz 5800 --output fpv-recordings`. It saves BMP images with JSON metadata, grouped by frequency.
+
+`u220-fpv-tx` replays PAL/NTSC test video through a MicroPhase U220 (UHD, `--args type=b200,serial=<serial>`). It only plans the run unless you pass `--transmit`. `u220-fpv-gui` builds the test signals and drives it. Transmit only into a dummy load or a shielded setup, or where you are licensed to.
 {{< /callout >}}
 
 ### Deep Tempest

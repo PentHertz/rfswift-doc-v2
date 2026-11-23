@@ -25,7 +25,7 @@ Find your job in the left column. The name on the right is what you type after `
 | Software-defined radio, everyday use | `sdr_light` |
 | Software-defined radio, the complete set | `sdr_full` |
 | GNU Radio 4.0 and GR4 Studio, next to GNU Radio 3.10 | `sdr_gnuradio4` |
-| Repurposed chips as SDRs (Wi-Fi dongles, routers, ESP32, LR2021) | `sdr_hacks` |
+| Repurposed chips as SDRs (Wi-Fi dongles, routers, ESP32, LR2021) and the AntSDR FPV scanner firmware | `sdr_hacks` |
 | Electromagnetic emanation analysis | `deeptempest` |
 | Wi-Fi | `wifi` (Wi-Fi tools on top of `network`) |
 | Bluetooth Classic and Low Energy | `bluetooth` |
