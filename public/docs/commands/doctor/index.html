@@ -245,7 +245,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift doctor</h1><p class="doc-lead">Diagnose the host: engines, Nix, USB, display, audio, udev rules and the jail.</p><p class="doc-meta">Reference · 4 min read · Updated November 23, 2026</p>
+      <h1>rfswift doctor</h1><p class="doc-lead">Diagnose the host: engines, Nix, USB, display, audio, udev rules and the jail.</p><p class="doc-meta">Reference · 4 min read · Updated September 27, 2026</p>
     </header>
     <div class="prose">
       <p><code>rfswift doctor</code> checks that your computer is ready for RF Swift. It looks at every engine, the display, sound, devices, the Nix engine and the other host prerequisites. For anything that is wrong, it tells you which command fixes it.</p>
@@ -282,7 +282,7 @@
     </tr>
     <tr>
       <td><strong>Nix engine</strong></td>
-      <td>Nix is installed and its store answers (<code>nix store info</code>: a multi-user install whose daemon cannot start is reported, with the reason); on Windows, the WSL 2 distribution that hosts it, the Linux <code>rfswift</code> inside and version skew</td>
+      <td>Nix is installed with flakes; on Windows, the WSL 2 distribution that hosts it, the Linux <code>rfswift</code> inside and version skew</td>
     </tr>
     <tr>
       <td><strong>Nix jail (&ndash;isolate)</strong></td>
@@ -323,14 +323,6 @@
     <tr>
       <td><strong>Kernel modules</strong></td>
       <td>USB, sound, Bluetooth, Wi-Fi modules loaded (Linux)</td>
-    </tr>
-    <tr>
-      <td><strong>SELinux</strong> (Linux, enforcing only)</td>
-      <td>Whether RF Swift containers get <code>label=disable</code>, or run confined because <code>[container] selinux_label = keep</code></td>
-    </tr>
-    <tr>
-      <td><strong>Qubes OS</strong> (in a qube only)</td>
-      <td>The <code>rfswift host qubes</code> checks (USB from sys-usb, persistent engine storage, rootful Podman access, free space on the private volume&hellip;) and how many setup steps are left; fix: <code>rfswift host qubes setup</code></td>
     </tr>
   </tbody>
 </table>
