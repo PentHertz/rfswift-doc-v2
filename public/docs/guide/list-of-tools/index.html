@@ -244,7 +244,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Included tools</h1><p class="doc-lead">Every tool in every RF Swift toolbox, the architectures it runs on, and how to add the ones that are not installed by default.</p><p class="doc-meta">Reference · 58 min read · Updated November 24, 2026</p>
+      <h1>Included tools</h1><p class="doc-lead">Every tool in every RF Swift toolbox, the architectures it runs on, and how to add the ones that are not installed by default.</p><p class="doc-meta">Reference · 60 min read · Updated November 24, 2026</p>
     </header>
     <div class="prose">
       <p>This page lists the tools inside each RF Swift toolbox (container image). It is a reference: you don&rsquo;t need to read it from top to bottom. If you are still choosing a toolbox, start with <a href="/docs/guide/list-of-images/">Choose a toolbox</a>.</p>
@@ -3368,6 +3368,42 @@ Open5GS requires MongoDB for subscriber database. The container includes:</p>
 <td>fpylll_soft_install</td>
 <td>Yes</td>
 </tr>
+      <tr><td>bulk_extractor</td>
+<td>Scan raw flash / RAM dumps without parsing file systems for AES keys / URLs / emails / JSON and base64 blobs (histogram per feature); regex search for credentials (-f / -F); -e wordlist builds a cracking wordlist</td>
+<td>bulk_extractor</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>bulk_extractor_soft_install</td>
+<td>Yes</td>
+</tr>
+      <tr><td>scalpel</td>
+<td>Header / footer file carving from raw dumps; enable the file types in /etc/scalpel/scalpel.conf (all commented out by default) or pass -c &lt;conf&gt;</td>
+<td>scalpel</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>scalpel_soft_install</td>
+<td>Yes</td>
+</tr>
+      <tr><td>foremost</td>
+<td>File carving from raw dumps with built-in types (-t jpg / zip / exe / ...) and /etc/foremost.conf</td>
+<td>foremost</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>foremost_soft_install</td>
+<td>Yes</td>
+</tr>
+      <tr><td>Volatility 3</td>
+<td>Memory forensics on RAM dumps (Linux / Windows / macOS); dwarf2json builds the Linux symbol tables (ISF); yara / capstone / crypto plugins on amd64 and arm64</td>
+<td>vol | volshell | dwarf2json</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>volatility3_soft_install</td>
+<td>Yes</td>
+</tr>
       <tr><td>SageMath (passagemath)</td>
 <td>Computer algebra for crypto work (number theory / lattices / elliptic curves); opt-in (4 to 5 GB): cd /root/scripts &amp;&amp; ./entrypoint.sh sage_soft_install</td>
 <td>sage | sage-python</td>
@@ -4130,6 +4166,60 @@ Open5GS requires MongoDB for subscriber database. The container includes:</p>
 <td>Yes</td>
 <td>mitmproxy_soft_install</td>
 <td>Yes</td>
+</tr>
+      <tr><td>OWASP ZAP</td>
+<td>Intercepting proxy and DAST scanner on OpenJDK 21 (Apache-2.0 alternative to Burp for device web UIs and companion-app APIs); headless: zap -cmd / zap -daemon (API) / automation framework (zap -cmd -autorun plan.yaml)</td>
+<td>zap | zap.sh</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>zaproxy_soft_install</td>
+<td>Yes</td>
+</tr>
+      <tr><td>hashID</td>
+<td>Identify the hash type of a sample with the matching hashcat mode (-m) and John format (-j); successor of hash-identifier</td>
+<td>hashid</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>hashid_soft_install</td>
+<td>Yes</td>
+</tr>
+      <tr><td>patator</td>
+<td>Modular brute-forcer: ftp_login / ssh_login / telnet_login / smtp_login / http_fuzz / snmp_login / mysql_login and more</td>
+<td>patator</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>patator_soft_install</td>
+<td>Yes</td>
+</tr>
+      <tr><td>Prowler (opt-in)</td>
+<td>Cloud security posture and compliance checks for IoT back ends (AWS / Azure / GCP / Kubernetes / Microsoft 365 and more) in its own uv venv; install: cd /root/scripts &amp;&amp; ./entrypoint.sh prowler_soft_install</td>
+<td>prowler</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>(some dependencies build from source)</td>
+<td>prowler_soft_install</td>
+<td>No</td>
+</tr>
+      <tr><td>ScoutSuite (opt-in)</td>
+<td>Multi-cloud security audit (AWS / Azure / GCP / Alibaba Cloud / OCI) with an offline HTML report in its own uv venv; install: cd /root/scripts &amp;&amp; ./entrypoint.sh scoutsuite_soft_install</td>
+<td>scout</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>(some dependencies build from source)</td>
+<td>scoutsuite_soft_install</td>
+<td>No</td>
+</tr>
+      <tr><td>Checkov (opt-in)</td>
+<td>Static analysis of infrastructure as code (Terraform / CloudFormation / Kubernetes / Helm / Dockerfiles) in its own uv venv; install: cd /root/scripts &amp;&amp; ./entrypoint.sh checkov_soft_install</td>
+<td>checkov</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>(some dependencies build from source)</td>
+<td>checkov_soft_install</td>
+<td>No</td>
 </tr>
     </tbody>
   </table>
