@@ -124,6 +124,8 @@ Editor AI actions prepare a scoped prompt and copy it for the external agent. Th
 
 A command runs in the mission workspace and the call waits at most `wait_seconds` (60 s by default, 300 s at most). A command still running then keeps going as a background job: the agent gets the output so far and a job ID, follows it with `job_output` and stops it with `cancel_job`; `max_seconds` ends timed captures. Output is cleaned of terminal colour and cursor codes, kept in the mission's `agent-workspace/jobs/` folder (up to 32 MiB per job) and shown to the agent as an excerpt that keeps the beginning and the end. At most 8 jobs and 6 sessions run at once.
 
+Tool calls run concurrently, so `list_jobs` or `cancel_job` answer while another call waits. If you cancel a call in the agent CLI (Esc), its command stops, or the program it was driving in a session gets Ctrl-C.
+
 Sessions are persistent terminals for programs that keep a prompt. `session_send` returns when the output matches the agent's `expect` pattern, after 1.5 s without new output, or after `wait_seconds`.
 
 ## RF transmission
@@ -155,8 +157,8 @@ What the agent saves with `save_finding` is a **draft** marked **AI** in the fin
 
 On **Connect & launch** the Workbench writes the RF Swift agent kit into the mission's `agent-workspace` and lists it in `AGENTS.md` / `CLAUDE.md`:
 
-- **Skills** in `.claude/skills` (Claude Code, also read by OpenCode) and `.agents/skills` (Codex, OpenCode, Kimi Code, Mistral Vibe): how to work in a mission, how to qualify findings, the mission board (`board.md`: confirmed facts, open directions, and a hints section that is yours), and methods for SDR setup, spectrum survey, IQ capture, signal analysis, sub-GHz ISM devices, GNSS, Wi-Fi, Bluetooth/BLE, Zigbee/Thread/Z-Wave/LoRaWAN, RFID/NFC, hardware interfaces, firmware, automotive CAN and the cellular lab.
-- **Subagents** in `.claude/agents` (Claude Code) and `.opencode/agents` (OpenCode): RF recon (receive only), signal analyst (files only), wireless tester, hardware hacker, cellular lab and evidence reviewer.
+- **Skills** in `.claude/skills` (Claude Code, also read by OpenCode) and `.agents/skills` (Codex, OpenCode, Kimi Code, Mistral Vibe): how to work in a mission, how to qualify findings (including attack chains across interfaces), how to assess a whole device (interface inventory, order of work, hardware), an EN 18031 test plan with a per-mechanism evidence matrix, the mission board (`board.md`: confirmed facts, open directions, and a hints section that is yours), and methods for SDR setup, spectrum survey, IQ capture, signal analysis, sub-GHz ISM devices, GNSS, Wi-Fi, Bluetooth/BLE, Zigbee/Thread/Z-Wave/LoRaWAN, RFID/NFC, hardware interfaces, firmware, automotive CAN and the cellular lab.
+- **Specialist agents**: RF recon (receive only), signal analyst (files only), wireless tester, hardware hacker, cellular lab and evidence reviewer. They are subagents in Claude Code (`.claude/agents`), OpenCode (`.opencode/agents`), Codex (`.codex/agents`, named `rfswift_rf_recon` and so on) and Kimi Code (`.kimi-code/agents`). Mistral Vibe subagents cannot use MCP tools, so for Vibe they are agents to start the session as. **Start as** in the Agent settings, shown for Mistral Vibe and Kimi Code, starts the CLI as the chosen specialist.
 
 Only files named `rfswift-*` are written and replaced; your own skills and agents in those folders are left alone.
 

@@ -264,7 +264,7 @@ The optional coding-agent bridge. In **Agent & MCP** (the "Agent" button or **Co
 2. Pick Codex CLI, Claude Code, Kimi Code, GLM CLI, OpenCode or Mistral Vibe (the dialog says which are installed).
 3. Choose the permissions: read only, "Allow updating notes and findings", "Allow executing commands inside the selected mission", "Allow commands that transmit RF" (only with command execution), and the client's own YOLO mode with its warning.
 
-**RF scope** in the panel sets, for this mission, the transmit bands, the in-scope target addresses and the excluded addresses the agent must stay within (see [Mission RF scope](/docs/guide/ai-assistant/#mission-rf-scope)). Connecting also installs the RF Swift skills and subagents in the mission's agent workspace.
+**RF scope** in the panel sets, for this mission, the transmit bands, the in-scope target addresses and the excluded addresses the agent must stay within (see [Mission RF scope](/docs/guide/ai-assistant/#mission-rf-scope)). Connecting also installs the RF Swift skills and specialist agents in the mission's agent workspace, in each client's format. For Mistral Vibe and Kimi Code, **Start as** in Agent settings starts the CLI as one of those specialists.
 
 If a CLI is installed where the Workbench does not look, set its **program path** in Agent settings (**Browse...** shows hidden folders such as `.nvm`). Without one, the search covers your `PATH` plus nvm and fnm Node versions, pnpm, yarn, deno and mise.
 
