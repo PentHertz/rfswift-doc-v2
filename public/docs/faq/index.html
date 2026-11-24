@@ -244,7 +244,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>FAQ &amp; troubleshooting</h1><p class="doc-lead">Answers to the questions newcomers ask most, and fixes for the problems people hit most, grouped by symptom.</p><p class="doc-meta">Beginner · 10 min read · Updated November 24, 2026</p>
+      <h1>FAQ &amp; troubleshooting</h1><p class="doc-lead">Answers to the questions newcomers ask most, and fixes for the problems people hit most, grouped by symptom.</p><p class="doc-meta">Beginner · 10 min read · Updated September 27, 2026</p>
     </header>
     <div class="prose">
       <p>The first half of this page answers common questions. The second half is a troubleshooting guide: find your symptom, apply the fix. If your problem isn&rsquo;t here, the end of the page says where to ask.</p>
@@ -318,11 +318,6 @@
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">which -a rfswift</span></span></code></pre></div></div>
 <p>The installer offers to remove the old copies in <code>/usr/local/bin/rfswift</code> and <code>~/.rfswift/bin</code>.</p>
-<h3 id="rf-swifts-configuration--is-not-owned-by-you">&ldquo;RF Swift&rsquo;s configuration &hellip; is not owned by you&rdquo;<a class="anchor" href="#rf-swifts-configuration--is-not-owned-by-you" aria-label="Link to this section"></a></h3>
-<p>An earlier <code>sudo rfswift</code> run created files in your configuration directory (<code>~/.config/rfswift</code> on Linux) as root, so RF Swift cannot save settings, profiles or the package setup answer there. Give the directory back to your user with the command the warning prints:</p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo chown -R <span class="s2">&#34;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id -g<span class="k">)</span><span class="s2">&#34;</span> ~/.config/rfswift</span></span></code></pre></div></div>
-<p>Current releases create the files they write under <code>sudo</code> as your user, so this only happens with directories left by older runs.</p>
 <h3 id="my-rtl-sdr-is-busy-or-not-found-linux">My RTL-SDR is busy or not found (Linux)<a class="anchor" href="#my-rtl-sdr-is-busy-or-not-found-linux" aria-label="Link to this section"></a></h3>
 <p>Linux may have claimed the dongle for digital TV (DVB-T). Block that driver on your computer, then restart it:</p>
 <div class="code">
@@ -451,7 +446,6 @@
         <li><a href="#podman--is-not-a-shared-mount-or-short-name-errors">Podman: &ldquo;<code>/</code> is not a shared mount&rdquo; or short-name errors</a></li>
         <li><a href="#image-pull-fails-with-invalid-usernamepassword">Image pull fails with &ldquo;invalid username/password&rdquo;</a></li>
         <li><a href="#an-old-version-of-rfswift-still-runs">An old version of <code>rfswift</code> still runs</a></li>
-        <li><a href="#rf-swifts-configuration--is-not-owned-by-you">&ldquo;RF Swift&rsquo;s configuration &hellip; is not owned by you&rdquo;</a></li>
         <li><a href="#my-rtl-sdr-is-busy-or-not-found-linux">My RTL-SDR is busy or not found (Linux)</a></li>
         <li><a href="#my-usb-device-is-not-visible-in-the-lab">My USB device is not visible in the lab</a></li>
         <li><a href="#plutosdr-is-not-found">PlutoSDR is not found</a></li>

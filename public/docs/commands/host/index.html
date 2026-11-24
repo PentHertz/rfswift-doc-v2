@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift host · RF Swift</title>
-  <meta name="description" content="Prepare the host: udev rules, Docker access, the Nix jail, the audio server and Qubes OS.">
+  <meta name="description" content="Prepare the host: udev rules, Docker access, the Nix jail and the audio server.">
   <meta name="theme-color" content="#0b1416">
   <link rel="canonical" href="https://rfswift.io/docs/commands/host/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift host · RF Swift">
-  <meta property="og:description" content="Prepare the host: udev rules, Docker access, the Nix jail, the audio server and Qubes OS.">
+  <meta property="og:description" content="Prepare the host: udev rules, Docker access, the Nix jail and the audio server.">
   <meta property="og:url" content="https://rfswift.io/docs/commands/host/">
   <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -245,7 +245,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift host</h1><p class="doc-lead">Prepare the host: udev rules, Docker access, the Nix jail, the audio server and Qubes OS.</p><p class="doc-meta">Reference · 8 min read · Updated November 24, 2026</p>
+      <h1>rfswift host</h1><p class="doc-lead">Prepare the host: udev rules, Docker access, the Nix jail and the audio server.</p><p class="doc-meta">Reference · 6 min read · Updated September 27, 2026</p>
     </header>
     <div class="prose">
       <p><code>rfswift host</code> prepares your computer (the &ldquo;host&rdquo;) for labs. It covers:</p>
@@ -254,8 +254,7 @@
 <li>Docker access without logging out;</li>
 <li>what the Nix <code>--isolate</code> jail needs;</li>
 <li>cleanup of stray device directories;</li>
-<li>the audio server that gives containers sound;</li>
-<li>the Qubes OS integration (USB from sys-usb, persistent engines, rootful Podman without sudo).</li>
+<li>the audio server that gives containers sound.</li>
 </ul>
 <p>On a fresh Linux desktop, start with the guided setup:</p>
 <div class="code">
@@ -267,8 +266,6 @@
 </span></span><span class="line"><span class="cl">rfswift host docker-access <span class="o">[</span>--status<span class="o">]</span> <span class="o">[</span>--json<span class="o">]</span> <span class="o">[</span>-y<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift host isolate <span class="o">[</span>--status<span class="o">]</span> <span class="o">[</span>--sysctl<span class="o">]</span> <span class="o">[</span>--json<span class="o">]</span> <span class="o">[</span>-y<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift host devclean <span class="o">[</span>--list<span class="o">]</span> <span class="o">[</span>-y<span class="o">]</span>
-</span></span><span class="line"><span class="cl">rfswift host qubes <span class="o">[</span>--json<span class="o">]</span>
-</span></span><span class="line"><span class="cl">rfswift host qubes setup <span class="o">[</span>-y<span class="o">]</span> <span class="o">[</span>--dry-run<span class="o">]</span> <span class="o">[</span>--no-...<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift host audio <span class="nb">enable</span> <span class="o">[</span>-s tcp:127.0.0.1:34567<span class="o">]</span>
 </span></span><span class="line"><span class="cl">rfswift host audio unload</span></span></code></pre></div></div>
 <p>RF Swift asks before every privileged step, then runs it in <strong>one <code>sudo</code> call</strong>. Installing the packages never changes these settings by itself.</p>
@@ -336,82 +333,6 @@
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host devclean          <span class="c1"># list, then offer to remove</span>
 </span></span><span class="line"><span class="cl">rfswift host devclean --list   <span class="c1"># only list</span>
 </span></span><span class="line"><span class="cl">rfswift host devclean --yes    <span class="c1"># remove without asking</span></span></span></code></pre></div></div>
-<h2 id="host-qubes-qubes-os">host qubes (Qubes OS)<a class="anchor" href="#host-qubes-qubes-os" aria-label="Link to this section"></a></h2>
-<p>In a Qubes OS qube, USB devices come from sys-usb, so <code>/dev/bus/usb</code> only exists once a first device is attached, and a template-based AppVM loses <code>/etc</code> and the rootful engines&rsquo; images at every restart. <code>rfswift host qubes</code> shows what is in the way; <code>rfswift host qubes setup</code> fixes it in one root script that it prints before asking. Outside Qubes OS both say there is nothing to do.</p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift host qubes                   <span class="c1"># show the state and what the setup would do</span>
-</span></span><span class="line"><span class="cl">rfswift host qubes --json            <span class="c1"># the same, as JSON</span>
-</span></span><span class="line"><span class="cl">rfswift host qubes setup             <span class="c1"># show the script, ask, apply</span>
-</span></span><span class="line"><span class="cl">rfswift host qubes setup --dry-run   <span class="c1"># only print the script</span>
-</span></span><span class="line"><span class="cl">rfswift host qubes setup --yes --no-podman-socket</span></span></code></pre></div></div>
-<p>The setup:</p>
-<ul>
-<li>loads <code>vhci-hcd</code> at every start, so <code>/dev/bus/usb</code> exists and containers can be created before a device is attached;</li>
-<li>keeps <code>/var/lib/containers</code>, <code>/var/lib/docker</code> and <code>/nix</code> across restarts (bind-dirs);</li>
-<li>makes the rootful Podman socket usable by your user and sets <code>podman_mode = rootful</code>, so RF Swift and the Workbench run as you, without sudo, with rootful device access (skipped where root needs a password);</li>
-<li>with Docker installed, starts <code>docker.socket</code> at boot and gives you the socket (docker group plus an ACL), without restarting a running daemon;</li>
-<li>runs the Nix profile&rsquo;s own daemon when a Determinate Nix in the template is not visible from the AppVM;</li>
-<li>blacklists the DVB-T driver that claims RTL2832U dongles (<code>dvb_usb_rtl28xxu</code>);</li>
-<li>gives root-owned workspace folders back to you and drops <code>/dev/dri</code> (no GPU in a qube) from the default devices.</li>
-</ul>
-<p>In an AppVM it writes <code>/rw/config/qubes-bind-dirs.d/50_rfswift.conf</code> and <code>/rw/config/rc.local.d/50-rfswift.rc</code> (delete them to undo); in a TemplateVM or StandaloneVM it writes <code>/etc</code> directly.</p>
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Flag (<code>setup</code>)</th>
-      <th>Effect</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>-y, --yes</code></td>
-      <td>Apply without asking</td>
-    </tr>
-    <tr>
-      <td><code>--dry-run</code></td>
-      <td>Only print what would run</td>
-    </tr>
-    <tr>
-      <td><code>--podman-socket</code></td>
-      <td>Grant the rootful Podman socket even where root needs a password</td>
-    </tr>
-    <tr>
-      <td><code>--no-podman-socket</code></td>
-      <td>Leave the rootful Podman socket root-only (keep using sudo for USB work)</td>
-    </tr>
-    <tr>
-      <td><code>--group NAME</code></td>
-      <td>Group that owns the rootful Podman socket (default: your primary group)</td>
-    </tr>
-    <tr>
-      <td><code>--no-docker-group</code></td>
-      <td>Do not give you access to the Docker socket</td>
-    </tr>
-    <tr>
-      <td><code>--no-docker-start</code></td>
-      <td>Do not start Docker&rsquo;s socket at boot</td>
-    </tr>
-    <tr>
-      <td><code>--no-persist</code></td>
-      <td>Do not keep the rootful engines&rsquo; storage across restarts</td>
-    </tr>
-    <tr>
-      <td><code>--no-vhci</code></td>
-      <td>Do not load <code>vhci-hcd</code> at boot</td>
-    </tr>
-    <tr>
-      <td><code>--no-workspace</code></td>
-      <td>Leave root-owned workspace folders as they are</td>
-    </tr>
-    <tr>
-      <td><code>--no-rtl-blacklist</code></td>
-      <td>Keep the DVB-T driver for RTL2832U dongles (TV use); native tools then cannot open them</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<p><code>rfswift doctor</code> shows the same checks, and the Workbench&rsquo;s Engine doctor has a <strong>Set up for Qubes</strong> button. The <a href="/docs/guide/qubes-os/">Qubes OS guide</a> explains the whole workflow.</p>
 <h2 id="host-audio-linux-macos">host audio (Linux, macOS)<a class="anchor" href="#host-audio-linux-macos" aria-label="Link to this section"></a></h2>
 <p>Containers play sound through your computer&rsquo;s PulseAudio or PipeWire server. RF Swift loads <code>module-native-protocol-tcp</code> on the port set by <code>[audio] pulse_server</code> (default <code>tcp:127.0.0.1:34567</code>, local connections only), and points the container&rsquo;s <code>PULSE_SERVER</code> at it.</p>
 <p><code>rfswift container create</code> and the Workbench load the module automatically every time a lab starts. Use these commands to do it by hand, for example after a sound problem:</p>
@@ -461,7 +382,6 @@
     <li><a href="#host-docker-access-linux">host docker-access (Linux)</a></li>
     <li><a href="#host-isolate-linux">host isolate (Linux)</a></li>
     <li><a href="#host-devclean-linux">host devclean (Linux)</a></li>
-    <li><a href="#host-qubes-qubes-os">host qubes (Qubes OS)</a></li>
     <li><a href="#host-audio-linux-macos">host audio (Linux, macOS)</a></li>
     <li><a href="#related">Related</a></li>
   </ul>

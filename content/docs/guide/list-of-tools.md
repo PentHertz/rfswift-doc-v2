@@ -378,16 +378,6 @@ The `reversing` image provides tools for firmware analysis, hardware reverse eng
 
 {{< csv-table "content/docs/guide/tools_for_reversing.csv" >}}
 
-{{< callout type="warning" title="OFRAK is opt-in and has its own licence" >}}
-[OFRAK](https://ofrak.com) is not in the published image. Its free Community License covers academic and personal non-commercial use only and does not allow redistributing it. Using it at work needs an [OFRAK Pro licence](https://ofrak.com/license) from Red Balloon Security. Installing it counts as accepting that licence, so you install it yourself (amd64 only):
-
-```sh
-cd /root/scripts && OFRAK_ACCEPT_LICENSE=yes ./entrypoint.sh ofrak_soft_install
-ofrak license --community           # or: ofrak license -l <your OFRAK Pro licence file>
-ofrak gui --no-browser              # web GUI on http://127.0.0.1:8080 (no login: keep it on loopback)
-```
-{{< /callout >}}
-
 {{< callout type="info" title="Static analysis alongside the RE tooling" >}}
 Beyond the disassemblers and unpackers, the image carries a full SAST/fuzzing set you can point at extracted firmware and source trees: **Semgrep**, **Joern**, **cppcheck**, the **Clang static analyzer**, **AFL** and **honggfuzz**. Two of those are new in v3.0.0: **Trivy**, which scans images, filesystems and repos for vulnerabilities, misconfigurations, secrets and SBOMs, and **Sighthound**, a tree-sitter based scanner that follows source-to-sink taint flows through Python, JS/TS, Java, PHP, C#, Go and Ruby and reports in text, JSON, CSV or SARIF.
 {{< /callout >}}
