@@ -245,7 +245,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift container last</h1><p class="doc-lead">List the containers RF Swift created, most recent first.</p><p class="doc-meta">Reference · 2 min read · Updated September 27, 2026</p>
+      <h1>rfswift container last</h1><p class="doc-lead">List the containers RF Swift created, most recent first.</p><p class="doc-meta">Reference · 2 min read · Updated November 25, 2026</p>
     </header>
     <div class="prose">
       <p><code>rfswift container last</code> lists your RF Swift containers, running and stopped, with their name, status, image and creation time. Use it whenever you want to see which labs you have.</p>
@@ -254,12 +254,31 @@
 <div class="admonition admonition-info" role="note"><p><strong>Other spellings</strong>: the legacy form <code>rfswift last</code> still works and prints a notice. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
 <h2 id="options">Options<a class="anchor" href="#options" aria-label="Link to this section"></a></h2>
-<p>The command takes no options: it always lists every container.</p>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Flag</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>-f, --filter</code></td>
+      <td>Show only the containers whose image, name or ID contains this text (case-insensitive)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <h2 id="examples">Examples<a class="anchor" href="#examples" aria-label="Link to this section"></a></h2>
 <h3 id="basic-usage">Basic usage<a class="anchor" href="#basic-usage" aria-label="Link to this section"></a></h3>
 <h4 id="list-all-containers">List all containers<a class="anchor" href="#list-all-containers" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container last</span></span></code></pre></div></div>
+<h4 id="only-some-containers">Only some containers<a class="anchor" href="#only-some-containers" aria-label="Link to this section"></a></h4>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift container last -f sdr_full     <span class="c1"># containers created from an sdr_full image</span>
+</span></span><span class="line"><span class="cl">rfswift container last -f bluetooth_1  <span class="c1"># by name (or part of the container ID)</span></span></span></code></pre></div></div>
 <h4 id="example-output">Example output<a class="anchor" href="#example-output" aria-label="Link to this section"></a></h4>
 <div class="code">
   <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>CONTAINER ID   NAME           IMAGE                        STATUS      CREATED        PORTS
@@ -342,7 +361,7 @@ c3d4e5f6g7h8   analysis       penthertz/rfswift_resolute:sdr_full   Exited      
 </span></span><span class="line"><span class="cl">rfswift container last
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Find specific container</span>
-</span></span><span class="line"><span class="cl">rfswift container last <span class="p">|</span> grep sdr_work
+</span></span><span class="line"><span class="cl">rfswift container last -f sdr_work
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Count total containers</span>
 </span></span><span class="line"><span class="cl">rfswift container last <span class="p">|</span> tail -n +2 <span class="p">|</span> wc -l</span></span></code></pre></div></div>
@@ -364,7 +383,7 @@ c3d4e5f6g7h8   analysis       penthertz/rfswift_resolute:sdr_full   Exited      
 <li><a href="/docs/commands/exec/"><code>container shell</code></a>: enter a container</li>
 <li><a href="/docs/commands/cleanup/"><code>system cleanup</code></a>: remove old containers and images by age</li>
 </ul>
-<div class="admonition admonition-info" role="note"><p><strong>Filtering</strong>: the list always includes running and stopped containers (like <code>docker ps -a</code>), with no filter options. Pipe it through <code>grep</code> instead: <code>grep &quot;Up&quot;</code> for running containers, <code>grep &quot;Exited&quot;</code> for stopped ones, or use <code>docker ps</code> for more advanced filters.</p>
+<div class="admonition admonition-info" role="note"><p><strong>Filtering</strong>: the list always includes running and stopped containers (like <code>docker ps -a</code>). <code>-f</code> narrows it by image, name or ID; to filter by state, pipe it through <code>grep</code> (<code>grep &quot;Up&quot;</code> for running containers, <code>grep &quot;Exited&quot;</code> for stopped ones).</p>
 </div>
 
     </div>
