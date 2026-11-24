@@ -244,10 +244,10 @@
 </nav>
 
     <header class="doc-head">
-      <h1>AI bridge (MCP) best practices</h1><p class="doc-lead">Use a coding agent on a mission without leaking data or letting injected instructions act for you.</p><p class="doc-meta">Advanced · 6 min read · Updated September 27, 2026</p>
+      <h1>AI bridge (MCP) best practices</h1><p class="doc-lead">Use a coding agent on a mission without leaking data or letting injected instructions act for you.</p><p class="doc-meta">Advanced · 8 min read · Updated November 24, 2026</p>
     </header>
     <div class="prose">
-      <p>The Workbench can connect an external coding-agent CLI (Codex, Claude Code, Kimi Code, GLM) to one mission, through a local MCP server. When you do, you trust two things:</p>
+      <p>The Workbench can connect an external coding-agent CLI (Codex, Claude Code, Kimi Code, GLM, OpenCode, Mistral Vibe) to one mission, through a local MCP server. When you do, you trust two things:</p>
 <ul>
 <li><strong>the agent vendor</strong>, with everything you send it;</li>
 <li><strong>the evidence</strong> the agent reads, which may have been written by the system you are assessing.</li>
@@ -274,7 +274,8 @@
 <ul>
 <li>Read-only exposes <code>recommend_tools</code>, <code>read_audit</code>, <code>read_evidence_index</code>, <code>read_artifact_content</code>, <code>list_missions</code>, <code>read_note</code>, <code>list_findings</code> and <code>list_secrets</code> (metadata only).</li>
 <li>Write access adds <code>write_note</code>, <code>save_finding</code> and <code>save_secret</code>.</li>
-<li>Command access adds <code>execute_command</code>.</li>
+<li>Command access adds <code>execute_command</code>, the job tools (<code>job_output</code>, <code>cancel_job</code>, <code>list_jobs</code>) and the session tools (<code>session_start</code>, <code>session_send</code>, <code>session_close</code>).</li>
+<li>RF transmission is a separate switch on top of command access; without it, commands that transmit are refused.</li>
 </ul>
 <p>A tool that is not permitted is <strong>missing from the tool list</strong>, not just rejected, and every call is checked again.</p>
 </li>
@@ -285,7 +286,16 @@
 <p><strong>Secrets stay in the vault.</strong> <code>list_secrets</code> never returns values. <code>save_secret</code> needs an exact source and writes the value to the OS credential vault. Values are left out of notes, findings, reports, project exports and the evidence index.</p>
 </li>
 <li>
-<p><strong>Commands are limited and visible.</strong> <code>execute_command</code> accepts at most 16 KiB, runs only in the mission target (container or Nix environment), and streams to a read-only &ldquo;AI&rdquo; terminal tab in the Console, so you see what ran.</p>
+<p><strong>Commands are limited and visible.</strong> <code>execute_command</code> accepts at most 16 KiB, runs only in the mission target (container or Nix environment), and streams to a read-only &ldquo;AI&rdquo; terminal tab in the Console, so you see what ran. A call waits at most 300 s; longer commands continue as jobs, output is capped (32 MiB per log, a 24 KiB excerpt to the agent), at most 8 jobs and 6 sessions run at once, and <strong>everything the agent started is stopped when it disconnects</strong>.</p>
+</li>
+<li>
+<p><strong>Transmission needs its own permission and a declaration.</strong> Commands that transmit RF are refused unless &ldquo;Allow commands that transmit RF&rdquo; is on. With it on, each transmission must still be declared (<code>transmits: true</code>) and described (frequency, power, duration, target); the AI tab tags it <code>[RF TX]</code>. Detection covers the transmit modes of the tools RF Swift ships; it cannot see inside scripts or flowgraphs, so the declaration and your approval are the controls.</p>
+</li>
+<li>
+<p><strong>The mission&rsquo;s RF scope binds the agent.</strong> When you set an RF scope (transmit bands, in-scope and excluded addresses), transmissions must state a frequency inside a band, transmitting commands may only name in-scope addresses, and excluded addresses are refused on any command. The scope is stored outside the notes, so the agent cannot widen it.</p>
+</li>
+<li>
+<p><strong>The agent proposes, you decide.</strong> Findings the agent saves are drafts marked &ldquo;AI&rdquo;; the status it asks for is replaced by draft, and it cannot change a finding you wrote or edited. There is no delete tool.</p>
 </li>
 <li>
 <p><strong>YOLO mode is explicit.</strong> The client&rsquo;s own approval bypass (<code>--dangerously-skip-permissions</code>, <code>--dangerously-bypass-approvals-and-sandbox</code>, <code>--yolo</code>) is a per-client switch. It is off by default, and the connection audit shows a warning when it is on. It never widens the MCP permissions.</p>
@@ -325,6 +335,11 @@
       <td>Off</td>
     </tr>
     <tr>
+      <td>An approved transmission test (replay, injection, lab base station in a shielded enclosure)</td>
+      <td>Write, command execution and RF transmission, only while the test runs, with an RF scope listing the approved bands and targets</td>
+      <td>Off</td>
+    </tr>
+    <tr>
       <td>Anything on a shared machine, a client network, or with an untrusted evidence set</td>
       <td>Read-only</td>
       <td>Never</td>
@@ -332,7 +347,7 @@
   </tbody>
 </table>
 </div>
-<p>Turn command execution on for the task and off afterwards: the connection audit shows a warning as long as it is on.</p>
+<p>Turn command execution on for the task and off afterwards: the connection audit shows a warning as long as it is on. The same goes for RF transmission, which has its own warning: approve each transmission in the chat (frequency, power, duration, target), and never let an agent transmit in licensed bands outside a shielded enclosure or attenuated coax.</p>
 <p>YOLO mode disables the CLI&rsquo;s own confirmations and often its sandbox. Use it only in a throwaway mission on a machine you can rebuild.</p>
 <h3 id="keep-the-agent-inside-the-mission">Keep the agent inside the mission<a class="anchor" href="#keep-the-agent-inside-the-mission" aria-label="Link to this section"></a></h3>
 <ul>
@@ -355,8 +370,8 @@
 </ul>
 <h3 id="review-before-it-counts">Review before it counts<a class="anchor" href="#review-before-it-counts" aria-label="Link to this section"></a></h3>
 <ul>
-<li>Findings saved by the agent are ordinary findings. Open each one, check the CVSS vector and the evidence, and set the status yourself before a report goes out.</li>
-<li>Watch the &ldquo;AI&rdquo; terminal tabs: every <code>execute_command</code> shows the command and its output. Disconnect the agent if you see something you did not ask for.</li>
+<li>Findings saved by the agent are drafts marked &ldquo;AI&rdquo;. Open each one, check the CVSS vector and the evidence, and set the status yourself before a report goes out; once you save it, the agent can no longer change it.</li>
+<li>Watch the &ldquo;AI&rdquo; terminal tabs: every command and session shows its purpose and output. Disconnect the agent if you see something you did not ask for.</li>
 <li>The agent workspace keeps <code>terminal-events.jsonl</code>, a log of every command the agent ran, inside the mission directory. Keep it with the engagement records.</li>
 </ul>
 <h3 id="keep-the-client-cli-safe">Keep the client CLI safe<a class="anchor" href="#keep-the-client-cli-safe" aria-label="Link to this section"></a></h3>
