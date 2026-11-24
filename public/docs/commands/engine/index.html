@@ -245,7 +245,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift --engine and rfswift engine</h1><p class="doc-lead">Choose the engine RF Swift uses, and manage the Lima VM on macOS.</p><p class="doc-meta">Reference · 11 min read · Updated November 24, 2026</p>
+      <h1>rfswift --engine and rfswift engine</h1><p class="doc-lead">Choose the engine RF Swift uses, and manage the Lima VM on macOS.</p><p class="doc-meta">Reference · 11 min read · Updated September 27, 2026</p>
     </header>
     <div class="prose">
       <p>An engine is the program that runs your labs: Docker, Podman, Lima (macOS) or Nix. RF Swift picks one for you automatically. Use <code>--engine</code> when you want a specific one for a command, and <code>rfswift engine lima</code> to manage the Lima virtual machine on macOS.</p>
@@ -257,7 +257,6 @@
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift --engine ENGINE <span class="o">[</span>command<span class="o">]</span> <span class="o">[</span>options<span class="o">]</span>      <span class="c1"># docker, podman, lima, nix, auto</span>
 </span></span><span class="line"><span class="cl">rfswift --gpu <span class="o">[</span>command<span class="o">]</span> <span class="o">[</span>options<span class="o">]</span>                 <span class="c1"># macOS Apple Silicon: the krunkit GPU VM (implies --engine lima)</span>
 </span></span><span class="line"><span class="cl">rfswift engine                                    <span class="c1"># which engine is active, and why</span>
-</span></span><span class="line"><span class="cl">rfswift engine <span class="nb">set</span> auto<span class="p">|</span>docker<span class="p">|</span>podman<span class="p">|</span>lima<span class="p">|</span>nix    <span class="c1"># set (or clear) the default engine</span>
 </span></span><span class="line"><span class="cl">rfswift engine lima status<span class="p">|</span>set<span class="p">|</span>reconfig<span class="p">|</span>reset     <span class="c1"># macOS</span></span></span></code></pre></div></div>
 <p><code>--engine</code> is a <strong>global flag</strong>: put it before the subcommand. When several settings are present, RF Swift uses the first one it finds, in this order:</p>
 <ol>
@@ -291,15 +290,10 @@
   </tbody>
 </table>
 </div>
-<p>To make an engine the default without typing <code>--engine</code> every time, use <code>rfswift engine set</code>:</p>
-<div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift engine <span class="nb">set</span> podman   <span class="c1"># default engine from now on (--engine still overrides it)</span>
-</span></span><span class="line"><span class="cl">rfswift engine <span class="nb">set</span> auto     <span class="c1"># clear it: auto-detect, and ask in the run wizard</span></span></span></code></pre></div></div>
-<p>It writes <code>engine =</code> in the <code>[general]</code> section of <code>config.ini</code>, which you can also edit by hand:</p>
+<p>To make an engine the default without typing <code>--engine</code> every time, set it in <code>config.ini</code>:</p>
 <div class="code">
   <div class="code-bar"><span>ini</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[general]</span>
 </span></span><span class="line"><span class="cl"><span class="na">engine</span> <span class="o">=</span> <span class="s">podman</span></span></span></code></pre></div></div>
-<p>When several engines are installed and none is set, the <code>rfswift container create</code> wizard first asks which one to use, and offers to keep the choice as the default.</p>
 <h2 id="how-rf-swift-picks-an-engine">How RF Swift picks an engine<a class="anchor" href="#how-rf-swift-picks-an-engine" aria-label="Link to this section"></a></h2>
 <p>When you don&rsquo;t pass <code>--engine</code>, RF Swift looks for an engine at startup, in this order:</p>
 <div class="code">

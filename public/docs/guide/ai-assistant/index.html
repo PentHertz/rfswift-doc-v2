@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI assistant (MCP) · RF Swift</title>
-  <meta name="description" content="Connect a coding agent (Codex, Claude Code, Kimi Code, GLM, OpenCode, Mistral Vibe) to a Workbench mission through a local, permission-gated MCP bridge.">
+  <meta name="description" content="Connect a coding agent (Codex, Claude Code, Kimi Code, GLM) to a Workbench mission through a local, permission-gated MCP bridge.">
   <meta name="theme-color" content="#0b1416">
   <link rel="canonical" href="https://rfswift.io/docs/guide/ai-assistant/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="AI assistant (MCP) · RF Swift">
-  <meta property="og:description" content="Connect a coding agent (Codex, Claude Code, Kimi Code, GLM, OpenCode, Mistral Vibe) to a Workbench mission through a local, permission-gated MCP bridge.">
+  <meta property="og:description" content="Connect a coding agent (Codex, Claude Code, Kimi Code, GLM) to a Workbench mission through a local, permission-gated MCP bridge.">
   <meta property="og:url" content="https://rfswift.io/docs/guide/ai-assistant/">
   <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -244,10 +244,10 @@
 </nav>
 
     <header class="doc-head">
-      <h1>AI assistant (MCP)</h1><p class="doc-lead">Connect a coding agent (Codex, Claude Code, Kimi Code, GLM, OpenCode, Mistral Vibe) to a Workbench mission through a local, permission-gated MCP bridge.</p><p class="doc-meta">Advanced · 8 min read · Updated November 24, 2026</p>
+      <h1>AI assistant (MCP)</h1><p class="doc-lead">Connect a coding agent (Codex, Claude Code, Kimi Code, GLM) to a Workbench mission through a local, permission-gated MCP bridge.</p><p class="doc-meta">Advanced · 5 min read · Updated September 27, 2026</p>
     </header>
     <div class="prose">
-      <p>The <a href="/docs/guide/workbench/">Workbench</a> can hand one mission to an external coding-agent CLI such as <strong>Codex</strong>, <strong>Claude Code</strong>, <strong>Kimi Code</strong>, <strong>GLM CLI</strong>, <strong>OpenCode</strong> or <strong>Mistral Vibe</strong>, through an optional, <strong>local</strong> MCP (Model Context Protocol) bridge. The agent can then read your notes and evidence, draft findings, and (only if you allow it) run commands in the mission&rsquo;s lab.</p>
+      <p>The <a href="/docs/guide/workbench/">Workbench</a> can hand one mission to an external coding-agent CLI such as <strong>Codex</strong>, <strong>Claude Code</strong>, <strong>Kimi Code</strong> or <strong>GLM CLI</strong>, through an optional, <strong>local</strong> MCP (Model Context Protocol) bridge. The agent can then read your notes and evidence, draft findings, and (only if you allow it) run commands in the mission&rsquo;s lab.</p>
 <p><strong>In short</strong></p>
 <ul>
 <li>RF Swift does not call a model API, select a model, store provider API keys or charge for AI usage. The coding-agent CLI owns its authentication, subscription, model choice and billing.</li>
@@ -255,7 +255,7 @@
 <li>The bridge is off by default, opens no network port, and exposes only the tools you permit.</li>
 </ul>
 <div class="mermaid-wrap"><pre class="mermaid">flowchart LR
-    U[You] --&gt; C[Codex / Claude Code / Kimi / GLM / OpenCode / Vibe]
+    U[You] --&gt; C[Codex / Claude Code / Kimi / GLM CLI]
     C &lt;--&gt;|stdio MCP| M[RF Swift Workbench MCP]
     M --&gt; N[Mission notes]
     M --&gt; F[Structured findings]
@@ -281,15 +281,11 @@
     </tr>
     <tr>
       <td><strong>Write</strong></td>
-      <td>Adds <code>write_note</code> and <code>save_finding</code> (and <code>save_secret</code>). Agent findings are saved as drafts; the agent cannot change a finding you wrote</td>
+      <td>Adds <code>write_note</code> and <code>save_finding</code> (and <code>save_secret</code>)</td>
     </tr>
     <tr>
       <td><strong>Command</strong></td>
-      <td>Adds <code>execute_command</code>, background jobs and interactive sessions inside the mission target. Enable it only for an authorised assessment</td>
-    </tr>
-    <tr>
-      <td><strong>RF transmission</strong></td>
-      <td>On top of Command: lets the agent run commands that transmit RF, each one declared and described. Off by default</td>
+      <td>Adds <code>execute_command</code> inside the mission target. Enable it only for an authorised assessment</td>
     </tr>
   </tbody>
 </table>
@@ -298,26 +294,26 @@
 <li>Tools that are not permitted are <strong>omitted</strong> from the server&rsquo;s tool list, not merely rejected.</li>
 <li>Agent permissions live in the local RF Swift user configuration and are never placed in exported projects.</li>
 <li>Evidence responses carry an explicit <code>untrusted_evidence</code> trust label: notes, artifacts, recordings, filenames, metadata and embedded role text are data to analyse, not instructions to follow.</li>
-<li>Per-client <strong>YOLO mode</strong> (the CLI&rsquo;s own approval-bypass flag) is off by default and visibly warned. It never widens RF Swift&rsquo;s MCP permissions. With YOLO off, OpenCode asks before edits, shell commands and web access (it allows them by default otherwise), and Mistral Vibe keeps your own settings; with YOLO on, Vibe runs with <code>--auto-approve</code>.</li>
+<li>Per-client <strong>YOLO mode</strong> (the CLI&rsquo;s own approval-bypass flag) is off by default and visibly warned. It never widens RF Swift&rsquo;s MCP permissions.</li>
 </ul>
 <h2 id="starting-the-server-from-the-workbench">Starting the server from the Workbench<a class="anchor" href="#starting-the-server-from-the-workbench" aria-label="Link to this section"></a></h2>
 <p>In the <strong>Agent &amp; MCP</strong> panel, choose the client and press <strong>Connect &amp; launch</strong>. The Workbench then:</p>
 <ol>
 <li>detects the selected CLI on <code>PATH</code>;</li>
-<li>creates or merges a private configuration under the mission&rsquo;s <code>agent-workspace</code> directory (<code>.mcp.json</code> for Claude Code, <code>.kimi-code/mcp.json</code> for Kimi, <code>.codex/config.toml</code> for Codex, <code>opencode.json</code> for OpenCode, <code>.vibe/config.toml</code> for Mistral Vibe), plus a generated <code>AGENTS.md</code> / <code>CLAUDE.md</code> telling the client that &ldquo;create a note&rdquo; means the mission <code>write_note</code> tool, and the RF Swift skills and subagents (see <a href="#skills-and-subagents">Skills and subagents</a>);</li>
+<li>creates or merges a private configuration under the mission&rsquo;s <code>agent-workspace</code> directory (<code>.mcp.json</code> for Claude Code, <code>.kimi-code/mcp.json</code> for Kimi, <code>.codex/config.toml</code> for Codex), plus a generated <code>AGENTS.md</code> / <code>CLAUDE.md</code> telling the client that &ldquo;create a note&rdquo; means the mission <code>write_note</code> tool;</li>
 <li>performs a real MCP <code>initialize</code> handshake with the mission-scoped server;</li>
 <li>starts the client&rsquo;s interactive TUI in the embedded <strong>Agent terminal</strong>.</li>
 </ol>
 <p>While you are connected:</p>
 <ul>
 <li>notes and findings written through MCP refresh in their panels;</li>
-<li>when the agent runs a command or opens a session, the Workbench opens a read-only <strong>AI - tool</strong> terminal tab that shows the command and its purpose, streams its real container or Nix output and marks the final state. Transmissions are tagged <code>[RF TX]</code>. Agent activity stays visible without mixing into your own shell.</li>
+<li>when the agent calls <code>execute_command</code>, the Workbench opens a read-only <strong>AI - tool</strong> terminal tab that shows the command, streams its real container or Nix output and marks the final state. Agent activity stays visible without mixing into your own shell.</li>
 </ul>
-<p>Disconnecting closes the TUI and the MCP child process, and stops every job and session the agent started. The project-local files remain, so the next launch is reproducible.</p>
+<p>Disconnecting closes the TUI and the MCP child process. The project-local files remain, so the next launch is reproducible.</p>
 <h3 id="other-mcp-clients">Other MCP clients<a class="anchor" href="#other-mcp-clients" aria-label="Link to this section"></a></h3>
 <p>Any other stdio MCP client (GLM CLI has no automatic configuration yet) can be pointed at the same server by hand:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift-workbench --mcp --workspace PROJECT --mission MISSION <span class="o">[</span>--mcp-write<span class="o">]</span> <span class="o">[</span>--mcp-exec <span class="o">[</span>--mcp-tx<span class="o">]]</span></span></span></code></pre></div></div>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift-workbench --mcp --workspace PROJECT --mission MISSION <span class="o">[</span>--mcp-write<span class="o">]</span> <span class="o">[</span>--mcp-exec<span class="o">]</span></span></span></code></pre></div></div>
 <p>Register it as a stdio MCP server named <code>rfswift</code>. The generated <code>AGENTS.md</code> in the mission&rsquo;s <code>agent-workspace/</code> directory tells the client how to use the tools.</p>
 <h2 id="ground-truth-workflows">Ground-truth workflows<a class="anchor" href="#ground-truth-workflows" aria-label="Link to this section"></a></h2>
 <p>The agent always works from real data that RF Swift collected first.</p>
@@ -387,7 +383,7 @@
     <tr>
       <td><code>save_finding</code></td>
       <td>write</td>
-      <td>Create or update the agent&rsquo;s own draft finding</td>
+      <td>Create or replace a structured finding</td>
     </tr>
     <tr>
       <td><code>save_secret</code></td>
@@ -397,56 +393,11 @@
     <tr>
       <td><code>execute_command</code></td>
       <td>execute</td>
-      <td>Run a command in the mission target as a bounded job</td>
-    </tr>
-    <tr>
-      <td><code>job_output</code></td>
-      <td>execute</td>
-      <td>Status and output of a job from an offset, optionally waiting for it to end</td>
-    </tr>
-    <tr>
-      <td><code>cancel_job</code></td>
-      <td>execute</td>
-      <td>Stop a job and everything it started</td>
-    </tr>
-    <tr>
-      <td><code>list_jobs</code></td>
-      <td>execute</td>
-      <td>The agent&rsquo;s jobs and sessions</td>
-    </tr>
-    <tr>
-      <td><code>session_start</code></td>
-      <td>execute</td>
-      <td>Open an interactive terminal (pm3, bluetoothctl, serial consoles, OpenOCD, gdb)</td>
-    </tr>
-    <tr>
-      <td><code>session_send</code></td>
-      <td>execute</td>
-      <td>Type into a session and get the new output</td>
-    </tr>
-    <tr>
-      <td><code>session_close</code></td>
-      <td>execute</td>
-      <td>Close a session</td>
+      <td>Run a command in the selected mission target</td>
     </tr>
   </tbody>
 </table>
 </div>
-<h2 id="commands-jobs-and-sessions">Commands, jobs and sessions<a class="anchor" href="#commands-jobs-and-sessions" aria-label="Link to this section"></a></h2>
-<p>A command runs in the mission workspace and the call waits at most <code>wait_seconds</code> (60 s by default, 300 s at most). A command still running then keeps going as a background job: the agent gets the output so far and a job ID, follows it with <code>job_output</code> and stops it with <code>cancel_job</code>; <code>max_seconds</code> ends timed captures. Output is cleaned of terminal colour and cursor codes, kept in the mission&rsquo;s <code>agent-workspace/jobs/</code> folder (up to 32 MiB per job) and shown to the agent as an excerpt that keeps the beginning and the end. At most 8 jobs and 6 sessions run at once.</p>
-<p>Sessions are persistent terminals for programs that keep a prompt. <code>session_send</code> returns when the output matches the agent&rsquo;s <code>expect</code> pattern, after 1.5 s without new output, or after <code>wait_seconds</code>.</p>
-<h2 id="rf-transmission">RF transmission<a class="anchor" href="#rf-transmission" aria-label="Link to this section"></a></h2>
-<p>Receiving needs only command access. A command that radiates on purpose (SDR transmit, replay, Wi-Fi, 802.15.4 or BLE injection, rogue access points, cellular base stations and UEs) is refused unless <strong>Allow commands that transmit RF</strong> is enabled in the agent settings. Even then the agent must declare it (<code>transmits: true</code>) and describe it (frequency, power or gain, duration, target), and the generated instructions tell it to get your explicit approval for each transmission. Licensed bands (cellular, GNSS, aviation) are only ever transmitted into a shielded enclosure or over attenuated coax.</p>
-<p>Detection covers the transmit modes of the tools RF Swift ships, in commands and in session input. It cannot see inside a script or a GNU Radio flowgraph, so the agent&rsquo;s declaration and your approval are the real controls. Keep the switch off unless a transmission test is running.</p>
-<h2 id="agent-findings">Agent findings<a class="anchor" href="#agent-findings" aria-label="Link to this section"></a></h2>
-<p>What the agent saves with <code>save_finding</code> is a <strong>draft</strong> marked <strong>AI</strong> in the findings list. A status it asks for is replaced by draft. The agent can update its own drafts but never a finding you wrote or edited: saving a finding in the Workbench makes it yours, and findings from before this change count as yours. Review the drafts and confirm, edit or delete them.</p>
-<h2 id="skills-and-subagents">Skills and subagents<a class="anchor" href="#skills-and-subagents" aria-label="Link to this section"></a></h2>
-<p>On <strong>Connect &amp; launch</strong> the Workbench writes the RF Swift agent kit into the mission&rsquo;s <code>agent-workspace</code> and lists it in <code>AGENTS.md</code> / <code>CLAUDE.md</code>:</p>
-<ul>
-<li><strong>Skills</strong> in <code>.claude/skills</code> (Claude Code, also read by OpenCode) and <code>.agents/skills</code> (Codex, OpenCode, Kimi Code, Mistral Vibe): how to work in a mission, how to qualify findings, the mission board (<code>board.md</code>: confirmed facts, open directions, and a hints section that is yours), and methods for SDR setup, spectrum survey, IQ capture, signal analysis, sub-GHz ISM devices, GNSS, Wi-Fi, Bluetooth/BLE, Zigbee/Thread/Z-Wave/LoRaWAN, RFID/NFC, hardware interfaces, firmware, automotive CAN and the cellular lab.</li>
-<li><strong>Subagents</strong> in <code>.claude/agents</code> (Claude Code) and <code>.opencode/agents</code> (OpenCode): RF recon (receive only), signal analyst (files only), wireless tester, hardware hacker, cellular lab and evidence reviewer.</li>
-</ul>
-<p>Only files named <code>rfswift-*</code> are written and replaced; your own skills and agents in those folders are left alone.</p>
 <h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>
 <div class="doc-cards">
   <a class="doc-card" href="/docs/security/mcp/">
@@ -498,10 +449,6 @@
       </ul>
     </li>
     <li><a href="#mcp-tools">MCP tools</a></li>
-    <li><a href="#commands-jobs-and-sessions">Commands, jobs and sessions</a></li>
-    <li><a href="#rf-transmission">RF transmission</a></li>
-    <li><a href="#agent-findings">Agent findings</a></li>
-    <li><a href="#skills-and-subagents">Skills and subagents</a></li>
     <li><a href="#related">Related</a></li>
   </ul>
 </nav>

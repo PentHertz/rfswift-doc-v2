@@ -228,7 +228,10 @@ A table of findings sorted by severity, each edited like a pwndoc vulnerability:
 - title, type, affected scope, status (draft, open, confirmed, in progress, remediated, risk accepted, false positive);
 - a **CVSS v3.1 calculator** (vector and score, severity derived from it), optional CVSS v4 vector;
 - pwndoc category, priority, remediation complexity;
-- rich Description, Observation, Remediation and Proof of concept (with images), references, retest status, and advanced pwndoc fields.
+- rich Description, Observation, Remediation and Proof of concept (with images), references, retest status, and advanced pwndoc fields;
+- **Compliance weakness classes** (for example `replay`, `default-credentials`, `debug-interface`), with a live preview of the EN 18031, ETSI EN 303 645, OWASP IoT and IEC 62443-4-2 requirements they relate to. Left empty, the classes are inferred from the type and title. See [Compliance mapping](/docs/guide/ai-assistant/#compliance-mapping).
+
+Findings proposed by the coding agent are saved as drafts and marked **AI** in the table; once you save one, it is yours and the agent can no longer change it.
 
 **Suggest from evidence** asks the connected agent for source-cited candidates from the notes and registered artifacts; **Collect credentials** stores exact observed credentials in the vault through the agent. Environment CVEs never become findings by themselves.
 
@@ -259,7 +262,9 @@ The optional coding-agent bridge. In **Agent & MCP** (the "Agent" button or **Co
 
 1. Enable the bridge.
 2. Pick Codex CLI, Claude Code, Kimi Code, GLM CLI, OpenCode or Mistral Vibe (the dialog says which are installed).
-3. Choose the permissions: read only, "Allow updating notes and findings", "Allow executing commands inside the selected mission", and the client's own YOLO mode with its warning.
+3. Choose the permissions: read only, "Allow updating notes and findings", "Allow executing commands inside the selected mission", "Allow commands that transmit RF" (only with command execution), and the client's own YOLO mode with its warning.
+
+**RF scope** in the panel sets, for this mission, the transmit bands, the in-scope target addresses and the excluded addresses the agent must stay within (see [Mission RF scope](/docs/guide/ai-assistant/#mission-rf-scope)). Connecting also installs the RF Swift skills and subagents in the mission's agent workspace.
 
 If a CLI is installed where the Workbench does not look, set its **program path** in Agent settings (**Browse...** shows hidden folders such as `.nvm`). Without one, the search covers your `PATH` plus nvm and fnm Node versions, pnpm, yarn, deno and mise.
 
@@ -316,7 +321,7 @@ It shows the current stage while it runs and keeps the raw report as ground trut
 
 ## Reports and export
 
-**Report** renders a branded report of the mission: summary table, findings by severity with their CVSS vectors, notes with images, registered captures.
+**Report** renders a branded report of the mission: summary table, findings by severity with their CVSS vectors and the requirements they relate to, a compliance table (EN 18031, ETSI EN 303 645, OWASP IoT, IEC 62443-4-2), notes with images, registered captures. The PwnDoc export does not carry the compliance mapping.
 
 - **Save in workspace** (`reports/report-<mission>.md`)
 - **Download .md**

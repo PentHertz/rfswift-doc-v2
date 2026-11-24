@@ -91,6 +91,9 @@ The desktop app shares the engines' limits above and adds a few of its own:
 - Secret values live in the OS credential vault only and are excluded from project exports, findings, reports and evidence indexes.
 - The Workbench binary cannot be a static executable on Linux (it links GTK and WebKit): use the AppImage or the distro-linked package matching your system's WebKit; a mismatched WebKit can render a blank window.
 - The MCP bridge is local stdio only, off by default, and exposes only the tools you enable (`read`, plus `--mcp-write`, plus `--mcp-exec`, plus `--mcp-tx` for commands that transmit RF). RF Swift never calls a model API itself.
+- Transmission detection recognises the transmit modes of the tools RF Swift ships; it cannot see inside scripts or GNU Radio flowgraphs, so the agent's declaration and your approval remain the controls.
+- The mission RF scope checks frequencies on the command line of `hackrf_transfer`, the UHD TX examples and `urh_cli` only (other transmissions rely on the frequency the agent declares, and a Wi-Fi interface's channel is not read), and only 48-bit hardware addresses (BSSIDs, Bluetooth/BLE). SSIDs, Zigbee PAN IDs, card UIDs and other identifiers are left to your approval.
+- The compliance mapping (EN 18031, ETSI EN 303 645, OWASP IoT, IEC 62443-4-2) works at mechanism or provision level and has not yet been reviewed against the standard texts; check it before relying on it in a deliverable. It is not a conformity assessment, and it is not part of the PwnDoc export.
 - Container configuration changes from the GUI on Linux Docker need root once per change (a polkit prompt); Podman uses commit-and-recreate and leaves a snapshot image per change. Either path restarts the container.
 
 ## Installer and packages

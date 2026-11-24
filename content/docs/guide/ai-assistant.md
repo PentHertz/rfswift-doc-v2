@@ -108,6 +108,8 @@ Editor AI actions prepare a scoped prompt and copy it for the external agent. Th
 | `read_note` | read | A mission Markdown note |
 | `list_findings` | read | PwnDoc-compatible structured findings |
 | `write_note` | write | Replace or append to a Markdown note |
+| `read_scope` | read | The mission's RF scope: transmit bands, in-scope and excluded addresses |
+| `map_compliance` | read | Map a finding to EN 18031, ETSI EN 303 645, OWASP IoT and IEC 62443-4-2 requirements |
 | `save_finding` | write | Create or update the agent's own draft finding |
 | `save_secret` | write | Store an exact credential in the OS vault |
 | `execute_command` | execute | Run a command in the mission target as a bounded job |
@@ -129,6 +131,21 @@ Sessions are persistent terminals for programs that keep a prompt. `session_send
 Receiving needs only command access. A command that radiates on purpose (SDR transmit, replay, Wi-Fi, 802.15.4 or BLE injection, rogue access points, cellular base stations and UEs) is refused unless **Allow commands that transmit RF** is enabled in the agent settings. Even then the agent must declare it (`transmits: true`) and describe it (frequency, power or gain, duration, target), and the generated instructions tell it to get your explicit approval for each transmission. Licensed bands (cellular, GNSS, aviation) are only ever transmitted into a shielded enclosure or over attenuated coax.
 
 Detection covers the transmit modes of the tools RF Swift ships, in commands and in session input. It cannot see inside a script or a GNU Radio flowgraph, so the agent's declaration and your approval are the real controls. Keep the switch off unless a transmission test is running.
+
+## Mission RF scope
+
+**RF scope** in the Agent panel sets, per mission, the **transmit bands** (one per line, e.g. `433.05-434.79 MHz # gate remote`), the **in-scope targets** (Wi-Fi BSSIDs and clients, Bluetooth/BLE addresses) and the **excluded addresses**. The agent can read it (`read_scope`) but never change it. Once a mission has a scope:
+
+- every transmission must give its frequency (`tx_frequency_hz`) inside a band, and the frequency on the command line of `hackrf_transfer`, the UHD TX examples and `urh_cli` is checked too;
+- a scope without bands allows no transmission;
+- a transmitting command may only name in-scope addresses (when the list is not empty);
+- excluded addresses are refused on every command, even receive-only ones.
+
+The scope only narrows the transmission permission; it never grants it. Frequencies are read from the command line of those three tools only, and addresses are 48-bit hardware addresses; SSIDs, Zigbee PAN IDs or card UIDs stay with your approval.
+
+## Compliance mapping
+
+Findings are mapped to the requirements they relate to in **EN 18031** (the EU Radio Equipment Directive cybersecurity standards, mandatory for radio equipment since 1 August 2025), **ETSI EN 303 645**, the **OWASP IoT Top 10** and **IEC 62443-4-2**. The mapping goes through 18 weakness classes (replay, default credentials, exposed debug interface, cleartext radio link, ...): name them in the finding editor's **Compliance weakness classes** field, or leave it empty to infer them from the type and title. The editor previews the requirements, and the Markdown report lists them under each finding and in a closing compliance table. Agents set the classes through `map_compliance`. The mapping supports the report; it is not a conformity assessment, and its tables have not yet been reviewed against the standard texts, so check them before relying on them in a deliverable. The PwnDoc export does not carry it.
 
 ## Agent findings
 
