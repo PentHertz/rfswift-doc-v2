@@ -244,10 +244,10 @@
 </nav>
 
     <header class="doc-head">
-      <h1>What&#39;s new in v4.0 &#34;Nucleus&#34;</h1><p class="doc-lead">The Nix engine, the Workbench, the remote agent, a resource-first CLI, built-in audits and native installers.</p><p class="doc-meta">9 min read · Updated November 23, 2026</p>
+      <h1>What&#39;s new in v4.0 &#34;Nucleus&#34;</h1><p class="doc-lead">The Nix engine, the Workbench, the remote agent, a resource-first CLI, built-in audits and native installers.</p><p class="doc-meta">7 min read · Updated September 27, 2026</p>
     </header>
     <div class="prose">
-      <p>RF Swift v4.0 is the biggest change since the project started. The current release is <strong>v4.1.1</strong>; what the releases after v4.0.2 added is in <a href="#updates-since-v402">Updates since v4.0.2</a>. v4.0 adds:</p>
+      <p>RF Swift v4.0 (current release: <strong>v4.0.2</strong>) is the biggest change since the project started. It adds:</p>
 <ul>
 <li>a native <strong>Nix engine</strong> that runs the tool sets without containers;</li>
 <li>a desktop <strong>Workbench</strong> for assessments;</li>
@@ -267,37 +267,6 @@
 <li><a href="#security-built-in">Security built in</a>: <code>rfswift audit</code>, verified downloads, a hardened baseline.</li>
 <li>Native installers and packages for <a href="#linux-packages-and-host-setup">Linux</a>, <a href="#windows">Windows</a> and <a href="#macos">macOS</a>, plus <a href="#hardware-fixes-that-matter-in-the-field">hardware fixes</a>.</li>
 <li><a href="#upgrading-from-v3x">Upgrading from v3.x</a> takes a few minutes.</li>
-</ul>
-<h2 id="updates-since-v402">Updates since v4.0.2<a class="anchor" href="#updates-since-v402" aria-label="Link to this section"></a></h2>
-<p>Update with <code>rfswift update</code> (see <a href="/docs/commands/update/">update</a>). Newest first.</p>
-<h3 id="v411-qubes-os-rootful-podman-selinux-and-a-safer-update">v4.1.1: Qubes OS, rootful Podman, SELinux and a safer update<a class="anchor" href="#v411-qubes-os-rootful-podman-selinux-and-a-safer-update" aria-label="Link to this section"></a></h3>
-<ul>
-<li><strong>Qubes OS.</strong> <code>rfswift host qubes</code> checks a qube for RF Swift, and <code>rfswift host qubes setup</code> fixes what it finds in one root script that it prints first: the virtual USB bus for devices attached from sys-usb, persistent engine storage and Nix store across AppVM restarts, rootful Podman and Docker access for the user, a working Nix daemon for a Determinate Nix template, and the RTL-SDR DVB-T driver blacklisted. <code>rfswift doctor</code> and the Workbench (<strong>Set up for Qubes</strong>) show the same checks. See <a href="/docs/guide/qubes-os/">Qubes OS</a>.</li>
-<li><strong>Rootful Podman without sudo.</strong> <code>podman_mode = rootful</code> in <code>[general]</code> (or <code>RFSWIFT_PODMAN_MODE</code>) drives the system Podman service through its socket, for rootful device access while audio, X11, home and workspaces stay yours. See <a href="/docs/guide/podman/">Podman</a>.</li>
-<li><strong>SELinux.</strong> On an enforcing host, unprivileged containers are created with <code>label=disable</code> so they can read their workspace, the X11 socket and USB nodes. <code>[container] selinux_label = keep</code> (or <code>RFSWIFT_SELINUX_LABEL=keep</code>) opts out.</li>
-<li><strong><code>rfswift update</code></strong> now updates the way RF Swift was installed (deb/rpm/pacman package through the system package manager, <code>brew upgrade --cask</code>, or the binary in place), after one Yes/No question, and verifies every download against the release&rsquo;s SHA-256 checksums. <code>--yes</code> skips the question, <code>--check</code> only looks.</li>
-<li><strong>USB hot-plug</strong> with <code>rfswift run</code>/<code>container create</code>: device trees such as <code>/dev/bus/usb</code> are bind-mounted, so a dongle plugged in or forwarded later appears in the running container.</li>
-<li><strong>Audio under sudo</strong> and after a reboot: <code>sudo rfswift run|exec</code> talks to your audio session, and <code>rfswift exec</code> reloads the audio server&rsquo;s TCP module when it is missing.</li>
-</ul>
-<h3 id="v405-workbench-polish">v4.0.5: Workbench polish<a class="anchor" href="#v405-workbench-polish" aria-label="Link to this section"></a></h3>
-<ul>
-<li>The image field of the create dialog suggests the images published on Docker Hub for your architecture (cached for 6 hours; <strong>Refresh list</strong> fetches it again).</li>
-<li>Agent settings take a program path for each coding-agent CLI, with <strong>Browse…</strong>, and the search now covers nvm, fnm, pnpm, yarn, deno and mise.</li>
-<li>Terminal zoom (Ctrl + / Ctrl - / Ctrl 0, Ctrl + wheel, pinch), and a progress bar while a container&rsquo;s configuration changes.</li>
-<li><code>rfswift config bindings add -d</code> accepts a directory such as <code>/dev/bus/usb</code>.</li>
-</ul>
-<h3 id="v404-new-nix-environments-and-agents">v4.0.4: new Nix environments and agents<a class="anchor" href="#v404-new-nix-environments-and-agents" aria-label="Link to this section"></a></h3>
-<ul>
-<li>Nix catalog: <code>sdr_hacks</code> (repurposed chips as SDRs), <code>cyberether_release</code>, <code>telecom_5g_oai</code> (5G SA with OpenAirInterface) and <code>telecom_ltesniffer</code>.</li>
-<li>The Workbench hosts <strong>OpenCode</strong> and <strong>Mistral Vibe</strong> in missions, next to the other AI assistants.</li>
-<li>The <code>sdr_hacks</code> image is listed with the other toolboxes.</li>
-</ul>
-<h3 id="v403-engine-choice-and-workbench-updates">v4.0.3: engine choice and Workbench updates<a class="anchor" href="#v403-engine-choice-and-workbench-updates" aria-label="Link to this section"></a></h3>
-<ul>
-<li>When several engines are installed and none is set, the <code>rfswift run</code> wizard asks which one to use and can keep it. <code>rfswift engine set &lt;auto|docker|podman|lima|nix&gt;</code> sets it directly.</li>
-<li>The Workbench&rsquo;s Engine doctor shows a newer release and installs it after verifying its GitHub digest and Sigstore build provenance.</li>
-<li>A warning, with the fix, when <code>~/.config/rfswift</code> belongs to root after a <code>sudo rfswift</code> run.</li>
-<li>X11 fixes for GUI tools after a reboot (MIT-SHM, &ldquo;Authorization required&rdquo;).</li>
 </ul>
 <h2 id="nix-engine-native-environments">Nix engine: native environments<a class="anchor" href="#nix-engine-native-environments" aria-label="Link to this section"></a></h2>
 <p><code>--engine nix</code> installs an RF Swift tool set straight onto the host as a reproducible, pinned Nix environment. No daemon, no container boundary: USB radios, audio and the GPU work with zero device plumbing.</p>
@@ -420,14 +389,6 @@
   <p class="toc-title">On this page</p>
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#updates-since-v402">Updates since v4.0.2</a>
-      <ul>
-        <li><a href="#v411-qubes-os-rootful-podman-selinux-and-a-safer-update">v4.1.1: Qubes OS, rootful Podman, SELinux and a safer update</a></li>
-        <li><a href="#v405-workbench-polish">v4.0.5: Workbench polish</a></li>
-        <li><a href="#v404-new-nix-environments-and-agents">v4.0.4: new Nix environments and agents</a></li>
-        <li><a href="#v403-engine-choice-and-workbench-updates">v4.0.3: engine choice and Workbench updates</a></li>
-      </ul>
-    </li>
     <li><a href="#nix-engine-native-environments">Nix engine: native environments</a></li>
     <li><a href="#rf-swift-workbench">RF Swift Workbench</a></li>
     <li><a href="#remote-agent">Remote agent</a></li>

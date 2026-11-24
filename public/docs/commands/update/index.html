@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>rfswift update · RF Swift</title>
-  <meta name="description" content="Update RF Swift the way it was installed (package manager, Homebrew or binary), with SHA-256 verification.">
+  <meta name="description" content="Update the RF Swift binary, or learn how when it came from a package manager.">
   <meta name="theme-color" content="#0b1416">
   <link rel="canonical" href="https://rfswift.io/docs/commands/update/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="rfswift update · RF Swift">
-  <meta property="og:description" content="Update RF Swift the way it was installed (package manager, Homebrew or binary), with SHA-256 verification.">
+  <meta property="og:description" content="Update the RF Swift binary, or learn how when it came from a package manager.">
   <meta property="og:url" content="https://rfswift.io/docs/commands/update/">
   <meta property="og:image" content="https://rfswift.io/images/docs/imagesrf.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -245,94 +245,30 @@
 </nav>
 
     <header class="doc-head">
-      <h1>rfswift update</h1><p class="doc-lead">Update RF Swift the way it was installed (package manager, Homebrew or binary), with SHA-256 verification.</p><p class="doc-meta">Reference · 4 min read · Updated November 23, 2026</p>
+      <h1>rfswift update</h1><p class="doc-lead">Update the RF Swift binary, or learn how when it came from a package manager.</p><p class="doc-meta">Reference · 3 min read · Updated September 27, 2026</p>
     </header>
     <div class="prose">
       <p><code>rfswift update</code> updates RF Swift itself to the latest release from the official Penthertz repository. It only updates the program: your toolbox images, your labs and your data stay as they are.</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift update           <span class="c1"># show what changes, ask, then update</span>
-</span></span><span class="line"><span class="cl">rfswift update --check   <span class="c1"># only report whether an update exists</span>
-</span></span><span class="line"><span class="cl">rfswift update --yes     <span class="c1"># update without asking (scripts)</span></span></span></code></pre></div></div>
-<p>The update follows the way RF Swift was installed:</p>
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Installed as</th>
-      <th>How <code>rfswift update</code> updates it</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Debian package</td>
-      <td>Downloads the release&rsquo;s <code>.deb</code> for your architecture and installs it with <code>apt-get</code> (or <code>dpkg</code>), through <code>sudo</code></td>
-    </tr>
-    <tr>
-      <td>RPM package</td>
-      <td>Downloads the release&rsquo;s <code>.rpm</code> and installs it with <code>dnf</code>, <code>yum</code> or <code>zypper</code>, through <code>sudo</code></td>
-    </tr>
-    <tr>
-      <td>Arch package</td>
-      <td>Downloads the release&rsquo;s <code>.pkg.tar.zst</code> and installs it with <code>pacman</code>, through <code>sudo</code></td>
-    </tr>
-    <tr>
-      <td>Homebrew cask</td>
-      <td>Runs <code>brew upgrade --cask rfswift</code></td>
-    </tr>
-    <tr>
-      <td>Standalone binary</td>
-      <td>Replaces the binary in place, with <code>sudo</code> when its directory is not writable (e.g. <code>/usr/local/bin</code>)</td>
-    </tr>
-    <tr>
-      <td>Windows installer</td>
-      <td>Points you to the new installer</td>
-    </tr>
-  </tbody>
-</table>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift update</span></span></code></pre></div></div>
+<div class="admonition admonition-warning" role="note"><p><strong>Installed from a package?</strong> On a deb, rpm, pacman or Homebrew install, <code>rfswift update</code> tells you how to upgrade through your package manager instead of overwriting the packaged binary. (Overwriting it put the package database out of sync, and the next package upgrade reverted it.) Running <code>get_rfswift.sh</code> again also upgrades a packaged install.</p>
 </div>
-<p>Every download is checked against the release&rsquo;s SHA-256 checksums before anything is installed; a file that does not match, or is not listed, is refused. After installing, RF Swift runs <code>rfswift --version</code> to confirm the new version, and warns when another <code>rfswift</code> earlier in your <code>PATH</code> would still start the old one.</p>
-<div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift system update</code>. The legacy form <code>rfswift update</code> still works. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
+<div class="admonition admonition-info" role="note"><p><strong>RF Swift v4 canonical spelling</strong>: <code>rfswift system update</code>. The legacy form <code>rfswift update</code> still works and prints a notice pointing at the new name. Flags are identical. See the <a href="/docs/commands/#the-v4-command-tree">command tree</a>.</p>
 </div>
 <h2 id="synopsis">Synopsis<a class="anchor" href="#synopsis" aria-label="Link to this section"></a></h2>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift update <span class="o">[</span>--check<span class="o">]</span> <span class="o">[</span>-y<span class="o">]</span></span></span></code></pre></div></div>
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Flag</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>--check</code></td>
-      <td>Only report whether a newer release exists and how it would be installed; change nothing</td>
-    </tr>
-    <tr>
-      <td><code>-y, --yes</code></td>
-      <td>Update without asking (for scripts)</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<p>Without a flag, RF Swift shows what it will do, then asks one Yes/No question.</p>
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rfswift update</span></span></code></pre></div></div>
+<p>It takes no options. It downloads and installs the latest version of RF Swift and all its components, and keeps a backup of the current version.</p>
 <h2 id="example">Example<a class="anchor" href="#example" aria-label="Link to this section"></a></h2>
-<p>The output looks like this (versions and paths are only an example):</p>
+<p>The output looks like this (the version numbers are only an example):</p>
 <div class="code">
-  <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>╭─ Update available ───────────────────────────────────────────╮
-│ rfswift 4.0.5 → 4.1.1                                         │
-│ Installed as: Debian package at /usr/bin/rfswift              │
-│ Release notes: https://github.com/PentHertz/RF-Swift/releases │
-╰───────────────────────────────────────────────────────────────╯
-The update will:
-    1. download rfswift_4.1.1_amd64.deb and check its SHA-256 against the release checksums
-    2. install it: sudo apt-get install -y ./rfswift_4.1.1_amd64.deb
-Update rfswift 4.0.5 → 4.1.1? [Y/n] y
-SHA-256 verified: rfswift_4.1.1_amd64.deb
-Running: sudo apt-get install -y ./rfswift_4.1.1_amd64.deb
-rfswift updated: 4.0.5 → 4.1.1</code></pre></div>
-<p>Other commands also tell you when a release is out, with what to run: <code>RF Swift 4.1.1 is available (you have 4.0.5). Update with: rfswift update</code>.</p>
+  <div class="code-bar"><span>output</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><pre tabindex="0"><code>Checking for updates...
+Current version: v2.1.0
+Latest version: v3.0.0
+Downloading update...
+Installing RF Swift v3.0.0...
+✓ Update successful!
+RF Swift updated to v3.0.0</code></pre></div>
 <h2 id="what-gets-updated">What gets updated<a class="anchor" href="#what-gets-updated" aria-label="Link to this section"></a></h2>
 <div class="table-wrap">
 <table>
@@ -435,16 +371,17 @@ rfswift updated: 4.0.5 → 4.1.1</code></pre></div>
   <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -I https://github.com
 </span></span><span class="line"><span class="cl">sudo rfswift update</span></span></code></pre></div></div>
 <h3 id="the-update-finished-but-rfswift-no-longer-works">The update finished, but <code>rfswift</code> no longer works<a class="anchor" href="#the-update-finished-but-rfswift-no-longer-works" aria-label="Link to this section"></a></h3>
-<p>Reinstall with the installer, or download the previous release from <a href="https://github.com/PentHertz/RF-Swift/releases" target="_blank" rel="noopener">GitHub releases</a>. Then check that it works:</p>
+<p>Put the backup back, or reinstall. Then check that it works:</p>
 <div class="code">
-  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -fsSL <span class="s2">&#34;https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh&#34;</span> <span class="p">|</span> sh
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mv /usr/local/bin/rfswift.old /usr/local/bin/rfswift
+</span></span><span class="line"><span class="cl">curl -fsSL <span class="s2">&#34;https://raw.githubusercontent.com/PentHertz/RF-Swift/refs/heads/main/get_rfswift.sh&#34;</span> <span class="p">|</span> sh
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">rfswift --version
 </span></span><span class="line"><span class="cl">rfswift container last</span></span></code></pre></div></div>
 <h2 id="good-to-know">Good to know<a class="anchor" href="#good-to-know" aria-label="Link to this section"></a></h2>
 <ul>
 <li>Updates never touch your containers or your data.</li>
-<li>A standalone binary is replaced atomically (the new one is written next to it, then renamed over it), so a failed update never leaves a half-written <code>rfswift</code>. On Windows the previous binary is kept as <code>rfswift.exe.old</code> until the next update.</li>
+<li>The update keeps a backup of the previous version at <code>/usr/local/bin/rfswift.old</code>, so you can roll back.</li>
 <li>To update toolboxes, use <code>rfswift image pull</code>; to move a lab to a newer toolbox, use <code>rfswift container upgrade</code>.</li>
 </ul>
 <h2 id="related">Related<a class="anchor" href="#related" aria-label="Link to this section"></a></h2>

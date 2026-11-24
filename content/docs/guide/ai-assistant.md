@@ -32,8 +32,9 @@ flowchart LR
 | Permission | What the agent gets |
 |---|---|
 | **Read-only** | Mission discovery, notes, findings, the audit report and the evidence index |
-| **Write** | Adds `write_note` and `save_finding` (and `save_secret`) |
-| **Command** | Adds `execute_command` inside the mission target. Enable it only for an authorised assessment |
+| **Write** | Adds `write_note` and `save_finding` (and `save_secret`). Agent findings are saved as drafts; the agent cannot change a finding you wrote |
+| **Command** | Adds `execute_command`, background jobs and interactive sessions inside the mission target. Enable it only for an authorised assessment |
+| **RF transmission** | On top of Command: lets the agent run commands that transmit RF, each one declared and described. Off by default |
 
 - Tools that are not permitted are **omitted** from the server's tool list, not merely rejected.
 - Agent permissions live in the local RF Swift user configuration and are never placed in exported projects.
@@ -45,23 +46,23 @@ flowchart LR
 In the **Agent & MCP** panel, choose the client and press **Connect & launch**. The Workbench then:
 
 1. detects the selected CLI on `PATH`;
-2. creates or merges a private configuration under the mission's `agent-workspace` directory (`.mcp.json` for Claude Code, `.kimi-code/mcp.json` for Kimi, `.codex/config.toml` for Codex, `opencode.json` for OpenCode, `.vibe/config.toml` for Mistral Vibe), plus a generated `AGENTS.md` / `CLAUDE.md` telling the client that "create a note" means the mission `write_note` tool;
+2. creates or merges a private configuration under the mission's `agent-workspace` directory (`.mcp.json` for Claude Code, `.kimi-code/mcp.json` for Kimi, `.codex/config.toml` for Codex, `opencode.json` for OpenCode, `.vibe/config.toml` for Mistral Vibe), plus a generated `AGENTS.md` / `CLAUDE.md` telling the client that "create a note" means the mission `write_note` tool, and the RF Swift skills and subagents (see [Skills and subagents](#skills-and-subagents));
 3. performs a real MCP `initialize` handshake with the mission-scoped server;
 4. starts the client's interactive TUI in the embedded **Agent terminal**.
 
 While you are connected:
 
 - notes and findings written through MCP refresh in their panels;
-- when the agent calls `execute_command`, the Workbench opens a read-only **AI - tool** terminal tab that shows the command, streams its real container or Nix output and marks the final state. Agent activity stays visible without mixing into your own shell.
+- when the agent runs a command or opens a session, the Workbench opens a read-only **AI - tool** terminal tab that shows the command and its purpose, streams its real container or Nix output and marks the final state. Transmissions are tagged `[RF TX]`. Agent activity stays visible without mixing into your own shell.
 
-Disconnecting closes the TUI and the MCP child process. The project-local files remain, so the next launch is reproducible.
+Disconnecting closes the TUI and the MCP child process, and stops every job and session the agent started. The project-local files remain, so the next launch is reproducible.
 
 ### Other MCP clients
 
 Any other stdio MCP client (GLM CLI has no automatic configuration yet) can be pointed at the same server by hand:
 
 ```bash
-rfswift-workbench --mcp --workspace PROJECT --mission MISSION [--mcp-write] [--mcp-exec]
+rfswift-workbench --mcp --workspace PROJECT --mission MISSION [--mcp-write] [--mcp-exec [--mcp-tx]]
 ```
 
 Register it as a stdio MCP server named `rfswift`. The generated `AGENTS.md` in the mission's `agent-workspace/` directory tells the client how to use the tools.
@@ -107,9 +108,40 @@ Editor AI actions prepare a scoped prompt and copy it for the external agent. Th
 | `read_note` | read | A mission Markdown note |
 | `list_findings` | read | PwnDoc-compatible structured findings |
 | `write_note` | write | Replace or append to a Markdown note |
-| `save_finding` | write | Create or replace a structured finding |
+| `save_finding` | write | Create or update the agent's own draft finding |
 | `save_secret` | write | Store an exact credential in the OS vault |
-| `execute_command` | execute | Run a command in the selected mission target |
+| `execute_command` | execute | Run a command in the mission target as a bounded job |
+| `job_output` | execute | Status and output of a job from an offset, optionally waiting for it to end |
+| `cancel_job` | execute | Stop a job and everything it started |
+| `list_jobs` | execute | The agent's jobs and sessions |
+| `session_start` | execute | Open an interactive terminal (pm3, bluetoothctl, serial consoles, OpenOCD, gdb) |
+| `session_send` | execute | Type into a session and get the new output |
+| `session_close` | execute | Close a session |
+
+## Commands, jobs and sessions
+
+A command runs in the mission workspace and the call waits at most `wait_seconds` (60 s by default, 300 s at most). A command still running then keeps going as a background job: the agent gets the output so far and a job ID, follows it with `job_output` and stops it with `cancel_job`; `max_seconds` ends timed captures. Output is cleaned of terminal colour and cursor codes, kept in the mission's `agent-workspace/jobs/` folder (up to 32 MiB per job) and shown to the agent as an excerpt that keeps the beginning and the end. At most 8 jobs and 6 sessions run at once.
+
+Sessions are persistent terminals for programs that keep a prompt. `session_send` returns when the output matches the agent's `expect` pattern, after 1.5 s without new output, or after `wait_seconds`.
+
+## RF transmission
+
+Receiving needs only command access. A command that radiates on purpose (SDR transmit, replay, Wi-Fi, 802.15.4 or BLE injection, rogue access points, cellular base stations and UEs) is refused unless **Allow commands that transmit RF** is enabled in the agent settings. Even then the agent must declare it (`transmits: true`) and describe it (frequency, power or gain, duration, target), and the generated instructions tell it to get your explicit approval for each transmission. Licensed bands (cellular, GNSS, aviation) are only ever transmitted into a shielded enclosure or over attenuated coax.
+
+Detection covers the transmit modes of the tools RF Swift ships, in commands and in session input. It cannot see inside a script or a GNU Radio flowgraph, so the agent's declaration and your approval are the real controls. Keep the switch off unless a transmission test is running.
+
+## Agent findings
+
+What the agent saves with `save_finding` is a **draft** marked **AI** in the findings list. A status it asks for is replaced by draft. The agent can update its own drafts but never a finding you wrote or edited: saving a finding in the Workbench makes it yours, and findings from before this change count as yours. Review the drafts and confirm, edit or delete them.
+
+## Skills and subagents
+
+On **Connect & launch** the Workbench writes the RF Swift agent kit into the mission's `agent-workspace` and lists it in `AGENTS.md` / `CLAUDE.md`:
+
+- **Skills** in `.claude/skills` (Claude Code, also read by OpenCode) and `.agents/skills` (Codex, OpenCode, Kimi Code, Mistral Vibe): how to work in a mission, how to qualify findings, the mission board (`board.md`: confirmed facts, open directions, and a hints section that is yours), and methods for SDR setup, spectrum survey, IQ capture, signal analysis, sub-GHz ISM devices, GNSS, Wi-Fi, Bluetooth/BLE, Zigbee/Thread/Z-Wave/LoRaWAN, RFID/NFC, hardware interfaces, firmware, automotive CAN and the cellular lab.
+- **Subagents** in `.claude/agents` (Claude Code) and `.opencode/agents` (OpenCode): RF recon (receive only), signal analyst (files only), wireless tester, hardware hacker, cellular lab and evidence reviewer.
+
+Only files named `rfswift-*` are written and replaced; your own skills and agents in those folders are left alone.
 
 ## Related
 

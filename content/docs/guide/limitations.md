@@ -90,7 +90,7 @@ The desktop app shares the engines' limits above and adds a few of its own:
 - Environment CVE audits are never promoted into mission findings automatically, and are excluded from finding totals and PwnDoc exports.
 - Secret values live in the OS credential vault only and are excluded from project exports, findings, reports and evidence indexes.
 - The Workbench binary cannot be a static executable on Linux (it links GTK and WebKit): use the AppImage or the distro-linked package matching your system's WebKit; a mismatched WebKit can render a blank window.
-- The MCP bridge is local stdio only, off by default, and exposes only the tools you enable (`read`, plus `--mcp-write`, plus `--mcp-exec`). RF Swift never calls a model API itself.
+- The MCP bridge is local stdio only, off by default, and exposes only the tools you enable (`read`, plus `--mcp-write`, plus `--mcp-exec`, plus `--mcp-tx` for commands that transmit RF). RF Swift never calls a model API itself.
 - Container configuration changes from the GUI on Linux Docker need root once per change (a polkit prompt); Podman uses commit-and-recreate and leaves a snapshot image per change. Either path restarts the container.
 
 ## Installer and packages
