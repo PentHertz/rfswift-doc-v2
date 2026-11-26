@@ -244,7 +244,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Choose a toolbox (container images)</h1><p class="doc-lead">Which RF Swift image to pick for your job, how to download it, and how to keep your images up to date and your disk tidy.</p><p class="doc-meta">Beginner · 12 min read · Updated November 25, 2026</p>
+      <h1>Choose a toolbox (container images)</h1><p class="doc-lead">Which RF Swift image to pick for your job, how to download it, and how to keep your images up to date and your disk tidy.</p><p class="doc-meta">Beginner · 11 min read · Updated September 27, 2026</p>
     </header>
     <div class="prose">
       <p>In RF Swift, a <strong>toolbox</strong> is a container image: a ready-made set of tools, drivers and libraries for one kind of job. You pick a toolbox, RF Swift creates a lab from it, and the tools inside already work together. This page helps you choose one, then explains how to download and manage images.</p>
@@ -272,12 +272,8 @@
       <td><code>sdr_full</code></td>
     </tr>
     <tr>
-      <td>GNU Radio 4.0 and GR4 Studio, next to GNU Radio 3.10</td>
+      <td>Trying GNU Radio 4.0 next to GNU Radio 3.10</td>
       <td><code>sdr_gnuradio4</code></td>
-    </tr>
-    <tr>
-      <td>Repurposed chips as SDRs (Wi-Fi dongles, routers, ESP32, LR2021) and the AntSDR FPV scanner firmware</td>
-      <td><code>sdr_hacks</code></td>
     </tr>
     <tr>
       <td>Electromagnetic emanation analysis</td>
@@ -285,7 +281,7 @@
     </tr>
     <tr>
       <td>Wi-Fi</td>
-      <td><code>wifi</code> (Wi-Fi tools on top of <code>network</code>)</td>
+      <td><code>wifi_basic</code>, <code>wifi_full</code>, or <code>wifi</code> (Wi-Fi tools on top of <code>sdr_light</code>)</td>
     </tr>
     <tr>
       <td>Bluetooth Classic and Low Energy</td>
@@ -320,14 +316,6 @@
       <td><code>telecom_5G_train</code></td>
     </tr>
     <tr>
-      <td>Cellular 5G with OpenAirInterface</td>
-      <td><code>telecom_5G_oai</code></td>
-    </tr>
-    <tr>
-      <td>Passive LTE sniffing</td>
-      <td><code>telecom_ltesniffer</code></td>
-    </tr>
-    <tr>
       <td>Vehicles</td>
       <td><code>automotive</code></td>
     </tr>
@@ -355,18 +343,8 @@
       <td>Open-source intelligence</td>
       <td><code>osint</code></td>
     </tr>
-    <tr>
-      <td>AI coding agents with security skills</td>
-      <td><code>llm</code></td>
-    </tr>
-    <tr>
-      <td>Agent-driven web application testing</td>
-      <td><code>artex</code> (development registry, see below)</td>
-    </tr>
   </tbody>
 </table>
-</div>
-<div class="admonition admonition-info" role="note"><p class="admonition-title">ARTEX lives in the development registry</p><p><code>artex</code> is built on demand from the upstream ARTEX project rather than from the RF Swift image chain, so it is published to <code>penthertz/rfswiftdev_resolute</code> only. Use the full name: <code>rfswift container create -i penthertz/rfswiftdev_resolute:artex -n artex</code>. Inside, <code>artex-postgres</code> starts the database and <code>artex-start</code> starts ARTEX; then open <code>http://localhost:8787/setup</code>. Use it only against systems you are authorized to test.</p>
 </div>
 <div class="admonition admonition-info" role="note"><p class="admonition-title">GPU variants</p><p>On x86_64, <code>sdr_light</code> and <code>sdr_full</code> also come with Intel or NVIDIA GPU drivers and gr-fosphor: <code>sdr_light_intelgpu</code>, <code>sdr_light_nvidiagpu</code>, <code>sdr_full_intelgpu</code>, <code>sdr_full_nvidiagpu</code>. Use them only if you want GPU acceleration.</p>
 </div>
@@ -463,12 +441,12 @@
     <tr>
       <td><strong>SDR</strong></td>
       <td>Software-defined radio tools</td>
-      <td><code>sdr_light</code>, <code>sdr_full</code>, <code>sdr_light_intelgpu</code>, <code>sdr_full_nvidiagpu</code>, <code>deeptempest</code>, <code>sdr_gnuradio4</code>, <code>sdr_hacks</code></td>
+      <td><code>sdr_light</code>, <code>sdr_full</code>, <code>sdr_light_intelgpu</code>, <code>sdr_full_nvidiagpu</code>, <code>deeptempest</code>, <code>sdr_gnuradio4</code></td>
     </tr>
     <tr>
       <td><strong>Telecom</strong></td>
       <td>Mobile network analysis</td>
-      <td><code>telecom_utils</code>, <code>telecom_2Gto3G</code>, <code>telecom_4G_5GNSA</code>, <code>telecom_5G</code>, <code>telecom_5G_bladerf</code>, <code>telecom_4Gto5G</code>, <code>telecom_5G_train</code>, <code>telecom_5G_oai</code>, <code>telecom_ltesniffer</code></td>
+      <td><code>telecom_utils</code>, <code>telecom_2Gto3G</code>, <code>telecom_4G_5GNSA</code>, <code>telecom_5G</code>, <code>telecom_5G_bladerf</code>, <code>telecom_4Gto5G</code>, <code>telecom_5G_train</code></td>
     </tr>
     <tr>
       <td><strong>Short-range</strong></td>
@@ -506,11 +484,6 @@
       <td><code>osint</code></td>
     </tr>
     <tr>
-      <td><strong>AI agents</strong></td>
-      <td>Coding agents, shared security skills and agent-driven testing</td>
-      <td><code>llm</code>, <code>artex</code></td>
-    </tr>
-    <tr>
       <td><strong>Base images</strong></td>
       <td>Foundation for other images</td>
       <td><code>corebuild</code>, <code>sdrsa_devices</code>, <code>sdrsa_devices_antsdr</code>, <code>sdrsa_devices_rtlsdrv4</code></td>
@@ -537,11 +510,11 @@
     B[sdrsa_devices]--&gt;DT[deeptempest];
     A--&gt;OS[osint];
     A--&gt;AN[android];
-    A--&gt;LLM[llm];
-    S[network]--&gt;J[wifi];
+    S[network]--&gt;WB[wifi_basic];
+    WB--&gt;WF[wifi_full];
     S[network]--&gt;AD[ad];
+    H--&gt;J[wifi];
     H--&gt;G4[sdr_gnuradio4];
-    H--&gt;SH[sdr_hacks];
     H--&gt;K[sdr_full];
     H--&gt;H2[sdr_light_intelgpu];
     H--&gt;H3[sdr_light_nvidiagpu];
@@ -552,10 +525,7 @@
     L--&gt;O[telecom_5G];
     L--&gt;O2[telecom_5G_bladerf];
     L--&gt;P[telecom_4Gto5G];
-    L--&gt;OAI[telecom_5G_oai];
-    L--&gt;LS[telecom_ltesniffer];
-    N--&gt;P2[telecom_5G_train];</pre></div><p><code>artex</code> is not in this tree: it adds PostgreSQL on top of an image built from the upstream ARTEX project.</p>
-<p>This hierarchy gives you:</p>
+    N--&gt;P2[telecom_5G_train];</pre></div><p>This hierarchy gives you:</p>
 <ul>
 <li><strong>Layer reuse</strong>: less disk space when you use several images.</li>
 <li><strong>Consistency</strong>: common tools are identical across related images.</li>
@@ -643,14 +613,7 @@
 <td>Yes</td>
 <td>Yes</td>
 <td>No, (not yet)</td>
-<td>GNU Radio 4.0 (newest release; currently 4.0.0-RC3) and GR4 Studio (browser and desktop) built from source alongside the GNU Radio 3.10 of sdr_light</td>
-</tr>
-      <tr><td>sdr_hacks</td>
-<td>- Linux - Windows - macOS</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>No</td>
-<td>Repurposed chips as SDRs (MediaTek Wi-Fi dongles and routers / ESP32 / Semtech LR2021) and the AntSDR E200/E310 FPV scanner firmware on top of sdr_light</td>
+<td>GNU Radio 4.0 (RC) built from source alongside the GNU Radio 3.10 of sdr_light so you can try GR4 without touching your existing flowgraph environment</td>
 </tr>
       <tr><td>deeptempest</td>
 <td>- Linux - Windows - macOS</td>
@@ -658,6 +621,20 @@
 <td>Yes</td>
 <td>Yes</td>
 <td>Deep Tempest SDR image for electromagnetic emanation analysis</td>
+</tr>
+      <tr><td>wifi_basic</td>
+<td>- Linux - Windows - macOS</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Wi-Fi image for security tests using tools included in wifi_basic.docker</td>
+</tr>
+      <tr><td>wifi_full</td>
+<td>- Linux - Windows - macOS</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Wi-Fi image for security tests using tools included in wifi_full.docker</td>
 </tr>
       <tr><td>rfid</td>
 <td>- Linux - Windows - macOS</td>
@@ -736,20 +713,6 @@
 <td>Yes</td>
 <td>Extended 5G training telecom image with additional tools (builds on telecom_4G_5GNSA)</td>
 </tr>
-      <tr><td>telecom_5G_oai</td>
-<td>- Linux - Windows - macOS</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>No</td>
-<td>5G SA with OpenAirInterface (gNB and nrUE) and the Open5GS core (builds on telecom_utils)</td>
-</tr>
-      <tr><td>telecom_ltesniffer</td>
-<td>- Linux - Windows - macOS</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>No</td>
-<td>Passive LTE downlink and uplink sniffing with LTESniffer (builds on telecom_utils)</td>
-</tr>
       <tr><td>network</td>
 <td>- Linux - Windows - macOS</td>
 <td>Yes</td>
@@ -769,7 +732,7 @@
 <td>Yes</td>
 <td>Yes</td>
 <td>Yes</td>
-<td>Wi-Fi security image (builds on network) with the toolset in wifi_basic.docker</td>
+<td>Wi-Fi image with standard toolset using wifi.docker</td>
 </tr>
       <tr><td>ad</td>
 <td>- Linux - Windows - macOS</td>
@@ -791,20 +754,6 @@
 <td>Yes</td>
 <td>Yes</td>
 <td>OSINT and reconnaissance image with theHarvester Sherlock maigret holehe GHunt SpiderFoot recon-ng and FinalRecon</td>
-</tr>
-      <tr><td>llm</td>
-<td>- Linux - Windows - macOS</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>No</td>
-<td>AI coding agents (Claude Code / Codex / OpenCode / Mistral Vibe / Hermes) with shared security skill packs plus Strix / REA / Craft Anything / whisper.cpp / Open WebUI / NodeTerm</td>
-</tr>
-      <tr><td>artex</td>
-<td>- Linux - Windows - macOS</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>No</td>
-<td>ARTEX agent-driven web-security platform with embedded PostgreSQL; built on demand and published to the development registry (penthertz/rfswiftdev_resolute) only</td>
 </tr>
     </tbody>
   </table>

@@ -30,6 +30,10 @@ RF Swift is in active development: the tool collection is regularly expanded and
 
 Each RF Swift image builds upon a foundation of tools, with specialized images adding domain-specific capabilities: `corebuild` is the base, `sdrsa_devices` adds the SDR drivers, `sdr_light` builds on it, `sdr_full` on `sdr_light`, and so on. The full diagram is in [Choose a toolbox](/docs/guide/list-of-images/#how-images-build-on-each-other). A tool listed for a base image is also in every image built on it.
 
+{{< callout type="info" title="Reading source code in any image" >}}
+`corebuild`, and so every image, ships [See](https://see.wibus.ren), a native desktop source-code reader (amd64 and arm64): file tree, fuzzy file and symbol search, workspace search, Git diff/blame/history, a terminal, and hex and Markdown preview. Open a folder with `see <folder>` (for example an extracted firmware root), compare two trees with `see --diff <a> <b>`, or pipe text into `cmd | see -`. It needs the container's X11 display or the VNC desktop. Automatic update checks are off in the image; turn them on in Settings > Updates.
+{{< /callout >}}
+
 ## Tools by image
 
 ### Core SDR device support
