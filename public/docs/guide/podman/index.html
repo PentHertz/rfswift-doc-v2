@@ -244,7 +244,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Using Podman</h1><p class="doc-lead">Run RF Swift with rootless, daemonless Podman: why you&rsquo;d pick it, how to set it up, and what rootless mode changes.</p><p class="doc-meta">Intermediate · 8 min read · Updated September 27, 2026</p>
+      <h1>Using Podman</h1><p class="doc-lead">Run RF Swift with rootless, daemonless Podman: why you&rsquo;d pick it, how to set it up, and what rootless mode changes.</p><p class="doc-meta">Intermediate · 9 min read · Updated November 26, 2026</p>
     </header>
     <div class="prose">
       <p>Podman is a container engine that runs <strong>without a background service and without root rights</strong>. RF Swift supports it as a full alternative to Docker: the same toolboxes, the same commands and the same Workbench. RF Swift detects Podman automatically and adapts to its rootless mode for you.</p>
@@ -452,6 +452,20 @@
 <p><code>rfswift container create</code> and the Workbench list what will be dropped before creation.</p>
 <div class="admonition admonition-info" role="note"><p class="admonition-title">Your devices still work</p><p>You can use USB devices that are plugged in before the container starts. What doesn&rsquo;t work without cgroup rules is <strong>hotplug</strong>: plugging or unplugging devices while the container is running.</p>
 </div>
+<h2 id="rootful-podman-without-sudo">Rootful Podman without sudo<a class="anchor" href="#rootful-podman-without-sudo" aria-label="Link to this section"></a></h2>
+<p>Rootless Podman cannot honour device cgroup rules, root-only device nodes or realtime limits, which SDR and USB hardware often need. Running RF Swift with <code>sudo</code> gets them, but then the lab runs in root&rsquo;s session (no audio server, root&rsquo;s home). On Linux, <code>podman_mode = rootful</code> gives you both: RF Swift and the Workbench keep running as you (your audio, X11, home, workspaces and configuration), and drive the <strong>system</strong> Podman service through its socket, so containers get rootful device access.</p>
+<div class="code">
+  <div class="code-bar"><span>ini</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[general]</span>
+</span></span><span class="line"><span class="cl"><span class="na">podman_mode</span> <span class="o">=</span> <span class="s">rootful   # auto (default) | rootless | rootful</span></span></span></code></pre></div></div>
+<p>or for one shell: <code>export RFSWIFT_PODMAN_MODE=rootful</code>. The system socket must be running and usable by your user:</p>
+<div class="code">
+  <div class="code-bar"><span>bash</span><button class="copy-btn" type="button" data-copy aria-label="Copy code"><span>Copy</span></button></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> --now podman.socket
+</span></span><span class="line"><span class="cl"><span class="c1"># then give your group access, e.g. a podman.socket drop-in with SocketGroup=&lt;your group&gt;</span></span></span></code></pre></div></div>
+<p>If it is not, RF Swift says what is missing. On Qubes OS, <code>rfswift host qubes setup</code> does all of this for you (see <a href="/docs/guide/qubes-os/">Qubes OS</a>).</p>
+<div class="admonition admonition-warning" role="note"><p>Access to the rootful Podman socket is <strong>root-equivalent</strong>, like membership of the <code>docker</code> group. Grant it only to users you would give root to.</p>
+</div>
+<h2 id="selinux-hosts-fedora-rhel">SELinux hosts (Fedora, RHEL&hellip;)<a class="anchor" href="#selinux-hosts-fedora-rhel" aria-label="Link to this section"></a></h2>
+<p>On a host with SELinux enforcing, a container&rsquo;s processes run as <code>container_t</code> and cannot read a bind-mounted workspace, the X11 socket or the USB nodes. RF Swift therefore creates its unprivileged containers (Docker and Podman) with <code>label=disable</code>, as toolbox and distrobox do; namespaces, capabilities and seccomp still isolate them. To keep SELinux separation, set <code>selinux_label = keep</code> in <code>[container]</code> (or <code>RFSWIFT_SELINUX_LABEL=keep</code>); those containers then cannot use their workspace, the display or the devices. <code>rfswift doctor</code> shows which applies.</p>
 <h2 id="running-with-root-podman--sudo">Running with root (Podman + sudo)<a class="anchor" href="#running-with-root-podman--sudo" aria-label="Link to this section"></a></h2>
 <p>For full hardware access, run Podman with <code>sudo</code>. This gives you the same capabilities as Docker with root, including cgroup rules and full device access:</p>
 <div class="code">
@@ -625,6 +639,8 @@
         <li><a href="#what-rf-swift-adjusts-for-you">What RF Swift adjusts for you</a></li>
       </ul>
     </li>
+    <li><a href="#rootful-podman-without-sudo">Rootful Podman without sudo</a></li>
+    <li><a href="#selinux-hosts-fedora-rhel">SELinux hosts (Fedora, RHEL&hellip;)</a></li>
     <li><a href="#running-with-root-podman--sudo">Running with root (Podman + sudo)</a></li>
     <li><a href="#vpn-with-podman">VPN with Podman</a></li>
     <li><a href="#networking">Networking</a></li>
