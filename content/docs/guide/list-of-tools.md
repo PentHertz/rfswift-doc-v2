@@ -34,6 +34,21 @@ Each RF Swift image builds upon a foundation of tools, with specialized images a
 `corebuild`, and so every image, ships [See](https://see.wibus.ren), a native desktop source-code reader (amd64 and arm64): file tree, fuzzy file and symbol search, workspace search, Git diff/blame/history, a terminal, and hex and Markdown preview. Open a folder with `see <folder>` (for example an extracted firmware root), compare two trees with `see --diff <a> <b>`, or pipe text into `cmd | see -`. It needs the container's X11 display or the VNC desktop. Automatic update checks are off in the image; turn them on in Settings > Updates.
 {{< /callout >}}
 
+{{< callout type="info" title="Reverse engineering CRCs and checksums in any image" >}}
+Every image also has three tools for the checksum on a captured radio frame or a firmware header:
+- [CRC RevEng](https://reveng.sourceforge.io) (`reveng`) finds a CRC's width, polynomial, init, reflection and xorout from message+CRC samples, for example `reveng -w 16 -s <hex> <hex> <hex> <hex>` (give four or more). It also computes any of its 113 catalogue CRCs (`reveng -m CRC-16/MODBUS -c <hex>`; `reveng -D` lists them) and prints a CRC in the byte order it has in the message.
+- [delsum](https://github.com/8051Enthusiast/delsum) handles CRCs, modular sums and Fletcher checksums: `delsum reverse` finds the algorithm from files and their checksums, and `delsum part` finds which byte range of a file a known checksum covers, for example a header CRC over an unknown span.
+- [CRC Beagle](https://github.com/colinoflynn/crcbeagle) (`crcbeagle`) compares frames of the same length, so it recovers an equivalent CRC even when the init or xorout is non-standard, spots plain sums and XOR checksums, and prints Python code that reproduces the CRC: `crcbeagle -w 16 <hex-frame> <hex-frame> ...`. Write `MESSAGE/CRC` to split a frame yourself, for example to leave out a sync word.
+- [crchack](https://github.com/resilar/crchack) does the opposite: it changes the bits you allow so that a modified frame or firmware image gets the CRC you want, for example `crchack -o 4 patched.bin 1234abcd > forged.bin`. It takes any CRC's parameters (`-w`, `-p`, `-i`, `-x`, `-r`, `-R`); the default is CRC-32.
+- `pycrc` writes C code for a CRC once you know its parameters, for example `pycrc --model crc-16-modbus --algorithm table-driven --generate c -o crc.c`.
+{{< /callout >}}
+
+{{< callout type="info" title="Binary data helpers in any image" >}}
+- `ent` measures a file's entropy and randomness (`ent fw.bin`). Close to 8 bits per byte means compressed or encrypted data.
+- [fq](https://github.com/wader/fq) is jq for binary formats. It decodes ELF, pcap, protobuf, MessagePack, ZIP and about a hundred other formats into a tree you query with jq expressions: `fq . file`, `fq -d msgpack . blob`, `fq -i` for an interactive session.
+- [xortool](https://github.com/hellman/xortool) finds the key length and key of XOR-obfuscated data: `xortool -c 00 fw.bin` for binaries, `-c 20` for text. It writes the candidate plaintexts to `./xortool_out/`.
+{{< /callout >}}
+
 ## Tools by image
 
 ### Core SDR device support

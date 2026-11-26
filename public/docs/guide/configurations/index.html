@@ -244,7 +244,7 @@
 </nav>
 
     <header class="doc-head">
-      <h1>Configuration</h1><p class="doc-lead">Change RF Swift&rsquo;s defaults: the config.ini file, reusable profiles, environment variables and command-line flags.</p><p class="doc-meta">Advanced · 7 min read · Updated November 26, 2026</p>
+      <h1>Configuration</h1><p class="doc-lead">Change RF Swift&rsquo;s defaults: the config.ini file, reusable profiles, environment variables and command-line flags.</p><p class="doc-meta">Advanced · 7 min read · Updated September 27, 2026</p>
     </header>
     <div class="prose">
       <p>RF Swift works out of the box with sensible defaults. Read this page when you want to change one: your default engine, the image repository, the devices every container gets, or a preset you use every week.</p>
@@ -341,7 +341,6 @@
 </span></span><span class="line"><span class="cl"><span class="na">imagename</span> <span class="o">=</span> <span class="s">myrfswift:latest</span>
 </span></span><span class="line"><span class="cl"><span class="na">repotag</span> <span class="o">=</span> <span class="s">penthertz/rfswift_resolute</span>
 </span></span><span class="line"><span class="cl"><span class="na">engine</span> <span class="o">=</span> <span class="s">auto</span>
-</span></span><span class="line"><span class="cl"><span class="na">podman_mode</span> <span class="o">=</span> <span class="s">auto</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">[container]</span>
 </span></span><span class="line"><span class="cl"><span class="na">shell</span> <span class="o">=</span> <span class="s">/bin/zsh</span>
@@ -395,13 +394,8 @@
     </tr>
     <tr>
       <td><code>engine</code></td>
-      <td>Default engine when neither <code>--engine</code> nor <code>RFSWIFT_ENGINE</code> is set: <code>auto</code>, <code>docker</code>, <code>podman</code>, <code>lima</code>, <code>nix</code>. Which one to pick: <a href="/docs/engines/">Choose your engine</a> Set it with <code>rfswift engine set</code></td>
+      <td>Default engine when neither <code>--engine</code> nor <code>RFSWIFT_ENGINE</code> is set: <code>auto</code>, <code>docker</code>, <code>podman</code>, <code>lima</code>, <code>nix</code>. Which one to pick: <a href="/docs/engines/">Choose your engine</a></td>
       <td><code>nix</code></td>
-    </tr>
-    <tr>
-      <td><code>podman_mode</code></td>
-      <td>Which Podman service a non-root RF Swift drives on Linux: <code>auto</code> (rootless for a user, rootful for root), <code>rootless</code>, or <code>rootful</code> (the system service through its socket: rootful device access without <code>sudo</code>, see <a href="/docs/guide/podman/#rootful-podman-without-sudo">Podman</a>). <code>RFSWIFT_PODMAN_MODE</code> overrides it</td>
-      <td><code>rootful</code></td>
     </tr>
   </tbody>
 </table>
@@ -486,11 +480,6 @@
       <td>Device cgroup rules</td>
       <td><code>c 189:* rwm,c 166:* rwm</code></td>
     </tr>
-    <tr>
-      <td><code>selinux_label</code></td>
-      <td>On a host with SELinux enforcing, RF Swift creates unprivileged containers with <code>label=disable</code> so they can use their workspace, the X11 socket and USB nodes. <code>keep</code> leaves SELinux separation on (the containers then cannot read those). <code>RFSWIFT_SELINUX_LABEL</code> overrides it</td>
-      <td><code>keep</code></td>
-    </tr>
   </tbody>
 </table>
 </div>
@@ -547,14 +536,6 @@
     <tr>
       <td><code>RFSWIFT_LIMA_INSTANCE</code></td>
       <td>Lima instance name (default <code>rfswift</code>; <code>--gpu</code> uses <code>rfswift-gpu</code>)</td>
-    </tr>
-    <tr>
-      <td><code>RFSWIFT_PODMAN_MODE</code></td>
-      <td>Podman service on Linux: <code>auto</code>, <code>rootless</code> or <code>rootful</code>; overrides <code>[general] podman_mode</code></td>
-    </tr>
-    <tr>
-      <td><code>RFSWIFT_SELINUX_LABEL</code></td>
-      <td><code>keep</code> keeps SELinux separation for RF Swift containers; overrides <code>[container] selinux_label</code></td>
     </tr>
     <tr>
       <td><code>RFSWIFT_NO_BANNER</code></td>
